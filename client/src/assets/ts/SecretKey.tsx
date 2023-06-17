@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import Signup from "./Signup";
+import Signup from "../../page/Signup";
 
 // ------------------------------------------------------------------------------------------------>
 const SecretKey = () => {
@@ -11,7 +11,7 @@ const SecretKey = () => {
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const secretKeyFlow = async () => {
-      const promptValue = window.prompt("Input your SecretKey");
+      const promptValue = window.prompt("Input your SecretKey", "");
 
       if (promptValue === null || promptValue === "") {
         alert("Enter the SecretKey");

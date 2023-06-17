@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema ({
   userId: String,
   userPw: String,
+  secretKey: String,
 });
 
 const User = mongoose.model("User", UserSchema);

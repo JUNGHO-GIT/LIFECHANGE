@@ -1,9 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import Header from "../layout/Header";
-import Footer from "../layout/Footer";
 import {createGlobalStyle} from "styled-components";
-import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 const SignupStyle = createGlobalStyle`
@@ -74,10 +71,8 @@ const Signup = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
-    <Header />
+    <div><SignupStyle/>
       <section className="signup custom-flex-center">
-        <SignupStyle/>
         <form>
           <div className="empty-h50"></div>
           <h1 className="mb-3">Sign up</h1>
@@ -89,7 +84,7 @@ const Signup = () => {
           </div>
           <div className="empty-h20"></div>
           <div className="form-floating">
-            <input className="form-control" type="text" placeholder="Password" value={userPw}
+            <input className="form-control" type="password" placeholder="Password" value={userPw}
             id="floatingPassword" onChange={(e) => {setPassword(e.target.value);}}/>
             <label htmlFor="floatingPassword">Password</label>
           </div>
@@ -99,7 +94,6 @@ const Signup = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    <Footer />
     </div>
   );
 };

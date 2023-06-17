@@ -23,39 +23,29 @@ import Hover from "../components/Hover";
 // components2 ------------------------------------------------------------------------------------>
 import Main from "../page/Main";
 import Login from "../page/Login";
-import SecretKey from "../page/SecretKey";
-
-// ------------------------------------------------------------------------------------------------>
-class MainPages extends React.Component {
-  componentDidMount() {
-    Hover();
-  }
-  render() {
-    return (
-      <div className="App">
-        <Loader />
-        <Resize />
-        <Header />
-        <main id="main">
-          <Main />
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-}
+import SecretKey from "../assets/ts/SecretKey";
+import MyPage from "../page/MyPage";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 
+  Hover();
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainPages />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SecretKey />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <Loader />
+      <Resize />
+      <Header />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SecretKey />} />
+            <Route path="/myPage" element={<MyPage />} />
+          </Routes>
+        </Router>
+      <Footer />
+    </div>
   );
 };
 

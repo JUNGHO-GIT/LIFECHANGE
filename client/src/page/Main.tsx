@@ -1,5 +1,4 @@
 import React from "react";
-import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
@@ -68,49 +67,49 @@ const CarouselThird = () => {
 };
 
 // ------------------------------------------------------------------------------------------------>
+const MainStyle = createGlobalStyle`
+
+  .carousel-caption {
+    color: var(--bs-black);
+    bottom: 6rem;
+    z-index: 10;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    filter: invert(1) grayscale(1) brightness(10);
+  }
+
+  .carousel-indicators .active {
+    filter: invert(1) grayscale(1) brightness(10);
+  }
+
+  .carousel-item {
+    height: 32rem;
+    transition: -webkit-transform 0.3s ease;
+    overflow: hidden;
+    opacity: 0.5;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+  }
+
+  .carousel-item.active {
+    opacity: 1;
+  }
+
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+`;
+
+// ------------------------------------------------------------------------------------------------>
 const Main = () => {
-
-  // ---------------------------------------------------------------------------------------------->
-  const MainStyle = createGlobalStyle`
-
-    .carousel-caption {
-      color: var(--bs-black);
-      bottom: 6rem;
-      z-index: 10;
-    }
-
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      filter: invert(1) grayscale(1) brightness(10);
-    }
-
-    .carousel-indicators .active {
-      filter: invert(1) grayscale(1) brightness(10);
-    }
-
-    .carousel-item {
-      height: 32rem;
-      transition: -webkit-transform 0.3s ease;
-      overflow: hidden;
-      opacity: 0.5;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
-      vertical-align: middle;
-    }
-
-    .carousel-item.active {
-      opacity: 1;
-    }
-
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-  `;
 
   return (
     <div><MainStyle />

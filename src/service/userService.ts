@@ -1,33 +1,36 @@
 import User from "../model/User";
 
 // secretKey
-export const secretKey = (secretKey: any) => {
-  return User.findOne(secretKey);
+export const secretKey = (secretKeyParam: any) => {
+  return User.findOne({secretKey: secretKeyParam});
 };
 
 // checkId
-export const checkId = async (userData: any) => {
-  const userId = userData.userId;
-  return User.findOne(userId);
+export const checkId = async (userIdParam: any) => {
+  return User.findOne({userId: userIdParam});
 };
 
 // signup
-export const signupUser = async (userData: any) => {
-  return User.create(userData);
+export const signupUser = async (userIdParam: any, userPwParam: any) => {
+  return User.create({userId: userIdParam, userPw: userPwParam});
 };
 
 // login
-export const loginUser = async (loginData: any) => {
-  return User.findOne(loginData);
+export const loginUser = async (userIdParam: any, userPwParam: any) => {
+  return User.findOne({userId: userIdParam, userPw: userPwParam});
+};
+
+// myPage
+export const myPage = async (userIdParam: any) => {
+  return User.findOne({userId: userIdParam});
 };
 
 // update
-export const updateUser = async (userData: any) => {
-  return User.findByIdAndUpdate(userData._id, userData);
+export const updateUser = async (userIdParam: any, userPwParam: any) => {
+  return User.findOneAndUpdate({userId: userIdParam}, {userPw: userPwParam});
 };
 
 // delete
-export const deleteUser = async (userData: any) => {
-  const userId = userData.userId;
-  return User.findByIdAndDelete(userId);
+export const deleteUser = async (userIdParam: any) => {
+  return User.findOneAndDelete({userId: userIdParam});
 };

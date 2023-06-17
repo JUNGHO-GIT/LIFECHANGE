@@ -1,9 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import Header from "../layout/Header";
-import Footer from "../layout/Footer";
 import {createGlobalStyle} from "styled-components";
-import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 const LoginStyle = createGlobalStyle`
@@ -68,10 +65,8 @@ const Login = () => {
   };
 
   return (
-    <div>
-    <Header />
+    <div><LoginStyle/>
       <section className="login custom-flex-center">
-        <LoginStyle/>
         <form>
           <div className="empty-h50"></div>
           <h1 className="mb-3">Log In</h1>
@@ -93,7 +88,6 @@ const Login = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    <Footer />
     </div>
   );
 };

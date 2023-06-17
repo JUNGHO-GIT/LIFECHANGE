@@ -3,21 +3,21 @@ import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
+const FooterStyle = createGlobalStyle`
+  .footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    font-weight: bolder;
+  }
+`;
+
+// ------------------------------------------------------------------------------------------------>
 const Footer = () => {
 
-  const FooterStyle = createGlobalStyle`
-    .footer {
-      position: sticky;
-      bottom: 0;
-      width: 100%;
-      background-color: #343a40;
-      color: white;
-      text-align: center;
-      font-weight: bolder;
-    }
-  `;
-
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div><FooterStyle />
       <footer className="footer">
