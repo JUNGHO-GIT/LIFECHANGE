@@ -45,7 +45,7 @@ router.post("/secretKey", async (req: Request, res: Response) => {
 // signup ----------------------------------------------------------------------------------------->
 router.post("/signup", async (req: Request, res: Response) => {
   try {
-    const userIdCheck = await userService.checkId(req.body);
+    const userIdCheck = await userService.checkId(req.body.userId);
 
     if (userIdCheck) {
       res.send("duplicate");

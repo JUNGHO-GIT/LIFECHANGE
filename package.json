@@ -4,7 +4,8 @@
   "main": "index.ts",
   "scripts": {
     "start": "nodemon --exec ts-node index.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "clear-node-modules": "for %G in (README.MD README CHANGELOG.MD CHANGELOG HISTORY.MD HISTORY LICENSE.MD LICENSE) do forfiles /S /M %G /C 'cmd /c del @path'"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

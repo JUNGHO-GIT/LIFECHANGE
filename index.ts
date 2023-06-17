@@ -13,6 +13,7 @@ app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
 });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

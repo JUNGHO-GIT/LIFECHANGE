@@ -56,7 +56,7 @@ const Login = () => {
     else if (res.data === "success") {
       alert("Login successful");
       window.sessionStorage.setItem("userId", "true");
-      window.location.href = "/main";
+      window.location.href = "/";
     }
     else if (res.data === "fail") {
       alert("Incorrect ID or PW");

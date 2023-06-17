@@ -101,7 +101,7 @@ const Sidebar = () => {
       <button className="openBtn" onClick={() => sidebarOpen(true)}>☰</button>
       <div id="sidebar" className={`sidebar ${sidebar ? "open" : "close"}`}>
         <a className="closeBtn" onClick={() => sidebarOpen(false)}>×</a>
-        <a href="/main" className="side-menu linkHover">Home</a>
+        <a href="/" className="side-menu linkHover">Home</a>
         {!userId ? (
           <div>
             <a href="/login" className="side-menu linkHover">Login</a>

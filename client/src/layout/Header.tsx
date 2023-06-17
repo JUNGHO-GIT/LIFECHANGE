@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 import Sidebar from "./Sidebar";
@@ -53,7 +52,7 @@ const Header = () => {
           </div>
           <div className="d-lg-block d-none col-6 custom-flex-center mt-6 ps-10">
             <ul className="nav">
-              <li><a href="/main" className="nav-link linkHover ms-2 text-white">Home</a></li>
+              <li><a href="/" className="nav-link linkHover ms-2 text-white">Home</a></li>
             </ul>
           </div>
           <div className="col-lg-6 col-7 custom-flex-right pe-10">

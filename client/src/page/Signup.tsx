@@ -44,16 +44,18 @@ const Signup = () => {
   const [userPw, setPassword] = useState("");
 
   const SignupFlow = async () => {
-    const res = await axios.post("http://localhost:4000/api/signup", {
-      userId: userId,
-      userPw: userPw,
-    });
 
     if (userId === "" || userPw === "") {
       alert("Please enter both Id and Pw");
       return;
     }
-    else if (res.data === "success") {
+
+    const res = await axios.post("http://localhost:4000/api/signup", {
+      userId: userId,
+      userPw: userPw,
+    });
+
+    if (res.data === "success") {
       alert("Signup successful");
       window.location.href = "/login";
     }

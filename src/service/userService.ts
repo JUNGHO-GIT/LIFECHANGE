@@ -6,7 +6,8 @@ export const secretKey = (secretKey: any) => {
 };
 
 // checkId
-export const checkId = async (userId: any) => {
+export const checkId = async (userData: any) => {
+  const userId = userData.userId;
   return User.findOne(userId);
 };
 
@@ -26,6 +27,7 @@ export const updateUser = async (userData: any) => {
 };
 
 // delete
-export const deleteUser = async (id: string) => {
-  return User.findByIdAndDelete(id);
+export const deleteUser = async (userData: any) => {
+  const userId = userData.userId;
+  return User.findByIdAndDelete(userId);
 };
