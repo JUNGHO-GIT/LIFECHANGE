@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from "react";
-import axios, { AxiosResponse } from "axios";
+import axios, {AxiosResponse} from "axios";
 import {createGlobalStyle} from "styled-components";
 
-// ------------------------------------------------------------------------------------------------>
 interface UserResponse {
   userId: string;
   userPw: string;
 }
 
-// ------------------------------------------------------------------------------------------------>
 const MyPageStyle = createGlobalStyle`
 `;
 
+// ------------------------------------------------------------------------------------------------>
 const MyPage = () => {
   const [response, setResponse] = useState<UserResponse | null>(null);
 
@@ -20,12 +19,15 @@ const MyPage = () => {
     setResponse(res.data);
   };
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     MyPageFlow();
   }, []);
 
+  // ---------------------------------------------------------------------------------------------->
   return (
-    <div><MyPageStyle/>
+    <div>
+      <MyPageStyle />
       <section className="mypage custom-flex-center">
         <h1 className="mb-3">My Page</h1>
         <div className="empty-h20"></div>

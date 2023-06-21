@@ -3,7 +3,6 @@ import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 import Sidebar from "./Sidebar";
 
-// ------------------------------------------------------------------------------------------------>
 const HeaderStyle = createGlobalStyle`
 
   .header {
@@ -38,9 +37,9 @@ const HeaderStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const Header = () => {
-
   const userId = sessionStorage.getItem("userId");
 
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div>
       <HeaderStyle />
@@ -51,21 +50,38 @@ const Header = () => {
           </div>
           <div className="d-lg-block d-none col-6 custom-flex-center mt-6 ps-10">
             <ul className="nav">
-              <li><a href="/" className="nav-link linkHover ms-2 text-white">Home</a></li>
-              <li><a href="/myPage" className="nav-link linkHover ms-2 text-white">MyPage</a></li>
+              <li>
+                <a href="/" className="nav-link linkHover ms-2 text-white">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/myPage" className="nav-link linkHover ms-2 text-white">
+                  MyPage
+                </a>
+              </li>
             </ul>
           </div>
           <div className="col-lg-6 col-7 custom-flex-right pe-10">
             <form className="form-group custom-flex-center">
               {userId === "true" ? (
-                <button type="button" className="btn btn-outline-light ms-2" onClick={() => {
-                  sessionStorage.setItem("userId", "false");
-                  window.location.reload();
-                }}>Logout</button>
+                <button
+                  type="button"
+                  className="btn btn-outline-light ms-2"
+                  onClick={() => {
+                    sessionStorage.setItem("userId", "false");
+                    window.location.reload();
+                  }}>
+                  Logout
+                </button>
               ) : (
                 <>
-                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => window.location.href = "/login"}>Login</button>
-                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => window.location.href = "/signup"}>Signup</button>
+                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/login")}>
+                    Login
+                  </button>
+                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/signup")}>
+                    Signup
+                  </button>
                 </>
               )}
             </form>

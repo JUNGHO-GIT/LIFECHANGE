@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 
-// ------------------------------------------------------------------------------------------------>
 const SidebarStyle = createGlobalStyle`
   .sidebar {
     height: 100%;
@@ -71,15 +70,17 @@ const SidebarStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const Sidebar = () => {
-
   const [sidebar, sidebarOpen] = useState(false);
 
   let userId = sessionStorage.getItem("userId");
-  if(userId !== null){
+  if (userId !== null) {
     userId = JSON.parse(userId);
   }
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
+
+    // -------------------------------------------------------------------------------------------->
     const closeNav = (event: any) => {
       const sidebarElement = document.getElementById("sidebar");
       if (event.target !== sidebarElement && event.target.parentNode !== sidebarElement) {
@@ -97,22 +98,36 @@ const Sidebar = () => {
   return (
     <div>
       <SidebarStyle />
-      <button className="openBtn" onClick={() => sidebarOpen(true)}>☰</button>
+      <button className="openBtn" onClick={() => sidebarOpen(true)}>
+        ☰
+      </button>
       <div id="sidebar" className={`sidebar ${sidebar ? "open" : "close"}`}>
-        <a className="closeBtn" onClick={() => sidebarOpen(false)}>×</a>
-        <a href="/" className="side-menu linkHover">Home</a>
+        <a className="closeBtn" onClick={() => sidebarOpen(false)}>
+          ×
+        </a>
+        <a href="/" className="side-menu linkHover">
+          Home
+        </a>
         {!userId ? (
           <div>
-            <a href="/login" className="side-menu linkHover">Login</a>
-            <a href="/signup" className="side-menu linkHover">SignUp</a>
+            <a href="/login" className="side-menu linkHover">
+              Login
+            </a>
+            <a href="/signup" className="side-menu linkHover">
+              SignUp
+            </a>
           </div>
         ) : (
-          <a onClick={() => {
-            sessionStorage.setItem("userId", "false");
-            window.location.href = "/login";
-          }} className="side-menu linkHover">Logout</a>
+          <a
+            onClick={() => {
+              sessionStorage.setItem("userId", "false");
+              window.location.href = "/login";
+            }}
+            className="side-menu linkHover">
+            Logout
+          </a>
         )}
-        <hr/>
+        <hr />
       </div>
       <div className={`${sidebar ? "margin-left" : ""}`}></div>
     </div>

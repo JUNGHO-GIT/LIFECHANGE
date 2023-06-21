@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
-// ------------------------------------------------------------------------------------------------>
 const SignupStyle = createGlobalStyle`
   .signup {
     display: flex;
@@ -36,12 +35,10 @@ const SignupStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const Signup = () => {
-
   const [userId, setId] = useState("");
   const [userPw, setPassword] = useState("");
 
   const SignupFlow = async () => {
-
     if (userId === "" || userPw === "") {
       alert("Please enter both Id and Pw");
       return;
@@ -58,11 +55,13 @@ const Signup = () => {
     }
     else if (res.data === "duplicate") {
       alert("This ID already exists");
-      setId(""); setPassword("");
+      setId("");
+      setPassword("");
     }
     else if (res.data === "fail") {
       alert("Incorrect Id or Pw");
-      setId(""); setPassword("");
+      setId("");
+      setPassword("");
     }
     else {
       alert(`${res.data}error`);
@@ -71,25 +70,44 @@ const Signup = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div><SignupStyle/>
+    <div>
+      <SignupStyle />
       <section className="signup custom-flex-center">
         <form>
           <div className="empty-h50"></div>
           <h1 className="mb-3">Sign up</h1>
           <div className="empty-h20"></div>
           <div className="form-floating">
-            <input className="form-control" type="text" placeholder="ID" value={userId}
-            id="floatingId" onChange={(e) => {setId(e.target.value);}}/>
+            <input
+              className="form-control"
+              type="text"
+              placeholder="ID"
+              value={userId}
+              id="floatingId"
+              onChange={(e) => {
+                setId(e.target.value);
+              }}
+            />
             <label htmlFor="floatingId">ID</label>
           </div>
           <div className="empty-h20"></div>
           <div className="form-floating">
-            <input className="form-control" type="password" placeholder="Password" value={userPw}
-            id="floatingPassword" onChange={(e) => {setPassword(e.target.value);}}/>
+            <input
+              className="form-control"
+              type="password"
+              placeholder="Password"
+              value={userPw}
+              id="floatingPassword"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
             <label htmlFor="floatingPassword">Password</label>
           </div>
           <div className="empty-h20"></div>
-          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={SignupFlow}>Submit</button>
+          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={SignupFlow}>
+            Submit
+          </button>
           <p className="mt-5 mb-3 text-muted">&copy; 2023 JUNGHO</p>
           <div className="empty-h50"></div>
         </form>

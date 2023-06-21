@@ -2,7 +2,6 @@ import React from "react";
 import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 
-// ------------------------------------------------------------------------------------------------>
 const FooterStyle = createGlobalStyle`
   .footer {
     position: sticky;
@@ -18,8 +17,10 @@ const FooterStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 const Footer = () => {
 
+  // ---------------------------------------------------------------------------------------------->
   return (
-    <div><FooterStyle />
+    <div>
+      <FooterStyle />
       <footer className="footer">
         <div className="row pb-6 pt-6">
           <div className="col-12 custom-flex-center">

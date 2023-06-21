@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
-// ------------------------------------------------------------------------------------------------>
 const LoginStyle = createGlobalStyle`
   .login {
     display: flex;
@@ -36,7 +35,6 @@ const LoginStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const Login = () => {
-
   const [userId, setId] = useState("");
   const [userPw, setPassword] = useState("");
 
@@ -64,26 +62,46 @@ const Login = () => {
     }
   };
 
+  // ---------------------------------------------------------------------------------------------->
   return (
-    <div><LoginStyle/>
+    <div>
+      <LoginStyle />
       <section className="login custom-flex-center">
         <form>
           <div className="empty-h50"></div>
           <h1 className="mb-3">Log In</h1>
           <div className="empty-h20"></div>
           <div className="form-floating">
-            <input className="form-control" type="text" placeholder="ID" value={userId}
-            id="floatingId" onChange={(e) => {setId(e.target.value);}}/>
+            <input
+              className="form-control"
+              type="text"
+              placeholder="ID"
+              value={userId}
+              id="floatingId"
+              onChange={(e) => {
+                setId(e.target.value);
+              }}
+            />
             <label htmlFor="floatingId">ID</label>
           </div>
           <div className="empty-h20"></div>
           <div className="form-floating">
-            <input className="form-control" type="text" placeholder="Password" value={userPw}
-            id="floatingPassword" onChange={(e) => {setPassword(e.target.value);}}/>
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Password"
+              value={userPw}
+              id="floatingPassword"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
             <label htmlFor="floatingPassword">Password</label>
           </div>
           <div className="empty-h20"></div>
-          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={login}>Submit</button>
+          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={login}>
+            Submit
+          </button>
           <p className="mt-5 mb-3 text-muted">&copy; 2023 JUNGHO</p>
           <div className="empty-h50"></div>
         </form>

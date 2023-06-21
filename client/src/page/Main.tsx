@@ -4,23 +4,27 @@ import {createGlobalStyle} from "styled-components";
 // ------------------------------------------------------------------------------------------------>
 const CarouselFirst = () => {
 
+  // ---------------------------------------------------------------------------------------------->
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (window.sessionStorage.getItem("userId") == null) {
       alert("Please login to use this service.");
     }
     else {
-     window.location.href="http://www.junghomun.com:8888";
+      window.location.href = "http://www.junghomun.com:8888";
     }
-  }
+  };
 
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="carousel-item active">
       <rect width="100%" height="100%" fill="#eeeeee" />
       <div className="carousel-caption text-start">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>ENTER</a>
+        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
+          ENTER
+        </a>
       </div>
     </div>
   );
@@ -29,18 +33,22 @@ const CarouselFirst = () => {
 // ------------------------------------------------------------------------------------------------>
 const CarouselSecond = () => {
 
+  // ---------------------------------------------------------------------------------------------->
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    window.location.href="http://www.junghomun.com:8888";
-  }
+    window.location.href = "http://www.junghomun.com:8888";
+  };
 
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="carousel-item">
       <rect width="100%" height="100%" fill="#eeeeee" />
       <div className="carousel-caption text-center">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>ENTER</a>
+        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
+          ENTER
+        </a>
       </div>
     </div>
   );
@@ -49,24 +57,27 @@ const CarouselSecond = () => {
 // ------------------------------------------------------------------------------------------------>
 const CarouselThird = () => {
 
+  // ---------------------------------------------------------------------------------------------->
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    window.location.href="http://www.junghomun.com:8888";
-  }
+    window.location.href = "http://www.junghomun.com:8888";
+  };
 
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="carousel-item">
       <rect width="100%" height="100%" fill="#eeeeee" />
       <div className="carousel-caption text-end">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>ENTER</a>
+        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
+          ENTER
+        </a>
       </div>
     </div>
   );
 };
 
-// ------------------------------------------------------------------------------------------------>
 const MainStyle = createGlobalStyle`
 
   .carousel-caption {
@@ -111,8 +122,10 @@ const MainStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 const Main = () => {
 
+  // ---------------------------------------------------------------------------------------------->
   return (
-    <div><MainStyle />
+    <div>
+      <MainStyle />
       <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-indicators">
           <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
