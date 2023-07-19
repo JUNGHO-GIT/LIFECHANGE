@@ -104,11 +104,10 @@ const Signup = () => {
             />
             <label htmlFor="floatingPassword">Password</label>
           </div>
-          <div className="empty-h20"></div>
+          <div className="empty-h100"></div>
           <button className="w-100 btn btn-lg btn-primary" type="button" onClick={SignupFlow}>
             Submit
           </button>
-          <p className="mt-5 mb-3 text-muted">&copy; 2023 JUNGHO</p>
           <div className="empty-h50"></div>
         </form>
       </section>

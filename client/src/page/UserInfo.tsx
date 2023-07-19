@@ -2,7 +2,35 @@ import React, {useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
-const UserStyle = createGlobalStyle`
+const UserInfoStyle = createGlobalStyle`
+  .userInfo {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+  }
+
+  .form-userInfo {
+    max-width: 330px;
+    padding: 15px;
+  }
+
+  .form-userInfo .form-floating:focus-within {
+    z-index: 2;
+  }
+
+  .form-userInfo input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-userInfo input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 `;
 
 // ------------------------------------------------------------------------------------------------>
@@ -37,14 +65,42 @@ const UserInfo = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div>
-      <UserStyle />
-      <div>
-        <button onClick={fetchUserInfo}>Fetch User Info</button>
-      </div>
-      <div>
-        <p>UserId: {userId}</p>
-        <p>UserPw: {userPw}</p>
-      </div>
+      <UserInfoStyle />
+      <section className="userInfo custom-flex-center">
+        <form>
+          <div className="empty-h50"></div>
+          <h1 className="mb-3">User Info</h1>
+          <div className="empty-h20"></div>
+          <div className="form-floating">
+            <input type="text"
+              className="form-control"
+              id="userId"
+              placeholder="User ID"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              readOnly
+            />
+            <label htmlFor="userId">User ID</label>
+          </div>
+          <div className="empty-h20"></div>
+          <div className="form-floating">
+            <input type="text"
+              className="form-control"
+              id="userPw"
+              placeholder="User PW"
+              value={userPw}
+              onChange={(e) => setUserPw(e.target.value)}
+              readOnly
+            />
+            <label htmlFor="userPw">User PW</label>
+          </div>
+          <div className="empty-h100"></div>
+          <button type="button" className="btn btn-primary" onClick={fetchUserInfo}>
+            Fetch User Info
+          </button>
+          <div className="empty-h50"></div>
+        </form>
+      </section>
     </div>
   );
 };
