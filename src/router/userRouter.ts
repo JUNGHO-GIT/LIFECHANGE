@@ -7,7 +7,7 @@ const router = Router();
 
 // read ------------------------------------------------------------------------------------------->
 router.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "client/public/index.html"));
+  res.sendFile(path.join(__dirname, "../../client/public/index.html"));
 });
 
 // secretKey -------------------------------------------------------------------------------------->
@@ -65,21 +65,20 @@ router.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-// myPage ----------------------------------------------------------------------------------------->
-router.post("/myPage", async (req: Request, res: Response) => {
-  const userId = req.body.userId;
+// user ------------------------------------------------------------------------------------------->
+router.post("/userInfo", async (req: Request, res: Response) => {
   try {
-    const user = await userService.myPage(userId);
+    const user = await userService.userInfo(req.body.userId);
     if (user) {
-      res.json(user);
-    } else {
-      res.status(404).send("User not found");
+      res.send(user);
+    }
+    else {
+      res.send("fail");
     }
   }
   catch (err) {
-    res.status(500).send("Server error");
+    res.status(500).send(err);
   }
 });
-
 
 export default router;

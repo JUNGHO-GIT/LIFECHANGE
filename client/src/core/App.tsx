@@ -19,7 +19,7 @@ import Hover from "../components/Hover";
 import Main from "../page/Main";
 import Login from "../page/Login";
 import SecretKey from "../assets/ts/SecretKey";
-import MyPage from "../page/MyPage";
+import UserInfo from "../page/UserInfo";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -30,16 +30,16 @@ const App = () => {
     <div className="App">
       <Loader />
       <Resize />
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SecretKey />} />
-          <Route path="/myPage" element={<MyPage />} />
+          <Route path="/userInfo" element={<UserInfo />} />
         </Routes>
+        <Footer />
       </Router>
-      <Footer />
     </div>
   );
 };

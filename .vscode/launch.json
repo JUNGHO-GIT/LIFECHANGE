@@ -1,0 +1,7 @@
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Debug JavaScript",
+  "program": "${file}",
+  "console": "integratedTerminal"
+}

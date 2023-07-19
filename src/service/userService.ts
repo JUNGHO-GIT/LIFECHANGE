@@ -1,36 +1,36 @@
-import User from "../model/User";
+import User from "../../src/model/User";
 
-// secretKey
+// secretKey -------------------------------------------------------------------------------------->
 export const secretKey = (secretKeyParam: any) => {
   return User.findOne({secretKey: secretKeyParam});
 };
 
-// checkId
+// checkId ---------------------------------------------------------------------------------------->
 export const checkId = async (userIdParam: any) => {
   return User.findOne({userId: userIdParam});
 };
 
-// signup
+// signup ----------------------------------------------------------------------------------------->
 export const signupUser = async (userIdParam: any, userPwParam: any) => {
   return User.create({userId: userIdParam, userPw: userPwParam});
 };
 
-// login
+// login ------------------------------------------------------------------------------------------>
 export const loginUser = async (userIdParam: any, userPwParam: any) => {
   return User.findOne({userId: userIdParam, userPw: userPwParam});
 };
 
-// myPage
-export const myPage = async (userIdParam: any) => {
+// userInfo --------------------------------------------------------------------------------------->
+export const userInfo = async (userIdParam: any) => {
   return User.findOne({userId: userIdParam});
 };
 
-// update
+// update ----------------------------------------------------------------------------------------->
 export const updateUser = async (userIdParam: any, userPwParam: any) => {
   return User.findOneAndUpdate({userId: userIdParam}, {userPw: userPwParam});
 };
 
-// delete
+// delete ----------------------------------------------------------------------------------------->
 export const deleteUser = async (userIdParam: any) => {
   return User.findOneAndDelete({userId: userIdParam});
 };

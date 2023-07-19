@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // 추가
 import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 import Sidebar from "./Sidebar";
@@ -51,20 +52,20 @@ const Header = () => {
           <div className="d-lg-block d-none col-6 custom-flex-center mt-6 ps-10">
             <ul className="nav">
               <li>
-                <a href="/" className="nav-link linkHover ms-2 text-white">
+                <Link to="/" className="nav-link linkHover ms-2 text-white">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/myPage" className="nav-link linkHover ms-2 text-white">
-                  MyPage
-                </a>
+                <Link to="/userInfo" className="nav-link linkHover ms-2 text-white">
+                  User
+                </Link>
               </li>
             </ul>
           </div>
           <div className="col-lg-6 col-7 custom-flex-right pe-10">
             <form className="form-group custom-flex-center">
-              {userId === "true" ? (
+              {userId !== "false" ? (
                 <button
                   type="button"
                   className="btn btn-outline-light ms-2"

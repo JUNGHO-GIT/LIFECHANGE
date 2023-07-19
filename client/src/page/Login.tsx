@@ -48,15 +48,18 @@ const Login = () => {
       alert("Please enter both ID and PW");
       return;
     }
+
     else if (res.data === "success") {
       alert("Login successful");
-      window.sessionStorage.setItem("userId", "true");
+      window.sessionStorage.setItem("userId", userId);
       window.location.href = "/";
     }
+
     else if (res.data === "fail") {
       alert("Incorrect ID or PW");
       window.sessionStorage.setItem("userId", "false");
     }
+
     else {
       alert(`${res.data}error`);
     }
