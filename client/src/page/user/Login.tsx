@@ -39,7 +39,7 @@ const Login = () => {
   const [userPw, setPassword] = useState("");
 
   const login = async () => {
-    const res = await axios.post("http://localhost:4000/api/login", {
+    const res = await axios.post("http://localhost:4000/api/user/login", {
       userId: userId,
       userPw: userPw,
     });

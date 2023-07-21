@@ -61,6 +61,11 @@ const Header = () => {
                   User
                 </Link>
               </li>
+              <li>
+                <Link to="/userList" className="nav-link linkHover ms-2 text-white">
+                  Admin
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="col-lg-6 col-7 custom-flex-right pe-10">

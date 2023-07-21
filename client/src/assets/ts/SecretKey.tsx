@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import Signup from "../../page/Signup";
+import Signup from "../../page/user/Signup";
 
 // ------------------------------------------------------------------------------------------------>
 const SecretKey = () => {
@@ -19,7 +19,7 @@ const SecretKey = () => {
         return;
       }
 
-      const res = await axios.post("http://localhost:4000/api/secretKey", {
+      const res = await axios.post("http://localhost:4000/api/user/secretKey", {
         secretKey: promptValue,
       });
 

@@ -11,7 +11,7 @@ router.get("*", (req: Request, res: Response) => {
 });
 
 // secretKey -------------------------------------------------------------------------------------->
-router.post("/secretKey", async (req: Request, res: Response) => {
+router.post("/user/secretKey", async (req: Request, res: Response) => {
   try {
     const user = await userService.secretKey(req.body.secretKey);
     if (user) {
@@ -27,7 +27,7 @@ router.post("/secretKey", async (req: Request, res: Response) => {
 });
 
 // signup ----------------------------------------------------------------------------------------->
-router.post("/signup", async (req: Request, res: Response) => {
+router.post("/user/signup", async (req: Request, res: Response) => {
   try {
     const userIdCheck = await userService.checkId(req.body.userId);
 
@@ -50,7 +50,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 });
 
 // login ------------------------------------------------------------------------------------------>
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/user/login", async (req: Request, res: Response) => {
   try {
     const user = await userService.loginUser(req.body.userId, req.body.userPw);
     if (user) {
@@ -65,8 +65,8 @@ router.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-// user ------------------------------------------------------------------------------------------->
-router.post("/userInfo", async (req: Request, res: Response) => {
+// userInfo --------------------------------------------------------------------------------------->
+router.post("/user/userInfo", async (req: Request, res: Response) => {
   try {
     const user = await userService.userInfo(req.body.userId);
     if (user) {

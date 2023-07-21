@@ -16,10 +16,11 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Hover from "../components/Hover";
 
-import Main from "../page/Main";
-import Login from "../page/Login";
+import Main from "../page/user/Main";
+import Login from "../page/user/Login";
 import SecretKey from "../assets/ts/SecretKey";
-import UserInfo from "../page/UserInfo";
+import UserInfo from "../page/user/UserInfo";
+import UserList from "../page/admin/UserList";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SecretKey />} />
           <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/userList" element={<UserList />} />
         </Routes>
         <Footer />
       </Router>
