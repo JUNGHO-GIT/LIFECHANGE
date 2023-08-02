@@ -1,33 +1,13 @@
+// userRouter.ts
+
 import {Router, Request, Response} from "express";
-import * as path from "path";
-import * as jwt from "jsonwebtoken";
 import * as userService from "../service/userService";
 
-const router = Router();
+const userRouter = Router();
 
-// read ------------------------------------------------------------------------------------------->
-router.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../../client/public/index.html"));
-});
-
-// secretKey -------------------------------------------------------------------------------------->
-router.post("/user/secretKey", async (req: Request, res: Response) => {
-  try {
-    const user = await userService.secretKey(req.body.secretKey);
-    if (user) {
-      res.send("success");
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    res.status(500).send(err);
-  }
-});
 
 // signup ----------------------------------------------------------------------------------------->
-router.post("/user/signup", async (req: Request, res: Response) => {
+userRouter.post("/signup", async (req: Request, res: Response) => {
   try {
     const userIdCheck = await userService.checkId(req.body.userId);
 
@@ -50,7 +30,7 @@ router.post("/user/signup", async (req: Request, res: Response) => {
 });
 
 // login ------------------------------------------------------------------------------------------>
-router.post("/user/login", async (req: Request, res: Response) => {
+userRouter.post("/login", async (req: Request, res: Response) => {
   try {
     const user = await userService.loginUser(req.body.userId, req.body.userPw);
     if (user) {
@@ -66,7 +46,7 @@ router.post("/user/login", async (req: Request, res: Response) => {
 });
 
 // userInfo --------------------------------------------------------------------------------------->
-router.post("/user/userInfo", async (req: Request, res: Response) => {
+userRouter.post("/userInfo", async (req: Request, res: Response) => {
   try {
     const user = await userService.userInfo(req.body.userId);
     if (user) {
@@ -81,4 +61,4 @@ router.post("/user/userInfo", async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+export default userRouter;

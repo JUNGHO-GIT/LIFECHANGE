@@ -1,9 +1,6 @@
-import User from "../../src/model/User";
+// userService.ts
 
-// secretKey -------------------------------------------------------------------------------------->
-export const secretKey = (secretKeyParam: any) => {
-  return User.findOne({secretKey: secretKeyParam});
-};
+import User from "../../src/model/User";
 
 // checkId ---------------------------------------------------------------------------------------->
 export const checkId = async (userIdParam: any) => {

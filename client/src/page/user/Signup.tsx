@@ -44,7 +44,7 @@ const Signup = () => {
       return;
     }
 
-    const res = await axios.post("http://localhost:4000/api/user/signup", {
+    const res = await axios.post("http://localhost:4000/user/signup", {
       userId: userId,
       userPw: userPw,
     });

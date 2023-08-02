@@ -18,7 +18,7 @@ import Hover from "../components/Hover";
 
 import Main from "../page/user/Main";
 import Login from "../page/user/Login";
-import SecretKey from "../assets/ts/SecretKey";
+import SecretKeys from "../assets/ts/SecretKeys";
 import UserInfo from "../page/user/UserInfo";
 import UserList from "../page/admin/UserList";
 
@@ -36,7 +36,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SecretKey />} />
+          <Route path="/signup" element={<SecretKeys />} />
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/userList" element={<UserList />} />
         </Routes>

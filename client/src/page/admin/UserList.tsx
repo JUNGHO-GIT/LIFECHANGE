@@ -1,42 +1,57 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-type User = {
+interface User {
+  _id: string;
   userId: string;
   userPw: string;
-  secretKey: string;
+}
+
+const UserList = () => {
+  const [UserList, setUserList] = useState<User[]>([]); // Initialize with empty array
+
+  const fetchUserList = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/admin/userList");
+      if (Array.isArray(response.data)) {
+        setUserList(response.data);
+      } else {
+        console.error('Data received from server is not an array');
+        setUserList([]);
+      }
+    }
+    catch (err) {
+      console.error(err);
+      setUserList([]); // Setting to an empty array on error
+    }
 };
 
-// ------------------------------------------------------------------------------------------------>
-const UserList = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api/admin/userList");
-        if (response.data !== "fail") {
-          setUsers(response.data);
-        }
-        else {
-          console.error("Failed to fetch user list");
-        }
-      }
-      catch (error) {
-        console.error("Error fetching users", error);
-      }
-    };
-    fetchUsers();
-  }, []);
+    fetchUserList();
+  }, []); // On component mount
 
-
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div>
-      {users.map((user, index) => (
-        <div key={index}>{user.userId}</div>
-      ))}
+      <button type="button" className="btn btn-primary" onClick={fetchUserList}>
+        Refresh User List
+      </button>
+      <div className="empty-h50"></div>
+      <table className="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">User PW</th>
+          </tr>
+        </thead>
+        <tbody>
+          {UserList.map((user) => (
+            <tr key={user._id}>
+              <td>{user.userId}</td>
+              <td>{user.userPw}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

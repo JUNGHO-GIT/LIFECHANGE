@@ -1,14 +1,14 @@
+// adminRouter.ts
+
 import {Router, Request, Response} from "express";
-import * as path from "path";
-import * as jwt from "jsonwebtoken";
 import * as adminService from "../service/adminService";
 
-const router = Router();
+const adminRouter = Router();
 
 // userList --------------------------------------------------------------------------------------->
-router.get("/admin/userList", async (req: Request, res: Response) => {
+adminRouter.get("/userList", async (req: Request, res: Response) => {
   try {
-    const userList = await adminService.userList(req.body.userList);
+    const userList = await adminService.userList();
     if (userList) {
       res.send(userList);
     }
@@ -21,7 +21,4 @@ router.get("/admin/userList", async (req: Request, res: Response) => {
   }
 });
 
-// read ------------------------------------------------------------------------------------------->
-router.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../../client/public/index.html"));
-});
+export default adminRouter;

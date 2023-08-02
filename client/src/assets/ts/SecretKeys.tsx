@@ -4,32 +4,32 @@ import {useNavigate} from "react-router-dom";
 import Signup from "../../page/user/Signup";
 
 // ------------------------------------------------------------------------------------------------>
-const SecretKey = () => {
-  const [validSecretKey, setValidSecretKey] = useState(false);
+const SecretKeys = () => {
+  const [validSecretKeys, setValidSecretKeys] = useState(false);
   const navigate = useNavigate();
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const secretKeyFlow = async () => {
-      const promptValue = window.prompt("Input your SecretKey", "");
+    const secretKeysFlow = async () => {
+      const promptValue = window.prompt("Input your SecretKeys", "");
 
       if (promptValue === null || promptValue === "") {
-        alert("Enter the SecretKey");
+        alert("Enter the SecretKeys");
         navigate(-1);
         return;
       }
 
-      const res = await axios.post("http://localhost:4000/api/user/secretKey", {
-        secretKey: promptValue,
+      const res = await axios.post("http://localhost:4000/secretKeys/secretKeys", {
+        secretKeys: promptValue,
       });
 
       if (res.data === "success") {
-        alert("Valid SecretKey");
-        setValidSecretKey(true);
+        alert("Valid SecretKeys");
+        setValidSecretKeys(true);
         return;
       }
       else if (res.data === "fail") {
-        alert("Invalid SecretKey");
+        alert("Invalid SecretKeys");
         navigate(-1);
         return;
       }
@@ -40,10 +40,10 @@ const SecretKey = () => {
       }
     };
 
-    secretKeyFlow();
+    secretKeysFlow();
   }, [navigate]);
 
-  if (validSecretKey) {
+  if (validSecretKeys) {
     return <Signup />;
   }
   else {
@@ -51,4 +51,4 @@ const SecretKey = () => {
   }
 };
 
-export default SecretKey;
+export default SecretKeys;

@@ -42,7 +42,7 @@ const UserInfo = () => {
     const userId = window.sessionStorage.getItem("userId");
 
     try {
-      const res = await axios.post("http://localhost:4000/api/user/userInfo", {
+      const res = await axios.post("http://localhost:4000/user/userInfo", {
         userId: userId,
       });
 

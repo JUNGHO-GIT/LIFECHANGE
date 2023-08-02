@@ -1,5 +1,8 @@
+// adminService.ts
+
 import User from "../../src/model/User";
 
-export const userList = async (userListParam: any) => {
-  return User.find({});
+// load users list
+export const userList = async () => {
+  return User.find();
 };
