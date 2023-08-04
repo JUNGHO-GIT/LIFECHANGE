@@ -5,7 +5,6 @@ import {createGlobalStyle} from "styled-components";
 import Sidebar from "./Sidebar";
 
 const HeaderStyle = createGlobalStyle`
-
   .header {
     width: 100%;
     background-color: #343a40;
@@ -62,8 +61,13 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/userList" className="nav-link linkHover ms-2 text-white">
-                  Admin
+                <Link to="/boardList" className="nav-link linkHover ms-2 text-white">
+                  Board
+                </Link>
+              </li>
+              <li>
+                <Link to="/boardWrite" className="nav-link linkHover ms-2 text-white">
+                  Write
                 </Link>
               </li>
             </ul>

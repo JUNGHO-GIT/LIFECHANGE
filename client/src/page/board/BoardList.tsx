@@ -1,11 +1,11 @@
-// UserList.tsx
+// BoardList.tsx
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
-const UserListStyle = createGlobalStyle`
-  .userList {
+const BoardListStyle = createGlobalStyle`
+  .boardList {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -13,76 +13,82 @@ const UserListStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-userList {
+  .form-boardList {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-userList .form-floating:focus-within {
+  .form-boardList .form-floating:focus-within {
     z-index: 2;
   }
 `;
 
 // ------------------------------------------------------------------------------------------------>
-interface User {
-  _id: string;
-  userId: string;
-  userPw: string;
+interface Board {
+  _id: string,
+  boardId: string,
+  boardTitle: string,
+  boardContent: string,
+  boardDate: String
 }
 
 // ------------------------------------------------------------------------------------------------>
-const UserList = () => {
-  const [UserList, setUserList] = useState<User[]>([]);
+const BoardList = () => {
+  const [BoardList, setBoardList] = useState<Board[]>([]);
 
-  const fetchUserList = async () => {
+  const fetchBoardList = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/admin/userList");
-      setUserList(response.data);
+      const response = await axios.get("http://localhost:4000/board/boardList");
+      setBoardList(response.data);
     }
     catch (err) {
       console.error(err);
-      setUserList([]);
+      setBoardList([]);
     }
   };
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    fetchUserList();
+    fetchBoardList();
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
-  const refreshUserList = () => {
+  const refreshBoardList = () => {
     window.location.reload();
   };
 
   // ---------------------------------------------------------------------------------------------->
   return (
     <div>
-      <UserListStyle />
-      <section className="userList custom-flex-center">
+      <BoardListStyle />
+      <section className="boardList custom-flex-center">
         <form>
           <div className="empty-h50"></div>
-          <h1 className="mb-3">User List</h1>
+          <h1 className="mb-3">Board List</h1>
           <div className="empty-h20"></div>
           <table className="table table-striped table-bordered">
             <thead>
               <tr>
-                <th scope="col">User ID</th>
-                <th scope="col">User PW</th>
+                <th scope="col">Board ID</th>
+                <th scope="col">Board Title</th>
+                <th scope="col">Board Content</th>
+                <th scope="col">Board Date</th>
               </tr>
             </thead>
             <tbody>
-              {UserList.map((user) => (
-                <tr key={user._id}>
-                  <td>{user.userId}</td>
-                  <td>{user.userPw}</td>
+              {BoardList.map((board) => (
+                <tr key={board._id}>
+                  <td>{board.boardId}</td>
+                  <td>{board.boardTitle}</td>
+                  <td>{board.boardContent}</td>
+                  <td>{board.boardDate}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           <div className="empty-h100"></div>
-          <button type="button" className="btn btn-primary" onClick={refreshUserList}>
-            Refresh User List
+          <button type="button" className="btn btn-primary" onClick={refreshBoardList}>
+            Refresh Board List
           </button>
           <div className="empty-h50"></div>
         </form>
@@ -91,4 +97,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default BoardList;

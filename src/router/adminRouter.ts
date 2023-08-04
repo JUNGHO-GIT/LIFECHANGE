@@ -1,5 +1,4 @@
 // adminRouter.ts
-
 import {Router, Request, Response} from "express";
 import * as adminService from "../service/adminService";
 

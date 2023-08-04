@@ -3,11 +3,10 @@ import * as mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-
-
+import secretKeysRouter from "./src/router/secretKeysRouter";
 import userRouter from "./src/router/userRouter";
 import adminRouter from "./src/router/adminRouter";
-import secretKeysRouter from "./src/router/secretKeysRouter";
+import boardRouter from "./src/router/boardRouter";
 
 const app = express();
 
@@ -22,12 +21,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 mongoose.connect("mongodb://localhost/test");
-
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use("/secretKeys", secretKeysRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
-app.use("/secretKeys", secretKeysRouter);
+app.use("/board", boardRouter);
+
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://localhost:%d in %s mode", app.get("port"), app.get("env"));

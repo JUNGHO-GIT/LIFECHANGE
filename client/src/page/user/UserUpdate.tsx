@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
-const UserInfoStyle = createGlobalStyle`
-  .userInfo {
+// ------------------------------------------------------------------------------------------------>
+const UserUpdateStyle = createGlobalStyle`
+  .userUpdate {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -11,22 +12,22 @@ const UserInfoStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-userInfo {
+  .form-userUpdate {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-userInfo .form-floating:focus-within {
+  .form-userUpdate .form-floating:focus-within {
     z-index: 2;
   }
 
-  .form-userInfo input[type="email"] {
+  .form-userUpdate input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  .form-userInfo input[type="password"] {
+  .form-userUpdate input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -34,26 +35,18 @@ const UserInfoStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const UserInfo = () => {
+const UserUpdate = () => {
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
-  const fetchUserInfo = async () => {
+  const fetchUserUpdate = async () => {
     const userId = window.sessionStorage.getItem("userId");
 
     try {
       const res = await axios.post("http://localhost:4000/user/userInfo", {
         userId: userId,
       });
-
-      if (res.status === 200) {
-        const {userId, userPw} = res.data;
-        setUserId(userId);
-        setUserPw(userPw);
-      }
-      else {
-        throw new Error("Server responded with an error");
-      }
+      setUserId(res.data.userId);
     }
     catch (error: unknown) {
       if (error instanceof Error) {
@@ -63,30 +56,71 @@ const UserInfo = () => {
   };
 
   useEffect(() => {
-    fetchUserInfo();
+    fetchUserUpdate();
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
-  const refreshUserInfo = () => {
-    window.location.reload();
-  };
+  const buttonUserUpdate = async () => {
 
-  const buttonUserUpdate = () => {
-    window.location.href = "/userUpdate";
-  };
+    if (userPw === "" || userPw === null) {
+      alert("Please enter your password");
+      return;
+    }
 
-  const buttonUserDelete = () => {
-    window.location.href = "/userDelete";
+    try {
+      const res = await axios.post("http://localhost:4000/user/checkIdPw", {
+        userId: userId,
+        userPw: userPw,
+      });
+
+      if (res.data === "fail") {
+        alert("Incorrect password");
+        return;
+      }
+
+      if (res.data === "success") {
+
+        const updatePw = prompt("Please enter a new password");
+
+        try {
+          const res = await axios.put("http://localhost:4000/user/userUpdate", {
+            userId: userId,
+            userPw: updatePw
+          });
+
+          if (res.data === "success") {
+            alert("User Update success");
+            window.location.href = "/";
+          }
+          else if (res.data === "fail") {
+            alert("User Update fail");
+          }
+          else {
+            alert("Error Ocurred in User Delete");
+          }
+        }
+        catch (error: unknown) {
+          if (error instanceof Error) {
+            alert(`Error fetching user data: ${error.message}`);
+          }
+        }
+      }
+    }
+    catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(`Error fetching user data: ${error.message}`);
+      }
+    }
   };
 
   // ---------------------------------------------------------------------------------------------->
   return (
     <div>
-      <UserInfoStyle />
-      <section className="userInfo custom-flex-center">
+      <UserUpdateStyle />
+      <section className="userUpdate custom-flex-center">
         <form>
           <div className="empty-h50"></div>
-          <h1 className="mb-3">User Info</h1>
+          <h1 className="mb-3">User Update</h1>
           <div className="empty-h20"></div>
           <div className="form-floating">
             <input type="text"
@@ -107,21 +141,12 @@ const UserInfo = () => {
               placeholder="User PW"
               value={userPw}
               onChange={(e) => setUserPw(e.target.value)}
-              readOnly
             />
             <label htmlFor="userPw">User PW</label>
           </div>
           <div className="empty-h100"></div>
-          <button type="button" className="btn btn-primary" onClick={refreshUserInfo}>
-            Refresh User Info
-          </button>
-          &nbsp;
           <button type="button" className="btn btn-primary" onClick={buttonUserUpdate}>
-            Go to User Update
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-primary" onClick={buttonUserDelete}>
-            Go to User Delete
+            User Update
           </button>
           <div className="empty-h50"></div>
         </form>
@@ -130,4 +155,4 @@ const UserInfo = () => {
   );
 };
 
-export default UserInfo;
+export default UserUpdate;
