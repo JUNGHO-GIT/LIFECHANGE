@@ -38,7 +38,7 @@ const BoardList = () => {
 
   const fetchBoardList = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/board/boardList");
+      const response = await axios.get("http://127.0.0.1:4000/board/boardList");
       setBoardList(response.data);
     }
     catch (err) {

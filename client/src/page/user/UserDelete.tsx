@@ -43,7 +43,7 @@ const UserDelete = () => {
     const userId = window.sessionStorage.getItem("userId");
 
     try {
-      const res = await axios.post("http://localhost:4000/user/userInfo", {
+      const res = await axios.post("http://127.0.0.1:4000/user/userInfo", {
         userId: userId,
       });
       setUserId(res.data.userId);
@@ -68,7 +68,7 @@ const UserDelete = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:4000/user/checkIdPw", {
+      const res = await axios.post("http://127.0.0.1:4000/user/checkIdPw", {
         userId: userId,
         userPw: userPw,
       });
@@ -81,7 +81,7 @@ const UserDelete = () => {
       if (res.data === "success") {
 
         try {
-          const res = await axios.delete("http://localhost:4000/user/userDelete", {
+          const res = await axios.delete("http://127.0.0.1:4000/user/userDelete", {
             data: {
               userId: userId,
             },

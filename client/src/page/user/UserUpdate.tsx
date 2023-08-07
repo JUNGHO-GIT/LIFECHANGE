@@ -43,7 +43,7 @@ const UserUpdate = () => {
     const userId = window.sessionStorage.getItem("userId");
 
     try {
-      const res = await axios.post("http://localhost:4000/user/userInfo", {
+      const res = await axios.post("http://127.0.0.1:4000/user/userInfo", {
         userId: userId,
       });
       setUserId(res.data.userId);
@@ -68,7 +68,7 @@ const UserUpdate = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:4000/user/checkIdPw", {
+      const res = await axios.post("http://127.0.0.1:4000/user/checkIdPw", {
         userId: userId,
         userPw: userPw,
       });
@@ -83,7 +83,7 @@ const UserUpdate = () => {
         const updatePw = prompt("Please enter a new password");
 
         try {
-          const res = await axios.put("http://localhost:4000/user/userUpdate", {
+          const res = await axios.put("http://127.0.0.1:4000/user/userUpdate", {
             userId: userId,
             userPw: updatePw
           });

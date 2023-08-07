@@ -1,5 +1,6 @@
 // userService.ts
 import User from "../../src/model/User";
+import * as mongoose from "mongoose";
 
 // checkId ---------------------------------------------------------------------------------------->
 export const checkId = async (userIdParam: any) => {
@@ -12,8 +13,15 @@ export const checkIdPw = async (userIdParam: any, userPwParam: any) => {
 };
 
 // signup ----------------------------------------------------------------------------------------->
-export const userSignup = async (userIdParam: any, userPwParam: any) => {
-  return User.create({userId: userIdParam, userPw: userPwParam});
+export const userSignup = async (
+  userIdParam: any,
+  userPwParam: any
+) => {
+  return User.create({
+    _id: new mongoose.Types.ObjectId(),
+    userId: userIdParam,
+    userPw: userPwParam
+  });
 };
 
 // login ------------------------------------------------------------------------------------------>

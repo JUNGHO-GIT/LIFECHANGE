@@ -1,5 +1,6 @@
 // boardService.ts
 import Board from "../model/Board";
+import * as mongoose from "mongoose";
 
 // boardList -------------------------------------------------------------------------------------->
 export const boardList = async () => {
@@ -14,6 +15,7 @@ export const boardWrite = async (
   boardDateParam: String
 ) => {
   return Board.create({
+    _id: new mongoose.Types.ObjectId(),
     boardId: boardIdParam,
     boardTitle: boardTitleParam,
     boardContent: boardContentParam,

@@ -19,7 +19,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.3.0",
+    "mongoose": "^7.4.2",
     "nodemon": "^2.0.22",
     "style-components": "^0.1.0",
     "ts-node": "^10.9.1",

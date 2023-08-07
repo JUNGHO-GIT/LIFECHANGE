@@ -11,7 +11,7 @@ const SecretKeys = () => {
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const secretKeysFlow = async () => {
-      const promptValue = window.prompt("Input your SecretKeys", "");
+      const promptValue = window.prompt("Input your SecretKeys");
 
       if (promptValue === null || promptValue === "") {
         alert("Enter the SecretKeys");
@@ -19,8 +19,8 @@ const SecretKeys = () => {
         return;
       }
 
-      const res = await axios.post("http://localhost:4000/secretKeys/secretKeys", {
-        secretKeys: promptValue,
+      const res = await axios.post("http://127.0.0.1:4000/secretKeys/secretKeys", {
+          secretKeys: promptValue
       });
 
       if (res.data === "success") {

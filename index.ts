@@ -20,7 +20,7 @@ app.use(cors(), (req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-mongoose.connect("mongodb://localhost/test");
+mongoose.connect("mongodb://127.0.0.1:27017/test");
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use("/secretKeys", secretKeysRouter);
@@ -30,5 +30,5 @@ app.use("/board", boardRouter);
 
 
 app.listen(app.get("port"), () => {
-  console.log("App is running at http://localhost:%d in %s mode", app.get("port"), app.get("env"));
+  console.log("App is running at http://127.0.0.1:%d in %s mode", app.get("port"), app.get("env"));
 });

@@ -17,6 +17,7 @@ userRouter.post("/checkIdPw", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
@@ -40,6 +41,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
@@ -56,6 +58,7 @@ userRouter.post("/login", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
@@ -72,6 +75,7 @@ userRouter.post("/userInfo", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
@@ -88,6 +92,7 @@ userRouter.put("/userUpdate", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
@@ -104,6 +109,7 @@ userRouter.delete("/userDelete", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });

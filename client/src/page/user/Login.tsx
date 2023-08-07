@@ -38,8 +38,8 @@ const Login = () => {
   const [userId, setId] = useState("");
   const [userPw, setPassword] = useState("");
 
-  const login = async () => {
-    const res = await axios.post("http://localhost:4000/user/login", {
+  const LoginFlow = async () => {
+    const res = await axios.post("http://127.0.0.1:4000/user/login", {
       userId: userId,
       userPw: userPw,
     });
@@ -99,8 +99,8 @@ const Login = () => {
             <label htmlFor="floatingPassword">Password</label>
           </div>
           <div className="empty-h100"></div>
-          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={login}>
-            Submit
+          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={LoginFlow}>
+            Log In
           </button>
           <div className="empty-h50"></div>
         </form>
