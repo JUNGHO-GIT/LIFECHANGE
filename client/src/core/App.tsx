@@ -31,6 +31,7 @@ import BoardDetail from "../page/board/BoardDetail";
 import BoardUpdate from "../page/board/BoardUpdate";
 
 import CalendarList from "../page/calendar/CalendarList";
+import NutritionList from "../page/nutrition/NutritionList";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/boardDetail/:_id" element={<BoardDetail />} />
           <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
           <Route path="/calendarList" element={<CalendarList />} />
+          <Route path="/nutritionList" element={<NutritionList />} />
         </Routes>
         <Footer />
       </Router>
