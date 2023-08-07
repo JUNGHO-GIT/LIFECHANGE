@@ -70,6 +70,7 @@ const BoardUpdate = () => {
     try {
       const response = await axios.put(`http://127.0.0.1:4000/board/boardUpdate/${_id}`, board);
       if (response.data === 'success') {
+        alert('Update success');
         window.location.href = `/boardDetail/${_id}`;
       }
       else {
@@ -82,12 +83,6 @@ const BoardUpdate = () => {
   };
 
   if (!board) return <div>Loading...</div>;
-
-  // ---------------------------------------------------------------------------------------------->
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
-    setBoard({ ...board, [id]: value });
-  };
 
   // ---------------------------------------------------------------------------------------------->
   return (
