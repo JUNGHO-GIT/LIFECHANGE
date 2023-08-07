@@ -20,7 +20,7 @@ const SecretKeys = () => {
       }
 
       const res = await axios.post("http://127.0.0.1:4000/secretKeys/secretKeys", {
-          secretKeys: promptValue
+        secretKeys: promptValue
       });
 
       if (res.data === "success") {

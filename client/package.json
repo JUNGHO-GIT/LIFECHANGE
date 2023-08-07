@@ -24,6 +24,9 @@
     "test": "react-scripts test"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.8",
+    "@fullcalendar/daygrid": "^6.1.8",
+    "@fullcalendar/react": "^6.1.8",
     "@srexi/purecounterjs": "^1.5.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -58,6 +61,7 @@
     "@types/jquery": "^3.5.16",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "fullcalendar": "^6.1.8"
   }
 }

@@ -16,6 +16,7 @@ boardRouter.get("/boardList", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
@@ -37,14 +38,65 @@ boardRouter.post("/boardWrite", async (req: Request, res: Response) => {
     }
   }
   catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
 
 // boardDetail ------------------------------------------------------------------------------------>
+boardRouter.get("/boardDetail/:_id", async (req: Request, res: Response) => {
+  try {
+    const boardDetail = await boardService.boardDetail(req.params._id);
+
+    if (boardDetail) {
+      res.send(boardDetail);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 
 // boardUpdate ------------------------------------------------------------------------------------>
+boardRouter.put("/boardUpdate/:_id", async (req: Request, res: Response) => {
+  try {
+    const boardUpdate = await boardService.boardUpdate(req.params._id, req.body);
+
+    if (boardUpdate) {
+      res.send("success");
+    }
+    else {
+      res.send('fail');
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 
 // boardDelete ------------------------------------------------------------------------------------>
+boardRouter.delete("/boardDelete/:_id", async (req: Request, res: Response) => {
+  try {
+    const boardDelete = await boardService.boardDelete (
+      req.params._id
+    );
+
+    if (boardDelete) {
+      res.send("success");
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 
 export default boardRouter;

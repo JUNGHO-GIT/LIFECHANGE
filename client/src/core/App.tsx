@@ -27,6 +27,10 @@ import UserList from "../page/admin/UserList";
 
 import BoardList from "../page/board/BoardList";
 import BoardWrite from "../page/board/BoardWrite";
+import BoardDetail from "../page/board/BoardDetail";
+import BoardUpdate from "../page/board/BoardUpdate";
+
+import CalendarList from "../page/calendar/CalendarList";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -49,6 +53,9 @@ const App = () => {
           <Route path="/userDelete" element={<UserDelete />} />
           <Route path="/boardList" element={<BoardList />} />
           <Route path="/boardWrite" element={<BoardWrite />} />
+          <Route path="/boardDetail/:_id" element={<BoardDetail />} />
+          <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
+          <Route path="/calendarList" element={<CalendarList />} />
         </Routes>
         <Footer />
       </Router>

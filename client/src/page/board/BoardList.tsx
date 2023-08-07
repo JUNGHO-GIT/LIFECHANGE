@@ -47,6 +47,10 @@ const BoardList = () => {
     }
   };
 
+  const buttonBoardDetail = (_id: string) => {
+    window.location.href = "/boardDetail/" + _id;
+  };
+
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     fetchBoardList();
@@ -55,6 +59,14 @@ const BoardList = () => {
   // ---------------------------------------------------------------------------------------------->
   const refreshBoardList = () => {
     window.location.reload();
+  };
+
+  const buttonBoardWrite = () => {
+    window.location.href = "/boardWrite";
+  };
+
+  const buttonBoardList = () => {
+    window.location.href = "/boardList";
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -69,26 +81,36 @@ const BoardList = () => {
           <table className="table table-striped table-bordered">
             <thead>
               <tr>
-                <th scope="col">Board ID</th>
-                <th scope="col">Board Title</th>
-                <th scope="col">Board Content</th>
-                <th scope="col">Board Date</th>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
               </tr>
             </thead>
             <tbody>
               {BoardList.map((board) => (
                 <tr key={board._id}>
-                  <td>{board.boardId}</td>
+                  <td>
+                    <a onClick={() => buttonBoardDetail(board._id)} className="text-hover">
+                      {board.boardId}
+                    </a>
+                  </td>
                   <td>{board.boardTitle}</td>
-                  <td>{board.boardContent}</td>
                   <td>{board.boardDate}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           <div className="empty-h100"></div>
-          <button type="button" className="btn btn-primary" onClick={refreshBoardList}>
-            Refresh Board List
+          <button type="button" className="btn btn-success" onClick={refreshBoardList}>
+            Refresh
+          </button>
+          &nbsp;
+          <button type="button" className="btn btn-primary" onClick={buttonBoardWrite}>
+            Write
+          </button>
+          &nbsp;
+          <button type="button" className="btn btn-secondary" onClick={buttonBoardList}>
+            List
           </button>
           <div className="empty-h50"></div>
         </form>

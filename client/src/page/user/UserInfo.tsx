@@ -80,6 +80,10 @@ const UserInfo = () => {
     window.location.href = "/userDelete";
   };
 
+  const buttonUserList = () => {
+    window.location.href = "/userList";
+  };
+
   // ---------------------------------------------------------------------------------------------->
   return (
     <div>
@@ -113,16 +117,20 @@ const UserInfo = () => {
             <label htmlFor="userPw">User PW</label>
           </div>
           <div className="empty-h100"></div>
-          <button type="button" className="btn btn-primary" onClick={refreshUserInfo}>
-            Refresh User Info
+          <button type="button" className="btn btn-success" onClick={refreshUserInfo}>
+            Refresh
           </button>
           &nbsp;
           <button type="button" className="btn btn-primary" onClick={buttonUserUpdate}>
-            Go to User Update
+            Update
           </button>
           &nbsp;
-          <button type="button" className="btn btn-primary" onClick={buttonUserDelete}>
-            Go to User Delete
+          <button type="button" className="btn btn-danger" onClick={buttonUserDelete}>
+            Delete
+          </button>
+          &nbsp;
+          <button type="button" className="btn btn-secondary" onClick={buttonUserList}>
+            List
           </button>
           <div className="empty-h50"></div>
         </form>

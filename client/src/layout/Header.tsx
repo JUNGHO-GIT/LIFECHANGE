@@ -66,8 +66,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/boardWrite" className="nav-link linkHover ms-2 text-white">
-                  Write
+                <Link to="/calendarList" className="nav-link linkHover ms-2 text-white">
+                  Calendar
                 </Link>
               </li>
             </ul>

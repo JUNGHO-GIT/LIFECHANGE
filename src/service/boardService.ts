@@ -24,7 +24,30 @@ export const boardWrite = async (
 };
 
 // boardDetail ------------------------------------------------------------------------------------>
+export const boardDetail = async (
+  boardIdParam: String
+) => {
+  return Board.findOne({
+    _id: boardIdParam
+  });
+};
 
 // boardUpdate ------------------------------------------------------------------------------------>
+export const boardUpdate = async (
+  _id: String,
+  board: any
+) => {
+  return Board.updateOne({
+    _id: _id
+  }, board);
+};
 
 // boardDelete ------------------------------------------------------------------------------------>
+export const boardDelete = async (
+  _id: String
+) => {
+  return Board.deleteOne({
+    _id: _id
+  });
+};
+
