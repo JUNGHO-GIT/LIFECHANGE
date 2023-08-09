@@ -3,4 +3,7 @@
 /build/
 **/build/
 pakcage-lock.json
+**.env
+
+# env file
 .env
