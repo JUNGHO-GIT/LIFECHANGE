@@ -1,41 +1,48 @@
 import React, { useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
-interface Food {
+interface IFoodData {
   food_name: string;
-  food_description: string;
-}
-
-interface FatSecretResponse {
-  foods: {
-    food: Food[];
-  };
+  calories: number;
+  nutrient: any;
 }
 
 const NutritionList = () => {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState<Food[]>([]);
+  const [foodName, setFoodName] = useState<string>('');
+  const [foodData, setFoodData] = useState<IFoodData | null>(null);
 
-  const search = async () => {
+  // fatscret
+  const handleSearch = async () => {
     try {
-      const response = await axios.post<FatSecretResponse>('http://localhost:5000/nutrition/search', { query });
-      setResults(response.data.foods.food);
-    } catch (err) {
-      console.error(err);
+      const res = await axios({
+
+        method: 'GET',
+        url: 'http://www.fatsecret.com/calories-nutrition/generic',
+        params: {
+          method: 'foods.search.v2',
+          food_name: foodName,
+        },
+      });
+      console.log(res.data);
+      setFoodData(res.data);
+    }
+    catch (err) {
+      console.log(err);
     }
   };
 
   return (
-    <div className="NutritionList">
-      <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
-      <button onClick={search}>Search</button>
-      {results && results.map((food, index) => (
-        <div key={index}>
-          <p>{food.food_name}: {food.food_description}</p>
+    <div>
+      <input value={foodName} onChange={(e) => setFoodName(e.target.value)} />
+      <button onClick={handleSearch}>Search</button>
+      {foodData && (
+        <div>
+          <h3>{foodData.food_name}</h3>
+          <p>Calories: {foodData.calories}</p>
+          <p>Nutrients: {JSON.stringify(foodData.nutrient)}</p>
         </div>
-      ))}
+      )}
     </div>
   );
 }
-
 export default NutritionList;

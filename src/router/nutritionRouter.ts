@@ -1,50 +1,27 @@
-import express from "express";
-import requestPromise from "request-promise";
-import oauthSignature from "oauth-signature";
-require("dotenv").config();
+import {Router, Request, Response} from "express";
+import axios from 'axios';
 
-interface Parameters {
-  oauth_consumer_key: string;
-  oauth_signature_method: string;
-  oauth_timestamp: number;
-  oauth_nonce: string;
-  oauth_version: string;
-  format: string;
-  method: string;
-  search_expression: string;
-  oauth_signature?: string;
-}
+const nutritionRouter = Router();
 
-const nutritionRouter = express();
-nutritionRouter.use(express.json());
-nutritionRouter.use(express.urlencoded({extended: true}));
-
-nutritionRouter.post('/search', async (req, res) => {
-  const httpMethod = 'foods.search',
-  url = 'http://platform.fatsecret.com/rest/server.api',
-  parameters: Parameters = {
-    oauth_consumer_key : process.env.FATSECRET_API_KEY!,
-    oauth_signature_method : 'HMAC-SHA1',
-    oauth_timestamp : new Date().getTime(),
-    oauth_nonce : '',
-    oauth_version : '1.0',
-    format: 'json',
-    method: 'foods.search',
-    search_expression: req.body.query,
-  },
-  consumerSecret = process.env.FATSECRET_SECRET!,
-  encodedSignature = oauthSignature.generate(httpMethod, url, parameters, consumerSecret);
-
-  parameters.oauth_signature = encodedSignature;
+nutritionRouter.get('/getFood', async (req, res) => {
+  const food_id = req.query.food_id as string;
 
   try {
-    const foodSearch = await requestPromise({url: url, qs: parameters});
-    res.json(JSON.parse(foodSearch));
-  } catch (err) {
-    console.error(err);
+    const response = await axios({
+
+      method: 'GET',
+      url: 'www.fatsecret.com.',
+      params: {
+        method: 'food.get.v3',
+        food_id: food_id,
+        format: 'json',
+      },
+    });
+    res.json(response.data);
+  }
+  catch (err:any) {
+    res.status(500).json({ err: err.message });
   }
 });
-
-nutritionRouter.listen(5000, () => console.log('Server is running on port 5000'));
 
 export default nutritionRouter;
