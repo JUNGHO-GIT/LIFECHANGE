@@ -21,7 +21,7 @@ app.use(cors(), (req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-mongoose.connect("mongodb://127.0.0.1:27017/test");
+/* mongoose.connect("mongodb://127.0.0.1:27017"); */
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use("/secretKeys", secretKeysRouter);
@@ -29,7 +29,6 @@ app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/board", boardRouter);
 app.use("/nutrition", nutritionRouter);
-
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://127.0.0.1:%d in %s mode", app.get("port"), app.get("env"));

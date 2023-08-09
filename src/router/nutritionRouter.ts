@@ -1,26 +1,35 @@
-import {Router, Request, Response} from "express";
-import axios from 'axios';
+import express from "express";
+import axios from "axios";
 
-const nutritionRouter = Router();
+const nutritionRouter = express.Router();
 
-nutritionRouter.get('/getFood', async (req, res) => {
-  const food_id = req.query.food_id as string;
+const CLIENT_ID = "55f7d4e62e064893bb4cacb83bc697e2";
+const CLIENT_SECRET = "a8fb786644f741a08df53873d8e37773";
 
+nutritionRouter.post("/search", async (req, res) => {
   try {
-    const response = await axios({
+    const { searchTerm } = req.body;
 
-      method: 'GET',
-      url: 'www.fatsecret.com.',
-      params: {
-        method: 'food.get.v3',
-        food_id: food_id,
-        format: 'json',
-      },
+    const tokenResponse = await axios.post("https://oauth.fatsecret.com/connect/token", null, {
+      auth: { username: CLIENT_ID, password: CLIENT_SECRET },
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      params: { grant_type: "client_credentials", scope: "basic" },
     });
-    res.json(response.data);
+    console.log('Token Response:', tokenResponse.data); // 로깅 추가
+
+    const accessToken = tokenResponse.data.access_token;
+
+    const searchResponse = await axios.post("https://platform.fatsecret.com/rest/server.api", null, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      params: { method: "foods.search.v2", search_expression: searchTerm, format: "json" },
+    });
+    console.log('Search Response:', searchResponse.data); // 로깅 추가
+
+    res.json({foods: searchResponse.data.foods});
   }
-  catch (err:any) {
-    res.status(500).json({ err: err.message });
+  catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
