@@ -1,50 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-type Food = {
-  food_name: string;
-  food_description: string;
-};
 
 const NutritionList = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [results, setResults] = useState<Food[]>([]);
 
-  const handleSearch = async () => {
-    try {
-      const response = await axios.post('http://127.0.0.1:4000/nutrition/search', { searchTerm });
-      setResults(response.data.foods.food);
-    } catch (err) {
-      console.error(err);
-      alert('검색 중 오류가 발생했습니다.');
-    }
-  };
+  const [search, setSearch] = useState('');
+  const [foodList, setFoodList] = useState<any[]>([]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }
+
+  const searchFood = () => {
+    axios.get(`http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/5/DESC_KOR=${search}`)
+    .then((res) => {
+      console.log(res);
+      setFoodList(res.data.I2790.row);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
   return (
     <div>
-      <h1>음식 검색</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="음식을 입력하세요"
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-        />
-        <button onClick={handleSearch}>검색</button>
-      </div>
-      <div>
-        {results && results.length > 0 ? (
-          <ul>
-            {results.map((food, index) => (
-              <li key={index}>{food.food_name} - {food.food_description}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>검색 결과가 없습니다.</p>
-        )}
-      </div>
+      <input type="text" value={search} onChange={onChange} />
+      <button onClick={searchFood}>검색</button>
+      <ul>
+        {foodList.map((food) => (
+          <li key={food.PRDLST_REPORT_NO}>{food.PRDLST_NM}</li>
+        ))}
+      </ul>
     </div>
-  );
+  )
 };
 
 export default NutritionList;
