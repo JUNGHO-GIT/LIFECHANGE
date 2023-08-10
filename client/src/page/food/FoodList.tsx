@@ -49,7 +49,7 @@ const FoodList = () => {
     }
     await axios.get(`${URL}=${foodValue}`)
     .then((res) => {
-      if (res.data.I2790.row.total_count === "0") {
+      if (res.data.I2790.total_count === "0") {
         alert("검색 결과가 없습니다.");
       }
       else {
