@@ -115,7 +115,7 @@ const UserDelete = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <UserDeleteStyle />
       <section className="userDelete custom-flex-center">
         <form>
@@ -151,7 +151,7 @@ const UserDelete = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

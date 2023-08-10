@@ -118,7 +118,7 @@ const FoodDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <FoodDetailStyle />
       <section className="foodDetail custom-flex-center">
         <form>
@@ -136,9 +136,10 @@ const FoodDetail = () => {
           <button className="btn btn-primary" type="button" onClick={() => buttonFoodList()}>
             List
           </button>
+          <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

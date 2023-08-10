@@ -94,7 +94,7 @@ const BoardDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <BoardDetailStyle />
       <section className="boardDetail custom-flex-center">
         <form>
@@ -139,7 +139,7 @@ const BoardDetail = () => {
           </button>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

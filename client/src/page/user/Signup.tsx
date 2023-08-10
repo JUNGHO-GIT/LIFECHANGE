@@ -70,7 +70,7 @@ const Signup = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <SignupStyle />
       <section className="signup custom-flex-center">
         <form>
@@ -111,7 +111,7 @@ const Signup = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

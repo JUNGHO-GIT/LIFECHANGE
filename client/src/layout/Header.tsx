@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // 추가
+import { Link } from "react-router-dom";
 import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 import Sidebar from "./Sidebar";
@@ -41,7 +41,7 @@ const Header = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <HeaderStyle />
       <header className="header">
         <div className="row custom-flex-center">
@@ -51,27 +51,27 @@ const Header = () => {
           <div className="d-lg-block d-none col-6 custom-flex-center mt-6 ps-10">
             <ul className="nav">
               <li>
-                <Link to="/" className="nav-link linkHover ms-2 text-white">
+                <Link to="/" className="nav-link text-hover ms-2 text-white">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/userInfo" className="nav-link linkHover ms-2 text-white">
+                <Link to="/userInfo" className="nav-link text-hover ms-2 text-white">
                   User
                 </Link>
               </li>
               <li>
-                <Link to="/boardList" className="nav-link linkHover ms-2 text-white">
+                <Link to="/boardList" className="nav-link text-hover ms-2 text-white">
                   Board
                 </Link>
               </li>
               <li>
-                <Link to="/calendarList" className="nav-link linkHover ms-2 text-white">
+                <Link to="/calendarList" className="nav-link text-hover ms-2 text-white">
                   Calendar
                 </Link>
               </li>
               <li>
-                <Link to="/foodList" className="nav-link linkHover ms-2 text-white">
+                <Link to="/foodList" className="nav-link text-hover ms-2 text-white">
                   Food
                 </Link>
               </li>
@@ -103,7 +103,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-    </div>
+    </>
   );
 };
 

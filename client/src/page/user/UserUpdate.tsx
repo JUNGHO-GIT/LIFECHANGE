@@ -115,7 +115,7 @@ const UserUpdate = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <UserUpdateStyle />
       <section className="userUpdate custom-flex-center">
         <form>
@@ -151,7 +151,7 @@ const UserUpdate = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

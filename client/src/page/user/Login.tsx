@@ -64,7 +64,7 @@ const Login = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <LoginStyle />
       <section className="login custom-flex-center">
         <form>
@@ -105,7 +105,7 @@ const Login = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

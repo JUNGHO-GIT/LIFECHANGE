@@ -96,7 +96,7 @@ const Sidebar = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <SidebarStyle />
       <button className="openBtn" onClick={() => sidebarOpen(true)}>
         ☰
@@ -130,7 +130,7 @@ const Sidebar = () => {
         <hr />
       </div>
       <div className={`${sidebar ? "margin-left" : ""}`}></div>
-    </div>
+    </>
   );
 };
 

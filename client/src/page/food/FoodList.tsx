@@ -25,28 +25,40 @@ const FoodListStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 const FoodList = () => {
 
-  const [foodName, setFoodName] = useState("");
+  const [foodValue, setFoodValue] = useState("");
+  const [searchOption, setSearchOption] = useState("name");
   const [foodList, setFoodList] = useState<any[]>([]);
-  const URL = `http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json`;
+  let NAME_URL
+  = `http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/20/DESC_KOR`;
+  let COMPANY_URL
+  = `http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/20/MAKER_NAME`;
+
+  // ---------------------------------------------------------------------------------------------->
+  const selectOnchange = (e: any) => {
+    setSearchOption(e.target.value);
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const searchFood = async () => {
-    await axios.get(`${URL}/1/10/DESC_KOR=${foodName}`)
+    let URL = "";
+    if (searchOption === "name") {
+      URL = NAME_URL;
+    }
+    else if (searchOption === "company") {
+      URL = COMPANY_URL;
+    }
+    await axios.get(`${URL}=${foodValue}`)
     .then((res) => {
-      setFoodList(res.data.I2790.row);
+      if (res.data.I2790.row.total_count === "0") {
+        alert("검색 결과가 없습니다.");
+      }
+      else {
+        setFoodList(res.data.I2790.row);
+      }
     })
     .catch((err) => {
       console.log(err);
     })
-  };
-
-  // ---------------------------------------------------------------------------------------------->
-  const refreshFoodList = () => {
-    window.location.reload();
-  };
-
-  const buttonFoodDetail = (foodCD: string) => {
-    window.location.href = "/foodDetail/" + foodCD;
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -107,6 +119,14 @@ const FoodList = () => {
     )
   }
 
+  // ---------------------------------------------------------------------------------------------->
+  const refreshFoodList = () => {
+    window.location.reload();
+  };
+
+  const buttonFoodDetail = (foodCD: string) => {
+    window.location.href = "/foodDetail/" + foodCD;
+  };
 
   // ---------------------------------------------------------------------------------------------->
   return (
@@ -122,7 +142,11 @@ const FoodList = () => {
           </table>
           <div className="empty-h100"></div>
           <div className="d-flex justify-content-center">
-            <input type="text" className="form-control" placeholder="Search" aria-label="Search" onChange={(e) => setFoodName(e.target.value)} />
+            <select className="form-select me-2" onChange={selectOnchange}>
+              <option value="name">식품이름</option>
+              <option value="company">제조사명</option>
+            </select>
+            <input type="text" className="form-control" placeholder="Search" aria-label="Search" onChange={(e) => setFoodValue(e.target.value)} />
             <button type="button" className="btn btn-primary" onClick={searchFood}>
               Search
             </button>

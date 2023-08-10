@@ -111,7 +111,7 @@ const BoardWrite = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <BoardWriteStyle />
       <section className="boardWrite custom-flex-center">
         <form>
@@ -189,7 +189,7 @@ const BoardWrite = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

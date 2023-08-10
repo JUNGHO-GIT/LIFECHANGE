@@ -20,7 +20,7 @@ const Footer = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <FooterStyle />
       <footer className="footer">
         <div className="row pb-6 pt-6">
@@ -29,7 +29,7 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   );
 };
 

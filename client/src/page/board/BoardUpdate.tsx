@@ -86,7 +86,7 @@ const BoardUpdate = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <BoardUpdateStyle />
       <section className="boardUpdate custom-flex-center">
         <form>
@@ -145,7 +145,7 @@ const BoardUpdate = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

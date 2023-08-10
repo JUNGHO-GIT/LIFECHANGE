@@ -86,7 +86,7 @@ const UserInfo = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <UserInfoStyle />
       <section className="userInfo custom-flex-center">
         <form>
@@ -135,7 +135,7 @@ const UserInfo = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 
