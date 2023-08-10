@@ -19,7 +19,7 @@
     ]
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3322 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test"
   },

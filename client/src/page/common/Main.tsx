@@ -4,6 +4,10 @@ import {createGlobalStyle} from "styled-components";
 // ------------------------------------------------------------------------------------------------>
 const MainStyle = createGlobalStyle`
 
+  .main-container {
+    object-fit: cover;
+  }
+
   .carousel-caption {
     color: var(--bs-black);
     bottom: 6rem;
@@ -125,7 +129,7 @@ const Main = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <div className="main-container">
       <MainStyle />
       <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-indicators">

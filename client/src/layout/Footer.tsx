@@ -4,13 +4,14 @@ import {createGlobalStyle} from "styled-components";
 
 const FooterStyle = createGlobalStyle`
   .footer {
-    position: sticky;
-    bottom: 0;
     width: 100%;
     background-color: #343a40;
     color: white;
     text-align: center;
     font-weight: bolder;
+    bottom: 0;
+    position: fixed;
+    z-index: 9999;
   }
 `;
 
