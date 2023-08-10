@@ -71,8 +71,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/nutritionList" className="nav-link linkHover ms-2 text-white">
-                  Nutrition
+                <Link to="/foodList" className="nav-link linkHover ms-2 text-white">
+                  Food
                 </Link>
               </li>
             </ul>

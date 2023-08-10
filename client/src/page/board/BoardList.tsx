@@ -47,10 +47,6 @@ const BoardList = () => {
     }
   };
 
-  const buttonBoardDetail = (_id: string) => {
-    window.location.href = "/boardDetail/" + _id;
-  };
-
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     fetchBoardList();
@@ -67,6 +63,10 @@ const BoardList = () => {
 
   const buttonBoardList = () => {
     window.location.href = "/boardList";
+  };
+
+  const buttonBoardDetail = (_id: string) => {
+    window.location.href = "/boardDetail/" + _id;
   };
 
   // ---------------------------------------------------------------------------------------------->

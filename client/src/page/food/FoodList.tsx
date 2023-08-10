@@ -3,8 +3,8 @@ import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
-const NutritionListStyle = createGlobalStyle`
-  .nutritionList {
+const FoodListStyle = createGlobalStyle`
+  .foodList {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -12,32 +12,42 @@ const NutritionListStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-nutritionList {
+  .form-foodList {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-nutritionList .form-floating:focus-within {
+  .form-foodList .form-floating:focus-within {
     z-index: 2;
   }
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const NutritionList = () => {
+const FoodList = () => {
 
   const [foodName, setFoodName] = useState("");
   const [foodList, setFoodList] = useState<any[]>([]);
+  const URL = `http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json`;
 
   // ---------------------------------------------------------------------------------------------->
-  const searchFood = () => {
-    axios.get(`http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/10/DESC_KOR=${foodName}&CHNG_DT=20200101`)
+  const searchFood = async () => {
+    await axios.get(`${URL}/1/10/DESC_KOR=${foodName}`)
     .then((res) => {
       setFoodList(res.data.I2790.row);
     })
     .catch((err) => {
       console.log(err);
     })
-  }
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const refreshFoodList = () => {
+    window.location.reload();
+  };
+
+  const buttonFoodDetail = (foodCD: string) => {
+    window.location.href = "/foodDetail/" + foodCD;
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const resultFoodList = () => {
@@ -61,16 +71,18 @@ const NutritionList = () => {
             return (
               <tr key={food.FOOD_CD} className="border border-1 border-dark">
                 <td className="border-end border-1 border-dark">
-                  {food.YEAR === "" || undefined ? "X" : food.RESEARCH_YEAR}
+                 {food.RESEARCH_YEAR === "" || undefined ? "0" : food.RESEARCH_YEAR}
                 </td>
                 <td className="border-end border-1 border-dark">
-                  {food.DESC_KOR === "" || undefined ? "X" : food.DESC_KOR}
+                  <a href="#" onClick={() => buttonFoodDetail(food.FOOD_CD)} className="text-hover">
+                    {food.DESC_KOR === "" || undefined ? "0" : food.DESC_KOR}
+                  </a>
                 </td>
                 <td className="border-end border-1 border-dark">
-                  {food.MAKER_NAME === "" || undefined ? "X" : food.MAKER_NAME}
+                  {food.MAKER_NAME === "" || undefined ? "0" : food.MAKER_NAME}
                 </td>
                 <td className="border-end border-1 border-dark">
-                  {food.SERVING_SIZE === "" || undefined ? "X" : food.SERVING_SIZE}
+                  {food.SERVING_SIZE === "" || undefined ? "0" : food.SERVING_SIZE}
                 </td>
                 <td className="border-end border-1 border-dark">
                   {food.NUTR_CONT1 === "" || undefined ? "0" : food.NUTR_CONT1}
@@ -95,14 +107,15 @@ const NutritionList = () => {
     )
   }
 
+
   // ---------------------------------------------------------------------------------------------->
   return (
     <>
-      <NutritionListStyle />
-      <section className="nutritionList custom-flex-center">
+      <FoodListStyle />
+      <section className="foodList custom-flex-center">
         <form>
           <div className="empty-h50"></div>
-          <h1 className="mb-3">Nutrition List</h1>
+          <h1 className="mb-3">Food List</h1>
           <div className="empty-h20"></div>
           <table className="border border-3 border-dark">
             {resultFoodList()}
@@ -114,6 +127,10 @@ const NutritionList = () => {
               Search
             </button>
           </div>
+          <br/>
+          <button type="button" className="btn btn-success" onClick={refreshFoodList}>
+            Refresh
+          </button>
           <div className="empty-h50"></div>
         </form>
       </section>
@@ -121,4 +138,4 @@ const NutritionList = () => {
   );
 };
 
-export default NutritionList;
+export default FoodList;
