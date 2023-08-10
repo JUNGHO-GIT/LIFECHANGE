@@ -1,19 +1,37 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
+import {createGlobalStyle} from "styled-components";
 
-const NutritionList = () => {
-
-  const [foodSearch, setFoodSearch] = useState('');
-  const [foodList, setFoodList] = useState<any[]>([]);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFoodSearch(e.target.value);
+// ------------------------------------------------------------------------------------------------>
+const NutritionListStyle = createGlobalStyle`
+  .nutritionList {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
   }
 
+  .form-nutritionList {
+    max-width: 330px;
+    padding: 15px;
+  }
+
+  .form-nutritionList .form-floating:focus-within {
+    z-index: 2;
+  }
+`;
+
+// ------------------------------------------------------------------------------------------------>
+const NutritionList = () => {
+
+  const [foodName, setFoodName] = useState("");
+  const [foodList, setFoodList] = useState<any[]>([]);
+
+  // ---------------------------------------------------------------------------------------------->
   const searchFood = () => {
-    axios.get(`http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/5/DESC_KOR=${foodSearch}`)
+    axios.get(`http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/10/DESC_KOR=${foodName}&CHNG_DT=20200101`)
     .then((res) => {
-      console.log(res.data);
       setFoodList(res.data.I2790.row);
     })
     .catch((err) => {
@@ -22,66 +40,76 @@ const NutritionList = () => {
   }
 
   // ---------------------------------------------------------------------------------------------->
-  const resultFoodTitle = () => {
-    return (
-      <>
-        <tr className="border-end border-1 border-dark">
-          <th>식품이름</th>
-          <th>제조사명</th>
-          <th>총내용량</th>
-          <th>열량(kcal)</th>
-          <th>탄수화물(g)</th>
-          <th>단백질(g)</th>
-          <th>지방(g)</th>
-          <th>당류(g)</th>
-          <th>나트륨(mg)</th>
-        </tr>
-      </>
-    )
-  }
-
-  // ---------------------------------------------------------------------------------------------->
   const resultFoodList = () => {
     return (
       <>
-        {foodList.map((food) => {
-          return (
-            <tr key={food.FOOD_CD} className="border-end border-1 border-dark">
-              <td>{food.DESC_KOR}</td>
-              <td>{food.MAKER_NAME}</td>
-              <td>{food.SERVING_SIZE}</td>
-              <td>{food.NUTR_CONT1}</td>
-              <td>{food.NUTR_CONT2}</td>
-              <td>{food.NUTR_CONT3}</td>
-              <td>{food.NUTR_CONT4}</td>
-              <td>{food.NUTR_CONT5}</td>
-            </tr>
-          )
-        })}
+        <thead>
+          <tr className="border border-1 border-dark">
+            <th className="border-end border-1 border-dark">년도</th>
+            <th className="border-end border-1 border-dark">식품이름</th>
+            <th className="border-end border-1 border-dark">제조사명</th>
+            <th className="border-end border-1 border-dark">총내용량</th>
+            <th className="border-end border-1 border-dark">열량(kcal)</th>
+            <th className="border-end border-1 border-dark">탄수화물(g)</th>
+            <th className="border-end border-1 border-dark">단백질(g)</th>
+            <th className="border-end border-1 border-dark">지방(g)</th>
+            <th className="border-end border-1 border-dark">당(g)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {foodList.map((food) => {
+            return (
+              <tr key={food.FOOD_CD} className="border border-1 border-dark">
+                <td className="border-end border-1 border-dark">
+                  {food.YEAR === "" || undefined ? "X" : food.RESEARCH_YEAR}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.DESC_KOR === "" || undefined ? "X" : food.DESC_KOR}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.MAKER_NAME === "" || undefined ? "X" : food.MAKER_NAME}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.SERVING_SIZE === "" || undefined ? "X" : food.SERVING_SIZE}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.NUTR_CONT1 === "" || undefined ? "0" : food.NUTR_CONT1}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.NUTR_CONT2 === "" || undefined ? "0" : food.NUTR_CONT2}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.NUTR_CONT3 === "" || undefined ? "0" : food.NUTR_CONT3}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.NUTR_CONT4 === "" || undefined ? "0" : food.NUTR_CONT4}
+                </td>
+                <td className="border-end border-1 border-dark">
+                  {food.NUTR_CONT5 === "" || undefined ? "0" : food.NUTR_CONT5}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
       </>
     )
   }
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
-      {/* <BoardListStyle /> */}
-      <section className="boardList custom-flex-center">
+    <>
+      <NutritionListStyle />
+      <section className="nutritionList custom-flex-center">
         <form>
           <div className="empty-h50"></div>
-          <h1 className="mb-3">Board List</h1>
+          <h1 className="mb-3">Nutrition List</h1>
           <div className="empty-h20"></div>
-          <table className="border border-1 border-dark">
-            <thead>
-              {resultFoodTitle()}
-            </thead>
-            <tbody>
-              {resultFoodList()}
-            </tbody>
+          <table className="border border-3 border-dark">
+            {resultFoodList()}
           </table>
           <div className="empty-h100"></div>
           <div className="d-flex justify-content-center">
-            <input type="text" value={foodSearch} onChange={onChange} className="form-control" placeholder="식품이름" />
+            <input type="text" className="form-control" placeholder="Search" aria-label="Search" onChange={(e) => setFoodName(e.target.value)} />
             <button type="button" className="btn btn-primary" onClick={searchFood}>
               Search
             </button>
@@ -89,7 +117,7 @@ const NutritionList = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 

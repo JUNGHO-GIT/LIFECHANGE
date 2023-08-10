@@ -7,8 +7,6 @@ import {createGlobalStyle} from "styled-components";
 const CalendarListStyle = createGlobalStyle`
   .calendar {
     width: 50%;
-    margin: 0 auto;
-    margin-top: 100px;
     margin-bottom: 100px;
   }
 `;
@@ -26,12 +24,17 @@ const FullCalendarFlow = () => {
 // ------------------------------------------------------------------------------------------------>
 const CalendarList = () => {
   return (
-    <div>
+    <>
       <CalendarListStyle />
-      <div className="calendar">
-        <FullCalendarFlow />
-      </div>
-    </div>
+      <section className="calendarList custom-flex-center">
+        <div className="calendar">
+          <div className="empty-h50"></div>
+          <h1 className="mb-3">Calendar List</h1>
+          <FullCalendarFlow />
+          <div className="empty-h50"></div>
+        </div>
+      </section>
+    </>
   );
 };
 

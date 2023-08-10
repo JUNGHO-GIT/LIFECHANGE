@@ -71,7 +71,7 @@ const BoardList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div>
+    <>
       <BoardListStyle />
       <section className="boardList custom-flex-center">
         <form>
@@ -115,7 +115,7 @@ const BoardList = () => {
           <div className="empty-h50"></div>
         </form>
       </section>
-    </div>
+    </>
   );
 };
 
