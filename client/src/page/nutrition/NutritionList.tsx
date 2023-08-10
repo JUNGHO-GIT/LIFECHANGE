@@ -22,12 +22,31 @@ const NutritionList = () => {
   }
 
   // ---------------------------------------------------------------------------------------------->
+  const resultFoodTitle = () => {
+    return (
+      <>
+        <tr className="border-end border-1 border-dark">
+          <th>식품이름</th>
+          <th>제조사명</th>
+          <th>총내용량</th>
+          <th>열량(kcal)</th>
+          <th>탄수화물(g)</th>
+          <th>단백질(g)</th>
+          <th>지방(g)</th>
+          <th>당류(g)</th>
+          <th>나트륨(mg)</th>
+        </tr>
+      </>
+    )
+  }
+
+  // ---------------------------------------------------------------------------------------------->
   const resultFoodList = () => {
     return (
       <>
         {foodList.map((food) => {
           return (
-            <tr key={food.FOOD_CD}>
+            <tr key={food.FOOD_CD} className="border-end border-1 border-dark">
               <td>{food.DESC_KOR}</td>
               <td>{food.MAKER_NAME}</td>
               <td>{food.SERVING_SIZE}</td>
@@ -54,17 +73,7 @@ const NutritionList = () => {
           <div className="empty-h20"></div>
           <table className="border border-1 border-dark">
             <thead>
-              <tr className="border-end border-1 border-dark">
-                <th>식품이름</th>
-                <th>제조사명</th>
-                <th>총내용량</th>
-                <th>열량(kcal)</th>
-                <th>탄수화물(g)</th>
-                <th>단백질(g)</th>
-                <th>지방(g)</th>
-                <th>당류(g)</th>
-                <th>나트륨(mg)</th>
-              </tr>
+              {resultFoodTitle()}
             </thead>
             <tbody>
               {resultFoodList()}
