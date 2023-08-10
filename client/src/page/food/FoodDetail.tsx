@@ -41,12 +41,13 @@ interface Food {
 const FoodDetail = () => {
   const {FOOD_CD} = useParams<{ FOOD_CD: string }>();
   const [food, setFood] = useState<Food | null>(null);
-  const URL = `http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json`;
+  const URL
+  = `http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/1/FOOD_CD`;
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodDetail = async () => {
-      await axios.get(`${URL}/1/1/FOOD_CD=${FOOD_CD}`)
+      await axios.get(`${URL}=${FOOD_CD}`)
       .then((res) => {
         setFood(res.data.I2790.row[0]);
       })
