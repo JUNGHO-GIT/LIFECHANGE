@@ -33,7 +33,7 @@ const Nutrition = () => {
         foodName: foodName
       });
       console.log(searchResponse.data);
-      setFoodList(searchResponse.data);
+      setFoodList(searchResponse.data.foods.food);
     }
     catch (err) {
       console.log(err);
