@@ -41,6 +41,17 @@ const Nutrition = () => {
             <th>지방</th>
           </tr>
         </thead>
+        <tbody>
+          {foodList.map((food, index) => (
+            <tr key={index}>
+              <td>{food.food_name}</td>
+              <td>{food.food_description.split("|")[0].split(":")[1]}</td>
+              <td>{food.food_description.split("|")[1].split(":")[1]}</td>
+              <td>{food.food_description.split("|")[2].split(":")[1]}</td>
+              <td>{food.food_description.split("|")[3].split(":")[1]}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </>
   );
