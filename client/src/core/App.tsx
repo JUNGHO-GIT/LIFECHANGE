@@ -33,6 +33,7 @@ import BoardUpdate from "../page/board/BoardUpdate";
 import CalendarList from "../page/calendar/CalendarList";
 import FoodList from "../page/food/FoodList";
 import FoodDetail from "../page/food/FoodDetail";
+import Nutrition from "../page/food/Nutrition";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail/:FOOD_CD" element={<FoodDetail />} />
+          <Route path="/nutrition" element={<Nutrition />} />
         </Routes>
         <Footer />
       </Router>

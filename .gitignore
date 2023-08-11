@@ -4,6 +4,6 @@
 **/build/
 pakcage-lock.json
 **.env
-
-# env file
 .env
+**.txt
+.txt
