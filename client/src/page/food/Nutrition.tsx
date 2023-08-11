@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import axios from "axios";
 /**
-"brand_name": "IHOP",
-"food_description": "Per 1 serving - Calories: 1200kcal | Fat: 67.00g | Carbs: 113.00g | Protein: 36.00g",
-"food_id": "68959496",
-"food_name": "(1) Classic Crispy Chicken Sandwich with Fries For Burger Family Feast",
-"food_type": "Brand",
-"food_url": "https://www.fatsecret.com/calories-nutrition/ihop/(1)-classic-crispy-chicken-sandwich-with-fries-for-burge
+"foods": {
+  "food": [
+    {
+      "brand_name": "Athletic Brewing Co.",
+      "food_description": "Per 1 can - Calories: 65kcal | Fat: 0.00g | Carbs: 14.00g | Protein: 0.00g",
+      "food_id": "37714057",
+      "food_name": "Run Wild NA IPA",
+      "food_type": "Brand",
+      "food_url": "https://www.fatsecret.com/calories-nutrition/athletic-brewing-co/run-wild-na-ipa"
+    },
+    {
+      "brand_name": "Lucky Me",
+      "food_description": "Per 1 pack - Calories: 240kcal | Fat: 9.00g | Carbs: 33.00g | Protein: 5.00g",
+      "food_id": "4384632",
+      "food_name": "Beef Na Beef Instant Mami Noodles",
+      "food_type": "Brand",
+      "food_url": "https://www.fatsecret.com/calories-nutrition/lucky-me/beef-na-beef-instant-mami-noodles"
+    },
+  ]
+}
 **/
 
 const Nutrition = () => {
