@@ -1,31 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-/**
-"foods": {
-  "food": [
-    {
-      "brand_name": "Athletic Brewing Co.",
-      "food_description": "Per 1 can - Calories: 65kcal | Fat: 0.00g | Carbs: 14.00g | Protein: 0.00g",
-      "food_id": "37714057",
-      "food_name": "Run Wild NA IPA",
-      "food_type": "Brand",
-      "food_url": "https://www.fatsecret.com/calories-nutrition/athletic-brewing-co/run-wild-na-ipa"
-    },
-    {
-      "brand_name": "Lucky Me",
-      "food_description": "Per 1 pack - Calories: 240kcal | Fat: 9.00g | Carbs: 33.00g | Protein: 5.00g",
-      "food_id": "4384632",
-      "food_name": "Beef Na Beef Instant Mami Noodles",
-      "food_type": "Brand",
-      "food_url": "https://www.fatsecret.com/calories-nutrition/lucky-me/beef-na-beef-instant-mami-noodles"
-    },
-  ]
-}
-**/
 
-const Nutrition = () => {
+// ------------------------------------------------------------------------------------------------>
+const NutritionList = () => {
   const [foodList, setFoodList] = useState<any[]>([]);
   const [foodName, setFoodName] = useState("");
+  const [food_id, setFood_id] = useState("");
 
   const searchCalories = async () => {
     try {
@@ -40,15 +20,32 @@ const Nutrition = () => {
     }
   };
 
+  // ---------------------------------------------------------------------------------------------->
+  const refreshNutritionList = () => {
+    window.location.reload();
+  };
+
+  const buttonNutritionDetail = (food_id: string) => {
+    window.location.href = "/nutritionDetail/" + food_id;
+  };
+
+  function getVolume(description: string) {
+    const volumeMatch = description.match(/Per (.+?) -/);
+    return volumeMatch ? volumeMatch[1] : '';
+  }
+
+  // ---------------------------------------------------------------------------------------------->
   return (
     <>
       <h1>영양소</h1>
       <input type="text" onChange={(e) => setFoodName(e.target.value)} />
       <button onClick={searchCalories}>검색</button>
-      <table>
+      <table className="table-bordered">
         <thead>
           <tr>
+            <th>식품코드</th>
             <th>이름</th>
+            <th>용량</th>
             <th>칼로리</th>
             <th>탄수화물</th>
             <th>단백질</th>
@@ -58,11 +55,19 @@ const Nutrition = () => {
         <tbody>
           {foodList.map((food, index) => (
             <tr key={index}>
+              <td>
+                <a onClick={() => buttonNutritionDetail(food.food_id)}
+                  className="text-hover"
+                >
+                  {food.food_id}
+                </a>
+              </td>
               <td>{food.food_name}</td>
+              <td>{getVolume(food.food_description)}</td>
               <td>{food.food_description.split("|")[0].split(":")[1]}</td>
-              <td>{food.food_description.split("|")[1].split(":")[1]}</td>
               <td>{food.food_description.split("|")[2].split(":")[1]}</td>
               <td>{food.food_description.split("|")[3].split(":")[1]}</td>
+              <td>{food.food_description.split("|")[1].split(":")[1]}</td>
             </tr>
           ))}
         </tbody>
@@ -71,4 +76,4 @@ const Nutrition = () => {
   );
 };
 
-export default Nutrition;
+export default NutritionList;

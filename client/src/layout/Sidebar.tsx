@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
 import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
+import {Link} from "react-router-dom";
 
+// ------------------------------------------------------------------------------------------------>
 const SidebarStyle = createGlobalStyle`
   .sidebar {
     height: 100%;
@@ -105,21 +107,20 @@ const Sidebar = () => {
         <a className="closeBtn" onClick={() => sidebarOpen(false)}>
           ×
         </a>
-        <a href="/" className="side-menu linkHover">
+        <Link to="/" className="side-menu linkHover">
           Home
-        </a>
+        </Link>
         {!userId ? (
           <div>
-            <a href="/login" className="side-menu linkHover">
+            <Link to="/login" className="side-menu linkHover">
               Login
-            </a>
-            <a href="/signup" className="side-menu linkHover">
+            </Link>
+            <Link to="/signup" className="side-menu linkHover">
               SignUp
-            </a>
+            </Link>
           </div>
         ) : (
-          <a
-            onClick={() => {
+          <a onClick={() => {
               sessionStorage.setItem("userId", "false");
               window.location.href = "/login";
             }}
@@ -127,6 +128,21 @@ const Sidebar = () => {
             Logout
           </a>
         )}
+        <Link to="/userInfo" className="side-menu linkHover">
+          User
+        </Link>
+        <Link to="/boardList" className="side-menu linkHover">
+          Board
+        </Link>
+        <Link to="/calendarList" className="side-menu linkHover">
+          Calendar
+        </Link>
+        <Link to="/foodList" className="side-menu linkHover">
+          Food
+        </Link>
+        <Link to="/nutritionList" className="side-menu linkHover">
+          Nutrition
+        </Link>
         <hr />
       </div>
       <div className={`${sidebar ? "margin-left" : ""}`}></div>

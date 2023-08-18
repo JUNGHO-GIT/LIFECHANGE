@@ -235,8 +235,8 @@ const FoodList = () => {
               aria-label="Search"
               onChange={(e) => setFoodValue(e.target.value)}
             />
-                      </div>
-                      <br/>
+          </div>
+          <br/>
             <button
               type="button"
               className="btn btn-primary"

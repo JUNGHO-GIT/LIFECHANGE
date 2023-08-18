@@ -4,6 +4,7 @@ import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 import Sidebar from "./Sidebar";
 
+// ------------------------------------------------------------------------------------------------>
 const HeaderStyle = createGlobalStyle`
   .header {
     width: 100%;
@@ -76,7 +77,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/Nutrition" className="nav-link text-hover ms-2 text-white">
+                <Link to="/nutritionList" className="nav-link text-hover ms-2 text-white">
                   Nutrition
                 </Link>
               </li>
