@@ -68,8 +68,15 @@ const NutritionDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   const renderServing = () => {
     const serving = Array.isArray(food?.food.servings.serving)
-      ? food?.food.servings.serving[0]
-      : food?.food.servings.serving;
+    ?  food?.food.servings.serving[0]
+    :  food?.food.servings.serving;
+
+    // if unit is `oz`, then convert it to `g`
+    if (serving?.metric_serving_unit === "oz") {
+      serving.metric_serving_amount = (parseFloat(serving.metric_serving_amount) * 28.3495).toFixed(2);
+      serving.metric_serving_unit = "g";
+    }
+
     return (
       <>
         <thead>

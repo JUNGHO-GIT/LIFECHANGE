@@ -13,7 +13,7 @@ let token: string;
 // ------------------------------------------------------------------------------------------------>
 nutritionRouter.post("/nutritionList", async (req: Request, res: Response) => {
   try {
-    // request token from fatsecret
+    // request token from fatSecret
     const options = {
       method: "POST" as const,
       url: "https://oauth.fatsecret.com/connect/token",
@@ -27,7 +27,7 @@ nutritionRouter.post("/nutritionList", async (req: Request, res: Response) => {
     const tokenResponse = await axios(options);
     token = tokenResponse.data.access_token;
 
-    // request food list from fatsecret
+    // request food list from fatSecret
     const { foodName } = req.body;
     const postData = querystring.stringify({
       method: "foods.search",
@@ -36,13 +36,14 @@ nutritionRouter.post("/nutritionList", async (req: Request, res: Response) => {
     });
 
     const searchResponse = await axios.post(
-      "https://platform.fatsecret.com/rest/server.api",
-      postData,
-      {
+      "https://platform.fatsecret.com/rest/server.api", postData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${token}`,
         },
+        params: {
+          region: "KR"
+        }
       }
     );
     res.json(searchResponse.data);
@@ -68,6 +69,8 @@ nutritionRouter.get("/nutritionDetail/:food_id", async (req: Request, res: Respo
         method: "food.get.v2",
         food_id: req.params.food_id,
         format: "json",
+        region: "KR",
+        language: "ko",
       },
 
     };
