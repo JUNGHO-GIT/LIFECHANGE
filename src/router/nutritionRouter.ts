@@ -57,7 +57,6 @@ nutritionRouter.post("/nutritionList", async (req: Request, res: Response) => {
 nutritionRouter.get("/nutritionDetail/:food_id", async (req: Request, res: Response) => {
 
   try {
-
     const options = {
       method: "POST" as const,
       url: `https://platform.fatsecret.com/rest/server.api`,
@@ -70,6 +69,7 @@ nutritionRouter.get("/nutritionDetail/:food_id", async (req: Request, res: Respo
         food_id: req.params.food_id,
         format: "json",
       },
+
     };
     const response = await axios(options);
     res.json(response.data);
