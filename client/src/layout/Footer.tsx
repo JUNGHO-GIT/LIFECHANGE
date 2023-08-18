@@ -10,7 +10,7 @@ const FooterStyle = createGlobalStyle`
     text-align: center;
     font-weight: bolder;
     bottom: 0;
-    position: fixed;
+    position: relative;
     z-index: 9999;
   }
 `;

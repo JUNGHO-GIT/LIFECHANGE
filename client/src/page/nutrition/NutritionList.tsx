@@ -94,7 +94,6 @@ const NutritionList = () => {
           »
         </button>
       );
-
     return pages;
   };
 
