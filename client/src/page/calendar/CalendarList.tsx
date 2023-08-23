@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import $ from "jquery";
 
+// ---------------------------------------------------------------------------------------------->
 const CalendarList = () => {
   const date = new Date();
+  const [today, setToday] = useState(date.getDay());
   const [year, setYear] = useState(date.getFullYear());
   const [month, setMonth] = useState(date.getMonth());
+
+  // ----------------------------------------------------------------------------------------->
   const loadCalendar = () => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
+    date.setFullYear(year);
+    date.setMonth(month);
+
     const en_month = date.toLocaleString("en", { month: "long" });
     const firstDay = new Date(year, month, 1).getDay();
     const lastDate = new Date(year, month + 1, 0).getDate();
@@ -30,7 +35,6 @@ const CalendarList = () => {
         if (j === 6) {
           col.addClass("text-primary");
         }
-
         if (i === 1 && j < firstDay) {
           col.text(blank);
         } else {
@@ -59,109 +63,146 @@ const CalendarList = () => {
   };
 
   const handleBeforeMonth = () => {
-    setMonth((prevMonth) => prevMonth - 1);
+    if (month === 0) {
+      setYear(year - 1);
+      setMonth(11);
+    } else {
+      setMonth(month - 1);
+    }
     loadCalendar();
   };
 
   const handleNextMonth = () => {
-    setMonth((prevMonth) => prevMonth + 1);
+    if (month === 11) {
+      setYear(year + 1);
+      setMonth(0);
+    } else {
+      setMonth(month + 1);
+    }
     loadCalendar();
   };
 
   useEffect(() => {
     loadCalendar();
   }, [year, month]);
+  
+  // ---------------------------------------------------------------------------------------------->
+  const RowComponent = () => {
+  return (
+    <>
+      {Array(6).fill().map((_, index) => (
+        <div key={index} className="col border-top border-end border-2 border-secondary pb-5"></div>
+      ))}
+      <div className="col border-top border-2 border-secondary pb-5"></div>
+    </>
+  );
+};
 
+  // ---------------------------------------------------------------------------------------------->
   return (
     <section className="vh-100 d-flex align-items-center justify-content-center">
-    <br />
-    <div className="container-fluid">
-      <div className="row d-flex justify-content-center text-center">
-        <div className="col-md-8 col-sm-10 col-12 border border-4 border-dark shadow-lg">
-          <div className="row bg-primary text-white fw-bolder fs-1 border-bottom border-4 border-dark align-items-center">
-            <div className="col-3">
-              <button id="beforeMonth" onClick={handleBeforeMonth}>이전</button>
+      <br />
+      <div className="container-fluid">
+        <div className="row d-flex justify-content-center text-center">
+          <div className="col-md-8 col-sm-10 col-10 border border-4 border-dark shadow-lg">
+            <div className="row bg-primary text-white fw-bolder fs-1 border-bottom border-4 border-dark align-items-center">
+              <div className="col-2">
+                <button
+                  id="beforeMonth"
+                  onClick={handleBeforeMonth}
+                  className="btn btn-primary text-white"
+                >
+                  -
+                </button>
+              </div>
+              <div className="col-6 pt-4 pb-4 d-inline-flex justify-content-center">
+                <div
+                  className="col-5 d-sm-block d-none text-center"
+                  id="yearParam"
+                ></div>
+                <div className="col-5 text-center" id="monthParam"></div>
+                <div
+                  className="col-4 d-md-block d-none border-2 border-dark text-center"
+                  id="en_monthParam"
+                ></div>
+              </div>
+              <div className="col-2">
+                <button
+                  id="nextMonth"
+                  onClick={handleNextMonth}
+                  className="btn btn-primary text-white"
+                >
+                  -
+                </button>
+              </div>
             </div>
-            <div className="col-6 pt-4 pb-4 d-inline-flex justify-content-center">
-              <div className="col-4 d-sm-block d-none text-center" id="yearParam"></div>
-              <div className="col-4 text-center" id="monthParam"></div>
-              <div className="col-4 d-md-block d-none border-2 border-dark text-center"
-              id="en_monthParam"></div>
+            <div
+              className="row bg-white text-black fw-bolder fs-6 align-items-center"
+              id="weekRow"
+            >
+              <div className="col border-end border-2 border-secondary pt-4 pb-4 text-danger">
+                일
+              </div>
+              <div className="col border-end border-2 border-secondary pt-4 pb-4">
+                월
+              </div>
+              <div className="col border-end border-2 border-secondary pt-4 pb-4">
+                화
+              </div>
+              <div className="col border-end border-2 border-secondary pt-4 pb-4">
+                수
+              </div>
+              <div className="col border-end border-2 border-secondary pt-4 pb-4">
+                목
+              </div>
+              <div className="col border-end border-2 border-secondary pt-4 pb-4">
+                금
+              </div>
+              <div className="col border-2 border-secondary pt-4 pb-4 text-primary">
+                토
+              </div>
             </div>
-            <div className="col-3">
-              <button id="nextMonth" onClick={handleNextMonth}>다음</button>
+            <div
+              className="row bg-body fw-bold fs-6 align-items-center text-end"
+              id="dayRow1"
+            >
+              <RowComponent/>
+            </div>
+            <div
+              className="row bg-body fw-bold fs-6 align-items-center text-end"
+              id="dayRow2"
+            >
+              <RowComponent/>
+            </div>
+            <div
+              className="row bg-body fw-bold fs-6 align-items-center text-end"
+              id="dayRow3"
+            >
+              <RowComponent/>
+            </div>
+            <div
+              className="row bg-body fw-bold fs-6 align-items-center text-end"
+              id="dayRow4"
+            >
+              <RowComponent/>
+            </div>
+            <div
+              className="row bg-body fw-bold fs-6 align-items-center text-end"
+              id="dayRow5"
+            >
+              <RowComponent/>
+            </div>
+            <div
+              className="row bg-body fw-bold fs-6 align-items-center text-end"
+              id="dayRow6"
+            >
+              <RowComponent/>
             </div>
           </div>
-          <div className="row bg-white text-black fw-bolder fs-6 align-items-center" id="weekRow">
-            <div className="col border-end border-2 border-secondary pt-4 pb-4 text-danger">일</div>
-            <div className="col border-end border-2 border-secondary pt-4 pb-4">월</div>
-            <div className="col border-end border-2 border-secondary pt-4 pb-4">화</div>
-            <div className="col border-end border-2 border-secondary pt-4 pb-4">수</div>
-            <div className="col border-end border-2 border-secondary pt-4 pb-4">목</div>
-            <div className="col border-end border-2 border-secondary pt-4 pb-4">금</div>
-            <div className="col border-2 border-secondary pt-4 pb-4 text-primary">토</div>
-          </div>
-          <div className="row bg-body fw-bold fs-6 align-items-center text-end" id="dayRow1">
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-2 border-secondary pb-5"></div>
-          </div>
-          <div className="row bg-body fw-bold fs-6 align-items-center text-end" id="dayRow2">
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-2 border-secondary pb-5"></div>
-          </div>
-          <div className="row bg-body fw-bold fs-6 align-items-center text-end" id="dayRow3">
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-2 border-secondary pb-5"></div>
-          </div>
-          <div className="row bg-body fw-bold fs-6 align-items-center text-end" id="dayRow4">
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-2 border-secondary pb-5"></div>
-          </div>
-          <div className="row bg-body fw-bold fs-6 align-items-center text-end" id="dayRow5">
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-2 border-secondary pb-5"></div>
-          </div>
-
-          <div className="row bg-body fw-bold fs-6 align-items-center text-end" id="dayRow6">
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-end border-2 border-secondary pb-5"></div>
-            <div className="col border-top border-2 border-secondary pb-5"></div>
-          </div>
-
         </div>
       </div>
-    </div>
-  </section>
-  )
-}
+    </section>
+  );
+};
 
 export default CalendarList;
