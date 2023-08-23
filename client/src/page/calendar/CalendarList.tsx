@@ -33,27 +33,21 @@ const CalendarList = () => {
     for (let dayParam = 0; dayParam < 7; dayParam++) {
       if (dayParam == 0) {
         weekRow.append (
-          `<div class="col-1 text-center text-danger fw-bold
-          border-top border-start border-bottom border-dark
-          week p-2">`
+          `<div class="col-1 tt-c tc-r fw-bold bd-t-1 bd-s-1 bd-b-1 week p-2">`
             + weekParam[dayParam] +
           `</div>`
         );
       }
       else if (dayParam == 6) {
         weekRow.append (
-          `<div class="col-1 text-center text-primary fw-bold
-          border-start border-top border-end border-bottom border-dark
-          week p-2">`
+          `<div class="col-1 tt-c tc-l fw-bold bd-s-1 bd-t-1 bd-e-1 bd-b-1 week p-2">`
             + weekParam[dayParam] +
           `</div>`
         );
       }
       else {
         weekRow.append (
-          `<div class="col-1 text-center text-black fw-bold
-          border-top border-start border-bottom border-dark
-          week p-2">`
+          `<div class="col-1 tt-c tc-b fw-bold bd-t-1 bd-s-1 bd-b-1 week p-2">`
             + weekParam[dayParam] +
           `</div>`
         );
@@ -63,9 +57,7 @@ const CalendarList = () => {
 
     for (let dayParam = 0; dayParam < startDay; dayParam++) {
       dayRow.append (
-        `<div class="col-1 text-center text-black fw-bold
-        border-start border-bottom border-dark
-        blank p-2">`
+        `<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 blank p-2">`
           + blank +
         `</div>`
       );
@@ -80,14 +72,14 @@ const CalendarList = () => {
       let dayElement;
       // 첫번째 열일 경우
       if ((startDay + dayParam - 1) % 7 == 0) {
-        dayElement = $(`<div class="col-1 text-center text-danger fw-bold border-start border-bottom border-dark day p-2">` + dayParam + `</div>`);
+        dayElement = $(`<div class="col-1 tt-c tc-r fw-bold bd-s-1 bd-b-1 day p-2">` + dayParam + `</div>`);
       }
       // 일곱번째 열일 경우
       else if ((startDay + dayParam - 1) % 7 == 6) {
-        dayElement = $(`<div class="col-1 text-center text-primary fw-bold border-start border-bottom border-end border-dark day p-2">` + dayParam + `</div>`);
+        dayElement = $(`<div class="col-1 tt-c tc-l fw-bold bd-s-1 bd-b-1 bd-e-1 day p-2">` + dayParam + `</div>`);
       }
       else {
-        dayElement = $(`<div class="col-1 text-center text-dark fw-bold border-start border-bottom border-dark day p-2">` + dayParam + `</div>`);
+        dayElement = $(`<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 day p-2">` + dayParam + `</div>`);
       }
 
       dayElement.click(function () {
@@ -100,18 +92,14 @@ const CalendarList = () => {
       // 일곱번째 열일 경우
       if (dayParam == 6) {
         dayRow.append (
-          `<div class="col-1 text-center text-dark fw-bold
-          border-start border-bottom border-end border-dark
-          blank p-2">`
+          `<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 bd-e-1 blank p-2">`
             + blank +
           `</div>`
         );
       }
       else {
         dayRow.append (
-          `<div class="col-1 text-center text-dark fw-bold
-          border-start border-bottom border-dark
-          blank p-2">`
+          `<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 blank p-2">`
             + blank +
           `</div>`
         );
@@ -137,14 +125,14 @@ const CalendarList = () => {
   return (
     <div className="container">
       <br/>
-      <div className="row d-flex text-center justify-content-center align-items-center">
-        <div className="col-6 text-end mt-5 ms-2">
+      <div className="row d-flex tt-c justify-content-center align-items-center">
+        <div className="col-6 tt-e mt-5 ms-2">
           <h3 className="fw-bolder">
             <span id="year"></span>
             <span id="month"></span>
           </h3>
         </div>
-        <div className="col-5 text-start mt-5">
+        <div className="col-5 tt-s mt-5">
           <button id="prev" className="btn btn-primary btn-sm ms-2">
             <i className="fas fa-angle-left"></i>
           </button>
@@ -156,7 +144,7 @@ const CalendarList = () => {
       <br/>
       <br/>
       <div className="row d-flex justify-content-center align-items-center">
-        <div className="col-12 text-center">
+        <div className="col-12 tt-c">
           <div id="calendar"></div>
         </div>
       </div>
