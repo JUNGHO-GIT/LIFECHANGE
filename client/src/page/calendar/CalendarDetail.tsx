@@ -26,6 +26,9 @@ const CalendarDetailStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 const CalendarDetail = () => {
   const { params } = useParams<{ params: string }>();
+  if (!params) {
+    return <div>Loading...</div>;
+  }
   const [year, month, day] = params.split("-");
 
   // ---------------------------------------------------------------------------------------------->
