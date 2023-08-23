@@ -1,43 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
+// ------------------------------------------------------------------------------------------------>
 const FoodList = () => {
-  const location = useLocation();
-  const navigation = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
-  const lang = "ko";
   const [items, setItems] = useState([]);
-  const [query, setQuery] = useState(queryParams.get('query') || "");
-  const [page, setPage] = useState(Number(queryParams.get('page')) || 0);
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(0);
+  const lang = "ko";
 
   const fetchData = () => {
-    const url = `https://fat-git-main-jungho-git.vercel.app/api/${lang}/search?query=${query}&page=${page}`;
-    axios.get(url)
-      .then((response) => {
-        setItems(response.data.items);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const url
+      = `https://fat-git-main-jungho-git.vercel.app/api/${lang}/search?query=${query}&page=${page}`;
+    axios
+    .get(url)
+    .then((response) => {
+      setItems(response.data.items);
+      console.log(response.data.items);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [query, page]);
-
-  const handleSearchChange = (e: any) => {
+  const handleSearchChange = (e:any) => {
     setQuery(e.target.value);
   };
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
-    navigation(`?query=${query}&page=${page + 1}`);
+    fetchData();
   };
 
   const handlePrevPage = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
-    navigation(`?query=${query}&page=${Math.max(page - 1, 1)}`);
+    fetchData();
   };
 
   // ---------------------------------------------------------------------------------------------->
