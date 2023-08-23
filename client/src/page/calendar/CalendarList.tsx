@@ -1,207 +1,166 @@
 import React, { useEffect, useState } from "react";
 import $ from "jquery";
 
-// ---------------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 const CalendarList = () => {
-  const date = new Date();
-  const [today, setToday] = useState(date.getDay());
-  const [year, setYear] = useState(date.getFullYear());
-  const [month, setMonth] = useState(date.getMonth());
+  let date = new Date();
 
-  // ----------------------------------------------------------------------------------------->
-  const loadCalendar = () => {
-    date.setFullYear(year);
-    date.setMonth(month);
+  // 함수 선언
+  function renderCalendar () {
 
-    const en_month = date.toLocaleString("en", { month: "long" });
-    const firstDay = new Date(year, month, 1).getDay();
-    const lastDate = new Date(year, month + 1, 0).getDate();
-    const blank = "\u00A0";
-    let dayCounter = 1;
+    $("#calendar").empty();
+    $("#year").text(date.getFullYear() + "년 ");
+    $("#month").text(date.getMonth() + 1 + "월");
 
-    $("#yearParam").text(year);
-    $("#monthParam").text(month + 1 + "월");
-    $("#en_monthParam").text(en_month.substring(0, 3));
+    let monthDays = new Date (
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0
+    ).getDate();
 
-    for (let i = 1; i <= 6; i++) {
-      let row = $("#dayRow" + i);
+    let startDay = new Date (
+      date.getFullYear(),
+      date.getMonth(),
+      1
+    ).getDay();
 
-      for (let j = 0; j < 7; j++) {
-        let col = row.find(".col:nth-child(" + (j + 1) + ")");
+    let weekRow = $(`<div class="row d-flex justify-content-center"></div>`);
+    let dayRow = $(`<div class="row d-flex justify-content-center"></div>`);
+    let blank = `&nbsp;`;
 
-        if (j === 0) {
-          col.addClass("text-danger");
-        }
-        if (j === 6) {
-          col.addClass("text-primary");
-        }
-        if (i === 1 && j < firstDay) {
-          col.text(blank);
-        } else {
-          if (dayCounter > lastDate) {
-            col.text(blank);
-          } else {
-            col.text(dayCounter);
-            dayCounter++;
-          }
-        }
+    // 요일 표시
+    let weekParam = ["일", "월", "화", "수", "목", "금", "토"];
+    for (let dayParam = 0; dayParam < 7; dayParam++) {
+      if (dayParam == 0) {
+        weekRow.append (
+          `<div class="col-1 text-center text-danger fw-bold
+          border-top border-start border-bottom border-dark
+          week p-2">`
+            + weekParam[dayParam] +
+          `</div>`
+        );
+      }
+      else if (dayParam == 6) {
+        weekRow.append (
+          `<div class="col-1 text-center text-primary fw-bold
+          border-start border-top border-end border-bottom border-dark
+          week p-2">`
+            + weekParam[dayParam] +
+          `</div>`
+        );
+      }
+      else {
+        weekRow.append (
+          `<div class="col-1 text-center text-black fw-bold
+          border-top border-start border-bottom border-dark
+          week p-2">`
+            + weekParam[dayParam] +
+          `</div>`
+        );
       }
     }
+    $("#calendar").append (weekRow);
 
-    let isRow6Empty = true;
-    $("#dayRow6 .col").each(function () {
-      if ($(this).text().trim() !== "") {
-        isRow6Empty = false;
-        return false;
+    for (let dayParam = 0; dayParam < startDay; dayParam++) {
+      dayRow.append (
+        `<div class="col-1 text-center text-black fw-bold
+        border-start border-bottom border-dark
+        blank p-2">`
+          + blank +
+        `</div>`
+      );
+    };
+
+    for (let dayParam = 1; dayParam <= monthDays; dayParam++) {
+      if ((startDay + dayParam - 1) % 7 == 0) {
+        $("#calendar").append(dayRow);
+        dayRow = $(`<div class="row d-flex justify-content-center"></div>`);
       }
+
+      let dayElement;
+      // 첫번째 열일 경우
+      if ((startDay + dayParam - 1) % 7 == 0) {
+        dayElement = $(`<div class="col-1 text-center text-danger fw-bold border-start border-bottom border-dark day p-2">` + dayParam + `</div>`);
+      }
+      // 일곱번째 열일 경우
+      else if ((startDay + dayParam - 1) % 7 == 6) {
+        dayElement = $(`<div class="col-1 text-center text-primary fw-bold border-start border-bottom border-end border-dark day p-2">` + dayParam + `</div>`);
+      }
+      else {
+        dayElement = $(`<div class="col-1 text-center text-dark fw-bold border-start border-bottom border-dark day p-2">` + dayParam + `</div>`);
+      }
+
+      dayElement.click(function () {
+        window.location.href = `/calendarDetail/${date.getFullYear()}/${date.getMonth() + 1}/${dayParam}`;
+      });
+      dayRow.append(dayElement);
+    };
+
+    for (let dayParam = (startDay + monthDays) % 7; dayParam < 7 && dayParam != 0; dayParam++) {
+      // 일곱번째 열일 경우
+      if (dayParam == 6) {
+        dayRow.append (
+          `<div class="col-1 text-center text-dark fw-bold
+          border-start border-bottom border-end border-dark
+          blank p-2">`
+            + blank +
+          `</div>`
+        );
+      }
+      else {
+        dayRow.append (
+          `<div class="col-1 text-center text-dark fw-bold
+          border-start border-bottom border-dark
+          blank p-2">`
+            + blank +
+          `</div>`
+        );
+      }
+    };
+    $("#calendar").append (dayRow);
+  }
+
+  // 이전 달, 다음 달 버튼
+  $(document).ready(function () {
+    $("#prev").click(function () {
+      date.setMonth(date.getMonth() - 1);
+      renderCalendar();
     });
-    if (isRow6Empty) {
-      $("#dayRow6").hide();
-    } else {
-      $("#dayRow6").show();
-    }
-  };
-
-  const handleBeforeMonth = () => {
-    if (month === 0) {
-      setYear(year - 1);
-      setMonth(11);
-    } else {
-      setMonth(month - 1);
-    }
-    loadCalendar();
-  };
-
-  const handleNextMonth = () => {
-    if (month === 11) {
-      setYear(year + 1);
-      setMonth(0);
-    } else {
-      setMonth(month + 1);
-    }
-    loadCalendar();
-  };
-
-  useEffect(() => {
-    loadCalendar();
-  }, [year, month]);
-  
-  // ---------------------------------------------------------------------------------------------->
-  const RowComponent = () => {
-  return (
-    <>
-      {Array(6).fill().map((_, index) => (
-        <div key={index} className="col border-top border-end border-2 border-secondary pb-5"></div>
-      ))}
-      <div className="col border-top border-2 border-secondary pb-5"></div>
-    </>
-  );
-};
+    $("#next").click(function () {
+      date.setMonth(date.getMonth() + 1);
+      renderCalendar();
+    });
+    renderCalendar();
+  });
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <section className="vh-100 d-flex align-items-center justify-content-center">
-      <br />
-      <div className="container-fluid">
-        <div className="row d-flex justify-content-center text-center">
-          <div className="col-md-8 col-sm-10 col-10 border border-4 border-dark shadow-lg">
-            <div className="row bg-primary text-white fw-bolder fs-1 border-bottom border-4 border-dark align-items-center">
-              <div className="col-2">
-                <button
-                  id="beforeMonth"
-                  onClick={handleBeforeMonth}
-                  className="btn btn-primary text-white"
-                >
-                  -
-                </button>
-              </div>
-              <div className="col-6 pt-4 pb-4 d-inline-flex justify-content-center">
-                <div
-                  className="col-5 d-sm-block d-none text-center"
-                  id="yearParam"
-                ></div>
-                <div className="col-5 text-center" id="monthParam"></div>
-                <div
-                  className="col-4 d-md-block d-none border-2 border-dark text-center"
-                  id="en_monthParam"
-                ></div>
-              </div>
-              <div className="col-2">
-                <button
-                  id="nextMonth"
-                  onClick={handleNextMonth}
-                  className="btn btn-primary text-white"
-                >
-                  -
-                </button>
-              </div>
-            </div>
-            <div
-              className="row bg-white text-black fw-bolder fs-6 align-items-center"
-              id="weekRow"
-            >
-              <div className="col border-end border-2 border-secondary pt-4 pb-4 text-danger">
-                일
-              </div>
-              <div className="col border-end border-2 border-secondary pt-4 pb-4">
-                월
-              </div>
-              <div className="col border-end border-2 border-secondary pt-4 pb-4">
-                화
-              </div>
-              <div className="col border-end border-2 border-secondary pt-4 pb-4">
-                수
-              </div>
-              <div className="col border-end border-2 border-secondary pt-4 pb-4">
-                목
-              </div>
-              <div className="col border-end border-2 border-secondary pt-4 pb-4">
-                금
-              </div>
-              <div className="col border-2 border-secondary pt-4 pb-4 text-primary">
-                토
-              </div>
-            </div>
-            <div
-              className="row bg-body fw-bold fs-6 align-items-center text-end"
-              id="dayRow1"
-            >
-              <RowComponent/>
-            </div>
-            <div
-              className="row bg-body fw-bold fs-6 align-items-center text-end"
-              id="dayRow2"
-            >
-              <RowComponent/>
-            </div>
-            <div
-              className="row bg-body fw-bold fs-6 align-items-center text-end"
-              id="dayRow3"
-            >
-              <RowComponent/>
-            </div>
-            <div
-              className="row bg-body fw-bold fs-6 align-items-center text-end"
-              id="dayRow4"
-            >
-              <RowComponent/>
-            </div>
-            <div
-              className="row bg-body fw-bold fs-6 align-items-center text-end"
-              id="dayRow5"
-            >
-              <RowComponent/>
-            </div>
-            <div
-              className="row bg-body fw-bold fs-6 align-items-center text-end"
-              id="dayRow6"
-            >
-              <RowComponent/>
-            </div>
-          </div>
+    <div className="container">
+      <br/>
+      <div className="row d-flex text-center justify-content-center align-items-center">
+        <div className="col-6 text-end mt-5 ms-2">
+          <h3 className="fw-bolder">
+            <span id="year"></span>
+            <span id="month"></span>
+          </h3>
+        </div>
+        <div className="col-5 text-start mt-5">
+          <button id="prev" className="btn btn-primary btn-sm ms-2">
+            <i className="fas fa-angle-left"></i>
+          </button>
+          <button id="next" className="btn btn-primary btn-sm ms-2">
+            <i className="fas fa-angle-right"></i>
+          </button>
         </div>
       </div>
-    </section>
+      <br/>
+      <br/>
+      <div className="row d-flex justify-content-center align-items-center">
+        <div className="col-12 text-center">
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </div>
   );
 };
 

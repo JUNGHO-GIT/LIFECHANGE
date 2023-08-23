@@ -288,7 +288,6 @@
 .fs-30 {font-size: 30px !important;}
 
 /** font weight ***********************************************************************************/
-.p {font-weight: 700 !important;}
 .fw-1 {font-weight: 100 !important;}
 .fw-2 {font-weight: 200 !important;}
 .fw-3 {font-weight: 300 !important;}
@@ -298,6 +297,11 @@
 .fw-7 {font-weight: 700 !important;}
 .fw-8 {font-weight: 800 !important;}
 .fw-9 {font-weight: 900 !important;}
+
+/** 텍스트 ****************************************************************************************/
+.tx-c {text-align: center !important;}
+.tx-l {text-align: left !important;}
+.tx-r {text-align: right !important;}
 
 /** 테두리 그림자 *********************************************************************************/
 .sh-1 { box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1) !important;}
@@ -327,6 +331,32 @@
 .rd-13 {border-radius: 130px !important;}
 .rd-14 {border-radius: 140px !important;}
 .rd-15 {border-radius: 150px !important;}
+
+/** 테두리 ****************************************************************************************/
+.bd-s-none {border-left: none !important;}
+.bd-e-none {border-right: none !important;}
+.bd-t-none {border-top: none !important;}
+.bd-b-none {border-bottom: none !important;}
+.bd-s-1 {border-left: 1px solid #000000 !important;}
+.bd-e-1 {border-right: 1px solid #000000 !important;}
+.bd-t-1 {border-top: 1px solid #000000 !important;}
+.bd-b-1 {border-bottom: 1px solid #000000 !important;}
+.bd-s-2 {border-left: 2px solid #000000 !important;}
+.bd-e-2 {border-right: 2px solid #000000 !important;}
+.bd-t-2 {border-top: 2px solid #000000 !important;}
+.bd-b-2 {border-bottom: 2px solid #000000 !important;}
+.bd-s-3 {border-left: 3px solid #000000 !important;}
+.bd-e-3 {border-right: 3px solid #000000 !important;}
+.bd-t-3 {border-top: 3px solid #000000 !important;}
+.bd-b-3 {border-bottom: 3px solid #000000 !important;}
+.bd-s-4 {border-left: 4px solid #000000 !important;}
+.bd-e-4 {border-right: 4px solid #000000 !important;}
+.bd-t-4 {border-top: 4px solid #000000 !important;}
+.bd-b-4 {border-bottom: 4px solid #000000 !important;}
+.bd-s-5 {border-left: 5px solid #000000 !important;}
+.bd-e-5 {border-right: 5px solid #000000 !important;}
+.bd-t-5 {border-top: 5px solid #000000 !important;}
+.bd-b-5 {border-bottom: 5px solid #000000 !important;}
 
 /**************************************************************************************************/
 .empty-w10 {width: 10px !important;}

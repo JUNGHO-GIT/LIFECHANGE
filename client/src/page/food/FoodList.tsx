@@ -11,7 +11,7 @@ const FoodList = () => {
 
   const fetchData = () => {
     const url
-      = `https://fat-git-main-jungho-git.vercel.app/api/${lang}/search?query=${query}&page=${page}`;
+    = `https://fat-git-main-jungho-git.vercel.app/api/${lang}/search?query=${query}&page=${page}`;
     axios
     .get(url)
     .then((response) => {
@@ -76,11 +76,11 @@ const FoodList = () => {
         ))}
       </div>
       <div className="btn-group mt-3">
-        <button className="btn btn-secondary" onClick={handlePrevPage}>
-          이전 페이지
+        <button className="btn btn-primary" onClick={handlePrevPage}>
+          이전
         </button>
-        <button className="btn btn-secondary" onClick={handleNextPage}>
-          다음 페이지
+        <button className="btn btn-primary" onClick={handleNextPage}>
+          다음
         </button>
       </div>
     </div>
