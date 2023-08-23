@@ -28,6 +28,8 @@ const FoodDetailStyle = createGlobalStyle`
 const FoodDetail = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="card">

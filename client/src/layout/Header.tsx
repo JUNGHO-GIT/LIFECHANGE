@@ -76,11 +76,6 @@ const Header = () => {
                   Food
                 </Link>
               </li>
-              <li>
-                <Link to="/nutritionList" className="nav-link text-hover ms-2 text-white">
-                  Nutrition
-                </Link>
-              </li>
             </ul>
           </div>
           <div className="col-lg-6 col-7 custom-flex-right pe-10">

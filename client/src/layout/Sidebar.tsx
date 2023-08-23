@@ -140,9 +140,6 @@ const Sidebar = () => {
         <Link to="/foodList" className="side-menu linkHover">
           Food
         </Link>
-        <Link to="/nutritionList" className="side-menu linkHover">
-          Nutrition
-        </Link>
         <hr />
       </div>
       <div className={`${sidebar ? "margin-left" : ""}`}></div>
