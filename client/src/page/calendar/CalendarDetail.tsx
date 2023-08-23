@@ -5,7 +5,7 @@ import { createGlobalStyle } from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
 const CalendarDetailStyle = createGlobalStyle`
-  .calendarDetail {
+  .calendar {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -13,13 +13,25 @@ const CalendarDetailStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-calendarDetail {
+  .form-calendar {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-calendarDetail .form-floating:focus-within {
+  .form-calendar .form-floating:focus-within {
     z-index: 2;
+  }
+
+  .form-calendar input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-calendar input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 `;
 
@@ -33,18 +45,24 @@ const CalendarDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="calendarDetail">
+    <>
       <CalendarDetailStyle />
-      <main className="form-calendarDetail">
-        <h1 className="h3 mb-3 fw-normal">일정 상세</h1>
-        <div className="form-floating">
-          <span>
-            {year}년 {month}월 {day}일
-          </span>
+      <section className="calendar custom-flex-center">
+        <div className="row">
+          <div className="col-12">
+            <div className="empty-h50"></div>
+            <h1 className="mb-3">Calendar Detail</h1>
+            <div className="empty-h20"></div>
+            <p className="fw-5" id="year"> Year : <b>{year}년</b> </p>
+            <p className="fw-5" id="month"> Month : <b>{month}월</b> </p>
+            <p className="fw-5" id="day"> Day : <b>{day}일</b> </p>
+            <button className="w-100 btn btn-lg btn-primary" type="button"
+            onClick={() => { window.location.reload(); }}>Refresh</button>
+            <div className="empty-h50"></div>
+          </div>
         </div>
-        <br/>
-      </main>
-    </div>
+      </section>
+    </>
   );
 };
 
