@@ -7,8 +7,6 @@ import secretKeysRouter from "./src/router/secretKeysRouter";
 import userRouter from "./src/router/userRouter";
 import adminRouter from "./src/router/adminRouter";
 import boardRouter from "./src/router/boardRouter";
-/* import foodRouter from "./src/router/foodRouter"; */
-import nutritionRouter from "./src/router/nutritionRouter";
 
 const app = express();
 
@@ -29,8 +27,6 @@ app.use("/secretKeys", secretKeysRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/board", boardRouter);
-/* app.use("/food", foodRouter); */
-app.use("/nutrition", nutritionRouter);
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://127.0.0.1:%d in %s mode", app.get("port"), app.get("env"));

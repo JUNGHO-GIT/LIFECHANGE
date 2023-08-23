@@ -31,6 +31,7 @@ import BoardDetail from "../page/board/BoardDetail";
 import BoardUpdate from "../page/board/BoardUpdate";
 
 import CalendarList from "../page/calendar/CalendarList";
+import CalendarDetail from "../page/calendar/CalendarDetail";
 import FoodList from "../page/food/FoodList";
 import FoodDetail from "../page/food/FoodDetail";
 
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/boardDetail/:_id" element={<BoardDetail />} />
           <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
           <Route path="/calendarList" element={<CalendarList />} />
+          <Route path="/calendarDetail/:params" element={<CalendarDetail />} />
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
         </Routes>

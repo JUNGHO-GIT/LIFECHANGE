@@ -65,7 +65,7 @@ const CarouselFirst = () => {
   return (
     <div className="carousel-item active">
       <rect width="100%" height="100%" fill="#eeeeee" />
-      <div className="carousel-caption text-start">
+      <div className="carousel-caption tt-s">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
         <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
@@ -89,7 +89,7 @@ const CarouselSecond = () => {
   return (
     <div className="carousel-item">
       <rect width="100%" height="100%" fill="#eeeeee" />
-      <div className="carousel-caption text-center">
+      <div className="carousel-caption tt-c">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
         <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
@@ -113,7 +113,7 @@ const CarouselThird = () => {
   return (
     <div className="carousel-item">
       <rect width="100%" height="100%" fill="#eeeeee" />
-      <div className="carousel-caption text-end">
+      <div className="carousel-caption tt-e">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
         <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>

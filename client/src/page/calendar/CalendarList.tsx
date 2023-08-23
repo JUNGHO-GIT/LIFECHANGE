@@ -3,6 +3,11 @@ import $ from "jquery";
 
 // ------------------------------------------------------------------------------------------------>
 const CalendarList = () => {
+  const [params, setParams] = useState({
+    year: 0,
+    month: 0,
+    day: 0
+  });
   let date = new Date();
 
   // 함수 선언
@@ -33,21 +38,21 @@ const CalendarList = () => {
     for (let dayParam = 0; dayParam < 7; dayParam++) {
       if (dayParam == 0) {
         weekRow.append (
-          `<div class="col-1 tt-c tc-r fw-bold bd-t-1 bd-s-1 bd-b-1 week p-2">`
+          `<div class="col-1 tt-c tc-r fw-7 bd-t-1 bd-s-1 bd-b-1 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
       }
       else if (dayParam == 6) {
         weekRow.append (
-          `<div class="col-1 tt-c tc-l fw-bold bd-s-1 bd-t-1 bd-e-1 bd-b-1 week p-2">`
+          `<div class="col-1 tt-c tc-l fw-7 bd-s-1 bd-t-1 bd-e-1 bd-b-1 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
       }
       else {
         weekRow.append (
-          `<div class="col-1 tt-c tc-b fw-bold bd-t-1 bd-s-1 bd-b-1 week p-2">`
+          `<div class="col-1 tt-c tc-b fw-7 bd-t-1 bd-s-1 bd-b-1 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
@@ -57,7 +62,7 @@ const CalendarList = () => {
 
     for (let dayParam = 0; dayParam < startDay; dayParam++) {
       dayRow.append (
-        `<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 blank p-2">`
+        `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 p-2 blank">`
           + blank +
         `</div>`
       );
@@ -72,18 +77,30 @@ const CalendarList = () => {
       let dayElement;
       // 첫번째 열일 경우
       if ((startDay + dayParam - 1) % 7 == 0) {
-        dayElement = $(`<div class="col-1 tt-c tc-r fw-bold bd-s-1 bd-b-1 day p-2">` + dayParam + `</div>`);
+        dayElement = $(
+          `<div class="col-1 tt-c tc-r fw-7 bd-s-1 bd-b-1 p-2 day">`
+            + dayParam +
+          `</div>`
+        );
       }
       // 일곱번째 열일 경우
       else if ((startDay + dayParam - 1) % 7 == 6) {
-        dayElement = $(`<div class="col-1 tt-c tc-l fw-bold bd-s-1 bd-b-1 bd-e-1 day p-2">` + dayParam + `</div>`);
+        dayElement = $(
+          `<div class="col-1 tt-c tc-l fw-7 bd-s-1 bd-b-1 bd-e-1 p-2 day">`
+            + dayParam +
+          `</div>`
+        );
       }
       else {
-        dayElement = $(`<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 day p-2">` + dayParam + `</div>`);
+        dayElement = $(
+          `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 p-2 day">`
+            + dayParam +
+          `</div>`
+        );
       }
 
       dayElement.click(function () {
-        window.location.href = `/calendarDetail/${date.getFullYear()}/${date.getMonth() + 1}/${dayParam}`;
+        window.location.href = `/calendarDetail/${date.getFullYear()}-${date.getMonth() + 1}-${dayParam}`;
       });
       dayRow.append(dayElement);
     };
@@ -92,14 +109,14 @@ const CalendarList = () => {
       // 일곱번째 열일 경우
       if (dayParam == 6) {
         dayRow.append (
-          `<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 bd-e-1 blank p-2">`
+          `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 bd-e-1 p-2 blank">`
             + blank +
           `</div>`
         );
       }
       else {
         dayRow.append (
-          `<div class="col-1 tt-c tc-b fw-bold bd-s-1 bd-b-1 blank p-2">`
+          `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 p-2 blank">`
             + blank +
           `</div>`
         );
@@ -127,7 +144,7 @@ const CalendarList = () => {
       <br/>
       <div className="row d-flex tt-c justify-content-center align-items-center">
         <div className="col-6 tt-e mt-5 ms-2">
-          <h3 className="fw-bolder">
+          <h3 className="fw-9">
             <span id="year"></span>
             <span id="month"></span>
           </h3>
