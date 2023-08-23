@@ -2,6 +2,30 @@ import React, { useState } from "react";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
+type FoodData = {
+  food: {
+    food_name: string;
+    servings: {
+      serving: {
+        calories: string;
+        carbohydrate: string;
+        protein: string;
+        fat: string;
+        metric_serving_amount: string;
+        metric_serving_unit: string;
+      }[] | {
+        calories: string;
+        carbohydrate: string;
+        protein: string;
+        fat: string;
+        metric_serving_amount: string;
+        metric_serving_unit: string;
+      };
+    };
+  };
+};
+
+// ------------------------------------------------------------------------------------------------>
 const NutritionList = () => {
   const [foodList, setFoodList] = useState<any[]>([]);
   const [foodName, setFoodName] = useState("");
@@ -33,7 +57,7 @@ const NutritionList = () => {
 
   function getVolume(description: string) {
     const volumeMatch = description.match(/Per (.+?) -/);
-    return volumeMatch ? volumeMatch[1] : '';
+    return (volumeMatch ? volumeMatch[1] : '');
   }
 
   // ---------------------------------------------------------------------------------------------->
@@ -98,12 +122,9 @@ const NutritionList = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  return (
-    <>
-      <h1>영양소</h1>
-      <input type="text" onChange={(e) => setFoodName(e.target.value)} />
-      <button onClick={searchCalories}>검색</button>
-      <table className="table-bordered">
+  const renderService = () => {
+    return (
+      <>
         <thead>
           <tr>
             <th>식품코드</th>
@@ -135,6 +156,18 @@ const NutritionList = () => {
             );
           })}
         </tbody>
+      </>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  return (
+    <>
+      <h1>영양소</h1>
+      <input type="text" onChange={(e) => setFoodName(e.target.value)} />
+      <button onClick={searchCalories}>검색</button>
+      <table className="table-bordered">
+        {renderService()}
       </table>
       <div className="d-flex justify-content-center">
         {renderPageNumbers()}

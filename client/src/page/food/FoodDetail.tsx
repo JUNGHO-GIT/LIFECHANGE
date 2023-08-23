@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
@@ -24,123 +25,23 @@ const FoodDetailStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-interface Food {
-  FOOD_CD: string,
-  DESC_KOR: string,
-  RESEARCH_YEAR: string,
-  MAKER_NAME: string,
-  SERVING_SIZE: string,
-  NUTR_CONT1: string,
-  NUTR_CONT2: string,
-  NUTR_CONT3: string,
-  NUTR_CONT4: string,
-  NUTR_CONT5: string
-}
-
-// ------------------------------------------------------------------------------------------------>
 const FoodDetail = () => {
-  const {FOOD_CD} = useParams<{ FOOD_CD: string }>();
-  const [food, setFood] = useState<Food | null>(null);
-  const URL
-  = `http://openapi.foodsafetykorea.go.kr/api/715fe7af70994e9fa08e/I2790/json/1/1/FOOD_CD`;
-
-  // ---------------------------------------------------------------------------------------------->
-  useEffect(() => {
-    const fetchFoodDetail = async () => {
-      await axios.get(`${URL}=${FOOD_CD}`)
-      .then((res) => {
-        setFood(res.data.I2790.row[0]);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    };
-    fetchFoodDetail();
-  }, [FOOD_CD]);
-
-  // ---------------------------------------------------------------------------------------------->
-  const refreshFoodDetail = () => {
-    window.location.reload();
-  };
-
-  const buttonFoodList = () => {
-    window.location.href = "/foodList";
-  };
-
-  // ---------------------------------------------------------------------------------------------->
-  const resultFoodDetail = () => {
-    return (
-      <>
-        <tbody>
-          <tr>
-            <th>식품코드</th>
-            <td>{food?.FOOD_CD}</td>
-          </tr>
-          <tr>
-            <th>식품이름</th>
-            <td>{food?.DESC_KOR}</td>
-          </tr>
-          <tr>
-            <th>년도</th>
-            <td>{food?.RESEARCH_YEAR}</td>
-          </tr>
-          <tr>
-            <th>제조사</th>
-            <td>{food?.MAKER_NAME}</td>
-          </tr>
-          <tr>
-            <th>1회제공량</th>
-            <td>{food?.SERVING_SIZE}</td>
-          </tr>
-          <tr>
-            <th>에너지</th>
-            <td>{food?.NUTR_CONT1}</td>
-          </tr>
-          <tr>
-            <th>탄수화물</th>
-            <td>{food?.NUTR_CONT2}</td>
-          </tr>
-          <tr>
-            <th>단백질</th>
-            <td>{food?.NUTR_CONT3}</td>
-          </tr>
-          <tr>
-            <th>지방</th>
-            <td>{food?.NUTR_CONT4}</td>
-          </tr>
-          <tr>
-            <th>당류</th>
-            <td>{food?.NUTR_CONT5}</td>
-          </tr>
-        </tbody>
-      </>
-    );
-  };
-
-  // ---------------------------------------------------------------------------------------------->
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   return (
-    <>
-      <FoodDetailStyle />
-      <section className="foodDetail custom-flex-center">
-        <form>
-          <div className="empty-h50"></div>
-          <h1 className="mb-3">Food Detail</h1>
-          <div className="empty-h20"></div>
-          <table className="table table-striped table-bordered">
-            {resultFoodDetail()}
-          </table>
-          <div className="empty-h20"></div>
-          <button className="btn btn-success" type="button" onClick={refreshFoodDetail}>
-            Refresh
-          </button>
-          &nbsp;
-          <button className="btn btn-primary" type="button" onClick={() => buttonFoodList()}>
-            List
-          </button>
-          <div className="empty-h50"></div>
-        </form>
-      </section>
-    </>
+    <div className="container">
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">{params.get("title")}</h5>
+          <p className="card-text">{params.get("brand")}</p>
+          <p className="card-text">{params.get("calories")} 칼로리</p>
+          <p className="card-text">{params.get("food")} 지방</p>
+          <p className="card-text">{params.get("carb")} 탄수화물</p>
+          <p className="card-text">{params.get("protein")} 단백질</p>
+          <p className="card-text">{params.get("serving")}</p>
+        </div>
+      </div>
+    </div>
   );
 };
 

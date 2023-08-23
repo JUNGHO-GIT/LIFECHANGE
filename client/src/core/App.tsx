@@ -61,7 +61,7 @@ const App = () => {
           <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/foodList" element={<FoodList />} />
-          <Route path="/foodDetail/:FOOD_CD" element={<FoodDetail />} />
+          <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/nutritionList" element={<NutritionList />} />
           <Route path="/nutritionDetail/:food_id" element={<NutritionDetail />} />
         </Routes>
