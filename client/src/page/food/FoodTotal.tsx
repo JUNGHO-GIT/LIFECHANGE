@@ -3,67 +3,41 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
-// ------------------------------------------------------------------------------------------------>
-const FoodTotalStyle = createGlobalStyle`
-  .foodTotal {
-    display: flex;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-  }
-
-  .form-foodTotal {
-    max-width: 330px;
-    padding: 15px;
-  }
-
-  .form-foodTotal .form-floating:focus-within {
-    z-index: 2;
-  }
-`;
-
-// ------------------------------------------------------------------------------------------------>
-interface FoodTotal {
-  totalDate : string;
-  totalCalories : number;
-  totalProtein : number;
-  totalCarb : number;
-  totalFat : number;
-}
-
-// ------------------------------------------------------------------------------------------------>
 const FoodTotal = () => {
-  const [foods, setFoods] = useState<FoodTotal[]>([]);
-  const { user_id } = useParams<{ user_id: string }>();
-  const { food_date } = useParams<{ food_date: string }>();
+  const { user_id, food_regdate }
+  = useParams<{ user_id: string; food_regdate: string }>();
+  
+  const [total, setTotal] = useState({
+    totalCalories: 0,
+    totalProtein: 0,
+    totalCarb: 0,
+    totalFat: 0
+  });
 
-  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchFoodDetail = async () => {
+    const fetchFoodTotal = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:4000/food/foodTotal/${user_id}/${food_date}`);
-        console.log(response.data);
-        setFoods(response.data);
+        const response = await axios.get(
+          `http://127.0.0.1:4000/food/foodTotal/${user_id}/${food_regdate}`
+        );
+        setTotal(response.data);
       }
       catch (err) {
-        console.error(err);
-        setFoods([]);
+        alert('데이터를 불러오는 데 실패했습니다.');
       }
     };
-    fetchFoodDetail();
-  }, [user_id, food_date]);
+    fetchFoodTotal();
+  }, [user_id, food_regdate]);
 
-  // ---------------------------------------------------------------------------------------------->
-  return (
+  return(
     <div className="foodTotal">
-      <FoodTotalStyle />
+      <div className="empty-h30"></div>
       <div className="form-foodTotal">
-        <h1>총 칼로리</h1>
+        <h1>{food_regdate}</h1>
+        <h2>{user_id}</h2>
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>날짜</th>
               <th>총 칼로리</th>
               <th>총 단백질</th>
               <th>총 탄수화물</th>
@@ -71,15 +45,12 @@ const FoodTotal = () => {
             </tr>
           </thead>
           <tbody>
-            {foods.map((food) => (
-              <tr key={food.totalDate.toString()}>
-                <td>{food.totalDate}</td>
-                <td>{food.totalCalories}</td>
-                <td>{food.totalProtein}</td>
-                <td>{food.totalCarb}</td>
-                <td>{food.totalFat}</td>
-              </tr>
-            ))}
+            <tr>
+              <td>{total.totalCalories}</td>
+              <td>{total.totalProtein}</td>
+              <td>{total.totalCarb}</td>
+              <td>{total.totalFat}</td>
+            </tr>
           </tbody>
         </table>
       </div>
