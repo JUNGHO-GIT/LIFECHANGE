@@ -1,6 +1,6 @@
-/* import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import FoodInterface from "./FoodInterface";
 import { createGlobalStyle } from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
@@ -24,4 +24,21 @@ const FoodTotalStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const FoodTotal = () => { */
+const FoodTotal = () => {
+  const [foods, setFoods] = useState<FoodInterface[]>([]);
+
+  // ---------------------------------------------------------------------------------------------->
+  useEffect(() => {
+    const fetchFoodDetail = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:4000/food/foodTotal`);
+        setFoods(response.data);
+      }
+      catch (err) {
+        console.error(err);
+        setFoods([]);
+      }
+    };
+
+    fetchFoodDetail();
+  }, []);

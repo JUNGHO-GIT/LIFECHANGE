@@ -53,7 +53,11 @@ const BoardDetail = () => {
     fetchBoardDetail();
   }, [_id]);
 
-  if (!board) return <div>Loading...</div>;
+  if (!board) {
+    return (
+      <div>Loading...</div>
+    );
+  }
 
   // ---------------------------------------------------------------------------------------------->
   const buttonBoardUpdate = (_id: string) => {

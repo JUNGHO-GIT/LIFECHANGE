@@ -17,7 +17,7 @@ export const foodInsert = async (
   food_protein: Number,
   food_fat: Number
 ) => {
-  return Food.create({
+  const foodInsert = await Food.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id,
     food_name: food_name,
@@ -28,15 +28,37 @@ export const foodInsert = async (
     food_protein: food_protein,
     food_fat: food_fat
   });
+  return foodInsert;
 };
 
 // 3-1. foodTotal --------------------------------------------------------------------------------->
 export const foodTotal = async (
-  user_id: String
+  user_id: String,
+  food_regdate: Date
 ) => {
-  return Food.find({
-    user_id: user_id
-  }).countDocuments();
+  const foodTotal = await Food.find({
+    user_id: user_id,
+    food_regdate: food_regdate
+  });
+
+  let totalCalories = 0;
+  let totalProtein = 0;
+  let totalCarb = 0;
+  let totalFat = 0;
+
+  foodTotal.forEach((food) => {
+    totalCalories += food.food_calories;
+    totalProtein += food.food_protein;
+    totalCarb += food.food_carb;
+    totalFat += food.food_fat;
+  });
+
+  return {
+    totalCalories,
+    totalProtein,
+    totalCarb,
+    totalFat
+  };
 };
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
