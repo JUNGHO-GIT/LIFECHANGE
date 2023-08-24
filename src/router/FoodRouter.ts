@@ -37,11 +37,16 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
 // 3-2. foodTotal --------------------------------------------------------------------------------->
 foodRouter.get("/foodTotal", async (req: Request, res: Response) => {
   try {
-    const foodTotalValue = await foodService.foodTotal(
+    const foodTotalValue = await foodService.foodTotal (
       req.body.user_id,
       req.body.food_regdate
     );
-    res.send(foodTotalValue);
+    if (foodTotalValue) {
+      res.send(foodTotalValue);
+    }
+    else {
+      res.send("fail");
+    }
   }
   catch (err) {
     console.error(err);

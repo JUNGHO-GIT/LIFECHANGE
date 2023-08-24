@@ -32,8 +32,10 @@ import BoardUpdate from "../page/board/BoardUpdate";
 
 import CalendarList from "../page/calendar/CalendarList";
 import CalendarDetail from "../page/calendar/CalendarDetail";
+
 import FoodList from "../page/food/FoodList";
 import FoodDetail from "../page/food/FoodDetail";
+import FoodTotal from "../page/food/FoodTotal";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -48,20 +50,25 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
+
           <Route path="/userLogin" element={<Login />} />
           <Route path="/userInsert" element={<SecretKeys />} />
           <Route path="/userDetail" element={<UserInfo />} />
           <Route path="/userList" element={<UserList />} />
           <Route path="/userUpdate" element={<UserUpdate />} />
           <Route path="/userDelete" element={<UserDelete />} />
+
           <Route path="/boardList" element={<BoardList />} />
           <Route path="/boardInsert" element={<BoardInsert />} />
           <Route path="/boardDetail/:_id" element={<BoardDetail />} />
           <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
+
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail/:params" element={<CalendarDetail />} />
+
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
+          <Route path="/foodTotal/:user_id/:food_date" element={<FoodTotal />} />
         </Routes>
         <Footer />
       </Router>

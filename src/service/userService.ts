@@ -12,7 +12,7 @@ export const checkIdPw = async (user_idParam: any, user_pwParam: any) => {
   return User.findOne({user_id: user_idParam, user_pw: user_pwParam});
 };
 
-// userInsert ----------------------------------------------------------------------------------------->
+// userInsert ------------------------------------------------------------------------------------->
 export const userSignup = async (
   user_idParam: any,
   user_pwParam: any
@@ -24,12 +24,12 @@ export const userSignup = async (
   });
 };
 
-// userLogin ------------------------------------------------------------------------------------------>
+// userLogin -------------------------------------------------------------------------------------->
 export const userLogin = async (user_idParam: any, user_pwParam: any) => {
   return User.findOne({user_id: user_idParam, user_pw: user_pwParam});
 };
 
-// userDetail --------------------------------------------------------------------------------------->
+// userDetail ------------------------------------------------------------------------------------->
 export const userDetail = async (user_idParam: any) => {
   return User.findOne({user_id: user_idParam});
 };

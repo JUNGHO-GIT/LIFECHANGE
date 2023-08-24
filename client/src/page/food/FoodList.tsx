@@ -60,6 +60,12 @@ const FoodList = () => {
     }
   };
 
+  const buttonFoodTotal = () => {
+    const user_id = sessionStorage.getItem("user_id");
+    const food_date = new Date().toISOString().split("T")[0];
+    window.location.href = "/foodTotal/" + user_id + "/" + food_date;
+  };
+
   // ---------------------------------------------------------------------------------------------->
   return (
     <>
@@ -82,6 +88,9 @@ const FoodList = () => {
           <div className="btn-group mt-3">
             <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
             <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
+            <button type="button" className="btn btn-primary ms-2" onClick={buttonFoodTotal}>
+              총 섭취 영양소
+            </button>
           </div>
           <br/>
           <div className="row">

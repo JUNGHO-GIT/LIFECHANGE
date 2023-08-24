@@ -33,20 +33,26 @@ export const foodInsert = async (
 
 // 3-1. foodTotal --------------------------------------------------------------------------------->
 export const foodTotal = async (
-  user_id: String,
-  food_regdate: Date
+  user_id_param: string,
+  food_regdate_param: string
 ) => {
+  // 문자열을 날짜로 변환
+  const food_regdate = new Date(food_regdate_param);
+
+  // 날짜 객체를 사용하여 MongoDB에서 찾기
   const foodTotal = await Food.find({
-    user_id: user_id,
-    food_regdate: food_regdate
+    user_id: user_id_param,
+    food_regdate
   });
 
+  let totalDate = "";
   let totalCalories = 0;
   let totalProtein = 0;
   let totalCarb = 0;
   let totalFat = 0;
 
   foodTotal.forEach((food) => {
+    totalDate = new Date(food.food_regdate).toISOString().split("T")[0];
     totalCalories += food.food_calories;
     totalProtein += food.food_protein;
     totalCarb += food.food_carb;
@@ -54,12 +60,14 @@ export const foodTotal = async (
   });
 
   return {
+    totalDate,
     totalCalories,
     totalProtein,
     totalCarb,
     totalFat
   };
 };
+
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
 
