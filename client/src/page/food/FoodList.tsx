@@ -104,7 +104,7 @@ const FoodList = () => {
                     </p>
                     <p className="card-text">
                       <span>지방 : </span>
-                      {item.food ? item.food : 0}
+                      {item.fat ? item.fat : 0}
                     </p>
                     <p className="card-text">
                       <span>탄수화물 : </span>

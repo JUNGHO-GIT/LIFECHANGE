@@ -123,19 +123,25 @@ const FoodDetail = () => {
       <FoodDetailStyle />
       <div className="empty-h100"></div>
       <div className="container">
-        <div className="card">
-          <div className="card-body">
-            {totalGram()}
+        <div className="row">
+          <div className="col-6">
+            <div className="card">
+              <div className="card-body">
+                {totalGram()}
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="empty-h20"></div>
-        <div className="input-group">
-          <input type="number" className="form-control" placeholder="그램 수 입력" onChange={e => setShowPerGram(Number(e.target.value))} />
-        </div>
-        <div className="empty-h20"></div>
-        <div className="card">
-          <div className="card-body">
-            {showPerGram > 0 && perGram(showPerGram)}
+          <div className="col-6">
+            <div className="empty-h20"></div>
+            <div className="input-group">
+              <input type="number" className="form-control" placeholder="그램 수 입력" onChange={e => setShowPerGram(Number(e.target.value))} />
+            </div>
+            <div className="empty-h20"></div>
+            <div className="card">
+              <div className="card-body">
+                {showPerGram > 0 && perGram(showPerGram)}
+              </div>
+            </div>
           </div>
         </div>
       </div>
