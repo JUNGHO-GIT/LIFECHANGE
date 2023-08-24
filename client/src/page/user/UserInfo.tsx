@@ -4,7 +4,7 @@ import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
 const UserInfoStyle = createGlobalStyle`
-  .userInfo {
+  .userDetail {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -12,22 +12,22 @@ const UserInfoStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-userInfo {
+  .form-userDetail {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-userInfo .form-floating:focus-within {
+  .form-userDetail .form-floating:focus-within {
     z-index: 2;
   }
 
-  .form-userInfo input[type="email"] {
+  .form-userDetail input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  .form-userInfo input[type="password"] {
+  .form-userDetail input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -36,21 +36,21 @@ const UserInfoStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const UserInfo = () => {
-  const [userId, setUserId] = useState("");
-  const [userPw, setUserPw] = useState("");
+  const [user_id, setUserId] = useState("");
+  const [user_pw, setUserPw] = useState("");
 
   const fetchUserInfo = async () => {
-    const userId = window.sessionStorage.getItem("userId");
+    const user_id = window.sessionStorage.getItem("user_id");
 
     try {
-      const res = await axios.post("http://127.0.0.1:4000/user/userInfo", {
-        userId: userId,
+      const res = await axios.post("http://127.0.0.1:4000/user/userDetail", {
+        user_id: user_id,
       });
 
       if (res.status === 200) {
-        const {userId, userPw} = res.data;
-        setUserId(userId);
-        setUserPw(userPw);
+        const {user_id, user_pw} = res.data;
+        setUserId(user_id);
+        setUserPw(user_pw);
       }
       else {
         throw new Error("Server responded with an error");
@@ -88,7 +88,7 @@ const UserInfo = () => {
   return (
     <>
       <UserInfoStyle />
-      <section className="userInfo custom-flex-center">
+      <section className="userDetail custom-flex-center">
         <form>
           <div className="empty-h50"></div>
           <h1 className="mb-3">User Info</h1>
@@ -96,25 +96,25 @@ const UserInfo = () => {
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="userId"
+              id="user_id"
               placeholder="User ID"
-              value={userId}
+              value={user_id}
               onChange={(e) => setUserId(e.target.value)}
               readOnly
             />
-            <label htmlFor="userId">User ID</label>
+            <label htmlFor="user_id">User ID</label>
           </div>
           <div className="empty-h20"></div>
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="userPw"
+              id="user_pw"
               placeholder="User PW"
-              value={userPw}
+              value={user_pw}
               onChange={(e) => setUserPw(e.target.value)}
               readOnly
             />
-            <label htmlFor="userPw">User PW</label>
+            <label htmlFor="user_pw">User PW</label>
           </div>
           <div className="empty-h100"></div>
           <button type="button" className="btn btn-success" onClick={refreshUserInfo}>

@@ -26,7 +26,7 @@ import UserDelete from "../page/user/UserDelete";
 import UserList from "../page/admin/UserList";
 
 import BoardList from "../page/board/BoardList";
-import BoardWrite from "../page/board/BoardWrite";
+import BoardInsert from "../page/board/BoardInsert";
 import BoardDetail from "../page/board/BoardDetail";
 import BoardUpdate from "../page/board/BoardUpdate";
 
@@ -48,14 +48,14 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SecretKeys />} />
-          <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/userLogin" element={<Login />} />
+          <Route path="/userInsert" element={<SecretKeys />} />
+          <Route path="/userDetail" element={<UserInfo />} />
           <Route path="/userList" element={<UserList />} />
           <Route path="/userUpdate" element={<UserUpdate />} />
           <Route path="/userDelete" element={<UserDelete />} />
           <Route path="/boardList" element={<BoardList />} />
-          <Route path="/boardWrite" element={<BoardWrite />} />
+          <Route path="/boardInsert" element={<BoardInsert />} />
           <Route path="/boardDetail/:_id" element={<BoardDetail />} />
           <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
           <Route path="/calendarList" element={<CalendarList />} />

@@ -6,6 +6,4 @@ const SecretKeysSchema = new mongoose.Schema ({
   secretKeys: String,
 });
 
-const SecretKeys = mongoose.model("SecretKeys", SecretKeysSchema);
-
-export default SecretKeys;
+export default mongoose.model("SecretKeys", SecretKeysSchema);

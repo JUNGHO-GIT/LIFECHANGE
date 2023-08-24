@@ -7,6 +7,7 @@ import secretKeysRouter from "./src/router/secretKeysRouter";
 import userRouter from "./src/router/userRouter";
 import adminRouter from "./src/router/adminRouter";
 import boardRouter from "./src/router/boardRouter";
+import foodRouter from "./src/router/foodRouter";
 
 const app = express();
 
@@ -20,13 +21,14 @@ app.use(cors(), (req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-/* mongoose.connect("mongodb://127.0.0.1:27017"); */
+mongoose.connect("mongodb://127.0.0.1:27017");
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use("/secretKeys", secretKeysRouter);
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/board", boardRouter);
+app.use("/food", foodRouter);
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://127.0.0.1:%d in %s mode", app.get("port"), app.get("env"));

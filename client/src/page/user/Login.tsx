@@ -3,7 +3,7 @@ import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
 const LoginStyle = createGlobalStyle`
-  .login {
+  .userLogin {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -11,22 +11,22 @@ const LoginStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-login {
+  .form-userLogin {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-login .form-floating:focus-within {
+  .form-userLogin .form-floating:focus-within {
     z-index: 2;
   }
 
-  .form-login input[type="email"] {
+  .form-userLogin input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  .form-login input[type="password"] {
+  .form-userLogin input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -35,27 +35,27 @@ const LoginStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const Login = () => {
-  const [userId, setId] = useState("");
-  const [userPw, setPassword] = useState("");
+  const [user_id, setId] = useState("");
+  const [user_pw, setPassword] = useState("");
 
   const LoginFlow = async () => {
-    const res = await axios.post("http://127.0.0.1:4000/user/login", {
-      userId: userId,
-      userPw: userPw,
+    const res = await axios.post("http://127.0.0.1:4000/user/userLogin", {
+      user_id: user_id,
+      user_pw: user_pw,
     });
 
-    if (userId.length === 0 || userPw.length === 0) {
+    if (user_id.length === 0 || user_pw.length === 0) {
       alert("Please enter both ID and PW");
       return;
     }
     else if (res.data === "success") {
       alert("Login successful");
-      window.sessionStorage.setItem("userId", userId);
+      window.sessionStorage.setItem("user_id", user_id);
       window.location.href = "/";
     }
     else if (res.data === "fail") {
       alert("Incorrect ID or PW");
-      window.sessionStorage.setItem("userId", "false");
+      window.sessionStorage.setItem("user_id", "false");
     }
     else {
       alert(`${res.data}error`);
@@ -66,7 +66,7 @@ const Login = () => {
   return (
     <>
       <LoginStyle />
-      <section className="login custom-flex-center">
+      <section className="userLogin custom-flex-center">
         <form>
           <div className="empty-h50"></div>
           <h1 className="mb-3">Log In</h1>
@@ -76,7 +76,7 @@ const Login = () => {
               className="form-control"
               type="text"
               placeholder="ID"
-              value={userId}
+              value={user_id}
               id="floatingId"
               onChange={(e) => {
                 setId(e.target.value);
@@ -90,7 +90,7 @@ const Login = () => {
               className="form-control"
               type="text"
               placeholder="Password"
-              value={userPw}
+              value={user_pw}
               id="floatingPassword"
               onChange={(e) => {
                 setPassword(e.target.value);

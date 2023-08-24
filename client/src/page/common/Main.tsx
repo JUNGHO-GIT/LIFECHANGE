@@ -53,8 +53,8 @@ const CarouselFirst = () => {
   // ---------------------------------------------------------------------------------------------->
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (window.sessionStorage.getItem("userId") == null) {
-      alert("Please login to use this service.");
+    if (window.sessionStorage.getItem("user_id") == null) {
+      alert("Please userLogin to use this service.");
     }
     else {
       window.location.href = "http://www.junghomun.com:8888";

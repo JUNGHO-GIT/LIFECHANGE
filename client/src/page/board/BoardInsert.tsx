@@ -3,8 +3,8 @@ import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
-const BoardWriteStyle = createGlobalStyle`
-  .boardWrite {
+const BoardInsertStyle = createGlobalStyle`
+  .boardInsert {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -12,22 +12,22 @@ const BoardWriteStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-BoardWrite {
+  .form-BoardInsert {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-BoardWrite .form-floating:focus-within {
+  .form-BoardInsert .form-floating:focus-within {
     z-index: 2;
   }
 
-  .form-BoardWrite input[type="email"] {
+  .form-BoardInsert input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  .form-BoardWrite input[type="boardPw"] {
+  .form-BoardInsert input[type="boardPw"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -35,7 +35,7 @@ const BoardWriteStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const BoardWrite = () => {
+const BoardInsert = () => {
   const [boardId, setBoardId] = useState("");
   const [boardPw, setBoardPw] = useState("");
   const [boardTitle, setBoardTitle] = useState("");
@@ -43,17 +43,17 @@ const BoardWrite = () => {
   const [boardDate, setBoardDate] = useState(new Date().toISOString());
 
   // ---------------------------------------------------------------------------------------------->
-  const fetchBoardWrite = async () => {
-    const userId = window.sessionStorage.getItem("userId");
+  const fetchBoardInsert = async () => {
+    const user_id = window.sessionStorage.getItem("user_id");
      try {
-      const res = await axios.post("http://localhost:4000/user/userInfo", {
-        userId : userId,
+      const res = await axios.post("http://localhost:4000/user/userDetail", {
+        user_id : user_id,
       });
 
       if (res.status === 200) {
-        const {userId, userPw} = res.data;
-        setBoardId(userId);
-        setBoardPw(userPw);
+        const {user_id, user_pw} = res.data;
+        setBoardId(user_id);
+        setBoardPw(user_pw);
       }
       else {
         throw new Error("Server responded with an error");
@@ -67,11 +67,11 @@ const BoardWrite = () => {
   };
 
   useEffect(() => {
-    fetchBoardWrite();
+    fetchBoardInsert();
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
-  const BoardWriteFlow = async () => {
+  const BoardInsertFlow = async () => {
 
     if (boardTitle === "") {
       alert("Please enter a title");
@@ -84,7 +84,7 @@ const BoardWrite = () => {
     else {
       setBoardDate(new Date().toISOString());
       try {
-        const res = await axios.post("http://localhost:4000/board/boardWrite", {
+        const res = await axios.post("http://localhost:4000/board/boardInsert", {
           boardId: boardId,
           boardTitle: boardTitle,
           boardContent: boardContent,
@@ -92,11 +92,11 @@ const BoardWrite = () => {
         });
 
         if (res.data === "success") {
-          alert("Write a board successfully");
+          alert("Insert a board successfully");
           window.location.href = "/boardList";
         }
         else if (res.data === "fail") {
-          alert("Write a board failed");
+          alert("Insert a board failed");
         }
         else {
           alert(`${res.data}error`);
@@ -104,7 +104,7 @@ const BoardWrite = () => {
       }
       catch (err) {
         console.error(err);
-        alert("Write a board failed");
+        alert("Insert a board failed");
       }
     }
   };
@@ -112,11 +112,11 @@ const BoardWrite = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <>
-      <BoardWriteStyle />
-      <section className="boardWrite custom-flex-center">
+      <BoardInsertStyle />
+      <section className="boardInsert custom-flex-center">
         <form>
           <div className="empty-h50"></div>
-          <h1 className="mb-3">Board Write</h1>
+          <h1 className="mb-3">Board Insert</h1>
           <div className="empty-h20"></div>
           <div className="form-floating">
             <input type="text"
@@ -183,8 +183,8 @@ const BoardWrite = () => {
             <label htmlFor="boardDate">Board Date</label>
           </div>
           <div className="empty-h100"></div>
-          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={BoardWriteFlow}>
-            Write
+          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={BoardInsertFlow}>
+            Insert
           </button>
           <div className="empty-h50"></div>
         </form>
@@ -193,4 +193,4 @@ const BoardWrite = () => {
   );
 };
 
-export default BoardWrite;
+export default BoardInsert;

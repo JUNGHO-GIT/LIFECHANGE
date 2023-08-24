@@ -3,7 +3,7 @@ import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
 const SignupStyle = createGlobalStyle`
-  .signup {
+  .userInsert {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -26,7 +26,7 @@ const SignupStyle = createGlobalStyle`
     border-bottom-left-radius: 0;
   }
 
-  .form-Signup input[type="userPw"] {
+  .form-Signup input[type="user_pw"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -35,23 +35,23 @@ const SignupStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const Signup = () => {
-  const [userId, setId] = useState("");
-  const [userPw, setPassword] = useState("");
+  const [user_id, setId] = useState("");
+  const [user_pw, setPassword] = useState("");
 
   const SignupFlow = async () => {
-    if (userId === "" || userPw === "") {
+    if (user_id === "" || user_pw === "") {
       alert("Please enter both Id and Pw");
       return;
     }
 
-    const res = await axios.post("http://127.0.0.1:4000/user/signup", {
-      userId: userId,
-      userPw: userPw,
+    const res = await axios.post("http://127.0.0.1:4000/user/userInsert", {
+      user_id: user_id,
+      user_pw: user_pw,
     });
 
     if (res.data === "success") {
       alert("Signup successful");
-      window.location.href = "/login";
+      window.location.href = "/userLogin";
     }
     else if (res.data === "duplicate") {
       alert("This ID already exists");
@@ -72,7 +72,7 @@ const Signup = () => {
   return (
     <>
       <SignupStyle />
-      <section className="signup custom-flex-center">
+      <section className="userInsert custom-flex-center">
         <form>
           <div className="empty-h50"></div>
           <h1 className="mb-3">Sign up</h1>
@@ -82,7 +82,7 @@ const Signup = () => {
               className="form-control"
               type="text"
               placeholder="ID"
-              value={userId}
+              value={user_id}
               id="floatingId"
               onChange={(e) => {
                 setId(e.target.value);
@@ -96,7 +96,7 @@ const Signup = () => {
               className="form-control"
               type="password"
               placeholder="Password"
-              value={userPw}
+              value={user_pw}
               id="floatingPassword"
               onChange={(e) => {
                 setPassword(e.target.value);

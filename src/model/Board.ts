@@ -9,6 +9,4 @@ const BoardScheme = new mongoose.Schema({
   boardDate: String,
 });
 
-const Board = mongoose.model("Board", BoardScheme);
-
-export default Board;
+export default mongoose.model("Board", BoardScheme);

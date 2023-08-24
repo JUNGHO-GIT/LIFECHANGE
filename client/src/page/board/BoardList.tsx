@@ -57,8 +57,8 @@ const BoardList = () => {
     window.location.reload();
   };
 
-  const buttonBoardWrite = () => {
-    window.location.href = "/boardWrite";
+  const buttonBoardInsert = () => {
+    window.location.href = "/boardInsert";
   };
 
   const buttonBoardList = () => {
@@ -105,8 +105,8 @@ const BoardList = () => {
             Refresh
           </button>
           &nbsp;
-          <button type="button" className="btn btn-primary" onClick={buttonBoardWrite}>
-            Write
+          <button type="button" className="btn btn-primary" onClick={buttonBoardInsert}>
+            Insert
           </button>
           &nbsp;
           <button type="button" className="btn btn-secondary" onClick={buttonBoardList}>

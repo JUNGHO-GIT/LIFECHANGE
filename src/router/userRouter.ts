@@ -4,13 +4,14 @@ import * as userService from "../service/userService";
 
 const userRouter = Router();
 
-// checkIdPw -------------------------------------------------------------------------------------->
-userRouter.post("/checkIdPw", async (req: Request, res: Response) => {
-  try {
-    const userIdPwCheck = await userService.checkIdPw(req.body.userId, req.body.userPw);
+// 1. userList ------------------------------------------------------------------------------------>
 
-    if (userIdPwCheck) {
-      res.send("success");
+// 2. userDetail ---------------------------------------------------------------------------------->
+userRouter.post("/userDetail", async (req: Request, res: Response) => {
+  try {
+    const user = await userService.userDetail(req.body.user_id);
+    if (user) {
+      res.send(user);
     }
     else {
       res.send("fail");
@@ -22,16 +23,16 @@ userRouter.post("/checkIdPw", async (req: Request, res: Response) => {
   }
 });
 
-// signup ----------------------------------------------------------------------------------------->
-userRouter.post("/signup", async (req: Request, res: Response) => {
+// 3-1. userInsert -------------------------------------------------------------------------------->
+userRouter.post("/userInsert", async (req: Request, res: Response) => {
   try {
-    const userIdCheck = await userService.checkId(req.body.userId);
+    const user_idCheck = await userService.checkId(req.body.user_id);
 
-    if (userIdCheck) {
+    if (user_idCheck) {
       res.send("duplicate");
     }
     else {
-      const user = await userService.userSignup(req.body.userId, req.body.userPw);
+      const user = await userService.userSignup(req.body.user_id, req.body.user_pw);
       if (user) {
         res.send("success");
       }
@@ -46,10 +47,10 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
   }
 });
 
-// login ------------------------------------------------------------------------------------------>
-userRouter.post("/login", async (req: Request, res: Response) => {
+// 3-2. userLogin --------------------------------------------------------------------------------->
+userRouter.post("/userLogin", async (req: Request, res: Response) => {
   try {
-    const user = await userService.userLogin(req.body.userId, req.body.userPw);
+    const user = await userService.userLogin(req.body.user_id, req.body.user_pw);
     if (user) {
       res.send("success");
     }
@@ -63,27 +64,10 @@ userRouter.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-// userInfo --------------------------------------------------------------------------------------->
-userRouter.post("/userInfo", async (req: Request, res: Response) => {
-  try {
-    const user = await userService.userInfo(req.body.userId);
-    if (user) {
-      res.send(user);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// userUpdate ------------------------------------------------------------------------------------->
+// 4-1. userUpdate -------------------------------------------------------------------------------->
 userRouter.put("/userUpdate", async (req: Request, res: Response) => {
   try {
-    const user = await userService.userUpdate(req.body.userId, req.body.userPw);
+    const user = await userService.userUpdate(req.body.user_id, req.body.user_pw);
     if (user) {
       res.send("success");
     }
@@ -97,10 +81,28 @@ userRouter.put("/userUpdate", async (req: Request, res: Response) => {
   }
 });
 
-// userDelete ------------------------------------------------------------------------------------->
+// 4-2. checkIdPw --------------------------------------------------------------------------------->
+userRouter.post("/checkIdPw", async (req: Request, res: Response) => {
+  try {
+    const user_idPwCheck = await userService.checkIdPw(req.body.user_id, req.body.user_pw);
+
+    if (user_idPwCheck) {
+      res.send("success");
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 5. userDelete ---------------------------------------------------------------------------------->
 userRouter.delete("/userDelete", async (req: Request, res: Response) => {
   try {
-    const user = await userService.userDelete(req.body.userId);
+    const user = await userService.userDelete(req.body.user_id);
     if (user) {
       res.send("success");
     }

@@ -36,17 +36,17 @@ const UserDeleteStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const UserDelete = () => {
-  const [userId, setUserId] = useState("");
-  const [userPw, setUserPw] = useState("");
+  const [user_id, setUserId] = useState("");
+  const [user_pw, setUserPw] = useState("");
 
   const fetchUserDelete = async () => {
-    const userId = window.sessionStorage.getItem("userId");
+    const user_id = window.sessionStorage.getItem("user_id");
 
     try {
-      const res = await axios.post("http://127.0.0.1:4000/user/userInfo", {
-        userId: userId,
+      const res = await axios.post("http://127.0.0.1:4000/user/userDetail", {
+        user_id: user_id,
       });
-      setUserId(res.data.userId);
+      setUserId(res.data.user_id);
     }
     catch (error: unknown) {
       if (error instanceof Error) {
@@ -62,15 +62,15 @@ const UserDelete = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonUserDelete = async () => {
 
-    if (userPw === "" || userPw === null) {
+    if (user_pw === "" || user_pw === null) {
       alert("Please enter your password");
       return;
     }
 
     try {
       const res = await axios.post("http://127.0.0.1:4000/user/checkIdPw", {
-        userId: userId,
-        userPw: userPw,
+        user_id: user_id,
+        user_pw: user_pw,
       });
 
       if (res.data === "fail") {
@@ -83,7 +83,7 @@ const UserDelete = () => {
         try {
           const res = await axios.delete("http://127.0.0.1:4000/user/userDelete", {
             data: {
-              userId: userId,
+              user_id: user_id,
             },
           });
 
@@ -125,24 +125,24 @@ const UserDelete = () => {
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="userId"
+              id="user_id"
               placeholder="User ID"
-              value={userId}
+              value={user_id}
               onChange={(e) => setUserId(e.target.value)}
               readOnly
             />
-            <label htmlFor="userId">User ID</label>
+            <label htmlFor="user_id">User ID</label>
           </div>
           <div className="empty-h20"></div>
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="userPw"
+              id="user_pw"
               placeholder="User PW"
-              value={userPw}
+              value={user_pw}
               onChange={(e) => setUserPw(e.target.value)}
             />
-            <label htmlFor="userPw">User PW</label>
+            <label htmlFor="user_pw">User PW</label>
           </div>
           <div className="empty-h100"></div>
           <button type="button" className="btn btn-primary" onClick={buttonUserDelete}>

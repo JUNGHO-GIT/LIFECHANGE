@@ -38,7 +38,7 @@ const HeaderStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const Header = () => {
-  const userId = sessionStorage.getItem("userId");
+  const user_id = sessionStorage.getItem("user_id");
 
   // ---------------------------------------------------------------------------------------------->
   return (
@@ -57,7 +57,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/userInfo" className="nav-link text-hover ms-2 text-white">
+                <Link to="/userDetail" className="nav-link text-hover ms-2 text-white">
                   User
                 </Link>
               </li>
@@ -80,22 +80,22 @@ const Header = () => {
           </div>
           <div className="col-lg-6 col-7 custom-flex-right pe-10">
             <form className="form-group custom-flex-center">
-              {userId !== "false" ? (
+              {user_id !== "false" ? (
                 <button
                   type="button"
                   className="btn btn-outline-light ms-2"
                   onClick={() => {
-                    sessionStorage.setItem("userId", "false");
+                    sessionStorage.setItem("user_id", "false");
                     window.location.reload();
                   }}>
                   Logout
                 </button>
               ) : (
                 <>
-                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/login")}>
+                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/userLogin")}>
                     Login
                   </button>
-                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/signup")}>
+                  <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/userInsert")}>
                     Signup
                   </button>
                 </>

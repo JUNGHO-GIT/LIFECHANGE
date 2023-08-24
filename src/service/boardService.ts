@@ -2,13 +2,22 @@
 import Board from "../model/Board";
 import * as mongoose from "mongoose";
 
-// boardList -------------------------------------------------------------------------------------->
+// 1. boardList ----------------------------------------------------------------------------------->
 export const boardList = async () => {
   return Board.find();
 };
 
-// boardWrite ------------------------------------------------------------------------------------->
-export const boardWrite = async (
+// 2. boardDetail --------------------------------------------------------------------------------->
+export const boardDetail = async (
+  boardIdParam: String
+) => {
+  return Board.findOne({
+    _id: boardIdParam
+  });
+};
+
+// 3. boardInsert --------------------------------------------------------------------------------->
+export const boardInsert = async (
   boardIdParam: String,
   boardTitleParam: String,
   boardContentParam: String,
@@ -23,16 +32,7 @@ export const boardWrite = async (
   });
 };
 
-// boardDetail ------------------------------------------------------------------------------------>
-export const boardDetail = async (
-  boardIdParam: String
-) => {
-  return Board.findOne({
-    _id: boardIdParam
-  });
-};
-
-// boardUpdate ------------------------------------------------------------------------------------>
+// 4. boardUpdate --------------------------------------------------------------------------------->
 export const boardUpdate = async (
   _id: String,
   board: any
@@ -42,7 +42,7 @@ export const boardUpdate = async (
   }, board);
 };
 
-// boardDelete ------------------------------------------------------------------------------------>
+// 5. boardDelete --------------------------------------------------------------------------------->
 export const boardDelete = async (
   _id: String
 ) => {

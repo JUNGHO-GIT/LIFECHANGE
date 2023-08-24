@@ -4,7 +4,7 @@ import * as boardService from "../service/boardService";
 
 const boardRouter = Router();
 
-// boardList -------------------------------------------------------------------------------------->
+// 1. boardList ----------------------------------------------------------------------------------->
 boardRouter.get("/boardList", async (req: Request, res: Response) => {
   try {
     const boardList = await boardService.boardList();
@@ -21,29 +21,7 @@ boardRouter.get("/boardList", async (req: Request, res: Response) => {
   }
 });
 
-// boardWrite ------------------------------------------------------------------------------------->
-boardRouter.post("/boardWrite", async (req: Request, res: Response) => {
-  try {
-    const boardWrite = await boardService.boardWrite (
-      req.body.boardId,
-      req.body.boardTitle,
-      req.body.boardContent,
-      req.body.boardDate
-    );
-    if (boardWrite) {
-      res.send("success");
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// boardDetail ------------------------------------------------------------------------------------>
+// 2. boardDetail --------------------------------------------------------------------------------->
 boardRouter.get("/boardDetail/:_id", async (req: Request, res: Response) => {
   try {
     const boardDetail = await boardService.boardDetail(req.params._id);
@@ -61,7 +39,29 @@ boardRouter.get("/boardDetail/:_id", async (req: Request, res: Response) => {
   }
 });
 
-// boardUpdate ------------------------------------------------------------------------------------>
+// 3. boardInsert --------------------------------------------------------------------------------->
+boardRouter.post("/boardInsert", async (req: Request, res: Response) => {
+  try {
+    const boardInsert = await boardService.boardInsert (
+      req.body.boardId,
+      req.body.boardTitle,
+      req.body.boardContent,
+      req.body.boardDate
+    );
+    if (boardInsert) {
+      res.send("success");
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 4. boardUpdate --------------------------------------------------------------------------------->
 boardRouter.put("/boardUpdate/:_id", async (req: Request, res: Response) => {
   try {
     const boardUpdate = await boardService.boardUpdate(req.params._id, req.body);
@@ -79,7 +79,7 @@ boardRouter.put("/boardUpdate/:_id", async (req: Request, res: Response) => {
   }
 });
 
-// boardDelete ------------------------------------------------------------------------------------>
+// 5. boardDelete --------------------------------------------------------------------------------->
 boardRouter.delete("/boardDelete/:_id", async (req: Request, res: Response) => {
   try {
     const boardDelete = await boardService.boardDelete (

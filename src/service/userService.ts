@@ -3,43 +3,43 @@ import User from "../../src/model/User";
 import * as mongoose from "mongoose";
 
 // checkId ---------------------------------------------------------------------------------------->
-export const checkId = async (userIdParam: any) => {
-  return User.findOne({userId: userIdParam});
+export const checkId = async (user_idParam: any) => {
+  return User.findOne({user_id: user_idParam});
 };
 
 // checkIdPw -------------------------------------------------------------------------------------->
-export const checkIdPw = async (userIdParam: any, userPwParam: any) => {
-  return User.findOne({userId: userIdParam, userPw: userPwParam});
+export const checkIdPw = async (user_idParam: any, user_pwParam: any) => {
+  return User.findOne({user_id: user_idParam, user_pw: user_pwParam});
 };
 
-// signup ----------------------------------------------------------------------------------------->
+// userInsert ----------------------------------------------------------------------------------------->
 export const userSignup = async (
-  userIdParam: any,
-  userPwParam: any
+  user_idParam: any,
+  user_pwParam: any
 ) => {
   return User.create({
     _id: new mongoose.Types.ObjectId(),
-    userId: userIdParam,
-    userPw: userPwParam
+    user_id: user_idParam,
+    user_pw: user_pwParam
   });
 };
 
-// login ------------------------------------------------------------------------------------------>
-export const userLogin = async (userIdParam: any, userPwParam: any) => {
-  return User.findOne({userId: userIdParam, userPw: userPwParam});
+// userLogin ------------------------------------------------------------------------------------------>
+export const userLogin = async (user_idParam: any, user_pwParam: any) => {
+  return User.findOne({user_id: user_idParam, user_pw: user_pwParam});
 };
 
-// userInfo --------------------------------------------------------------------------------------->
-export const userInfo = async (userIdParam: any) => {
-  return User.findOne({userId: userIdParam});
+// userDetail --------------------------------------------------------------------------------------->
+export const userDetail = async (user_idParam: any) => {
+  return User.findOne({user_id: user_idParam});
 };
 
 // userUpdate ------------------------------------------------------------------------------------->
-export const userUpdate = async (userIdParam: any, updatePwParam: any) => {
-  return User.findOneAndUpdate({userId: userIdParam, userPw: updatePwParam});
+export const userUpdate = async (user_idParam: any, updatePwParam: any) => {
+  return User.findOneAndUpdate({user_id: user_idParam, user_pw: updatePwParam});
 };
 
 // userDelete ------------------------------------------------------------------------------------->
-export const userDelete = async (userIdParam: any) => {
-  return User.findOneAndDelete({userId: userIdParam});
+export const userDelete = async (user_idParam: any) => {
+  return User.findOneAndDelete({user_id: user_idParam});
 };

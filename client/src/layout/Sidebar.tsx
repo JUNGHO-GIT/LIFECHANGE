@@ -74,9 +74,9 @@ const SidebarStyle = createGlobalStyle`
 const Sidebar = () => {
   const [sidebar, sidebarOpen] = useState(false);
 
-  let userId = sessionStorage.getItem("userId");
-  if (userId !== null) {
-    userId = JSON.parse(userId);
+  let user_id = sessionStorage.getItem("user_id");
+  if (user_id !== null) {
+    user_id = JSON.parse(user_id);
   }
 
   // ---------------------------------------------------------------------------------------------->
@@ -110,25 +110,25 @@ const Sidebar = () => {
         <Link to="/" className="side-menu linkHover">
           Home
         </Link>
-        {!userId ? (
+        {!user_id ? (
           <div>
-            <Link to="/login" className="side-menu linkHover">
+            <Link to="/userLogin" className="side-menu linkHover">
               Login
             </Link>
-            <Link to="/signup" className="side-menu linkHover">
+            <Link to="/userInsert" className="side-menu linkHover">
               SignUp
             </Link>
           </div>
         ) : (
           <a onClick={() => {
-              sessionStorage.setItem("userId", "false");
-              window.location.href = "/login";
+              sessionStorage.setItem("user_id", "false");
+              window.location.href = "/userLogin";
             }}
             className="side-menu linkHover">
             Logout
           </a>
         )}
-        <Link to="/userInfo" className="side-menu linkHover">
+        <Link to="/userDetail" className="side-menu linkHover">
           User
         </Link>
         <Link to="/boardList" className="side-menu linkHover">

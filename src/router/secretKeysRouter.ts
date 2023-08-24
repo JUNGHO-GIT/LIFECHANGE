@@ -4,7 +4,7 @@ import * as secretKeysService from "../service/secretKeysService";
 
 const secretKeysRouter = Router();
 
-// secretKeys ------------------------------------------------------------------------------------->
+// 1. secretKeys ---------------------------------------------------------------------------------->
 secretKeysRouter.post("/secretKeys", async (req: Request, res: Response) => {
   try {
     const secretKeys = await secretKeysService.secretKeys(req.body.secretKeys);

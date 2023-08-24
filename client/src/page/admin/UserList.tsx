@@ -26,8 +26,8 @@ const UserListStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 interface User {
   _id: string;
-  userId: string;
-  userPw: string;
+  user_id: string;
+  user_pw: string;
 }
 
 // ------------------------------------------------------------------------------------------------>
@@ -74,8 +74,8 @@ const UserList = () => {
             <tbody>
               {UserList.map((user) => (
                 <tr key={user._id}>
-                  <td>{user.userId}</td>
-                  <td>{user.userPw}</td>
+                  <td>{user.user_id}</td>
+                  <td>{user.user_pw}</td>
                 </tr>
               ))}
             </tbody>
