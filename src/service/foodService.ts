@@ -26,47 +26,46 @@ export const foodInsert = async (
     food_calories: food_calories,
     food_carb: food_carb,
     food_protein: food_protein,
-    food_fat: food_fat
+    food_fat: food_fat,
   });
   return foodInsert;
 };
 
 // 3-1. foodTotal --------------------------------------------------------------------------------->
-export const foodTotal = async (
-  user_id_param: string,
-  food_regdate_param: string
-) => {
-  // 문자열을 날짜로 변환
-  const food_regdate = new Date(food_regdate_param);
-
-  // 날짜 객체를 사용하여 MongoDB에서 찾기
-  const foodTotal = await Food.find({
-    user_id: user_id_param,
-    food_regdate
-  });
-
-  let totalDate = "";
-  let totalCalories = 0;
-  let totalProtein = 0;
-  let totalCarb = 0;
-  let totalFat = 0;
-
-  foodTotal.forEach((food) => {
-    totalDate = new Date(food.food_regdate).toISOString().split("T")[0];
-    totalCalories += food.food_calories;
-    totalProtein += food.food_protein;
-    totalCarb += food.food_carb;
-    totalFat += food.food_fat;
-  });
-
-  return {
-    totalDate,
-    totalCalories,
-    totalProtein,
-    totalCarb,
-    totalFat
+  export const foodTotal = async (
+    user_id_param: string,
+    food_regdate_param: string
+  ) => {
+    try {
+    
+      const foodResults = await Food.find({
+        user_id: user_id_param,
+        food_regdate: food_regdate_param
+      });
+  
+      let totalCalories = 0;
+      let totalProtein = 0;
+      let totalCarb = 0;
+      let totalFat = 0;
+  
+      foodResults.forEach((index) => {
+        totalCalories += index.food_calories;
+        totalProtein += index.food_protein;
+        totalCarb += index.food_carb;
+        totalFat += index.food_fat;
+      });
+      return {
+        totalCalories,
+        totalProtein,
+        totalCarb,
+        totalFat
+      };
+    } 
+    catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
-};
 
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
