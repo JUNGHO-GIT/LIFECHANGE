@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import { createGlobalStyle } from "styled-components";
 
@@ -26,6 +27,7 @@ const FoodDetailStyle = createGlobalStyle`
 const FoodDetail = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const user_id = window.sessionStorage.getItem("user_id");
   const [showGram, setShowGram] = useState(0);
 
   const title:any = params.get("title") ? params.get("title") : "x";
@@ -78,9 +80,6 @@ const FoodDetail = () => {
     const regexRules7 = servingValue.match(/(\d+)(\s*)테이블스푼/gm);
     const regexRules8 = servingValue.match(/(\d+)(\s*)티스푼/gm);
 
-    // 용량 파악 불가능한것
-    // ...
-
     // 단순 숫자만 리턴하기 위함
     if (regexRules1) {
       const regexValue = (regexRules1[0].replace("g", "")) * 1;
@@ -125,11 +124,43 @@ const FoodDetail = () => {
     const oneServingValue:any = oneServing();
 
     const caloriesPer:any = ((calories/oneServingValue)*(paramsValue)).toFixed(1);
-    const fatPer:any = ((fat/oneServingValue)*(paramsValue)).toFixed(1);
     const carbPer:any = ((carb/oneServingValue)*(paramsValue)).toFixed(1);
     const proteinPer:any = ((protein/oneServingValue)*(paramsValue)).toFixed(1);
+    const fatPer:any = ((fat/oneServingValue)*(paramsValue)).toFixed(1);
+
+    // 음식 상세정보를 보낸다.
+    const buttonFoodFlow = async () => {
+      try {
+        const res  = await axios.post("http://localhost:4000/food/foodInsert", {
+          user_id : user_id,
+          food_name : title,
+          food_brand : brand,
+          food_serving : params,
+          food_calories : caloriesPer,
+          food_carb : carbPer,
+          food_protein : proteinPer,
+          food_fat : fatPer
+        });
+
+        if (res.data === "success") {
+          alert("Insert food successfully");
+          window.location.href = "/foodList";
+        }
+        else if (res.data === "fail") {
+          alert("Insert food failed");
+        }
+        else {
+          alert(`${res.data}error`);
+        }
+      }
+      catch (err) {
+        console.error(err);
+        alert("Insert food failed");
+      }
+    };
 
     return (
+      <>
       <div className="card">
         <div className="card-body">
           <h4 className="card-title">{params}</h4>
@@ -151,9 +182,13 @@ const FoodDetail = () => {
           </p>
         </div>
       </div>
+      <br/>
+      <button type="button" className="btn btn-primary" onClick={buttonFoodFlow}>
+        음식 추가하기
+      </button>
+      </>
     );
   };
-
 
   // ---------------------------------------------------------------------------------------------->
   return (

@@ -12,10 +12,14 @@ const foodRouter = Router();
 foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
   try {
     const foodInsert = await foodService.foodInsert (
-      req.body.foodId,
-      req.body.foodTitle,
-      req.body.foodContent,
-      req.body.foodDate
+      req.body.user_id,
+      req.body.food_name,
+      req.body.food_brand,
+      req.body.food_serving,
+      req.body.food_calories,
+      req.body.food_carb,
+      req.body.food_protein,
+      req.body.food_fat
     );
     if (foodInsert) {
       res.send("success");
@@ -33,3 +37,5 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
 // 4. foodUpdate ---------------------------------------------------------------------------------->
 
 // 5. foodDelete ---------------------------------------------------------------------------------->
+
+export default foodRouter;
