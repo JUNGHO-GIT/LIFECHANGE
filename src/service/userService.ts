@@ -1,5 +1,5 @@
 // userService.ts
-import User from "../../src/model/User";
+import User from "../schemas/User";
 import * as mongoose from "mongoose";
 
 // checkId ---------------------------------------------------------------------------------------->

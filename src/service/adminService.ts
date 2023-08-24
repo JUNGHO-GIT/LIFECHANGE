@@ -1,5 +1,5 @@
 // adminService.ts
-import User from "../../src/model/User";
+import User from "../schemas/User";
 
 // load users list -------------------------------------------------------------------------------->
 export const userList = async () => {

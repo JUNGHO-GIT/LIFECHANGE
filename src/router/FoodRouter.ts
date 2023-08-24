@@ -8,7 +8,7 @@ const foodRouter = Router();
 
 // 2. foodDetail ---------------------------------------------------------------------------------->
 
-// 3. foodInsert ---------------------------------------------------------------------------------->
+// 3-1. foodInsert -------------------------------------------------------------------------------->
 foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
   try {
     const foodInsert = await foodService.foodInsert (
@@ -33,6 +33,8 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
     res.status(500).send(err);
   }
 });
+
+// 3-2. foodTotal --------------------------------------------------------------------------------->
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
 

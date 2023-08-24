@@ -1,5 +1,5 @@
 // foodService.ts
-import Food from "../model/Food";
+import Food from "../schemas/Food";
 import * as mongoose from "mongoose";
 
 // 1. foodList ------------------------------------------------------------------------------------>
@@ -28,6 +28,15 @@ export const foodInsert = async (
     food_protein: food_protein,
     food_fat: food_fat
   });
+};
+
+// 3-1. foodTotal --------------------------------------------------------------------------------->
+export const foodTotal = async (
+  user_id: String
+) => {
+  return Food.find({
+    user_id: user_id
+  }).countDocuments();
 };
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->

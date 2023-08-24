@@ -1,5 +1,5 @@
 // boardService.ts
-import Board from "../model/Board";
+import Board from "../schemas/Board";
 import * as mongoose from "mongoose";
 
 // 1. boardList ----------------------------------------------------------------------------------->
