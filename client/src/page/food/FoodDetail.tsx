@@ -26,11 +26,10 @@ const FoodDetailStyle = createGlobalStyle`
 const FoodDetail = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const [showPerGram, setShowPerGram] = useState(0);
+  const [showGram, setShowGram] = useState(0);
 
-  const title:any = params.get("title");
-  const brand:any = params.get("brand");
-
+  const title:any = params.get("title") ? params.get("title") : "x";
+  const brand:any = params.get("brand") ? params.get("brand") : "x";
   const calories:any = Number(params.get("calories"));
   const fat:any = Number(params.get("fat"));
   const carb:any = Number(params.get("carb"));
@@ -39,40 +38,31 @@ const FoodDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const totalServing = () => {
+
     return (
-      <>
-      <h5 className="card-title">
-        {title ? title : "x"}
-      </h5>
-      <p className="card-text">
-        <span>브랜드 : </span>
-        {brand ? brand : "x"}
-      </p>
-      <p className="card-text">
-        <span>칼로리 : </span>
-        {calories ? calories : 0}
-      </p>
-      <p className="card-text">
-        <span>지방 : </span>
-        {fat ? fat : 0}
-      </p>
-      <p className="card-text">
-        <span>탄수화물 : </span>
-        {carb ? carb : 0}
-      </p>
-      <p className="card-text">
-        <span>단백질 : </span>
-        {protein ? protein : 0}
-      </p>
-      <p className="card-text">
-        <span>용량 : </span>
-        {serving ? serving : 0}
-      </p>
-      </>
+      <div className="card">
+        <div className="card-body">
+          <h4 className="card-title">{serving ? serving : 0}</h4>
+          <p className="card-text">
+            <span>칼로리 : </span>
+            {calories ? calories : 0}
+          </p>
+          <p className="card-text">
+            <span>지방 : </span>
+            {fat ? fat : 0}
+          </p>
+          <p className="card-text">
+            <span>탄수화물 : </span>
+            {carb ? carb : 0}
+          </p>
+          <p className="card-text">
+            <span>단백질 : </span>
+            {protein ? protein : 0}
+          </p>
+        </div>
+      </div>
     );
   };
-
-  // 1 중간크기
 
   // ---------------------------------------------------------------------------------------------->
   const oneServing = () => {
@@ -89,7 +79,7 @@ const FoodDetail = () => {
     const regexRules8 = servingValue.match(/(\d+)(\s*)티스푼/gm);
 
     // 용량 파악 불가능한것
-    const regexRules9 = servingValue.match(/(\d+)(\s*)(조각|장|개|쪽|통|팩|회.*크기)/gm);
+    // ...
 
     // 단순 숫자만 리턴하기 위함
     if (regexRules1) {
@@ -127,13 +117,12 @@ const FoodDetail = () => {
     else {
       return 1;
     }
-  };
-
+  }
   // ---------------------------------------------------------------------------------------------->
-  const perGram = (params: any) => {
+  const perServing = (params: any) => {
 
-    const oneServingValue:any = oneServing();
     const paramsValue = Number(params);
+    const oneServingValue:any = oneServing();
 
     const caloriesPer:any = ((calories/oneServingValue)*(paramsValue)).toFixed(1);
     const fatPer:any = ((fat/oneServingValue)*(paramsValue)).toFixed(1);
@@ -141,26 +130,30 @@ const FoodDetail = () => {
     const proteinPer:any = ((protein/oneServingValue)*(paramsValue)).toFixed(1);
 
     return (
-      <>
-      <p className="card-text">
-        <span>칼로리 : </span>
-        {caloriesPer ? caloriesPer : "x"}
-      </p>
-      <p className="card-text">
-        <span>지방 : </span>
-        {fatPer ? fatPer : "x"}
-      </p>
-      <p className="card-text">
-        <span>탄수화물 : </span>
-        {carbPer ? carbPer : "x"}
-      </p>
-      <p className="card-text">
-        <span>단백질 : </span>
-        {proteinPer ? proteinPer : "x"}
-      </p>
-      </>
+      <div className="card">
+        <div className="card-body">
+          <h4 className="card-title">{params}</h4>
+          <p className="card-text">
+            <span>칼로리 : </span>
+            {caloriesPer ? caloriesPer : 0}
+          </p>
+          <p className="card-text">
+            <span>지방 : </span>
+            {fatPer ? fatPer : 0}
+          </p>
+          <p className="card-text">
+            <span>탄수화물 : </span>
+            {carbPer ? carbPer : 0}
+          </p>
+          <p className="card-text">
+            <span>단백질 : </span>
+            {proteinPer ? proteinPer : 0}
+          </p>
+        </div>
+      </div>
     );
   };
+
 
   // ---------------------------------------------------------------------------------------------->
   return (
@@ -169,25 +162,22 @@ const FoodDetail = () => {
       <div className="empty-h100"></div>
       <div className="container">
         <div className="row">
-          <div className="col-6">
-            <div className="card">
-              <div className="card-body">
-                {totalServing()}
-              </div>
-            </div>
+          <div className="col-12">
+            <h1 className="mb-3">{title}</h1>
+            <h2 className="mb-3">{brand}</h2>
+            <div className="empty-h20"></div>
           </div>
           <div className="col-6">
-            <div className="empty-h20"></div>
-            <div className="input-group">
-              <input type="number" className="form-control" placeholder="그램 수 입력"
-              onChange={e => setShowPerGram(Number(e.target.value))} />
-            </div>
-            <div className="empty-h20"></div>
-            <div className="card">
-              <div className="card-body">
-                {showPerGram > 0 && perGram(showPerGram)}
-              </div>
-            </div>
+            {totalServing()}
+          </div>
+          <div className="col-6">
+            {perServing(showGram)}
+          </div>
+        </div>
+        <br/>
+        <div className="row">
+          <div className="col-12">
+            <input type="number" className="form-control" onChange={e => setShowGram(Number(e.target.value))} />
           </div>
         </div>
       </div>
