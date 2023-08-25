@@ -26,6 +26,7 @@ const BoardDetailStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const BoardDetail = () => {
+  const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
   const [board, setBoard] = useState<any>(null);
@@ -53,7 +54,6 @@ const BoardDetail = () => {
   }
 
   // ---------------------------------------------------------------------------------------------->
-  const navParam = useNavigate();
   const ButtonBoardUpdate = (_id: string) => {
     const navButton = () => navParam(`/boardUpdate`, {
       state: {
@@ -61,7 +61,6 @@ const BoardDetail = () => {
       }
     });
     navButton();
-  };
   };
 
   // ---------------------------------------------------------------------------------------------->

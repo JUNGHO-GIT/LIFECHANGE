@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
-import {useParams} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 const BoardUpdateStyle = createGlobalStyle`
@@ -38,8 +38,11 @@ const BoardUpdateStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const BoardUpdate = () => {
-  const { _id } = useParams<{ _id: string }>();
-  const [board, setBoard] = useState<any>(null);
+  const navParam = useNavigate();
+  const _id = useLocation().state._id;
+  const [board_title, setBoard_title] = useState<string>("");
+  const [board_content, setBoard_content] = useState<string>("");
+  const [board, setBoard] = useState<any>();
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -58,12 +61,10 @@ const BoardUpdate = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const BoardUpdateFlow = async () => {
-
     try {
       const response = await axios.put(`http://127.0.0.1:4000/board/boardUpdate/${_id}`, board);
       if (response.data === "success") {
         alert("Update success");
-        window.location.href = `/boardDetail/${_id}`;
       }
       else {
         alert("Update failed");
@@ -73,7 +74,6 @@ const BoardUpdate = () => {
       console.error(err);
     }
   };
-
   if (!board) {
     return (
       <div>Loading...</div>

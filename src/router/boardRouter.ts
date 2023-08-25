@@ -67,7 +67,8 @@ boardRouter.post("/boardInsert", async (req: Request, res: Response) => {
 boardRouter.put("/boardUpdate/:_id", async (req: Request, res: Response) => {
   try {
     const boardUpdate = await boardService.boardUpdate (
-      req.params._id, req.body
+      req.params._id,
+      req.body
     );
     if (boardUpdate) {
       res.send("success");
