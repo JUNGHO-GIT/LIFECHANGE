@@ -1,5 +1,4 @@
 // UserInfo.tsx
-
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
@@ -88,56 +87,53 @@ const UserInfo = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <UserInfoStyle />
-      <section className="userDetail custom-flex-center">
-        <form>
-          <div className="empty-h50"></div>
-          <h1 className="mb-3">User Info</h1>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input type="text"
-              className="form-control"
-              id="user_id"
-              placeholder="User ID"
-              value={user_id}
-              onChange={(e) => setUserId(e.target.value)}
-              readOnly
-            />
-            <label htmlFor="user_id">User ID</label>
-          </div>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input type="text"
-              className="form-control"
-              id="user_pw"
-              placeholder="User PW"
-              value={user_pw}
-              onChange={(e) => setUserPw(e.target.value)}
-              readOnly
-            />
-            <label htmlFor="user_pw">User PW</label>
-          </div>
-          <div className="empty-h100"></div>
-          <button type="button" className="btn btn-success" onClick={refreshUserInfo}>
-            Refresh
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-primary" onClick={buttonUserUpdate}>
-            Update
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-danger" onClick={buttonUserDelete}>
-            Delete
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-secondary" onClick={buttonUserList}>
-            List
-          </button>
-          <div className="empty-h50"></div>
-        </form>
-      </section>
-    </>
+    <section className="userDetail custom-flex-center"><UserInfoStyle />
+      <form>
+        <div className="empty-h50"></div>
+        <h1 className="mb-3">User Info</h1>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="user_id"
+            placeholder="User ID"
+            value={user_id}
+            onChange={(e) => setUserId(e.target.value)}
+            readOnly
+          />
+          <label htmlFor="user_id">User ID</label>
+        </div>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="user_pw"
+            placeholder="User PW"
+            value={user_pw}
+            onChange={(e) => setUserPw(e.target.value)}
+            readOnly
+          />
+          <label htmlFor="user_pw">User PW</label>
+        </div>
+        <div className="empty-h100"></div>
+        <button type="button" className="btn btn-success" onClick={refreshUserInfo}>
+          Refresh
+        </button>
+        &nbsp;
+        <button type="button" className="btn btn-primary" onClick={buttonUserUpdate}>
+          Update
+        </button>
+        &nbsp;
+        <button type="button" className="btn btn-danger" onClick={buttonUserDelete}>
+          Delete
+        </button>
+        &nbsp;
+        <button type="button" className="btn btn-secondary" onClick={buttonUserList}>
+          List
+        </button>
+        <div className="empty-h50"></div>
+      </form>
+    </section>
   );
 };
 

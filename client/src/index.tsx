@@ -1,9 +1,9 @@
+// index.tsx
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./core/App";
 import reportWebVitals from "./settings/reportWebVitals";
-import setupProxy from "./settings/setupProxy";
 
 ReactDOM.render(
   <React.StrictMode>

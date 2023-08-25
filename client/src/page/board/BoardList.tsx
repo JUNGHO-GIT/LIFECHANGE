@@ -1,5 +1,4 @@
 // BoardList.tsx
-
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
@@ -27,10 +26,10 @@ const BoardListStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 interface Board {
   _id: string,
-  boardId: string,
-  boardTitle: string,
-  boardContent: string,
-  boardDate: String
+  board_id: string,
+  board_title: string,
+  board_content: string,
+  board_regdate: String
 }
 
 // ------------------------------------------------------------------------------------------------>
@@ -92,11 +91,11 @@ const BoardList = () => {
                 <tr key={board._id}>
                   <td>
                     <a onClick={() => buttonBoardDetail(board._id)} className="text-hover">
-                      {board.boardId}
+                      {board.board_id}
                     </a>
                   </td>
-                  <td>{board.boardTitle}</td>
-                  <td>{board.boardDate}</td>
+                  <td>{board.board_title}</td>
+                  <td>{board.board_regdate}</td>
                 </tr>
               ))}
             </tbody>

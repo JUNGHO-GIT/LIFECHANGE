@@ -1,3 +1,4 @@
+// Loader.tsx
 import React from "react";
 import {createGlobalStyle} from "styled-components";
 
@@ -56,4 +57,5 @@ const Loader = () => {
     </div>
   );
 };
+
 export default Loader;

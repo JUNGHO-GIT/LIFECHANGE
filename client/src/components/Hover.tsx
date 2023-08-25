@@ -1,8 +1,13 @@
+// Hover.tsx
 // @ts-nocheck
 import React, { useEffect } from "react";
 
+// ------------------------------------------------------------------------------------------------>
 const Hover = () => {
+
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
+
     const textHovers = document.querySelectorAll(".text-hover");
     textHovers.forEach((textHover) => {
       textHover.style.transition = "font-size 0.1s ease-in-out";
@@ -18,6 +23,10 @@ const Hover = () => {
     });
   }, []);
 
-  return <></>;
+  return (
+    <>
+    </>
+  );
 };
+
 export default Hover;

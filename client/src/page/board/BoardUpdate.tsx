@@ -1,5 +1,4 @@
 // BoardUpdate.tsx
-
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
@@ -40,10 +39,10 @@ const BoardUpdateStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 interface Board {
   _id: string,
-  boardId: string,
-  boardTitle: string,
-  boardContent: string,
-  boardDate: string,
+  board_id: string,
+  board_title: string,
+  board_content: string,
+  board_regdate: string,
 }
 
 // ------------------------------------------------------------------------------------------------>
@@ -98,12 +97,12 @@ const BoardUpdate = () => {
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="boardId"
+              id="board_id"
               placeholder="User ID"
-              value={board.boardId}
+              value={board.board_id}
               readOnly
             />
-            <label htmlFor="boardId">User ID</label>
+            <label htmlFor="board_id">User ID</label>
           </div>
           <div className="empty-h20"></div>
           <div className="form-floating">
@@ -111,9 +110,9 @@ const BoardUpdate = () => {
               className="form-control"
               type="text"
               placeholder="Title"
-              value={board.boardTitle}
+              value={board.board_title}
               id="floatingTitle"
-              onChange={(e) => setBoard({...board, boardTitle: e.target.value})}
+              onChange={(e) => setBoard({...board, board_title: e.target.value})}
             />
             <label htmlFor="floatingTitle">Title</label>
           </div>
@@ -123,9 +122,9 @@ const BoardUpdate = () => {
               className="form-control"
               type="text"
               placeholder="Content"
-              value={board.boardContent}
+              value={board.board_content}
               id="floatingContent"
-              onChange={(e) => setBoard({...board, boardContent: e.target.value})}
+              onChange={(e) => setBoard({...board, board_content: e.target.value})}
             />
             <label htmlFor="floatingContent">Content</label>
           </div>
@@ -133,12 +132,12 @@ const BoardUpdate = () => {
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="boardDate"
+              id="board_regdate"
               placeholder="Board Date"
-              value={board.boardDate}
+              value={board.board_regdate}
               readOnly
             />
-            <label htmlFor="boardDate">Board Date</label>
+            <label htmlFor="board_regdate">Board Date</label>
           </div>
           <div className="empty-h100"></div>
           <button className="btn btn-primary" type="button" onClick={BoardUpdateFlow}>

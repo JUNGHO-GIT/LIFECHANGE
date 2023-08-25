@@ -1,7 +1,7 @@
 // Footer.tsx
 import React from "react";
-import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
+import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 const FooterStyle = createGlobalStyle`

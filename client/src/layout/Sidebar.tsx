@@ -1,4 +1,4 @@
-// Sidebar.bx-task-x
+// Sidebar.tsx
 import React, {useState, useEffect} from "react";
 import {createGlobalStyle} from "styled-components";
 import {Link} from "react-router-dom";

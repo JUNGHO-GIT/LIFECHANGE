@@ -1,5 +1,4 @@
 // BoardDetail.tsx
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -28,10 +27,10 @@ const BoardDetailStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 interface Board {
   _id: string,
-  boardId: string,
-  boardTitle: string,
-  boardContent: string,
-  boardDate: String
+  board_id: string,
+  board_title: string,
+  board_content: string,
+  board_regdate: String
 }
 
 // ------------------------------------------------------------------------------------------------>
@@ -111,19 +110,19 @@ const BoardDetail = () => {
             <tbody>
               <tr>
                 <th scope="row">Board ID</th>
-                <td>{board.boardId}</td>
+                <td>{board.board_id}</td>
               </tr>
               <tr>
                 <th scope="row">Board Title</th>
-                <td>{board.boardTitle}</td>
+                <td>{board.board_title}</td>
               </tr>
               <tr>
                 <th scope="row">Board Content</th>
-                <td>{board.boardContent}</td>
+                <td>{board.board_content}</td>
               </tr>
               <tr>
                 <th scope="row">Board Date</th>
-                <td>{board.boardDate}</td>
+                <td>{board.board_regdate}</td>
               </tr>
             </tbody>
           </table>

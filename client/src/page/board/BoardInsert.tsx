@@ -1,5 +1,4 @@
 // BoardInsert.tsx
-
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
@@ -38,11 +37,11 @@ const BoardInsertStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const BoardInsert = () => {
-  const [boardId, setBoardId] = useState("");
+  const [board_id, setBoardId] = useState("");
   const [boardPw, setBoardPw] = useState("");
-  const [boardTitle, setBoardTitle] = useState("");
-  const [boardContent, setBoardContent] = useState("");
-  const [boardDate, setBoardDate] = useState(new Date().toISOString());
+  const [board_title, setBoardTitle] = useState("");
+  const [board_content, setBoardContent] = useState("");
+  const [board_regdate, setBoardDate] = useState(new Date().toISOString());
 
   // ---------------------------------------------------------------------------------------------->
   const fetchBoardInsert = async () => {
@@ -75,11 +74,11 @@ const BoardInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   const BoardInsertFlow = async () => {
 
-    if (boardTitle === "") {
+    if (board_title === "") {
       alert("Please enter a title");
       return;
     }
-    else if (boardContent === "") {
+    else if (board_content === "") {
       alert("Please enter a content");
       return;
     }
@@ -87,10 +86,10 @@ const BoardInsert = () => {
       setBoardDate(new Date().toISOString());
       try {
         const res = await axios.post("http://localhost:4000/board/boardInsert", {
-          boardId: boardId,
-          boardTitle: boardTitle,
-          boardContent: boardContent,
-          boardDate: boardDate,
+          board_id: board_id,
+          board_title: board_title,
+          board_content: board_content,
+          board_regdate: board_regdate,
         });
 
         if (res.data === "success") {
@@ -123,13 +122,13 @@ const BoardInsert = () => {
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="boardId"
+              id="board_id"
               placeholder="User ID"
-              value={boardId}
+              value={board_id}
               onChange={(e) => setBoardId(e.target.value)}
               readOnly
             />
-            <label htmlFor="boardId">User ID</label>
+            <label htmlFor="board_id">User ID</label>
           </div>
           <div className="empty-h20"></div>
           <div className="form-floating">
@@ -149,7 +148,7 @@ const BoardInsert = () => {
               className="form-control"
               type="text"
               placeholder="Title"
-              value={boardTitle}
+              value={board_title}
               id="floatingTitle"
               onChange={(e) => {
                 setBoardTitle(e.target.value);
@@ -163,7 +162,7 @@ const BoardInsert = () => {
               className="form-control"
               type="text"
               placeholder="Content"
-              value={boardContent}
+              value={board_content}
               id="floatingContent"
               onChange={(e) => {
                 setBoardContent(e.target.value);
@@ -176,13 +175,13 @@ const BoardInsert = () => {
           <div className="form-floating">
             <input type="text"
               className="form-control"
-              id="boardDate"
+              id="board_regdate"
               placeholder="Board Date"
-              value={boardDate}
+              value={board_regdate}
               onChange={(e) => setBoardDate(e.target.value)}
               readOnly
             />
-            <label htmlFor="boardDate">Board Date</label>
+            <label htmlFor="board_regdate">Board Date</label>
           </div>
           <div className="empty-h100"></div>
           <button className="w-100 btn btn-lg btn-primary" type="button" onClick={BoardInsertFlow}>

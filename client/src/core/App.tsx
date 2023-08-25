@@ -1,9 +1,6 @@
 // App.tsx
-
 import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import "./App.css";
 import "../assets/css/Custom.css";
@@ -11,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import Resize from "../components/Resize";
 import Loader from "../components/Loader";
@@ -51,22 +49,18 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-
           <Route path="/userLogin" element={<Login />} />
           <Route path="/userInsert" element={<UserInsert />} />
           <Route path="/userDetail" element={<UserInfo />} />
           <Route path="/userList" element={<UserList />} />
           <Route path="/userUpdate" element={<UserUpdate />} />
           <Route path="/userDelete" element={<UserDelete />} />
-
           <Route path="/boardList" element={<BoardList />} />
           <Route path="/boardInsert" element={<BoardInsert />} />
           <Route path="/boardDetail/:_id" element={<BoardDetail />} />
           <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
-
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail/:params" element={<CalendarDetail />} />
-
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/foodTotal/:user_id/:food_date" element={<FoodTotal />} />

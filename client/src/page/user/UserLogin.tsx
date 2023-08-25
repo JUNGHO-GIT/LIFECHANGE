@@ -1,9 +1,9 @@
 // UserLogin.tsx
-
 import React, {useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
+// ------------------------------------------------------------------------------------------------>
 const LoginStyle = createGlobalStyle`
   .userLogin {
     display: flex;
@@ -66,48 +66,45 @@ const Login = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <LoginStyle />
-      <section className="userLogin custom-flex-center">
-        <form>
-          <div className="empty-h50"></div>
-          <h1 className="mb-3">Log In</h1>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="ID"
-              value={user_id}
-              id="floatingId"
-              onChange={(e) => {
-                setId(e.target.value);
-              }}
-            />
-            <label htmlFor="floatingId">ID</label>
-          </div>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Password"
-              value={user_pw}
-              id="floatingPassword"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <label htmlFor="floatingPassword">Password</label>
-          </div>
-          <div className="empty-h100"></div>
-          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={LoginFlow}>
-            Log In
-          </button>
-          <div className="empty-h50"></div>
-        </form>
-      </section>
-    </>
+    <section className="userLogin custom-flex-center"><LoginStyle />
+      <form>
+        <div className="empty-h50"></div>
+        <h1 className="mb-3">Log In</h1>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="ID"
+            value={user_id}
+            id="floatingId"
+            onChange={(e) => {
+              setId(e.target.value);
+            }}
+          />
+          <label htmlFor="floatingId">ID</label>
+        </div>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Password"
+            value={user_pw}
+            id="floatingPassword"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <label htmlFor="floatingPassword">Password</label>
+        </div>
+        <div className="empty-h100"></div>
+        <button className="w-100 btn btn-lg btn-primary" type="button" onClick={LoginFlow}>
+          Log In
+        </button>
+        <div className="empty-h50"></div>
+      </form>
+    </section>
   );
 };
 
