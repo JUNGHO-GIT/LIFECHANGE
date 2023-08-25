@@ -5,16 +5,6 @@ import {createGlobalStyle} from "styled-components";
 import {useParams} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-interface BoardInterface {
-  _id: string;
-  user_id: string;
-  board_title: string;
-  board_content: string;
-  board_regdate: string;
-  board_update: string;
-}
-
-// ------------------------------------------------------------------------------------------------>
 const BoardUpdateStyle = createGlobalStyle`
   .boardUpdate {
     display: flex;
@@ -49,8 +39,9 @@ const BoardUpdateStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 const BoardUpdate = () => {
   const { _id } = useParams<{ _id: string }>();
-  const [board, setBoard] = useState<BoardInterface | null>(null);
+  const [board, setBoard] = useState<any>(null);
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {

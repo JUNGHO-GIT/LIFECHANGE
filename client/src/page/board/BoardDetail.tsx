@@ -1,8 +1,8 @@
 // BoardDetail.tsx
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 const BoardDetailStyle = createGlobalStyle`
@@ -53,8 +53,15 @@ const BoardDetail = () => {
   }
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonBoardUpdate = (_id: string) => {
-    window.location.href = "/boardUpdate/" + _id;
+  const navParam = useNavigate();
+  const ButtonBoardUpdate = (_id: string) => {
+    const navButton = () => navParam(`/boardUpdate`, {
+      state: {
+        _id
+      }
+    });
+    navButton();
+  };
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -121,7 +128,7 @@ const BoardDetail = () => {
           Refresh
         </button>
         &nbsp;
-        <button className="btn btn-primary" type="button" onClick={() => buttonBoardUpdate(board._id)}>
+        <button className="btn btn-primary" type="button" onClick={() => ButtonBoardUpdate(board._id)}>
           Update
         </button>
         &nbsp;

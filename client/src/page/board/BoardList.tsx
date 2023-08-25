@@ -1,8 +1,8 @@
 // BoardList.tsx
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 const BoardListStyle = createGlobalStyle`
@@ -29,22 +29,16 @@ const BoardList = () => {
   const [boardList, setBoardList] = useState<[]>([]);
 
   // ---------------------------------------------------------------------------------------------->
-  useEffect(() => {
-    const fetchBoardList = async () => {
-      try {
-        const response = await axios.get ("http://127.0.0.1:4000/board/boardList");
-        setBoardList(response.data);
+  const navParam = useNavigate();
+  const ButtonBoardDetail = (_id: string) => {
+    const navButton = () => navParam(`/boardDetail`, {
+      state: {
+        _id
       }
-      catch (err) {
-        console.error(err);
-        setBoardList([]);
-      }
-    };
+    });
+    navButton();
+  };
 
-    fetchBoardList();
-  }, []);
-
-  // ---------------------------------------------------------------------------------------------->
   const refreshBoardList = () => {
     return (
       <Link to="/boardList" className="btn btn-success">
@@ -61,15 +55,21 @@ const BoardList = () => {
     );
   };
 
-  const ButtonBoardDetail = (_id: string) => {
-    const navParam = useNavigate();
-    const navButton = () => navParam(`/boardDetail`, {
-      state: {
-        _id
+  // ---------------------------------------------------------------------------------------------->
+  useEffect(() => {
+    const fetchBoardList = async () => {
+      try {
+        const response = await axios.get ("http://127.0.0.1:4000/board/boardList");
+        setBoardList(response.data);
       }
-    });
-    navButton();
-  };
+      catch (err) {
+        console.error(err);
+        setBoardList([]);
+      }
+    };
+
+    fetchBoardList();
+  }, []);
 
   // ---------------------------------------------------------------------------------------------->
   return (

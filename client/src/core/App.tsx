@@ -57,10 +57,10 @@ const App = () => {
           <Route path="/userDelete" element={<UserDelete />} />
           <Route path="/boardList" element={<BoardList />} />
           <Route path="/boardInsert" element={<BoardInsert />} />
-          <Route path="/boardDetail/:_id" element={<BoardDetail />} />
-          <Route path="/boardUpdate/:_id" element={<BoardUpdate />} />
+          <Route path="/boardDetail" element={<BoardDetail />} />
+          <Route path="/boardUpdate" element={<BoardUpdate />} />
           <Route path="/calendarList" element={<CalendarList />} />
-          <Route path="/calendarDetail/:params" element={<CalendarDetail />} />
+          <Route path="/calendarDetail" element={<CalendarDetail />} />
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/foodTotal" element={<FoodTotal />} />
