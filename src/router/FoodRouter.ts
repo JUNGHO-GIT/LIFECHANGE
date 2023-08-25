@@ -15,6 +15,7 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
       req.body.user_id,
       req.body.food_name,
       req.body.food_brand,
+      req.body.food_category,
       req.body.food_serving,
       req.body.food_calories,
       req.body.food_carb,
@@ -35,7 +36,7 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
 });
 
 // 3-2. foodTotal --------------------------------------------------------------------------------->
-foodRouter.get("/foodTotal/:user_id/:food_regdate", async (req: Request, res: Response) => {
+foodRouter.post("/foodTotal/:user_id/:food_regdate", async (req: Request, res: Response) => {
   try {
     const foodTotal = await foodService.foodTotal (
       req.params.user_id,

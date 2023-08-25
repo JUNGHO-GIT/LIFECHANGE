@@ -18,6 +18,10 @@ const FoodScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
+  food_category : {
+    type : String,
+    required : true
+  },
   food_serving : {
     type : String,
     required : true

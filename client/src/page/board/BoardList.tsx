@@ -29,7 +29,7 @@ interface Board {
   board_id: string,
   board_title: string,
   board_content: string,
-  board_regdate: String
+  board_regdate: string,
 }
 
 // ------------------------------------------------------------------------------------------------>

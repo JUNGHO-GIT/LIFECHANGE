@@ -26,10 +26,11 @@ const FoodDetailStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const FoodDetail = () => {
+  const [showGram, setShowGram] = useState(0);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const user_id = window.sessionStorage.getItem("user_id");
-  const [showGram, setShowGram] = useState(0);
+
   const title:any = params.get("title") ? params.get("title") : "x";
   const brand:any = params.get("brand") ? params.get("brand") : "x";
   const calories:any = Number(params.get("calories"));
@@ -37,6 +38,12 @@ const FoodDetail = () => {
   const carb:any = Number(params.get("carb"));
   const protein:any = Number(params.get("protein"));
   const serving:any = params.get("serving");
+
+  // ---------------------------------------------------------------------------------------------->
+  const [category, setCategory] = useState("");
+  const handleCategoryChange = (e: any) => {
+    setCategory(e.target.value);
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const totalServing = () => {
@@ -69,54 +76,24 @@ const FoodDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   const oneServing = () => {
     const servingValue = serving.toString();
+    const units = [
+      { regex: /(g|ml)/gm, replace: ["g", "ml"], factor: 1 },
+      { regex: /(컵)/gm, replace: ["컵"], factor: 200 },
+      { regex: /(큰술|테이블스푼)/gm, replace: ["큰술", "테이블스푼"], factor: 15 },
+      { regex: /(작은술|스푼|티스푼)/gm, replace: ["작은술", "스푼", "티스푼"], factor: 5 }
+    ];
 
-    // 용량 파악 가능한것
-    const regexRules1 = servingValue.match(/(\d+)(\s*)g/gm);
-    const regexRules2 = servingValue.match(/(\d+)(\s*)ml/gm);
-    const regexRules3 = servingValue.match(/(\d+)(\s*)컵/gm);
-    const regexRules4 = servingValue.match(/(\d+)(\s*)큰술/gm);
-    const regexRules5 = servingValue.match(/(\d+)(\s*)작은술/gm);
-    const regexRules6 = servingValue.match(/(\d+)(\s*)스푼/gm);
-    const regexRules7 = servingValue.match(/(\d+)(\s*)테이블스푼/gm);
-    const regexRules8 = servingValue.match(/(\d+)(\s*)티스푼/gm);
+    for (const unit of units) {
+      const match = servingValue.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, 'gm'));
+      if (match) {
+        let regexValue = match[0];
+        unit.replace.forEach(index => regexValue = regexValue.replace(index, ""));
+        return Number(regexValue) * unit.factor;
+      }
+    }
+    return 1;
+  };
 
-    // 단순 숫자만 리턴하기 위함
-    if (regexRules1) {
-      const regexValue = (regexRules1[0].replace("g", "")) * 1;
-      return Number(regexValue);
-    }
-    else if (regexRules2) {
-      const regexValue = (regexRules2[0].replace("ml", "")) * 1;
-      return Number(regexValue);
-    }
-    else if (regexRules3) {
-      const regexValue = (regexRules3[0].replace("컵", "")) * 200;
-      return Number(regexValue);
-    }
-    else if (regexRules4) {
-      const regexValue = (regexRules4[0].replace("큰술", "")) * 15;
-      return Number(regexValue);
-    }
-    else if (regexRules5) {
-      const regexValue = (regexRules5[0].replace("작은술", "")) * 5;
-      return Number(regexValue);
-    }
-    else if (regexRules6) {
-      const regexValue = (regexRules6[0].replace("스푼", "")) * 5;
-      return Number(regexValue);
-    }
-    else if (regexRules7) {
-      const regexValue = (regexRules7[0].replace("테이블스푼", "")) * 15;
-      return Number(regexValue);
-    }
-    else if (regexRules8) {
-      const regexValue = (regexRules8[0].replace("티스푼", "")) * 5;
-      return Number(regexValue);
-    }
-    else {
-      return 1;
-    }
-  }
   // ---------------------------------------------------------------------------------------------->
   const perServing = (params: any) => {
 
@@ -129,12 +106,13 @@ const FoodDetail = () => {
     const fatPer:any = ((fat/oneServingValue)*(paramsValue)).toFixed(1);
 
     // 음식 상세정보를 보낸다.
-    const buttonFoodFlow = async () => {
+    const buttonFoodInsert = async () => {
       try {
         const res  = await axios.post("http://localhost:4000/food/foodInsert", {
           user_id : user_id,
           food_name : title,
           food_brand : brand,
+          food_category: category,
           food_serving : params,
           food_calories : caloriesPer,
           food_carb : carbPer,
@@ -183,7 +161,7 @@ const FoodDetail = () => {
         </div>
       </div>
       <br/>
-      <button type="button" className="btn btn-primary" onClick={buttonFoodFlow}>
+      <button type="button" className="btn btn-primary" onClick={buttonFoodInsert}>
         음식 추가하기
       </button>
       </>
@@ -210,6 +188,15 @@ const FoodDetail = () => {
         <br/>
         <div className="row">
           <div className="col-12">
+            {/** 카테고리 선택 **/}
+            <select className="form-select" onChange={handleCategoryChange}>
+              <option selected>카테고리</option>
+              <option value="morning">아침</option>
+              <option value="lunch">점심</option>
+              <option value="dinner">저녁</option>
+              <option value="snack">간식</option>
+            </select>
+            {/** 용량 숫자 **/}
             <input type="number" className="form-control" onChange={e => setShowGram(Number(e.target.value))} />
           </div>
         </div>
