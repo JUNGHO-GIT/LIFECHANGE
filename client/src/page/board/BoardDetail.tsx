@@ -27,8 +27,7 @@ const BoardDetailStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 const BoardDetail = () => {
   const navParam = useNavigate();
-  const location = useLocation();
-  const _id = location.state._id;
+  const _id = useLocation().state._id;
   const [board, setBoard] = useState<any>(null);
 
   // ---------------------------------------------------------------------------------------------->

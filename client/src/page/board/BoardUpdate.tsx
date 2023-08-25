@@ -65,6 +65,7 @@ const BoardUpdate = () => {
       const response = await axios.put(`http://127.0.0.1:4000/board/boardUpdate/${_id}`, board);
       if (response.data === "success") {
         alert("Update success");
+        window.location.href = "/boardList";
       }
       else {
         alert("Update failed");

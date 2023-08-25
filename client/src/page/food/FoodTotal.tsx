@@ -16,9 +16,8 @@ const FoodTotal = () => {
   const [foodResultDinner, setFoodResultDinner] = useState([]);
   const [foodResultSnack, setFoodResultSnack] = useState([]);
 
-  const location = useLocation();
-  const user_id = location.state.user_id;
-  const food_regdate = location.state.food_regdate;
+  const user_id = useLocation().state.user_id;
+  const food_regdate = useLocation().state.food_regdate;
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
