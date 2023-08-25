@@ -1,7 +1,7 @@
 // BoardDetail.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
@@ -25,18 +25,10 @@ const BoardDetailStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-interface Board {
-  _id: string,
-  board_id: string,
-  board_title: string,
-  board_content: string,
-  board_regdate: String
-}
-
-// ------------------------------------------------------------------------------------------------>
 const BoardDetail = () => {
-  const { _id } = useParams<{ _id: string }>();
-  const [board, setBoard] = useState<Board | null>(null);
+  const location = useLocation();
+  const _id = location.state._id;
+  const [board, setBoard] = useState<any>(null);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -107,8 +99,8 @@ const BoardDetail = () => {
         <table className="table table-striped table-bordered">
           <tbody>
             <tr>
-              <th scope="row">Board ID</th>
-              <td>{board.board_id}</td>
+              <th scope="row">ID</th>
+              <td>{board.user_id}</td>
             </tr>
             <tr>
               <th scope="row">Board Title</th>

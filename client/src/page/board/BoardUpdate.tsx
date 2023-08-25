@@ -5,6 +5,16 @@ import {createGlobalStyle} from "styled-components";
 import {useParams} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
+interface BoardInterface {
+  _id: string;
+  user_id: string;
+  board_title: string;
+  board_content: string;
+  board_regdate: string;
+  board_update: string;
+}
+
+// ------------------------------------------------------------------------------------------------>
 const BoardUpdateStyle = createGlobalStyle`
   .boardUpdate {
     display: flex;
@@ -37,18 +47,9 @@ const BoardUpdateStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-interface Board {
-  _id: string,
-  board_id: string,
-  board_title: string,
-  board_content: string,
-  board_regdate: string,
-}
-
-// ------------------------------------------------------------------------------------------------>
 const BoardUpdate = () => {
   const { _id } = useParams<{ _id: string }>();
-  const [board, setBoard] = useState<Board | null>(null);
+  const [board, setBoard] = useState<BoardInterface | null>(null);
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
@@ -98,12 +99,12 @@ const BoardUpdate = () => {
         <div className="form-floating">
           <input type="text"
             className="form-control"
-            id="board_id"
+            id="user_id"
             placeholder="User ID"
-            value={board.board_id}
+            value={board.user_id}
             readOnly
           />
-          <label htmlFor="board_id">User ID</label>
+          <label htmlFor="user_id">User ID</label>
         </div>
         <div className="empty-h20"></div>
         <div className="form-floating">

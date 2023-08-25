@@ -4,6 +4,15 @@ import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
+interface BoardInterface {
+  _id: string,
+  user_id: string,
+  board_title: string,
+  board_content: string,
+  board_regdate: string,
+}
+
+// ------------------------------------------------------------------------------------------------>
 const BoardInsertStyle = createGlobalStyle`
   .boardInsert {
     display: flex;
@@ -37,7 +46,7 @@ const BoardInsertStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const BoardInsert = () => {
-  const [board_id, setBoardId] = useState("");
+  const [user_id, setBoardId] = useState("");
   const [boardPw, setBoardPw] = useState("");
   const [board_title, setBoardTitle] = useState("");
   const [board_content, setBoardContent] = useState("");
@@ -83,10 +92,10 @@ const BoardInsert = () => {
       return;
     }
     else {
-      setBoardDate(new Date().toISOString());
+      setBoardDate(new Date().toISOString().split('T')[0]);
       try {
         const res = await axios.post("http://localhost:4000/board/boardInsert", {
-          board_id: board_id,
+          user_id: user_id,
           board_title: board_title,
           board_content: board_content,
           board_regdate: board_regdate,
@@ -120,13 +129,13 @@ const BoardInsert = () => {
         <div className="form-floating">
           <input type="text"
             className="form-control"
-            id="board_id"
+            id="user_id"
             placeholder="User ID"
-            value={board_id}
+            value={user_id}
             onChange={(e) => setBoardId(e.target.value)}
             readOnly
           />
-          <label htmlFor="board_id">User ID</label>
+          <label htmlFor="user_id">User ID</label>
         </div>
         <div className="empty-h20"></div>
         <div className="form-floating">
@@ -169,7 +178,6 @@ const BoardInsert = () => {
           <label htmlFor="floatingContent">Content</label>
         </div>
         <div className="empty-h20"></div>
-        {/** date time */}
         <div className="form-floating">
           <input type="text"
             className="form-control"

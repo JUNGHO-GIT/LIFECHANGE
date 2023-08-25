@@ -1,7 +1,7 @@
 // FoodTotal.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
@@ -10,12 +10,15 @@ const FoodTotalStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const FoodTotal = () => {
-  const {user_id, food_regdate} = useParams<{ user_id: string; food_regdate: string }>();
   const [foodResultAll, setFoodResultAll] = useState([]);
   const [foodResultMorning, setFoodResultMorning] = useState([]);
   const [foodResultLunch, setFoodResultLunch] = useState([]);
   const [foodResultDinner, setFoodResultDinner] = useState([]);
   const [foodResultSnack, setFoodResultSnack] = useState([]);
+
+  const location = useLocation();
+  const user_id = location.state.user_id;
+  const food_regdate = location.state.food_regdate;
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -23,10 +26,8 @@ const FoodTotal = () => {
       try {
         const response = await axios.post (
           `http://127.0.0.1:4000/food/foodTotal/`, {
-            data : {
-              user_id: user_id,
-              food_regdate: food_regdate,
-            }
+            user_id: user_id,
+            food_regdate: food_regdate,
           }
         );
         setFoodResultAll(response.data.foodResultAll);

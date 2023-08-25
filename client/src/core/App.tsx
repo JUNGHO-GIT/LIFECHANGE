@@ -63,7 +63,7 @@ const App = () => {
           <Route path="/calendarDetail/:params" element={<CalendarDetail />} />
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
-          <Route path="/foodTotal/:user_id/:food_regdate" element={<FoodTotal />} />
+          <Route path="/foodTotal" element={<FoodTotal />} />
         </Routes>
         <Footer />
       </Router>

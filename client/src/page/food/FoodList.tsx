@@ -1,20 +1,22 @@
 // FoodList.tsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 const FoodList = () => {
-  const [items, setItems] = useState([]);
+  const [foodList, setFoodList] = useState([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
   const lang = "ko";
 
-  const fetchData = () => {
-    const url = `https://fat-git-main-jungho-git.vercel.app/api/${lang}/search?query=${query}&page=${page}`;
+  const fetchFoodList = () => {
+    const url
+    = `https://fat-git-main-jungho-git.vercel.app/api/${lang}/search?query=${query}&page=${page}`;
+
     axios.get(url)
     .then((response) => {
-      setItems(response.data.items);
+      setFoodList(response.data.items);
     })
     .catch((error) => {
       console.error(error);
@@ -33,7 +35,7 @@ const FoodList = () => {
       return false;
     }
     else {
-      fetchData();
+      fetchFoodList();
     }
   };
 
@@ -45,7 +47,7 @@ const FoodList = () => {
     }
     else {
       setPage((prevPage) => prevPage + 1);
-      fetchData();
+      fetchFoodList();
     }
   };
 
@@ -57,14 +59,27 @@ const FoodList = () => {
     }
     else {
       setPage((prevPage) => Math.max(prevPage - 1, 1));
-      fetchData();
+      fetchFoodList();
     }
   };
 
-  const buttonFoodTotal = () => {
+  // ---------------------------------------------------------------------------------------------->
+  const ButtonFoodTotal = () => {
     const user_id = sessionStorage.getItem("user_id");
     const food_regdate = new Date().toISOString().split("T")[0];
-    window.location.href = "/foodTotal/" + user_id + "/" + food_regdate;
+    const navParam = useNavigate();
+    const navButton = () => navParam(`/foodTotal`, {
+      state: {
+        user_id,
+        food_regdate
+      }
+    });
+
+    return (
+      <>
+        <button className="btn btn-primary ms-2" onClick={navButton}>총 영양소 섭취량</button>
+      </>
+    );
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -86,44 +101,42 @@ const FoodList = () => {
           <div className="btn-group mt-3">
             <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
             <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
-            <button type="button" className="btn btn-primary ms-2" onClick={buttonFoodTotal}>
-              총 섭취 영양소
-            </button>
+            {ButtonFoodTotal()}
           </div>
           <br/>
           <div className="row">
-            {items.map((item: any, index) => (
+            {foodList.map((index : any) => (
               <div key={index} className="col-md-4">
                 <div className="card mb-4">
                   <div className="card-body">
                     <h5 className="card-title">
-                      <Link to={`/foodDetail?title=${item.title}&brand=${item.brand}&calories=${item.calories}&fat=${item.fat}&carb=${item.carb}&protein=${item.protein}&serving=${item.serving}`}>
-                        {item.title}
+                      <Link to={`/foodDetail?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>
+                        {index.title}
                       </Link>
                     </h5>
                     <p className="card-text">
                       <span>브랜드 : </span>
-                      {item.brand ? item.brand : "x"}
+                      {index.brand ? index.brand : "x"}
                     </p>
                     <p className="card-text">
                       <span>칼로리 : </span>
-                      {item.calories ? item.calories : 0}
+                      {index.calories ? index.calories : 0}
                     </p>
                     <p className="card-text">
                       <span>지방 : </span>
-                      {item.fat ? item.fat : 0}
+                      {index.fat ? index.fat : 0}
                     </p>
                     <p className="card-text">
                       <span>탄수화물 : </span>
-                      {item.carb ? item.carb : 0}
+                      {index.carb ? index.carb : 0}
                     </p>
                     <p className="card-text">
                       <span>단백질 : </span>
-                      {item.protein ? item.protein : 0}
+                      {index.protein ? index.protein : 0}
                     </p>
                     <p className="card-text">
                       <span>용량 : </span>
-                      {item.serving ? item.serving : 0}
+                      {index.serving ? index.serving : 0}
                     </p>
                   </div>
                 </div>

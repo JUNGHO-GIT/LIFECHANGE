@@ -36,11 +36,11 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
 });
 
 // 3-2. foodTotal --------------------------------------------------------------------------------->
-foodRouter.post("/foodTotal/:user_id/:food_regdate", async (req: Request, res: Response) => {
+foodRouter.post("/foodTotal/", async (req: Request, res: Response) => {
   try {
     const foodTotal = await foodService.foodTotal (
-      req.params.user_id,
-      req.params.food_regdate
+      req.body.user_id,
+      req.body.food_regdate
     );
     if (foodTotal) {
       res.send(foodTotal);

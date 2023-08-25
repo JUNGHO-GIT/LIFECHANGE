@@ -6,7 +6,7 @@ const BoardScheme = new mongoose.Schema ({
     type : mongoose.Schema.Types.ObjectId,
     required : true
   },
-  board_id : {
+  user_id : {
     type :String,
     required : true
   },

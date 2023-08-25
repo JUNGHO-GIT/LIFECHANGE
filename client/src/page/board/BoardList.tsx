@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
+import {Link, useNavigate} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 const BoardListStyle = createGlobalStyle`
@@ -24,49 +25,50 @@ const BoardListStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-interface Board {
-  _id: string,
-  board_id: string,
-  board_title: string,
-  board_content: string,
-  board_regdate: string,
-}
-
-// ------------------------------------------------------------------------------------------------>
 const BoardList = () => {
-  const [BoardList, setBoardList] = useState<Board[]>([]);
-
-  const fetchBoardList = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:4000/board/boardList");
-      setBoardList(response.data);
-    }
-    catch (err) {
-      console.error(err);
-      setBoardList([]);
-    }
-  };
+  const [boardList, setBoardList] = useState<[]>([]);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
+    const fetchBoardList = async () => {
+      try {
+        const response = await axios.get ("http://127.0.0.1:4000/board/boardList");
+        setBoardList(response.data);
+      }
+      catch (err) {
+        console.error(err);
+        setBoardList([]);
+      }
+    };
+
     fetchBoardList();
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
   const refreshBoardList = () => {
-    window.location.reload();
+    return (
+      <Link to="/boardList" className="btn btn-success">
+        Refresh
+      </Link>
+    );
   };
 
   const buttonBoardInsert = () => {
-    window.location.href = "/boardInsert";
+    return (
+      <Link to="/boardInsert" className="btn btn-primary">
+        Insert
+      </Link>
+    );
   };
 
-  const buttonBoardList = () => {
-    window.location.href = "/boardList";
-  };
-
-  const buttonBoardDetail = (_id: string) => {
-    window.location.href = "/boardDetail/" + _id;
+  const ButtonBoardDetail = (_id: string) => {
+    const navParam = useNavigate();
+    const navButton = () => navParam(`/boardDetail`, {
+      state: {
+        _id
+      }
+    });
+    navButton();
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -85,31 +87,23 @@ const BoardList = () => {
             </tr>
           </thead>
           <tbody>
-            {BoardList.map((board) => (
-              <tr key={board._id}>
+            {boardList.map((index : any) => (
+              <tr key={index}>
                 <td>
-                  <a onClick={() => buttonBoardDetail(board._id)} className="text-hover">
-                    {board.board_id}
+                  <a onClick={() => ButtonBoardDetail(index._id)} className="text-hover">
+                    {index.user_id}
                   </a>
                 </td>
-                <td>{board.board_title}</td>
-                <td>{board.board_regdate}</td>
+                <td>{index.board_title}</td>
+                <td>{index.board_regdate}</td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className="empty-h100"></div>
-        <button type="button" className="btn btn-success" onClick={refreshBoardList}>
-          Refresh
-        </button>
+        {refreshBoardList()}
         &nbsp;
-        <button type="button" className="btn btn-primary" onClick={buttonBoardInsert}>
-          Insert
-        </button>
-        &nbsp;
-        <button type="button" className="btn btn-secondary" onClick={buttonBoardList}>
-          List
-        </button>
+        {buttonBoardInsert()}
         <div className="empty-h50"></div>
       </form>
     </section>
