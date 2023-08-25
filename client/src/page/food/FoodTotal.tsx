@@ -4,21 +4,24 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
+// ------------------------------------------------------------------------------------------------>
 const FoodTotal = () => {
-  const { user_id, food_regdate }
-  = useParams<{ user_id: string; food_regdate: string }>();
-
-  const [total, setTotal] = useState({
-    totalCalories: 0,
-    totalProtein: 0,
-    totalCarb: 0,
-    totalFat: 0
+  const { user_id, food_regdate } = useParams <{
+    user_id : string;
+    food_regdate : string
+  }>();
+  const [total, setTotal] = useState ({
+    totalCalories : 0,
+    totalProtein : 0,
+    totalCarb : 0,
+    totalFat : 0
   });
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodTotal = async () => {
       try {
-        const response = await axios.get(
+        const response = await axios.get (
           `http://127.0.0.1:4000/food/foodTotal/${user_id}/${food_regdate}`
         );
         setTotal(response.data);
@@ -30,6 +33,7 @@ const FoodTotal = () => {
     fetchFoodTotal();
   }, [user_id, food_regdate]);
 
+  // ---------------------------------------------------------------------------------------------->
   return(
     <div className="foodTotal">
       <div className="empty-h30"></div>

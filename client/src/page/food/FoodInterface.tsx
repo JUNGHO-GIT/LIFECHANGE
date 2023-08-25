@@ -9,7 +9,6 @@ interface FoodInterface {
   food_carb: number;
   food_protein: number;
   food_fat: number;
-  food_calories_goal: number;
   food_regdate: Date;
   food_update: Date;
 }

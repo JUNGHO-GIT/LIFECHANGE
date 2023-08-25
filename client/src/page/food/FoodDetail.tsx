@@ -30,7 +30,6 @@ const FoodDetail = () => {
   const params = new URLSearchParams(location.search);
   const user_id = window.sessionStorage.getItem("user_id");
   const [showGram, setShowGram] = useState(0);
-
   const title:any = params.get("title") ? params.get("title") : "x";
   const brand:any = params.get("brand") ? params.get("brand") : "x";
   const calories:any = Number(params.get("calories"));
@@ -160,7 +159,6 @@ const FoodDetail = () => {
       }
     };
 
-    // -------------------------------------------------------------------------------------------->
     return (
       <>
       <div className="card">

@@ -62,12 +62,9 @@ const FoodList = () => {
   };
 
   const buttonFoodTotal = () => {
-    const user_id
-    = sessionStorage.getItem("user_id");
-    const food_regdate
-    = new Date().toISOString().split("T")[0];
-    window.location.href
-    = "/foodTotal" + "/" + user_id + "/" + food_regdate;
+    const user_id = sessionStorage.getItem("user_id");
+    const food_regdate = new Date().toISOString().split("T")[0];
+    window.location.href = "/foodTotal/" + user_id + "/" + food_regdate;
   };
 
   // ---------------------------------------------------------------------------------------------->
