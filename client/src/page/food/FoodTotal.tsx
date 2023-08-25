@@ -6,10 +6,7 @@ import { createGlobalStyle } from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
 const FoodTotal = () => {
-  const { user_id, food_regdate } = useParams <{
-    user_id : string;
-    food_regdate : string
-  }>();
+  const { user_id, food_regdate } = useParams<{ user_id: string; food_regdate: string }>();
   const [total, setTotal] = useState ({
     totalCalories : 0,
     totalProtein : 0,

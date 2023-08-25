@@ -46,24 +46,21 @@ const CalendarDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <CalendarDetailStyle />
-      <section className="calendar custom-flex-center">
-        <div className="row">
-          <div className="col-12">
-            <div className="empty-h50"></div>
-            <h1 className="mb-3">Calendar Detail</h1>
-            <div className="empty-h20"></div>
-            <p className="fw-5" id="year"> Year : <b>{year}년</b> </p>
-            <p className="fw-5" id="month"> Month : <b>{month}월</b> </p>
-            <p className="fw-5" id="day"> Day : <b>{day}일</b> </p>
-            <button className="w-100 btn btn-lg btn-primary" type="button"
-            onClick={() => { window.location.reload(); }}>Refresh</button>
-            <div className="empty-h50"></div>
-          </div>
+    <section className="calendar custom-flex-center"><CalendarDetailStyle />
+      <div className="row">
+        <div className="col-12">
+          <div className="empty-h50"></div>
+          <h1 className="mb-3">Calendar Detail</h1>
+          <div className="empty-h20"></div>
+          <p className="fw-5" id="year"> Year : <b>{year}년</b> </p>
+          <p className="fw-5" id="month"> Month : <b>{month}월</b> </p>
+          <p className="fw-5" id="day"> Day : <b>{day}일</b> </p>
+          <button className="w-100 btn btn-lg btn-primary" type="button"
+          onClick={() => { window.location.reload(); }}>Refresh</button>
+          <div className="empty-h50"></div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

@@ -71,51 +71,48 @@ const BoardList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <BoardListStyle />
-      <section className="boardList custom-flex-center">
-        <form>
-          <div className="empty-h50"></div>
-          <h1 className="mb-3">Board List</h1>
-          <div className="empty-h20"></div>
-          <table className="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Title</th>
-                <th scope="col">Date</th>
+    <section className="boardList custom-flex-center"><BoardListStyle />
+      <form>
+        <div className="empty-h50"></div>
+        <h1 className="mb-3">Board List</h1>
+        <div className="empty-h20"></div>
+        <table className="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {BoardList.map((board) => (
+              <tr key={board._id}>
+                <td>
+                  <a onClick={() => buttonBoardDetail(board._id)} className="text-hover">
+                    {board.board_id}
+                  </a>
+                </td>
+                <td>{board.board_title}</td>
+                <td>{board.board_regdate}</td>
               </tr>
-            </thead>
-            <tbody>
-              {BoardList.map((board) => (
-                <tr key={board._id}>
-                  <td>
-                    <a onClick={() => buttonBoardDetail(board._id)} className="text-hover">
-                      {board.board_id}
-                    </a>
-                  </td>
-                  <td>{board.board_title}</td>
-                  <td>{board.board_regdate}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="empty-h100"></div>
-          <button type="button" className="btn btn-success" onClick={refreshBoardList}>
-            Refresh
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-primary" onClick={buttonBoardInsert}>
-            Insert
-          </button>
-          &nbsp;
-          <button type="button" className="btn btn-secondary" onClick={buttonBoardList}>
-            List
-          </button>
-          <div className="empty-h50"></div>
-        </form>
-      </section>
-    </>
+            ))}
+          </tbody>
+        </table>
+        <div className="empty-h100"></div>
+        <button type="button" className="btn btn-success" onClick={refreshBoardList}>
+          Refresh
+        </button>
+        &nbsp;
+        <button type="button" className="btn btn-primary" onClick={buttonBoardInsert}>
+          Insert
+        </button>
+        &nbsp;
+        <button type="button" className="btn btn-secondary" onClick={buttonBoardList}>
+          List
+        </button>
+        <div className="empty-h50"></div>
+      </form>
+    </section>
   );
 };
 

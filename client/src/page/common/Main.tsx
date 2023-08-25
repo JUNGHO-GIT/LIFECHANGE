@@ -51,7 +51,6 @@ const MainStyle = createGlobalStyle`
 // ------------------------------------------------------------------------------------------------>
 const CarouselFirst = () => {
 
-  // ---------------------------------------------------------------------------------------------->
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (window.sessionStorage.getItem("user_id") == null) {
@@ -62,7 +61,6 @@ const CarouselFirst = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="carousel-item active">
       <rect width="100%" height="100%" fill="#eeeeee" />
@@ -80,13 +78,11 @@ const CarouselFirst = () => {
 // ------------------------------------------------------------------------------------------------>
 const CarouselSecond = () => {
 
-  // ---------------------------------------------------------------------------------------------->
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     window.location.href = "http://www.junghomun.com:8888";
   };
 
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="carousel-item">
       <rect width="100%" height="100%" fill="#eeeeee" />
@@ -104,13 +100,11 @@ const CarouselSecond = () => {
 // ------------------------------------------------------------------------------------------------>
 const CarouselThird = () => {
 
-  // ---------------------------------------------------------------------------------------------->
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     window.location.href = "http://www.junghomun.com:8888";
   };
 
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="carousel-item">
       <rect width="100%" height="100%" fill="#eeeeee" />
@@ -128,10 +122,8 @@ const CarouselThird = () => {
 // ------------------------------------------------------------------------------------------------>
 const Main = () => {
 
-  // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="main-container">
-      <MainStyle />
+    <div className="main-container"><MainStyle />
       <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-indicators">
           <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>

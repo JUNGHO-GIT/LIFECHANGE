@@ -192,10 +192,8 @@ const FoodDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <FoodDetailStyle />
+    <div className="container"><FoodDetailStyle />
       <div className="empty-h100"></div>
-      <div className="container">
         <div className="row">
           <div className="col-12">
             <h1 className="mb-3">{title}</h1>
@@ -215,9 +213,8 @@ const FoodDetail = () => {
             <input type="number" className="form-control" onChange={e => setShowGram(Number(e.target.value))} />
           </div>
         </div>
-      </div>
       <div className="empty-h100"></div>
-    </>
+    </div>
   );
 };
 

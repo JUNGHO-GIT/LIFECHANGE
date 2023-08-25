@@ -17,7 +17,7 @@ export const foodInsert = async (
   food_protein_param: number,
   food_fat_param: number,
 ) => {
-  const foodInsert = await Food.create({
+  const foodInsert = await Food.create ({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
     food_name: food_name_param,
@@ -32,39 +32,39 @@ export const foodInsert = async (
 };
 
 // 3-1. foodTotal --------------------------------------------------------------------------------->
-  export const foodTotal = async (
-    user_id_param: string,
-    food_regdate_param: string
-  ) => {
-    try {
-      const foodResults = await Food.find({
-        user_id: user_id_param,
-        food_regdate: food_regdate_param
-      });
+export const foodTotal = async (
+  user_id_param: string,
+  food_regdate_param: string
+) => {
+  try {
+    const foodResults = await Food.find ({
+      user_id: user_id_param,
+      food_regdate: food_regdate_param
+    });
 
-      let totalCalories = 0;
-      let totalProtein = 0;
-      let totalCarb = 0;
-      let totalFat = 0;
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalCarb = 0;
+    let totalFat = 0;
 
-      foodResults.forEach((index) => {
-        totalCalories += index.food_calories;
-        totalProtein += index.food_protein;
-        totalCarb += index.food_carb;
-        totalFat += index.food_fat;
-      });
-      return {
-        totalCalories,
-        totalProtein,
-        totalCarb,
-        totalFat
-      };
-    }
-    catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
+    foodResults.forEach((index) => {
+      totalCalories += index.food_calories;
+      totalProtein += index.food_protein;
+      totalCarb += index.food_carb;
+      totalFat += index.food_fat;
+    });
+    return {
+      totalCalories,
+      totalProtein,
+      totalCarb,
+      totalFat
+    };
+  }
+  catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->

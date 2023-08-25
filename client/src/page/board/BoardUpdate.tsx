@@ -61,7 +61,6 @@ const BoardUpdate = () => {
         setBoard(null);
       }
     };
-
     fetchBoardDetail();
   }, [_id]);
 
@@ -83,70 +82,71 @@ const BoardUpdate = () => {
     }
   };
 
-  if (!board) return <div>Loading...</div>;
+  if (!board) {
+    return (
+      <div>Loading...</div>
+    );
+  }
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <BoardUpdateStyle />
-      <section className="boardUpdate custom-flex-center">
-        <form>
-          <div className="empty-h50"></div>
-          <h1 className="mb-3">Board Update</h1>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input type="text"
-              className="form-control"
-              id="board_id"
-              placeholder="User ID"
-              value={board.board_id}
-              readOnly
-            />
-            <label htmlFor="board_id">User ID</label>
-          </div>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Title"
-              value={board.board_title}
-              id="floatingTitle"
-              onChange={(e) => setBoard({...board, board_title: e.target.value})}
-            />
-            <label htmlFor="floatingTitle">Title</label>
-          </div>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Content"
-              value={board.board_content}
-              id="floatingContent"
-              onChange={(e) => setBoard({...board, board_content: e.target.value})}
-            />
-            <label htmlFor="floatingContent">Content</label>
-          </div>
-          <div className="empty-h20"></div>
-          <div className="form-floating">
-            <input type="text"
-              className="form-control"
-              id="board_regdate"
-              placeholder="Board Date"
-              value={board.board_regdate}
-              readOnly
-            />
-            <label htmlFor="board_regdate">Board Date</label>
-          </div>
-          <div className="empty-h100"></div>
-          <button className="btn btn-primary" type="button" onClick={BoardUpdateFlow}>
-            Update
-          </button>
-          <div className="empty-h50"></div>
-        </form>
-      </section>
-    </>
+    <section className="boardUpdate custom-flex-center"><BoardUpdateStyle />
+      <form>
+        <div className="empty-h50"></div>
+        <h1 className="mb-3">Board Update</h1>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="board_id"
+            placeholder="User ID"
+            value={board.board_id}
+            readOnly
+          />
+          <label htmlFor="board_id">User ID</label>
+        </div>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Title"
+            value={board.board_title}
+            id="floatingTitle"
+            onChange={(e) => setBoard({...board, board_title: e.target.value})}
+          />
+          <label htmlFor="floatingTitle">Title</label>
+        </div>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Content"
+            value={board.board_content}
+            id="floatingContent"
+            onChange={(e) => setBoard({...board, board_content: e.target.value})}
+          />
+          <label htmlFor="floatingContent">Content</label>
+        </div>
+        <div className="empty-h20"></div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="board_regdate"
+            placeholder="Board Date"
+            value={board.board_regdate}
+            readOnly
+          />
+          <label htmlFor="board_regdate">Board Date</label>
+        </div>
+        <div className="empty-h100"></div>
+        <button className="btn btn-primary" type="button" onClick={BoardUpdateFlow}>
+          Update
+        </button>
+        <div className="empty-h50"></div>
+      </form>
+    </section>
   );
 };
 

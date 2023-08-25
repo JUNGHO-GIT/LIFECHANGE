@@ -69,10 +69,7 @@ const FoodList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-    <br />
-    <br />
-    <div className="container">
+    <div className="container"><br /><br />
       <div className="row">
         <div className="col-12">
           <div className="input-group mb-3">
@@ -136,7 +133,6 @@ const FoodList = () => {
         </div>
       </div>
     </div>
-    </>
   );
 };
 

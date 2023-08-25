@@ -99,52 +99,49 @@ const BoardDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <BoardDetailStyle />
-      <section className="boardDetail custom-flex-center">
-        <form>
-          <div className="empty-h50"></div>
-          <h1 className="mb-3">Board Detail</h1>
-          <div className="empty-h20"></div>
-          <table className="table table-striped table-bordered">
-            <tbody>
-              <tr>
-                <th scope="row">Board ID</th>
-                <td>{board.board_id}</td>
-              </tr>
-              <tr>
-                <th scope="row">Board Title</th>
-                <td>{board.board_title}</td>
-              </tr>
-              <tr>
-                <th scope="row">Board Content</th>
-                <td>{board.board_content}</td>
-              </tr>
-              <tr>
-                <th scope="row">Board Date</th>
-                <td>{board.board_regdate}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="empty-h20"></div>
-          <button className="btn btn-success" type="button" onClick={refreshBoardDetail}>
-            Refresh
-          </button>
-          &nbsp;
-          <button className="btn btn-primary" type="button" onClick={() => buttonBoardUpdate(board._id)}>
-            Update
-          </button>
-          &nbsp;
-          <button className="btn btn-danger" type="button" onClick={buttonBoardDelete}>
-            Delete
-          </button>
-          &nbsp;
-          <button className="btn btn-secondary" type="button" onClick={buttonBoardList}>
-            List
-          </button>
-        </form>
-      </section>
-    </>
+    <section className="boardDetail custom-flex-center"><BoardDetailStyle />
+      <form>
+        <div className="empty-h50"></div>
+        <h1 className="mb-3">Board Detail</h1>
+        <div className="empty-h20"></div>
+        <table className="table table-striped table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Board ID</th>
+              <td>{board.board_id}</td>
+            </tr>
+            <tr>
+              <th scope="row">Board Title</th>
+              <td>{board.board_title}</td>
+            </tr>
+            <tr>
+              <th scope="row">Board Content</th>
+              <td>{board.board_content}</td>
+            </tr>
+            <tr>
+              <th scope="row">Board Date</th>
+              <td>{board.board_regdate}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="empty-h20"></div>
+        <button className="btn btn-success" type="button" onClick={refreshBoardDetail}>
+          Refresh
+        </button>
+        &nbsp;
+        <button className="btn btn-primary" type="button" onClick={() => buttonBoardUpdate(board._id)}>
+          Update
+        </button>
+        &nbsp;
+        <button className="btn btn-danger" type="button" onClick={buttonBoardDelete}>
+          Delete
+        </button>
+        &nbsp;
+        <button className="btn btn-secondary" type="button" onClick={buttonBoardList}>
+          List
+        </button>
+      </form>
+    </section>
   );
 };
 

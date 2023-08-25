@@ -37,14 +37,14 @@ const CalendarList = () => {
     // 요일 표시
     let weekParam = ["일", "월", "화", "수", "목", "금", "토"];
     for (let dayParam = 0; dayParam < 7; dayParam++) {
-      if (dayParam == 0) {
+      if (dayParam === 0) {
         weekRow.append (
           `<div class="col-1 tt-c tc-r fw-7 bd-t-1 bd-s-1 bd-b-1 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
       }
-      else if (dayParam == 6) {
+      else if (dayParam === 6) {
         weekRow.append (
           `<div class="col-1 tt-c tc-l fw-7 bd-s-1 bd-t-1 bd-e-1 bd-b-1 p-2 week">`
             + weekParam[dayParam] +
@@ -70,14 +70,14 @@ const CalendarList = () => {
     };
 
     for (let dayParam = 1; dayParam <= monthDays; dayParam++) {
-      if ((startDay + dayParam - 1) % 7 == 0) {
+      if ((startDay + dayParam - 1) % 7 === 0) {
         $("#calendar").append(dayRow);
         dayRow = $(`<div class="row d-flex justify-content-center"></div>`);
       }
 
       let dayElement;
       // 첫번째 열일 경우
-      if ((startDay + dayParam - 1) % 7 == 0) {
+      if ((startDay + dayParam - 1) % 7 === 0) {
         dayElement = $(
           `<div class="col-1 tt-c tc-r fw-7 bd-s-1 bd-b-1 p-2 day">`
             + dayParam +
@@ -85,7 +85,7 @@ const CalendarList = () => {
         );
       }
       // 일곱번째 열일 경우
-      else if ((startDay + dayParam - 1) % 7 == 6) {
+      else if ((startDay + dayParam - 1) % 7 === 6) {
         dayElement = $(
           `<div class="col-1 tt-c tc-l fw-7 bd-s-1 bd-b-1 bd-e-1 p-2 day">`
             + dayParam +
@@ -106,9 +106,9 @@ const CalendarList = () => {
       dayRow.append(dayElement);
     };
 
-    for (let dayParam = (startDay + monthDays) % 7; dayParam < 7 && dayParam != 0; dayParam++) {
+    for (let dayParam = (startDay + monthDays) % 7; dayParam < 7 && dayParam !== 0; dayParam++) {
       // 일곱번째 열일 경우
-      if (dayParam == 6) {
+      if (dayParam === 6) {
         dayRow.append (
           `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 bd-e-1 p-2 blank">`
             + blank +
