@@ -1,4 +1,5 @@
 // Board.ts
+
 import mongoose from "mongoose";
 
 const BoardScheme = new mongoose.Schema({

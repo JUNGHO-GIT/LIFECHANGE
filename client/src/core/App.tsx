@@ -1,3 +1,5 @@
+// App.tsx
+
 import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
@@ -15,15 +17,14 @@ import Loader from "../components/Loader";
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Hover from "../components/Hover";
-
-import SecretKeys from "../assets/ts/SecretKeys";
 import Main from "../page/common/Main";
 
-import Login from "../page/user/Login";
+import Login from "../page/user/UserLogin";
+import UserInsert from "../page/user/UserInsert";
 import UserInfo from "../page/user/UserInfo";
 import UserUpdate from "../page/user/UserUpdate";
 import UserDelete from "../page/user/UserDelete";
-import UserList from "../page/admin/UserList";
+import UserList from "../page/user/UserList";
 
 import BoardList from "../page/board/BoardList";
 import BoardInsert from "../page/board/BoardInsert";
@@ -52,7 +53,7 @@ const App = () => {
           <Route path="/" element={<Main />} />
 
           <Route path="/userLogin" element={<Login />} />
-          <Route path="/userInsert" element={<SecretKeys />} />
+          <Route path="/userInsert" element={<UserInsert />} />
           <Route path="/userDetail" element={<UserInfo />} />
           <Route path="/userList" element={<UserList />} />
           <Route path="/userUpdate" element={<UserUpdate />} />

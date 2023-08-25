@@ -1,3 +1,5 @@
+// FoodInterface.tsx
+
 interface FoodInterface {
   _id: string;
   user_id: string;

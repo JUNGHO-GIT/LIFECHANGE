@@ -1,7 +1,8 @@
+// Sidebar.bx-task-x
 import React, {useState, useEffect} from "react";
-import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 import {Link} from "react-router-dom";
+import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 const SidebarStyle = createGlobalStyle`
@@ -98,8 +99,7 @@ const Sidebar = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <SidebarStyle />
+    <div className="sidebar"><SidebarStyle />
       <button className="openBtn" onClick={() => sidebarOpen(true)}>
         ☰
       </button>
@@ -143,7 +143,7 @@ const Sidebar = () => {
         <hr />
       </div>
       <div className={`${sidebar ? "margin-left" : ""}`}></div>
-    </>
+    </div>
   );
 };
 

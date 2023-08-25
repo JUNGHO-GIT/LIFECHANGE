@@ -1,3 +1,5 @@
+// UserInfo.tsx
+
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";

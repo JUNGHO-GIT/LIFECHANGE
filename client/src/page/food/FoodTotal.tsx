@@ -1,3 +1,5 @@
+// FoodTotal.tsx
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -6,7 +8,7 @@ import { createGlobalStyle } from "styled-components";
 const FoodTotal = () => {
   const { user_id, food_regdate }
   = useParams<{ user_id: string; food_regdate: string }>();
-  
+
   const [total, setTotal] = useState({
     totalCalories: 0,
     totalProtein: 0,

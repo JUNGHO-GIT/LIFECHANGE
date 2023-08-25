@@ -1,3 +1,5 @@
+// UserUpdate.tsx
+
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
@@ -68,7 +70,7 @@ const UserUpdate = () => {
     }
 
     try {
-      const res = await axios.post("http://127.0.0.1:4000/user/checkIdPw", {
+      const res = await axios.post("http://127.0.0.1:4000/user/userCheckIdPw", {
         user_id: user_id,
         user_pw: user_pw,
       });

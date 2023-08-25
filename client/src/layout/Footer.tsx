@@ -1,7 +1,9 @@
+// Footer.tsx
 import React from "react";
 import "../assets/css/Custom.css";
 import {createGlobalStyle} from "styled-components";
 
+// ------------------------------------------------------------------------------------------------>
 const FooterStyle = createGlobalStyle`
   .footer {
     width: 100%;
@@ -20,16 +22,13 @@ const Footer = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <>
-      <FooterStyle />
-      <footer className="footer">
-        <div className="row pb-6 pt-6">
-          <div className="col-12 custom-flex-center">
-            <span className="">&copy; JUNGHO's Domain</span>
-          </div>
+    <footer className="footer"><FooterStyle />
+      <div className="row pb-6 pt-6">
+        <div className="col-12 custom-flex-center">
+          <span className="">&copy; JUNGHO's Domain</span>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 };
 

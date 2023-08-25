@@ -7,7 +7,8 @@ const boardRouter = Router();
 // 1. boardList ----------------------------------------------------------------------------------->
 boardRouter.get("/boardList", async (req: Request, res: Response) => {
   try {
-    const boardList = await boardService.boardList();
+    const boardList = await boardService.boardList (
+    );
     if (boardList) {
       res.send(boardList);
     }
@@ -24,8 +25,9 @@ boardRouter.get("/boardList", async (req: Request, res: Response) => {
 // 2. boardDetail --------------------------------------------------------------------------------->
 boardRouter.get("/boardDetail/:_id", async (req: Request, res: Response) => {
   try {
-    const boardDetail = await boardService.boardDetail(req.params._id);
-
+    const boardDetail = await boardService.boardDetail (
+      req.params._id
+    );
     if (boardDetail) {
       res.send(boardDetail);
     }
@@ -64,8 +66,9 @@ boardRouter.post("/boardInsert", async (req: Request, res: Response) => {
 // 4. boardUpdate --------------------------------------------------------------------------------->
 boardRouter.put("/boardUpdate/:_id", async (req: Request, res: Response) => {
   try {
-    const boardUpdate = await boardService.boardUpdate(req.params._id, req.body);
-
+    const boardUpdate = await boardService.boardUpdate (
+      req.params._id, req.body
+    );
     if (boardUpdate) {
       res.send("success");
     }
@@ -85,7 +88,6 @@ boardRouter.delete("/boardDelete/:_id", async (req: Request, res: Response) => {
     const boardDelete = await boardService.boardDelete (
       req.params._id
     );
-
     if (boardDelete) {
       res.send("success");
     }

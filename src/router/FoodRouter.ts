@@ -37,23 +37,22 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
 // 3-2. foodTotal --------------------------------------------------------------------------------->
 foodRouter.get("/foodTotal/:user_id/:food_regdate", async (req: Request, res: Response) => {
   try {
-    const foodTotal = await foodService.foodTotal(
-        req.params.user_id,
-        req.params.food_regdate
-      );
-      if (foodTotal) {
-        res.send(foodTotal);
-      }
-      else {
-        res.send("fail");
-      }
+    const foodTotal = await foodService.foodTotal (
+      req.params.user_id,
+      req.params.food_regdate
+    );
+    if (foodTotal) {
+      res.send(foodTotal);
     }
-    catch (err) {
-      console.error(err);
-      res.status(500).send(err);
+    else {
+      res.send("fail");
     }
-  });
-
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
 

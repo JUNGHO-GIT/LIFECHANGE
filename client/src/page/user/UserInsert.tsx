@@ -1,9 +1,11 @@
+// UserInsert.tsx
+
 import React, {useState} from "react";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
-const LoginStyle = createGlobalStyle`
-  .userLogin {
+const SignupStyle = createGlobalStyle`
+  .userInsert {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -11,22 +13,22 @@ const LoginStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-userLogin {
+  .form-Signup {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-userLogin .form-floating:focus-within {
+  .form-Signup .form-floating:focus-within {
     z-index: 2;
   }
 
-  .form-userLogin input[type="email"] {
+  .form-Signup input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  .form-userLogin input[type="password"] {
+  .form-Signup input[type="user_pw"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -34,28 +36,34 @@ const LoginStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const Login = () => {
+const Signup = () => {
   const [user_id, setId] = useState("");
   const [user_pw, setPassword] = useState("");
 
-  const LoginFlow = async () => {
-    const res = await axios.post("http://127.0.0.1:4000/user/userLogin", {
+  const SignupFlow = async () => {
+    if (user_id === "" || user_pw === "") {
+      alert("Please enter both Id and Pw");
+      return;
+    }
+
+    const res = await axios.post("http://127.0.0.1:4000/user/userInsert", {
       user_id: user_id,
       user_pw: user_pw,
     });
 
-    if (user_id.length === 0 || user_pw.length === 0) {
-      alert("Please enter both ID and PW");
-      return;
+    if (res.data === "success") {
+      alert("Signup successful");
+      window.location.href = "/userLogin";
     }
-    else if (res.data === "success") {
-      alert("Login successful");
-      window.sessionStorage.setItem("user_id", user_id);
-      window.location.href = "/";
+    else if (res.data === "duplicate") {
+      alert("This ID already exists");
+      setId("");
+      setPassword("");
     }
     else if (res.data === "fail") {
-      alert("Incorrect ID or PW");
-      window.sessionStorage.setItem("user_id", "false");
+      alert("Incorrect Id or Pw");
+      setId("");
+      setPassword("");
     }
     else {
       alert(`${res.data}error`);
@@ -65,11 +73,11 @@ const Login = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <>
-      <LoginStyle />
-      <section className="userLogin custom-flex-center">
+      <SignupStyle />
+      <section className="userInsert custom-flex-center">
         <form>
           <div className="empty-h50"></div>
-          <h1 className="mb-3">Log In</h1>
+          <h1 className="mb-3">Sign up</h1>
           <div className="empty-h20"></div>
           <div className="form-floating">
             <input
@@ -88,7 +96,7 @@ const Login = () => {
           <div className="form-floating">
             <input
               className="form-control"
-              type="text"
+              type="password"
               placeholder="Password"
               value={user_pw}
               id="floatingPassword"
@@ -99,8 +107,8 @@ const Login = () => {
             <label htmlFor="floatingPassword">Password</label>
           </div>
           <div className="empty-h100"></div>
-          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={LoginFlow}>
-            Log In
+          <button className="w-100 btn btn-lg btn-primary" type="button" onClick={SignupFlow}>
+            Submit
           </button>
           <div className="empty-h50"></div>
         </form>
@@ -109,4 +117,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

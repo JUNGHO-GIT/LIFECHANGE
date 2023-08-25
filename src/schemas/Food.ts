@@ -1,4 +1,5 @@
 // Food.ts
+
 import mongoose from "mongoose";
 
 const FoodScheme = new mongoose.Schema ({
