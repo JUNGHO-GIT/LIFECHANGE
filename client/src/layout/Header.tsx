@@ -12,31 +12,11 @@ const Header = () => {
   const navList = () => {
     return (
       <ul className="nav">
-        <li>
-          <Link to="/" className="nav-link text-hover ms-2 text-white">
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/userDetail" className="nav-link text-hover ms-2 text-white">
-            User
-          </Link>
-        </li>
-        <li>
-          <Link to="/boardList" className="nav-link text-hover ms-2 text-white">
-            Board
-          </Link>
-        </li>
-        <li>
-          <Link to="/calendarList" className="nav-link text-hover ms-2 text-white">
-            Calendar
-          </Link>
-        </li>
-        <li>
-          <Link to="/foodList" className="nav-link text-hover ms-2 text-white">
-            Food
-          </Link>
-        </li>
+        <li><Link to="/" className="nav-link text-hover tc-w ms-2">Home</Link></li>
+        <li><Link to="/userDetail" className="nav-link text-hover tc-w ms-2">User</Link></li>
+        <li><Link to="/boardList" className="nav-link text-hover tc-w ms-2">Board</Link></li>
+        <li><Link to="/calendarList" className="nav-link text-hover tc-w ms-2">Calendar</Link></li>
+        <li><Link to="/foodList" className="nav-link text-hover tc-w ms-2">Food</Link></li>
       </ul>
     );
   };
@@ -72,13 +52,9 @@ const Header = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container-fluid bg-dark">
-      <div className="row custom-flex-center">
-        <div className="col-8">
-          {navList()}
-        </div>
-        <div className="col-4">
-          {formList()}
-        </div>
+      <div className="row custom-flex-center pt-3 pb-3">
+        <div className="col-8">{navList()}</div>
+        <div className="col-4">{formList()}</div>
       </div>
     </div>
   );

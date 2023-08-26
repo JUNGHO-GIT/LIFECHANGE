@@ -255,6 +255,28 @@
 .pe-19 {padding-right: 95px !important;}
 .pe-20 {padding-right: 100px !important;}
 
+/** position **************************************************************************************/
+.pos-r {position: relative !important;}
+.pos-a {position: absolute !important;}
+.pos-f {position: fixed !important;}
+.pos-s {position: static !important;}
+.pos-rb {position: relative; bottom: 0 !important;}
+.pos-ab {position: absolute; bottom: 0 !important;}
+.pos-fb {position: fixed; bottom: 0 !important;}
+.pos-sb {position: static; bottom: 0 !important;}
+.pos-rt {position: relative; top: 0 !important;}
+.pos-at {position: absolute; top: 0 !important;}
+.pos-ft {position: fixed; top: 0 !important;}
+.pos-st {position: static; top: 0 !important;}
+.pos-rl {position: relative; left: 0 !important;}
+.pos-al {position: absolute; left: 0 !important;}
+.pos-fl {position: fixed; left: 0 !important;}
+.pos-sl {position: static; left: 0 !important;}
+.pos-rr {position: relative; right: 0 !important;}
+.pos-ar {position: absolute; right: 0 !important;}
+.pos-fr {position: fixed; right: 0 !important;}
+.pos-sr {position: static; right: 0 !important;}
+
 /** font size custom ******************************************************************************/
 .fs-1 {font-size: 1px !important;}
 .fs-2 {font-size: 2px !important;}
@@ -540,7 +562,6 @@ html {
   object-fit: contain !important;
   vertical-align: middle !important;
 }
-
 
 /** loader ****************************************************************************************/
 /** <div class="background"><div class="loader"></div></div> **/
