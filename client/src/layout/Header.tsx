@@ -25,7 +25,7 @@ const Header = () => {
   const formList = () => {
     return (
       <form className="form-group custom-flex-center">
-        {user_id !== "false" ? (
+        {user_id && user_id !== "false" ? (
           <button
             type="button"
             className="btn btn-outline-light ms-2"

@@ -82,26 +82,31 @@ const FoodList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="container"><br /><br />
-      <div className="row">
+    <div className="container">
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              value={query}
-              onChange={handleSearchChange}
-            />
-            <div className="input-group-append">
-              <button className="btn btn-primary" onClick={handleSearchButton}>검색</button>
-            </div>
+          <h1 className="mb-3 fw-9">Food List</h1>
+        </div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
+          <div className="d-flex justify-content-between">
+            <input type="text" className="form-control" value={query} onChange={handleSearchChange}/>
+            <button className="btn btn-primary" onClick={handleSearchButton}>검색</button>
           </div>
+        </div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
           <div className="btn-group mt-3">
             <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
             <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
             {ButtonFoodTotal()}
           </div>
-          <br/>
+          <div className="empty-h50"></div>
           <div className="row">
             {foodList.map((index : any) => (
               <div key={index} className="col-md-4">
