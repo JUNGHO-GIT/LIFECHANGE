@@ -110,7 +110,7 @@ const FoodList = () => {
                 <div className="card mb-4">
                   <div className="card-body">
                     <h5 className="card-title">
-                      <Link to={`/foodDetail?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>
+                      <Link to={`/foodInsert?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>
                         {index.title}
                       </Link>
                     </h5>

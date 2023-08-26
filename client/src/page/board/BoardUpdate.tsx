@@ -38,11 +38,9 @@ const BoardUpdateStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 const BoardUpdate = () => {
-  const navParam = useNavigate();
-  const _id = useLocation().state._id;
-  const [board_title, setBoard_title] = useState<string>("");
-  const [board_content, setBoard_content] = useState<string>("");
-  const [board, setBoard] = useState<any>();
+  let navParam = useNavigate();
+  let _id = useLocation().state._id;
+  let [board, setBoard] = useState<any>(null);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {

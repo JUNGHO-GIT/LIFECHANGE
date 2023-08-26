@@ -33,7 +33,7 @@ import CalendarList from "../page/calendar/CalendarList";
 import CalendarDetail from "../page/calendar/CalendarDetail";
 
 import FoodList from "../page/food/FoodList";
-import FoodDetail from "../page/food/FoodDetail";
+import FoodInsert from "../page/food/FoodInsert";
 import FoodTotal from "../page/food/FoodTotal";
 
 // ------------------------------------------------------------------------------------------------>
@@ -62,7 +62,7 @@ const App = () => {
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail" element={<CalendarDetail />} />
           <Route path="/foodList" element={<FoodList />} />
-          <Route path="/foodDetail" element={<FoodDetail />} />
+          <Route path="/foodInsert" element={<FoodInsert />} />
           <Route path="/foodTotal" element={<FoodTotal />} />
         </Routes>
         <Footer />

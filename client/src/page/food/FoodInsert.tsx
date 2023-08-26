@@ -1,12 +1,12 @@
-// FoodDetail.tsx
+// FoodInsert.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import { createGlobalStyle } from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
-const FoodDetailStyle = createGlobalStyle`
-  .foodDetail {
+const FoodInsertStyle = createGlobalStyle`
+  .foodInsert {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -14,18 +14,18 @@ const FoodDetailStyle = createGlobalStyle`
     background-color: #f5f5f5;
   }
 
-  .form-foodDetail {
+  .form-foodInsert {
     max-width: 330px;
     padding: 15px;
   }
 
-  .form-foodDetail .form-floating:focus-within {
+  .form-foodInsert .form-floating:focus-within {
     z-index: 2;
   }
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const FoodDetail = () => {
+const FoodInsert = () => {
   const [showGram, setShowGram] = useState(0);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -170,7 +170,7 @@ const FoodDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="container"><FoodDetailStyle />
+    <div className="container"><FoodInsertStyle />
       <div className="empty-h100"></div>
         <div className="row">
           <div className="col-12">
@@ -205,4 +205,4 @@ const FoodDetail = () => {
   );
 };
 
-export default FoodDetail;
+export default FoodInsert;
