@@ -1,42 +1,15 @@
 // UserList.tsx
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import {createGlobalStyle} from "styled-components";
-
-// ------------------------------------------------------------------------------------------------>
-const UserListStyle = createGlobalStyle`
-  .userList {
-    display: flex;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-  }
-
-  .form-userList {
-    max-width: 330px;
-    padding: 15px;
-  }
-
-  .form-userList .form-floating:focus-within {
-    z-index: 2;
-  }
-`;
-
-// ------------------------------------------------------------------------------------------------>
-interface User {
-  _id: string;
-  user_id: string;
-  user_pw: string;
-}
+import {Link} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 const UserList = () => {
-  const [UserList, setUserList] = useState<User[]>([]);
+  const [UserList, setUserList] = useState<[]>([]);
 
   const fetchUserList = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:4000/admin/userList");
+      const response = await axios.get("http://127.0.0.1:4000/user/userList");
       setUserList(response.data);
     }
     catch (err) {
@@ -45,46 +18,61 @@ const UserList = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     fetchUserList();
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
-  const refreshUserList = () => {
-    window.location.reload();
+  const buttonRefreshPage = () => {
+    return (
+      <Link to="/userList">
+        <button type="button" className="btn btn-success">Refresh</button>
+      </Link>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const UserListTable = () => {
+    return (
+      <table className="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">User PW</th>
+          </tr>
+        </thead>
+        <tbody>
+          {UserList.map((user:any) => (
+            <tr key={user._id}>
+              <td>{user.user_id}</td>
+              <td>{user.user_pw}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
   };
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <section className="userList custom-flex-center"><UserListStyle />
-      <form>
-        <div className="empty-h50"></div>
-        <h1 className="mb-3">User List</h1>
-        <div className="empty-h20"></div>
-        <table className="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">User ID</th>
-              <th scope="col">User PW</th>
-            </tr>
-          </thead>
-          <tbody>
-            {UserList.map((user) => (
-              <tr key={user._id}>
-                <td>{user.user_id}</td>
-                <td>{user.user_pw}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="empty-h100"></div>
-        <button type="button" className="btn btn-primary" onClick={refreshUserList}>
-          Refresh User List
-        </button>
-        <div className="empty-h50"></div>
-      </form>
-    </section>
+    <div className="container">
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-12">
+          <h1 className="mb-3 fw-9">User List</h1>
+        </div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
+          <form className="form-inline">
+            {UserListTable()}
+            <div className="empty-h50"></div>
+            {buttonRefreshPage()}
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

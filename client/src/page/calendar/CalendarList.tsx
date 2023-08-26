@@ -142,30 +142,29 @@ const CalendarList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <br/>
-      <div className="row d-flex tt-c justify-content-center align-items-center">
-        <div className="col-6 tt-e mt-5 ms-2">
-          <h3 className="fw-9">
-            <span id="year"></span>
-            <span id="month"></span>
-          </h3>
-        </div>
-        <div className="col-5 tt-s mt-5">
-          <button id="prev" className="btn btn-primary btn-sm ms-2">
-            <i className="fas fa-angle-left"></i>
-          </button>
-          <button id="next" className="btn btn-primary btn-sm ms-2">
-            <i className="fas fa-angle-right"></i>
-          </button>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-12">
+          <h1 className="mb-3 fw-9">Calendar List</h1>
         </div>
       </div>
-      <br/>
-      <br/>
-      <div className="row d-flex justify-content-center align-items-center">
-        <div className="col-12 tt-c">
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
+          <div className="custom-flex-center">
+            <h3 className="fw-9"><span id="year"></span><span id="month"></span></h3>
+            <button id="prev" className="btn btn-primary btn-sm ms-2">이전</button>
+            <button id="next" className="btn btn-primary btn-sm ms-2">다음</button>
+          </div>
+        </div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
           <div id="calendar"></div>
         </div>
       </div>
+      <div className="empty-h200"></div>
     </div>
   );
 };

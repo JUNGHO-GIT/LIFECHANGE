@@ -21,7 +21,6 @@ const BoardDetail = () => {
         setBoard([]);
       }
     };
-
     fetchBoardDetail();
   }, [_id]);
 
@@ -30,6 +29,61 @@ const BoardDetail = () => {
       <div>Loading...</div>
     );
   }
+
+  // button --------------------------------------------------------------------------------------->
+  const boardDeleteFlow = async () => {
+    const confirm = window.confirm("Are you sure you want to delete?");
+    if (!confirm) {
+      return;
+    }
+    else {
+      try {
+        const response = await axios.delete(`http://127.0.0.1:4000/board/boardDelete/${_id}`);
+        if (response.data === "success") {
+          window.location.href = "/";
+        }
+        else {
+          alert("Delete failed");
+        }
+      }
+      catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  const buttonBoardDelete = (): React.ReactNode => {
+    return (
+      <button onClick={boardDeleteFlow} className="btn btn-danger">Delete</button>
+    );
+  };
+
+  const buttonBoardUpdate = (_id: string): React.ReactNode => {
+    const navButton = () => navParam(`/boardUpdate`, {
+      state: {
+        _id
+      }
+    });
+    return (
+      <button onClick={navButton} className="btn btn-primary">Update</button>
+    );
+  };
+
+  const buttonRefreshPage = () => {
+    return (
+      <Link to="/boardDetail">
+        <button type="button" className="btn btn-success">Refresh</button>
+      </Link>
+    );
+  };
+
+  const buttonBoardList = () => {
+    return (
+      <Link to="/boardList">
+        <button type="button" className="btn btn-secondary">List</button>
+      </Link>
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const BoardDetailTable = () => {
@@ -57,72 +111,13 @@ const BoardDetail = () => {
     );
   };
 
-  // button --------------------------------------------------------------------------------------->
-  const boardDeleteFlow = async () => {
-    const confirm = window.confirm("Are you sure you want to delete?");
-    if (!confirm) {
-      return;
-    }
-    else {
-      try {
-        const response = await axios.delete(`http://127.0.0.1:4000/board/boardDelete/${_id}`);
-        if (response.data === "success") {
-          window.location.href = "/";
-        }
-        else {
-          alert("Delete failed");
-        }
-      }
-      catch (err) {
-        console.error(err);
-      }
-    }
-  };
-
-  const buttonBoardDelete = (): React.ReactNode => {
-    return (
-      <button onClick={boardDeleteFlow} className="btn btn-danger">
-        Delete
-      </button>
-    );
-  };
-
-  const buttonBoardUpdate = (_id: string): React.ReactNode => {
-    const navButton = () => navParam(`/boardUpdate`, {
-      state: {
-        _id
-      }
-    });
-    return (
-      <button onClick={navButton} className="btn btn-primary">
-        Update
-      </button>
-    );
-  };
-
-  const refreshBoardDetail = () => {
-    return (
-      <Link to="/boardDetail" className="btn btn-success">
-        Refresh
-      </Link>
-    );
-  };
-
-  const buttonBoardList = () => {
-    return (
-      <Link to="/boardList" className="btn btn-secondary">
-        List
-      </Link>
-    );
-  };
-
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3">Board Detail</h1>
+          <h1 className="mb-3 fw-9">Board Detail</h1>
         </div>
       </div>
       <div className="empty-h50"></div>
@@ -131,7 +126,7 @@ const BoardDetail = () => {
           <form className="form-inline">
             {BoardDetailTable()}
             <div className="empty-h50"></div>
-            {refreshBoardDetail()}
+            {buttonRefreshPage()}
             &nbsp;
             {buttonBoardUpdate(board._id)}
             &nbsp;

@@ -27,7 +27,7 @@ const BoardInsert = () => {
         throw new Error("Server responded with an error");
       }
     }
-    catch (error: unknown) {
+    catch (error: any) {
       if (error instanceof Error) {
         alert(`Error fetching user data: ${error.message}`);
       }
@@ -37,6 +37,52 @@ const BoardInsert = () => {
   useEffect(() => {
     fetchBoardInsert();
   }, []);
+
+  // ---------------------------------------------------------------------------------------------->
+  const BoardInsertFlow = async () => {
+
+    if (board_title === "") {
+      alert("Please enter a title");
+      return;
+    }
+    else if (board_content === "") {
+      alert("Please enter a content");
+      return;
+    }
+    else {
+      setBoardDate(new Date().toISOString().split('T')[0]);
+      try {
+        const res = await axios.post("http://localhost:4000/board/boardInsert", {
+          user_id: user_id,
+          board_title: board_title,
+          board_content: board_content,
+          board_regdate: board_regdate,
+        });
+        if (res.data === "success") {
+          alert("Insert a board successfully");
+          window.location.href = "/boardList";
+        }
+        else if (res.data === "fail") {
+          alert("Insert a board failed");
+        }
+        else {
+          alert(`${res.data}error`);
+        }
+      }
+      catch (err) {
+        console.error(err);
+        alert("Insert a board failed");
+      }
+    }
+  };
+
+  const buttonBoardInsert = () => {
+    return (
+      <button className="btn btn-primary" type="button" onClick={BoardInsertFlow}>
+        Insert
+      </button>
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const BoardInsertTable = () => {
@@ -113,59 +159,12 @@ const BoardInsert = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const BoardInsertFlow = async () => {
-
-    if (board_title === "") {
-      alert("Please enter a title");
-      return;
-    }
-    else if (board_content === "") {
-      alert("Please enter a content");
-      return;
-    }
-    else {
-      setBoardDate(new Date().toISOString().split('T')[0]);
-      try {
-        const res = await axios.post("http://localhost:4000/board/boardInsert", {
-          user_id: user_id,
-          board_title: board_title,
-          board_content: board_content,
-          board_regdate: board_regdate,
-        });
-
-        if (res.data === "success") {
-          alert("Insert a board successfully");
-          window.location.href = "/boardList";
-        }
-        else if (res.data === "fail") {
-          alert("Insert a board failed");
-        }
-        else {
-          alert(`${res.data}error`);
-        }
-      }
-      catch (err) {
-        console.error(err);
-        alert("Insert a board failed");
-      }
-    }
-  };
-
-  const buttonBoardInsert = () => {
-    return (
-      <button className="btn btn-primary" type="button" onClick={BoardInsertFlow}>
-        Insert
-      </button>
-    );
-  };
-
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3">Board Insert</h1>
+          <h1 className="mb-3 fw-9">Board Insert</h1>
         </div>
       </div>
       <div className="empty-h50"></div>

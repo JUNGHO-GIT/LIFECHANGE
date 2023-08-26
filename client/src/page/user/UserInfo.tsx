@@ -1,39 +1,7 @@
 // UserInfo.tsx
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import {createGlobalStyle} from "styled-components";
-
-// ------------------------------------------------------------------------------------------------>
-const UserInfoStyle = createGlobalStyle`
-  .userDetail {
-    display: flex;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-  }
-
-  .form-userDetail {
-    max-width: 330px;
-    padding: 15px;
-  }
-
-  .form-userDetail .form-floating:focus-within {
-    z-index: 2;
-  }
-
-  .form-userDetail input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .form-userDetail input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-`;
+import {Link} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 const UserInfo = () => {
@@ -57,83 +25,93 @@ const UserInfo = () => {
         throw new Error("Server responded with an error");
       }
     }
-    catch (error: unknown) {
+    catch (error: any) {
       if (error instanceof Error) {
         alert(`Error fetching user data: ${error.message}`);
       }
     }
   };
-
   useEffect(() => {
     fetchUserInfo();
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
-  const refreshUserInfo = () => {
-    window.location.reload();
+  const buttonRefreshPage = () => {
+    return (
+      <Link to="/userInfo">
+        <button type="button" className="btn btn-success">Refresh</button>
+      </Link>
+    );
   };
 
   const buttonUserUpdate = () => {
-    window.location.href = "/userUpdate";
+    return (
+      <Link to="/userUpdate">
+        <button type="button" className="btn btn-primary">Update</button>
+      </Link>
+    );
   };
 
   const buttonUserDelete = () => {
-    window.location.href = "/userDelete";
+    return (
+      <Link to="/userDelete">
+        <button type="button" className="btn btn-danger">Delete</button>
+      </Link>
+    );
   };
 
   const buttonUserList = () => {
-    window.location.href = "/userList";
+    return (
+      <Link to="/userList">
+        <button type="button" className="btn btn-secondary">List</button>
+      </Link>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const UserInfoTable = () => {
+    return (
+      <>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="User ID"
+          value={user_id} onChange={(e) => setUserId(e.target.value)} readOnly />
+          <label htmlFor="user_id">User ID</label>
+        </div>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="User PW"
+          value={user_pw} onChange={(e) => setUserPw(e.target.value)} readOnly />
+          <label htmlFor="user_pw">User PW</label>
+        </div>
+      </>
+    );
   };
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <section className="userDetail custom-flex-center"><UserInfoStyle />
-      <form>
-        <div className="empty-h50"></div>
-        <h1 className="mb-3">User Info</h1>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="user_id"
-            placeholder="User ID"
-            value={user_id}
-            onChange={(e) => setUserId(e.target.value)}
-            readOnly
-          />
-          <label htmlFor="user_id">User ID</label>
+    <div className="container">
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-12">
+          <h1 className="mb-3 fw-9">User Info</h1>
         </div>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="user_pw"
-            placeholder="User PW"
-            value={user_pw}
-            onChange={(e) => setUserPw(e.target.value)}
-            readOnly
-          />
-          <label htmlFor="user_pw">User PW</label>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
+          <form className="form-inline">
+            {UserInfoTable()}
+            <div className="empty-h50"></div>
+            {buttonRefreshPage()}
+            &nbsp;
+            {buttonUserUpdate()}
+            &nbsp;
+            {buttonUserDelete()}
+            &nbsp;
+            {buttonUserList()}
+          </form>
         </div>
-        <div className="empty-h100"></div>
-        <button type="button" className="btn btn-success" onClick={refreshUserInfo}>
-          Refresh
-        </button>
-        &nbsp;
-        <button type="button" className="btn btn-primary" onClick={buttonUserUpdate}>
-          Update
-        </button>
-        &nbsp;
-        <button type="button" className="btn btn-danger" onClick={buttonUserDelete}>
-          Delete
-        </button>
-        &nbsp;
-        <button type="button" className="btn btn-secondary" onClick={buttonUserList}>
-          List
-        </button>
-        <div className="empty-h50"></div>
-      </form>
-    </section>
+      </div>
+    </div>
   );
 };
 

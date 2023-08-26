@@ -20,9 +20,34 @@ const BoardList = () => {
         setBoardList([]);
       }
     };
-
     fetchBoardList();
   }, []);
+
+  // ---------------------------------------------------------------------------------------------->
+  const buttonBoardDetail = (_id: string) => {
+    const navButton = () => navParam(`/boardDetail`, {
+      state: {
+        _id
+      }
+    });
+    navButton();
+  };
+
+  const buttonRefreshPage = () => {
+    return (
+      <Link to="/boardList">
+        <button type="button" className="btn btn-success">Refresh</button>
+      </Link>
+    );
+  };
+
+  const buttonBoardInsert = () => {
+    return (
+      <Link to="/boardInsert">
+        <button type="button" className="btn btn-primary">Insert</button>
+      </Link>
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const BoardListTable = () => {
@@ -53,38 +78,12 @@ const BoardList = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonBoardDetail = (_id: string) => {
-    const navButton = () => navParam(`/boardDetail`, {
-      state: {
-        _id
-      }
-    });
-    navButton();
-  };
-
-  const refreshBoardList = () => {
-    return (
-      <Link to="/boardList" className="btn btn-success">
-        Refresh
-      </Link>
-    );
-  };
-
-  const buttonBoardInsert = () => {
-    return (
-      <Link to="/boardInsert" className="btn btn-primary">
-        Insert
-      </Link>
-    );
-  };
-
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3">Board List</h1>
+          <h1 className="mb-3 fw-9">Board List</h1>
         </div>
       </div>
       <div className="empty-h50"></div>
@@ -93,7 +92,7 @@ const BoardList = () => {
           <form className="form-inline">
             {BoardListTable()}
             <div className="empty-h50"></div>
-            {refreshBoardList()}
+            {buttonRefreshPage()}
             &nbsp;
             {buttonBoardInsert()}
             <div className="empty-h50"></div>

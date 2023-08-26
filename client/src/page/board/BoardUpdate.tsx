@@ -91,7 +91,7 @@ const BoardUpdate = () => {
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3">Board Update</h1>
+          <h1 className="mb-3 fw-9">Board Update</h1>
         </div>
       </div>
       <div className="empty-h50"></div>
@@ -102,9 +102,9 @@ const BoardUpdate = () => {
             <div className="empty-h50"></div>
             {buttonBoardUpdate()}
           </form>
-          <div className="empty-h100"></div>
         </div>
       </div>
+      <div className="empty-h200"></div>
     </div>
   );
 };

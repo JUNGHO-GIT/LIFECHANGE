@@ -1,39 +1,6 @@
 // UserUpdate.tsx
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import {createGlobalStyle} from "styled-components";
-
-// ------------------------------------------------------------------------------------------------>
-const UserUpdateStyle = createGlobalStyle`
-  .userUpdate {
-    display: flex;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-  }
-
-  .form-userUpdate {
-    max-width: 330px;
-    padding: 15px;
-  }
-
-  .form-userUpdate .form-floating:focus-within {
-    z-index: 2;
-  }
-
-  .form-userUpdate input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .form-userUpdate input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-`;
 
 // ------------------------------------------------------------------------------------------------>
 const UserUpdate = () => {
@@ -49,18 +16,19 @@ const UserUpdate = () => {
       });
       setUserId(res.data.user_id);
     }
-    catch (error: unknown) {
+    catch (error : any) {
       if (error instanceof Error) {
         alert(`Error fetching user data: ${error.message}`);
       }
     }
   };
+
   useEffect(() => {
     fetchUserUpdate();
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonUserUpdate = async () => {
+  const UserUpdateFlow = async () => {
 
     if (user_pw === "" || user_pw === null) {
       alert("Please enter your password");
@@ -72,14 +40,11 @@ const UserUpdate = () => {
         user_id: user_id,
         user_pw: user_pw,
       });
-
       if (res.data === "fail") {
         alert("Incorrect password");
         return;
       }
-
       if (res.data === "success") {
-
         const updatePw = prompt("Please enter a new password");
 
         try {
@@ -87,7 +52,6 @@ const UserUpdate = () => {
             user_id: user_id,
             user_pw: updatePw
           });
-
           if (res.data === "success") {
             alert("User Update success");
             window.location.href = "/";
@@ -99,27 +63,33 @@ const UserUpdate = () => {
             alert("Error Ocurred in User Delete");
           }
         }
-        catch (error: unknown) {
+        catch (error : any) {
           if (error instanceof Error) {
             alert(`Error fetching user data: ${error.message}`);
           }
         }
       }
     }
-    catch (error: unknown) {
+    catch (error : any) {
       if (error instanceof Error) {
         alert(`Error fetching user data: ${error.message}`);
       }
     }
   };
 
+  const buttonUserUpdate = () => {
+    return (
+      <button className="btn btn-primary" type="button" onClick={UserUpdateFlow}>
+        User Update
+      </button>
+    );
+  };
+
   // ---------------------------------------------------------------------------------------------->
-  return (
-    <section className="userUpdate custom-flex-center"><UserUpdateStyle />
-      <form>
-        <div className="empty-h50"></div>
-        <h1 className="mb-3">User Update</h1>
-        <div className="empty-h20"></div>
+  const UserUpdateTable = () => {
+    return (
+      <>
+      <div className="empty-h20"></div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -142,13 +112,30 @@ const UserUpdate = () => {
           />
           <label htmlFor="user_pw">User PW</label>
         </div>
-        <div className="empty-h100"></div>
-        <button type="button" className="btn btn-primary" onClick={buttonUserUpdate}>
-          User Update
-        </button>
-        <div className="empty-h50"></div>
-      </form>
-    </section>
+      </>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  return (
+    <div className="container">
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-12">
+          <h1 className="mb-3 fw-9">User Update</h1>
+        </div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
+          <form className="form-inline">
+            {UserUpdateTable()}
+            <div className="empty-h50"></div>
+            {buttonUserUpdate()}
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

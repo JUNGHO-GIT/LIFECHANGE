@@ -1,28 +1,7 @@
 // FoodInsert.tsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from 'react-router-dom';
-import { createGlobalStyle } from "styled-components";
-
-// ------------------------------------------------------------------------------------------------>
-const FoodInsertStyle = createGlobalStyle`
-  .foodInsert {
-    display: flex;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-  }
-
-  .form-foodInsert {
-    max-width: 330px;
-    padding: 15px;
-  }
-
-  .form-foodInsert .form-floating:focus-within {
-    z-index: 2;
-  }
-`;
+import { Link, useLocation } from 'react-router-dom';
 
 // ------------------------------------------------------------------------------------------------>
 const FoodInsert = () => {
@@ -30,7 +9,6 @@ const FoodInsert = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const user_id = window.sessionStorage.getItem("user_id");
-
   const title:any = params.get("title") ? params.get("title") : "x";
   const brand:any = params.get("brand") ? params.get("brand") : "x";
   const calories:any = Number(params.get("calories"));
@@ -99,14 +77,13 @@ const FoodInsert = () => {
 
     const paramsValue = Number(params);
     const oneServingValue:any = oneServing();
-
     const caloriesPer:any = ((calories/oneServingValue)*(paramsValue)).toFixed(1);
     const carbPer:any = ((carb/oneServingValue)*(paramsValue)).toFixed(1);
     const proteinPer:any = ((protein/oneServingValue)*(paramsValue)).toFixed(1);
     const fatPer:any = ((fat/oneServingValue)*(paramsValue)).toFixed(1);
 
     // 음식 상세정보를 보낸다.
-    const buttonFoodInsert = async () => {
+    const FoodInsertFlow = async () => {
       try {
         const res  = await axios.post("http://localhost:4000/food/foodInsert", {
           user_id : user_id,
@@ -119,7 +96,6 @@ const FoodInsert = () => {
           food_protein : proteinPer,
           food_fat : fatPer
         });
-
         if (res.data === "success") {
           alert("Insert food successfully");
           window.location.href = "/foodList";
@@ -160,8 +136,7 @@ const FoodInsert = () => {
           </p>
         </div>
       </div>
-      <br/>
-      <button type="button" className="btn btn-primary" onClick={buttonFoodInsert}>
+      <button type="button" className="btn btn-primary" onClick={FoodInsertFlow}>
         음식 추가하기
       </button>
       </>
@@ -170,37 +145,41 @@ const FoodInsert = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="container"><FoodInsertStyle />
-      <div className="empty-h100"></div>
-        <div className="row">
-          <div className="col-12">
-            <h1 className="mb-3">{title}</h1>
-            <h2 className="mb-3">{brand}</h2>
-            <div className="empty-h20"></div>
-          </div>
-          <div className="col-6">
-            {totalServing()}
-          </div>
-          <div className="col-6">
-            {perServing(showGram)}
-          </div>
+    <div className="container">
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-12">
+          <h1 className="mb-3 fw-9">Food Insert</h1>
         </div>
-        <br/>
-        <div className="row">
-          <div className="col-12">
-            {/** 카테고리 선택 **/}
-            <select className="form-select" onChange={handleCategoryChange}>
-              <option selected>카테고리</option>
-              <option value="morning">아침</option>
-              <option value="lunch">점심</option>
-              <option value="dinner">저녁</option>
-              <option value="snack">간식</option>
-            </select>
-            {/** 용량 숫자 **/}
-            <input type="number" className="form-control" onChange={e => setShowGram(Number(e.target.value))} />
-          </div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
+          <h1 className="mb-3">{title}</h1>
+          <h2 className="mb-3">{brand}</h2>
         </div>
-      <div className="empty-h100"></div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-6">{totalServing()}</div>
+        <div className="col-6">{perServing(showGram)}</div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-4">
+          <select className="form-select" onChange={handleCategoryChange}>
+            <option selected>카테고리</option>
+            <option value="morning">아침</option>
+            <option value="lunch">점심</option>
+            <option value="dinner">저녁</option>
+            <option value="snack">간식</option>
+          </select>
+        </div>
+        <div className="col-4">
+          <input type="number" className="form-control" onChange={e => setShowGram(Number(e.target.value))} />
+        </div>
+      </div>
+      <div className="empty-h200"></div>
     </div>
   );
 };
