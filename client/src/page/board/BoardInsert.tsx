@@ -1,48 +1,6 @@
 // BoardInsert.tsx
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {createGlobalStyle} from "styled-components";
-
-// ------------------------------------------------------------------------------------------------>
-interface BoardInterface {
-  _id: string,
-  user_id: string,
-  board_title: string,
-  board_content: string,
-  board_regdate: string,
-}
-
-// ------------------------------------------------------------------------------------------------>
-const BoardInsertStyle = createGlobalStyle`
-  .boardInsert {
-    display: flex;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-  }
-
-  .form-BoardInsert {
-    max-width: 330px;
-    padding: 15px;
-  }
-
-  .form-BoardInsert .form-floating:focus-within {
-    z-index: 2;
-  }
-
-  .form-BoardInsert input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .form-BoardInsert input[type="boardPw"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-`;
 
 // ------------------------------------------------------------------------------------------------>
 const BoardInsert = () => {
@@ -79,6 +37,80 @@ const BoardInsert = () => {
   useEffect(() => {
     fetchBoardInsert();
   }, []);
+
+  // ---------------------------------------------------------------------------------------------->
+  const BoardInsertTable = () => {
+    return (
+      <>
+      <div className="form-floating">
+        <input type="text"
+          className="form-control"
+          id="user_id"
+          placeholder="User ID"
+          value={user_id}
+          onChange={(e) => setBoardId(e.target.value)}
+          readOnly
+        />
+        <label htmlFor="user_id">User ID</label>
+      </div>
+      <div className="empty-h20"></div>
+      <div className="form-floating">
+        <input type="text"
+          className="form-control"
+          id="boardPw"
+          placeholder="User PW"
+          value={boardPw}
+          readOnly
+          onChange={(e) => {
+            setBoardPw(e.target.value);
+          }}
+        />
+        <label htmlFor="boardPw">User PW</label>
+      </div>
+      <div className="empty-h20"></div>
+      <div className="form-floating">
+        <input type="text"
+          className="form-control"
+          placeholder="Title"
+          value={board_title}
+          id="floatingTitle"
+          onChange={(e) => {
+            setBoardTitle(e.target.value);
+          }}
+        />
+        <label htmlFor="floatingTitle">Title</label>
+      </div>
+      <div className="empty-h20"></div>
+      <div className="form-floating">
+        <input type="text"
+          className="form-control"
+          placeholder="Content"
+          value={board_content}
+          id="floatingContent"
+          onChange={(e) => {
+            setBoardContent(e.target.value);
+          }}
+        />
+        <label htmlFor="floatingContent">Content</label>
+      </div>
+      <div className="empty-h20"></div>
+      <div className="form-floating">
+        <input type="text"
+          className="form-control"
+          id="board_regdate"
+          placeholder="Board Date"
+          value={board_regdate}
+          readOnly
+          onChange={(e) => {
+            setBoardDate(e.target.value);
+          }}
+        />
+        <label htmlFor="board_regdate">Board Date</label>
+      </div>
+      <div className="empty-h50"></div>
+      </>
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const BoardInsertFlow = async () => {
@@ -119,83 +151,35 @@ const BoardInsert = () => {
     }
   };
 
+  const buttonBoardInsert = () => {
+    return (
+      <button className="btn btn-primary" type="button" onClick={BoardInsertFlow}>
+        Insert
+      </button>
+    );
+  };
+
   // ---------------------------------------------------------------------------------------------->
   return (
-    <section className="boardInsert custom-flex-center"><BoardInsertStyle />
-      <form>
-        <div className="empty-h50"></div>
-        <h1 className="mb-3">Board Insert</h1>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="user_id"
-            placeholder="User ID"
-            value={user_id}
-            onChange={(e) => setBoardId(e.target.value)}
-            readOnly
-          />
-          <label htmlFor="user_id">User ID</label>
+    <div className="container">
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-12">
+          <h1 className="mb-3">Board Insert</h1>
         </div>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="boardPw"
-            placeholder="User PW"
-            value={boardPw}
-            onChange={(e) => setBoardPw(e.target.value)}
-            readOnly
-          />
-          <label htmlFor="boardPw">User PW</label>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-10">
+          <form  className="form-inline">
+            {BoardInsertTable()}
+            <div className="empty-h50"></div>
+            {buttonBoardInsert()}
+          </form>
         </div>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Title"
-            value={board_title}
-            id="floatingTitle"
-            onChange={(e) => {
-              setBoardTitle(e.target.value);
-            }}
-          />
-          <label htmlFor="floatingTitle">Title</label>
-        </div>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Content"
-            value={board_content}
-            id="floatingContent"
-            onChange={(e) => {
-              setBoardContent(e.target.value);
-            }}
-          />
-          <label htmlFor="floatingContent">Content</label>
-        </div>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="board_regdate"
-            placeholder="Board Date"
-            value={board_regdate}
-            onChange={(e) => setBoardDate(e.target.value)}
-            readOnly
-          />
-          <label htmlFor="board_regdate">Board Date</label>
-        </div>
-        <div className="empty-h100"></div>
-        <button className="w-100 btn btn-lg btn-primary" type="button" onClick={BoardInsertFlow}>
-          Insert
-        </button>
-        <div className="empty-h50"></div>
-      </form>
-    </section>
+      </div>
+      <div className="empty-h200"></div>
+    </div>
   );
 };
 
