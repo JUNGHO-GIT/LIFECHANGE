@@ -76,9 +76,7 @@ const FoodList = () => {
     });
 
     return (
-      <>
-        <button className="btn btn-primary ms-2" onClick={navButton}>총 영양소 섭취량</button>
-      </>
+      <button className="btn btn-primary ms-2" onClick={navButton}>총 영양소 섭취량</button>
     );
   };
 
