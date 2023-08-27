@@ -82,25 +82,25 @@ const FoodTotal = () => {
   // ---------------------------------------------------------------------------------------------->
   return(
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">Food Total</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-8">
           <h1>{food_regdate}</h1>
           <h2>{user_id}</h2>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-8">
           {foodArrayTable()}
         </div>
-        <div className="empty-h200"></div>
+        <div className="he-200"></div>
       </div>
     </div>
   );

@@ -59,18 +59,18 @@ const UserList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
             {userListTable()}
-            <div className="empty-h50"></div>
+            <div className="he-50"></div>
             {buttonRefreshPage()}
           </form>
         </div>

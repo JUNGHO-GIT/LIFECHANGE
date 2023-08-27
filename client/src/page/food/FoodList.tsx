@@ -117,13 +117,13 @@ const FoodList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           {foodListTable()}
@@ -138,7 +138,7 @@ const FoodList = () => {
           </div>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <div className="btn-group mt-3">

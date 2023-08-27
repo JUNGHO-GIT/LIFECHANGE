@@ -51,19 +51,19 @@ const BoardUpdate = () => {
           value={board.user_id} readOnly />
           <label htmlFor="user_id">User ID</label>
         </div>
-        <div className="empty-h20"></div>
+        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Title" value={board.board_title} onChange={(e) => setBoard({...board, board_title: e.target.value})} />
           <label htmlFor="floatingTitle">Title</label>
         </div>
-        <div className="empty-h20"></div>
+        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Content"
           value={board.board_content}
           onChange={(e) => setBoard({...board, board_content: e.target.value})} />
           <label htmlFor="floatingContent">Content</label>
         </div>
-        <div className="empty-h20"></div>
+        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Board Date"
           value={board.board_regdate} readOnly />
@@ -85,23 +85,23 @@ const BoardUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
             {boardUpdateTable()}
-            <div className="empty-h50"></div>
+            <div className="he-50"></div>
             {buttonBoardUpdate()}
           </form>
         </div>
       </div>
-      <div className="empty-h200"></div>
+      <div className="he-200"></div>
     </div>
   );
 };

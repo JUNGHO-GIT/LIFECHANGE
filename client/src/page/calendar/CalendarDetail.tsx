@@ -37,20 +37,20 @@ const CalendarDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">Calendar Detail</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
-          <div className="empty-h20"></div>
+          <div className="he-20"></div>
           {CalendarDetailTable()}
-          <div className="empty-h20"></div>
+          <div className="he-20"></div>
           {buttonRefreshPage()}
-          <div className="empty-h50"></div>
+          <div className="he-50"></div>
         </div>
       </div>
     </div>

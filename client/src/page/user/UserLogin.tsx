@@ -43,7 +43,7 @@ const UserLogin = () => {
           onChange={(e) => {setId(e.target.value);}} />
           <label htmlFor="floatingId">ID</label>
         </div>
-        <div className="empty-h20"></div>
+        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Password" value={user_pw}
           onChange={(e) => {setPassword(e.target.value);}} />
@@ -65,18 +65,18 @@ const UserLogin = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
             {userLoginTable()}
-            <div className="empty-h50"></div>
+            <div className="he-50"></div>
             {buttonUserLogin()}
           </form>
         </div>

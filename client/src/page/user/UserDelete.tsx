@@ -83,7 +83,7 @@ const UserDelete = () => {
           />
           <label htmlFor="user_id">User ID</label>
         </div>
-        <div className="empty-h20"></div>
+        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -109,23 +109,23 @@ const UserDelete = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
             {userDeleteTable()}
-            <div className="empty-h20"></div>
+            <div className="he-20"></div>
             {buttonUserDelete()}
           </form>
         </div>
       </div>
-      <div className="empty-h200"></div>
+      <div className="he-200"></div>
     </div>
   );
 };

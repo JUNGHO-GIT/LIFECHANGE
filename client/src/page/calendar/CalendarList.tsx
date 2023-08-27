@@ -142,13 +142,13 @@ const CalendarList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">Calendar List</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <div className="custom-flex-center">
@@ -158,13 +158,13 @@ const CalendarList = () => {
           </div>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <div id="calendar"></div>
         </div>
       </div>
-      <div className="empty-h200"></div>
+      <div className="he-200"></div>
     </div>
   );
 };

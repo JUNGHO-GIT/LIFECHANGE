@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 // ------------------------------------------------------------------------------------------------>
 const FoodInsert = () => {
 
+  // ---------------------------------------------------------------------------------------------->
   const [showGram, setShowGram] = useState(0);
   const [category, setCategory] = useState("");
   const URL = "http://localhost:4000/food";
@@ -147,9 +148,12 @@ const FoodInsert = () => {
 
     const categoryFoodInsert = () => {
       return (
-        <select className="form-select" onChange={handleCategoryChange}>
-          <option selected>카테고리</option>
-          <option value="morning">아침</option>
+        <select className="form-select"
+          onChange={e => {
+            setCategory(e.target.value);
+          }}
+        >
+          <option value="morning" selected>아침</option>
           <option value="lunch">점심</option>
           <option value="dinner">저녁</option>
           <option value="snack">간식</option>
@@ -184,26 +188,21 @@ const FoodInsert = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const handleCategoryChange = (e: any) => {
-    setCategory(e.target.value);
-  };
-
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <h1 className="mb-3"><span>{title}</span><span>{brand}</span></h1>
         </div>
       </div>
-      <div className="empty-h50"></div>
+      <div className="he-50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-6">
           {totalServTable()}
@@ -212,7 +211,7 @@ const FoodInsert = () => {
           {perServTable(showGram)}
         </div>
       </div>
-      <div className="empty-h200"></div>
+      <div className="he-200"></div>
     </div>
   );
 };
