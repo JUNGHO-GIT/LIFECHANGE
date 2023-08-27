@@ -148,11 +148,7 @@ export const FoodInsert = () => {
 
     const categoryFoodInsert = () => {
       return (
-        <select className="form-select"
-          onChange={e => {
-            setCategory(e.target.value);
-          }}
-        >
+        <select className="form-select"onChange={e => {setCategory(e.target.value);}}>
           <option value="morning" selected>아침</option>
           <option value="lunch">점심</option>
           <option value="dinner">저녁</option>
@@ -163,9 +159,10 @@ export const FoodInsert = () => {
 
     const inputFoodInsert = () => {
       return (
-        <input type="number" className="form-control"
+        <input type="number" className="form-control" defaultValue={1} min="1"
           onChange={e => {
-            setShowGram(Number(e.target.value));
+            const value = Math.max(1, Number(e.target.value));
+            setShowGram(value);
           }}
         />
       );

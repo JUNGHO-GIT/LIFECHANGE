@@ -69,7 +69,6 @@ export const FoodList = () => {
     e.preventDefault();
     setQuery(e.target.value);
   };
-
   const handleSearchButton = (e: any) => {
     e.preventDefault();
     if (!query) {
@@ -80,7 +79,6 @@ export const FoodList = () => {
       fetchFoodList();
     }
   };
-
   const handleNextPage = (e: any) => {
     e.preventDefault();
     if (!query) {
@@ -92,7 +90,6 @@ export const FoodList = () => {
       fetchFoodList();
     }
   };
-
   const handlePrevPage = (e: any) => {
     e.preventDefault();
     if (!query) {
@@ -104,7 +101,6 @@ export const FoodList = () => {
       fetchFoodList();
     }
   };
-
   const buttonFoodTotal = () => {
     navParam(`/foodTotal`, {
       state: {
@@ -113,7 +109,6 @@ export const FoodList = () => {
       }
     });
   };
-
   const buttonFoodMorning = () => {
     navParam(`/foodDetail`, {
       state: {
@@ -123,7 +118,6 @@ export const FoodList = () => {
       }
     });
   };
-
   const buttonFoodLunch = () => {
     navParam(`/foodDetail`, {
       state: {
@@ -133,7 +127,6 @@ export const FoodList = () => {
       }
     });
   };
-
   const buttonFoodDinner = () => {
     navParam(`/foodDetail`, {
       state: {
@@ -143,7 +136,6 @@ export const FoodList = () => {
       }
     });
   };
-
   const buttonFoodSnack = () => {
     navParam(`/foodDetail`, {
       state: {
@@ -167,20 +159,18 @@ export const FoodList = () => {
           {foodListTable()}
         </div>
       </div>
-      <div className="row d-flex justify-content-center">
-        <div className="col-10">
+      <div className="row d-flex justify-content-center mt-5">
+        <div className="col-4">
+          <div className="btn-group mb-3">
+            <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
+            <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
+          </div>
+        </div>
+        <div className="col-4">
           <div className="input-group mb-3">
             <input type="text" className="form-control" value={query}
             onChange={handleSearchChange}/>
             <button className="btn btn-primary" onClick={handleSearchButton}>검색</button>
-          </div>
-        </div>
-      </div>
-      <div className="row d-flex justify-content-center mt-5">
-        <div className="col-10">
-          <div className="btn-group">
-            <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
-            <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
           </div>
         </div>
       </div>
