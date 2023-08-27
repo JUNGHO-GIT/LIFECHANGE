@@ -5,6 +5,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardDetail = () => {
+
   const [board, setBoard] = useState<any>({});
   const navParam = useNavigate();
   const _id = useLocation().state._id;
@@ -118,13 +119,10 @@ export const BoardDetail = () => {
         <div className="col-10">
           <form className="form-inline">
             {boardDetailTable()}
-            <div className="he-50"></div>
+            <br/>
             {buttonRefreshPage()}
-            &nbsp;
             {buttonBoardUpdate(board._id)}
-            &nbsp;
             {buttonBoardDelete()}
-            &nbsp;
             {buttonBoardList()}
           </form>
         </div>

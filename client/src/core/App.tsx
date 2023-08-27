@@ -35,6 +35,7 @@ import {CalendarDetail} from "../page/calendar/CalendarDetail";
 import {FoodList} from "../page/food/FoodList";
 import {FoodInsert} from "../page/food/FoodInsert";
 import {FoodTotal} from "../page/food/FoodTotal";
+import {FoodDetail} from "../page/food/FoodDetail";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -64,6 +65,7 @@ const App = () => {
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodInsert" element={<FoodInsert />} />
           <Route path="/foodTotal" element={<FoodTotal />} />
+          <Route path="/foodDetail" element={<FoodDetail />} />
         </Routes>
         <Footer />
       </Router>
