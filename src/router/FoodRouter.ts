@@ -6,7 +6,7 @@ const foodRouter = Router();
 
 // 1. foodList ------------------------------------------------------------------------------------>
 
-// 2. foodDetail ---------------------------------------------------------------------------------->
+// 2-1. foodDetail -------------------------------------------------------------------------------->
 foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
   try {
     const foodDetail = await foodService.foodDetail (
@@ -16,6 +16,27 @@ foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
     );
     if (foodDetail) {
       res.send(foodDetail);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 2-2. foodInfo ---------------------------------------------------------------------------------->
+foodRouter.get ("/foodInfo", async (req: Request, res: Response) => {
+  try {
+    const foodInfo = await foodService.foodInfo (
+      req.query._id as string,
+      req.query.user_id as string,
+      req.query.food_regdate as string,
+    );
+    if (foodInfo) {
+      res.send(foodInfo);
     }
     else {
       res.send("fail");

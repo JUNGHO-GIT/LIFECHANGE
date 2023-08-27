@@ -1,19 +1,19 @@
-// FoodDetail.tsx
+// FoodInfo.tsx
 import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
+import { useLocation } from "react-router-dom";
+import DatePicker from "react-datepicker"
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDetail = () => {
-  const [foodDetail, setFoodDetail] = useState([]);
-  const [food_regdate, setFood_regdate] = useState(new Date().toISOString().split("T")[0]);
-  const user_id = sessionStorage.getItem("user_id");
+export const FoodInfo = () => {
+  const [foodInfo, setFoodInfo] = useState<any>({});
   const location = useLocation();
-  const navParam = useNavigate();
+  const _id = location.state._id;
+  const user_id = location.state.user_id;
+  const food_regdate = location.state.food_regdate;
   const food_category = location.state.food_category;
   const URL = "http://127.0.0.1:4000/food";
-  const TITLE = "Food Detail";
+  const TITLE = "Food Info";
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
@@ -24,35 +24,35 @@ export const FoodDetail = () => {
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
         }}
+        readOnly
       />
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchFoodDetail = async () => {
+    const fetchFoodInfo = async () => {
       try {
-        const res = await axios.get(`${URL}/foodDetail`, {
+        const res = await axios.get(`${URL}/foodInfo`, {
           params: {
-            user_id: user_id,
-            food_category: food_category,
-            food_regdate: food_regdate,
+            _id : _id,
+            user_id : user_id,
+            food_regdate : food_regdate,
           },
         });
-        setFoodDetail(res.data);
+        setFoodInfo(res.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
-        setFoodDetail([]);
+        setFoodInfo([]);
       }
     };
-    fetchFoodDetail();
-  }, [user_id, food_category, food_regdate]);
+    fetchFoodInfo();
+  }, [_id]);
 
   // ---------------------------------------------------------------------------------------------->
-  const foodDetailTable = () => {
+  const foodInfoTable = () => {
     return (
       <div>
         <table className="table table-striped">
@@ -66,27 +66,13 @@ export const FoodDetail = () => {
             </tr>
           </thead>
           <tbody>
-            {foodDetail.map((index: any, i: number) => (
-              <tr key={i}>
-                <td onClick={() =>
-                    navParam(`/foodInfo`, {
-                      state: {
-                        _id : index._id,
-                        user_id : index.user_id,
-                        food_regdate : index.food_regdate,
-                        food_category : index.food_category
-                      },
-                    })
-                  }
-                >
-                  {index.food_name}
-                </td>
-                <td>{index.food_calories}</td>
-                <td>{index.food_carb}</td>
-                <td>{index.food_protein}</td>
-                <td>{index.food_fat}</td>
-              </tr>
-            ))}
+            <tr>
+              <td>{foodInfo.food_name}</td>
+              <td>{foodInfo.food_calories}</td>
+              <td>{foodInfo.food_carb}</td>
+              <td>{foodInfo.food_protein}</td>
+              <td>{foodInfo.food_fat}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -112,7 +98,7 @@ export const FoodDetail = () => {
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
-        <div className="col-10">{foodDetailTable()}</div>
+        <div className="col-10">{foodInfoTable()}</div>
       </div>
     </div>
   );

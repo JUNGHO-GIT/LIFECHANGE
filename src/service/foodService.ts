@@ -4,7 +4,7 @@ import * as mongoose from "mongoose";
 
 // 1. foodList ------------------------------------------------------------------------------------>
 
-// 2. foodDetail ---------------------------------------------------------------------------------->
+// 2-1. foodDetail -------------------------------------------------------------------------------->
 export const foodDetail = async (
   user_id_param : string,
   food_regdate_param : string,
@@ -16,6 +16,20 @@ export const foodDetail = async (
     food_category : food_category_param
   });
   return foodDetail;
+};
+
+// 2-2. foodInfo ---------------------------------------------------------------------------------->
+export const foodInfo = async (
+  _id_param : string,
+  user_id_param : string,
+  food_regdate_param : string,
+) => {
+  const foodInfo = await Food.findOne ({
+    _id : _id_param,
+    user_id : user_id_param,
+    food_regdate : food_regdate_param,
+  });
+  return foodInfo;
 };
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
