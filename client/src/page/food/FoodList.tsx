@@ -47,11 +47,9 @@ const FoodList = () => {
         </thead>
         <tbody>
           {foodList.map((index : any) => (
-            <tr key={index}>
+            <tr>
               <td>
-                <Link to={`/foodInsert?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>
-                  {index.title}
-                </Link>
+                <Link to={`/foodInsert?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>{index.title}</Link>
               </td>
               <td>{index.brand ? index.brand : "x"}</td>
               <td>{index.calories ? index.calories : 0}</td>
