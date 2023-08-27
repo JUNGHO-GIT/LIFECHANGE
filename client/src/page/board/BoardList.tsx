@@ -7,16 +7,18 @@ import axios from "axios";
 const BoardList = () => {
   const [boardList, setBoardList] = useState<[]>([]);
   const navParam = useNavigate();
+  const URL = "http://127.0.0.1:4000/board";
+  const TITLE = "Board List";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
-        const response = await axios.get ("http://127.0.0.1:4000/board/boardList");
+        const response = await axios.get (`${URL}/boardList`);
         setBoardList(response.data);
       }
-      catch (err) {
-        console.error(err);
+      catch (error: any) {
+        alert(`Error fetching board data: ${error.message}`);
         setBoardList([]);
       }
     };
@@ -24,40 +26,14 @@ const BoardList = () => {
   }, []);
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonBoardDetail = (_id: string) => {
-    const navButton = () => navParam(`/boardDetail`, {
-      state: {
-        _id
-      }
-    });
-    navButton();
-  };
-
-  const buttonRefreshPage = () => {
-    return (
-      <Link to="/boardList">
-        <button type="button" className="btn btn-success">Refresh</button>
-      </Link>
-    );
-  };
-
-  const buttonBoardInsert = () => {
-    return (
-      <Link to="/boardInsert">
-        <button type="button" className="btn btn-primary">Insert</button>
-      </Link>
-    );
-  };
-
-  // ---------------------------------------------------------------------------------------------->
-  const BoardListTable = () => {
+  const boardListTable = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Date</th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody>
@@ -78,26 +54,50 @@ const BoardList = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
+  const buttonBoardDetail = (_id: string) => {
+    const navButton = () => navParam(`/boardDetail`, {
+      state: {
+        _id
+      }
+    });
+    navButton();
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <Link to="/boardList">
+        <button type="button" className="btn btn-success">Refresh</button>
+      </Link>
+    );
+  };
+  const buttonBoardInsert = () => {
+    return (
+      <Link to="/boardInsert">
+        <button type="button" className="btn btn-primary">Insert</button>
+      </Link>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">Board List</h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
-            {BoardListTable()}
+            {boardListTable()}
             <div className="empty-h50"></div>
             {buttonRefreshPage()}
             &nbsp;
             {buttonBoardInsert()}
-            <div className="empty-h50"></div>
           </form>
         </div>
+        <div className="empty-h50"></div>
       </div>
     </div>
   );

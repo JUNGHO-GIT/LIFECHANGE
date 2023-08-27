@@ -5,40 +5,36 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 const BoardDetail = () => {
+  const [board, setBoard] = useState<any>({});
   const navParam = useNavigate();
   const _id = useLocation().state._id;
-  const [board, setBoard] = useState<any>();
+  const URL = "http://127.0.0.1:4000/board";
+  const TITLE = "Board Detail";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:4000/board/boardDetail/${_id}`);
+        const response = await axios.get (`${URL}/boardDetail/${_id}`);
         setBoard(response.data);
       }
-      catch (err) {
-        console.error(err);
+      catch (error: any) {
+        alert(`Error fetching board data: ${error.message}`);
         setBoard([]);
       }
     };
     fetchBoardDetail();
   }, [_id]);
 
-  if (!board) {
-    return (
-      <div>Loading...</div>
-    );
-  }
-
-  // button --------------------------------------------------------------------------------------->
+  // ---------------------------------------------------------------------------------------------->
   const boardDeleteFlow = async () => {
-    const confirm = window.confirm("Are you sure you want to delete?");
-    if (!confirm) {
-      return;
-    }
-    else {
-      try {
-        const response = await axios.delete(`http://127.0.0.1:4000/board/boardDelete/${_id}`);
+    try {
+      const confirm = window.confirm("Are you sure you want to delete?");
+      if (!confirm) {
+        return;
+      }
+      else {
+        const response = await axios.delete (`${URL}/boardDelete/${_id}`);
         if (response.data === "success") {
           window.location.href = "/";
         }
@@ -46,29 +42,54 @@ const BoardDetail = () => {
           alert("Delete failed");
         }
       }
-      catch (err) {
-        console.error(err);
-      }
+    }
+    catch (error: any) {
+      alert(`Error fetching board data: ${error.message}`);
     }
   };
 
-  const buttonBoardDelete = (): React.ReactNode => {
+  // ---------------------------------------------------------------------------------------------->
+  const boardDetailTable = () => {
     return (
-      <button onClick={boardDeleteFlow} className="btn btn-danger">Delete</button>
+      <table className="table table-striped table-bordered">
+        <tbody>
+          <tr>
+            <th>ID</th>
+            <td>{board.user_id}</td>
+          </tr>
+          <tr>
+            <th>Board Title</th>
+            <td>{board.board_title}</td>
+          </tr>
+          <tr>
+            <th>Board Content</th>
+            <td>{board.board_content}</td>
+          </tr>
+          <tr>
+            <th>Board Date</th>
+            <td>{board.board_regdate}</td>
+          </tr>
+        </tbody>
+      </table>
     );
   };
 
-  const buttonBoardUpdate = (_id: string): React.ReactNode => {
+  // ---------------------------------------------------------------------------------------------->
+  const buttonBoardDelete = () => {
+    return (
+      <button type="button" className="btn btn-danger" onClick={boardDeleteFlow}>Delete</button>
+    );
+  };
+  const buttonBoardUpdate = (_id: string) => {
     const navButton = () => navParam(`/boardUpdate`, {
       state: {
         _id
       }
     });
     return (
-      <button onClick={navButton} className="btn btn-primary">Update</button>
+      <button type="button" className="btn btn-primary" onClick={navButton}>Update</button>
     );
   };
-
   const buttonRefreshPage = () => {
     return (
       <Link to="/boardDetail">
@@ -76,7 +97,6 @@ const BoardDetail = () => {
       </Link>
     );
   };
-
   const buttonBoardList = () => {
     return (
       <Link to="/boardList">
@@ -86,45 +106,19 @@ const BoardDetail = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const BoardDetailTable = () => {
-    return (
-      <table className="table table-striped table-bordered">
-        <tbody>
-          <tr>
-            <th scope="row">ID</th>
-            <td>{board.user_id}</td>
-          </tr>
-          <tr>
-            <th scope="row">Board Title</th>
-            <td>{board.board_title}</td>
-          </tr>
-          <tr>
-            <th scope="row">Board Content</th>
-            <td>{board.board_content}</td>
-          </tr>
-          <tr>
-            <th scope="row">Board Date</th>
-            <td>{board.board_regdate}</td>
-          </tr>
-        </tbody>
-      </table>
-    );
-  };
-
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">Board Detail</h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
-            {BoardDetailTable()}
+            {boardDetailTable()}
             <div className="empty-h50"></div>
             {buttonRefreshPage()}
             &nbsp;
@@ -133,9 +127,9 @@ const BoardDetail = () => {
             {buttonBoardDelete()}
             &nbsp;
             {buttonBoardList()}
-            <div className="empty-h50"></div>
           </form>
         </div>
+        <div className="empty-h50"></div>
       </div>
     </div>
   );

@@ -3,14 +3,17 @@ import Board from "../schemas/Board";
 import * as mongoose from "mongoose";
 
 // 1. boardList ----------------------------------------------------------------------------------->
-export const boardList = async () => {
+export const boardList = async (
+) => {
   const boardList = await Board.find();
   return boardList;
 };
 
 // 2. boardDetail --------------------------------------------------------------------------------->
-export const boardDetail = async (_id_param: any) => {
-  const boardDetail = await Board.findOne({
+export const boardDetail = async (
+  _id_param: any
+) => {
+  const boardDetail = await Board.findOne ({
     _id: _id_param,
   });
   return boardDetail;
@@ -34,7 +37,10 @@ export const boardInsert = async (
 };
 
 // 4. boardUpdate --------------------------------------------------------------------------------->
-export const boardUpdate = async (_id_param: any, board_param: any) => {
+export const boardUpdate = async (
+  _id_param: any,
+  board_param: any
+) => {
   const boardUpdate = await Board.updateOne(
     { _id: _id_param }, // Query
     { $set: board_param } // Update
@@ -44,7 +50,9 @@ export const boardUpdate = async (_id_param: any, board_param: any) => {
 };
 
 // 5. boardDelete --------------------------------------------------------------------------------->
-export const boardDelete = async (_id_param: any) => {
+export const boardDelete = async (
+  _id_param: any
+) => {
   const boardDelete = await Board.deleteOne({
     _id: _id_param,
   });

@@ -5,19 +5,21 @@ import { useLocation } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 const BoardUpdate = () => {
-  let _id = useLocation().state._id;
-  let [board, setBoard] = useState<any>(null);
+  const [board, setBoard] = useState<any>(null);
+  const _id = useLocation().state._id;
+  const URL = "http://127.0.0.1:4000/board";
+  const TITLE = "Board Update";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:4000/board/boardDetail/${_id}`);
+        const response = await axios.get(`${URL}/boardDetail/${_id}`);
         setBoard(response.data);
       }
-      catch (err) {
-        console.error(err);
-        setBoard(null);
+      catch (error: any) {
+        alert(`Error fetching board data: ${error.message}`);
+        setBoard([]);
       }
     };
     fetchBoardDetail();
@@ -26,7 +28,7 @@ const BoardUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   const BoardUpdateFlow = async () => {
     try {
-      const response = await axios.put(`http://127.0.0.1:4000/board/boardUpdate/${_id}`, board);
+      const response = await axios.put(`${URL}/boardUpdate/${_id}`, board);
       if (response.data === "success") {
         alert("Update success");
         window.location.href = "/boardList";
@@ -35,29 +37,15 @@ const BoardUpdate = () => {
         alert("Update failed");
       }
     }
-    catch (err) {
-      console.error(err);
+    catch (error: any) {
+      alert(`Error fetching board data: ${error.message}`);
     }
-  };
-  if (!board) {
-    return (
-      <div>Loading...</div>
-    );
-  }
-
-  const buttonBoardUpdate = () => {
-    return (
-      <button className="btn btn-primary" type="button" onClick={BoardUpdateFlow}>
-        Update
-      </button>
-    );
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const BoardUpdateTable = () => {
+  const boardUpdateTable = () => {
     return (
       <>
-      <div className="empty-h20"></div>
         <div className="form-floating">
           <input type="text" className="form-control"  placeholder="User ID"
           value={board.user_id} readOnly />
@@ -86,19 +74,28 @@ const BoardUpdate = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
+  const buttonBoardUpdate = () => {
+    return (
+      <button className="btn btn-primary" type="button" onClick={BoardUpdateFlow}>
+        Update
+      </button>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">Board Update</h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
-            {BoardUpdateTable()}
+            {boardUpdateTable()}
             <div className="empty-h50"></div>
             {buttonBoardUpdate()}
           </form>
