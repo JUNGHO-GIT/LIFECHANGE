@@ -18,8 +18,7 @@ const FoodList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const fetchFoodList = () => {
-    const url
-    = `${URL}/${lang}/search?query=${query}&page=${page}`;
+    const url = `${URL}/${lang}/search?query=${query}&page=${page}`;
 
     axios.get(url)
     .then((response) => {
@@ -132,7 +131,6 @@ const FoodList = () => {
           {foodListTable()}
         </div>
       </div>
-      <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <div className="input-group mb-3">
@@ -142,6 +140,7 @@ const FoodList = () => {
           </div>
         </div>
       </div>
+      <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <div className="btn-group mt-3">
@@ -151,7 +150,6 @@ const FoodList = () => {
           </div>
         </div>
       </div>
-      <div className="empty-h200"></div>
     </div>
   );
 };
