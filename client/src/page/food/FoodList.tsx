@@ -5,26 +5,71 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 const FoodList = () => {
+
   const [foodList, setFoodList] = useState([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
   const lang = "ko";
+  const user_id = sessionStorage.getItem("user_id");
+  const food_regdate = new Date().toISOString().split("T")[0];
+  const navParam = useNavigate();
+  const URL = "https://fat-git-main-jungho-git.vercel.app/api";
+  const TITLE = "Food List";
 
+  // ---------------------------------------------------------------------------------------------->
   const fetchFoodList = () => {
     const url
-    = `https://fat-git-main-jungho-git.vercel.app/api/${lang}/search?query=${query}&page=${page}`;
+    = `${URL}/${lang}/search?query=${query}&page=${page}`;
 
     axios.get(url)
     .then((response) => {
       setFoodList(response.data.items);
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((error: any) => {
+      alert(`Error fetching food data: ${error.message}`);
+      setFoodList([]);
     });
   };
 
   // ---------------------------------------------------------------------------------------------->
+  const foodListTable = () => {
+    return (
+      <table className="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>브랜드</th>
+            <th>칼로리</th>
+            <th>지방</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>용량</th>
+          </tr>
+        </thead>
+        <tbody>
+          {foodList.map((index : any) => (
+            <tr key={index}>
+              <td>
+                <Link to={`/foodInsert?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>
+                  {index.title}
+                </Link>
+              </td>
+              <td>{index.brand ? index.brand : "x"}</td>
+              <td>{index.calories ? index.calories : 0}</td>
+              <td>{index.fat ? index.fat : 0}</td>
+              <td>{index.carb ? index.carb : 0}</td>
+              <td>{index.protein ? index.protein : 0}</td>
+              <td>{index.serving ? index.serving : 0}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
   const handleSearchChange = (e: any) => {
+    e.preventDefault();
     setQuery(e.target.value);
   };
 
@@ -63,21 +108,13 @@ const FoodList = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const ButtonFoodTotal = () => {
-    const user_id = sessionStorage.getItem("user_id");
-    const food_regdate = new Date().toISOString().split("T")[0];
-    const navParam = useNavigate();
-    const navButton = () => navParam(`/foodTotal`, {
+  const buttonFoodTotal = () => {
+    navParam(`/foodTotal`, {
       state: {
         user_id,
         food_regdate
       }
     });
-
-    return (
-      <button className="btn btn-primary ms-2" onClick={navButton}>총 영양소 섭취량</button>
-    );
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -86,68 +123,35 @@ const FoodList = () => {
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">Food List</h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
+        </div>
+      </div>
+      <div className="empty-h50"></div>
+      <div className="row d-flex justify-content-center">
+        <div className="col-12">
+          {foodListTable()}
         </div>
       </div>
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
-          <div className="d-flex justify-content-between">
-            <input type="text" className="form-control" value={query} onChange={handleSearchChange}/>
+          <div className="input-group mb-3">
+            <input type="text" className="form-control" value={query}
+            onChange={handleSearchChange}/>
             <button className="btn btn-primary" onClick={handleSearchButton}>검색</button>
           </div>
         </div>
       </div>
-      <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <div className="btn-group mt-3">
             <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
             <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
-            {ButtonFoodTotal()}
-          </div>
-          <div className="empty-h50"></div>
-          <div className="row">
-            {foodList.map((index : any) => (
-              <div key={index} className="col-md-4">
-                <div className="card mb-4">
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      <Link to={`/foodInsert?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>
-                        {index.title}
-                      </Link>
-                    </h5>
-                    <p className="card-text">
-                      <span>브랜드 : </span>
-                      {index.brand ? index.brand : "x"}
-                    </p>
-                    <p className="card-text">
-                      <span>칼로리 : </span>
-                      {index.calories ? index.calories : 0}
-                    </p>
-                    <p className="card-text">
-                      <span>지방 : </span>
-                      {index.fat ? index.fat : 0}
-                    </p>
-                    <p className="card-text">
-                      <span>탄수화물 : </span>
-                      {index.carb ? index.carb : 0}
-                    </p>
-                    <p className="card-text">
-                      <span>단백질 : </span>
-                      {index.protein ? index.protein : 0}
-                    </p>
-                    <p className="card-text">
-                      <span>용량 : </span>
-                      {index.serving ? index.serving : 0}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <button className="btn btn-primary ms-2" onClick={buttonFoodTotal}>총합</button>
           </div>
         </div>
       </div>
+      <div className="empty-h200"></div>
     </div>
   );
 };
