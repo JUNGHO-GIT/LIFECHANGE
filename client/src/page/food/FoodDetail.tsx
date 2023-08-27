@@ -22,6 +22,7 @@ export const FoodDetail = () => {
       <DatePicker
         dateFormat="yyyy-MM-dd"
         selected={new Date(food_regdate)}
+        popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
@@ -100,7 +101,6 @@ export const FoodDetail = () => {
         <div className="col-10">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{datePicker()}</span>
-            <span className="ms-4">{user_id}</span>
           </h1>
         </div>
       </div>

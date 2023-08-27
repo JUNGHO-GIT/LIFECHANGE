@@ -158,7 +158,6 @@ export const FoodList = () => {
         <div className="col-10">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{food_regdate}</span>
-            <span className="ms-4">{user_id}</span>
           </h1>
         </div>
       </div>

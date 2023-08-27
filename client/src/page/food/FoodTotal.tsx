@@ -1,8 +1,8 @@
 // FoodTotal.tsx
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodTotal = () => {
@@ -19,6 +19,7 @@ export const FoodTotal = () => {
       <DatePicker
         dateFormat="yyyy-MM-dd"
         selected={new Date(food_regdate)}
+        popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
@@ -85,7 +86,6 @@ export const FoodTotal = () => {
         <div className="col-8">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{datePicker()}</span>
-            <span className="ms-4">{user_id}</span>
           </h1>
         </div>
       </div>
