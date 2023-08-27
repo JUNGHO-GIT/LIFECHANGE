@@ -37,26 +37,25 @@ const UserLogin = () => {
   // ---------------------------------------------------------------------------------------------->
   const userLoginTable = () => {
     return (
-      <>
+      <div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="ID" value={user_id}
           onChange={(e) => {setId(e.target.value);}} />
           <label htmlFor="floatingId">ID</label>
         </div>
-        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Password" value={user_pw}
           onChange={(e) => {setPassword(e.target.value);}} />
           <label htmlFor="floatingPassword">Password</label>
         </div>
-      </>
+      </div>
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
   const buttonUserLogin = () => {
     return (
-      <button type="button" className="btn btn-primary" onClick={userLoginFlow}>
+      <button type="button" className="btn btn-primary ms-2" onClick={userLoginFlow}>
         Log In
       </button>
     );
@@ -65,18 +64,16 @@ const UserLogin = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {userLoginTable()}
-            <div className="he-50"></div>
+            <br/>
             {buttonUserLogin()}
           </form>
         </div>

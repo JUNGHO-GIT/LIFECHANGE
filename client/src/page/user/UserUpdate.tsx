@@ -44,7 +44,7 @@ const UserUpdate = () => {
           alert("Incorrect password");
           return;
         }
-        if (res.data === "success") {
+        else if (res.data === "success") {
           const updatePw = prompt("Please enter a new password");
           const res = await axios.put(`${URL}/userUpdate`, {
             user_id: user_id,
@@ -71,38 +71,36 @@ const UserUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   const userUpdateTable = () => {
     return (
-      <>
-        <div className="he-20"></div>
-          <div className="form-floating">
-            <input type="text"
-              className="form-control"
-              id="user_id"
-              placeholder="User ID"
-              value={user_id}
-              onChange={(e) => setUserId(e.target.value)}
-              readOnly
-            />
-            <label htmlFor="user_id">User ID</label>
-          </div>
-          <div className="he-20"></div>
-          <div className="form-floating">
-            <input type="text"
-              className="form-control"
-              id="user_pw"
-              placeholder="User PW"
-              value={user_pw}
-              onChange={(e) => setUserPw(e.target.value)}
-            />
-            <label htmlFor="user_pw">User PW</label>
-          </div>
-      </>
+      <div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="user_id"
+            placeholder="User ID"
+            value={user_id}
+            onChange={(e) => setUserId(e.target.value)}
+            readOnly
+          />
+          <label htmlFor="user_id">User ID</label>
+        </div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="user_pw"
+            placeholder="User PW"
+            value={user_pw}
+            onChange={(e) => setUserPw(e.target.value)}
+          />
+          <label htmlFor="user_pw">User PW</label>
+        </div>
+      </div>
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
   const buttonUserUpdate = () => {
     return (
-      <button className="btn btn-primary" type="button" onClick={userUpdateFlow}>
+      <button type="button" className="btn btn-primary ms-2" onClick={userUpdateFlow}>
         User Update
       </button>
     );
@@ -111,18 +109,16 @@ const UserUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {userUpdateTable()}
-            <div className="he-50"></div>
+            <br/>
             {buttonUserUpdate()}
           </form>
         </div>

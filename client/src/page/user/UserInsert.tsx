@@ -9,7 +9,7 @@ const UserInsert = () => {
   const [user_id, setId] = useState("");
   const [user_pw, setPassword] = useState("");
   const URL = "http://127.0.0.1:4000/user";
-  const TITLE = "User Info";
+  const TITLE = "User Insert";
 
   // ---------------------------------------------------------------------------------------------->
   const userInsertFlow = async () => {
@@ -48,7 +48,7 @@ const UserInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   const userInsertTable = () => {
     return (
-      <>
+      <div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -58,7 +58,6 @@ const UserInsert = () => {
           />
           <label htmlFor="floatingId">ID</label>
         </div>
-        <div className="he-20"></div>
         <div className="form-floating">
           <input
             className="form-control"
@@ -72,7 +71,7 @@ const UserInsert = () => {
           />
           <label htmlFor="floatingPassword">Password</label>
         </div>
-      </>
+      </div>
     );
   };
 
@@ -80,23 +79,21 @@ const UserInsert = () => {
   const buttonRefreshPage = () => {
     return (
       <Link to="/userInsert">
-        <button type="button" className="btn btn-success">Refresh</button>
+        <button type="button" className="btn btn-success ms-2">Refresh</button>
       </Link>
     );
   };
-
   const buttonUserInsert = () => {
     return (
-      <button type="button" className="btn btn-primary" onClick={userInsertFlow}>
+      <button type="button" className="btn btn-primary ms-2" onClick={userInsertFlow}>
         Submit
       </button>
     );
   };
-
   const buttonUserList = () => {
     return (
       <Link to="/userList">
-        <button type="button" className="btn btn-secondary">List</button>
+        <button type="button" className="btn btn-secondary ms-2">List</button>
       </Link>
     );
   };
@@ -104,22 +101,18 @@ const UserInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {userInsertTable()}
-            <div className="he-50"></div>
+            <br/>
             {buttonUserInsert()}
-            &nbsp;
             {buttonRefreshPage()}
-            &nbsp;
             {buttonUserList()}
           </form>
         </div>

@@ -39,7 +39,7 @@ const UserDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   const userDetailTable = () => {
     return (
-      <>
+      <div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -60,7 +60,7 @@ const UserDetail = () => {
           />
           <label htmlFor="user_pw">User PW</label>
         </div>
-      </>
+      </div>
     );
   };
 
@@ -68,31 +68,28 @@ const UserDetail = () => {
   const buttonRefreshPage = () => {
     return (
       <Link to="/userDetail">
-        <button type="button" className="btn btn-success">Refresh</button>
+        <button type="button" className="btn btn-success ms-2">Refresh</button>
       </Link>
     );
   };
-
   const buttonUserUpdate = () => {
     return (
       <Link to="/userUpdate">
-        <button type="button" className="btn btn-primary">Update</button>
+        <button type="button" className="btn btn-primary ms-2">Update</button>
       </Link>
     );
   };
-
   const buttonUserDelete = () => {
     return (
       <Link to="/userDelete">
-        <button type="button" className="btn btn-danger">Delete</button>
+        <button type="button" className="btn btn-danger ms-2">Delete</button>
       </Link>
     );
   };
-
   const buttonUserList = () => {
     return (
       <Link to="/userList">
-        <button type="button" className="btn btn-secondary">List</button>
+        <button type="button" className="btn btn-secondary ms-2">List</button>
       </Link>
     );
   };
@@ -100,24 +97,19 @@ const UserDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {userDetailTable()}
-            <div className="he-50"></div>
+            <br/>
             {buttonRefreshPage()}
-            &nbsp;
             {buttonUserUpdate()}
-            &nbsp;
             {buttonUserDelete()}
-            &nbsp;
             {buttonUserList()}
           </form>
         </div>

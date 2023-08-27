@@ -31,12 +31,12 @@ const UserList = () => {
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th scope="col">User ID</th>
-            <th scope="col">User PW</th>
+            <th>User ID</th>
+            <th>User PW</th>
           </tr>
         </thead>
         <tbody>
-          {userList.map((key:any, value:any) => (
+          {userList.map((key:any) => (
             <tr>
               <td>{key.user_id}</td>
               <td>{key.user_pw}</td>
@@ -51,7 +51,7 @@ const UserList = () => {
   const buttonRefreshPage = () => {
     return (
       <Link to="/userList">
-        <button type="button" className="btn btn-success">Refresh</button>
+        <button type="button" className="btn btn-success ms-2">Refresh</button>
       </Link>
     );
   };
@@ -59,18 +59,16 @@ const UserList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {userListTable()}
-            <div className="he-50"></div>
+            <br/>
             {buttonRefreshPage()}
           </form>
         </div>

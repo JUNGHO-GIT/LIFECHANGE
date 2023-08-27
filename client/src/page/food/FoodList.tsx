@@ -117,14 +117,12 @@ const FoodList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           {foodListTable()}
         </div>
@@ -138,10 +136,9 @@ const FoodList = () => {
           </div>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
-          <div className="btn-group mt-3">
+          <div className="btn-group">
             <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
             <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
             <button className="btn btn-primary ms-2" onClick={buttonFoodTotal}>총합</button>

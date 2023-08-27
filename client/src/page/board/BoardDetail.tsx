@@ -77,7 +77,8 @@ const BoardDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonBoardDelete = () => {
     return (
-      <button type="button" className="btn btn-danger" onClick={boardDeleteFlow}>Delete</button>
+      <button type="button" className="btn btn-danger ms-2" onClick={boardDeleteFlow}>Delete
+      </button>
     );
   };
   const buttonBoardUpdate = (_id: string) => {
@@ -87,20 +88,20 @@ const BoardDetail = () => {
       }
     });
     return (
-      <button type="button" className="btn btn-primary" onClick={navButton}>Update</button>
+      <button type="button" className="btn btn-primary ms-2" onClick={navButton}>Update</button>
     );
   };
   const buttonRefreshPage = () => {
     return (
       <Link to="/boardDetail">
-        <button type="button" className="btn btn-success">Refresh</button>
+        <button type="button" className="btn btn-success ms-2">Refresh</button>
       </Link>
     );
   };
   const buttonBoardList = () => {
     return (
       <Link to="/boardList">
-        <button type="button" className="btn btn-secondary">List</button>
+        <button type="button" className="btn btn-secondary ms-2">List</button>
       </Link>
     );
   };
@@ -108,14 +109,12 @@ const BoardDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {boardDetailTable()}
@@ -129,7 +128,6 @@ const BoardDetail = () => {
             {buttonBoardList()}
           </form>
         </div>
-        <div className="he-50"></div>
       </div>
     </div>
   );

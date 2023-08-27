@@ -55,24 +55,23 @@ const BoardList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const buttonBoardDetail = (_id: string) => {
-    const navButton = () => navParam(`/boardDetail`, {
+    navParam(`/boardDetail`, {
       state: {
         _id
       }
     });
-    navButton();
   };
   const buttonRefreshPage = () => {
     return (
       <Link to="/boardList">
-        <button type="button" className="btn btn-success">Refresh</button>
+        <button type="button" className="btn btn-success ms-2">Refresh</button>
       </Link>
     );
   };
   const buttonBoardInsert = () => {
     return (
       <Link to="/boardInsert">
-        <button type="button" className="btn btn-primary">Insert</button>
+        <button type="button" className="btn btn-primary ms-2">Insert</button>
       </Link>
     );
   };
@@ -80,24 +79,19 @@ const BoardList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {boardListTable()}
-            <div className="he-50"></div>
             {buttonRefreshPage()}
-            &nbsp;
             {buttonBoardInsert()}
           </form>
         </div>
-        <div className="he-50"></div>
       </div>
     </div>
   );

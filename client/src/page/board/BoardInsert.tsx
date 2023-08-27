@@ -76,7 +76,7 @@ const BoardInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   const boardInsertTable = () => {
     return (
-      <>
+      <div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -90,7 +90,6 @@ const BoardInsert = () => {
           />
           <label htmlFor="user_id">User ID</label>
         </div>
-        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -103,7 +102,6 @@ const BoardInsert = () => {
           />
           <label htmlFor="floatingTitle">Title</label>
         </div>
-        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -116,7 +114,6 @@ const BoardInsert = () => {
           />
           <label htmlFor="floatingContent">Content</label>
         </div>
-        <div className="he-20"></div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
@@ -130,7 +127,7 @@ const BoardInsert = () => {
           />
           <label htmlFor="board_regdate">Board Date</label>
         </div>
-      </>
+      </div>
     );
   };
 
@@ -146,24 +143,20 @@ const BoardInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <form  className="form-inline">
             {boardInsertTable()}
-            <div className="he-50"></div>
+            <br/>
             {buttonBoardInsert()}
           </form>
         </div>
-        <div className="he-50"></div>
       </div>
-      <div className="he-200"></div>
     </div>
   );
 };
