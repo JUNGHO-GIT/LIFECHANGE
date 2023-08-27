@@ -190,20 +190,17 @@ export const FoodInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <h1 className="mb-3"><span>{title}</span><span>{brand}</span></h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-6">
           {totalServTable()}
         </div>
@@ -211,7 +208,6 @@ export const FoodInsert = () => {
           {perServTable(showGram)}
         </div>
       </div>
-      <div className="he-200"></div>
     </div>
   );
 };

@@ -48,56 +48,23 @@ export const foodTotal = async (
     let totalCarb = 0;
     let totalFat = 0;
 
-    // 1. all result
     const foodResultTotal = await Food.find({
       user_id : user_id_param,
       food_regdate : food_regdate_param
     });
-
     foodResultTotal.forEach((index) => {
       totalCalories += index.food_calories;
       totalProtein += index.food_protein;
       totalCarb += index.food_carb;
       totalFat += index.food_fat;
     });
-
-    const foodResultAll = [{
+    const foodTotal = [{
       food_calories : totalCalories.toFixed(1),
       food_protein : totalProtein.toFixed(1),
       food_carb : totalCarb.toFixed(1),
       food_fat : totalFat.toFixed(1)
     }];
-
-    // 2. morning result
-    const foodResultMorning = await Food.find ({
-      user_id : user_id_param,
-      food_regdate : food_regdate_param,
-      food_category : "morning"
-    });
-
-    // 3. lunch result
-    const foodResultLunch = await Food.find ({
-      user_id : user_id_param,
-      food_regdate : food_regdate_param,
-      food_category : "lunch"
-    });
-
-    // 4. dinner result
-    const foodResultDinner = await Food.find ({
-      user_id : user_id_param,
-      food_regdate : food_regdate_param,
-      food_category : "dinner"
-    });
-
-    // 5. snack result
-    const foodResultSnack = await Food.find ({
-      user_id : user_id_param,
-      food_regdate : food_regdate_param,
-      food_category : "snack"
-    });
-    return {
-      foodResultAll, foodResultMorning, foodResultLunch, foodResultDinner, foodResultSnack
-    };
+    return foodTotal;
   }
   catch (error) {
     console.error(error);

@@ -10,9 +10,9 @@ const foodRouter = Router();
 foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
   try {
     const foodDetail = await foodService.foodDetail (
-      req.body.user_id,
-      req.body.food_regdate,
-      req.body.food_category
+      req.query.user_id as string,
+      req.query.food_regdate as string,
+      req.query.food_category as string
     );
     if (foodDetail) {
       res.send(foodDetail);

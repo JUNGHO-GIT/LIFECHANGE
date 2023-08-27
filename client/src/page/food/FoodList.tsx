@@ -36,7 +36,7 @@ export const FoodList = () => {
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>제목</th>
+            <th>이름</th>
             <th>브랜드</th>
             <th>칼로리</th>
             <th>지방</th>

@@ -6,32 +6,25 @@ import { useLocation } from "react-router-dom";
 // ------------------------------------------------------------------------------------------------>
 export const FoodTotal = () => {
 
-  const [foodResultAll, setFoodResultAll] = useState([]);
-  const [foodResultMorning, setFoodResultMorning] = useState([]);
-  const [foodResultLunch, setFoodResultLunch] = useState([]);
-  const [foodResultDinner, setFoodResultDinner] = useState([]);
-  const [foodResultSnack, setFoodResultSnack] = useState([]);
+  const [foodTotal, setFoodTotal] = useState([]);
   const user_id = useLocation().state.user_id;
   const food_regdate = useLocation().state.food_regdate;
+  const URL = "http://127.0.0.1:4000/food";
+  const TITLE = "Food Total";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodTotal = async () => {
       try {
-        const response = await axios.post (
-          `http://127.0.0.1:4000/food/foodTotal/`, {
-            user_id: user_id,
-            food_regdate: food_regdate,
-          }
-        );
-        setFoodResultAll(response.data.foodResultAll);
-        setFoodResultMorning(response.data.foodResultMorning);
-        setFoodResultLunch(response.data.foodResultLunch);
-        setFoodResultDinner(response.data.foodResultDinner);
-        setFoodResultSnack(response.data.foodResultSnack);
+        const response = await axios.post (`${URL}/foodTotal/`, {
+          user_id: user_id,
+          food_regdate: food_regdate,
+        });
+        setFoodTotal(response.data);
       }
-      catch (err) {
-        alert("fail to load values");
+      catch (error: any) {
+        alert(`Error fetching food data: ${error.message}`);
+        setFoodTotal([]);
       }
     };
     fetchFoodTotal();
@@ -39,43 +32,28 @@ export const FoodTotal = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const foodArrayTable = () => {
-
-    const titleArray = [
-      "전부", "아침", "점심", "저녁", "간식",
-    ];
-    const tableArray = [
-      foodResultAll, foodResultMorning, foodResultLunch, foodResultDinner, foodResultSnack
-    ];
-
     return (
       <div>
-        {titleArray.map((title, index) => (
-          <div key={index}>
-            <h1>{title}</h1>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>음식 이름</th>
-                  <th>칼로리</th>
-                  <th>단백질</th>
-                  <th>탄수화물</th>
-                  <th>지방</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableArray[index].map((foodItem: any) => (
-                  <tr key={foodItem.food_id}>
-                    <td>{foodItem.food_name ? foodItem.food_name : "x"}</td>
-                    <td>{foodItem.food_calories ? foodItem.food_calories : 0}</td>
-                    <td>{foodItem.food_protein ? foodItem.food_protein : 0}</td>
-                    <td>{foodItem.food_carb ? foodItem.food_carb : 0}</td>
-                    <td>{foodItem.food_fat ? foodItem.food_fat : 0}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>칼로리</th>
+              <th>탄수화물</th>
+              <th>단백질</th>
+              <th>지방</th>
+            </tr>
+          </thead>
+          <tbody>
+            {foodTotal.map((index : any) => (
+              <tr>
+                <td>{index.food_calories}</td>
+                <td>{index.food_carb}</td>
+                <td>{index.food_protein}</td>
+                <td>{index.food_fat}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   };
@@ -85,19 +63,22 @@ export const FoodTotal = () => {
     <div className="container">
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">Food Total</h1>
+          <h1 className="mb-3 fw-9">{TITLE}<span className="ms-4">(Total)</span></h1>
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-8">
-          <h1>{food_regdate}</h1>
-          <h2>{user_id}</h2>
+          <h1 className="mb-3 fw-5">
+            <span className="ms-4">{food_regdate}</span>
+            <span className="ms-4">{user_id}</span>
+          </h1>
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-8">
           {foodArrayTable()}
-          <br/><br/><br/><br/><br/><br/>
+          <br/><br/><br/>
+          <br/><br/><br/>
         </div>
       </div>
     </div>
