@@ -7,12 +7,14 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 export const FoodList = () => {
 
-  const [foodList, setFoodList] = useState([]);
+  const [FOOD_LIST, setFOOD_LIST] = useState([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
   const lang = "ko";
   const user_id = sessionStorage.getItem("user_id");
-  const food_regdate = new Date().toISOString().split("T")[0];
+  const koreanDate = new Date();
+  koreanDate.setHours(koreanDate.getHours() + 9);
+  const food_regdate = koreanDate.toISOString().split("T")[0];
   const navParam = useNavigate();
   const URL = "https://fat-git-main-jungho-git.vercel.app/api";
   const TITLE = "Food List";
@@ -38,11 +40,11 @@ export const FoodList = () => {
 
     axios.get(url)
     .then((response) => {
-      setFoodList(response.data.items);
+      setFOOD_LIST(response.data.items);
     })
     .catch((error: any) => {
       alert(`Error fetching food data: ${error.message}`);
-      setFoodList([]);
+      setFOOD_LIST([]);
     });
   };
 
@@ -62,7 +64,7 @@ export const FoodList = () => {
           </tr>
         </thead>
         <tbody>
-          {foodList.map((index : any) => (
+          {FOOD_LIST.map((index : any) => (
             <tr>
               <td>
                 <Link to={`/foodInsert?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>{index.title}</Link>

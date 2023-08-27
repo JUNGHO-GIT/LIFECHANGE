@@ -20,12 +20,20 @@ const BoardScheme = new mongoose.Schema ({
   },
   board_regdate : {
     type : String,
-    default : () => new Date().toISOString().split('T')[0],
+    default: () => {
+      const date = new Date();
+      date.setHours(date.getHours() + 9);
+      return date.toISOString().split('T')[0];
+    },
     required : true
   },
   board_update : {
     type : String,
-    default : () => new Date().toISOString().split('T')[0],
+    default: () => {
+      const date = new Date();
+      date.setHours(date.getHours() + 9);
+      return date.toISOString().split('T')[0];
+    },
     required : true
   }
 });

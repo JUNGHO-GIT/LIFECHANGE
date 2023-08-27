@@ -5,7 +5,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardList = () => {
-  const [boardList, setBoardList] = useState<[]>([]);
+  const [BOARD_LIST, setBOARD_LIST] = useState<[]>([]);
   const navParam = useNavigate();
   const URL = "http://127.0.0.1:4000/board";
   const TITLE = "Board List";
@@ -15,11 +15,11 @@ export const BoardList = () => {
     const fetchBoardList = async () => {
       try {
         const response = await axios.get (`${URL}/boardList`);
-        setBoardList(response.data);
+        setBOARD_LIST(response.data);
       }
       catch (error: any) {
         alert(`Error fetching board data: ${error.message}`);
-        setBoardList([]);
+        setBOARD_LIST([]);
       }
     };
     fetchBoardList();
@@ -37,7 +37,7 @@ export const BoardList = () => {
           </tr>
         </thead>
         <tbody>
-          {boardList.map((index : any) => (
+          {BOARD_LIST.map((index : any) => (
             <tr key={index}>
               <td>
                 <a onClick={() => buttonBoardDetail(index._id)} className="text-hover">

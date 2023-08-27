@@ -6,12 +6,14 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodInfo = () => {
-  const [foodInfo, setFoodInfo] = useState<any>({});
+  const [FOOD, setFOOD] = useState<any>({});
   const location = useLocation();
   const navParam = useNavigate();
   const _id = location.state._id;
   const user_id = location.state.user_id;
-  const food_regdate = location.state.food_regdate;
+  const koreanDate = new Date();
+  koreanDate.setHours(koreanDate.getHours() + 9);
+  const food_regdate = koreanDate.toISOString().split("T")[0];
   const food_category = location.state.food_category;
   const URL = "http://127.0.0.1:4000/food";
   const TITLE = "Food Info";
@@ -42,11 +44,11 @@ export const FoodInfo = () => {
             food_regdate : food_regdate,
           },
         });
-        setFoodInfo(res.data);
+        setFOOD(res.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
-        setFoodInfo([]);
+        setFOOD([]);
       }
     };
     fetchFoodInfo();
@@ -69,12 +71,12 @@ export const FoodInfo = () => {
           </thead>
           <tbody>
             <tr>
-              <td>{foodInfo.food_name}</td>
-              <td>{foodInfo.food_serving}</td>
-              <td>{foodInfo.food_calories}</td>
-              <td>{foodInfo.food_carb}</td>
-              <td>{foodInfo.food_protein}</td>
-              <td>{foodInfo.food_fat}</td>
+              <td>{FOOD.food_name}</td>
+              <td>{FOOD.food_serving}</td>
+              <td>{FOOD.food_calories}</td>
+              <td>{FOOD.food_carb}</td>
+              <td>{FOOD.food_protein}</td>
+              <td>{FOOD.food_fat}</td>
             </tr>
           </tbody>
         </table>

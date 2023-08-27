@@ -7,8 +7,10 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 export const FoodTotal = () => {
 
-  const [foodTotal, setFoodTotal] = useState([]);
-  const [food_regdate, setFood_regdate] = useState(new Date().toISOString().split("T")[0]);
+  const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
+  const koreanDate = new Date();
+  koreanDate.setHours(koreanDate.getHours() + 9);
+  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
   const user_id = useLocation().state.user_id;
   const URL = "http://127.0.0.1:4000/food";
   const TITLE = "Food Total";
@@ -36,11 +38,11 @@ export const FoodTotal = () => {
           user_id: user_id,
           food_regdate : food_regdate,
         });
-        setFoodTotal(response.data);
+        setFOOD_TOTAL(response.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
-        setFoodTotal([]);
+        setFOOD_TOTAL([]);
       }
     };
     fetchFoodTotal();
@@ -60,7 +62,7 @@ export const FoodTotal = () => {
             </tr>
           </thead>
           <tbody>
-            {foodTotal.map((index : any) => (
+            {FOOD_TOTAL.map((index : any) => (
               <tr>
                 <td>{index.food_calories}</td>
                 <td>{index.food_carb}</td>

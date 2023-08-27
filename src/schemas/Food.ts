@@ -44,12 +44,20 @@ const FoodScheme = new mongoose.Schema ({
   },
   food_regdate : {
     type : String,
-    default : () => new Date().toISOString().split('T')[0],
+    default: () => {
+      const date = new Date();
+      date.setHours(date.getHours() + 9);
+      return date.toISOString().split('T')[0];
+    },
     required : true
   },
   food_update : {
     type : String,
-    default : () => new Date().toISOString().split('T')[0],
+    default: () => {
+      const date = new Date();
+      date.setHours(date.getHours() + 9);
+      return date.toISOString().split('T')[0];
+    },
     required : true
   }
 });

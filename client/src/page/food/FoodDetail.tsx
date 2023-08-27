@@ -6,8 +6,11 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
-  const [foodDetail, setFoodDetail] = useState([]);
-  const [food_regdate, setFood_regdate] = useState(new Date().toISOString().split("T")[0]);
+
+  const [FOOD, setFOOD] = useState([]);
+  const koreanDate = new Date();
+  koreanDate.setHours(koreanDate.getHours() + 9);
+  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
   const user_id = sessionStorage.getItem("user_id");
   const location = useLocation();
   const navParam = useNavigate();
@@ -41,11 +44,11 @@ export const FoodDetail = () => {
             food_regdate: food_regdate,
           },
         });
-        setFoodDetail(res.data);
+        setFOOD(res.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
-        setFoodDetail([]);
+        setFOOD([]);
       }
     };
     fetchFoodDetail();
@@ -67,7 +70,7 @@ export const FoodDetail = () => {
             </tr>
           </thead>
           <tbody>
-            {foodDetail.map((index: any, i: number) => (
+            {FOOD.map((index: any, i: number) => (
               <tr key={i}>
                 <td onClick={() =>
                     navParam(`/foodInfo`, {

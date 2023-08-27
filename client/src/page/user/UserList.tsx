@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 // ------------------------------------------------------------------------------------------------>
 export const UserList = () => {
 
-  const [userList, setUserList] = useState<[]>([]);
+  const [USER_LIST, setUSER_LIST] = useState<[]>([]);
   const URL = "http://127.0.0.1:4000/user";
   const TITLE = "User List";
 
@@ -15,11 +15,11 @@ export const UserList = () => {
     const fetchUserList = async () => {
       try {
         const response = await axios.get (`${URL}/userList`);
-        setUserList(response.data);
+        setUSER_LIST(response.data);
       }
       catch (error: any) {
         alert(`Error fetching user data: ${error.message}`);
-        setUserList([]);
+        setUSER_LIST([]);
       }
     };
     fetchUserList();
@@ -36,7 +36,7 @@ export const UserList = () => {
           </tr>
         </thead>
         <tbody>
-          {userList.map((key:any) => (
+          {USER_LIST.map((key:any) => (
             <tr>
               <td>{key.user_id}</td>
               <td>{key.user_pw}</td>

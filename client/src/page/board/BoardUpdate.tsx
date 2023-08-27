@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardUpdate = () => {
-  const [board, setBoard] = useState<any>({});
+  const [BOARD, setBOARD] = useState<any>({});
   const _id = useLocation().state._id;
   const URL = "http://127.0.0.1:4000/board";
   const TITLE = "Board Update";
@@ -15,11 +15,11 @@ export const BoardUpdate = () => {
     const fetchBoardDetail = async () => {
       try {
         const response = await axios.get(`${URL}/boardDetail/${_id}`);
-        setBoard(response.data);
+        setBOARD(response.data);
       }
       catch (error: any) {
         alert(`Error fetching board data: ${error.message}`);
-        setBoard([]);
+        setBOARD([]);
       }
     };
     fetchBoardDetail();
@@ -28,7 +28,7 @@ export const BoardUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   const boardUpdateFlow = async () => {
     try {
-      const response = await axios.put(`${URL}/boardUpdate/${_id}`, board);
+      const response = await axios.put(`${URL}/boardUpdate/${_id}`, BOARD);
       if (response.data === "success") {
         alert("Update success");
         window.location.href = "/boardList";
@@ -48,22 +48,22 @@ export const BoardUpdate = () => {
       <div>
         <div className="form-floating">
           <input type="text" className="form-control"  placeholder="User ID"
-          value={board.user_id} readOnly />
+          value={BOARD.user_id} readOnly />
           <label htmlFor="user_id">User ID</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Title" value={board.board_title} onChange={(e) => setBoard({...board, board_title: e.target.value})} />
+          <input type="text" className="form-control" placeholder="Title" value={BOARD.board_title} onChange={(e) => setBOARD({...BOARD, board_title: e.target.value})} />
           <label htmlFor="floatingTitle">Title</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Content"
-          value={board.board_content}
-          onChange={(e) => setBoard({...board, board_content: e.target.value})} />
+          value={BOARD.board_content}
+          onChange={(e) => setBOARD({...BOARD, board_content: e.target.value})} />
           <label htmlFor="floatingContent">Content</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Board Date"
-          value={board.board_regdate} readOnly />
+          value={BOARD.board_regdate} readOnly />
           <label htmlFor="board_regdate">Board Date</label>
         </div>
       </div>
