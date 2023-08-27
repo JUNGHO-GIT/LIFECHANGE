@@ -5,13 +5,10 @@ import { Link, useParams } from "react-router-dom";
 // ------------------------------------------------------------------------------------------------>
 const CalendarDetail = () => {
   const { params } = useParams<{ params: string }>();
-  if (!params) {
-    return <div>Loading...</div>;
-  }
-  const [year, month, day] = params.split("-");
+  const [year, month, day] = params?.split("-") ?? [];
 
   // ---------------------------------------------------------------------------------------------->
-  const CalendarDetailTable = () => {
+  const calendarDetailTable = () => {
     return (
       <div className="card">
         <div className="card-body">
@@ -27,7 +24,7 @@ const CalendarDetail = () => {
   const buttonRefreshPage = () => {
     return (
       <Link to={`/calendarList`}>
-        <button className="btn btn-primary" type="button">
+        <button className="btn btn-primary ms-2" type="button">
           Refresh
         </button>
       </Link>
@@ -37,20 +34,16 @@ const CalendarDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">Calendar Detail</h1>
         </div>
       </div>
-      <div className="he-50"></div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
-          <div className="he-20"></div>
-          {CalendarDetailTable()}
-          <div className="he-20"></div>
+          {calendarDetailTable()}
+          <br/>
           {buttonRefreshPage()}
-          <div className="he-50"></div>
         </div>
       </div>
     </div>
