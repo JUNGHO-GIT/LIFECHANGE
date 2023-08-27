@@ -62,7 +62,7 @@ export const FoodDetail = () => {
               <tr>
                 <td>{index.food_name}</td>
                 <td>{index.food_calories}</td>
-                <td>{index.food_carbohydrate}</td>
+                <td>{index.food_carb}</td>
                 <td>{index.food_protein}</td>
                 <td>{index.food_fat}</td>
               </tr>
