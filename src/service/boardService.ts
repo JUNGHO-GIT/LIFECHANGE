@@ -21,17 +21,14 @@ export const boardDetail = async (
 
 // 3. boardInsert --------------------------------------------------------------------------------->
 export const boardInsert = async (
-  user_id_param: string,
-  board_title_param: string,
-  board_content_param: string,
-  board_date_param: string
+  board_param : any
 ) => {
-  const boardInsert = await Board.create({
-    _id: new mongoose.Types.ObjectId(),
-    user_id: user_id_param,
-    board_title: board_title_param,
-    board_content: board_content_param,
-    board_date: board_date_param,
+  const boardInsert = await Board.create ({
+    _id : new mongoose.Types.ObjectId(),
+    user_id : board_param.user_id,
+    board_title : board_param.board_title,
+    board_content : board_param.board_content,
+    board_date : board_param.board_date,
   });
   return boardInsert;
 };

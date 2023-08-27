@@ -5,8 +5,7 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 const BoardInsert = () => {
 
-  const [user_id, setBoardId] = useState("");
-  const [board_pw, setBoard_pw] = useState("");
+  const [user_id, setUserId] = useState("");
   const [board_title, setBoardTitle] = useState("");
   const [board_content, setBoardContent] = useState("");
   const [board_regdate, setBoardDate] = useState(new Date().toISOString());
@@ -24,9 +23,8 @@ const BoardInsert = () => {
         });
 
         if (res.status === 200) {
-          const {user_id, user_pw} = res.data;
-          setBoardId(user_id);
-          setBoard_pw(user_pw);
+          const user_id = res.data.user_id;
+          setUserId(user_id);
         }
         else {
           throw new Error("Server responded with an error");
@@ -85,24 +83,12 @@ const BoardInsert = () => {
             id="user_id"
             placeholder="User ID"
             value={user_id}
-            onChange={(e) => setBoardId(e.target.value)}
+            onChange={(e) => {
+              setUserId(e.target.value);
+            }}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
-        </div>
-        <div className="empty-h20"></div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="board_pw"
-            placeholder="User PW"
-            value={board_pw}
-            readOnly
-            onChange={(e) => {
-              setBoard_pw(e.target.value);
-            }}
-          />
-          <label htmlFor="board_pw">User PW</label>
         </div>
         <div className="empty-h20"></div>
         <div className="form-floating">

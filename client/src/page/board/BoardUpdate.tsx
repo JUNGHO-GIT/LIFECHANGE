@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 const BoardUpdate = () => {
-  const [board, setBoard] = useState<any>(null);
+  const [board, setBoard] = useState<any>({});
   const _id = useLocation().state._id;
   const URL = "http://127.0.0.1:4000/board";
   const TITLE = "Board Update";
@@ -26,7 +26,7 @@ const BoardUpdate = () => {
   }, [_id]);
 
   // ---------------------------------------------------------------------------------------------->
-  const BoardUpdateFlow = async () => {
+  const boardUpdateFlow = async () => {
     try {
       const response = await axios.put(`${URL}/boardUpdate/${_id}`, board);
       if (response.data === "success") {
@@ -76,7 +76,7 @@ const BoardUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonBoardUpdate = () => {
     return (
-      <button className="btn btn-primary" type="button" onClick={BoardUpdateFlow}>
+      <button className="btn btn-primary" type="button" onClick={boardUpdateFlow}>
         Update
       </button>
     );
