@@ -6,7 +6,7 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 export const BoardDetail = () => {
 
-  const [board, setBoard] = useState<any>({});
+  const [boardDetail, setBoardDetail] = useState<any>({});
   const navParam = useNavigate();
   const _id = useLocation().state._id;
   const URL = "http://127.0.0.1:4000/board";
@@ -17,11 +17,11 @@ export const BoardDetail = () => {
     const fetchBoardDetail = async () => {
       try {
         const response = await axios.get (`${URL}/boardDetail/${_id}`);
-        setBoard(response.data);
+        setBoardDetail(response.data);
       }
       catch (error: any) {
         alert(`Error fetching board data: ${error.message}`);
-        setBoard([]);
+        setBoardDetail([]);
       }
     };
     fetchBoardDetail();
@@ -56,19 +56,19 @@ export const BoardDetail = () => {
         <tbody>
           <tr>
             <th>ID</th>
-            <td>{board.user_id}</td>
+            <td>{boardDetail.user_id}</td>
           </tr>
           <tr>
             <th>Board Title</th>
-            <td>{board.board_title}</td>
+            <td>{boardDetail.board_title}</td>
           </tr>
           <tr>
             <th>Board Content</th>
-            <td>{board.board_content}</td>
+            <td>{boardDetail.board_content}</td>
           </tr>
           <tr>
             <th>Board Date</th>
-            <td>{board.board_regdate}</td>
+            <td>{boardDetail.board_regdate}</td>
           </tr>
         </tbody>
       </table>
@@ -121,7 +121,7 @@ export const BoardDetail = () => {
             {boardDetailTable()}
             <br/>
             {buttonRefreshPage()}
-            {buttonBoardUpdate(board._id)}
+            {buttonBoardUpdate(boardDetail._id)}
             {buttonBoardDelete()}
             {buttonBoardList()}
           </form>

@@ -7,12 +7,12 @@ const foodRouter = Router();
 // 1. foodList ------------------------------------------------------------------------------------>
 
 // 2. foodDetail ---------------------------------------------------------------------------------->
-foodRouter.get ("/foodDetail/:food_category", async (req: Request, res: Response) => {
+foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
   try {
     const foodDetail = await foodService.foodDetail (
       req.body.user_id,
       req.body.food_regdate,
-      req.params.food_category
+      req.body.food_category
     );
     if (foodDetail) {
       res.send(foodDetail);

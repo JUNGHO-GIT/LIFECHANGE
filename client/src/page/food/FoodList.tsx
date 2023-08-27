@@ -108,8 +108,48 @@ export const FoodList = () => {
   const buttonFoodTotal = () => {
     navParam(`/foodTotal`, {
       state: {
-        user_id,
-        food_regdate
+        user_id : user_id,
+        food_regdate : food_regdate
+      }
+    });
+  };
+
+  const buttonFoodMorning = () => {
+    navParam(`/foodDetail`, {
+      state: {
+        user_id : user_id,
+        food_regdate : food_regdate,
+        food_category : "morning"
+      }
+    });
+  };
+
+  const buttonFoodLunch = () => {
+    navParam(`/foodDetail`, {
+      state: {
+        user_id : user_id,
+        food_regdate : food_regdate,
+        food_category : "lunch"
+      }
+    });
+  };
+
+  const buttonFoodDinner = () => {
+    navParam(`/foodDetail`, {
+      state: {
+        user_id : user_id,
+        food_regdate : food_regdate,
+        food_category : "dinner"
+      }
+    });
+  };
+
+  const buttonFoodSnack = () => {
+    navParam(`/foodDetail`, {
+      state: {
+        user_id : user_id,
+        food_regdate : food_regdate,
+        food_category : "snack"
       }
     });
   };
@@ -141,7 +181,17 @@ export const FoodList = () => {
           <div className="btn-group">
             <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
             <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
+          </div>
+        </div>
+      </div>
+      <div className="row d-flex justify-content-center mt-5">
+        <div className="col-10">
+          <div className="btn-group">
             <button className="btn btn-primary ms-2" onClick={buttonFoodTotal}>총합</button>
+            <button className="btn btn-primary ms-2" onClick={buttonFoodMorning}>아침</button>
+            <button className="btn btn-primary ms-2" onClick={buttonFoodLunch}>점심</button>
+            <button className="btn btn-primary ms-2" onClick={buttonFoodDinner}>저녁</button>
+            <button className="btn btn-primary ms-2" onClick={buttonFoodSnack}>간식</button>
           </div>
         </div>
       </div>
