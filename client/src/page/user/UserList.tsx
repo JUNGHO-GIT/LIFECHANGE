@@ -5,22 +5,47 @@ import {Link} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 const UserList = () => {
-  const [UserList, setUserList] = useState<[]>([]);
 
-  const fetchUserList = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:4000/user/userList");
-      setUserList(response.data);
-    }
-    catch (err) {
-      console.error(err);
-      setUserList([]);
-    }
-  };
+  const [userList, setUserList] = useState<[]>([]);
+  const URL = "http://127.0.0.1:4000/user";
+  const TITLE = "User List";
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
+    const fetchUserList = async () => {
+      try {
+        const response = await axios.get (`${URL}/userList`);
+        setUserList(response.data);
+      }
+      catch (error: any) {
+        alert(`Error fetching user data: ${error.message}`);
+        setUserList([]);
+      }
+    };
     fetchUserList();
   }, []);
+
+  // ---------------------------------------------------------------------------------------------->
+  const userListTable = () => {
+    return (
+      <table className="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">User PW</th>
+          </tr>
+        </thead>
+        <tbody>
+          {userList.map((key:any, value:any) => (
+            <tr>
+              <td>{key.user_id}</td>
+              <td>{key.user_pw}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const buttonRefreshPage = () => {
@@ -32,41 +57,19 @@ const UserList = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const UserListTable = () => {
-    return (
-      <table className="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">User ID</th>
-            <th scope="col">User PW</th>
-          </tr>
-        </thead>
-        <tbody>
-          {UserList.map((user:any) => (
-            <tr key={user._id}>
-              <td>{user.user_id}</td>
-              <td>{user.user_pw}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
-  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">User List</h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
       <div className="empty-h50"></div>
       <div className="row d-flex justify-content-center">
         <div className="col-10">
           <form className="form-inline">
-            {UserListTable()}
+            {userListTable()}
             <div className="empty-h50"></div>
             {buttonRefreshPage()}
           </form>

@@ -19,7 +19,7 @@ import Main from "../page/common/Main";
 
 import Login from "../page/user/UserLogin";
 import UserInsert from "../page/user/UserInsert";
-import UserInfo from "../page/user/UserInfo";
+import UserDetail from "../page/user/UserDetail";
 import UserUpdate from "../page/user/UserUpdate";
 import UserDelete from "../page/user/UserDelete";
 import UserList from "../page/user/UserList";
@@ -51,7 +51,7 @@ const App = () => {
           <Route path="/" element={<Main />} />
           <Route path="/userLogin" element={<Login />} />
           <Route path="/userInsert" element={<UserInsert />} />
-          <Route path="/userDetail" element={<UserInfo />} />
+          <Route path="/userDetail" element={<UserDetail />} />
           <Route path="/userList" element={<UserList />} />
           <Route path="/userUpdate" element={<UserUpdate />} />
           <Route path="/userDelete" element={<UserDelete />} />

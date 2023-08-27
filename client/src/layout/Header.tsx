@@ -1,15 +1,15 @@
 // Header.tsx
 import React from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "./Sidebar";
 import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 const Header = () => {
+
   const user_id = sessionStorage.getItem("user_id");
 
   // ---------------------------------------------------------------------------------------------->
-  const navList = () => {
+  const NavList = () => {
     return (
       <ul className="nav">
         <li><Link to="/" className="nav-link text-hover tc-w ms-2">Home</Link></li>
@@ -22,30 +22,58 @@ const Header = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const formList = () => {
+  const FormList = () => {
+
+    // 로그인 x
+    const loginFalse = () => {
+
+      const buttonLogin = () => {
+        return (
+          <Link to="/userLogin">
+            <button type="button" className="btn btn-outline-light ms-2">Login</button>
+          </Link>
+        );
+      };
+      const buttonSignup = () => {
+        return (
+          <Link to="/userInsert">
+            <button type="button" className="btn btn-outline-light ms-2">Signup</button>
+          </Link>
+        );
+      };
+
+      if (!user_id || user_id === "false") {
+        return (
+          <form className="form-group custom-flex-center">
+            {buttonLogin()}
+            {buttonSignup()}
+          </form>
+        );
+      }
+    };
+
+    // 로그인 o
+    const loginTrue = () => {
+      if (user_id && user_id !== "false") {
+        return (
+          <form className="form-group custom-flex-center">
+            <button type="button" className="btn btn-outline-light ms-2"
+              onClick={() => {
+                sessionStorage.setItem("user_id", "false");
+                window.location.reload();
+              }}>
+              Logout
+            </button>
+          </form>
+        );
+      }
+    };
+
     return (
-      <form className="form-group custom-flex-center">
-        {user_id && user_id !== "false" ? (
-          <button
-            type="button"
-            className="btn btn-outline-light ms-2"
-            onClick={() => {
-              sessionStorage.setItem("user_id", "false");
-              window.location.reload();
-            }}>
-            Logout
-          </button>
-        ) : (
-          <>
-            <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/userLogin")}>
-              Login
-            </button>
-            <button type="button" className="btn btn-outline-light ms-2" onClick={() => (window.location.href = "/userInsert")}>
-              Signup
-            </button>
-          </>
-        )}
-      </form>
+      <div className="custom-flex-center">
+        {loginFalse()}
+        {loginTrue()}
+      </div>
     );
   };
 
@@ -53,8 +81,8 @@ const Header = () => {
   return (
     <div className="container-fluid bg-dark">
       <div className="row custom-flex-center pt-3 pb-3">
-        <div className="col-8">{navList()}</div>
-        <div className="col-4">{formList()}</div>
+        <div className="col-8">{NavList()}</div>
+        <div className="col-4">{FormList()}</div>
       </div>
     </div>
   );
