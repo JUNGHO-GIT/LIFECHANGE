@@ -1,18 +1,19 @@
 // CalendarList.tsx
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import $ from "jquery";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
-  const [params, setParams] = useState({
-    year: 0,
-    month: 0,
-    day: 0
-  });
+
+  const user_id = sessionStorage.getItem("user_id");
+  const navParam = useNavigate();
+  const URL = "http://127.0.0.1:4000/calendar";
+  const TITLE = "Calendar List";
   let date = new Date();
 
-  // 함수 선언
-  function renderCalendar () {
+  // ---------------------------------------------------------------------------------------------->
+  const renderCalendar = () => {
 
     $("#calendar").empty();
     $("#year").text(date.getFullYear() + "년 ");
@@ -101,7 +102,14 @@ export const CalendarList = () => {
       }
 
       dayElement.click(function () {
-        window.location.href = `/calendarDetail/${date.getFullYear()}-${date.getMonth() + 1}-${dayParam}`;
+        navParam(`/calendarDetail`, {
+          state: {
+            user_id : user_id,
+            calendar_year : date.getFullYear(),
+            calendar_month : date.getMonth() + 1,
+            calendar_day : dayParam,
+          },
+        });
       });
       dayRow.append(dayElement);
     };
@@ -144,7 +152,7 @@ export const CalendarList = () => {
     <div className="container">
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">Calendar List</h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">

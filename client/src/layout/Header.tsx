@@ -79,11 +79,11 @@ export const Header = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="container-fluid bg-dark">
+    <header className="container-fluid bg-dark">
       <div className="row custom-flex-center pt-3 pb-3">
         <div className="col-8">{NavList()}</div>
         <div className="col-4">{FormList()}</div>
       </div>
-    </div>
+    </header>
   );
 };
