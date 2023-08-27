@@ -7,8 +7,8 @@ import { Link, useLocation } from 'react-router-dom';
 export const FoodInsert = () => {
 
   // ---------------------------------------------------------------------------------------------->
-  const [showGram, setShowGram] = useState(0);
-  const [category, setCategory] = useState("");
+  const [showGram, setShowGram] = useState(1);
+  const [category, setCategory] = useState("morning");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const user_id = window.sessionStorage.getItem("user_id");
@@ -149,7 +149,7 @@ export const FoodInsert = () => {
     const categoryFoodInsert = () => {
       return (
         <select className="form-select"onChange={e => {setCategory(e.target.value);}}>
-          <option value="morning" selected>아침</option>
+          <option value="morning">아침</option>
           <option value="lunch">점심</option>
           <option value="dinner">저녁</option>
           <option value="snack">간식</option>
