@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-const BoardInsert = () => {
+export const BoardInsert = () => {
 
   const [user_id, setUserId] = useState("");
   const [board_title, setBoardTitle] = useState("");
@@ -160,5 +160,3 @@ const BoardInsert = () => {
     </div>
   );
 };
-
-export default BoardInsert;

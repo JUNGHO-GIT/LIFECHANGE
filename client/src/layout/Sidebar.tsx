@@ -72,7 +72,7 @@ const SidebarStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const Sidebar = () => {
+export const Sidebar = () => {
   const [sidebar, sidebarOpen] = useState(false);
 
   let user_id = sessionStorage.getItem("user_id");
@@ -146,5 +146,3 @@ const Sidebar = () => {
     </div>
   );
 };
-
-export default Sidebar;

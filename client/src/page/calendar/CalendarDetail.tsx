@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-const CalendarDetail = () => {
+export const CalendarDetail = () => {
   const { params } = useParams<{ params: string }>();
   const [year, month, day] = params?.split("-") ?? [];
 
@@ -49,6 +49,3 @@ const CalendarDetail = () => {
     </div>
   );
 };
-
-export default CalendarDetail;
-

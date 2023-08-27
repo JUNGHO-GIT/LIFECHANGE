@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
-const Header = () => {
+export const Header = () => {
 
   const user_id = sessionStorage.getItem("user_id");
 
@@ -87,5 +87,3 @@ const Header = () => {
     </div>
   );
 };
-
-export default Header;

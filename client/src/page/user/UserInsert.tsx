@@ -4,7 +4,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-const UserInsert = () => {
+export const UserInsert = () => {
 
   const [user_id, setId] = useState("");
   const [user_pw, setPassword] = useState("");
@@ -120,5 +120,3 @@ const UserInsert = () => {
     </div>
   );
 };
-
-export default UserInsert;

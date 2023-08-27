@@ -7,9 +7,28 @@ const foodRouter = Router();
 // 1. foodList ------------------------------------------------------------------------------------>
 
 // 2. foodDetail ---------------------------------------------------------------------------------->
+foodRouter.get ("/foodDetail/:food_category", async (req: Request, res: Response) => {
+  try {
+    const foodDetail = await foodService.foodDetail (
+      req.body.user_id,
+      req.body.food_regdate,
+      req.params.food_category
+    );
+    if (foodDetail) {
+      res.send(foodDetail);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 
 // 3-1. foodInsert -------------------------------------------------------------------------------->
-foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
+foodRouter.post ("/foodInsert", async (req: Request, res: Response) => {
   try {
     const foodInsert = await foodService.foodInsert (
       req.body
@@ -28,7 +47,7 @@ foodRouter.post("/foodInsert", async (req: Request, res: Response) => {
 });
 
 // 3-2. foodTotal --------------------------------------------------------------------------------->
-foodRouter.post("/foodTotal", async (req: Request, res: Response) => {
+foodRouter.post ("/foodTotal", async (req: Request, res: Response) => {
   try {
     const foodTotal = await foodService.foodTotal (
       req.body.user_id,

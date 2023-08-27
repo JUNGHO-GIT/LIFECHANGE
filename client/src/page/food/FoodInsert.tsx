@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, useLocation } from 'react-router-dom';
 
 // ------------------------------------------------------------------------------------------------>
-const FoodInsert = () => {
+export const FoodInsert = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const [showGram, setShowGram] = useState(0);
@@ -215,5 +215,3 @@ const FoodInsert = () => {
     </div>
   );
 };
-
-export default FoodInsert;

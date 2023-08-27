@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-const BoardDetail = () => {
+export const BoardDetail = () => {
   const [board, setBoard] = useState<any>({});
   const navParam = useNavigate();
   const _id = useLocation().state._id;
@@ -132,5 +132,3 @@ const BoardDetail = () => {
     </div>
   );
 };
-
-export default BoardDetail;

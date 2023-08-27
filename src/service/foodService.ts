@@ -5,6 +5,18 @@ import * as mongoose from "mongoose";
 // 1. foodList ------------------------------------------------------------------------------------>
 
 // 2. foodDetail ---------------------------------------------------------------------------------->
+export const foodDetail = async (
+  user_id_param : string,
+  food_regdate_param : string,
+  food_category_param : string
+) => {
+  const foodDetail = await Food.find ({
+    user_id : user_id_param,
+    food_regdate : food_regdate_param,
+    food_category : food_category_param
+  });
+  return foodDetail;
+};
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (

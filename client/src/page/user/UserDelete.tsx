@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-const UserDelete = () => {
+export const UserDelete = () => {
 
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
@@ -125,5 +125,3 @@ const UserDelete = () => {
     </div>
   );
 };
-
-export default UserDelete;

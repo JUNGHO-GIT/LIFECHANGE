@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-const FoodList = () => {
+export const FoodList = () => {
 
   const [foodList, setFoodList] = useState([]);
   const [query, setQuery] = useState("");
@@ -148,5 +148,3 @@ const FoodList = () => {
     </div>
   );
 };
-
-export default FoodList;

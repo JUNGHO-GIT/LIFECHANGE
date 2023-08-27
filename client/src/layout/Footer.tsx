@@ -3,7 +3,7 @@ import React from "react";
 import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
-const Footer = () => {
+export const Footer = () => {
   return (
     <div className="container-fluid bg-dark pos-fb">
       <div className="row d-flex pb-6 pt-6">
@@ -14,5 +14,3 @@ const Footer = () => {
     </div>
   );
 };
-
-export default Footer;

@@ -4,7 +4,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-const UserDetail = () => {
+export const UserDetail = () => {
 
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
@@ -117,5 +117,3 @@ const UserDetail = () => {
     </div>
   );
 };
-
-export default UserDetail;

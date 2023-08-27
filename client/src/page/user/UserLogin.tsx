@@ -3,7 +3,8 @@ import React, {useState} from "react";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-const UserLogin = () => {
+export const UserLogin = () => {
+
   const [user_id, setId] = useState("");
   const [user_pw, setPassword] = useState("");
   const URL = "http://127.0.0.1:4000/user";
@@ -81,5 +82,3 @@ const UserLogin = () => {
     </div>
   );
 };
-
-export default UserLogin;

@@ -4,7 +4,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-const UserList = () => {
+export const UserList = () => {
 
   const [userList, setUserList] = useState<[]>([]);
   const URL = "http://127.0.0.1:4000/user";
@@ -76,5 +76,3 @@ const UserList = () => {
     </div>
   );
 };
-
-export default UserList;

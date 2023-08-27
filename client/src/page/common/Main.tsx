@@ -49,7 +49,7 @@ const MainStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const CarouselFirst = () => {
+ const CarouselFirst = () => {
 
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -120,7 +120,7 @@ const CarouselThird = () => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-const Main = () => {
+export const Main = () => {
 
   return (
     <div className="main-container"><MainStyle />
@@ -147,5 +147,3 @@ const Main = () => {
     </div>
   );
 };
-
-export default Main;

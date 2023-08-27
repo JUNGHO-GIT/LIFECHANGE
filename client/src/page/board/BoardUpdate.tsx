@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-const BoardUpdate = () => {
+export const BoardUpdate = () => {
   const [board, setBoard] = useState<any>({});
   const _id = useLocation().state._id;
   const URL = "http://127.0.0.1:4000/board";
@@ -99,5 +99,3 @@ const BoardUpdate = () => {
     </div>
   );
 };
-
-export default BoardUpdate;

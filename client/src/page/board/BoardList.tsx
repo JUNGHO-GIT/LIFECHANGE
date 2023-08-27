@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-const BoardList = () => {
+export const BoardList = () => {
   const [boardList, setBoardList] = useState<[]>([]);
   const navParam = useNavigate();
   const URL = "http://127.0.0.1:4000/board";
@@ -96,5 +96,3 @@ const BoardList = () => {
     </div>
   );
 };
-
-export default BoardList;

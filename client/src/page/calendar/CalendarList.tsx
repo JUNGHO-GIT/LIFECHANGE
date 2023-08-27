@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import $ from "jquery";
 
 // ------------------------------------------------------------------------------------------------>
-const CalendarList = () => {
+export const CalendarList = () => {
   const [params, setParams] = useState({
     year: 0,
     month: 0,
@@ -164,5 +164,3 @@ const CalendarList = () => {
     </div>
   );
 };
-
-export default CalendarList;

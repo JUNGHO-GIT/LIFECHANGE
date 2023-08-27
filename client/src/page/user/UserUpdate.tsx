@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-const UserUpdate = () => {
+export const UserUpdate = () => {
 
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
@@ -126,5 +126,3 @@ const UserUpdate = () => {
     </div>
   );
 };
-
-export default UserUpdate;

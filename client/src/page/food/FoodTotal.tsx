@@ -4,7 +4,8 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-const FoodTotal = () => {
+export const FoodTotal = () => {
+
   const [foodResultAll, setFoodResultAll] = useState([]);
   const [foodResultMorning, setFoodResultMorning] = useState([]);
   const [foodResultLunch, setFoodResultLunch] = useState([]);
@@ -96,10 +97,9 @@ const FoodTotal = () => {
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-8">
           {foodArrayTable()}
+          <br/><br/><br/><br/><br/><br/>
         </div>
       </div>
     </div>
   );
 };
-
-export default FoodTotal;
