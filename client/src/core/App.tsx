@@ -9,6 +9,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "react-datepicker/dist/react-datepicker.css";
 
 import {Resize} from "../components/Resize";
 import {Loader} from "../components/Loader";

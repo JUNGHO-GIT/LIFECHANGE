@@ -1,6 +1,7 @@
 // FoodDetail.tsx
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import DatePicker from "react-datepicker";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
@@ -8,12 +9,26 @@ export const FoodDetail = () => {
 
   const [foodDetail, setFoodDetail] = useState([]);
   const [food_category, setFood_category] = useState("");
+  const [food_regdate, setFood_regdate] = useState(new Date().toISOString().split("T")[0]);
   const user_id = sessionStorage.getItem("user_id");
-  const food_regdate = new Date().toISOString().split("T")[0];
   const location = useLocation();
   const category = location.state.food_category;
   const URL = "http://127.0.0.1:4000/food";
   const TITLE = "Food Detail";
+
+  // ---------------------------------------------------------------------------------------------->
+  const datePicker = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date(food_regdate)}
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setFood_regdate(selectedDate);
+        }}
+      />
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -41,7 +56,7 @@ export const FoodDetail = () => {
       }
     };
     fetchFoodDetail();
-  }, [food_category, user_id]);
+  }, [user_id, food_regdate, food_category]);
 
   // ---------------------------------------------------------------------------------------------->
   const foodDetailTable = () => {
@@ -84,7 +99,7 @@ export const FoodDetail = () => {
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{food_regdate}</span>
+            <span className="ms-4">{datePicker()}</span>
             <span className="ms-4">{user_id}</span>
           </h1>
         </div>

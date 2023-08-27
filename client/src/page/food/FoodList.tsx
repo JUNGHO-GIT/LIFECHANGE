@@ -155,6 +155,14 @@ export const FoodList = () => {
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
+        <div className="col-10">
+          <h1 className="mb-3 fw-5">
+            <span className="ms-4">{food_regdate}</span>
+            <span className="ms-4">{user_id}</span>
+          </h1>
+        </div>
+      </div>
+      <div className="row d-flex justify-content-center mt-5">
         <div className="col-12">
           {foodListTable()}
         </div>

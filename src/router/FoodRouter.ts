@@ -50,8 +50,8 @@ foodRouter.post ("/foodInsert", async (req: Request, res: Response) => {
 foodRouter.post ("/foodTotal", async (req: Request, res: Response) => {
   try {
     const foodTotal = await foodService.foodTotal (
-      req.body.user_id,
-      req.body.food_regdate
+      req.body.user_id as string,
+      req.body.food_regdate as string,
     );
     if (foodTotal) {
       res.send(foodTotal);

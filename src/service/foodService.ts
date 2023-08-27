@@ -48,7 +48,7 @@ export const foodTotal = async (
     let totalCarb = 0;
     let totalFat = 0;
 
-    const foodResultTotal = await Food.find({
+    const foodResultTotal = await Food.find ({
       user_id : user_id_param,
       food_regdate : food_regdate_param
     });

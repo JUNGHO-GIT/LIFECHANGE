@@ -9,11 +9,11 @@ export const FoodInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   const [showGram, setShowGram] = useState(0);
   const [category, setCategory] = useState("");
-  const URL = "http://localhost:4000/food";
-  const TITLE = "Food Insert";
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const user_id = window.sessionStorage.getItem("user_id");
+  const URL = "http://localhost:4000/food";
+  const TITLE = "Food Insert";
 
   // ---------------------------------------------------------------------------------------------->
   const title:any = params.get("title") ? params.get("title") : "x";
