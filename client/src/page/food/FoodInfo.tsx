@@ -37,14 +37,14 @@ export const FoodInfo = () => {
   useEffect(() => {
     const fetchFoodInfo = async () => {
       try {
-        const res = await axios.get(`${URL}/foodInfo`, {
+        const response = await axios.get(`${URL}/foodInfo`, {
           params: {
             _id : _id,
             user_id : user_id,
             food_regdate : food_regdate,
           },
         });
-        setFOOD(res.data);
+        setFOOD(response.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
@@ -87,14 +87,14 @@ export const FoodInfo = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonFoodDelete = async () => {
     try {
-      const res = await axios.delete(`${URL}/foodDelete`, {
+      const response = await axios.delete(`${URL}/foodDelete`, {
         params: {
           _id : _id,
           user_id : user_id,
           food_regdate : food_regdate,
         },
       });
-      if (res.data === "success") {
+      if (response.data === "success") {
         alert("삭제되었습니다.");
         navParam(`/foodDetail`, {
           state: {
@@ -104,11 +104,11 @@ export const FoodInfo = () => {
           },
         });
       }
-      else if (res.data === "fail") {
+      else if (response.data === "fail") {
         alert("삭제에 실패하였습니다.");
       }
       else {
-        throw new Error(`Invalid response: ${res.data}`);
+        throw new Error(`Invalid response: ${response.data}`);
       }
     }
     catch (error: any) {

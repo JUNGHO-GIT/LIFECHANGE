@@ -13,21 +13,21 @@ export const UserLogin = () => {
   // ---------------------------------------------------------------------------------------------->
   const userLoginFlow = async () => {
     try {
-      const res = await axios.post (`${URL}/userLogin`, {
+      const response = await axios.post (`${URL}/userLogin`, {
         user_id: user_id,
         user_pw: user_pw,
       });
-      if (res.data === "success") {
+      if (response.data === "success") {
         alert("Login successful");
         window.sessionStorage.setItem("user_id", user_id);
         window.location.href = "/";
       }
-      else if (res.data === "fail") {
+      else if (response.data === "fail") {
         alert("Incorrect ID or PW");
         window.sessionStorage.setItem("user_id", "false");
       }
       else {
-        alert(`${res.data}error`);
+        alert(`${response.data}error`);
       }
     }
     catch (error: any) {

@@ -84,7 +84,7 @@ export const FoodInsert = () => {
 
     const foodInsertFlow = async () => {
       try {
-        const res  = await axios.post(`${URL}/foodInsert`, {
+        const response  = await axios.post(`${URL}/foodInsert`, {
           user_id : user_id,
           food_name : title,
           food_brand : brand,
@@ -95,15 +95,15 @@ export const FoodInsert = () => {
           food_protein : proteinPer,
           food_fat : fatPer
         });
-        if (res.data === "success") {
+        if (response.data === "success") {
           alert("Insert food successfully");
           window.location.href = "/foodList";
         }
-        else if (res.data === "fail") {
+        else if (response.data === "fail") {
           alert("Insert food failed");
         }
         else {
-          alert(`${res.data}error`);
+          alert(`${response.data}error`);
         }
       }
       catch (err) {

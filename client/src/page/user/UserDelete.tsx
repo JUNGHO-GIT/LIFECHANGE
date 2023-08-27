@@ -16,10 +16,10 @@ export const UserDelete = () => {
       const user_id = window.sessionStorage.getItem("user_id");
 
       try {
-        const res = await axios.post (`${URL}/userDetail`, {
+        const response = await axios.post (`${URL}/userDetail`, {
           user_id: user_id,
         });
-        setUserId(res.data.user_id);
+        setUserId(response.data.user_id);
       }
       catch (error: any) {
         alert(`Error fetching user data: ${error.message}`);
@@ -36,26 +36,26 @@ export const UserDelete = () => {
         return;
       }
       else {
-        const res = await axios.post(`${URL}/userCheckIdPw`, {
+        const response = await axios.post(`${URL}/userCheckIdPw`, {
           user_id: user_id,
           user_pw: user_pw,
         });
-        if (res.data === "fail") {
+        if (response.data === "fail") {
           alert("Incorrect password");
           return;
         }
-        if (res.data === "success") {
-          const res = await axios.delete (`${URL}/userDelete`, {
+        if (response.data === "success") {
+          const response = await axios.delete (`${URL}/userDelete`, {
             data: {
               user_id: user_id,
             },
           });
-          if (res.data === "success") {
+          if (response.data === "success") {
             alert("User Delete Success");
             window.sessionStorage.clear();
             window.location.href = "/";
           }
-          else if (res.data === "fail") {
+          else if (response.data === "fail") {
             alert("User Delete Fail");
           }
           else {

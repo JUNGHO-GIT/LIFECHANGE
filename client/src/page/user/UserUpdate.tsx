@@ -16,10 +16,10 @@ export const UserUpdate = () => {
       const user_id = window.sessionStorage.getItem("user_id");
 
       try {
-        const res = await axios.post (`${URL}/userDetail`, {
+        const response = await axios.post (`${URL}/userDetail`, {
           user_id: user_id,
         });
-        setUserId(res.data.user_id);
+        setUserId(response.data.user_id);
       }
       catch (error : any) {
         alert(`Error fetching user data: ${error.message}`);
@@ -36,25 +36,25 @@ export const UserUpdate = () => {
         return;
       }
       else {
-        const res = await axios.post (`${URL}/userCheckIdPw`, {
+        const response = await axios.post (`${URL}/userCheckIdPw`, {
           user_id: user_id,
           user_pw: user_pw,
         });
-        if (res.data === "fail") {
+        if (response.data === "fail") {
           alert("Incorrect password");
           return;
         }
-        else if (res.data === "success") {
+        else if (response.data === "success") {
           const updatePw = prompt("Please enter a new password");
-          const res = await axios.put(`${URL}/userUpdate`, {
+          const response = await axios.put(`${URL}/userUpdate`, {
             user_id: user_id,
             user_pw: updatePw
           });
-          if (res.data === "success") {
+          if (response.data === "success") {
             alert("User Update success");
             window.location.href = "/";
           }
-          else if (res.data === "fail") {
+          else if (response.data === "fail") {
             alert("User Update fail");
           }
           else {

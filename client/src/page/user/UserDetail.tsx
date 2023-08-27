@@ -17,11 +17,11 @@ export const UserDetail = () => {
       const user_id = window.sessionStorage.getItem("user_id");
 
       try {
-        const res = await axios.post (`${URL}/userDetail`, {
+        const response = await axios.post (`${URL}/userDetail`, {
           user_id: user_id,
         });
-        if (res.status === 200) {
-          const {user_id, user_pw} = res.data;
+        if (response.status === 200) {
+          const {user_id, user_pw} = response.data;
           setUserId(user_id);
           setUserPw(user_pw);
         }

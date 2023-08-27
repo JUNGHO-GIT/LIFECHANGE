@@ -18,12 +18,12 @@ export const BoardInsert = () => {
     const fetchBoardInsert = async () => {
       const user_id = window.sessionStorage.getItem("user_id");
       try {
-        const res = await axios.post(`${URL_USER}/userDetail`, {
+        const response = await axios.post(`${URL_USER}/userDetail`, {
           user_id : user_id,
         });
 
-        if (res.status === 200) {
-          const user_id = res.data.user_id;
+        if (response.status === 200) {
+          const user_id = response.data.user_id;
           setUserId(user_id);
         }
         else {
@@ -50,21 +50,21 @@ export const BoardInsert = () => {
       }
       else {
         setBoardDate(new Date().toISOString().split('T')[0]);
-        const res = await axios.post (`${URL}/boardInsert`, {
+        const response = await axios.post (`${URL}/boardInsert`, {
           user_id: user_id,
           board_title: board_title,
           board_content: board_content,
           board_regdate: board_regdate,
         });
-        if (res.data === "success") {
+        if (response.data === "success") {
           alert("Insert a board successfully");
           window.location.href = "/boardList";
         }
-        else if (res.data === "fail") {
+        else if (response.data === "fail") {
           alert("Insert a board failed");
         }
         else {
-          alert(`${res.data}error`);
+          alert(`${response.data}error`);
         }
       }
     }

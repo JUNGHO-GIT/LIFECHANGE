@@ -37,14 +37,14 @@ export const FoodDetail = () => {
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
-        const res = await axios.get(`${URL}/foodDetail`, {
+        const response = await axios.get(`${URL}/foodDetail`, {
           params: {
             user_id: user_id,
             food_category: food_category,
             food_regdate: food_regdate,
           },
         });
-        setFOOD(res.data);
+        setFOOD(response.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);

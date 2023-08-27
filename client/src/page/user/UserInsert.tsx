@@ -18,26 +18,26 @@ export const UserInsert = () => {
         alert("Please enter both Id and Pw");
         return;
       }
-      const res = await axios.post (`${URL}/userInsert`, {
+      const response = await axios.post (`${URL}/userInsert`, {
         user_id: user_id,
         user_pw: user_pw,
       });
-      if (res.data === "success") {
+      if (response.data === "success") {
         alert("Signup successful");
         window.location.href = "/userLogin";
       }
-      else if (res.data === "duplicate") {
+      else if (response.data === "duplicate") {
         alert("This ID already exists");
         setId("");
         setPassword("");
       }
-      else if (res.data === "fail") {
+      else if (response.data === "fail") {
         alert("Incorrect Id or Pw");
         setId("");
         setPassword("");
       }
       else {
-        alert(`${res.data}error`);
+        alert(`${response.data}error`);
       }
     }
     catch (error: any) {
