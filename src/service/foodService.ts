@@ -8,27 +8,19 @@ import * as mongoose from "mongoose";
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (
-  user_id_param : string,
-  food_name_param : string,
-  food_brand_param : string,
-  food_category_param : string,
-  food_serving_param : string,
-  food_calories_param : number,
-  food_carb_param : number,
-  food_protein_param : number,
-  food_fat_param : number,
+  food_param: any
 ) => {
   const foodInsert = await Food.create ({
     _id : new mongoose.Types.ObjectId(),
-    user_id : user_id_param,
-    food_name : food_name_param,
-    food_brand : food_brand_param,
-    food_category : food_category_param,
-    food_serving : food_serving_param,
-    food_calories : food_calories_param,
-    food_carb : food_carb_param,
-    food_protein : food_protein_param,
-    food_fat : food_fat_param,
+    user_id : food_param.user_id,
+    food_name : food_param.food_name,
+    food_brand : food_param.food_brand,
+    food_category : food_param.food_category,
+    food_serving : food_param.food_serving,
+    food_calories : food_param.food_calories,
+    food_carb : food_param.food_carb,
+    food_protein : food_param.food_protein,
+    food_fat : food_param.food_fat,
   });
   return foodInsert;
 };
