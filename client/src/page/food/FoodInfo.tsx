@@ -1,6 +1,6 @@
 // FoodInfo.tsx
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker"
 import axios from "axios";
 
@@ -8,6 +8,7 @@ import axios from "axios";
 export const FoodInfo = () => {
   const [foodInfo, setFoodInfo] = useState<any>({});
   const location = useLocation();
+  const navParam = useNavigate();
   const _id = location.state._id;
   const user_id = location.state.user_id;
   const food_regdate = location.state.food_regdate;
@@ -59,6 +60,7 @@ export const FoodInfo = () => {
           <thead>
             <tr>
               <th>음식명</th>
+              <th>서빙</th>
               <th>칼로리</th>
               <th>탄수화물</th>
               <th>단백질</th>
@@ -68,6 +70,7 @@ export const FoodInfo = () => {
           <tbody>
             <tr>
               <td>{foodInfo.food_name}</td>
+              <td>{foodInfo.food_serving}</td>
               <td>{foodInfo.food_calories}</td>
               <td>{foodInfo.food_carb}</td>
               <td>{foodInfo.food_protein}</td>
@@ -77,6 +80,38 @@ export const FoodInfo = () => {
         </table>
       </div>
     );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const buttonFoodDelete = async () => {
+    try {
+      const res = await axios.delete(`${URL}/foodDelete`, {
+        params: {
+          _id : _id,
+          user_id : user_id,
+          food_regdate : food_regdate,
+        },
+      });
+      if (res.data === "success") {
+        alert("삭제되었습니다.");
+        navParam(`/foodDetail`, {
+          state: {
+            user_id : user_id,
+            food_regdate : food_regdate,
+            food_category : food_category,
+          },
+        });
+      }
+      else if (res.data === "fail") {
+        alert("삭제에 실패하였습니다.");
+      }
+      else {
+        throw new Error(`Invalid response: ${res.data}`);
+      }
+    }
+    catch (error: any) {
+      alert(`Error fetching food data: ${error.message}`);
+    }
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -98,7 +133,16 @@ export const FoodInfo = () => {
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
-        <div className="col-10">{foodInfoTable()}</div>
+        <div className="col-10">
+          {foodInfoTable()}
+        </div>
+      </div>
+      <div className="row d-flex justify-content-center mt-5">
+        <div className="col-10">
+          <button type="button" className="btn btn-danger" onClick={buttonFoodDelete}>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -87,5 +87,27 @@ export const foodTotal = async (
 };
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
+/* export const foodUpdate = async (
+  _id_param: any,
+  food_param: any
+) => {
+  const foodUpdate = await Food.updateOne (
+    { _id: _id_param }, // Query
+    { $set: food_param } // Update
+  );
+  return foodUpdate;
+}; */
 
 // 5. foodDelete ---------------------------------------------------------------------------------->
+export const foodDelete = async (
+  _id_param : string,
+  user_id_param : string,
+  food_regdate_param : string,
+) => {
+  const foodDelete = await Food.deleteOne ({
+    _id : _id_param,
+    user_id : user_id_param,
+    food_regdate : food_regdate_param,
+  });
+  return foodDelete;
+};

@@ -1,6 +1,7 @@
 // FoodList.tsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
@@ -15,6 +16,21 @@ export const FoodList = () => {
   const navParam = useNavigate();
   const URL = "https://fat-git-main-jungho-git.vercel.app/api";
   const TITLE = "Food List";
+
+  // ---------------------------------------------------------------------------------------------->
+  const datePicker = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date(food_regdate)}
+        popperPlacement="bottom"
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+        }}
+        readOnly
+      />
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const fetchFoodList = () => {
@@ -157,7 +173,7 @@ export const FoodList = () => {
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{food_regdate}</span>
+            <span className="ms-4">{datePicker()}</span>
           </h1>
         </div>
       </div>

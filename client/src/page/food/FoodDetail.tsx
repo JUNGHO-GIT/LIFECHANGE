@@ -59,6 +59,7 @@ export const FoodDetail = () => {
           <thead>
             <tr>
               <th>음식명</th>
+              <th>서빙</th>
               <th>칼로리</th>
               <th>탄수화물</th>
               <th>단백질</th>
@@ -81,6 +82,7 @@ export const FoodDetail = () => {
                 >
                   {index.food_name}
                 </td>
+                <td>{index.food_serving}</td>
                 <td>{index.food_calories}</td>
                 <td>{index.food_carb}</td>
                 <td>{index.food_protein}</td>
