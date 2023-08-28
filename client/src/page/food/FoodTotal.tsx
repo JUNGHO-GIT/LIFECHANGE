@@ -34,7 +34,7 @@ export const FoodTotal = () => {
   useEffect(() => {
     const fetchFoodTotal = async () => {
       try {
-        const response = await axios.post (`${URL}/foodTotal/`, {
+        const response = await axios.post (`${URL}/foodTotal`, {
           user_id: user_id,
           food_regdate : food_regdate,
         });
@@ -49,7 +49,7 @@ export const FoodTotal = () => {
   }, [user_id, food_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
-  const foodArrayTable = () => {
+  const foodTotalTable = () => {
     return (
       <div>
         <table className="table table-striped">
@@ -85,7 +85,7 @@ export const FoodTotal = () => {
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
-        <div className="col-8">
+        <div className="col-12">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{datePicker()}</span>
           </h1>
@@ -93,7 +93,7 @@ export const FoodTotal = () => {
       </div>
       <div className="row d-flex justify-content-center mt-5">
         <div className="col-8">
-          {foodArrayTable()}
+          {foodTotalTable()}
           <br/><br/><br/>
           <br/><br/><br/>
         </div>

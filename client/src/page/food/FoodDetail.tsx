@@ -6,11 +6,10 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
-
-  const [FOOD, setFOOD] = useState([]);
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+  const [foodDetail, setFoodDetail] = useState([]);
+  const [food_regdate, setFood_regdate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const user_id = sessionStorage.getItem("user_id");
   const location = useLocation();
   const navParam = useNavigate();
@@ -37,18 +36,18 @@ export const FoodDetail = () => {
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
-        const response = await axios.get(`${URL}/foodDetail`, {
+        const res = await axios.get(`${URL}/foodDetail`, {
           params: {
             user_id: user_id,
             food_category: food_category,
             food_regdate: food_regdate,
           },
         });
-        setFOOD(response.data);
+        setFoodDetail(res.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
-        setFOOD([]);
+        setFoodDetail([]);
       }
     };
     fetchFoodDetail();
@@ -62,7 +61,6 @@ export const FoodDetail = () => {
           <thead>
             <tr>
               <th>음식명</th>
-              <th>서빙</th>
               <th>칼로리</th>
               <th>탄수화물</th>
               <th>단백질</th>
@@ -70,14 +68,14 @@ export const FoodDetail = () => {
             </tr>
           </thead>
           <tbody>
-            {FOOD.map((index: any, i: number) => (
+            {foodDetail.map((index: any, i: number) => (
               <tr key={i}>
-                <td onClick={() =>
+                <td
+                  onClick={() =>
                     navParam(`/foodInfo`, {
                       state: {
                         _id : index._id,
                         user_id : index.user_id,
-                        food_regdate : index.food_regdate,
                         food_category : index.food_category
                       },
                     })
@@ -85,7 +83,6 @@ export const FoodDetail = () => {
                 >
                   {index.food_name}
                 </td>
-                <td>{index.food_serving}</td>
                 <td>{index.food_calories}</td>
                 <td>{index.food_carb}</td>
                 <td>{index.food_protein}</td>
