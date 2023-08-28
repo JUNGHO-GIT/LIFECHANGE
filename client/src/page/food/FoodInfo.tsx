@@ -63,6 +63,7 @@ export const FoodInfo = () => {
           <thead>
             <tr>
               <th>음식명</th>
+              <th>브랜드</th>
               <th>서빙</th>
               <th>칼로리</th>
               <th>탄수화물</th>
@@ -73,6 +74,7 @@ export const FoodInfo = () => {
           <tbody>
             <tr>
               <td>{FOOD.food_name}</td>
+              <td>{FOOD.food_brand}</td>
               <td>{FOOD.food_serving}</td>
               <td>{FOOD.food_calories}</td>
               <td>{FOOD.food_carb}</td>

@@ -8,7 +8,9 @@ import axios from "axios";
 export const FoodDetail = () => {
 
   const [FOOD, setFOOD] = useState([]);
-  const [food_regdate, setFood_regdate] = useState(new Date().toISOString().split("T")[0]);
+  const koreanDate = new Date();
+  koreanDate.setHours(koreanDate.getHours() + 9);
+  const food_regdate = koreanDate.toISOString().split("T")[0];
   const user_id = sessionStorage.getItem("user_id");
   const location = useLocation();
   const navParam = useNavigate();
@@ -25,7 +27,6 @@ export const FoodDetail = () => {
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
         }}
       />
     );
@@ -60,6 +61,8 @@ export const FoodDetail = () => {
           <thead>
             <tr>
               <th>음식명</th>
+              <th>브랜드</th>
+              <th>서빙</th>
               <th>칼로리</th>
               <th>탄수화물</th>
               <th>단백질</th>
@@ -80,6 +83,8 @@ export const FoodDetail = () => {
                 }>
                   {index.food_name}
                 </td>
+                <td>{index.food_brand}</td>
+                <td>{index.food_serving}</td>
                 <td>{index.food_calories}</td>
                 <td>{index.food_carb}</td>
                 <td>{index.food_protein}</td>

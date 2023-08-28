@@ -40,21 +40,21 @@ export const CalendarList = () => {
     for (let dayParam = 0; dayParam < 7; dayParam++) {
       if (dayParam === 0) {
         weekRow.append (
-          `<div class="col-1 tt-c tc-r fw-7 bd-t-1 bd-s-1 bd-b-1 p-2 week">`
+          `<div class="col-1 tt-c tc-r fw-7 bd-t-3 bd-s-3 bd-b-1 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
       }
       else if (dayParam === 6) {
         weekRow.append (
-          `<div class="col-1 tt-c tc-l fw-7 bd-s-1 bd-t-1 bd-e-1 bd-b-1 p-2 week">`
+          `<div class="col-1 tt-c tc-l fw-7 bd-s-3 bd-t-3 bd-e-3 bd-b-3 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
       }
       else {
         weekRow.append (
-          `<div class="col-1 tt-c tc-b fw-7 bd-t-1 bd-s-1 bd-b-1 p-2 week">`
+          `<div class="col-1 tt-c tc-b fw-7 bd-t-3 bd-s-3 bd-b-3 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
@@ -64,7 +64,7 @@ export const CalendarList = () => {
 
     for (let dayParam = 0; dayParam < startDay; dayParam++) {
       dayRow.append (
-        `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 p-2 blank">`
+        `<div class="col-1 tt-c tc-b fw-7 bd-s-3 bd-b-3 p-2 blank">`
           + blank +
         `</div>`
       );
@@ -80,7 +80,7 @@ export const CalendarList = () => {
       // 첫번째 열일 경우
       if ((startDay + dayParam - 1) % 7 === 0) {
         dayElement = $(
-          `<div class="col-1 tt-c tc-r fw-7 bd-s-1 bd-b-1 p-2 day">`
+          `<div class="col-1 tt-c tc-r fw-7 bd-s-3 bd-b-3 p-2 day">`
             + dayParam +
           `</div>`
         );
@@ -88,14 +88,14 @@ export const CalendarList = () => {
       // 일곱번째 열일 경우
       else if ((startDay + dayParam - 1) % 7 === 6) {
         dayElement = $(
-          `<div class="col-1 tt-c tc-l fw-7 bd-s-1 bd-b-1 bd-e-1 p-2 day">`
+          `<div class="col-1 tt-c tc-l fw-7 bd-s-3 bd-b-3 bd-e-3 p-2 day">`
             + dayParam +
           `</div>`
         );
       }
       else {
         dayElement = $(
-          `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 p-2 day">`
+          `<div class="col-1 tt-c tc-b fw-7 bd-s-3 bd-b-3 p-2 day">`
             + dayParam +
           `</div>`
         );
@@ -118,14 +118,14 @@ export const CalendarList = () => {
       // 일곱번째 열일 경우
       if (dayParam === 6) {
         dayRow.append (
-          `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 bd-e-1 p-2 blank">`
+          `<div class="col-1 tt-c tc-b fw-7 bd-s-3 bd-b-3 bd-e-3 p-2 blank">`
             + blank +
           `</div>`
         );
       }
       else {
         dayRow.append (
-          `<div class="col-1 tt-c tc-b fw-7 bd-s-1 bd-b-1 p-2 blank">`
+          `<div class="col-1 tt-c tc-b fw-7 bd-s-3 bd-b-3 p-2 blank">`
             + blank +
           `</div>`
         );
