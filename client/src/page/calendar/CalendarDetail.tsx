@@ -5,6 +5,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
+
   const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
@@ -92,12 +93,12 @@ export const CalendarDetail = () => {
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
-        <div className="col-10">
+        <div className="col-12">
           {calendarDetailTable()}
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
-        <div className="col-10">
+        <div className="col-12">
           {foodTotalTable()}
         </div>
       </div>
