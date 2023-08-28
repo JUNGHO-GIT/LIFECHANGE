@@ -14,7 +14,7 @@ const WorkoutScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
-  workout_name : {
+  workout_title : {
     type : String,
     required : true
   },
@@ -40,7 +40,7 @@ const WorkoutScheme = new mongoose.Schema ({
   },
   workout_image : {
     type : String,
-    required : true
+    required : false
   },
   workout_regdate : {
     type : String,

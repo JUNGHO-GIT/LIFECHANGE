@@ -5,18 +5,23 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutInsert = () => {
 
-  const user_id = window.sessionStorage.getItem("user_id");
-  const [workout_name, setWorkout_name] = useState("");
-  const [workout_part, setWorkout_part] = useState("");
-  const [workout_set, setWorkout_set] = useState("");
-  const [workout_count, setWorkout_count] = useState("");
-  const [workout_kg, setWorkout_kg] = useState("");
-  const [workout_rest, setWorkout_rest] = useState("");
-  const [workout_time, setWorkout_time] = useState("");
-  const [workout_image, setWorkout_image] = useState("");
+  const [WORKOUT, setWORKOUT] = useState({
+    workout_title: "",
+    workout_part: "",
+    workout_set: "",
+    workout_count: "",
+    workout_kg: "",
+    workout_rest: "",
+    workout_time: "",
+    workout_image: "",
+  });
+
+  const [user_id, setUser_id] = useState(sessionStorage.getItem("user_id"));
+
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
   const workout_regdate = koreanDate.toISOString().split("T")[0];
+
   const URL = "http://127.0.0.1:4000/workout";
   const URL_USER = "http://127.0.0.1:4000/user";
   const TITLE = "Workout Insert";
@@ -24,35 +29,55 @@ export const WorkoutInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   const workoutInsertFlow = async () => {
     try {
-      if (workout_name === "") {
-        alert("Please enter a title");
+      if (WORKOUT.workout_title === "") {
+        alert("Please enter title.");
         return;
       }
-      else if (workout_content === "") {
-        alert("Please enter a content");
+      if (WORKOUT.workout_part === "") {
+        alert("Please enter part.");
         return;
       }
-      else {
-        const response = await axios.post (`${URL}/workoutInsert`, {
-          user_id: user_id,
-          workout_title: workout_title,
-          workout_content: workout_content,
-          workout_regdate: workout_regdate,
-        });
-        if (response.data === "success") {
-          alert("Insert a workout successfully");
-          window.location.href = "/workoutList";
-        }
-        else if (response.data === "fail") {
-          alert("Insert a workout failed");
-        }
-        else {
-          alert(`${response.data}error`);
-        }
+      if (WORKOUT.workout_set === "") {
+        alert("Please enter set.");
+        return;
       }
+      if (WORKOUT.workout_count === "") {
+        alert("Please enter count.");
+        return;
+      }
+      if (WORKOUT.workout_kg === "") {
+        alert("Please enter kg.");
+        return;
+      }
+      if (WORKOUT.workout_rest === "") {
+        alert("Please enter rest.");
+        return;
+      }
+      if (WORKOUT.workout_time === "") {
+        alert("Please enter time.");
+        return;
+      }
+      if (WORKOUT.workout_image === "") {
+        alert("Please enter image.");
+        return;
+      }
+      await axios.post(`${URL}/workoutInsert`, {
+        user_id: user_id,
+        workout_title: WORKOUT.workout_title,
+        workout_part: WORKOUT.workout_part,
+        workout_set: WORKOUT.workout_set,
+        workout_count: WORKOUT.workout_count,
+        workout_kg: WORKOUT.workout_kg,
+        workout_rest: WORKOUT.workout_rest,
+        workout_time: WORKOUT.workout_time,
+        workout_image: WORKOUT.workout_image,
+        workout_regdate: workout_regdate,
+      });
+      alert("Workout Inserted.");
+      window.location.href = "/workoutList";
     }
     catch (error: any) {
-      alert(`Error fetching workout data: ${error.message}`);
+      alert(`Error inserting workout data: ${error.message}`);
     }
   };
 
@@ -65,9 +90,9 @@ export const WorkoutInsert = () => {
             className="form-control"
             id="user_id"
             placeholder="User ID"
-            value={user_id}
+            value={user_id ?? ""}
             onChange={(e) => {
-              setUserId(e.target.value);
+              setUser_id(e.target.value);
             }}
             readOnly
           />
@@ -76,39 +101,114 @@ export const WorkoutInsert = () => {
         <div className="form-floating">
           <input type="text"
             className="form-control"
+            id="workout_title"
             placeholder="Title"
-            value={workout_title}
-            id="floatingTitle"
             onChange={(e) => {
-              setWorkoutTitle(e.target.value);
+              setWORKOUT({
+                ...WORKOUT,
+                workout_title: e.target.value,
+              });
             }}
           />
-          <label htmlFor="floatingTitle">Title</label>
+          <label htmlFor="workout_title">Title</label>
         </div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
-            placeholder="Content"
-            value={workout_content}
-            id="floatingContent"
+            id="workout_part"
+            placeholder="Part"
             onChange={(e) => {
-              setWorkoutContent(e.target.value);
+              setWORKOUT({
+                ...WORKOUT,
+                workout_part: e.target.value,
+              });
             }}
           />
-          <label htmlFor="floatingContent">Content</label>
+          <label htmlFor="workout_part">Part</label>
         </div>
         <div className="form-floating">
           <input type="text"
             className="form-control"
-            id="workout_regdate"
-            placeholder="Workout Date"
-            value={workout_regdate}
-            readOnly
+            id="workout_set"
+            placeholder="Set"
             onChange={(e) => {
-              setWorkoutDate(e.target.value);
+              setWORKOUT({
+                ...WORKOUT,
+                workout_set: e.target.value,
+              });
             }}
           />
-          <label htmlFor="workout_regdate">Workout Date</label>
+          <label htmlFor="workout_set">Set</label>
+        </div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="workout_count"
+            placeholder="Count"
+            onChange={(e) => {
+              setWORKOUT({
+                ...WORKOUT,
+                workout_count: e.target.value,
+              });
+            }}
+          />
+          <label htmlFor="workout_count">Count</label>
+        </div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="workout_kg"
+            placeholder="Kg"
+            onChange={(e) => {
+              setWORKOUT({
+                ...WORKOUT,
+                workout_kg: e.target.value,
+              });
+            }}
+          />
+          <label htmlFor="workout_kg">Kg</label>
+        </div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="workout_rest"
+            placeholder="Rest"
+            onChange={(e) => {
+              setWORKOUT({
+                ...WORKOUT,
+                workout_rest: e.target.value,
+              });
+            }}
+          />
+          <label htmlFor="workout_rest">Rest</label>
+        </div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="workout_time"
+            placeholder="Time"
+            onChange={(e) => {
+              setWORKOUT({
+                ...WORKOUT,
+                workout_time: e.target.value,
+              });
+            }}
+          />
+          <label htmlFor="workout_time">Time</label>
+        </div>
+        <div className="form-floating">
+          <input type="text"
+            className="form-control"
+            id="workout_image"
+            placeholder="Image"
+            onChange={(e) => {
+              setWORKOUT({
+                ...WORKOUT,
+                workout_image: e.target.value,
+              });
+            }}
+          />
+          <label htmlFor="workout_image">Image</label>
         </div>
       </div>
     );
