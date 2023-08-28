@@ -4,8 +4,14 @@ import * as mongoose from "mongoose";
 
 // 1. workoutList -------------------------------------------------------------------------------->
 export const workoutList = async (
+  user_id_param : any,
+  workout_regdate_param : any
 ) => {
-  const workoutList = await Workout.find();
+  const workoutList = await Workout.find (
+    user_id : user_id_param,
+    workout_regdate : workout_regdate_param,
+
+  );
   return workoutList;
 };
 

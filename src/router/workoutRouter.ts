@@ -8,6 +8,8 @@ const workoutRouter = Router();
 workoutRouter.get("/workoutList", async (req: Request, res: Response) => {
   try {
     const workoutList = await workoutService.workoutList (
+      req.query.user_id,
+      req.query.workout_regdate
     );
     if (workoutList) {
       res.send(workoutList);
