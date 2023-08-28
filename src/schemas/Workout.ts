@@ -38,10 +38,6 @@ const WorkoutScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
-  workout_image : {
-    type : String,
-    required : false
-  },
   workout_regdate : {
     type : String,
     default : () => {

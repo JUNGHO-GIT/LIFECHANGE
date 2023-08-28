@@ -6,6 +6,7 @@ import axios from "axios";
 export const WorkoutInsert = () => {
 
   const [WORKOUT, setWORKOUT] = useState({
+    user_id : sessionStorage.getItem("user_id"),
     workout_title: "",
     workout_part: "",
     workout_set: "",
@@ -13,22 +14,20 @@ export const WorkoutInsert = () => {
     workout_kg: "",
     workout_rest: "",
     workout_time: "",
-    workout_image: "",
   });
-
-  const [user_id, setUser_id] = useState(sessionStorage.getItem("user_id"));
 
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
   const workout_regdate = koreanDate.toISOString().split("T")[0];
 
   const URL = "http://127.0.0.1:4000/workout";
-  const URL_USER = "http://127.0.0.1:4000/user";
   const TITLE = "Workout Insert";
 
   // ---------------------------------------------------------------------------------------------->
   const workoutInsertFlow = async () => {
     try {
+
+      // 유효성 검사
       if (WORKOUT.workout_title === "") {
         alert("Please enter title.");
         return;
@@ -57,24 +56,18 @@ export const WorkoutInsert = () => {
         alert("Please enter time.");
         return;
       }
-      if (WORKOUT.workout_image === "") {
-        alert("Please enter image.");
-        return;
+
+      const response = await axios.post(`${URL}/workoutInsert`, WORKOUT);
+      if (response.data === "success") {
+        alert("Insert a workout successfully");
+        window.location.href = "/workoutList";
       }
-      await axios.post(`${URL}/workoutInsert`, {
-        user_id: user_id,
-        workout_title: WORKOUT.workout_title,
-        workout_part: WORKOUT.workout_part,
-        workout_set: WORKOUT.workout_set,
-        workout_count: WORKOUT.workout_count,
-        workout_kg: WORKOUT.workout_kg,
-        workout_rest: WORKOUT.workout_rest,
-        workout_time: WORKOUT.workout_time,
-        workout_image: WORKOUT.workout_image,
-        workout_regdate: workout_regdate,
-      });
-      alert("Workout Inserted.");
-      window.location.href = "/workoutList";
+      else if (response.data === "fail") {
+        alert("Insert a workout failure");
+      }
+      else {
+        throw new Error("Server responded with an error");
+      }
     }
     catch (error: any) {
       alert(`Error inserting workout data: ${error.message}`);
@@ -86,29 +79,31 @@ export const WorkoutInsert = () => {
     return (
       <div>
         <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="user_id"
-            placeholder="User ID"
-            value={user_id ?? ""}
-            onChange={(e) => {
-              setUser_id(e.target.value);
-            }}
-            readOnly
-          />
-          <label htmlFor="user_id">User ID</label>
-        </div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="workout_title"
-            placeholder="Title"
-            onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                workout_title: e.target.value,
-              });
-            }}
+            <input type="text"
+              className="form-control"
+              id="user_id"
+              placeholder="User ID"
+              value = {WORKOUT.user_id ? WORKOUT.user_id : ""}
+              onChange={(e) => {
+                setWORKOUT({
+                  ...WORKOUT,
+                  user_id: e.target.value,
+                });
+              }}
+            />
+            <label htmlFor="user_id">User ID</label>
+          </div>
+          <div className="form-floating">
+            <input type="text"
+              className="form-control"
+              id="workout_title"
+              placeholder="Title"
+              onChange={(e) => {
+                setWORKOUT({
+                  ...WORKOUT,
+                  workout_title: e.target.value,
+                });
+              }}
           />
           <label htmlFor="workout_title">Title</label>
         </div>
@@ -195,20 +190,6 @@ export const WorkoutInsert = () => {
             }}
           />
           <label htmlFor="workout_time">Time</label>
-        </div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="workout_image"
-            placeholder="Image"
-            onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                workout_image: e.target.value,
-              });
-            }}
-          />
-          <label htmlFor="workout_image">Image</label>
         </div>
       </div>
     );

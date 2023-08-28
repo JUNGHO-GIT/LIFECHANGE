@@ -7,6 +7,8 @@ import bodyParser from "body-parser";
 import userRouter from "./src/router/userRouter";
 import boardRouter from "./src/router/boardRouter";
 import foodRouter from "./src/router/foodRouter";
+import calendarRouter from "./src/router/calendarRouter";
+import workoutRouter from "./src/router/workoutRouter";
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.use("/user", userRouter);
 app.use("/board", boardRouter);
 app.use("/food", foodRouter);
+app.use("/calendar", calendarRouter);
+app.use("/workout", workoutRouter);
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://127.0.0.1:%d in %s mode", app.get("port"), app.get("env"));

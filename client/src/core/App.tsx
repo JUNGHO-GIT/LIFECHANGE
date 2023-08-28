@@ -40,6 +40,9 @@ import {FoodTotal} from "../page/food/FoodTotal";
 import {FoodDetail} from "../page/food/FoodDetail";
 import {FoodInfo} from "../page/food/FoodInfo";
 
+import {WorkoutList} from "../page/workout/WorkoutList";
+import {WorkoutInsert} from "../page/workout/WorkoutInsert";
+
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 
@@ -70,6 +73,8 @@ const App = () => {
           <Route path="/foodTotal" element={<FoodTotal />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/foodInfo" element={<FoodInfo />} />
+          <Route path="/workoutList" element={<WorkoutList />} />
+          <Route path="/workoutInsert" element={<WorkoutInsert />} />
         </Routes>
         <Footer />
       </Router>
