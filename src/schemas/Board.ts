@@ -20,7 +20,7 @@ const BoardScheme = new mongoose.Schema ({
   },
   board_regdate : {
     type : String,
-    default: () => {
+    default : () => {
       const date = new Date();
       date.setHours(date.getHours() + 9);
       return date.toISOString().split('T')[0];
@@ -29,7 +29,7 @@ const BoardScheme = new mongoose.Schema ({
   },
   board_update : {
     type : String,
-    default: () => {
+    default : () => {
       const date = new Date();
       date.setHours(date.getHours() + 9);
       return date.toISOString().split('T')[0];

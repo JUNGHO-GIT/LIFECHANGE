@@ -1,6 +1,6 @@
 // Footer.tsx
 import React from "react";
-import "../assets/css/Custom.css";
+import "../assets/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 export const Footer = () => {

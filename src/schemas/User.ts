@@ -6,13 +6,13 @@ const UserSchema = new mongoose.Schema ({
     type : mongoose.Schema.Types.ObjectId,
     required : true
   },
-  user_id: {
-    type: String,
-    required: true
+  user_id : {
+    type : String,
+    required : true
   },
-  user_pw: {
-    type: String,
-    required: true
+  user_pw : {
+    type : String,
+    required : true
   },
 });
 

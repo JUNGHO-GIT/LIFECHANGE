@@ -1,48 +1,36 @@
-// Food.ts
+// Calendar.ts
 import mongoose from "mongoose";
 
-const FoodScheme = new mongoose.Schema ({
+const CalendarScheme = new mongoose.Schema ({
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
   },
   user_id : {
-    type  : String,
+    type :String,
     required : true
   },
-  food_name : {
+  calendar_title : {
     type : String,
     required : true
   },
-  food_brand : {
+  calendar_content :{
     type : String,
     required : true
   },
-  food_category : {
+  calendar_start : {
     type : String,
     required : true
   },
-  food_serving : {
+  calendar_end : {
     type : String,
     required : true
   },
-  food_calories : {
-    type : Number,
+  calendar_image : {
+    type : String,
     required : true
   },
-  food_carb : {
-    type : Number,
-    required : true
-  },
-  food_protein : {
-    type : Number,
-    required : true
-  },
-  food_fat : {
-    type : Number,
-    required : true
-  },
-  food_regdate : {
+  calendar_regdate : {
     type : String,
     default : () => {
       const date = new Date();
@@ -51,7 +39,7 @@ const FoodScheme = new mongoose.Schema ({
     },
     required : true
   },
-  food_update : {
+  calendar_update : {
     type : String,
     default : () => {
       const date = new Date();
@@ -62,4 +50,4 @@ const FoodScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("food", FoodScheme);
+export default mongoose.model("Calendar", CalendarScheme);

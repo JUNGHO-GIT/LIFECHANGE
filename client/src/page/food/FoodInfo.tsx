@@ -6,6 +6,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodInfo = () => {
+
   const [FOOD, setFOOD] = useState<any>({});
   const location = useLocation();
   const navParam = useNavigate();

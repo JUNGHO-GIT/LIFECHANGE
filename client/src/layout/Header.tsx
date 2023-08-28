@@ -1,7 +1,7 @@
 // Header.tsx
 import React from "react";
 import { Link } from "react-router-dom";
-import "../assets/css/Custom.css";
+import "../assets/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {

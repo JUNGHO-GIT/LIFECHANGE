@@ -3,14 +3,14 @@ import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 import "./App.css";
-import "../assets/css/Custom.css";
+import "../assets/Custom.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-datepicker/dist/react-datepicker.css";
-import "../assets/css/DatePicker.css";
+import "../assets/DatePicker.css";
 
 import {Resize} from "../components/Resize";
 import {Loader} from "../components/Loader";

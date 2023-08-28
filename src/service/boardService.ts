@@ -11,10 +11,10 @@ export const boardList = async (
 
 // 2. boardDetail --------------------------------------------------------------------------------->
 export const boardDetail = async (
-  _id_param: any
+  _id_param : any
 ) => {
   const boardDetail = await Board.findOne ({
-    _id: _id_param,
+    _id : _id_param,
   });
   return boardDetail;
 };
@@ -35,12 +35,12 @@ export const boardInsert = async (
 
 // 4. boardUpdate --------------------------------------------------------------------------------->
 export const boardUpdate = async (
-  _id_param: any,
-  board_param: any
+  _id_param : any,
+  board_param : any
 ) => {
   const boardUpdate = await Board.updateOne(
-    { _id: _id_param }, // Query
-    { $set: board_param } // Update
+    { _id : _id_param }, // Query
+    { $set : board_param } // Update
   );
 
   return boardUpdate;
@@ -48,10 +48,10 @@ export const boardUpdate = async (
 
 // 5. boardDelete --------------------------------------------------------------------------------->
 export const boardDelete = async (
-  _id_param: any
+  _id_param : any
 ) => {
   const boardDelete = await Board.deleteOne({
-    _id: _id_param,
+    _id : _id_param,
   });
   return boardDelete;
 };

@@ -6,10 +6,9 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
-  const [foodDetail, setFoodDetail] = useState([]);
-  const [food_regdate, setFood_regdate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+
+  const [FOOD, setFOOD] = useState([]);
+  const [food_regdate, setFood_regdate] = useState(new Date().toISOString().split("T")[0]);
   const user_id = sessionStorage.getItem("user_id");
   const location = useLocation();
   const navParam = useNavigate();
@@ -36,18 +35,18 @@ export const FoodDetail = () => {
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
-        const res = await axios.get(`${URL}/foodDetail`, {
+        const response = await axios.get(`${URL}/foodDetail`, {
           params: {
             user_id: user_id,
             food_category: food_category,
             food_regdate: food_regdate,
           },
         });
-        setFoodDetail(res.data);
+        setFOOD(response.data);
       }
       catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
-        setFoodDetail([]);
+        setFOOD([]);
       }
     };
     fetchFoodDetail();
@@ -68,19 +67,17 @@ export const FoodDetail = () => {
             </tr>
           </thead>
           <tbody>
-            {foodDetail.map((index: any, i: number) => (
+            {FOOD.map((index: any, i: number) => (
               <tr key={i}>
-                <td
-                  onClick={() =>
-                    navParam(`/foodInfo`, {
-                      state: {
-                        _id : index._id,
-                        user_id : index.user_id,
-                        food_category : index.food_category
-                      },
-                    })
-                  }
-                >
+                <td onClick={() =>
+                  navParam(`/foodInfo`, {
+                    state: {
+                      _id : index._id,
+                      user_id : index.user_id,
+                      food_category : index.food_category
+                    },
+                  })
+                }>
                   {index.food_name}
                 </td>
                 <td>{index.food_calories}</td>
@@ -114,7 +111,9 @@ export const FoodDetail = () => {
         </div>
       </div>
       <div className="row d-flex justify-content-center mt-5">
-        <div className="col-10">{foodDetailTable()}</div>
+        <div className="col-10">
+          {foodDetailTable()
+        }</div>
       </div>
     </div>
   );
