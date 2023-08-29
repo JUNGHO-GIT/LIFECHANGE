@@ -51,28 +51,26 @@ export const FoodTotal = () => {
   // ---------------------------------------------------------------------------------------------->
   const foodTotalTable = () => {
     return (
-      <div>
-        <table className="table table-striped">
-          <thead>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
+          </tr>
+        </thead>
+        <tbody>
+          {FOOD_TOTAL.map((index : any) => (
             <tr>
-              <th>칼로리</th>
-              <th>탄수화물</th>
-              <th>단백질</th>
-              <th>지방</th>
+              <td>{index.food_calories}</td>
+              <td>{index.food_carb}</td>
+              <td>{index.food_protein}</td>
+              <td>{index.food_fat}</td>
             </tr>
-          </thead>
-          <tbody>
-            {FOOD_TOTAL.map((index : any) => (
-              <tr>
-                <td>{index.food_calories}</td>
-                <td>{index.food_carb}</td>
-                <td>{index.food_protein}</td>
-                <td>{index.food_fat}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     );
   };
 

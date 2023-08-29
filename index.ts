@@ -10,6 +10,8 @@ import foodRouter from "./src/router/foodRouter";
 import calendarRouter from "./src/router/calendarRouter";
 import workoutRouter from "./src/router/workoutRouter";
 
+mongoose.connect("mongodb://127.0.0.1:27017");
+
 const app = express();
 
 app.set("port", process.env.PORT || 4000);
@@ -19,9 +21,8 @@ app.use(cors(), (req, res, next) => {
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
-mongoose.connect("mongodb://127.0.0.1:27017");
 app.use(express.static(path.join(__dirname, "client/build")));
+
 app.use("/user", userRouter);
 app.use("/board", boardRouter);
 app.use("/food", foodRouter);

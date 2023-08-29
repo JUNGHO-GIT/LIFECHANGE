@@ -10,7 +10,7 @@ export const CalendarList = () => {
   const navParam = useNavigate();
   const URL = "http://127.0.0.1:4000/calendar";
   const TITLE = "Calendar List";
-  let date = new Date();
+  const date = new Date();
 
   // ---------------------------------------------------------------------------------------------->
   const renderCalendar = () => {
@@ -101,13 +101,15 @@ export const CalendarList = () => {
         );
       }
 
+      dayElement.data('dayParam', dayParam);
       dayElement.click(function () {
+        const clickedDayParam = $(this).data('dayParam');
         navParam(`/calendarDetail`, {
           state: {
             user_id : user_id,
             calendar_year : date.getFullYear(),
             calendar_month : date.getMonth() + 1,
-            calendar_day : dayParam,
+            calendar_day : clickedDayParam,
           },
         });
       });

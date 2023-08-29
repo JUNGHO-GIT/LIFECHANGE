@@ -1,7 +1,7 @@
-// Calendar.ts
+// Routine.ts
 import mongoose from "mongoose";
 
-const CalendarScheme = new mongoose.Schema ({
+const RoutineScheme = new mongoose.Schema ({
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
@@ -10,27 +10,31 @@ const CalendarScheme = new mongoose.Schema ({
     type :String,
     required : true
   },
-  calendar_title : {
+  routine_title : {
     type : String,
     required : true
   },
-  calendar_content :{
+  routine_kg : {
     type : String,
     required : true
   },
-  calendar_start : {
+  routine_set : {
     type : String,
     required : true
   },
-  calendar_end : {
+  routine_count : {
     type : String,
     required : true
   },
-  calendar_image : {
+  routine_rest : {
     type : String,
-    required : false
+    required : true
   },
-  calendar_regdate : {
+  routine_time : {
+    type : String,
+    required : true
+  },
+  routine_regdate : {
     type : String,
     default : () => {
       const date = new Date();
@@ -39,7 +43,7 @@ const CalendarScheme = new mongoose.Schema ({
     },
     required : true
   },
-  calendar_update : {
+  routine_update : {
     type : String,
     default : () => {
       const date = new Date();
@@ -50,4 +54,4 @@ const CalendarScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("Calendar", CalendarScheme);
+export default mongoose.model("Routine", RoutineScheme);
