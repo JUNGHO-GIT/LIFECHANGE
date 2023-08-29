@@ -16,9 +16,12 @@ export const CalendarDetail = () => {
   const koreanDate = new Date(`${calendar_year}-${calendar_month}-${calendar_day}`);
   koreanDate.setHours(koreanDate.getHours() + 9);
   const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+  const [workout_regdate, setWorkout_regdate] = useState(koreanDate.toISOString().split("T")[0]);
   const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
+  const [WORKOUT_LIST, setWORKOUT_LIST] = useState([]);
 
-  const URL = "http://127.0.0.1:4000/food";
+  const URL_FOOD = "http://127.0.0.1:4000/food";
+  const URL_WORKOUT = "http://127.0.0.1:4000/workout";
   const TITLE = "Calendar Detail";
 
   // ---------------------------------------------------------------------------------------------->
@@ -31,6 +34,7 @@ export const CalendarDetail = () => {
         onChange={(date : any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
+          setWorkout_regdate(selectedDate);
         }}
       />
     );
@@ -40,7 +44,7 @@ export const CalendarDetail = () => {
   useEffect(() => {
     const fetchFoodTotal = async () => {
       try {
-        const response = await axios.post (`${URL}/foodTotal`, {
+        const response = await axios.post (`${URL_FOOD}/foodTotal`, {
           user_id: user_id,
           food_regdate : food_regdate,
         });
@@ -55,29 +59,30 @@ export const CalendarDetail = () => {
   }, [user_id, food_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
-  const calendarDetailTable = () => {
-    return (
-      <div className="card">
-        <div className="card-body">
-          <p className="fw-5">
-            Year :<b>{calendar_year}년</b>
-          </p>
-          <p className="fw-5">
-            Month :<b>{calendar_month}월</b>
-          </p>
-          <p className="fw-5">
-            Day :<b>{calendar_day}일</b>
-          </p>
-        </div>
-      </div>
-    );
-  };
+  useEffect(() => {
+    const fetchWorkoutList = async () => {
+      try {
+        const response = await axios.get (`${URL_WORKOUT}/workoutList`, {
+          params: {
+            user_id: user_id,
+            workout_regdate : workout_regdate,
+          }
+        });
+        setWORKOUT_LIST(response.data);
+      }
+      catch (error: any) {
+        alert(`Error fetching workout data: ${error.message}`);
+        setWORKOUT_LIST([]);
+      }
+    };
+    fetchWorkoutList();
+  }, [user_id, workout_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
   const foodTotalTable = () => {
     return (
-      <table className="table table-striped">
-        <thead>
+      <table className="table table-bordered border-dark">
+        <thead className="table-dark">
           <tr>
             <th>칼로리</th>
             <th>탄수화물</th>
@@ -92,6 +97,40 @@ export const CalendarDetail = () => {
               <td>{index.food_carb}</td>
               <td>{index.food_protein}</td>
               <td>{index.food_fat}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const workoutTotalTable = () => {
+    return (
+      <table className="table table-bordered border-dark">
+        <thead className="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Part</th>
+            <th>Title</th>
+            <th>Kg</th>
+            <th>Set</th>
+            <th>Count</th>
+            <th>Rest</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {WORKOUT_LIST.map((index : any) => (
+            <tr>
+              <td>{index.user_id}</td>
+              <td>{index.workout_part}</td>
+              <td>{index.workout_title}</td>
+              <td>{index.workout_kg}</td>
+              <td>{index.workout_set}</td>
+              <td>{index.workout_count}</td>
+              <td>{index.workout_rest}</td>
+              <td>{index.workout_time}</td>
             </tr>
           ))}
         </tbody>
@@ -116,12 +155,12 @@ export const CalendarDetail = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
-          {calendarDetailTable()}
+          {foodTotalTable()}
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
-          {foodTotalTable()}
+          {workoutTotalTable()}
         </div>
       </div>
     </div>
