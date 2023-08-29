@@ -502,65 +502,23 @@ html {
 }
 
 /** align *****************************************************************************************/
-.custom-inline-center {
-  display: inline-block;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-}
-.custom-inline-left {
-  display: inline-block;
-  justify-content: flex-start !important;
-  align-items: center !important;
-  text-align: left !important;
-}
-.custom-inline-right {
-  display: inline-block;
-  justify-content: flex-end !important;
-  align-items: center !important;
-  text-align: right !important;
-}
-.custom-flex-center {
+.d-center {
   display: flex;
   justify-content: center !important;
   align-items: center !important;
   text-align: center !important;
 }
-.custom-flex-left {
+.d-left {
   display: flex;
   justify-content: flex-start !important;
   align-items: center !important;
   text-align: left !important;
 }
-.custom-flex-right {
+.d-right {
   display: flex;
   justify-content: flex-end !important;
   align-items: center !important;
   text-align: right !important;
-}
-.custom-center {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-}
-.custom-left {
-  justify-content: flex-start !important;
-  align-items: center !important;
-  text-align: left !important;
-}
-.custom-right {
-  justify-content: flex-end !important;
-  align-items: center !important;
-  text-align: right !important;
-}
-.custom-image {
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-  vertical-align: middle !important;
 }
 
 /** loader ****************************************************************************************/
