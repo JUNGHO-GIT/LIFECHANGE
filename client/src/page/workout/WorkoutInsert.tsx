@@ -5,6 +5,7 @@ import { WorkoutSelect } from "./WorkoutSelect";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutInsert = () => {
+
   const [WORKOUT, setWORKOUT] = useState({
     user_id: sessionStorage.getItem("user_id"),
     workout_part: "",
@@ -26,7 +27,6 @@ export const WorkoutInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   const workoutInsertFlow = async () => {
     try {
-      // 유효성 검사
       if (WORKOUT.workout_part === "") {
         alert("Please enter part.");
         return;
@@ -56,16 +56,19 @@ export const WorkoutInsert = () => {
         return;
       }
 
-      const response = await axios.post(`${URL}/workoutInsert`, WORKOUT);
+      const response = await axios.post (`${URL}/workoutInsert`, WORKOUT);
       if (response.data === "success") {
         alert("Insert a workout successfully");
         window.location.href = "/workoutList";
-      } else if (response.data === "fail") {
+      }
+      else if (response.data === "fail") {
         alert("Insert a workout failure");
-      } else {
+      }
+      else {
         throw new Error("Server responded with an error");
       }
-    } catch (error: any) {
+    }
+    catch (error: any) {
       alert(`Error inserting workout data: ${error.message}`);
     }
   };
@@ -90,16 +93,18 @@ export const WorkoutInsert = () => {
           />
           <label htmlFor="user_id">User ID</label>
         </div>
-        <WorkoutSelect
-          workoutPart={WORKOUT.workout_part}
-          setWorkoutPart={(value: string) =>
-            setWORKOUT({ ...WORKOUT, workout_part: value })
-          }
-          workoutTitle={WORKOUT.workout_title}
-          setWorkoutTitle={(value: string) =>
-            setWORKOUT({ ...WORKOUT, workout_title: value })
-          }
-        />
+        <div>
+          <WorkoutSelect
+            workoutPart={WORKOUT.workout_part}
+            setWorkoutPart={(value : any) =>
+              setWORKOUT({ ...WORKOUT, workout_part: value })
+            }
+            workoutTitle={WORKOUT.workout_title}
+            setWorkoutTitle={(value: string) =>
+              setWORKOUT({ ...WORKOUT, workout_title: value })
+            }
+          />
+        </div>
         <div className="form-floating">
           <input
             type="text"
@@ -195,12 +200,12 @@ export const WorkoutInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {workoutInsertTable()}

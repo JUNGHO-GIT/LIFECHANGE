@@ -167,24 +167,24 @@ export const FoodList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{datePicker()}</span>
           </h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           {foodListTable()}
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-4">
           <div className="btn-group mb-3">
             <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
@@ -199,7 +199,7 @@ export const FoodList = () => {
           </div>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <div className="btn-group">
             <button className="btn btn-primary ms-2" onClick={buttonFoodTotal}>총합</button>

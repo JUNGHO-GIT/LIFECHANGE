@@ -1,5 +1,5 @@
 // userService.ts
-import User from "../schemas/User";
+import User from "../schema/User";
 import * as mongoose from "mongoose";
 
 // 1. userList ------------------------------------------------------------------------------------>

@@ -18,7 +18,6 @@ export const Header = () => {
         <li><Link to="/calendarList" className="nav-link text-hover tc-w ms-2">Calendar</Link></li>
         <li><Link to="/foodList" className="nav-link text-hover tc-w ms-2">Food</Link></li>
         <li><Link to="/workoutList" className="nav-link text-hover tc-w ms-2">Workout</Link></li>
-        <li><Link to="/workoutInsert" className="nav-link text-hover tc-w ms-2">Workout Insert</Link></li>
       </ul>
     );
   };
@@ -46,7 +45,7 @@ export const Header = () => {
 
       if (!user_id || user_id === "false") {
         return (
-          <form className="form-group custom-flex-center">
+          <form className="form-group d-center">
             {buttonLogin()}
             {buttonSignup()}
           </form>
@@ -58,7 +57,7 @@ export const Header = () => {
     const loginTrue = () => {
       if (user_id && user_id !== "false") {
         return (
-          <form className="form-group custom-flex-center">
+          <form className="form-group d-center">
             <button type="button" className="btn btn-outline-light ms-2"
               onClick={() => {
                 sessionStorage.setItem("user_id", "false");
@@ -72,7 +71,7 @@ export const Header = () => {
     };
 
     return (
-      <div className="custom-flex-center">
+      <div className="d-center">
         {loginFalse()}
         {loginTrue()}
       </div>
@@ -82,7 +81,7 @@ export const Header = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <header className="container-fluid bg-dark">
-      <div className="row custom-flex-center pt-3 pb-3">
+      <div className="row d-center pt-3 pb-3">
         <div className="col-8">{NavList()}</div>
         <div className="col-4">{FormList()}</div>
       </div>

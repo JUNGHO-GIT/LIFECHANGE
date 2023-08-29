@@ -1,8 +1,8 @@
 // workoutService.ts
-import Workout from "../schemas/Workout";
+import Workout from "../schema/Workout";
 import * as mongoose from "mongoose";
 
-// 1. workoutList -------------------------------------------------------------------------------->
+// 1. workoutList --------------------------------------------------------------------------------->
 export const workoutList = async (
   user_id_param : any,
   workout_regdate_param : any
@@ -15,7 +15,7 @@ export const workoutList = async (
   return workoutList;
 };
 
-// 2. workoutDetail ------------------------------------------------------------------------------>
+// 2. workoutDetail ------------------------------------------------------------------------------->
 export const workoutDetail = async (
   _id_param : any
 ) => {
@@ -25,7 +25,7 @@ export const workoutDetail = async (
   return workoutDetail;
 };
 
-// 3. workoutInsert ------------------------------------------------------------------------------>
+// 3. workoutInsert ------------------------------------------------------------------------------->
 export const workoutInsert = async (
   workout_param : any
 ) => {
@@ -46,7 +46,7 @@ export const workoutInsert = async (
   return workoutInsert;
 };
 
-// 4. workoutUpdate ------------------------------------------------------------------------------>
+// 4. workoutUpdate ------------------------------------------------------------------------------->
 export const workoutUpdate = async (
   _id_param : any,
   workout_param : any
@@ -59,7 +59,7 @@ export const workoutUpdate = async (
   return workoutUpdate;
 };
 
-// 5. workoutDelete ------------------------------------------------------------------------------>
+// 5. workoutDelete ------------------------------------------------------------------------------->
 export const workoutDelete = async (
   _id_param : any
 ) => {

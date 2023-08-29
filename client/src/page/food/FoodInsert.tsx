@@ -169,7 +169,7 @@ export const FoodInsert = () => {
     };
 
     return (
-      <div className="row d-flex justify-content-center">
+      <div className="row d-center">
         <div className="col-6">
           {foodInsertTable()}
         </div>
@@ -187,17 +187,17 @@ export const FoodInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3"><span>{title}</span><span>{brand}</span></h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-6">
           {totalServTable()}
         </div>

@@ -6,6 +6,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutList = () => {
+
   const [WORKOUT_LIST, setWORKOUT_LIST] = useState<[]>([]);
   const navParam = useNavigate();
   const koreanDate = new Date();
@@ -52,7 +53,7 @@ export const WorkoutList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const workoutListTable = () => {
-    
+
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -60,28 +61,26 @@ export const WorkoutList = () => {
             <th>ID</th>
             <th>Part</th>
             <th>Title</th>
-            <th>set</th>
-            <th>count</th>
-            <th>kg</th>
-            <th>rest</th>
-            <th>time</th>
+            <th>Kg</th>
+            <th>Set</th>
+            <th>Count</th>
+            <th>Rest</th>
+            <th>Time</th>
           </tr>
         </thead>
         <tbody>
           {WORKOUT_LIST.map((index : any) => (
             <tr key={index}>
-              <td>
-                <a onClick={() => buttonWorkoutDetail(index._id)} className="text-hover">
-                  {index.user_id}
-                </a>
-              </td>
+              <td><a onClick={() => buttonWorkoutDetail(index._id)} className="text-hover">
+                {index.user_id}
+              </a></td>
               <td>{index.workout_part}</td>
               <td>{index.workout_title}</td>
+              <td>{index.workout_kg}</td>
               <td>{index.workout_set}</td>
               <td>{index.workout_count}</td>
-              <td>{index.workout_kg}</td>
               <td>{index.workout_rest}</td>
-              <td>{index.worlout_time}</td>
+              <td>{index.workout_time}</td>
             </tr>
           ))}
         </tbody>
@@ -115,19 +114,19 @@ export const WorkoutList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{datePicker()}</span>
           </h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
             {workoutListTable()}

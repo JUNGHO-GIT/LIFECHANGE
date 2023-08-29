@@ -31,8 +31,8 @@ export const CalendarList = () => {
       1
     ).getDay();
 
-    let weekRow = $(`<div class="row d-flex justify-content-center"></div>`);
-    let dayRow = $(`<div class="row d-flex justify-content-center"></div>`);
+    let weekRow = $(`<div class="row d-center"></div>`);
+    let dayRow = $(`<div class="row d-center"></div>`);
     let blank = `&nbsp;`;
 
     // 요일 표시
@@ -73,7 +73,7 @@ export const CalendarList = () => {
     for (let dayParam = 1; dayParam <= monthDays; dayParam++) {
       if ((startDay + dayParam - 1) % 7 === 0) {
         $("#calendar").append(dayRow);
-        dayRow = $(`<div class="row d-flex justify-content-center"></div>`);
+        dayRow = $(`<div class="row d-center"></div>`);
       }
 
       let dayElement;
@@ -150,21 +150,22 @@ export const CalendarList = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
-          <div className="custom-flex-center">
-            <h3 className="fw-9"><span id="year"></span><span id="month"></span></h3>
+          <h3 className="fw-9">
+            <span id="year"></span>
+            <span id="month"></span>
             <button id="prev" className="btn btn-primary btn-sm ms-2">이전</button>
             <button id="next" className="btn btn-primary btn-sm ms-2">다음</button>
-          </div>
+          </h3>
         </div>
       </div>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-center">
         <div className="col-10">
           <div id="calendar"></div>
         </div>

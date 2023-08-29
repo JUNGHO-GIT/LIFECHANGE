@@ -1,5 +1,5 @@
 // foodService.ts
-import Food from "../schemas/Food";
+import Food from "../schema/Food";
 import * as mongoose from "mongoose";
 
 // 1. foodList ------------------------------------------------------------------------------------>

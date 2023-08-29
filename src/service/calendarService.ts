@@ -1,5 +1,5 @@
 // calendarService.ts
-import Calendar from "../schemas/Calendar";
+import Calendar from "../schema/Calendar";
 import * as mongoose from "mongoose";
 
 // 1. calendarList -------------------------------------------------------------------------------->

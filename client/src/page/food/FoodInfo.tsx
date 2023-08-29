@@ -122,7 +122,7 @@ export const FoodInfo = () => {
   // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">
             {TITLE}
@@ -130,19 +130,19 @@ export const FoodInfo = () => {
           </h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{datePicker()}</span>
           </h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           {foodInfoTable()}
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <button type="button" className="btn btn-danger" onClick={buttonFoodDelete}>
             Delete

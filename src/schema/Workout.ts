@@ -18,15 +18,15 @@ const WorkoutScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
+  workout_kg : {
+    type : String,
+    required : true
+  },
   workout_set : {
     type : String,
     required : true
   },
   workout_count : {
-    type : String,
-    required : true
-  },
-  workout_kg : {
     type : String,
     required : true
   },
