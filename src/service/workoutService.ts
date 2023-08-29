@@ -51,11 +51,10 @@ export const workoutUpdate = async (
   _id_param : any,
   workout_param : any
 ) => {
-  const workoutUpdate = await Workout.updateOne(
-    { _id : _id_param }, // Query
-    { $set : workout_param } // Update
-  );
-
+  const workoutUpdate = await Workout.updateOne ({
+    _id : _id_param,
+    $set : workout_param
+  });
   return workoutUpdate;
 };
 
@@ -63,7 +62,7 @@ export const workoutUpdate = async (
 export const workoutDelete = async (
   _id_param : any
 ) => {
-  const workoutDelete = await Workout.deleteOne({
+  const workoutDelete = await Workout.deleteOne ({
     _id : _id_param,
   });
   return workoutDelete;
