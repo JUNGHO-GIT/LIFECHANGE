@@ -38,10 +38,10 @@ export const calendarUpdate = async (
   _id_param : any,
   calendar_param : any
 ) => {
-  const calendarUpdate = await Calendar.updateOne(
-    { _id : _id_param }, // Query
-    { $set : calendar_param } // Update
-  );
+  const calendarUpdate = await Calendar.updateOne({
+    _id : _id_param,
+    $set : calendar_param
+  });
 
   return calendarUpdate;
 };
