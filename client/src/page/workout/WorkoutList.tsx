@@ -52,13 +52,19 @@ export const WorkoutList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const workoutListTable = () => {
+    
     return (
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
             <th>ID</th>
+            <th>Part</th>
             <th>Title</th>
-            <th>Date</th>
+            <th>set</th>
+            <th>count</th>
+            <th>kg</th>
+            <th>rest</th>
+            <th>time</th>
           </tr>
         </thead>
         <tbody>
@@ -69,8 +75,13 @@ export const WorkoutList = () => {
                   {index.user_id}
                 </a>
               </td>
+              <td>{index.workout_part}</td>
               <td>{index.workout_title}</td>
-              <td>{index.workout_regdate}</td>
+              <td>{index.workout_set}</td>
+              <td>{index.workout_count}</td>
+              <td>{index.workout_kg}</td>
+              <td>{index.workout_rest}</td>
+              <td>{index.worlout_time}</td>
             </tr>
           ))}
         </tbody>
@@ -120,6 +131,7 @@ export const WorkoutList = () => {
         <div className="col-10">
           <form className="form-inline">
             {workoutListTable()}
+            <br/>
             {buttonRefreshPage()}
             {buttonWorkoutInsert()}
           </form>
