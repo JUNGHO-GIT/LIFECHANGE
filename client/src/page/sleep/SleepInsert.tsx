@@ -54,9 +54,11 @@ export const SleepInsert = () => {
     return (
       <div>
         <TimePicker
-          onChange={(e) => setSLEEP({...SLEEP, sleep_morning : e || ""})}
-          value={SLEEP.sleep_night || ""}
+          onChange={(e:any) => setSLEEP({...SLEEP, sleep_morning : e })}
+          value={SLEEP.sleep_night}
           disableClock={true}
+          format="HH:mm:ss"
+          locale="ko"
         />
       </div>
     );
