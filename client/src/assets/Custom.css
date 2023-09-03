@@ -474,9 +474,7 @@
 .he-400 {height: 400px !important;}
 
 /** core ******************************************************************************************/
-* {
-  caret-color: transparent !important;
-}
+
 textarea {
   resize: none !important;
 }
