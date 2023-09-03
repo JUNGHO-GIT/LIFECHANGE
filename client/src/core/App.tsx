@@ -11,6 +11,7 @@ import "boxicons/css/boxicons.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-datepicker/dist/react-datepicker.css";
 import "../assets/DatePicker.css";
+import "../assets/TimePicker.css";
 
 import { Resize } from "../components/Resize";
 import { Loader } from "../components/Loader";

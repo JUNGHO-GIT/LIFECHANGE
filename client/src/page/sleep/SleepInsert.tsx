@@ -13,7 +13,7 @@ export const SleepInsert = () => {
   const [SLEEP, setSLEEP] = useState({
     user_id : window.sessionStorage.getItem("user_id"),
     sleep_title : sleep_regdate,
-    sleep_night : "",
+    sleep_night : "00:00",
     sleep_morning : "",
     sleep_time : "",
   });
@@ -53,51 +53,11 @@ export const SleepInsert = () => {
   const sleepInsertTable = () => {
     return (
       <div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="user_id"
-            placeholder="User ID"
-            value={SLEEP.user_id ? SLEEP.user_id : ""}
-            onChange={(e) => setSLEEP({...SLEEP, user_id: e.target.value})}
-            disabled
-          />
-          <label htmlFor="user_id">User ID</label>
-        </div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="sleep_title"
-            placeholder="Sleep Title"
-            value={SLEEP.sleep_title ? SLEEP.sleep_title : ""}
-            onChange={(e) => setSLEEP({...SLEEP, sleep_title: e.target.value})}
-            disabled
-          />
-          <label htmlFor="sleep_title">Sleep Title</label>
-        </div>
-        <div className="form-floating">
-          <TimePicker
-            onChange={(time:any) => setSLEEP({...SLEEP, sleep_night: time})}
-            value={SLEEP.sleep_night}
-          />
-        </div>
-        <div>
-          <TimePicker
-            onChange={(time:any) => setSLEEP({...SLEEP, sleep_morning: time})}
-            value={SLEEP.sleep_morning}
-          />
-        </div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="sleep_time"
-            placeholder="Sleep Time"
-            value={SLEEP.sleep_time ? SLEEP.sleep_time : ""}
-            onChange={(e) => setSLEEP({...SLEEP, sleep_time: e.target.value})}
-            disabled
-          />
-          <label htmlFor="sleep_time">Sleep Time</label>
-        </div>
+        <TimePicker
+          onChange={(e) => setSLEEP({...SLEEP, sleep_morning : e || ""})}
+          value={SLEEP.sleep_night || ""}
+          disableClock={true}
+        />
       </div>
     );
   };
