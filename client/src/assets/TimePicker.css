@@ -3,7 +3,7 @@
   display: inline-block;
   position: relative;
   vertical-align: middle;
-  width: 100%;
+  width: 80%;
 }
 
 .react-time-picker--disabled {

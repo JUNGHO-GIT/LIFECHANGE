@@ -53,14 +53,69 @@ export const SleepInsert = () => {
   const sleepInsertTable = () => {
     return (
       <div>
-        <TimePicker
-          onChange={(e:any) => setSLEEP({...SLEEP, sleep_night : e })}
-          value={SLEEP.sleep_night}
-          disableClock={false}
-          clockIcon={null}
-          format="HH:mm:ss"
-          locale="ko"
-        />
+        {/** user_id **/}
+        <div className="d-center">
+          <span className="form-label me-4">User ID</span>
+          <input
+            type="text"
+            className="form-control"
+            id="user_id"
+            name="user_id"
+            value={SLEEP.user_id || ""}
+            onChange={(event:any) => {
+              setSLEEP({...SLEEP, user_id : event.target.value })
+            }}
+          />
+        </div>
+        <br/>
+        {/** title **/}
+        <div className="d-center">
+          <span className="form-label me-4">Title</span>
+          <input
+            type="text"
+            className="form-control"
+            id="sleep_title"
+            name="sleep_title"
+            value={SLEEP.sleep_title}
+            onChange={(event:any) => {
+              setSLEEP({...SLEEP, sleep_title : event.target.value })
+            }}
+          />
+        </div>
+        <br/>
+        {/** night **/}
+        <div className="d-center">
+          <span className="form-label me-4">Night</span>
+          <TimePicker
+            id="sleep_night"
+            name="sleep_night"
+            onChange={(event:any) => {
+              setSLEEP({...SLEEP, sleep_night : event })
+            }}
+            value={SLEEP.sleep_night}
+            disableClock={false}
+            clockIcon={null}
+            format="HH:mm:ss"
+            locale="ko"
+          />
+        </div>
+        <br/>
+        {/** morning **/}
+        <div className="d-center">
+          <span className="form-label me-4">Morning</span>
+          <TimePicker
+            id="sleep_morning"
+            name="sleep_morning"
+            onChange={(event:any) => {
+              setSLEEP({...SLEEP, sleep_morning : event })
+            }}
+            value={SLEEP.sleep_morning}
+            disableClock={false}
+            clockIcon={null}
+            format="HH:mm:ss"
+            locale="ko"
+          />
+        </div>
       </div>
     );
   };
