@@ -44,6 +44,9 @@ import { WorkoutList } from "../page/workout/WorkoutList";
 import { WorkoutInsert } from "../page/workout/WorkoutInsert";
 import { WorkoutDetail } from "../page/workout/WorkoutDetail";
 
+import { SleepList } from "../page/sleep/SleepList";
+import { SleepInsert } from "../page/sleep/SleepInsert";
+
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
   // ---------------------------------------------------------------------------------------------->
@@ -76,6 +79,8 @@ const App = () => {
           <Route path="/workoutList" element={<WorkoutList />} />
           <Route path="/workoutInsert" element={<WorkoutInsert />} />
           <Route path="/workoutDetail" element={<WorkoutDetail />} />
+          <Route path="/sleepList" element={<SleepList />} />
+          <Route path="/sleepInsert" element={<SleepInsert />} />
         </Routes>
         <Footer />
       </Router>

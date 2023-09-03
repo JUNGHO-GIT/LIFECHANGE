@@ -18,6 +18,7 @@ export const Header = () => {
         <li><Link to="/calendarList" className="nav-link text-hover tc-w ms-2">Calendar</Link></li>
         <li><Link to="/foodList" className="nav-link text-hover tc-w ms-2">Food</Link></li>
         <li><Link to="/workoutList" className="nav-link text-hover tc-w ms-2">Workout</Link></li>
+        <li><Link to="/sleepList" className="nav-link text-hover tc-w ms-2">Sleep</Link></li>
       </ul>
     );
   };
