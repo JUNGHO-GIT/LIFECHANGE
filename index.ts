@@ -9,6 +9,7 @@ import boardRouter from "./src/router/boardRouter";
 import foodRouter from "./src/router/foodRouter";
 import calendarRouter from "./src/router/calendarRouter";
 import workoutRouter from "./src/router/workoutRouter";
+import sleepRouter from "./src/router/sleepRouter";
 
 mongoose.connect("mongodb://127.0.0.1:27017");
 
@@ -28,6 +29,7 @@ app.use("/board", boardRouter);
 app.use("/food", foodRouter);
 app.use("/calendar", calendarRouter);
 app.use("/workout", workoutRouter);
+app.use("/sleep", sleepRouter);
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://127.0.0.1:%d in %s mode", app.get("port"), app.get("env"));

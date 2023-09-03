@@ -27,8 +27,11 @@ export const sleepInsert = async (
     _id : new mongoose.Types.ObjectId(),
     user_id : sleep_param.user_id,
     sleep_title : sleep_param.sleep_title,
-    sleep_content : sleep_param.sleep_content,
-    sleep_date : sleep_param.sleep_date,
+    sleep_night : sleep_param.sleep_night,
+    sleep_morning : sleep_param.sleep_morning,
+    sleep_time : sleep_param.sleep_time,
+    sleep_regdate : sleep_param.sleep_regdate,
+    sleep_update : sleep_param.sleep_update
   });
   return sleepInsert;
 };

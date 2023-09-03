@@ -18,7 +18,8 @@ export const WorkoutDetail = () => {
       try {
         const response = await axios.get(`${URL}/workoutDetail/${_id}`);
         setWORKOUT(response.data);
-      } catch (error: any) {
+      }
+      catch (error: any) {
         alert(`Error fetching workout data: ${error.message}`);
         setWORKOUT([]);
       }
@@ -32,7 +33,7 @@ export const WorkoutDetail = () => {
       const confirm = window.confirm("Are you sure you want to delete?");
       if (!confirm) {
         return;
-      } 
+      }
       else {
         const response = await axios.delete(`${URL}/workoutDelete/${_id}`);
         if (response.data === "success") {
@@ -43,7 +44,7 @@ export const WorkoutDetail = () => {
           alert("Delete failed");
         }
       }
-    } 
+    }
     catch (error: any) {
       alert(`Error fetching workout data: ${error.message}`);
     }

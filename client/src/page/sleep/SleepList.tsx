@@ -6,7 +6,7 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
 
-  const [BOARD_LIST, setBOARD_LIST] = useState<[]>([]);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<[]>([]);
   const navParam = useNavigate();
   const URL = "http://127.0.0.1:4000/sleep";
   const TITLE = "Sleep List";
@@ -16,11 +16,11 @@ export const SleepList = () => {
     const fetchSleepList = async () => {
       try {
         const response = await axios.get (`${URL}/sleepList`);
-        setBOARD_LIST(response.data);
+        setSLEEP_LIST(response.data);
       }
       catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
-        setBOARD_LIST([]);
+        setSLEEP_LIST([]);
       }
     };
     fetchSleepList();
@@ -32,21 +32,25 @@ export const SleepList = () => {
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Title</th>
-            <th>Date</th>
+            <th>Night</th>
+            <th>Morning</th>
+            <th>Time</th>
           </tr>
         </thead>
         <tbody>
-          {BOARD_LIST.map((index : any) => (
+          {SLEEP_LIST.map((index : any) => (
             <tr key={index}>
               <td>
-                <a onClick={() => buttonSleepDetail(index._id)} className="text-hover">
-                  {index.user_id}
+                <a onClick={() => {
+                  buttonSleepDetail(index.sleep_title);
+                }}>
+                {index.sleep_title}
                 </a>
               </td>
-              <td>{index.sleep_title}</td>
-              <td>{index.sleep_regdate}</td>
+              <td>{index.sleep_night}</td>
+              <td>{index.sleep_morning}</td>
+              <td>{index.sleep_time}</td>
             </tr>
           ))}
         </tbody>

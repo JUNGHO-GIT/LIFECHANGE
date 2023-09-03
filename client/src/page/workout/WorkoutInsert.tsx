@@ -19,7 +19,7 @@ export const WorkoutInsert = () => {
 
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const workout_regdate = koreanDate.toISOString().split("T")[0];
+  const [workout_regdate, setWorkout_regdate] = useState(koreanDate.toISOString().split("T")[0]);
 
   const URL = "http://127.0.0.1:4000/workout";
   const TITLE = "Workout Insert";

@@ -1,6 +1,7 @@
 // SleepInsert.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import TimePicker from 'react-time-picker';
 
 // ------------------------------------------------------------------------------------------------>
@@ -8,7 +9,7 @@ export const SleepInsert = () => {
 
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const sleep_regdate = koreanDate.toISOString().split("T")[0];
+  const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
 
   const [SLEEP, setSLEEP] = useState({
     user_id : window.sessionStorage.getItem("user_id"),
@@ -21,6 +22,22 @@ export const SleepInsert = () => {
   const URL_SLEEP = "http://127.0.0.1:4000/sleep";
   const URL_USER = "http://127.0.0.1:4000/user";
   const TITLE = "Sleep Insert";
+
+  // ---------------------------------------------------------------------------------------------->
+  const datePicker = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date (sleep_regdate)}
+        popperPlacement="bottom"
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setSleep_regdate(selectedDate);
+          setSLEEP({...SLEEP, sleep_title : selectedDate });
+        }}
+      />
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const sleepInsertFlow = async () => {
@@ -65,6 +82,7 @@ export const SleepInsert = () => {
             onChange={(event:any) => {
               setSLEEP({...SLEEP, user_id : event.target.value })
             }}
+            readOnly
           />
         </div>
         <br/>
@@ -80,6 +98,7 @@ export const SleepInsert = () => {
             onChange={(event:any) => {
               setSLEEP({...SLEEP, sleep_title : event.target.value })
             }}
+            readOnly
           />
         </div>
         <br/>
@@ -138,8 +157,15 @@ export const SleepInsert = () => {
         </div>
       </div>
       <div className="row d-center mt-5">
+        <div className="col-12">
+          <h1 className="mb-3 fw-5">
+            <span className="ms-4">{datePicker()}</span>
+          </h1>
+        </div>
+      </div>
+      <div className="row d-center mt-5">
         <div className="col-10">
-          <form  className="form-inline">
+          <form className="form-inline">
             {sleepInsertTable()}
             <br/>
             {buttonSleepInsert()}
