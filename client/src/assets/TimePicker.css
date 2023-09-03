@@ -6,12 +6,6 @@
   width: 100%;
 }
 
-.react-time-picker,
-.react-time-picker *:before,
-.react-time-picker *:after {
-  box-sizing: border-box;
-}
-
 .react-time-picker--disabled {
   background-color: #f7f7f7;
   color: #ccc;
@@ -27,14 +21,6 @@
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 1rem;
   position: relative;
-}
-
-.react-time-picker__wrapper--open-down {
-  margin-top: 4px;
-}
-
-.react-time-picker__wrapper--open-up {
-  margin-bottom: 4px;
 }
 
 .react-time-picker__wrapper--disabled {
@@ -56,15 +42,17 @@
   top: -1px;
 }
 
+/** 직접선택부분 */
 .react-time-picker__inputGroup__input {
   background: none;
   border: none;
-  color: #555;
+  color : #007bff;
   font-size: 1.2em;
   outline: none;
   padding: 0;
   text-align: center;
   width: 100%;
+  cursor: pointer;
 }
 
 .react-time-picker__inputGroup__input::-webkit-outer-spin-button,
@@ -117,5 +105,18 @@
 
 .react-time-picker__clear-button:disabled {
   color: #ccc;
-  cursor: default;
+  cursor: pointer;
+}
+
+
+.react-time-picker__inputGroup__leadingZero {
+  background: none;
+  border: none;
+  color : #007bff;
+  font-size: 1.2em;
+  outline: none;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
 }

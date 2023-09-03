@@ -14,8 +14,8 @@ export const SleepInsert = () => {
     user_id : window.sessionStorage.getItem("user_id"),
     sleep_title : sleep_regdate,
     sleep_night : "00:00",
-    sleep_morning : "",
-    sleep_time : "",
+    sleep_morning : "00:00",
+    sleep_time : "00:00",
   });
 
   const URL_SLEEP = "http://127.0.0.1:4000/sleep";
