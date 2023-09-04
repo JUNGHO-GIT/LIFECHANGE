@@ -5,21 +5,24 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardDetail = () => {
-
   const [BOARD, setBOARD] = useState<any>({});
   const navParam = useNavigate();
-  const _id = useLocation().state._id;
-  const URL = "http://127.0.0.1:4000/board";
+  const location = useLocation();
+  const _id = location.state._id;
+  const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const TITLE = "Board Detail";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get (`${URL}/boardDetail/${_id}`);
+        const response = await axios.get(`${URL_BOARD}/boardDetail`, {
+          params: {
+            _id: _id,
+          },
+        });
         setBOARD(response.data);
-      }
-      catch (error: any) {
+      } catch (error: any) {
         alert(`Error fetching board data: ${error.message}`);
         setBOARD([]);
       }
@@ -33,18 +36,19 @@ export const BoardDetail = () => {
       const confirm = window.confirm("Are you sure you want to delete?");
       if (!confirm) {
         return;
-      }
-      else {
-        const response = await axios.delete (`${URL}/boardDelete/${_id}`);
+      } else {
+        const response = await axios.delete(`${URL_BOARD}/boardDelete`, {
+          params: {
+            _id: _id,
+          },
+        });
         if (response.data === "success") {
           window.location.href = "/";
-        }
-        else {
+        } else {
           alert("Delete failed");
         }
       }
-    }
-    catch (error: any) {
+    } catch (error: any) {
       alert(`Error fetching board data: ${error.message}`);
     }
   };
@@ -78,31 +82,47 @@ export const BoardDetail = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonBoardDelete = () => {
     return (
-      <button type="button" className="btn btn-danger ms-2" onClick={boardDeleteFlow}>Delete
+      <button
+        type="button"
+        className="btn btn-danger ms-2"
+        onClick={boardDeleteFlow}
+      >
+        Delete
       </button>
     );
   };
   const buttonBoardUpdate = (_id: string) => {
-    const navButton = () => navParam(`/boardUpdate`, {
-      state: {
-        _id
-      }
-    });
+    const navButton = () =>
+      navParam(`/boardUpdate`, {
+        state: {
+          _id,
+        },
+      });
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={navButton}>Update</button>
+      <button
+        type="button"
+        className="btn btn-primary ms-2"
+        onClick={navButton}
+      >
+        Update
+      </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
       <Link to="/boardDetail">
-        <button type="button" className="btn btn-success ms-2">Refresh</button>
+        <button type="button" className="btn btn-success ms-2">
+          Refresh
+        </button>
       </Link>
     );
   };
   const buttonBoardList = () => {
     return (
       <Link to="/boardList">
-        <button type="button" className="btn btn-secondary ms-2">List</button>
+        <button type="button" className="btn btn-secondary ms-2">
+          List
+        </button>
       </Link>
     );
   };
@@ -119,7 +139,7 @@ export const BoardDetail = () => {
         <div className="col-10">
           <form className="form-inline">
             {boardDetailTable()}
-            <br/>
+            <br />
             {buttonRefreshPage()}
             {buttonBoardUpdate(BOARD._id)}
             {buttonBoardDelete()}

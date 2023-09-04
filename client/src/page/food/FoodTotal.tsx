@@ -6,13 +6,16 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodTotal = () => {
-
   const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
+
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+  const [food_regdate, setFood_regdate] = useState(
+    koreanDate.toISOString().split("T")[0]
+  );
+
   const user_id = useLocation().state.user_id;
-  const URL = "http://127.0.0.1:4000/food";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const TITLE = "Food Total";
 
   // ---------------------------------------------------------------------------------------------->
@@ -34,13 +37,14 @@ export const FoodTotal = () => {
   useEffect(() => {
     const fetchFoodTotal = async () => {
       try {
-        const response = await axios.post (`${URL}/foodTotal`, {
-          user_id: user_id,
-          food_regdate : food_regdate,
+        const response = await axios.get(`${URL_FOOD}/foodTotal`, {
+          params: {
+            user_id: user_id,
+            food_regdate: food_regdate,
+          },
         });
         setFOOD_TOTAL(response.data);
-      }
-      catch (error: any) {
+      } catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
         setFOOD_TOTAL([]);
       }
@@ -61,7 +65,7 @@ export const FoodTotal = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_TOTAL.map((index : any) => (
+          {FOOD_TOTAL.map((index: any) => (
             <tr>
               <td>{index.food_calories}</td>
               <td>{index.food_carb}</td>
@@ -75,11 +79,14 @@ export const FoodTotal = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  return(
+  return (
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}<span className="ms-4">(Total)</span></h1>
+          <h1 className="mb-3 fw-9">
+            {TITLE}
+            <span className="ms-4">(Total)</span>
+          </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
@@ -92,8 +99,12 @@ export const FoodTotal = () => {
       <div className="row d-center mt-5">
         <div className="col-8">
           {foodTotalTable()}
-          <br/><br/><br/>
-          <br/><br/><br/>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     </div>

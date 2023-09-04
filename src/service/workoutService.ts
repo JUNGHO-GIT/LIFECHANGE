@@ -10,7 +10,6 @@ export const workoutList = async (
   const workoutList = await Workout.find ({
     user_id : user_id_param,
     workout_regdate : workout_regdate_param,
-
   });
   return workoutList;
 };

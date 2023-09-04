@@ -2,22 +2,52 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import TimePicker from 'react-time-picker';
+import TimePicker from "react-time-picker";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepInsert = () => {
-
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+  const [sleep_regdate, setSleep_regdate] = useState(
+    koreanDate.toISOString().split("T")[0]
+  );
 
   const [SLEEP, setSLEEP] = useState({
-    user_id : window.sessionStorage.getItem("user_id"),
-    sleep_title : sleep_regdate,
-    sleep_night : "00:00",
-    sleep_morning : "00:00",
-    sleep_time : "00:00",
+    user_id: window.sessionStorage.getItem("user_id"),
+    sleep_title: sleep_regdate,
+    sleep_night: "00:00",
+    sleep_morning: "00:00",
+    sleep_time: "00:00",
   });
+
+  useEffect(() => {
+    const calcSleepTime = () => {
+      const nightDate = new Date(
+        `${sleep_regdate}T${SLEEP.sleep_night}:00Z`
+      );
+      const morningDate = new Date(
+        `${sleep_regdate}T${SLEEP.sleep_morning}:00Z`
+      );
+
+      // 다음 날까지의 수면 시간을 고려
+      if (morningDate < nightDate) {
+        morningDate.setDate(morningDate.getDate() + 1);
+      }
+
+      const diff = morningDate.getTime() - nightDate.getTime();
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+
+      setSLEEP({
+        ...SLEEP,
+        sleep_time: `${String(hours).padStart(2, "0")}:${String(
+          minutes
+        ).padStart(2, "0")}`,
+      });
+    };
+
+    calcSleepTime();
+  }, [SLEEP.sleep_night, SLEEP.sleep_morning, sleep_regdate]);
 
   const URL_SLEEP = "http://127.0.0.1:4000/sleep";
   const URL_USER = "http://127.0.0.1:4000/user";
@@ -28,12 +58,12 @@ export const SleepInsert = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
-        selected={new Date (sleep_regdate)}
+        selected={new Date(sleep_regdate)}
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setSleep_regdate(selectedDate);
-          setSLEEP({...SLEEP, sleep_title : selectedDate });
+          setSLEEP({ ...SLEEP, sleep_title: selectedDate });
         }}
       />
     );
@@ -45,23 +75,19 @@ export const SleepInsert = () => {
       if (SLEEP.sleep_night === "") {
         alert("Please enter a night");
         return;
-      }
-      else if (SLEEP.sleep_morning === "") {
+      } else if (SLEEP.sleep_morning === "") {
         alert("Please enter a morning");
         return;
-      }
-      else {
-        const response = await axios.post (`${URL_SLEEP}/sleepInsert`, SLEEP);
+      } else {
+        const response = await axios.post(`${URL_SLEEP}/sleepInsert`, SLEEP);
         if (response.data === "success") {
           alert("Insert a sleep successfully");
           window.location.href = "/sleepList";
-        }
-        else {
+        } else {
           throw new Error("Server responded with an error");
         }
       }
-    }
-    catch (error: any) {
+    } catch (error: any) {
       alert(`Error fetching user data: ${error.message}`);
     }
   };
@@ -79,13 +105,13 @@ export const SleepInsert = () => {
             id="user_id"
             name="user_id"
             value={SLEEP.user_id || ""}
-            onChange={(event:any) => {
-              setSLEEP({...SLEEP, user_id : event.target.value })
+            onChange={(event: any) => {
+              setSLEEP({ ...SLEEP, user_id: event.target.value });
             }}
             readOnly
           />
         </div>
-        <br/>
+        <br />
         {/** title **/}
         <div className="d-center">
           <span className="form-label me-4">Title</span>
@@ -95,21 +121,21 @@ export const SleepInsert = () => {
             id="sleep_title"
             name="sleep_title"
             value={SLEEP.sleep_title}
-            onChange={(event:any) => {
-              setSLEEP({...SLEEP, sleep_title : event.target.value })
+            onChange={(event: any) => {
+              setSLEEP({ ...SLEEP, sleep_title: event.target.value });
             }}
             readOnly
           />
         </div>
-        <br/>
+        <br />
         {/** night **/}
         <div className="d-center">
           <span className="form-label me-4">Night</span>
           <TimePicker
             id="sleep_night"
             name="sleep_night"
-            onChange={(event:any) => {
-              setSLEEP({...SLEEP, sleep_night : event })
+            onChange={(event: any) => {
+              setSLEEP({ ...SLEEP, sleep_night: event });
             }}
             value={SLEEP.sleep_night}
             disableClock={false}
@@ -118,15 +144,15 @@ export const SleepInsert = () => {
             locale="ko"
           />
         </div>
-        <br/>
+        <br />
         {/** morning **/}
         <div className="d-center">
           <span className="form-label me-4">Morning</span>
           <TimePicker
             id="sleep_morning"
             name="sleep_morning"
-            onChange={(event:any) => {
-              setSLEEP({...SLEEP, sleep_morning : event })
+            onChange={(event: any) => {
+              setSLEEP({ ...SLEEP, sleep_morning: event });
             }}
             value={SLEEP.sleep_morning}
             disableClock={false}
@@ -142,7 +168,11 @@ export const SleepInsert = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonSleepInsert = () => {
     return (
-      <button className="btn btn-primary" type="button" onClick={sleepInsertFlow}>
+      <button
+        className="btn btn-primary"
+        type="button"
+        onClick={sleepInsertFlow}
+      >
         Insert
       </button>
     );
@@ -167,7 +197,7 @@ export const SleepInsert = () => {
         <div className="col-10">
           <form className="form-inline">
             {sleepInsertTable()}
-            <br/>
+            <br />
             {buttonSleepInsert()}
           </form>
         </div>

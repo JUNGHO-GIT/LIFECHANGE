@@ -12,7 +12,7 @@ export const FoodInsert = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const user_id = window.sessionStorage.getItem("user_id");
-  const URL = "http://localhost:4000/food";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const TITLE = "Food Insert";
 
   // ---------------------------------------------------------------------------------------------->
@@ -84,7 +84,7 @@ export const FoodInsert = () => {
 
     const foodInsertFlow = async () => {
       try {
-        const response  = await axios.post(`${URL}/foodInsert`, {
+        const response  = await axios.post(`${URL_FOOD}/foodInsert`, {
           user_id : user_id,
           food_name : title,
           food_brand : brand,

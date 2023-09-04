@@ -5,16 +5,17 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardList = () => {
+  
   const [BOARD_LIST, setBOARD_LIST] = useState<[]>([]);
   const navParam = useNavigate();
-  const URL = "http://127.0.0.1:4000/board";
+  const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const TITLE = "Board List";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
-        const response = await axios.get (`${URL}/boardList`);
+        const response = await axios.get (`${URL_BOARD}/boardList`);
         setBOARD_LIST(response.data);
       }
       catch (error: any) {
@@ -38,7 +39,7 @@ export const BoardList = () => {
         </thead>
         <tbody>
           {BOARD_LIST.map((index : any) => (
-            <tr key={index}>
+            <tr key={index._id}>
               <td>
                 <a onClick={() => buttonBoardDetail(index._id)} className="text-hover">
                   {index.user_id}

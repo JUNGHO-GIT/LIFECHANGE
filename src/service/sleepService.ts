@@ -4,8 +4,13 @@ import * as mongoose from "mongoose";
 
 // 1. sleepList ----------------------------------------------------------------------------------->
 export const sleepList = async (
+  user_id_param : any,
+  sleep_regdate_param : any
 ) => {
-  const sleepList = await Sleep.find();
+  const sleepList = await Sleep.find ({
+    user_id : user_id_param,
+    sleep_regdate : sleep_regdate_param
+  });
   return sleepList;
 };
 
@@ -14,7 +19,7 @@ export const sleepDetail = async (
   _id_param : any
 ) => {
   const sleepDetail = await Sleep.findOne ({
-    _id : _id_param,
+    _id : _id_param
   });
   return sleepDetail;
 };
@@ -53,7 +58,7 @@ export const sleepUpdate = async (
 export const sleepDelete = async (
   _id_param : any
 ) => {
-  const sleepDelete = await Sleep.deleteOne({
+  const sleepDelete = await Sleep.deleteOne ({
     _id : _id_param,
   });
   return sleepDelete;

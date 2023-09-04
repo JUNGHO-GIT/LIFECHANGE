@@ -8,7 +8,7 @@ export const UserInsert = () => {
 
   const [user_id, setId] = useState("");
   const [user_pw, setPassword] = useState("");
-  const URL = "http://127.0.0.1:4000/user";
+  const URL_USER = process.env.REACT_APP_URL_USER;
   const TITLE = "User Insert";
 
   // ---------------------------------------------------------------------------------------------->
@@ -18,7 +18,7 @@ export const UserInsert = () => {
         alert("Please enter both Id and Pw");
         return;
       }
-      const response = await axios.post (`${URL}/userInsert`, {
+      const response = await axios.post (`${URL_USER}/userInsert`, {
         user_id: user_id,
         user_pw: user_pw,
       });

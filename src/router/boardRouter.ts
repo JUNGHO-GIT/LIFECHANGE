@@ -23,10 +23,10 @@ boardRouter.get("/boardList", async (req: Request, res: Response) => {
 });
 
 // 2. boardDetail --------------------------------------------------------------------------------->
-boardRouter.get("/boardDetail/:_id", async (req: Request, res: Response) => {
+boardRouter.get("/boardDetail", async (req: Request, res: Response) => {
   try {
     const boardDetail = await boardService.boardDetail (
-      req.params._id
+      req.query._id
     );
     if (boardDetail) {
       res.send(boardDetail);
@@ -61,10 +61,10 @@ boardRouter.post("/boardInsert", async (req: Request, res: Response) => {
 });
 
 // 4. boardUpdate --------------------------------------------------------------------------------->
-boardRouter.put("/boardUpdate/:_id", async (req: Request, res: Response) => {
+boardRouter.put("/boardUpdate", async (req: Request, res: Response) => {
   try {
     const boardUpdate = await boardService.boardUpdate (
-      req.params._id,
+      req.query._id,
       req.body
     );
     if (boardUpdate) {
@@ -81,10 +81,10 @@ boardRouter.put("/boardUpdate/:_id", async (req: Request, res: Response) => {
 });
 
 // 5. boardDelete --------------------------------------------------------------------------------->
-boardRouter.delete("/boardDelete/:_id", async (req: Request, res: Response) => {
+boardRouter.delete("/boardDelete", async (req: Request, res: Response) => {
   try {
     const boardDelete = await boardService.boardDelete (
-      req.params._id
+      req.query._id
     );
     if (boardDelete) {
       res.send("success");

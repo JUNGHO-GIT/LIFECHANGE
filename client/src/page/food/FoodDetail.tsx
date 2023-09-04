@@ -15,7 +15,7 @@ export const FoodDetail = () => {
   const location = useLocation();
   const navParam = useNavigate();
   const food_category = location.state.food_category;
-  const URL = "http://127.0.0.1:4000/food";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const TITLE = "Food Detail";
 
   // ---------------------------------------------------------------------------------------------->
@@ -36,7 +36,7 @@ export const FoodDetail = () => {
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
-        const response = await axios.get(`${URL}/foodDetail`, {
+        const response = await axios.get(`${URL_FOOD}/foodDetail`, {
           params: {
             user_id: user_id,
             food_category: food_category,

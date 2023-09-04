@@ -5,7 +5,8 @@ import * as mongoose from "mongoose";
 // 1. calendarList -------------------------------------------------------------------------------->
 export const calendarList = async (
 ) => {
-  const calendarList = await Calendar.find();
+  const calendarList = await Calendar.find (
+  );
   return calendarList;
 };
 
@@ -38,7 +39,7 @@ export const calendarUpdate = async (
   _id_param : any,
   calendar_param : any
 ) => {
-  const calendarUpdate = await Calendar.updateOne({
+  const calendarUpdate = await Calendar.updateOne ({
     _id : _id_param,
     $set : calendar_param
   });
@@ -50,7 +51,7 @@ export const calendarUpdate = async (
 export const calendarDelete = async (
   _id_param : any
 ) => {
-  const calendarDelete = await Calendar.deleteOne({
+  const calendarDelete = await Calendar.deleteOne ({
     _id : _id_param,
   });
   return calendarDelete;

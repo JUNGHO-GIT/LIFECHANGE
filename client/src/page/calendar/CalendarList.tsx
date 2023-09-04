@@ -8,7 +8,7 @@ export const CalendarList = () => {
 
   const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
-  const URL = "http://127.0.0.1:4000/calendar";
+  const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
   const TITLE = "Calendar List";
   const date = new Date();
 

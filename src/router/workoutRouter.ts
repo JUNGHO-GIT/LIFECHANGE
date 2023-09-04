@@ -25,10 +25,10 @@ workoutRouter.get("/workoutList", async (req: Request, res: Response) => {
 });
 
 // 2. workoutDetail ------------------------------------------------------------------------------>
-workoutRouter.get("/workoutDetail/:_id", async (req: Request, res: Response) => {
+workoutRouter.get("/workoutDetail", async (req: Request, res: Response) => {
   try {
     const workoutDetail = await workoutService.workoutDetail (
-      req.params._id
+      req.query._id
     );
     if (workoutDetail) {
       res.send(workoutDetail);
@@ -63,10 +63,10 @@ workoutRouter.post("/workoutInsert", async (req: Request, res: Response) => {
 });
 
 // 4. workoutUpdate ------------------------------------------------------------------------------>
-workoutRouter.put("/workoutUpdate/:_id", async (req: Request, res: Response) => {
+workoutRouter.put("/workoutUpdate", async (req: Request, res: Response) => {
   try {
     const workoutUpdate = await workoutService.workoutUpdate (
-      req.params._id,
+      req.query._id,
       req.body
     );
     if (workoutUpdate) {
@@ -83,10 +83,10 @@ workoutRouter.put("/workoutUpdate/:_id", async (req: Request, res: Response) => 
 });
 
 // 5. workoutDelete ------------------------------------------------------------------------------>
-workoutRouter.delete("/workoutDelete/:_id", async (req: Request, res: Response) => {
+workoutRouter.delete("/workoutDelete", async (req: Request, res: Response) => {
   try {
     const workoutDelete = await workoutService.workoutDelete (
-      req.params._id
+      req.query._id
     );
     if (workoutDelete) {
       res.send("success");

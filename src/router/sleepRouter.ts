@@ -8,6 +8,8 @@ const sleepRouter = Router();
 sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   try {
     const sleepList = await sleepService.sleepList (
+      req.query.user_id,
+      req.query.sleep_regdate
     );
     if (sleepList) {
       res.send(sleepList);
@@ -23,10 +25,10 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
 });
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
-sleepRouter.get("/sleepDetail/:_id", async (req: Request, res: Response) => {
+sleepRouter.get("/sleepDetail", async (req: Request, res: Response) => {
   try {
     const sleepDetail = await sleepService.sleepDetail (
-      req.params._id
+      req.query._id
     );
     if (sleepDetail) {
       res.send(sleepDetail);
@@ -61,10 +63,10 @@ sleepRouter.post("/sleepInsert", async (req: Request, res: Response) => {
 });
 
 // 4. sleepUpdate --------------------------------------------------------------------------------->
-sleepRouter.put("/sleepUpdate/:_id", async (req: Request, res: Response) => {
+sleepRouter.put("/sleepUpdate", async (req: Request, res: Response) => {
   try {
     const sleepUpdate = await sleepService.sleepUpdate (
-      req.params._id,
+      req.query._id,
       req.body
     );
     if (sleepUpdate) {
@@ -81,10 +83,10 @@ sleepRouter.put("/sleepUpdate/:_id", async (req: Request, res: Response) => {
 });
 
 // 5. sleepDelete --------------------------------------------------------------------------------->
-sleepRouter.delete("/sleepDelete/:_id", async (req: Request, res: Response) => {
+sleepRouter.delete("/sleepDelete", async (req: Request, res: Response) => {
   try {
     const sleepDelete = await sleepService.sleepDelete (
-      req.params._id
+      req.query._id
     );
     if (sleepDelete) {
       res.send("success");

@@ -1,22 +1,22 @@
-// SleepList.tsx
-import React, {useState, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+// SleepDetail.tsx
+import React, { useState, useEffect } from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepList = () => {
-
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<[]>([]);
+export const SleepDetail = () => {
+  const [SLEEP, setSLEEP] = useState<any>({});
+  const location = useLocation();
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
-
+  const _id = useLocation().state._id;
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-
+  const sleep_regdate = koreanDate.toISOString().split("T")[0];
+  const sleep_title = location.state.sleep_title;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const TITLE = "Sleep List";
+  const TITLE = "Sleep Detail";
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
@@ -27,7 +27,6 @@ export const SleepList = () => {
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
-          setSleep_regdate(selectedDate);
         }}
       />
     );
@@ -35,26 +34,24 @@ export const SleepList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchSleepList = async () => {
+    const fetchSleepDetail = async () => {
       try {
-        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
+        const response = await axios.get(`${URL_SLEEP}/sleepDetail`, {
           params: {
-            user_id : user_id,
-            sleep_regdate : sleep_regdate,
-          }
+            _id: _id,
+          },
         });
-        setSLEEP_LIST(response.data);
-      }
-      catch (error: any) {
+        setSLEEP(response.data);
+      } catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
-        setSLEEP_LIST([]);
+        setSLEEP([]);
       }
     };
-    fetchSleepList();
-  }, [user_id, sleep_regdate]);
+    fetchSleepDetail();
+  }, [_id]);
 
   // ---------------------------------------------------------------------------------------------->
-  const sleepListTable = () => {
+  const sleepDetailTable = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -66,45 +63,51 @@ export const SleepList = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP_LIST.map((index : any) => (
-            <tr key={index._id}>
-              <td>
-                <a onClick={() => {
-                  buttonSleepDetail(index._id);
-                }}>
-                {index.sleep_title}
-                </a>
-              </td>
-              <td>{index.sleep_night}</td>
-              <td>{index.sleep_morning}</td>
-              <td>{index.sleep_time}</td>
-            </tr>
-          ))}
+          <tr>
+            <td>{SLEEP.sleep_title}</td>
+            <td>{SLEEP.sleep_night}</td>
+            <td>{SLEEP.sleep_morning}</td>
+            <td>{SLEEP.sleep_time}</td>
+          </tr>
         </tbody>
       </table>
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonSleepDetail = (_id: string) => {
-    navParam(`/sleepDetail`, {
-      state: {
-        _id
+  const sleepDeleteFlow = async () => {
+    try {
+      const confirm = window.confirm("Are you sure you want to delete?");
+      if (!confirm) {
+        return;
+      } 
+      else {
+        const response = await axios.delete(`${URL_SLEEP}/sleepDelete`, {
+          params: {
+            _id: _id,
+          },
+        });
+        if (response.data === "success") {
+          window.location.href = "/";
+        } else {
+          alert("Delete failed");
+        }
       }
-    });
+    } catch (error: any) {
+      alert(`Error fetching sleep data: ${error.message}`);
+    }
   };
-  const buttonRefreshPage = () => {
+
+  // ---------------------------------------------------------------------------------------------->
+  const buttonSleepDelete = () => {
     return (
-      <Link to="/sleepList">
-        <button type="button" className="btn btn-success ms-2">Refresh</button>
-      </Link>
-    );
-  };
-  const buttonSleepInsert = () => {
-    return (
-      <Link to="/sleepInsert">
-        <button type="button" className="btn btn-primary ms-2">Insert</button>
-      </Link>
+      <button
+        type="button"
+        className="btn btn-danger ms-2"
+        onClick={sleepDeleteFlow}
+      >
+        Delete
+      </button>
     );
   };
 
@@ -125,11 +128,9 @@ export const SleepList = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-10">
-          <form className="form-inline">
-            {sleepListTable()}
-            {buttonRefreshPage()}
-            {buttonSleepInsert()}
-          </form>
+          {sleepDetailTable()}
+          <br />
+          {buttonSleepDelete()}
         </div>
       </div>
     </div>

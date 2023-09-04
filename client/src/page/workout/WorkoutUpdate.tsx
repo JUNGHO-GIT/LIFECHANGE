@@ -1,49 +1,49 @@
-// BoardUpdate.tsx
+// WorkoutUpdate.tsx
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-export const BoardUpdate = () => {
+export const WorkoutUpdate = () => {
   const [BOARD, setBOARD] = useState<any>({});
   const _id = useLocation().state._id;
-  const URL_BOARD = process.env.REACT_APP_URL_BOARD;
-  const TITLE = "Board Update";
+  const URL = "http://127.0.0.1:4000/workout";
+  const TITLE = "Workout Update";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchBoardDetail = async () => {
+    const fetchWorkoutDetail = async () => {
       try {
-        const response = await axios.get(`${URL_BOARD}/boardDetail/${_id}`);
+        const response = await axios.get(`${URL}/workoutDetail/${_id}`);
         setBOARD(response.data);
       }
       catch (error: any) {
-        alert(`Error fetching board data: ${error.message}`);
+        alert(`Error fetching workout data: ${error.message}`);
         setBOARD([]);
       }
     };
-    fetchBoardDetail();
+    fetchWorkoutDetail();
   }, [_id]);
 
   // ---------------------------------------------------------------------------------------------->
-  const boardUpdateFlow = async () => {
+  const workoutUpdateFlow = async () => {
     try {
-      const response = await axios.put(`${URL_BOARD}/boardUpdate/${_id}`, BOARD);
+      const response = await axios.put(`${URL}/workoutUpdate/${_id}`, BOARD);
       if (response.data === "success") {
         alert("Update success");
-        window.location.href = "/boardList";
+        window.location.href = "/workoutList";
       }
       else {
         alert("Update failed");
       }
     }
     catch (error: any) {
-      alert(`Error fetching board data: ${error.message}`);
+      alert(`Error fetching workout data: ${error.message}`);
     }
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const boardUpdateTable = () => {
+  const workoutUpdateTable = () => {
     return (
       <div>
         <div className="form-floating">
@@ -52,28 +52,28 @@ export const BoardUpdate = () => {
           <label htmlFor="user_id">User ID</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Title" value={BOARD.board_title} onChange={(e) => setBOARD({...BOARD, board_title: e.target.value})} />
+          <input type="text" className="form-control" placeholder="Title" value={BOARD.workout_title} onChange={(e) => setBOARD({...BOARD, workout_title: e.target.value})} />
           <label htmlFor="floatingTitle">Title</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Content"
-          value={BOARD.board_content}
-          onChange={(e) => setBOARD({...BOARD, board_content: e.target.value})} />
+          value={BOARD.workout_content}
+          onChange={(e) => setBOARD({...BOARD, workout_content: e.target.value})} />
           <label htmlFor="floatingContent">Content</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Board Date"
-          value={BOARD.board_regdate} readOnly />
-          <label htmlFor="board_regdate">Board Date</label>
+          <input type="text" className="form-control" placeholder="Workout Date"
+          value={BOARD.workout_regdate} readOnly />
+          <label htmlFor="workout_regdate">Workout Date</label>
         </div>
       </div>
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonBoardUpdate = () => {
+  const buttonWorkoutUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={boardUpdateFlow}>
+      <button className="btn btn-primary ms-2" type="button" onClick={workoutUpdateFlow}>
         Update
       </button>
     );
@@ -90,9 +90,9 @@ export const BoardUpdate = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {boardUpdateTable()}
+            {workoutUpdateTable()}
             <br/>
-            {buttonBoardUpdate()}
+            {buttonWorkoutUpdate()}
           </form>
         </div>
       </div>

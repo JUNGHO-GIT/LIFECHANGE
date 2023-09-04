@@ -13,7 +13,7 @@ export const WorkoutList = () => {
   koreanDate.setHours(koreanDate.getHours() + 9);
   const [workout_regdate, setWorkout_regdate] = useState(koreanDate.toISOString().split("T")[0]);
   const user_id = sessionStorage.getItem("user_id");
-  const URL = "http://127.0.0.1:4000/workout";
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const TITLE = "Workout List";
 
   // ---------------------------------------------------------------------------------------------->
@@ -35,7 +35,7 @@ export const WorkoutList = () => {
   useEffect(() => {
     const fetchWorkoutList = async () => {
       try {
-        const response = await axios.get (`${URL}/workoutList`, {
+        const response = await axios.get (`${URL_WORKOUT}/workoutList`, {
           params: {
             user_id: user_id,
             workout_regdate : workout_regdate,

@@ -6,22 +6,36 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
-
   const location = useLocation();
   const user_id = location.state.user_id;
+
   const calendar_year = location.state.calendar_year;
   const calendar_month = location.state.calendar_month;
   const calendar_day = location.state.calendar_day;
 
-  const koreanDate = new Date(`${calendar_year}-${calendar_month}-${calendar_day}`);
+  const koreanDate = new Date(
+    `${calendar_year}-${calendar_month}-${calendar_day}`
+  );
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-  const [workout_regdate, setWorkout_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+
+  const [food_regdate, setFood_regdate] = useState(
+    koreanDate.toISOString().split("T")[0]
+  );
+  const [workout_regdate, setWorkout_regdate] = useState(
+    koreanDate.toISOString().split("T")[0]
+  );
+  const [sleep_regdate, setSleep_regdate] = useState(
+    koreanDate.toISOString().split("T")[0]
+  );
+
   const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
   const [WORKOUT_LIST, setWORKOUT_LIST] = useState([]);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState([]);
 
-  const URL_FOOD = "http://127.0.0.1:4000/food";
-  const URL_WORKOUT = "http://127.0.0.1:4000/workout";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+
   const TITLE = "Calendar Detail";
 
   // ---------------------------------------------------------------------------------------------->
@@ -31,10 +45,11 @@ export const CalendarDetail = () => {
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
         selected={new Date(food_regdate)}
-        onChange={(date : any) => {
+        onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
           setWorkout_regdate(selectedDate);
+          setSleep_regdate(selectedDate);
         }}
       />
     );
@@ -42,35 +57,35 @@ export const CalendarDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchFoodTotal = async () => {
+    const fetchFoodList = async () => {
       try {
-        const response = await axios.post (`${URL_FOOD}/foodTotal`, {
-          user_id: user_id,
-          food_regdate : food_regdate,
+        const response = await axios.get(`${URL_FOOD}/foodTotal`, {
+          params: {
+            user_id: user_id,
+            food_regdate: food_regdate,
+          },
         });
         setFOOD_TOTAL(response.data);
-      }
-      catch (error: any) {
+      } catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
         setFOOD_TOTAL([]);
       }
     };
-    fetchFoodTotal();
+    fetchFoodList();
   }, [user_id, food_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutList = async () => {
       try {
-        const response = await axios.get (`${URL_WORKOUT}/workoutList`, {
+        const response = await axios.get(`${URL_WORKOUT}/workoutList`, {
           params: {
             user_id: user_id,
-            workout_regdate : workout_regdate,
-          }
+            workout_regdate: workout_regdate,
+          },
         });
         setWORKOUT_LIST(response.data);
-      }
-      catch (error: any) {
+      } catch (error: any) {
         alert(`Error fetching workout data: ${error.message}`);
         setWORKOUT_LIST([]);
       }
@@ -79,7 +94,26 @@ export const CalendarDetail = () => {
   }, [user_id, workout_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
-  const foodTotalTable = () => {
+  useEffect(() => {
+    const fetchSleepList = async () => {
+      try {
+        const response = await axios.get(`${URL_SLEEP}/sleepList`, {
+          params: {
+            user_id: user_id,
+            sleep_regdate: sleep_regdate,
+          },
+        });
+        setSLEEP_LIST(response.data);
+      } catch (error: any) {
+        alert(`Error fetching sleep data: ${error.message}`);
+        setSLEEP_LIST([]);
+      }
+    };
+    fetchSleepList();
+  }, [user_id, workout_regdate]);
+
+  // ---------------------------------------------------------------------------------------------->
+  const foodListTable = () => {
     return (
       <table className="table table-bordered border-dark">
         <thead className="table-dark">
@@ -91,7 +125,7 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_TOTAL.map((index : any) => (
+          {FOOD_TOTAL.map((index: any) => (
             <tr>
               <td>{index.food_calories}</td>
               <td>{index.food_carb}</td>
@@ -105,7 +139,7 @@ export const CalendarDetail = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const workoutTotalTable = () => {
+  const workoutListTable = () => {
     return (
       <table className="table table-bordered border-dark">
         <thead className="table-dark">
@@ -121,7 +155,7 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORKOUT_LIST.map((index : any) => (
+          {WORKOUT_LIST.map((index: any) => (
             <tr>
               <td>{index.user_id}</td>
               <td>{index.workout_part}</td>
@@ -131,6 +165,32 @@ export const CalendarDetail = () => {
               <td>{index.workout_count}</td>
               <td>{index.workout_rest}</td>
               <td>{index.workout_time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const sleepListTable = () => {
+    return (
+      <table className="table table-bordered border-dark">
+        <thead className="table-dark">
+          <tr>
+            <th>title</th>
+            <th>night</th>
+            <th>morning</th>
+            <th>time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SLEEP_LIST.map((index: any) => (
+            <tr>
+              <td>{index.sleep_title}</td>
+              <td>{index.sleep_night}</td>
+              <td>{index.sleep_morning}</td>
+              <td>{index.sleep_time}</td>
             </tr>
           ))}
         </tbody>
@@ -154,14 +214,13 @@ export const CalendarDetail = () => {
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
-          {foodTotalTable()}
-        </div>
+        <div className="col-12">{foodListTable()}</div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
-          {workoutTotalTable()}
-        </div>
+        <div className="col-12">{workoutListTable()}</div>
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-12">{sleepListTable()}</div>
       </div>
     </div>
   );

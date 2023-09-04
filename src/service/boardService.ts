@@ -5,7 +5,8 @@ import * as mongoose from "mongoose";
 // 1. boardList ----------------------------------------------------------------------------------->
 export const boardList = async (
 ) => {
-  const boardList = await Board.find();
+  const boardList = await Board.find (
+  );
   return boardList;
 };
 
@@ -50,7 +51,7 @@ export const boardUpdate = async (
 export const boardDelete = async (
   _id_param : any
 ) => {
-  const boardDelete = await Board.deleteOne({
+  const boardDelete = await Board.deleteOne ({
     _id : _id_param,
   });
   return boardDelete;
