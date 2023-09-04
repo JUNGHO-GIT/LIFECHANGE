@@ -5,6 +5,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardDetail = () => {
+
   const [BOARD, setBOARD] = useState<any>({});
   const navParam = useNavigate();
   const location = useLocation();
@@ -21,7 +22,9 @@ export const BoardDetail = () => {
             _id: _id,
           },
         });
-      } catch (error: any) {
+        setBOARD(response.data);
+      }
+      catch (error: any) {
         alert(`Error fetching board data: ${error.message}`);
         setBOARD([]);
       }
@@ -35,7 +38,8 @@ export const BoardDetail = () => {
       const confirm = window.confirm("Are you sure you want to delete?");
       if (!confirm) {
         return;
-      } else {
+      }
+      else {
         const response = await axios.delete(`${URL_BOARD}/boardDelete`, {
           params: {
             _id: _id,
@@ -43,11 +47,13 @@ export const BoardDetail = () => {
         });
         if (response.data === "success") {
           window.location.href = "/";
-        } else {
+        }
+        else {
           alert("Delete failed");
         }
       }
-    } catch (error: any) {
+    }
+    catch (error: any) {
       alert(`Error fetching board data: ${error.message}`);
     }
   };
@@ -91,12 +97,13 @@ export const BoardDetail = () => {
     );
   };
   const buttonBoardUpdate = (_id: string) => {
-    const navButton = () =>
+    const navButton = () => {
       navParam(`/boardUpdate`, {
         state: {
           _id,
         },
       });
+    };
     return (
       <button
         type="button"

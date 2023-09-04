@@ -37,13 +37,14 @@ export const boardInsert = async (
 // 4. boardUpdate --------------------------------------------------------------------------------->
 export const boardUpdate = async (
   _id_param : any,
-  board_param : any
+  board_title_param : any,
+  board_content_param : any
 ) => {
-  const boardUpdate = await Board.updateOne(
-    { _id : _id_param }, // Query
-    { $set : board_param } // Update
-  );
-
+  const boardUpdate = await Board.updateOne ({
+    _id : _id_param,
+    board_title : board_title_param,
+    board_content : board_content_param,
+  });
   return boardUpdate;
 };
 

@@ -69,10 +69,8 @@ export const SleepList = () => {
           {SLEEP_LIST.map((index : any) => (
             <tr key={index._id}>
               <td>
-                <a onClick={() => {
-                  buttonSleepDetail(index._id);
-                }}>
-                {index.sleep_title}
+                <a onClick={() => {buttonSleepDetail(index._id);}}>
+                  {index.sleep_title}
                 </a>
               </td>
               <td>{index.sleep_night}</td>
