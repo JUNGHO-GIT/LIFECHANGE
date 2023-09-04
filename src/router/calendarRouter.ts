@@ -23,10 +23,10 @@ calendarRouter.get("/calendarList", async (req: Request, res: Response) => {
 });
 
 // 2. calendarDetail ------------------------------------------------------------------------------>
-calendarRouter.get("/calendarDetail/:_id", async (req: Request, res: Response) => {
+calendarRouter.get("/calendarDetail", async (req: Request, res: Response) => {
   try {
     const calendarDetail = await calendarService.calendarDetail (
-      req.params._id
+      req.query._id
     );
     if (calendarDetail) {
       res.send(calendarDetail);
@@ -61,10 +61,10 @@ calendarRouter.post("/calendarInsert", async (req: Request, res: Response) => {
 });
 
 // 4. calendarUpdate ------------------------------------------------------------------------------>
-calendarRouter.put("/calendarUpdate/:_id", async (req: Request, res: Response) => {
+calendarRouter.put("/calendarUpdate", async (req: Request, res: Response) => {
   try {
     const calendarUpdate = await calendarService.calendarUpdate (
-      req.params._id,
+      req.query._id,
       req.body
     );
     if (calendarUpdate) {
@@ -81,10 +81,10 @@ calendarRouter.put("/calendarUpdate/:_id", async (req: Request, res: Response) =
 });
 
 // 5. calendarDelete ------------------------------------------------------------------------------>
-calendarRouter.delete("/calendarDelete/:_id", async (req: Request, res: Response) => {
+calendarRouter.delete("/calendarDelete", async (req: Request, res: Response) => {
   try {
     const calendarDelete = await calendarService.calendarDelete (
-      req.params._id
+      req.query._id
     );
     if (calendarDelete) {
       res.send("success");
