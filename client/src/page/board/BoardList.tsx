@@ -5,8 +5,8 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardList = () => {
-  
-  const [BOARD_LIST, setBOARD_LIST] = useState<[]>([]);
+
+  const [BOARD_LIST, setBOARD_LIST] = useState<any>([]);
   const navParam = useNavigate();
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const TITLE = "Board List";

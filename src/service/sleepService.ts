@@ -16,14 +16,10 @@ export const sleepList = async (
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
 export const sleepDetail = async (
-  _id_param : any,
-  user_id_param : any,
-  sleep_regdate_param : any
+  _id_param : any
 ) => {
   const sleepDetail = await Sleep.findOne ({
-    _id : _id_param,
-    user_id : user_id_param,
-    sleep_regdate : sleep_regdate_param
+    _id : _id_param
   });
   return sleepDetail;
 };

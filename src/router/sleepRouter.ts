@@ -28,9 +28,7 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
 sleepRouter.get("/sleepDetail", async (req: Request, res: Response) => {
   try {
     const sleepDetail = await sleepService.sleepDetail (
-      req.query._id,
-      req.query.user_id,
-      req.query.sleep_regdate
+      req.query._id
     );
     if (sleepDetail) {
       res.send(sleepDetail);

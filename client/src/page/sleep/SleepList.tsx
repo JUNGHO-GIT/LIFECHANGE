@@ -86,10 +86,10 @@ export const SleepList = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonSleepDetail = (sleep_title: any) => {
+  const buttonSleepDetail = (_id: string) => {
     navParam(`/sleepDetail`, {
       state: {
-        sleep_title : sleep_title,
+        _id
       }
     });
   };
