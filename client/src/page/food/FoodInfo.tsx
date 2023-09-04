@@ -1,11 +1,11 @@
-// FoodInfo.tsx
+// FoodListPart.tsx
 import React, { useState, useEffect } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker"
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodInfo = () => {
+export const FoodListPart = () => {
 
   const [FOOD, setFOOD] = useState<any>({});
   const location = useLocation();
@@ -19,7 +19,7 @@ export const FoodInfo = () => {
 
   const food_category = location.state.food_category;
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const TITLE = "Food Info";
+  const TITLE = "Food ListPart";
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
@@ -38,9 +38,9 @@ export const FoodInfo = () => {
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchFoodInfo = async () => {
+    const fetchFoodListPart = async () => {
       try {
-        const response = await axios.get(`${URL_FOOD}/foodInfo`, {
+        const response = await axios.get(`${URL_FOOD}/foodListPart`, {
           params: {
             _id : _id,
             user_id : user_id,
@@ -54,11 +54,11 @@ export const FoodInfo = () => {
         setFOOD([]);
       }
     };
-    fetchFoodInfo();
+    fetchFoodListPart();
   }, [_id]);
 
   // ---------------------------------------------------------------------------------------------->
-  const foodInfoTable = () => {
+  const foodListPartTable = () => {
     return (
       <div>
         <table className="table table-striped">
@@ -141,7 +141,7 @@ export const FoodInfo = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-10">
-          {foodInfoTable()}
+          {foodListPartTable()}
         </div>
       </div>
       <div className="row d-center mt-5">
