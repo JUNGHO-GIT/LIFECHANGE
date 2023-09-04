@@ -28,7 +28,7 @@ export const CalendarDetail = () => {
     koreanDate.toISOString().split("T")[0]
   );
 
-  const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
+  const [FOOD_LIST, setFOOD_LIST] = useState([]);
   const [WORKOUT_LIST, setWORKOUT_LIST] = useState([]);
   const [SLEEP_LIST, setSLEEP_LIST] = useState([]);
 
@@ -59,16 +59,16 @@ export const CalendarDetail = () => {
   useEffect(() => {
     const fetchFoodList = async () => {
       try {
-        const response = await axios.get(`${URL_FOOD}/foodTotal`, {
+        const response = await axios.get(`${URL_FOOD}/foodList`, {
           params: {
             user_id: user_id,
             food_regdate: food_regdate,
           },
         });
-        setFOOD_TOTAL(response.data);
+        setFOOD_LIST(response.data);
       } catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
-        setFOOD_TOTAL([]);
+        setFOOD_LIST([]);
       }
     };
     fetchFoodList();
@@ -125,7 +125,7 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_TOTAL.map((index: any) => (
+          {FOOD_LIST.map((index: any) => (
             <tr>
               <td>{index.food_calories}</td>
               <td>{index.food_carb}</td>
