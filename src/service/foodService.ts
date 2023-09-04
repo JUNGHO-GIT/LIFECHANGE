@@ -3,6 +3,53 @@ import Food from "../schema/Food";
 import * as mongoose from "mongoose";
 
 // 1. foodList ------------------------------------------------------------------------------------>
+export const foodList = async (
+  user_id_param : string,
+  food_regdate_param : string,
+) => {
+  try {
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalCarb = 0;
+    let totalFat = 0;
+
+    const foodResultList = await Food.find ({
+      user_id : user_id_param,
+      food_regdate : food_regdate_param
+    });
+    foodResultList.forEach((index) => {
+      totalCalories += index.food_calories;
+      totalProtein += index.food_protein;
+      totalCarb += index.food_carb;
+      totalFat += index.food_fat;
+    });
+    const foodList = [{
+      food_calories : totalCalories.toFixed(1),
+      food_protein : totalProtein.toFixed(1),
+      food_carb : totalCarb.toFixed(1),
+      food_fat : totalFat.toFixed(1)
+    }];
+    return foodList;
+  }
+  catch (error) {
+    console.error(error);
+    throw error;
+  }
+  
+// 1-2. foodListPart ---------------------------------------------------------------------------------->
+export const foodListPart = async (
+  _id_param : string,
+  user_id_param : string,
+  food_regdate_param : string,
+) => {
+  const foodListPart = await Food.findOne ({
+    _id : _id_param,
+    user_id : user_id_param,
+    food_regdate : food_regdate_param,
+  });
+  return foodListPart;
+};
+
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
 export const foodDetail = async (
@@ -18,19 +65,6 @@ export const foodDetail = async (
   return foodDetail;
 };
 
-// 2-2. foodInfo ---------------------------------------------------------------------------------->
-export const foodInfo = async (
-  _id_param : string,
-  user_id_param : string,
-  food_regdate_param : string,
-) => {
-  const foodInfo = await Food.findOne ({
-    _id : _id_param,
-    user_id : user_id_param,
-    food_regdate : food_regdate_param,
-  });
-  return foodInfo;
-};
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (
@@ -49,41 +83,6 @@ export const foodInsert = async (
     food_fat : food_param.food_fat,
   });
   return foodInsert;
-};
-
-// 3-1. foodTotal --------------------------------------------------------------------------------->
-export const foodTotal = async (
-  user_id_param : string,
-  food_regdate_param : string,
-) => {
-  try {
-    let totalCalories = 0;
-    let totalProtein = 0;
-    let totalCarb = 0;
-    let totalFat = 0;
-
-    const foodResultTotal = await Food.find ({
-      user_id : user_id_param,
-      food_regdate : food_regdate_param
-    });
-    foodResultTotal.forEach((index) => {
-      totalCalories += index.food_calories;
-      totalProtein += index.food_protein;
-      totalCarb += index.food_carb;
-      totalFat += index.food_fat;
-    });
-    const foodTotal = [{
-      food_calories : totalCalories.toFixed(1),
-      food_protein : totalProtein.toFixed(1),
-      food_carb : totalCarb.toFixed(1),
-      food_fat : totalFat.toFixed(1)
-    }];
-    return foodTotal;
-  }
-  catch (error) {
-    console.error(error);
-    throw error;
-  }
 };
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
