@@ -8,7 +8,7 @@ export const UserDetail = () => {
 
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
-  const URL = "http://127.0.0.1:4000/user";
+  const URL_USER = process.env.REACT_APP_URL_USER;
   const TITLE = "User Detail";
 
   // ---------------------------------------------------------------------------------------------->
@@ -17,7 +17,7 @@ export const UserDetail = () => {
       const user_id = window.sessionStorage.getItem("user_id");
 
       try {
-        const response = await axios.post (`${URL}/userDetail`, {
+        const response = await axios.post (`${URL_USER}/userDetail`, {
           user_id: user_id,
         });
         if (response.status === 200) {

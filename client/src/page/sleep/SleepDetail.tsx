@@ -1,32 +1,35 @@
-// FoodTotal.tsx
+// SleepDetail.tsx
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodTotal = () => {
+export const SleepDetail = () => {
 
-  const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
+  const [SLEEP, setSLEEP] = useState<any>({});
 
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+  const sleep_regdate = koreanDate.toISOString().split("T")[0];
 
-  const user_id = useLocation().state.user_id;
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const TITLE = "Food Total";
+  const user_id = window.sessionStorage.getItem("user_id");
+  const location = useLocation();
+  const navParam = useNavigate();
+  const sleep_title = location.state.sleep_title;
+
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const TITLE = "Sleep Detail";
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
-        selected={new Date(food_regdate)}
+        selected={new Date(sleep_regdate)}
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
         }}
       />
     );
@@ -34,69 +37,71 @@ export const FoodTotal = () => {
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchFoodTotal = async () => {
+    const fetchSleepDetail = async () => {
       try {
-        const response = await axios.post (`${URL_FOOD}/foodTotal`, {
-          user_id: user_id,
-          food_regdate : food_regdate,
+        const response = await axios.get(`${URL_SLEEP}/sleepDetail`, {
+          params: {
+            user_id : user_id,
+            sleep_regdate : sleep_regdate,
+          },
         });
-        setFOOD_TOTAL(response.data);
+        setSLEEP(response.data);
       }
       catch (error: any) {
-        alert(`Error fetching food data: ${error.message}`);
-        setFOOD_TOTAL([]);
+        alert(`Error fetching sleep data: ${error.message}`);
+        setSLEEP([]);
       }
     };
-    fetchFoodTotal();
-  }, [user_id, food_regdate]);
+    fetchSleepDetail();
+  }, [user_id, sleep_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
-  const foodTotalTable = () => {
+  const sleepDetailTable = () => {
     return (
-      <table className="table table-striped">
+      <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>칼로리</th>
-            <th>탄수화물</th>
-            <th>단백질</th>
-            <th>지방</th>
+            <th>Title</th>
+            <th>Night</th>
+            <th>Morning</th>
+            <th>Time</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD_TOTAL.map((index : any) => (
-            <tr>
-              <td>{index.food_calories}</td>
-              <td>{index.food_carb}</td>
-              <td>{index.food_protein}</td>
-              <td>{index.food_fat}</td>
-            </tr>
-          ))}
+          <tr>
+            <td>{SLEEP.sleep_title}</td>
+            <td>{SLEEP.sleep_night}</td>
+            <td>{SLEEP.sleep_morning}</td>
+            <td>{SLEEP.sleep_time}</td>
+          </tr>
         </tbody>
       </table>
     );
   };
 
+
   // ---------------------------------------------------------------------------------------------->
-  return(
+  return (
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}<span className="ms-4">(Total)</span></h1>
+          <h1 className="mb-3 fw-9">
+            {TITLE}
+            <span className="ms-4">({sleep_title})</span>
+          </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className="col-10">
           <h1 className="mb-3 fw-5">
             <span className="ms-4">{datePicker()}</span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-8">
-          {foodTotalTable()}
-          <br/><br/><br/>
-          <br/><br/><br/>
-        </div>
+        <div className="col-10">
+          {sleepDetailTable()
+        }</div>
       </div>
     </div>
   );

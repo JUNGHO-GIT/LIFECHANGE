@@ -21,7 +21,7 @@ export const WorkoutInsert = () => {
   koreanDate.setHours(koreanDate.getHours() + 9);
   const [workout_regdate, setWorkout_regdate] = useState(koreanDate.toISOString().split("T")[0]);
 
-  const URL = "http://127.0.0.1:4000/workout";
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const TITLE = "Workout Insert";
 
   // ---------------------------------------------------------------------------------------------->
@@ -56,7 +56,7 @@ export const WorkoutInsert = () => {
         return;
       }
 
-      const response = await axios.post (`${URL}/workoutInsert`, WORKOUT);
+      const response = await axios.post (`${URL_WORKOUT}/workoutInsert`, WORKOUT);
       if (response.data === "success") {
         alert("Insert a workout successfully");
         window.location.href = "/workoutList";

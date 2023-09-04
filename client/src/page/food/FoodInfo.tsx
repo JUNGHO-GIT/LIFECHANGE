@@ -12,11 +12,13 @@ export const FoodInfo = () => {
   const navParam = useNavigate();
   const _id = location.state._id;
   const user_id = location.state.user_id;
+
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
-  const food_regdate = koreanDate.toISOString().split("T")[0];
+  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+
   const food_category = location.state.food_category;
-  const URL = "http://127.0.0.1:4000/food";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const TITLE = "Food Info";
 
   // ---------------------------------------------------------------------------------------------->
@@ -38,7 +40,7 @@ export const FoodInfo = () => {
   useEffect(() => {
     const fetchFoodInfo = async () => {
       try {
-        const response = await axios.get(`${URL}/foodInfo`, {
+        const response = await axios.get(`${URL_FOOD}/foodInfo`, {
           params: {
             _id : _id,
             user_id : user_id,

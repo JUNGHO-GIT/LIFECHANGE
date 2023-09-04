@@ -7,14 +7,14 @@ import {Link} from "react-router-dom";
 export const UserList = () => {
 
   const [USER_LIST, setUSER_LIST] = useState<[]>([]);
-  const URL = "http://127.0.0.1:4000/user";
+  const URL_USER = process.env.REACT_APP_URL_USER;
   const TITLE = "User List";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchUserList = async () => {
       try {
-        const response = await axios.get (`${URL}/userList`);
+        const response = await axios.get (`${URL_USER}/userList`);
         setUSER_LIST(response.data);
       }
       catch (error: any) {

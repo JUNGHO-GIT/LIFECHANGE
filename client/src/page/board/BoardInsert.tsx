@@ -9,8 +9,8 @@ export const BoardInsert = () => {
   const [board_title, setBoardTitle] = useState("");
   const [board_content, setBoardContent] = useState("");
   const [board_regdate, setBoardDate] = useState(new Date().toISOString());
-  const URL = "http://127.0.0.1:4000/board";
-  const URL_USER = "http://127.0.0.1:4000/user";
+  const URL_BOARD = process.env.REACT_APP_URL_BOARD;
+  const URL_USER = process.env.REACT_APP_URL_USER;
   const TITLE = "Board Insert";
 
   // ---------------------------------------------------------------------------------------------->
@@ -50,7 +50,7 @@ export const BoardInsert = () => {
       }
       else {
         setBoardDate(new Date().toISOString().split('T')[0]);
-        const response = await axios.post (`${URL}/boardInsert`, {
+        const response = await axios.post (`${URL_BOARD}/boardInsert`, {
           user_id: user_id,
           board_title: board_title,
           board_content: board_content,

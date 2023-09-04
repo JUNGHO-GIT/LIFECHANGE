@@ -5,18 +5,19 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutDetail = () => {
-  const [WORKOUT, setWORKOUT] = useState([]);
+
+  const [WORKOUT, setWORKOUT] = useState<any>({});
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
-  const URL = "http://127.0.0.1:4000/workout";
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const TITLE = "Workout Detail";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutDetail = async () => {
       try {
-        const response = await axios.get(`${URL}/workoutDetail/${_id}`);
+        const response = await axios.get(`${URL_WORKOUT}/workoutDetail/${_id}`);
         setWORKOUT(response.data);
       }
       catch (error: any) {

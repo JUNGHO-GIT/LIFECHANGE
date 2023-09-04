@@ -7,13 +7,13 @@ export const UserLogin = () => {
 
   const [user_id, setId] = useState("");
   const [user_pw, setPassword] = useState("");
-  const URL = "http://127.0.0.1:4000/user";
+  const URL_USER = process.env.REACT_APP_URL_USER;
   const TITLE = "User Login";
 
   // ---------------------------------------------------------------------------------------------->
   const userLoginFlow = async () => {
     try {
-      const response = await axios.post (`${URL}/userLogin`, {
+      const response = await axios.post (`${URL_USER}/userLogin`, {
         user_id: user_id,
         user_pw: user_pw,
       });

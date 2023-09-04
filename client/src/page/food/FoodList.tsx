@@ -16,7 +16,7 @@ export const FoodList = () => {
   koreanDate.setHours(koreanDate.getHours() + 9);
   const food_regdate = koreanDate.toISOString().split("T")[0];
   const navParam = useNavigate();
-  const URL = "https://fat-git-main-jungho-git.vercel.app/api";
+  const URL_FOOD_API = process.env.REACT_APP_URL_FOOD_API;
   const TITLE = "Food List";
 
   // ---------------------------------------------------------------------------------------------->
@@ -36,7 +36,7 @@ export const FoodList = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const fetchFoodList = () => {
-    const url = `${URL}/${lang}/search?query=${query}&page=${page}`;
+    const url = `${URL_FOOD_API}/${lang}/search?query=${query}&page=${page}`;
 
     axios.get(url)
     .then((response) => {

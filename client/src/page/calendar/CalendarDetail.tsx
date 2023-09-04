@@ -20,8 +20,8 @@ export const CalendarDetail = () => {
   const [FOOD_TOTAL, setFOOD_TOTAL] = useState([]);
   const [WORKOUT_LIST, setWORKOUT_LIST] = useState([]);
 
-  const URL_FOOD = "http://127.0.0.1:4000/food";
-  const URL_WORKOUT = "http://127.0.0.1:4000/workout";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const TITLE = "Calendar Detail";
 
   // ---------------------------------------------------------------------------------------------->

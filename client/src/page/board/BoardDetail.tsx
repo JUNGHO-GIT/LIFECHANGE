@@ -9,14 +9,14 @@ export const BoardDetail = () => {
   const [BOARD, setBOARD] = useState<any>({});
   const navParam = useNavigate();
   const _id = useLocation().state._id;
-  const URL = "http://127.0.0.1:4000/board";
+  const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const TITLE = "Board Detail";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get (`${URL}/boardDetail/${_id}`);
+        const response = await axios.get (`${URL_BOARD}/boardDetail/${_id}`);
         setBOARD(response.data);
       }
       catch (error: any) {

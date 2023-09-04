@@ -20,7 +20,7 @@
     "rootDir": ".",
     "outDir": "build",
     "removeComments": true,
-    "types": ["jest"],
+    "types": ["node", "jest"],
     "preserveConstEnums": true,
     "sourceMap": true,
     "allowImportingTsExtensions": true,

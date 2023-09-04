@@ -1,21 +1,48 @@
 // SleepList.tsx
 import React, {useState, useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import DatePicker from "react-datepicker";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
 
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<[]>([]);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
   const navParam = useNavigate();
-  const URL = "http://127.0.0.1:4000/sleep";
+  const user_id = window.sessionStorage.getItem("user_id");
+
+  const koreanDate = new Date();
+  koreanDate.setHours(koreanDate.getHours() + 9);
+  const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const TITLE = "Sleep List";
+
+  // ---------------------------------------------------------------------------------------------->
+  const datePicker = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date(sleep_regdate)}
+        popperPlacement="bottom"
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setSleep_regdate(selectedDate);
+        }}
+      />
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
-        const response = await axios.get (`${URL}/sleepList`);
+        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
+          params: {
+            user_id : user_id,
+            sleep_regdate : sleep_regdate,
+          }
+        });
         setSLEEP_LIST(response.data);
       }
       catch (error: any) {
@@ -24,7 +51,7 @@ export const SleepList = () => {
       }
     };
     fetchSleepList();
-  }, []);
+  }, [user_id, sleep_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
   const sleepListTable = () => {
@@ -59,10 +86,10 @@ export const SleepList = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonSleepDetail = (_id: string) => {
+  const buttonSleepDetail = (sleep_title: any) => {
     navParam(`/sleepDetail`, {
       state: {
-        _id
+        sleep_title : sleep_title,
       }
     });
   };
@@ -87,6 +114,13 @@ export const SleepList = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
+        </div>
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-10">
+          <h1 className="mb-3 fw-5">
+            <span className="ms-4">{datePicker()}</span>
+          </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
