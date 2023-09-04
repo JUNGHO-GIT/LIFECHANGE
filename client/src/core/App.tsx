@@ -35,11 +35,11 @@ import { BoardUpdate } from "../page/board/BoardUpdate";
 import { CalendarList } from "../page/calendar/CalendarList";
 import { CalendarDetail } from "../page/calendar/CalendarDetail";
 
-import { FoodList } from "../page/food/FoodList";
+import { FoodSearch } from "../page/food/FoodSearch";
 import { FoodInsert } from "../page/food/FoodInsert";
-import { FoodTotal } from "../page/food/FoodTotal";
+import { FoodList } from "../page/food/FoodList";
 import { FoodDetail } from "../page/food/FoodDetail";
-import { FoodInfo } from "../page/food/FoodInfo";
+import { FoodListPart } from "../page/food/FoodListPart";
 
 import { WorkoutList } from "../page/workout/WorkoutList";
 import { WorkoutInsert } from "../page/workout/WorkoutInsert";
@@ -48,7 +48,6 @@ import { WorkoutDetail } from "../page/workout/WorkoutDetail";
 import { SleepList } from "../page/sleep/SleepList";
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
-import { SleepUpdate } from "../page/sleep/SleepUpdate";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -74,18 +73,17 @@ const App = () => {
           <Route path="/boardUpdate" element={<BoardUpdate />} />
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail" element={<CalendarDetail />} />
-          <Route path="/foodList" element={<FoodList />} />
+          <Route path="/foodSearch" element={<FoodSearch />} />
           <Route path="/foodInsert" element={<FoodInsert />} />
-          <Route path="/foodTotal" element={<FoodTotal />} />
+          <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
-          <Route path="/foodInfo" element={<FoodInfo />} />
+          <Route path="/foodListPart" element={<FoodListPart />} />
           <Route path="/workoutList" element={<WorkoutList />} />
           <Route path="/workoutInsert" element={<WorkoutInsert />} />
           <Route path="/workoutDetail" element={<WorkoutDetail />} />
           <Route path="/sleepList" element={<SleepList />} />
           <Route path="/sleepInsert" element={<SleepInsert />} />
           <Route path="/sleepDetail" element={<SleepDetail />} />
-          <Route path="/sleepUpdate" element={<SleepUpdate />} />
         </Routes>
         <Footer />
       </Router>
