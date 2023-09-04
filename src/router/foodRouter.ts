@@ -5,6 +5,43 @@ import * as foodService from "../service/foodService";
 const foodRouter = Router();
 
 // 1. foodList ------------------------------------------------------------------------------------>
+foodRouter.get ("/foodList", async (req: Request, res: Response) => {
+  try {
+    const foodList = await foodService.foodList (
+      req.query.user_id as string,
+      req.query.food_regdate as string
+    );
+    if (foodList) {
+      res.send(foodList);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+}// 1-2. foodListPart ---------------------------------------------------------------------------------->
+foodRouter.get ("/foodListPart", async (req: Request, res: Response) => {
+  try {
+    const foodListPart = await foodService.foodListPart (
+      req.query._id as string,
+      req.query.user_id as string,
+      req.query.food_regdate as string,
+    );
+    if (foodListPart) {
+      res.send(foodListPart);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
 foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
@@ -27,27 +64,6 @@ foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
   }
 });
 
-// 2-2. foodInfo ---------------------------------------------------------------------------------->
-foodRouter.get ("/foodInfo", async (req: Request, res: Response) => {
-  try {
-    const foodInfo = await foodService.foodInfo (
-      req.query._id as string,
-      req.query.user_id as string,
-      req.query.food_regdate as string,
-    );
-    if (foodInfo) {
-      res.send(foodInfo);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
 // 3-1. foodInsert -------------------------------------------------------------------------------->
 foodRouter.post ("/foodInsert", async (req: Request, res: Response) => {
   try {
@@ -56,26 +72,6 @@ foodRouter.post ("/foodInsert", async (req: Request, res: Response) => {
     );
     if (foodInsert) {
       res.send("success");
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 3-2. foodTotal --------------------------------------------------------------------------------->
-foodRouter.get ("/foodTotal", async (req: Request, res: Response) => {
-  try {
-    const foodTotal = await foodService.foodTotal (
-      req.query.user_id as string,
-      req.query.food_regdate as string
-    );
-    if (foodTotal) {
-      res.send(foodTotal);
     }
     else {
       res.send("fail");
