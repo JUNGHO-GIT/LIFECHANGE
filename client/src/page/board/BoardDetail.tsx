@@ -21,7 +21,6 @@ export const BoardDetail = () => {
             _id: _id,
           },
         });
-        setBOARD(response.data);
       } catch (error: any) {
         alert(`Error fetching board data: ${error.message}`);
         setBOARD([]);

@@ -6,6 +6,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
+
   const [SLEEP, setSLEEP] = useState<any>({});
   const location = useLocation();
   const navParam = useNavigate();
@@ -42,7 +43,8 @@ export const SleepDetail = () => {
           },
         });
         setSLEEP(response.data);
-      } catch (error: any) {
+      }
+      catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP([]);
       }
@@ -80,7 +82,7 @@ export const SleepDetail = () => {
       const confirm = window.confirm("Are you sure you want to delete?");
       if (!confirm) {
         return;
-      } 
+      }
       else {
         const response = await axios.delete(`${URL_SLEEP}/sleepDelete`, {
           params: {
@@ -117,6 +119,10 @@ export const SleepDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <h1 className="mb-3 fw-9">
+            {TITLE}
+            <span className="ms-4">({sleep_title})</span>
+          </h1>
         </div>
       </div>
       <div className="row d-center mt-5">

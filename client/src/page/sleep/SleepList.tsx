@@ -7,7 +7,7 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
 
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<[]>([]);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
 
@@ -86,10 +86,10 @@ export const SleepList = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonSleepDetail = (_id: string) => {
+  const buttonSleepDetail = (sleep_title: any) => {
     navParam(`/sleepDetail`, {
       state: {
-        _id
+        sleep_title : sleep_title,
       }
     });
   };
