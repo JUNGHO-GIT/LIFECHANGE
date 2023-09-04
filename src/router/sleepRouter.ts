@@ -64,7 +64,7 @@ sleepRouter.post("/sleepInsert", async (req: Request, res: Response) => {
 });
 
 // 4. sleepUpdate --------------------------------------------------------------------------------->
-sleepRouter.put("/sleepUpdate/:_id", async (req: Request, res: Response) => {
+sleepRouter.put("/sleepUpdate", async (req: Request, res: Response) => {
   try {
     const sleepUpdate = await sleepService.sleepUpdate (
       req.params._id,
@@ -84,7 +84,7 @@ sleepRouter.put("/sleepUpdate/:_id", async (req: Request, res: Response) => {
 });
 
 // 5. sleepDelete --------------------------------------------------------------------------------->
-sleepRouter.delete("/sleepDelete/:_id", async (req: Request, res: Response) => {
+sleepRouter.delete("/sleepDelete", async (req: Request, res: Response) => {
   try {
     const sleepDelete = await sleepService.sleepDelete (
       req.params._id

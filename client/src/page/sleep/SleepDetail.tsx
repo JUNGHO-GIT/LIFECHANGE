@@ -7,13 +7,14 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
 
+  const user_id = window.sessionStorage.getItem("user_id");
+
   const [SLEEP, setSLEEP] = useState<any>({});
 
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
   const sleep_regdate = koreanDate.toISOString().split("T")[0];
 
-  const user_id = window.sessionStorage.getItem("user_id");
   const location = useLocation();
   const navParam = useNavigate();
   const sleep_title = location.state.sleep_title;

@@ -5,7 +5,8 @@ import * as mongoose from "mongoose";
 // 1. boardList ----------------------------------------------------------------------------------->
 export const boardList = async (
 ) => {
-  const boardList = await Board.find();
+  const boardList = await Board.find (
+  );
   return boardList;
 };
 
