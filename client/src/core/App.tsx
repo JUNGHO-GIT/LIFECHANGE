@@ -48,6 +48,7 @@ import { WorkoutDetail } from "../page/workout/WorkoutDetail";
 import { SleepList } from "../page/sleep/SleepList";
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
+import { SleepUpdate } from "../page/sleep/SleepUpdate";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -84,6 +85,7 @@ const App = () => {
           <Route path="/sleepList" element={<SleepList />} />
           <Route path="/sleepInsert" element={<SleepInsert />} />
           <Route path="/sleepDetail" element={<SleepDetail />} />
+          <Route path="/sleepUpdate" element={<SleepUpdate />} />
         </Routes>
         <Footer />
       </Router>

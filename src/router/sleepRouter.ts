@@ -66,7 +66,7 @@ sleepRouter.post("/sleepInsert", async (req: Request, res: Response) => {
 sleepRouter.put("/sleepUpdate", async (req: Request, res: Response) => {
   try {
     const sleepUpdate = await sleepService.sleepUpdate (
-      req.query._id,
+      req.body._id,
       req.body
     );
     if (sleepUpdate) {

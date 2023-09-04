@@ -1,27 +1,40 @@
-// SleepInsert.tsx
-import React, { useEffect, useState } from "react";
+// SleepUpdate.tsx
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepInsert = () => {
+export const SleepUpdate = () => {
 
+  const [SLEEP, setSLEEP] = useState<any>({});
+  const location = useLocation();
+  const _id = location.state._id;
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
   const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const TITLE = "Sleep Update";
 
-  const URL_SLEEP = "http://127.0.0.1:4000/sleep";
-  const URL_USER = "http://127.0.0.1:4000/user";
-  const TITLE = "Sleep Insert";
-
-  const [SLEEP, setSLEEP] = useState({
-    user_id: window.sessionStorage.getItem("user_id"),
-    sleep_title: sleep_regdate,
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
-    sleep_time: "00:00",
-  });
+  // ---------------------------------------------------------------------------------------------->
+  useEffect(() => {
+    const fetchSleepDetail = async () => {
+      try {
+        const response = await axios.get(`${URL_SLEEP}/sleepDetail`, {
+          params: {
+            _id: _id,
+          },
+        });
+        setSLEEP(response.data);
+      }
+      catch (error: any) {
+        alert(`Error fetching sleep data: ${error.message}`);
+        setSLEEP([]);
+      }
+    };
+    fetchSleepDetail();
+  }, [_id]);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -64,72 +77,50 @@ export const SleepInsert = () => {
           setSleep_regdate(selectedDate);
           setSLEEP({ ...SLEEP, sleep_title: selectedDate });
         }}
+        readOnly
       />
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const sleepInsertFlow = async () => {
+  const sleepUpdateFlow = async () => {
     try {
-      if (SLEEP.sleep_night === "") {
-        alert("Please enter a night");
-        return;
-      }
-      else if (SLEEP.sleep_morning === "") {
-        alert("Please enter a morning");
-        return;
+      const response = await axios.put(`${URL_SLEEP}/sleepUpdate`, {
+        _id : _id,
+        sleep_morning : SLEEP.sleep_morning,
+        sleep_night : SLEEP.sleep_night,
+        sleep_time : SLEEP.sleep_time,
+      });
+      if (response.data === "success") {
+        alert("Update success");
+        window.location.href = "/sleepList";
       }
       else {
-        const response = await axios.post(`${URL_SLEEP}/sleepInsert`, SLEEP);
-        if (response.data === "success") {
-          alert("Insert a sleep successfully");
-          window.location.href = "/sleepList";
-        }
-        else {
-          throw new Error("Server responded with an error");
-        }
+        alert("Update failed");
       }
-    } catch (error: any) {
-      alert(`Error fetching user data: ${error.message}`);
+    }
+    catch (error: any) {
+      alert(`Error updating sleep data: ${error.message}`);
     }
   };
 
+
   // ---------------------------------------------------------------------------------------------->
-  const sleepInsertTable = () => {
+  const sleepUpdateTable = () => {
     return (
       <div>
         {/** user_id **/}
         <div className="d-center">
           <span className="form-label me-4">User ID</span>
-          <input
-            type="text"
-            className="form-control"
-            id="user_id"
-            name="user_id"
-            value={SLEEP.user_id || ""}
-            onChange={(event: any) => {
-              setSLEEP({ ...SLEEP, user_id: event.target.value });
-            }}
-            readOnly
-          />
+          <input type="text" className="form-control"  placeholder="User ID"
+          value={SLEEP.user_id} readOnly />
         </div>
-        <br />
-        {/** title **/}
+        {/** sleep_title **/}
         <div className="d-center">
-          <span className="form-label me-4">Title</span>
-          <input
-            type="text"
-            className="form-control"
-            id="sleep_title"
-            name="sleep_title"
-            value={SLEEP.sleep_title}
-            onChange={(event: any) => {
-              setSLEEP({ ...SLEEP, sleep_title: event.target.value });
-            }}
-            readOnly
-          />
+          <span className="form-label me-4">Sleep Title</span>
+          <input type="text" className="form-control"  placeholder="Sleep Title"
+          value={SLEEP.sleep_title} readOnly />
         </div>
-        <br />
         {/** night **/}
         <div className="d-center">
           <span className="form-label me-4">Night</span>
@@ -168,14 +159,10 @@ export const SleepInsert = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonSleepInsert = () => {
+  const buttonSleepUpdate = () => {
     return (
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={sleepInsertFlow}
-      >
-        Insert
+      <button className="btn btn-primary ms-2" type="button" onClick={sleepUpdateFlow}>
+        Update
       </button>
     );
   };
@@ -198,9 +185,9 @@ export const SleepInsert = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {sleepInsertTable()}
-            <br />
-            {buttonSleepInsert()}
+            {sleepUpdateTable()}
+            <br/>
+            {buttonSleepUpdate()}
           </form>
         </div>
       </div>

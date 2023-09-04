@@ -10,11 +10,14 @@ export const SleepDetail = () => {
   const [SLEEP, setSLEEP] = useState<any>({});
   const location = useLocation();
   const navParam = useNavigate();
-  const user_id = window.sessionStorage.getItem("user_id");
-  const _id = useLocation().state._id;
+
   const koreanDate = new Date();
   koreanDate.setHours(koreanDate.getHours() + 9);
   const sleep_regdate = koreanDate.toISOString().split("T")[0];
+
+  const user_id = window.sessionStorage.getItem("user_id");
+  const _id = useLocation().state._id;
+
   const sleep_title = location.state.sleep_title;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const TITLE = "Sleep Detail";
@@ -112,6 +115,42 @@ export const SleepDetail = () => {
       </button>
     );
   };
+  const buttonSleepUpdate = (_id: string) => {
+    const navButton = () => {
+      navParam(`/sleepUpdate`, {
+        state: {
+          _id,
+        },
+      });
+    };
+    return (
+      <button
+        type="button"
+        className="btn btn-primary ms-2"
+        onClick={navButton}
+      >
+        Update
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <Link to="/sleepDetail">
+        <button type="button" className="btn btn-success ms-2">
+          Refresh
+        </button>
+      </Link>
+    );
+  };
+  const buttonSleepList = () => {
+    return (
+      <Link to="/sleepList">
+        <button type="button" className="btn btn-secondary ms-2">
+          List
+        </button>
+      </Link>
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   return (
@@ -133,6 +172,9 @@ export const SleepDetail = () => {
           {sleepDetailTable()}
           <br />
           {buttonSleepDelete()}
+          {buttonSleepUpdate(SLEEP._id)}
+          {buttonRefreshPage()}
+          {buttonSleepList()}
         </div>
       </div>
     </div>
