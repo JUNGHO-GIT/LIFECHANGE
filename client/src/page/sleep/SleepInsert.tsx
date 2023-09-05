@@ -80,7 +80,12 @@ export const SleepInsert = () => {
         return;
       }
       else {
-        const response = await axios.post(`${URL_SLEEP}/sleepInsert`, SLEEP);
+        const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
+          data: {
+            ...SLEEP,
+            sleep_regdate
+          },
+        });
         if (response.data === "success") {
           alert("Insert a sleep successfully");
           window.location.href = "/sleepList";
