@@ -119,8 +119,8 @@ export const FoodSearch = () => {
       fetchFoodSearch();
     }
   };
-  const buttonFoodTotal = () => {
-    navParam(`/foodTotal`, {
+  const buttonFoodList = () => {
+    navParam(`/foodList`, {
       state: {
         user_id : user_id,
         food_regdate : food_regdate
@@ -202,7 +202,7 @@ export const FoodSearch = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <div className="btn-group">
-            <button className="btn btn-primary ms-2" onClick={buttonFoodTotal}>총합</button>
+            <button className="btn btn-primary ms-2" onClick={buttonFoodList}>총합</button>
             <button className="btn btn-primary ms-2" onClick={buttonFoodMorning}>아침</button>
             <button className="btn btn-primary ms-2" onClick={buttonFoodLunch}>점심</button>
             <button className="btn btn-primary ms-2" onClick={buttonFoodDinner}>저녁</button>
