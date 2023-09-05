@@ -4,7 +4,7 @@ import * as foodService from "../service/foodService";
 
 const foodRouter = Router();
 
-// 1. foodList ------------------------------------------------------------------------------------>
+// 1-1. foodList ---------------------------------------------------------------------------------->
 foodRouter.get ("/foodList", async (req: Request, res: Response) => {
   try {
     const foodList = await foodService.foodList (
@@ -22,7 +22,9 @@ foodRouter.get ("/foodList", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).send(err);
   }
-}// 1-2. foodListPart ---------------------------------------------------------------------------------->
+});
+
+// 1-2. foodListPart ----------------------------------------------------------------------------->
 foodRouter.get ("/foodListPart", async (req: Request, res: Response) => {
   try {
     const foodListPart = await foodService.foodListPart (

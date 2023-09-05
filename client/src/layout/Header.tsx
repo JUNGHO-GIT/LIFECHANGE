@@ -12,13 +12,27 @@ export const Header = () => {
   const NavList = () => {
     return (
       <ul className="nav">
-        <li><Link to="/" className="nav-link text-hover tc-w ms-2">Home</Link></li>
-        <li><Link to="/userDetail" className="nav-link text-hover tc-w ms-2">User</Link></li>
-        <li><Link to="/boardList" className="nav-link text-hover tc-w ms-2">Board</Link></li>
-        <li><Link to="/calendarList" className="nav-link text-hover tc-w ms-2">Calendar</Link></li>
-        <li><Link to="/foodSearch" className="nav-link text-hover tc-w ms-2">Food</Link></li>
-        <li><Link to="/workoutList" className="nav-link text-hover tc-w ms-2">Workout</Link></li>
-        <li><Link to="/sleepList" className="nav-link text-hover tc-w ms-2">Sleep</Link></li>
+        <li>
+          <Link to="/" className="nav-link fs-14 tc-w ms-2">Home</Link>
+        </li>
+        <li>
+          <Link to="/userDetail" className="nav-link fs-14 tc-w ms-2">User</Link>
+        </li>
+        <li>
+          <Link to="/boardList" className="nav-link fs-14 tc-w ms-2">Board</Link>
+        </li>
+        <li>
+          <Link to="/calendarList" className="nav-link fs-14 tc-w ms-2">Calendar</Link>
+        </li>
+        <li>
+          <Link to="/foodSearch" className="nav-link fs-14 tc-w ms-2">Food</Link>
+        </li>
+        <li>
+          <Link to="/workoutList" className="nav-link fs-14 tc-w ms-2">Workout</Link>
+        </li>
+        <li>
+          <Link to="/sleepList" className="nav-link fs-14 tc-w ms-2">Sleep</Link>
+        </li>
       </ul>
     );
   };
@@ -28,7 +42,6 @@ export const Header = () => {
 
     // 로그인 x
     const loginFalse = () => {
-
       const buttonLogin = () => {
         return (
           <Link to="/userLogin">
@@ -83,8 +96,8 @@ export const Header = () => {
   return (
     <header className="container-fluid bg-dark">
       <div className="row d-center pt-3 pb-3">
-        <div className="col-8">{NavList()}</div>
-        <div className="col-4">{FormList()}</div>
+        <div className="col-9">{NavList()}</div>
+        <div className="col-3">{FormList()}</div>
       </div>
     </header>
   );

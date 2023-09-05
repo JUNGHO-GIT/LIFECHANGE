@@ -2,7 +2,7 @@
 import Food from "../schema/Food";
 import * as mongoose from "mongoose";
 
-// 1. foodList ------------------------------------------------------------------------------------>
+// 1-1. foodList ---------------------------------------------------------------------------------->
 export const foodList = async (
   user_id_param : string,
   food_regdate_param : string,
@@ -35,21 +35,27 @@ export const foodList = async (
     console.error(error);
     throw error;
   }
-  
-// 1-2. foodListPart ---------------------------------------------------------------------------------->
+};
+
+// 1-2. foodListPart ------------------------------------------------------------------------------>
 export const foodListPart = async (
   _id_param : string,
   user_id_param : string,
   food_regdate_param : string,
 ) => {
-  const foodListPart = await Food.findOne ({
-    _id : _id_param,
-    user_id : user_id_param,
-    food_regdate : food_regdate_param,
-  });
-  return foodListPart;
+  try {
+    const foodListPart = await Food.findOne ({
+      _id : _id_param,
+      user_id : user_id_param,
+      food_regdate : food_regdate_param,
+    });
+    return foodListPart;
+  }
+  catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
-
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
 export const foodDetail = async (
@@ -57,32 +63,43 @@ export const foodDetail = async (
   food_regdate_param : string,
   food_category_param : string
 ) => {
-  const foodDetail = await Food.find ({
-    user_id : user_id_param,
-    food_regdate : food_regdate_param,
-    food_category : food_category_param
-  });
-  return foodDetail;
+  try {
+    const foodDetail = await Food.find ({
+      user_id : user_id_param,
+      food_regdate : food_regdate_param,
+      food_category : food_category_param
+    });
+    return foodDetail;
+  }
+  catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
-
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (
   food_param: any
 ) => {
-  const foodInsert = await Food.create ({
-    _id : new mongoose.Types.ObjectId(),
-    user_id : food_param.user_id,
-    food_name : food_param.food_name,
-    food_brand : food_param.food_brand,
-    food_category : food_param.food_category,
-    food_serving : food_param.food_serving,
-    food_calories : food_param.food_calories,
-    food_carb : food_param.food_carb,
-    food_protein : food_param.food_protein,
-    food_fat : food_param.food_fat,
-  });
-  return foodInsert;
+  try {
+    const foodInsert = await Food.create ({
+      _id : new mongoose.Types.ObjectId(),
+      user_id : food_param.user_id,
+      food_name : food_param.food_name,
+      food_brand : food_param.food_brand,
+      food_category : food_param.food_category,
+      food_serving : food_param.food_serving,
+      food_calories : food_param.food_calories,
+      food_carb : food_param.food_carb,
+      food_protein : food_param.food_protein,
+      food_fat : food_param.food_fat,
+    });
+    return foodInsert;
+  }
+  catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
@@ -93,10 +110,16 @@ export const foodDelete = async (
   user_id_param : string,
   food_regdate_param : string,
 ) => {
-  const foodDelete = await Food.deleteOne ({
-    _id : _id_param,
-    user_id : user_id_param,
-    food_regdate : food_regdate_param,
-  });
-  return foodDelete;
+  try {
+    const foodDelete = await Food.deleteOne ({
+      _id : _id_param,
+      user_id : user_id_param,
+      food_regdate : food_regdate_param,
+    });
+    return foodDelete;
+  }
+  catch (error) {
+    console.error(error);
+    throw error;
+  }
 };

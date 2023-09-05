@@ -18,19 +18,79 @@ export const SleepList = () => {
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const TITLE = "Sleep List";
 
+  // daily, weekly, monthly
+  const [viewMode, setViewMode] = useState("daily");
+
   // ---------------------------------------------------------------------------------------------->
-  const datePicker = () => {
-    return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        selected={new Date(sleep_regdate)}
-        popperPlacement="bottom"
-        onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setSleep_regdate(selectedDate);
-        }}
-      />
-    );
+  const viewModeSelect = () => {
+
+    // 0. select
+    const viewModeSet = () => {
+      return (
+        <select className="form-select form-select-lg mb-3" onChange={(e) => {
+        setViewMode(e.target.value);}}>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      );
+    };
+
+    // 1. daily
+    if (viewMode === "daily") {
+      return (
+        <div>
+          {viewModeSet()}
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            selected={new Date(sleep_regdate)}
+            popperPlacement="bottom"
+            onChange={(date: any) => {
+              const selectedDate = date.toISOString().split("T")[0];
+              setSleep_regdate(selectedDate);
+            }}
+          />
+        </div>
+      );
+    };
+
+    // 2. weekly
+    if (viewMode === "weekly") {
+      return (
+        <div>
+          {viewModeSet()}
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            selected={new Date(sleep_regdate)}
+            popperPlacement="bottom"
+            showWeekNumbers={true}
+            onChange={(date: any) => {
+              const selectedDate = date.toISOString().split("T")[0];
+              setSleep_regdate(selectedDate);
+            }}
+          />
+        </div>
+      );
+    };
+
+    // 3. monthly
+    if (viewMode === "monthly") {
+      return (
+        <div>
+          {viewModeSet()}
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            selected={new Date(sleep_regdate)}
+            popperPlacement="bottom"
+            showWeekNumbers={true}
+            onChange={(date: any) => {
+              const selectedDate = date.toISOString().split("T")[0];
+              setSleep_regdate(selectedDate);
+            }}
+          />
+        </div>
+      );
+    };
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -117,7 +177,7 @@ export const SleepList = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{datePicker()}</span>
+            <span className="ms-4">{viewModeSelect()}</span>
           </h1>
         </div>
       </div>
@@ -125,6 +185,7 @@ export const SleepList = () => {
         <div className="col-10">
           <form className="form-inline">
             {sleepListTable()}
+            <br/>
             {buttonRefreshPage()}
             {buttonSleepInsert()}
           </form>

@@ -59,6 +59,11 @@ const FoodScheme = new mongoose.Schema ({
       return date.toISOString().split('T')[0];
     },
     required : true
+  },
+  food_select : {
+    type : String,
+    default : "daily",
+    required : false
   }
 });
 

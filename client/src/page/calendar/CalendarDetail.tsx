@@ -6,6 +6,7 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
+
   const location = useLocation();
   const user_id = location.state.user_id;
 
@@ -18,13 +19,13 @@ export const CalendarDetail = () => {
   );
   koreanDate.setHours(koreanDate.getHours() + 9);
 
-  const [food_regdate, setFood_regdate] = useState(
+  const [food_regdate, setFood_regdate] = useState (
     koreanDate.toISOString().split("T")[0]
   );
-  const [workout_regdate, setWorkout_regdate] = useState(
+  const [workout_regdate, setWorkout_regdate] = useState (
     koreanDate.toISOString().split("T")[0]
   );
-  const [sleep_regdate, setSleep_regdate] = useState(
+  const [sleep_regdate, setSleep_regdate] = useState (
     koreanDate.toISOString().split("T")[0]
   );
 
@@ -200,8 +201,8 @@ export const CalendarDetail = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="container">
-      <div className="row d-center mt-5">
+    <div className="container main">
+      <div className="row d-center">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>

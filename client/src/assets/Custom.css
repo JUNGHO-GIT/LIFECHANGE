@@ -320,11 +320,12 @@
 .fw-8 {font-weight: 800 !important;}
 .fw-9 {font-weight: 900 !important;}
 
-/** 텍스트 ****************************************************************************************/
+/** 텍스트 정렬 ***********************************************************************************/
 .tt-c {text-align: center !important;}
 .tt-l {text-align: left !important;}
 .tt-r {text-align: right !important;}
 
+/** 텍스트 컬러 ***********************************************************************************/
 .tc-r {color: #ff0000 !important;}
 .tc-g {color: #00ff00 !important;}
 .tc-l {color: #0000ff !important;}
@@ -474,7 +475,18 @@
 .he-400 {height: 400px !important;}
 
 /** core ******************************************************************************************/
-
+html {
+  scroll-behavior: smooth !important;
+}
+html, body {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+.main {
+  margin-top: 50px;
+  margin-bottom : 50px;
+}
 textarea {
   resize: none !important;
 }
@@ -489,14 +501,6 @@ textarea.form-control {
   width: 0 !important;
   display: none !important;
   -ms-overflow-style: none !important;
-}
-html, body {
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-}
-html {
-  scroll-behavior: smooth !important;
 }
 
 /** align *****************************************************************************************/
@@ -547,7 +551,7 @@ html {
 	width: 80px;
 	height: 80px;
 	border-radius: 50%;
-	border-top: 4px solid #3cc88f;
+	border-top: 4px solid #3e96fc;
 	border-right: 4px solid transparent;
 	animation: loaderAnimation 0.5s linear infinite;
 }

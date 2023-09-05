@@ -35,6 +35,17 @@ const SleepScheme = new mongoose.Schema ({
     },
     required : true
   },
+  sleep_week : {
+    type : String,
+    default : () => {
+      const date = new Date();
+      date.setHours(date.getHours() + 9);
+      const modifiedDate = date.toISOString().split('T')[0];
+      const week = new Date(modifiedDate).getDay();
+      return week;
+    },
+    required : true
+  },
   sleep_update : {
     type : String,
     default : () => {

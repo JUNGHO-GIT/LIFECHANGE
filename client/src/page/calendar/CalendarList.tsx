@@ -40,7 +40,7 @@ export const CalendarList = () => {
     for (let dayParam = 0; dayParam < 7; dayParam++) {
       if (dayParam === 0) {
         weekRow.append (
-          `<div class="col-1 tt-c tc-r fw-7 bd-t-3 bd-s-3 bd-b-1 p-2 week">`
+          `<div class="col-1 tt-c tc-r fw-7 bd-t-3 bd-s-3 bd-b-3 p-2 week">`
             + weekParam[dayParam] +
           `</div>`
         );
