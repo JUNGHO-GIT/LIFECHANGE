@@ -36,7 +36,7 @@ export const WorkoutDetail = () => {
         return;
       }
       else {
-        const response = await axios.delete(`${URL}/workoutDelete/${_id}`);
+        const response = await axios.delete(`${URL_WORKOUT}/workoutDelete/${_id}`);
         if (response.data === "success") {
           alert("Delete Success");
           navParam(`/workoutList`);

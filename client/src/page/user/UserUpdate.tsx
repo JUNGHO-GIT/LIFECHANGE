@@ -36,7 +36,7 @@ export const UserUpdate = () => {
         return;
       }
       else {
-        const response = await axios.post (`${URL}/userCheckIdPw`, {
+        const response = await axios.post (`${URL_USER}/userCheckIdPw`, {
           user_id: user_id,
           user_pw: user_pw,
         });
@@ -46,7 +46,7 @@ export const UserUpdate = () => {
         }
         else if (response.data === "success") {
           const updatePw = prompt("Please enter a new password");
-          const response = await axios.put(`${URL}/userUpdate`, {
+          const response = await axios.put(`${URL_USER}/userUpdate`, {
             user_id: user_id,
             user_pw: updatePw
           });

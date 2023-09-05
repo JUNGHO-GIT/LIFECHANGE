@@ -36,7 +36,7 @@ export const UserDelete = () => {
         return;
       }
       else {
-        const response = await axios.post(`${URL}/userCheckIdPw`, {
+        const response = await axios.post(`${URL_USER}/userCheckIdPw`, {
           user_id: user_id,
           user_pw: user_pw,
         });
@@ -45,7 +45,7 @@ export const UserDelete = () => {
           return;
         }
         if (response.data === "success") {
-          const response = await axios.delete (`${URL}/userDelete`, {
+          const response = await axios.delete (`${URL_USER}/userDelete`, {
             data: {
               user_id: user_id,
             },

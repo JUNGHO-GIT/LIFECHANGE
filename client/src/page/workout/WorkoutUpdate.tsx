@@ -7,14 +7,14 @@ import { useLocation } from "react-router-dom";
 export const WorkoutUpdate = () => {
   const [BOARD, setBOARD] = useState<any>({});
   const _id = useLocation().state._id;
-  const URL = "http://127.0.0.1:4000/workout";
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const TITLE = "Workout Update";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutDetail = async () => {
       try {
-        const response = await axios.get(`${URL}/workoutDetail/${_id}`);
+        const response = await axios.get(`${URL_WORKOUT}/workoutDetail/${_id}`);
         setBOARD(response.data);
       }
       catch (error: any) {
@@ -28,7 +28,7 @@ export const WorkoutUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   const workoutUpdateFlow = async () => {
     try {
-      const response = await axios.put(`${URL}/workoutUpdate/${_id}`, BOARD);
+      const response = await axios.put(`${URL_WORKOUT}/workoutUpdate/${_id}`, BOARD);
       if (response.data === "success") {
         alert("Update success");
         window.location.href = "/workoutList";

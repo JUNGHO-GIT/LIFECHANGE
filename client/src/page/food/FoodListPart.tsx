@@ -92,7 +92,7 @@ export const FoodListPart = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonFoodDelete = async () => {
     try {
-      const response = await axios.delete(`${URL}/foodDelete`, {
+      const response = await axios.delete(`${URL_FOOD}/foodDelete`, {
         params: {
           _id : _id,
           user_id : user_id,

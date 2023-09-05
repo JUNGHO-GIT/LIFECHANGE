@@ -100,12 +100,6 @@ export const FoodList = () => {
       <div className="row d-center mt-5">
         <div className="col-8">
           {foodListTable()}
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
         </div>
       </div>
     </div>
