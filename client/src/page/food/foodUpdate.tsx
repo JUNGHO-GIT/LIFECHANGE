@@ -15,7 +15,11 @@ export const FoodUpdate = () => {
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
-        const response = await axios.get(`${URL_FOOD}/foodDetail/${_id}`);
+        const response = await axios.get(`${URL_FOOD}/foodDetail`, {
+          params: {
+            _id: _id,
+          },
+        });
         setFOOD(response.data);
       }
       catch (error: any) {

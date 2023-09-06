@@ -15,7 +15,11 @@ export const WorkoutUpdate = () => {
   useEffect(() => {
     const fetchWorkoutDetail = async () => {
       try {
-        const response = await axios.get(`${URL_WORKOUT}/workoutDetail/${_id}`);
+        const response = await axios.get(`${URL_WORKOUT}/workoutDetail`, {
+          params: {
+            _id: _id,
+          },
+        });
         setWORKOUT(response.data);
       }
       catch (error: any) {
@@ -29,7 +33,13 @@ export const WorkoutUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   const workoutUpdateFlow = async () => {
     try {
-      const response = await axios.put(`${URL_WORKOUT}/workoutUpdate/${_id}`, WORKOUT);
+      const response = await axios.put(`${URL_WORKOUT}/workoutUpdate`, {
+        data: {
+          _id: WORKOUT._id,
+          workout_title: WORKOUT.workout_title,
+          workout_content: WORKOUT.workout_content,
+        },
+      });
       if (response.data === "success") {
         alert("Update success");
         window.location.href = "/workoutList";

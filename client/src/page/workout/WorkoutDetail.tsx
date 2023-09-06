@@ -17,7 +17,11 @@ export const WorkoutDetail = () => {
   useEffect(() => {
     const fetchWorkoutDetail = async () => {
       try {
-        const response = await axios.get(`${URL_WORKOUT}/workoutDetail/${_id}`);
+        const response = await axios.get(`${URL_WORKOUT}/workoutDetail`, {
+          params: {
+            _id: _id,
+          },
+        });
         setWORKOUT(response.data);
       }
       catch (error: any) {
@@ -36,7 +40,11 @@ export const WorkoutDetail = () => {
         return;
       }
       else {
-        const response = await axios.delete(`${URL_WORKOUT}/workoutDelete/${_id}`);
+        const response = await axios.delete(`${URL_WORKOUT}/workoutDelete`, {
+          data: {
+            _id : WORKOUT._id,
+          },
+        });
         if (response.data === "success") {
           alert("Delete Success");
           navParam(`/workoutList`);
