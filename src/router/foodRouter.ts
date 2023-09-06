@@ -86,6 +86,24 @@ foodRouter.post ("/foodInsert", async (req: Request, res: Response) => {
 });
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
+foodRouter.put("/foodUpdate", async (req: Request, res: Response) => {
+  try {
+    const foodUpdate = await foodService.foodUpdate (
+      req.body._id,
+      req.body
+    );
+    if (foodUpdate) {
+      res.send("success");
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
 
 // 5. foodDelete ---------------------------------------------------------------------------------->
 foodRouter.delete ("/foodDelete", async (req: Request, res: Response) => {

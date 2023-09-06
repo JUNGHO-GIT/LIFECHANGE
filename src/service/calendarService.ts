@@ -43,7 +43,6 @@ export const calendarUpdate = async (
     _id : _id_param,
     $set : calendar_param
   });
-
   return calendarUpdate;
 };
 

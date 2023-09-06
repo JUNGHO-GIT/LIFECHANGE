@@ -1,80 +1,85 @@
-// WorkoutUpdate.tsx
+// FoodUpdate.tsx
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkoutUpdate = () => {
+export const FoodUpdate = () => {
 
-  const [WORKOUT, setWORKOUT] = useState<any>({});
+  const [FOOD, setFOOD] = useState<any>({});
   const _id = useLocation().state._id;
-  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
-  const TITLE = "Workout Update";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const TITLE = "Food Update";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchWorkoutDetail = async () => {
+    const fetchFoodDetail = async () => {
       try {
-        const response = await axios.get(`${URL_WORKOUT}/workoutDetail/${_id}`);
-        setWORKOUT(response.data);
+        const response = await axios.get(`${URL_FOOD}/foodDetail/${_id}`);
+        setFOOD(response.data);
       }
       catch (error: any) {
-        alert(`Error fetching workout data: ${error.message}`);
-        setWORKOUT([]);
+        alert(`Error fetching food data: ${error.message}`);
+        setFOOD([]);
       }
     };
-    fetchWorkoutDetail();
+    fetchFoodDetail();
   }, [_id]);
 
   // ---------------------------------------------------------------------------------------------->
-  const workoutUpdateFlow = async () => {
+  const foodUpdateFlow = async () => {
     try {
-      const response = await axios.put(`${URL_WORKOUT}/workoutUpdate/${_id}`, WORKOUT);
+      const response = await axios.put (`${URL_FOOD}/foodUpdate`, {
+        data : {
+          _id : _id,
+          FOOD : FOOD
+        }
+      });
       if (response.data === "success") {
         alert("Update success");
-        window.location.href = "/workoutList";
+        window.location.href = "/foodList";
       }
       else {
         alert("Update failed");
       }
     }
     catch (error: any) {
-      alert(`Error fetching workout data: ${error.message}`);
+      alert(`Error fetching food data: ${error.message}`);
     }
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const workoutUpdateTable = () => {
+  const foodUpdateTable = () => {
     return (
       <div>
         <div className="form-floating">
           <input type="text" className="form-control"  placeholder="User ID"
-          value={WORKOUT.user_id} readOnly />
+          value={FOOD.user_id} readOnly />
           <label htmlFor="user_id">User ID</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Title" value={WORKOUT.workout_title} onChange={(e) => setWORKOUT({...WORKOUT, workout_title: e.target.value})} />
+          <input type="text" className="form-control" placeholder="Title" value={FOOD.food_title} onChange={(e) => setFOOD({...FOOD, food_title: e.target.value})} />
           <label htmlFor="floatingTitle">Title</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Content"
-          value={WORKOUT.workout_content}
-          onChange={(e) => setWORKOUT({...WORKOUT, workout_content: e.target.value})} />
+          value={FOOD.food_content}
+          onChange={(e) => setFOOD({...FOOD, food_content: e.target.value})} />
           <label htmlFor="floatingContent">Content</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Workout Date"
-          value={WORKOUT.workout_regdate} readOnly />
-          <label htmlFor="workout_regdate">Workout Date</label>
+          <input type="text" className="form-control" placeholder="Food Date"
+          value={FOOD.food_regdate} readOnly />
+          <label htmlFor="food_regdate">Food Date</label>
         </div>
       </div>
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const buttonWorkoutUpdate = () => {
+  const buttonFoodUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={workoutUpdateFlow}>
+      <button className="btn btn-primary ms-2" type="button" onClick={foodUpdateFlow}>
         Update
       </button>
     );
@@ -91,9 +96,9 @@ export const WorkoutUpdate = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {workoutUpdateTable()}
+            {foodUpdateTable()}
             <br/>
-            {buttonWorkoutUpdate()}
+            {buttonFoodUpdate()}
           </form>
         </div>
       </div>

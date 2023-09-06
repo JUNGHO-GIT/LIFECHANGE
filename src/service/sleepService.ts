@@ -46,11 +46,10 @@ export const sleepUpdate = async (
   _id_param : any,
   sleep_param : any
 ) => {
-  const sleepUpdate = await Sleep.updateOne (
-    { _id : _id_param }, // Query
-    { $set : sleep_param } // Update
-  );
-
+  const sleepUpdate = await Sleep.updateOne ({
+    _id : _id_param,
+    $set : sleep_param
+  });
   return sleepUpdate;
 };
 
