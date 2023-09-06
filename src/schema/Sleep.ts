@@ -38,27 +38,30 @@ const SleepScheme = new mongoose.Schema ({
   sleep_week : {
     type : Array,
     default : () => {
+
+      // 날짜 지정
       const weekArray = [];
       const date = new Date();
       date.setHours(date.getHours() + 9);
+      const currentDay = date.toISOString().split('T')[0];
       const currentMonth = date.toISOString().split('T')[0].split('-')[1];
 
       for(let i = 1; i <= 5; i++) {
+
+        // 주의 첫날 (월요일)
         const startOfWeek = new Date(date);
         startOfWeek.setDate(date.getDate() - date.getDay() + (i * 7));
-        // 주의 첫날 (월요일)
+        const startString = startOfWeek.toISOString().split('T')[0];
+        const startMonth = startString.split('-')[1];
 
+        // 주의 마지막날 (일요일)
         const endOfWeek = new Date(date);
         endOfWeek.setDate(date.getDate() - date.getDay() + 6 + (i * 7));
-        // 주의 마지막날 (일요일)
-
-        const startString = startOfWeek.toISOString().split('T')[0];
         const endString = endOfWeek.toISOString().split('T')[0];
-        const startMonth = startString.split('-')[1];
         const endMonth = endString.split('-')[1];
 
         if (startMonth === currentMonth && endMonth === currentMonth) {
-          weekArray.push(`${i}번: ${startString} ~ ${endString}`);
+          weekArray.push(`${i}번째 주: ${startString} ~ ${endString}`);
         }
       }
       return weekArray;

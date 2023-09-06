@@ -55,7 +55,6 @@ export const WorkoutInsert = () => {
         alert("Please enter time.");
         return;
       }
-
       const response = await axios.post (`${URL_WORKOUT}/workoutInsert`, WORKOUT);
       if (response.data === "success") {
         alert("Insert a workout successfully");

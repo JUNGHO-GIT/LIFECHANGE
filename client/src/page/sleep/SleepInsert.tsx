@@ -80,12 +80,7 @@ export const SleepInsert = () => {
         return;
       }
       else {
-        const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
-          data: {
-            ...SLEEP,
-            sleep_regdate
-          },
-        });
+        const response = await axios.post (`${URL_SLEEP}/sleepInsert`, SLEEP);
         if (response.data === "success") {
           alert("Insert a sleep successfully");
           window.location.href = "/sleepList";
@@ -94,7 +89,8 @@ export const SleepInsert = () => {
           throw new Error("Server responded with an error");
         }
       }
-    } catch (error: any) {
+    }
+    catch (error: any) {
       alert(`Error fetching user data: ${error.message}`);
     }
   };
