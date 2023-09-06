@@ -28,6 +28,41 @@ export const sleepDetail = async (
 export const sleepInsert = async (
   sleep_param : any
 ) => {
+
+  // week 관련 로직 추가
+  function getWeek() {
+    const date = new Date();
+    date.setHours(date.getHours() + 9);
+    const currentMonth = date.toISOString().split('T')[0].split('-')[1];
+    const currentRegdate = sleep_param.sleep_regdate;
+
+    let weekStr = '';
+
+    for(let i = 1; i <= 5; i++) {
+
+      const startOfWeek = new Date(date);
+      startOfWeek.setDate(date.getDate() - date.getDay() + (i * 7) - 5);
+      const startString = startOfWeek.toISOString().split('T')[0];
+
+      const thursday = new Date(startOfWeek);
+      thursday.setDate(startOfWeek.getDate() + 3);
+      const thursdayString = thursday.toISOString().split('T')[0];
+      const thursdayMonth = thursdayString.split('-')[1];
+
+      const endOfWeek = new Date(date);
+      endOfWeek.setDate(date.getDate() - date.getDay() + (i * 7) + 1);
+      const endString = endOfWeek.toISOString().split('T')[0];
+
+      if (thursdayMonth === currentMonth) {
+        if (currentRegdate >= startString && currentRegdate <= endString) {
+          weekStr = `${i}번째 주: ${startString} ~ ${endString}`;
+          break;
+        }
+      }
+    }
+    return weekStr;
+  }
+
   const sleepInsert = await Sleep.create ({
     _id : new mongoose.Types.ObjectId(),
     user_id : sleep_param.user_id,
@@ -36,6 +71,7 @@ export const sleepInsert = async (
     sleep_morning : sleep_param.sleep_morning,
     sleep_time : sleep_param.sleep_time,
     sleep_regdate : sleep_param.sleep_regdate,
+    sleep_week : getWeek(),
     sleep_update : sleep_param.sleep_update
   });
   return sleepInsert;
