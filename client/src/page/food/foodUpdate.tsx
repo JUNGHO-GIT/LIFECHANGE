@@ -9,22 +9,22 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const FoodUpdate = () => {
 
-  // 1. title
+  // title
   const TITLE = "Food Update";
-  // 2. url
+  // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
   const _id = location.state._id;
-  // 6. state
+  // state
   const [FOOD, setFOOD] = useState<any>({});
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
@@ -93,7 +93,7 @@ export const FoodUpdate = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonFoodUpdate = () => {
     return (
       <button className="btn btn-primary ms-2" type="button" onClick={foodUpdateFlow}>
@@ -102,7 +102,7 @@ export const FoodUpdate = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

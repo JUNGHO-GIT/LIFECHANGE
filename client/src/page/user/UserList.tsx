@@ -9,21 +9,21 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const UserList = () => {
 
-  // 1. title
+  // title
   const TITLE = "User List";
-  // 2. url
+  // url
   const URL_USER = process.env.REACT_APP_URL_USER;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [USER_LIST, setUSER_LIST] = useState<[]>([]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchUserList = async () => {
       try {
@@ -60,7 +60,7 @@ export const UserList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
       <Link to="/userList">
@@ -69,7 +69,7 @@ export const UserList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

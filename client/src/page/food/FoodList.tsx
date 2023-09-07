@@ -9,18 +9,18 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const FoodList = () => {
 
-  // 1. title
+  // title
   const TITLE = "Food List";
-  // 2. url
+  // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [food_regdate, setFood_regdate] = useState(koreanDate);
   const [FOOD_LIST, setFOOD_LIST] = useState<any>([]);
 
@@ -39,7 +39,7 @@ export const FoodList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodList = async () => {
       try {
@@ -85,7 +85,7 @@ export const FoodList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

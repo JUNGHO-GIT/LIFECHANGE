@@ -9,21 +9,21 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const BoardList = () => {
 
-  // 1. title
+  // title
   const TITLE = "Board List";
-  // 2. url
+  // url
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [BOARD_LIST, setBOARD_LIST] = useState<any>([]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
@@ -66,7 +66,7 @@ export const BoardList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardDetail = (_id: string) => {
     navParam(`/boardDetail`, {
       state: {
@@ -89,7 +89,7 @@ export const BoardList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

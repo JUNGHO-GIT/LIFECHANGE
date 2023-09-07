@@ -9,22 +9,22 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const BoardUpdate = () => {
 
-  // 1. title
+  // title
   const TITLE = "Board Update";
-  // 2. url
+  // url
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [BOARD, setBOARD] = useState<any>({});
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
@@ -93,7 +93,7 @@ export const BoardUpdate = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardUpdate = () => {
     return (
       <button className="btn btn-primary ms-2" type="button" onClick={boardUpdateFlow}>
@@ -102,7 +102,7 @@ export const BoardUpdate = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

@@ -9,7 +9,7 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   try {
     const sleepList = await sleepService.sleepList (
       req.query.user_id,
-      req.query.sleep_regdate
+      req.query.sleep_day
     );
     if (sleepList) {
       res.send(sleepList);

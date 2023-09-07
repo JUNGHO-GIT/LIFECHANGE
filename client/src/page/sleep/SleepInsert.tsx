@@ -6,42 +6,50 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const SleepInsert = () => {
 
-  // 1. title
+  // title
   const TITLE = "Sleep Insert";
-  // 2. url
+  // url
   const URL_SLEEP = "http://127.0.0.1:4000/sleep";
   const URL_USER = "http://127.0.0.1:4000/user";
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
-  const [SLEEP, setSLEEP] = useState <any>({
+  // state
+  const [sleep_day, setSleep_day] = useState(koreanDate);
+  const [SLEEP, setSLEEP] = useState <any> ({
+    _id : "",
     user_id : user_id,
-    sleep_title : koreanDate,
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
-    sleep_time: "00:00",
-    sleep_regdate : koreanDate,
-    sleep_week: "",
-    sleep_month: "",
-    sleep_year: "",
+    sleep_title : "Title",
+    sleep_night : "00:00",
+    sleep_morning : "00:00",
+    sleep_time : "00:00",
+    sleep_day : sleep_day,
+    sleep_week : "",
+    sleep_month : "",
+    sleep_year : "",
+    sleep_regdate : koreanDate
   });
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
-    const calcSleepTime = () => {
-      const nightDate = new Date(`${SLEEP.sleep_regdate}T${SLEEP.sleep_night}:00Z`);
-      const morningDate = new Date(`${SLEEP.sleep_regdate}T${SLEEP.sleep_morning}:00Z`);
+    const setSleepDay = () => {
+      setSLEEP({ ...SLEEP, sleep_day: sleep_day });
+    };
+    setSleepDay();
+  }, [sleep_day]);
 
-      // 다음 날까지의 수면 시간을 고려
+  useEffect(() => {
+    const setSleepTime = () => {
+      const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
+      const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_morning}:00Z`);
+
       if (morningDate < nightDate) {
         morningDate.setDate(morningDate.getDate() + 1);
       }
@@ -57,25 +65,11 @@ export const SleepInsert = () => {
         ).padStart(2, "0")}`,
       });
     };
-    calcSleepTime();
-  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_regdate]);
+    setSleepTime();
+  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_day]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const viewDate = () => {
-    return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={new Date(sleep_regdate)}
-        onChange={(date: any) => {
-          setSleep_regdate(moment(date).format("YYYY-MM-DD").toString());
-        }}
-      />
-    );
-  };
-
-  // ---------------------------------------------------------------------------------------------->
-  const sleepInsertFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowSleepInsert = async () => {
     try {
       if (SLEEP.sleep_night === "") {
         alert("Please enter a night");
@@ -101,8 +95,22 @@ export const SleepInsert = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const sleepInsertTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+  const viewSleepDay = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        popperPlacement="bottom"
+        selected={new Date(sleep_day)}
+        onChange={(date:any) => {
+          setSleep_day(moment(date).format("YYYY-MM-DD").toString());
+        }}
+      />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableSleepInsert = () => {
     return (
       <div>
         {/** user_id **/}
@@ -129,11 +137,11 @@ export const SleepInsert = () => {
             className="form-control"
             id="sleep_title"
             name="sleep_title"
-            value={SLEEP.sleep_title}
+            value={SLEEP.sleep_title || ""}
             onChange={(event: any) => {
               setSLEEP({ ...SLEEP, sleep_title: event.target.value });
             }}
-            readOnly
+            placeholder="Title"
           />
         </div>
         <br />
@@ -174,20 +182,16 @@ export const SleepInsert = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepInsert = () => {
     return (
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={sleepInsertFlow}
-      >
+      <button className="btn btn-primary" type="button" onClick={flowSleepInsert}>
         Insert
       </button>
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
@@ -198,14 +202,14 @@ export const SleepInsert = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewDate()}</span>
+            <span className="ms-4">{viewSleepDay()}</span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {sleepInsertTable()}
+            {tableSleepInsert()}
             <br />
             {buttonSleepInsert()}
           </form>

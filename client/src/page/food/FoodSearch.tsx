@@ -9,19 +9,19 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
 
-  // 1. title
+  // title
   const TITLE = "Food Search";
-  // 2. url
+  // url
   const URL_FOOD_API = process.env.REACT_APP_URL_FOOD_API;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const lang = "ko";
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any>([]);
   const [food_regdate, setFood_regdate] = useState(koreanDate);
   const [query, setQuery] = useState("");
@@ -170,7 +170,7 @@ export const FoodSearch = () => {
     });
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

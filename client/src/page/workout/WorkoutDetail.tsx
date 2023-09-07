@@ -9,22 +9,22 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutDetail = () => {
 
-  // 1. title
+  // title
   const TITLE = "Workout Detail";
-  // 2. url
+  // url
   const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [WORKOUT, setWORKOUT] = useState<any>({});
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutDetail = async () => {
       try {
@@ -102,7 +102,7 @@ export const WorkoutDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkoutDelete = () => {
     return (
       <button
@@ -150,7 +150,7 @@ export const WorkoutDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-flex justify-content-center mt-5">

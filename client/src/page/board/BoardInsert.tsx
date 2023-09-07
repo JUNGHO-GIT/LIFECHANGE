@@ -9,19 +9,19 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const BoardInsert = () => {
 
-  // 1. title
+  // title
   const TITLE = "Board Insert";
-  // 2. url
+  // url
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const URL_USER = process.env.REACT_APP_URL_USER;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [board_title, setBoard_title] = useState("");
   const [board_content, setBoard_content] = useState("");
   const [board_regdate, setBoard_regdate] = useState(koreanDate);
@@ -103,7 +103,7 @@ export const BoardInsert = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardInsert = () => {
     return (
       <button className="btn btn-primary" type="button" onClick={boardInsertFlow}>
@@ -112,7 +112,7 @@ export const BoardInsert = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

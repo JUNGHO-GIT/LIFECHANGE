@@ -9,23 +9,23 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
 
-  // 1. title
+  // title
   const TITLE = "Calendar Detail";
-  // 2. url
+  // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
   const calendar_year = location.state.calendar_year;
   const calendar_month = location.state.calendar_month;
   const calendar_day = location.state.calendar_day;
-  // 6. state
+  // state
   const [FOOD_LIST, setFOOD_LIST] = useState<any>([]);
   const [WORKOUT_LIST, setWORKOUT_LIST] = useState<any>([]);
   const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
@@ -52,7 +52,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodList = async () => {
       try {
@@ -72,7 +72,7 @@ export const CalendarDetail = () => {
     fetchFoodList();
   }, [user_id, food_regdate]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutList = async () => {
       try {
@@ -92,7 +92,7 @@ export const CalendarDetail = () => {
     fetchWorkoutList();
   }, [user_id, workout_regdate]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
@@ -198,7 +198,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container main">
       <div className="row d-center">

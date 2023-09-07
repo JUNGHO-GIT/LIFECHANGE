@@ -10,18 +10,18 @@ import $ from "jquery";
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
 
-  // 1. title
+  // title
   const TITLE = "Calendar List";
-  // 2. url
+  // url
   const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
 
   // ---------------------------------------------------------------------------------------------->
   const date = new Date();
@@ -161,7 +161,7 @@ export const CalendarList = () => {
     renderCalendar();
   });
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

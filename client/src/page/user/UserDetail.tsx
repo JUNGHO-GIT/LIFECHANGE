@@ -9,21 +9,21 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const UserDetail = () => {
 
-  // 1. title
+  // title
   const TITLE = "User Detail";
-  // 2. url
+  // url
   const URL_USER = process.env.REACT_APP_URL_USER;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
-  // 6. state
+  // val
+  // state
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchUserDetail = async () => {
       const user_id = window.sessionStorage.getItem("user_id");
@@ -76,7 +76,7 @@ export const UserDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
       <Link to="/userDetail">
@@ -106,7 +106,7 @@ export const UserDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

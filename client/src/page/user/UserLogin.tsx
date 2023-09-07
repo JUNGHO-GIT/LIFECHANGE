@@ -9,17 +9,17 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
 
-  // 1. title
+  // title
   const TITLE = "User Login";
-  // 2. url
+  // url
   const URL_USER = process.env.REACT_APP_URL_USER;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
-  // 6. state
+  // val
+  // state
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
@@ -66,7 +66,7 @@ export const UserLogin = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonUserLogin = () => {
     return (
       <button type="button" className="btn btn-primary ms-2" onClick={userLoginFlow}>
@@ -75,7 +75,7 @@ export const UserLogin = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

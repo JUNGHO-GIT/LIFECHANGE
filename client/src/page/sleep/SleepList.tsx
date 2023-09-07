@@ -6,44 +6,44 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const SleepList = () => {
 
-  // 1. title
+  // title
   const TITLE = "Sleep List";
-  // 2. url
+  // url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([{
+  // state
+  const [sleep_day, setSleep_day] = useState(koreanDate);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<any> ([{
     _id : "",
-    user_id : "",
+    user_id : user_id,
     sleep_title : "",
-    sleep_night: "",
-    sleep_morning: "",
-    sleep_time: "",
-    sleep_regdate : "",
-    sleep_week: "",
-    sleep_month: "",
-    sleep_year: "",
-    sleep_update : "",
+    sleep_night : "",
+    sleep_morning : "",
+    sleep_time : "",
+    sleep_day : sleep_day,
+    sleep_week : "",
+    sleep_month : "",
+    sleep_year : "",
+    sleep_regdate : koreanDate
   }]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
         const response = await axios.get (`${URL_SLEEP}/sleepList`, {
           params: {
             user_id : user_id,
-            sleep_regdate : sleep_regdate
+            sleep_day : sleep_day,
           }
         });
         setSLEEP_LIST(response.data);
@@ -53,24 +53,26 @@ export const SleepList = () => {
       }
     };
     fetchSleepList();
-  }, [user_id, sleep_regdate]);
+  }, [user_id, sleep_day]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const viewDate = () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4. logic ------------------------------------------------------------------------------------->
+  const viewSleepDay = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
-        selected={new Date(sleep_regdate)}
+        selected={new Date(sleep_day)}
         onChange={(date: any) => {
-          setSleep_regdate(moment(date).format("YYYY-MM-DD").toString());
+          setSleep_day(moment(date).format("YYYY-MM-DD").toString());
         }}
       />
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const sleepListTable = () => {
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableSleepList = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -79,10 +81,11 @@ export const SleepList = () => {
             <th>Night</th>
             <th>Morning</th>
             <th>Time</th>
-            <th>regdate</th>
+            <th>day</th>
             <th>week</th>
             <th>month</th>
             <th>year</th>
+            <th>regdate</th>
           </tr>
         </thead>
         <tbody>
@@ -96,10 +99,11 @@ export const SleepList = () => {
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
               <td>{index.sleep_time}</td>
-              <td>{index.sleep_regdate}</td>
+              <td>{index.sleep_day}</td>
               <td>{index.sleep_week}</td>
               <td>{index.sleep_month}</td>
               <td>{index.sleep_year}</td>
+              <td>{index.sleep_regdate}</td>
             </tr>
           ))}
         </tbody>
@@ -107,7 +111,7 @@ export const SleepList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepDetail = (_id: string) => {
     navParam(`/sleepDetail`, {
       state: {
@@ -130,7 +134,7 @@ export const SleepList = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
@@ -141,14 +145,14 @@ export const SleepList = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewDate()}</span>
+            <span className="ms-4">{viewSleepDay()}</span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {sleepListTable()}
+            {tableSleepList()}
             <br/>
             {buttonRefreshPage()}
             {buttonSleepInsert()}

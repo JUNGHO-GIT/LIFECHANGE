@@ -10,18 +10,18 @@ import {WorkoutSelect} from "./WorkoutSelect";
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutInsert = () => {
 
-  // 1. title
+  // title
   const TITLE = "Workout Insert";
-  // 2. url
+  // url
   const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 6. state
+  // state
   const [WORKOUT, setWORKOUT] = useState({
     user_id: sessionStorage.getItem("user_id"),
     workout_part: "",
@@ -192,7 +192,7 @@ export const WorkoutInsert = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkoutInsert = () => {
     return (
       <button
@@ -205,7 +205,7 @@ export const WorkoutInsert = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">

@@ -6,11 +6,11 @@ import moment from "moment-timezone";
 // 1. sleepList ----------------------------------------------------------------------------------->
 export const sleepList = async (
   user_id_param : any,
-  sleep_regdate_param : any
+  sleep_day_param : any
 ) => {
   const sleepList = await Sleep.find ({
     user_id : user_id_param,
-    sleep_regdate : sleep_regdate_param
+    sleep_day : sleep_day_param
   });
   return sleepList;
 };
@@ -36,7 +36,7 @@ export const sleepInsert = async (
   const getWeek = () => {
 
     const currentMonth = koreanDate.split('-')[1];
-    const currentRegdate = sleep_param.sleep_regdate;
+    const currentRegdate = sleep_param.sleep_day;
 
     let weekValue;
     for(let i = 1; i <= 5; i++) {
@@ -82,10 +82,11 @@ export const sleepInsert = async (
     sleep_night : sleep_param.sleep_night,
     sleep_morning : sleep_param.sleep_morning,
     sleep_time : sleep_param.sleep_time,
-    sleep_regdate : sleep_param.sleep_regdate,
+    sleep_day : sleep_param.sleep_day,
     sleep_week : getWeek(),
     sleep_month : getMonth(),
     sleep_year : getYear(),
+    sleep_regdate : sleep_param.sleep_regdate,
     sleep_update : sleep_param.sleep_update
   });
   return sleepInsert;

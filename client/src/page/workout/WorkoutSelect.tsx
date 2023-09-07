@@ -51,7 +51,7 @@ export const WorkoutSelect : React.FC<WorkoutSelectProps> = ({
     ],
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     if (partOptions.length > 0 && !workoutPart) {
       setWorkoutPart(partOptions[0]);
@@ -64,7 +64,7 @@ export const WorkoutSelect : React.FC<WorkoutSelectProps> = ({
     }
   }, [workoutPart]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div>
       <select className="form-select" onChange={(e) => setWorkoutPart(e.target.value)}>

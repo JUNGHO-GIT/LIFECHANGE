@@ -9,19 +9,19 @@ import moment from "moment-timezone";
 // ------------------------------------------------------------------------------------------------>
 export const FoodInsert = () => {
 
-  // 1. title
+  // title
   const TITLE = "Food Insert";
-  // 2. url
+  // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  // 3. date
+  // date
   const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
-  // 4. hook
+  // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 5. val
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
   const params = new URLSearchParams(location.search);
-  // 6. state
+  // state
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
 
@@ -194,7 +194,7 @@ export const FoodInsert = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
