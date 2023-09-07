@@ -88,7 +88,7 @@ const DayComponent = () => {
     return (
       <div>
         <p>{selectedInfo()}</p>
-        <button className="btn btn-success me-2" onClick={() => setMonth(today)}>Today</button>
+        <button className="btn btn-success me-2" onClick={() => setSelectedMonth(today)}>Today</button>
         <button className="btn btn-primary me-2" onClick={handleResetClick}>Reset</button>
       </div>
     );
