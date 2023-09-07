@@ -21,19 +21,18 @@ export const SleepList = () => {
   // 5. val
   const user_id = window.sessionStorage.getItem("user_id");
   // 6. state
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
   const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([{
-    _id : "",
-    user_id : "",
-    sleep_title : "",
+    _id: "",
+    user_id : user_id,
+    sleep_title: "",
     sleep_night: "",
     sleep_morning: "",
     sleep_time: "",
-    sleep_regdate : "",
+    sleep_regdate : koreanDate,
     sleep_week: "",
     sleep_month: "",
     sleep_year: "",
-    sleep_update : "",
+    sleep_update: "",
   }]);
 
   // ---------------------------------------------------------------------------------------------->
@@ -42,31 +41,111 @@ export const SleepList = () => {
       try {
         const response = await axios.get (`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id : user_id,
-            sleep_regdate : sleep_regdate
+            user_id : SLEEP_LIST.user_id,
+            sleep_regdate : SLEEP_LIST.sleep_regdate,
           }
         });
         setSLEEP_LIST(response.data);
       }
       catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
+        setSLEEP_LIST([]);
       }
     };
     fetchSleepList();
-  }, [user_id, sleep_regdate]);
+  }, [SLEEP_LIST.user_id, SLEEP_LIST.sleep_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
   const viewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
+        selected={new Date(SLEEP_LIST.sleep_regdate)}
         popperPlacement="bottom"
-        selected={new Date(sleep_regdate)}
         onChange={(date: any) => {
-          setSleep_regdate(moment(date).format("YYYY-MM-DD").toString());
+          setSLEEP_LIST ({
+            ...SLEEP_LIST,
+            sleep_regdate: date.toISOString().split("T")[0],
+          });
         }}
       />
     );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const viewWeek = () => {
+    return (
+      <select
+        className="form-select"
+        aria-label="Default select example"
+        onChange={(e) => {
+          setSLEEP_LIST ({
+            ...SLEEP_LIST,
+            sleep_week: e.target.value,
+          });
+        }}
+      >
+        <option value="Mon">Mon</option>
+        <option value="Tue">Tue</option>
+        <option value="Wed">Wed</option>
+        <option value="Thu">Thu</option>
+        <option value="Fri">Fri</option>
+        <option value="Sat">Sat</option>
+        <option value="Sun">Sun</option>
+      </select>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const viewMonth = () => {
+    return (
+      <select
+        className="form-select"
+        aria-label="Default select example"
+        onChange={(e) => {
+          setSLEEP_LIST ({
+            ...SLEEP_LIST,
+            sleep_month: e.target.value,
+          });
+        }}
+      >
+        <option value="Jan">Jan</option>
+        <option value="Feb">Feb</option>
+        <option value="Mar">Mar</option>
+        <option value="Apr">Apr</option>
+        <option value="May">May</option>
+        <option value="Jun">Jun</option>
+        <option value="Jul">Jul</option>
+        <option value="Aug">Aug</option>
+        <option value="Sep">Sep</option>
+        <option value="Oct">Oct</option>
+        <option value="Nov">Nov</option>
+        <option value="Dec">Dec</option>
+      </select>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const viewYear = () => {
+    return (
+      <select
+        className="form-select"
+        aria-label="Default select example"
+        onChange={(e) => {
+          setSLEEP_LIST ({
+            ...SLEEP_LIST,
+            sleep_year: e.target.value,
+          });
+        }}
+      >
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+      </select>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const viewSelect = () => {
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -81,8 +160,6 @@ export const SleepList = () => {
             <th>Time</th>
             <th>regdate</th>
             <th>week</th>
-            <th>month</th>
-            <th>year</th>
           </tr>
         </thead>
         <tbody>
@@ -98,8 +175,6 @@ export const SleepList = () => {
               <td>{index.sleep_time}</td>
               <td>{index.sleep_regdate}</td>
               <td>{index.sleep_week}</td>
-              <td>{index.sleep_month}</td>
-              <td>{index.sleep_year}</td>
             </tr>
           ))}
         </tbody>

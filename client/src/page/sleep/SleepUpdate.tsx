@@ -21,8 +21,8 @@ export const SleepUpdate = () => {
   // 5. val
   const _id = location.state._id;
   // 6. state
-  const [SLEEP, setSLEEP] = useState<any>({});
   const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
+  const [SLEEP, setSLEEP] = useState<any>({});
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -69,18 +69,15 @@ export const SleepUpdate = () => {
   }, [SLEEP.sleep_night, SLEEP.sleep_morning, sleep_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
-  const datePicker = () => {
+  const viewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
-        selected={new Date(sleep_regdate)}
         popperPlacement="bottom"
+        selected={new Date(sleep_regdate)}
         onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setSleep_regdate(selectedDate);
-          setSLEEP({ ...SLEEP, sleep_title: selectedDate });
+          setSleep_regdate(moment(date).format("YYYY-MM-DD").toString());
         }}
-        readOnly
       />
     );
   };
@@ -181,7 +178,7 @@ export const SleepUpdate = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{datePicker()}</span>
+            <span className="ms-4">{viewDate()}</span>
           </h1>
         </div>
       </div>

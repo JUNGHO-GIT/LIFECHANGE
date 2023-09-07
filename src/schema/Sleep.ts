@@ -1,6 +1,5 @@
 // Sleep.ts
 import mongoose from "mongoose";
-import moment from "moment-timezone";
 
 const SleepScheme = new mongoose.Schema ({
   _id : {
@@ -30,7 +29,7 @@ const SleepScheme = new mongoose.Schema ({
   sleep_regdate: {
     type: String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return "default";
     },
     required : true
   },
@@ -41,10 +40,24 @@ const SleepScheme = new mongoose.Schema ({
     },
     required: true
   },
+  sleep_month: {
+    type: String,
+    default : () => {
+      return "default";
+    },
+    required: true
+  },
+  sleep_year: {
+    type: String,
+    default : () => {
+      return "default";
+    },
+    required: true
+  },
   sleep_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return "default";
     },
     required : true
   }

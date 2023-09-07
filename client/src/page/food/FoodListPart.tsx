@@ -27,7 +27,7 @@ export const FoodListPart = () => {
   const [FOOD, setFOOD] = useState<any>({});
 
   // ---------------------------------------------------------------------------------------------->
-  const datePicker = () => {
+  const viewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
@@ -140,7 +140,7 @@ export const FoodListPart = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{datePicker()}</span>
+            <span className="ms-4">{viewDate()}</span>
           </h1>
         </div>
       </div>

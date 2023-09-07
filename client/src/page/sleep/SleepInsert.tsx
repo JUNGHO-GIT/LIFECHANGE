@@ -22,13 +22,17 @@ export const SleepInsert = () => {
   // 5. val
   const user_id = window.sessionStorage.getItem("user_id");
   // 6. state
-  const [SLEEP, setSLEEP] = useState ({
-    user_id: window.sessionStorage.getItem("user_id"),
-    sleep_regdate : koreanDate,
+  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
+  const [SLEEP, setSLEEP] = useState <any>({
+    user_id : user_id,
+    sleep_title : koreanDate,
     sleep_night: "00:00",
     sleep_morning: "00:00",
     sleep_time: "00:00",
-    sleep_title : koreanDate,
+    sleep_regdate : koreanDate,
+    sleep_week: "",
+    sleep_month: "",
+    sleep_year: "",
   });
 
   // ---------------------------------------------------------------------------------------------->
@@ -57,19 +61,14 @@ export const SleepInsert = () => {
   }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
-  const datePicker = () => {
+  const viewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
-        selected={new Date(SLEEP.sleep_regdate)}
         popperPlacement="bottom"
+        selected={new Date(sleep_regdate)}
         onChange={(date: any) => {
-          const selectedDate = moment(date).format("YYYY-MM-DD");
-          setSLEEP ({
-            ...SLEEP,
-            sleep_title: selectedDate,
-            sleep_regdate: selectedDate
-          });
+          setSleep_regdate(moment(date).format("YYYY-MM-DD").toString());
         }}
       />
     );
@@ -199,7 +198,7 @@ export const SleepInsert = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{datePicker()}</span>
+            <span className="ms-4">{viewDate()}</span>
           </h1>
         </div>
       </div>

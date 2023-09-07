@@ -1,6 +1,7 @@
 // sleepService.ts
 import Sleep from "../schema/Sleep";
 import * as mongoose from "mongoose";
+import moment from "moment-timezone";
 
 // 1. sleepList ----------------------------------------------------------------------------------->
 export const sleepList = async (
@@ -29,43 +30,51 @@ export const sleepInsert = async (
   sleep_param : any
 ) => {
 
-  // week 관련 로직 추가
-  function getWeek() {
-    const date = new Date();
-    date.setHours(date.getHours() + 9);
-    const currentMonth = date.toISOString().split('T')[0].split('-')[1];
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+
+  // 1. getWeek ---------------------------------------------------------------------------------->
+  const getWeek = () => {
+
+    const currentMonth = koreanDate.split('-')[1];
     const currentRegdate = sleep_param.sleep_regdate;
 
-    let weekStr;
-
+    let weekValue;
     for(let i = 1; i <= 5; i++) {
 
       // 월요일
-      const startOfWeek = new Date(date);
-      startOfWeek.setDate(date.getDate() - date.getDay() + (i * 7) - 5);
-      const startString = startOfWeek.toISOString().split('T')[0];
+      const startOfWeek = moment().startOf('week').add(1, 'days');
+      const startString = startOfWeek.format('YYYY-MM-DD').toString();
 
       // 목요일
-      const thursday = new Date(startOfWeek);
-      thursday.setDate(startOfWeek.getDate() + 3);
-      const thursdayString = thursday.toISOString().split('T')[0];
-      const thursdayMonth = thursdayString.split('-')[1];
+      const thursdayOfWeek = moment().startOf('week').add(4, 'days');
+      const thursdayMonth = thursdayOfWeek.format('MM').toString();
 
       // 일요일
-      const endOfWeek = new Date(date);
-      endOfWeek.setDate(date.getDate() - date.getDay() + (i * 7) + 1);
-      const endString = endOfWeek.toISOString().split('T')[0];
+      const endOfWeek = moment().endOf('week');
+      const endString = endOfWeek.format('YYYY-MM-DD').toString();
 
       if (thursdayMonth === currentMonth) {
         if (currentRegdate >= startString && currentRegdate <= endString) {
-          weekStr = `${i}번째 주: ${startString} ~ ${endString}`;
+          weekValue = `${i}번째 주: ${startString} ~ ${endString}`;
           break;
         }
       }
     }
-    return weekStr;
+    return weekValue;
+  }
+  // 2. getMonth --------------------------------------------------------------------------------->
+  const getMonth = () => {
+    const monthValue = koreanDate.split('-')[1];
+    return monthValue;
   }
 
+  // 3. getYear ---------------------------------------------------------------------------------->
+  const getYear = () => {
+    const yearValue = koreanDate.split('-')[0];
+    return yearValue;
+  }
+
+  // 4. sleepInsert ------------------------------------------------------------------------------->
   const sleepInsert = await Sleep.create ({
     _id : new mongoose.Types.ObjectId(),
     user_id : sleep_param.user_id,
@@ -75,6 +84,8 @@ export const sleepInsert = async (
     sleep_time : sleep_param.sleep_time,
     sleep_regdate : sleep_param.sleep_regdate,
     sleep_week : getWeek(),
+    sleep_month : getMonth(),
+    sleep_year : getYear(),
     sleep_update : sleep_param.sleep_update
   });
   return sleepInsert;

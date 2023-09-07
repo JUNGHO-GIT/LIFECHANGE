@@ -22,23 +22,8 @@ export const SleepDetail = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const _id = location.state._id;
   // 6. state
-  const [SLEEP, setSLEEP] = useState<any>({});
   const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
-
-  // ---------------------------------------------------------------------------------------------->
-  const datePicker = () => {
-    return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        selected={new Date(sleep_regdate)}
-        popperPlacement="bottom"
-        onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setSleep_regdate(selectedDate);
-        }}
-      />
-    );
-  };
+  const [SLEEP, setSLEEP] = useState<any>({});
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -58,6 +43,20 @@ export const SleepDetail = () => {
     };
     fetchSleepDetail();
   }, [_id]);
+
+  // ---------------------------------------------------------------------------------------------->
+  const viewDate = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        popperPlacement="bottom"
+        selected={new Date(sleep_regdate)}
+        onChange={(date: any) => {
+          setSleep_regdate(moment(date).format("YYYY-MM-DD").toString());
+        }}
+      />
+    );
+  };
 
   // ---------------------------------------------------------------------------------------------->
   const sleepDetailTable = () => {
@@ -172,7 +171,7 @@ export const SleepDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{datePicker()}</span>
+            <span className="ms-4">{viewDate()}</span>
           </h1>
         </div>
       </div>
