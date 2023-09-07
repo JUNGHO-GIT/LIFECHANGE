@@ -1,5 +1,6 @@
 // Routine.ts
 import mongoose from "mongoose";
+import moment from "moment-timezone";
 
 const RoutineScheme = new mongoose.Schema ({
   _id : {
@@ -37,18 +38,14 @@ const RoutineScheme = new mongoose.Schema ({
   routine_regdate : {
     type : String,
     default : () => {
-      const date = new Date();
-      date.setHours(date.getHours() + 9);
-      return date.toISOString().split('T')[0];
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
   },
   routine_update : {
     type : String,
     default : () => {
-      const date = new Date();
-      date.setHours(date.getHours() + 9);
-      return date.toISOString().split('T')[0];
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
   }

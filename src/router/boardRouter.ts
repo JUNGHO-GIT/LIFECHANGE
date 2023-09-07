@@ -100,4 +100,4 @@ boardRouter.delete("/boardDelete", async (req: Request, res: Response) => {
   }
 });
 
-export default boardRouter;
+ boardRouter;

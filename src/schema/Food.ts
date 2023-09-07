@@ -1,5 +1,6 @@
 // Food.ts
 import mongoose from "mongoose";
+import moment from "moment-timezone";
 
 const FoodScheme = new mongoose.Schema ({
   _id : {
@@ -45,18 +46,14 @@ const FoodScheme = new mongoose.Schema ({
   food_regdate : {
     type : String,
     default : () => {
-      const date = new Date();
-      date.setHours(date.getHours() + 9);
-      return date.toISOString().split('T')[0];
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
   },
   food_update : {
     type : String,
     default : () => {
-      const date = new Date();
-      date.setHours(date.getHours() + 9);
-      return date.toISOString().split('T')[0];
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
   },

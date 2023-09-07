@@ -1,5 +1,6 @@
 // Board.ts
 import mongoose from "mongoose";
+import moment from "moment-timezone";
 
 const BoardScheme = new mongoose.Schema ({
   _id : {
@@ -21,18 +22,14 @@ const BoardScheme = new mongoose.Schema ({
   board_regdate : {
     type : String,
     default : () => {
-      const date = new Date();
-      date.setHours(date.getHours() + 9);
-      return date.toISOString().split('T')[0];
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
   },
   board_update : {
     type : String,
     default : () => {
-      const date = new Date();
-      date.setHours(date.getHours() + 9);
-      return date.toISOString().split('T')[0];
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
   }
