@@ -23,7 +23,7 @@ export const FoodDetail = () => {
   const food_category = location.state.food_category;
   // 6. state
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-  const [FOOD, setFOOD] = useState([]);
+  const [FOOD, setFOOD] = useState<any>([]);
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {

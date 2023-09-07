@@ -21,7 +21,7 @@ export const WorkoutList = () => {
   // 5. val
   const user_id = window.sessionStorage.getItem("user_id");
   // 6. state
-  const [WORKOUT_LIST, setWORKOUT_LIST] = useState<[]>([]);
+  const [WORKOUT_LIST, setWORKOUT_LIST] = useState<any>([]);
   const [workout_regdate, setWorkout_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->

@@ -22,7 +22,7 @@ export const FoodSearch = () => {
   const lang = "ko";
   const user_id = window.sessionStorage.getItem("user_id");
   // 6. state
-  const [FOOD_SEARCH, setFOOD_SEARCH] = useState([]);
+  const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any>([]);
   const [food_regdate, setFood_regdate] = useState(koreanDate);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);

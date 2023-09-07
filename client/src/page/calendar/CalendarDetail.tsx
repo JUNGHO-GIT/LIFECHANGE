@@ -26,9 +26,9 @@ export const CalendarDetail = () => {
   const calendar_month = location.state.calendar_month;
   const calendar_day = location.state.calendar_day;
   // 6. state
-  const [FOOD_LIST, setFOOD_LIST] = useState([]);
-  const [WORKOUT_LIST, setWORKOUT_LIST] = useState([]);
-  const [SLEEP_LIST, setSLEEP_LIST] = useState([]);
+  const [FOOD_LIST, setFOOD_LIST] = useState<any>([]);
+  const [WORKOUT_LIST, setWORKOUT_LIST] = useState<any>([]);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
   const [calendar_regdate, setCalendar_regdate]
   = useState(`${calendar_year}-${calendar_month}-${calendar_day}`);
   const [workout_regdate, setWorkout_regdate] = useState(koreanDate);

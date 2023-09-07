@@ -22,7 +22,7 @@ export const FoodList = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // 6. state
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-  const [FOOD_LIST, setFOOD_LIST] = useState([]);
+  const [FOOD_LIST, setFOOD_LIST] = useState<any>([]);
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {

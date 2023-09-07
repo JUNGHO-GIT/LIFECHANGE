@@ -18,9 +18,9 @@ export const FoodInsert = () => {
   // 4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
   // 5. val
   const user_id = window.sessionStorage.getItem("user_id");
+  const params = new URLSearchParams(location.search);
   // 6. state
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
