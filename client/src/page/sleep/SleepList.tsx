@@ -1,10 +1,12 @@
 // SleepList.tsx
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
+import { addDays, format, isSameDay } from 'date-fns';
+import { DayClickEventHandler, DateRange, DayPicker } from 'react-day-picker';
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
+
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepList = () => {
@@ -43,7 +45,6 @@ export const SleepList = () => {
       let params:any = {
         user_id : user_id
       };
-
       switch (view_mode) {
         case 'DAY':
           params['sleep_day'] = sleep_day;
@@ -57,41 +58,26 @@ export const SleepList = () => {
         default:
           break;
       }
-
       try {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, { params });
         setSLEEP_LIST(response.data);
-      } catch (error: any) {
+      }
+      catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
       }
     };
     fetchSleepList();
   }, [user_id, sleep_day, view_mode]);
 
-  // 일, 주, 년 보기 변경 함수
+  // 3. flow -------------------------------------------------------------------------------------->
   const handleViewChange = (mode: 'DAY' | 'WEEK' | 'YEAR', date: any) => {
     setView_mode(mode);
     setSleep_day(moment(date).format("YYYY-MM-DD").toString());
   };
 
-  // 3. flow -------------------------------------------------------------------------------------->
-
   // 4. logic ------------------------------------------------------------------------------------->
-  const viewSleepDay = () => {
-    return (
-      <div>
-        <h5><b>일 단위로 보기</b></h5>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
-          selected={new Date(sleep_day)}
-          onChange={(date: any) => {
-            handleViewChange('DAY', date);
-          }}
-        />
-      </div>
-    );
-  };
+
+
   const viewSleepWeek = () => {
     return (
       <div>
@@ -107,6 +93,7 @@ export const SleepList = () => {
       </div>
     );
   };
+
   const viewSleepYear = () => {
     return (
       <div>
@@ -197,7 +184,7 @@ export const SleepList = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-3 d-center ms-2">
-          {viewSleepDay()}
+          {/* {viewSleepDay()} */}
         </div>
         <div className="col-3 d-center ms-2">
           {viewSleepWeek()}

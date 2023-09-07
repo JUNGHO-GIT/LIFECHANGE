@@ -16,6 +16,9 @@ export const Header = () => {
           <Link to="/" className="nav-link fs-14 tc-w ms-2">Home</Link>
         </li>
         <li>
+          <Link to="/test" className="nav-link fs-14 tc-w ms-2">Test</Link>
+        </li>
+        <li>
           <Link to="/userDetail" className="nav-link fs-14 tc-w ms-2">User</Link>
         </li>
         <li>

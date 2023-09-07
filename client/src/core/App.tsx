@@ -5,10 +5,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "../assets/Custom.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import 'react-day-picker/dist/style.css';
 import "react-datepicker/dist/react-datepicker.css";
 import "../assets/DatePicker.css";
 import "../assets/TimePicker.css";
@@ -19,6 +20,7 @@ import { Header } from "../layout/Header";
 import { Footer } from "../layout/Footer";
 import { Hover } from "../components/Hover";
 import { Main } from "../page/common/Main";
+import { Test2 } from "../page/common/Test2";
 
 import { UserLogin } from "../page/user/UserLogin";
 import { UserInsert } from "../page/user/UserInsert";
@@ -61,6 +63,7 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/test" element={<Test2 />} />
           <Route path="/userLogin" element={<UserLogin />} />
           <Route path="/userInsert" element={<UserInsert />} />
           <Route path="/userDetail" element={<UserDetail />} />
