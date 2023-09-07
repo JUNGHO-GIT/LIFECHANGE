@@ -1,37 +1,41 @@
 // SleepInsert.tsx
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
+import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepInsert = () => {
 
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-
+  // 1. title
+  const TITLE = "Sleep Insert";
+  // 2. url
   const URL_SLEEP = "http://127.0.0.1:4000/sleep";
   const URL_USER = "http://127.0.0.1:4000/user";
-  const TITLE = "Sleep Insert";
-
-  const [SLEEP, setSLEEP] = useState({
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
+  const [SLEEP, setSLEEP] = useState ({
     user_id: window.sessionStorage.getItem("user_id"),
-    sleep_title: sleep_regdate,
+    sleep_regdate : koreanDate,
     sleep_night: "00:00",
     sleep_morning: "00:00",
     sleep_time: "00:00",
+    sleep_title : koreanDate,
   });
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const calcSleepTime = () => {
-      const nightDate = new Date(
-        `${sleep_regdate}T${SLEEP.sleep_night}:00Z`
-      );
-      const morningDate = new Date(
-        `${sleep_regdate}T${SLEEP.sleep_morning}:00Z`
-      );
+      const nightDate = new Date(`${SLEEP.sleep_regdate}T${SLEEP.sleep_night}:00Z`);
+      const morningDate = new Date(`${SLEEP.sleep_regdate}T${SLEEP.sleep_morning}:00Z`);
 
       // 다음 날까지의 수면 시간을 고려
       if (morningDate < nightDate) {
@@ -50,19 +54,22 @@ export const SleepInsert = () => {
       });
     };
     calcSleepTime();
-  }, [SLEEP.sleep_night, SLEEP.sleep_morning, sleep_regdate]);
+  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_regdate]);
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
-        selected={new Date(sleep_regdate)}
+        selected={new Date(SLEEP.sleep_regdate)}
         popperPlacement="bottom"
         onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setSleep_regdate(selectedDate);
-          setSLEEP({ ...SLEEP, sleep_title: selectedDate });
+          const selectedDate = moment(date).format("YYYY-MM-DD");
+          setSLEEP ({
+            ...SLEEP,
+            sleep_title: selectedDate,
+            sleep_regdate: selectedDate
+          });
         }}
       />
     );

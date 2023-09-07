@@ -1,43 +1,39 @@
 // CalendarDetail.tsx
-import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
 
-  const location = useLocation();
-  const user_id = location.state.user_id;
-
-  const calendar_year = location.state.calendar_year;
-  const calendar_month = location.state.calendar_month;
-  const calendar_day = location.state.calendar_day;
-
-  const koreanDate = new Date(
-    `${calendar_year}-${calendar_month}-${calendar_day}`
-  );
-  koreanDate.setHours(koreanDate.getHours() + 9);
-
-  const [food_regdate, setFood_regdate] = useState (
-    koreanDate.toISOString().split("T")[0]
-  );
-  const [workout_regdate, setWorkout_regdate] = useState (
-    koreanDate.toISOString().split("T")[0]
-  );
-  const [sleep_regdate, setSleep_regdate] = useState (
-    koreanDate.toISOString().split("T")[0]
-  );
-
-  const [FOOD_LIST, setFOOD_LIST] = useState([]);
-  const [WORKOUT_LIST, setWORKOUT_LIST] = useState([]);
-  const [SLEEP_LIST, setSLEEP_LIST] = useState([]);
-
+  // 1. title
+  const TITLE = "Calendar Detail";
+  // 2. url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-
-  const TITLE = "Calendar Detail";
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  const calendar_year = location.state.calendar_year;
+  const calendar_month = location.state.calendar_month;
+  const calendar_day = location.state.calendar_day;
+  // 6. state
+  const [FOOD_LIST, setFOOD_LIST] = useState([]);
+  const [WORKOUT_LIST, setWORKOUT_LIST] = useState([]);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState([]);
+  const [calendar_regdate, setCalendar_regdate]
+  = useState(`${calendar_year}-${calendar_month}-${calendar_day}`);
+  const [workout_regdate, setWorkout_regdate] = useState(koreanDate);
+  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
+  const [food_regdate, setFood_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
@@ -45,7 +41,7 @@ export const CalendarDetail = () => {
       <DatePicker
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
-        selected={new Date(food_regdate)}
+        selected={new Date(calendar_regdate)}
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
@@ -67,7 +63,8 @@ export const CalendarDetail = () => {
           },
         });
         setFOOD_LIST(response.data);
-      } catch (error: any) {
+      }
+      catch (error: any) {
         alert(`Error fetching food data: ${error.message}`);
         setFOOD_LIST([]);
       }
@@ -86,7 +83,8 @@ export const CalendarDetail = () => {
           },
         });
         setWORKOUT_LIST(response.data);
-      } catch (error: any) {
+      }
+      catch (error: any) {
         alert(`Error fetching workout data: ${error.message}`);
         setWORKOUT_LIST([]);
       }
@@ -105,7 +103,8 @@ export const CalendarDetail = () => {
           },
         });
         setSLEEP_LIST(response.data);
-      } catch (error: any) {
+      }
+      catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP_LIST([]);
       }

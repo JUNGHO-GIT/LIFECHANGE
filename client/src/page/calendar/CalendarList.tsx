@@ -1,18 +1,30 @@
 // CalendarList.tsx
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
+import axios from "axios";
+import moment from "moment-timezone";
 import $ from "jquery";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
 
-  const user_id = sessionStorage.getItem("user_id");
-  const navParam = useNavigate();
-  const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
+  // 1. title
   const TITLE = "Calendar List";
-  const date = new Date();
+  // 2. url
+  const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
 
   // ---------------------------------------------------------------------------------------------->
+  const date = new Date();
   const renderCalendar = () => {
 
     $("#calendar").empty();

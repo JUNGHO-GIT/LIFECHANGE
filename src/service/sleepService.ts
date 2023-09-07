@@ -36,19 +36,22 @@ export const sleepInsert = async (
     const currentMonth = date.toISOString().split('T')[0].split('-')[1];
     const currentRegdate = sleep_param.sleep_regdate;
 
-    let weekStr = '';
+    let weekStr;
 
     for(let i = 1; i <= 5; i++) {
 
+      // 월요일
       const startOfWeek = new Date(date);
       startOfWeek.setDate(date.getDate() - date.getDay() + (i * 7) - 5);
       const startString = startOfWeek.toISOString().split('T')[0];
 
+      // 목요일
       const thursday = new Date(startOfWeek);
       thursday.setDate(startOfWeek.getDate() + 3);
       const thursdayString = thursday.toISOString().split('T')[0];
       const thursdayMonth = thursdayString.split('-')[1];
 
+      // 일요일
       const endOfWeek = new Date(date);
       endOfWeek.setDate(date.getDate() - date.getDay() + (i * 7) + 1);
       const endString = endOfWeek.toISOString().split('T')[0];

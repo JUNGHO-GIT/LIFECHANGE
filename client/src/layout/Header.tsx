@@ -6,7 +6,7 @@ import "../assets/Custom.css";
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
 
-  const user_id = sessionStorage.getItem("user_id");
+  const user_id = window.sessionStorage.getItem("user_id");
 
   // ---------------------------------------------------------------------------------------------->
   const NavList = () => {

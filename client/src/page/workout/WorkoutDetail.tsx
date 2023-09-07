@@ -1,17 +1,28 @@
 // WorkoutDetail.tsx
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutDetail = () => {
 
-  const [WORKOUT, setWORKOUT] = useState<any>({});
+  // 1. title
+  const TITLE = "Workout Detail";
+  // 2. url
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
   const navParam = useNavigate();
   const location = useLocation();
+  // 5. val
   const _id = location.state._id;
-  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
-  const TITLE = "Workout Detail";
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
+  const [WORKOUT, setWORKOUT] = useState<any>({});
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {

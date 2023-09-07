@@ -1,25 +1,30 @@
 // FoodListPart.tsx
-import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker"
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodListPart = () => {
 
-  const [FOOD, setFOOD] = useState<any>({});
-  const location = useLocation();
-  const navParam = useNavigate();
-  const _id = location.state._id;
-  const user_id = location.state.user_id;
-
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const [food_regdate, setFood_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-
-  const food_category = location.state.food_category;
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  // 1. title
   const TITLE = "Food ListPart";
+  // 2. url
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const _id = location.state._id;
+  const user_id = window.sessionStorage.getItem("user_id");
+  const food_category = location.state.food_category;
+  // 6. state
+  const [food_regdate, setFood_regdate] = useState(koreanDate);
+  const [FOOD, setFOOD] = useState<any>({});
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {

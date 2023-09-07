@@ -1,14 +1,27 @@
 // UserDelete.tsx
 import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDelete = () => {
 
+  // 1. title
+  const TITLE = "User Delete";
+  // 2. url
+  const URL_USER = process.env.REACT_APP_URL_USER;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  // 6. state
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
-  const URL_USER = process.env.REACT_APP_URL_USER;
-  const TITLE = "User Delete";
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {

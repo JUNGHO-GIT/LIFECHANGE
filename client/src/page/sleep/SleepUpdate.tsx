@@ -1,21 +1,28 @@
 // SleepUpdate.tsx
-import React, {useEffect, useState} from "react";
-import axios from "axios";
-import { useLocation } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
+import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepUpdate = () => {
 
-  const [SLEEP, setSLEEP] = useState<any>({});
-  const location = useLocation();
-  const _id = location.state._id;
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  // 1. title
   const TITLE = "Sleep Update";
+  // 2. url
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const _id = location.state._id;
+  // 6. state
+  const [SLEEP, setSLEEP] = useState<any>({});
+  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -39,12 +46,8 @@ export const SleepUpdate = () => {
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const calcSleepTime = () => {
-      const nightDate = new Date(
-        `${sleep_regdate}T${SLEEP.sleep_night}:00Z`
-      );
-      const morningDate = new Date(
-        `${sleep_regdate}T${SLEEP.sleep_morning}:00Z`
-      );
+      const nightDate = new Date(`${sleep_regdate}T${SLEEP.sleep_night}:00Z`);
+      const morningDate = new Date(`${sleep_regdate}T${SLEEP.sleep_morning}:00Z`);
 
       // 다음 날까지의 수면 시간을 고려
       if (morningDate < nightDate) {

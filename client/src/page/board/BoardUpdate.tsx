@@ -1,16 +1,28 @@
 // BoardUpdate.tsx
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardUpdate = () => {
 
-  const [BOARD, setBOARD] = useState<any>({});
-  const location = useLocation();
-  const _id = location.state._id;
-  const URL_BOARD = process.env.REACT_APP_URL_BOARD;
+  // 1. title
   const TITLE = "Board Update";
+  // 2. url
+  const URL_BOARD = process.env.REACT_APP_URL_BOARD;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const _id = location.state._id;
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
+  const [BOARD, setBOARD] = useState<any>({});
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {

@@ -1,96 +1,42 @@
 // SleepList.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
 
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
-  const navParam = useNavigate();
-  const user_id = window.sessionStorage.getItem("user_id");
-
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  // 1. title
   const TITLE = "Sleep List";
-
-  // daily, weekly, monthly
-  const [viewMode, setViewMode] = useState("daily");
+  // 2. url
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
+  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->
-  const viewModeSelect = () => {
-
-    // 0. select
-    const viewModeSet = () => {
-      return (
-        <select className="form-select form-select-lg mb-3" onChange={(e) => {
-        setViewMode(e.target.value);}}>
-          <option value="daily">Daily</option>
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-        </select>
-      );
-    };
-
-    // 1. daily
-    if (viewMode === "daily") {
-      return (
-        <div>
-          {viewModeSet()}
-          <DatePicker
-            dateFormat="yyyy-MM-dd"
-            selected={new Date(sleep_regdate)}
-            popperPlacement="bottom"
-            onChange={(date: any) => {
-              const selectedDate = date.toISOString().split("T")[0];
-              setSleep_regdate(selectedDate);
-            }}
-          />
-        </div>
-      );
-    };
-
-    // 2. weekly
-    if (viewMode === "weekly") {
-      return (
-        <div>
-          {viewModeSet()}
-          <DatePicker
-            dateFormat="yyyy-MM-dd"
-            selected={new Date(sleep_regdate)}
-            popperPlacement="bottom"
-            showWeekNumbers={true}
-            onChange={(date: any) => {
-              const selectedDate = date.toISOString().split("T")[0];
-              setSleep_regdate(selectedDate);
-            }}
-          />
-        </div>
-      );
-    };
-
-    // 3. monthly
-    if (viewMode === "monthly") {
-      return (
-        <div>
-          {viewModeSet()}
-          <DatePicker
-            dateFormat="yyyy-MM-dd"
-            selected={new Date(sleep_regdate)}
-            popperPlacement="bottom"
-            showWeekNumbers={true}
-            onChange={(date: any) => {
-              const selectedDate = date.toISOString().split("T")[0];
-              setSleep_regdate(selectedDate);
-            }}
-          />
-        </div>
-      );
-    };
+  const datePicker = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date(sleep_regdate)}
+        popperPlacement="bottom"
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setSleep_regdate(selectedDate);
+        }}
+      />
+    );
   };
 
   // ---------------------------------------------------------------------------------------------->
@@ -123,6 +69,8 @@ export const SleepList = () => {
             <th>Night</th>
             <th>Morning</th>
             <th>Time</th>
+            <th>regdate</th>
+            <th>week</th>
           </tr>
         </thead>
         <tbody>
@@ -136,6 +84,8 @@ export const SleepList = () => {
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
               <td>{index.sleep_time}</td>
+              <td>{index.sleep_regdate}</td>
+              <td>{index.sleep_week}</td>
             </tr>
           ))}
         </tbody>
@@ -177,7 +127,7 @@ export const SleepList = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewModeSelect()}</span>
+            <span className="ms-4">{datePicker()}</span>
           </h1>
         </div>
       </div>

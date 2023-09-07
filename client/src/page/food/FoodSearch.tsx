@@ -1,23 +1,31 @@
 // FoodSearch.tsx
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
 
+  // 1. title
+  const TITLE = "Food Search";
+  // 2. url
+  const URL_FOOD_API = process.env.REACT_APP_URL_FOOD_API;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const lang = "ko";
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState([]);
+  const [food_regdate, setFood_regdate] = useState(koreanDate);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
-  const lang = "ko";
-  const user_id = sessionStorage.getItem("user_id");
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const food_regdate = koreanDate.toISOString().split("T")[0];
-  const navParam = useNavigate();
-  const URL_FOOD_API = process.env.REACT_APP_URL_FOOD_API;
-  const TITLE = "Food Search";
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
@@ -26,9 +34,7 @@ export const FoodSearch = () => {
         dateFormat="yyyy-MM-dd"
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
-        onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-        }}
+        onChange={(date: any) => {}}
         readOnly
       />
     );

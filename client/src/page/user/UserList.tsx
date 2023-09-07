@@ -1,14 +1,27 @@
 // UserList.tsx
 import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserList = () => {
 
-  const [USER_LIST, setUSER_LIST] = useState<[]>([]);
-  const URL_USER = process.env.REACT_APP_URL_USER;
+  // 1. title
   const TITLE = "User List";
+  // 2. url
+  const URL_USER = process.env.REACT_APP_URL_USER;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
+  const [USER_LIST, setUSER_LIST] = useState<[]>([]);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {

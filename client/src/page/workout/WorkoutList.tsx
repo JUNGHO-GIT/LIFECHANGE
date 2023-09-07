@@ -1,20 +1,28 @@
 // WorkoutList.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutList = () => {
 
-  const [WORKOUT_LIST, setWORKOUT_LIST] = useState<[]>([]);
-  const navParam = useNavigate();
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const [workout_regdate, setWorkout_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-  const user_id = sessionStorage.getItem("user_id");
-  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  // 1. title
   const TITLE = "Workout List";
+  // 2. url
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
+  const [WORKOUT_LIST, setWORKOUT_LIST] = useState<[]>([]);
+  const [workout_regdate, setWorkout_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {

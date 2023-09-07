@@ -1,11 +1,27 @@
 // WorkoutInsert.tsx
-import React, { useEffect, useState } from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
-import { WorkoutSelect } from "./WorkoutSelect";
+import moment from "moment-timezone";
+import {WorkoutSelect} from "./WorkoutSelect";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkoutInsert = () => {
 
+  // 1. title
+  const TITLE = "Workout Insert";
+  // 2. url
+  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
   const [WORKOUT, setWORKOUT] = useState({
     user_id: sessionStorage.getItem("user_id"),
     workout_part: "",
@@ -16,13 +32,6 @@ export const WorkoutInsert = () => {
     workout_rest: "",
     workout_time: "",
   });
-
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const [workout_regdate, setWorkout_regdate] = useState(koreanDate.toISOString().split("T")[0]);
-
-  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
-  const TITLE = "Workout Insert";
 
   // ---------------------------------------------------------------------------------------------->
   const workoutInsertFlow = async () => {

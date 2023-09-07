@@ -75,7 +75,7 @@ const SidebarStyle = createGlobalStyle`
 export const Sidebar = () => {
   const [sidebar, sidebarOpen] = useState(false);
 
-  let user_id = sessionStorage.getItem("user_id");
+  let user_id = window.sessionStorage.getItem("user_id");
   if (user_id !== null) {
     user_id = JSON.parse(user_id);
   }

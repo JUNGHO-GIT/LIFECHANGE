@@ -1,19 +1,29 @@
 // FoodInsert.tsx
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
-import { Link, useLocation } from 'react-router-dom';
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodInsert = () => {
 
-  // ---------------------------------------------------------------------------------------------->
-  const [showGram, setShowGram] = useState(1);
-  const [category, setCategory] = useState("morning");
+  // 1. title
+  const TITLE = "Food Insert";
+  // 2. url
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  // 5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const TITLE = "Food Insert";
+  // 6. state
+  const [showGram, setShowGram] = useState(1);
+  const [category, setCategory] = useState("morning");
 
   // ---------------------------------------------------------------------------------------------->
   const title:any = params.get("title") ? params.get("title") : "x";

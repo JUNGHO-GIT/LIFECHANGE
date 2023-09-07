@@ -1,41 +1,30 @@
 // BoardInsert.tsx
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardInsert = () => {
 
-  const [user_id, setUserId] = useState("");
-  const [board_title, setBoardTitle] = useState("");
-  const [board_content, setBoardContent] = useState("");
-  const [board_regdate, setBoardDate] = useState(new Date().toISOString());
+  // 1. title
+  const TITLE = "Board Insert";
+  // 2. url
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const URL_USER = process.env.REACT_APP_URL_USER;
-  const TITLE = "Board Insert";
-
-  // ---------------------------------------------------------------------------------------------->
-  useEffect(() => {
-    const fetchBoardInsert = async () => {
-      const user_id = window.sessionStorage.getItem("user_id");
-      try {
-        const response = await axios.post(`${URL_USER}/userDetail`, {
-          user_id : user_id,
-        });
-
-        if (response.status === 200) {
-          const user_id = response.data.user_id;
-          setUserId(user_id);
-        }
-        else {
-          throw new Error("Server responded with an error");
-        }
-      }
-      catch (error: any) {
-        alert(`Error fetching user data: ${error.message}`);
-      }
-    };
-    fetchBoardInsert();
-  }, []);
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  // 6. state
+  const [board_title, setBoard_title] = useState("");
+  const [board_content, setBoard_content] = useState("");
+  const [board_regdate, setBoard_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->
   const boardInsertFlow = async () => {
@@ -49,7 +38,6 @@ export const BoardInsert = () => {
         return;
       }
       else {
-        setBoardDate(new Date().toISOString().split('T')[0]);
         const response = await axios.post (`${URL_BOARD}/boardInsert`, {
           user_id: user_id,
           board_title: board_title,
@@ -82,10 +70,7 @@ export const BoardInsert = () => {
             className="form-control"
             id="user_id"
             placeholder="User ID"
-            value={user_id}
-            onChange={(e) => {
-              setUserId(e.target.value);
-            }}
+            value={user_id || ""}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
@@ -97,7 +82,7 @@ export const BoardInsert = () => {
             value={board_title}
             id="floatingTitle"
             onChange={(e) => {
-              setBoardTitle(e.target.value);
+              setBoard_title(e.target.value);
             }}
           />
           <label htmlFor="floatingTitle">Title</label>
@@ -109,23 +94,10 @@ export const BoardInsert = () => {
             value={board_content}
             id="floatingContent"
             onChange={(e) => {
-              setBoardContent(e.target.value);
+              setBoard_content(e.target.value);
             }}
           />
           <label htmlFor="floatingContent">Content</label>
-        </div>
-        <div className="form-floating">
-          <input type="text"
-            className="form-control"
-            id="board_regdate"
-            placeholder="Board Date"
-            value={board_regdate}
-            readOnly
-            onChange={(e) => {
-              setBoardDate(e.target.value);
-            }}
-          />
-          <label htmlFor="board_regdate">Board Date</label>
         </div>
       </div>
     );

@@ -1,22 +1,29 @@
 // FoodDetail.tsx
-import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
 
-  const [FOOD, setFOOD] = useState([]);
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const food_regdate = koreanDate.toISOString().split("T")[0];
-  const user_id = sessionStorage.getItem("user_id");
-  const location = useLocation();
-  const navParam = useNavigate();
-  const food_category = location.state.food_category;
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  // 1. title
   const TITLE = "Food Detail";
+  // 2. url
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  const food_category = location.state.food_category;
+  // 6. state
+  const [food_regdate, setFood_regdate] = useState(koreanDate);
+  const [FOOD, setFOOD] = useState([]);
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
@@ -27,6 +34,7 @@ export const FoodDetail = () => {
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
+          setFood_regdate(selectedDate);
         }}
       />
     );

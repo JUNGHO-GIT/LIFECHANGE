@@ -28,15 +28,18 @@ const SleepScheme = new mongoose.Schema ({
   },
   sleep_regdate: {
     type: String,
-    default: function() {
+    default : () => {
       const date = new Date();
       date.setHours(date.getHours() + 9);
       return date.toISOString().split('T')[0];
     },
-    required: true
+    required : true
   },
   sleep_week: {
     type: String,
+    default : () => {
+      return "default";
+    },
     required: true
   },
   sleep_update : {

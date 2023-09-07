@@ -1,15 +1,28 @@
 // FoodUpdate.tsx
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodUpdate = () => {
 
-  const [FOOD, setFOOD] = useState<any>({});
-  const _id = useLocation().state._id;
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  // 1. title
   const TITLE = "Food Update";
+  // 2. url
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  const _id = location.state._id;
+  // 6. state
+  const [FOOD, setFOOD] = useState<any>({});
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {

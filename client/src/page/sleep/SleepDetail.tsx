@@ -1,26 +1,29 @@
 // SleepDetail.tsx
-import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
 
-  const [SLEEP, setSLEEP] = useState<any>({});
-  const location = useLocation();
-  const navParam = useNavigate();
-
-  const koreanDate = new Date();
-  koreanDate.setHours(koreanDate.getHours() + 9);
-  const sleep_regdate = koreanDate.toISOString().split("T")[0];
-
-  const user_id = window.sessionStorage.getItem("user_id");
-  const _id = useLocation().state._id;
-
-  const sleep_title = location.state.sleep_title;
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  // 1. title
   const TITLE = "Sleep Detail";
+  // 2. url
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  // 3. date
+  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  // 4. hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // 5. val
+  const user_id = window.sessionStorage.getItem("user_id");
+  const _id = location.state._id;
+  // 6. state
+  const [SLEEP, setSLEEP] = useState<any>({});
+  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->
   const datePicker = () => {
@@ -31,6 +34,7 @@ export const SleepDetail = () => {
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
+          setSleep_regdate(selectedDate);
         }}
       />
     );
@@ -65,6 +69,8 @@ export const SleepDetail = () => {
             <th>Night</th>
             <th>Morning</th>
             <th>Time</th>
+            <th>regdate</th>
+            <th>week</th>
           </tr>
         </thead>
         <tbody>
@@ -73,6 +79,8 @@ export const SleepDetail = () => {
             <td>{SLEEP.sleep_night}</td>
             <td>{SLEEP.sleep_morning}</td>
             <td>{SLEEP.sleep_time}</td>
+            <td>{SLEEP.sleep_regdate}</td>
+            <td>{SLEEP.sleep_week}</td>
           </tr>
         </tbody>
       </table>
@@ -98,7 +106,8 @@ export const SleepDetail = () => {
           alert("Delete failed");
         }
       }
-    } catch (error: any) {
+    }
+      catch (error: any) {
       alert(`Error fetching sleep data: ${error.message}`);
     }
   };
