@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { addMonths, isSameMonth, isSameDay } from 'date-fns';
+import { DayClickEventHandler, DateRange, DayPicker } from 'react-day-picker';
+import { createGlobalStyle } from "styled-components";
+import { addMonths, isSameDay, differenceInDays } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import {SelectRangeEventHandler, DayClickEventHandler, DateRange, DayPicker}from 'react-day-picker';
 import moment from "moment-timezone";
-import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
 const TestStyle = createGlobalStyle`
@@ -16,29 +16,21 @@ const TestStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 export const Test2 = () => {
-
-  // ---------------------------------------------------------------------------------------------->
-  const koreanDate = new Date(moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString());
+  const koreanDate = new Date(moment.tz('Asia/Seoul').format('YYYY-MM-DD'));
   const today = new Date();
   const nextMonth = addMonths(new Date(), 1);
   const defaultSelected = { from: koreanDate };
+
   const [month, setMonth] = useState<Date>(nextMonth);
   const [range, setRange] = useState<DateRange>(defaultSelected);
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
 
-  // ---------------------------------------------------------------------------------------------->
   const handleDayClick: DayClickEventHandler = (day, modifiers) => {
-    const newSelectedDays = [...selectedDays];
     if (modifiers.selected) {
-      const index = selectedDays.findIndex((selectedDay) =>
-        isSameDay(day, selectedDay)
-      );
-      newSelectedDays.splice(index, 1);
+      setSelectedDays(prev => prev.filter(selectedDay => !isSameDay(day, selectedDay)));
+    } else {
+      setSelectedDays(prev => [...prev, day]);
     }
-    else {
-      newSelectedDays.push(day);
-    }
-    setSelectedDays(newSelectedDays);
   };
 
   const handleResetClick = () => {
@@ -46,28 +38,34 @@ export const Test2 = () => {
     setSelectedDays([]);
   };
 
-  const handleSelect: SelectRangeEventHandler = (range) => {
-    setRange(range || defaultSelected);
+  const selectedInfo = () => {
+    if (range.from && range.to) {
+      const duration = differenceInDays(range.to, range.from) + 1;
+      return (
+        <div>
+          <p>{`날짜 : ${range.from.getMonth() + 1}월 ${range.from.getDate()}일 ~ ${range.to.getMonth() + 1}월 ${range.to.getDate()}일`}</p>
+          <p>{`기간 : ${duration}일`}</p>
+        </div>
+      );
+    }
+    else {
+      return (
+        <p>날짜를 선택하세요</p>
+      );
+    }
   };
 
-  // ---------------------------------------------------------------------------------------------->
   const footer = (
     <div>
-      <p>
-        You selected {selectedDays.length} days.{' '}
-      </p>
-      <button onClick={() => setMonth(today)}>
-        Go to Today
-      </button>
-      <button onClick={handleResetClick}>
-        Reset
-      </button>
+      <p>{selectedInfo()}</p>
+      <button onClick={() => setMonth(today)}>Go to Today</button>
+      <button onClick={handleResetClick}>Reset</button>
     </div>
   );
 
-  // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="container"><TestStyle />
+    <div className="container">
+      <TestStyle />
       <div className="row">
         <div className="col-12">
           <DayPicker
@@ -76,14 +74,12 @@ export const Test2 = () => {
             selected={range}
             month={month}
             onMonthChange={setMonth}
-            onSelect={handleSelect}
+            onSelect={range => setRange(range || defaultSelected)}
             onDayClick={handleDayClick}
             locale={ko}
             weekStartsOn={0}
             footer={footer}
-            modifiersClassNames={{
-              today: 'today'
-            }}
+            modifiersClassNames={{ today: 'today' }}
           />
         </div>
       </div>
