@@ -21,7 +21,6 @@ export const SleepList = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [view_mode, setView_mode] = useState<'DAY' | 'WEEK' | 'YEAR'>('DAY');
   const [sleep_day, setSleep_day] = useState(koreanDate);
   const [SLEEP_LIST, setSLEEP_LIST] = useState<any> ([{
     _id : "",
@@ -40,39 +39,20 @@ export const SleepList = () => {
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
-      let params:any = {
-        user_id : user_id
-      };
-
-      switch (view_mode) {
-        case 'DAY':
-          params['sleep_day'] = sleep_day;
-          break;
-        case 'WEEK':
-          params['sleep_week'] = sleep_day; // 서버에서 주의 시작과 끝 날짜를 계산
-          break;
-        case 'YEAR':
-          params['sleep_year'] = sleep_day.split("-")[0]; // YYYY 형식으로 년만 전달
-          break;
-        default:
-          break;
-      }
-
       try {
-        const response = await axios.get(`${URL_SLEEP}/sleepList`, { params });
+        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
+          params: {
+            SLEEP_LIST
+          }
+        });
         setSLEEP_LIST(response.data);
-      } catch (error: any) {
+      }
+      catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
       }
     };
     fetchSleepList();
-  }, [user_id, sleep_day, view_mode]);
-
-  // 일, 주, 년 보기 변경 함수
-  const handleViewChange = (mode: 'DAY' | 'WEEK' | 'YEAR', date: any) => {
-    setView_mode(mode);
-    setSleep_day(moment(date).format("YYYY-MM-DD").toString());
-  };
+  }, [user_id, sleep_day]);
 
   // 3. flow -------------------------------------------------------------------------------------->
 
@@ -86,38 +66,39 @@ export const SleepList = () => {
           popperPlacement="bottom"
           selected={new Date(sleep_day)}
           onChange={(date: any) => {
-            handleViewChange('DAY', date);
+            setSleep_day(moment(date).format("YYYY-MM-DD").toString());
           }}
         />
       </div>
     );
   };
+
   const viewSleepWeek = () => {
     return (
       <div>
         <h5><b>주 단위로 보기</b></h5>
         <DatePicker
-          dateFormat="ww"
+          dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={new Date(sleep_day)}
           onChange={(date: any) => {
-            handleViewChange('WEEK', date);
+            setSleep_day(moment(date).format("YYYY-MM-DD").toString());
           }}
         />
       </div>
     );
   };
+
   const viewSleepYear = () => {
     return (
       <div>
         <h5><b>년 단위로 보기</b></h5>
         <DatePicker
-          dateFormat="yyyy"
-          showYearPicker
+          dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={new Date(sleep_day)}
           onChange={(date: any) => {
-            handleViewChange('YEAR', date);
+            setSleep_day(moment(date).format("YYYY-MM-DD").toString());
           }}
         />
       </div>

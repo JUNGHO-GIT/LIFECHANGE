@@ -29,6 +29,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/index.tsx", "src/page/board/ts.tsx.back"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/index.tsx", "src/page/board/ts.tsx.back", "src/page/sleep/SleepList.tsx.BACK"],
   "exclude": ["node_modules"]
 }

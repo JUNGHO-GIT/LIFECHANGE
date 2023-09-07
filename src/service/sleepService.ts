@@ -4,14 +4,28 @@ import * as mongoose from "mongoose";
 import moment from "moment-timezone";
 
 // 1. sleepList ----------------------------------------------------------------------------------->
-export const sleepList = async (
-  user_id_param : any,
-  sleep_day_param : any
-) => {
-  const sleepList = await Sleep.find ({
-    user_id : user_id_param,
-    sleep_day : sleep_day_param
-  });
+export const sleepList = async (sleep_param: any) => {
+  let query: any = {};
+
+  if (sleep_param.user_id) {
+    query['user_id'] = sleep_param.user_id;
+  }
+
+  if (sleep_param.sleep_day) {
+    query['sleep_day'] = sleep_param.sleep_day;
+  }
+  else if (sleep_param.sleep_week) {
+    const startOfWeek = moment(sleep_param.sleep_week).startOf('week').add(1, 'days').format('YYYY-MM-DD').toString();
+    const endOfWeek = moment(sleep_param.sleep_week).endOf('week').format('YYYY-MM-DD').toString();
+    query['sleep_day'] = { $gte: startOfWeek, $lte: endOfWeek };
+  }
+  else if (sleep_param.sleep_year) {
+    const startOfYear = `${sleep_param.sleep_year}-01-01`;
+    const endOfYear = `${sleep_param.sleep_year}-12-31`;
+    query['sleep_day'] = { $gte: startOfYear, $lte: endOfYear };
+  }
+
+  const sleepList = await Sleep.find(query);
   return sleepList;
 };
 
@@ -30,12 +44,11 @@ export const sleepInsert = async (
   sleep_param : any
 ) => {
 
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment().tz("Asia/Seoul");
 
   // 1. getWeek ---------------------------------------------------------------------------------->
   const getWeek = () => {
-
-    const currentMonth = koreanDate.split('-')[1];
+    const currentMonth = koreanDate.format('MM');
     const currentRegdate = sleep_param.sleep_day;
 
     let weekValue;
@@ -62,20 +75,19 @@ export const sleepInsert = async (
     }
     return weekValue;
   }
+
   // 2. getMonth --------------------------------------------------------------------------------->
   const getMonth = () => {
-    const monthValue = koreanDate.split('-')[1];
-    return monthValue;
+    return koreanDate.format('MM');
   }
 
   // 3. getYear ---------------------------------------------------------------------------------->
   const getYear = () => {
-    const yearValue = koreanDate.split('-')[0];
-    return yearValue;
+    return koreanDate.format('YYYY');
   }
 
   // 4. sleepInsert ------------------------------------------------------------------------------->
-  const sleepInsert = await Sleep.create ({
+  const sleepInsert = await Sleep.create({
     _id : new mongoose.Types.ObjectId(),
     user_id : sleep_param.user_id,
     sleep_title : sleep_param.sleep_title,
