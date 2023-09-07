@@ -9,8 +9,37 @@ import moment from "moment-timezone";
 const TestStyle = createGlobalStyle`
   .today {
     font-weight: bolder;
-    font-size: 140%;
-    color: red;
+    font-size: 150%;
+    color : #ff0000;
+  }
+  .selected {
+    background-color: #0d6efd;
+    color: #ffffff;
+  }
+  .selected:not([disabled]) {
+    background-color: #0d6efd;
+    color : #fff;
+  }
+  .selected:hover:not([disabled]) {
+    color: blue;
+  }
+  .disabled {
+    color : #999;
+  }
+  .outside {
+    color: #999;
+  }
+  .inside {
+    color: #000;
+  }
+  .rdp-caption_label {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 150%;
+  }
+  .rdp-head_cell {
+    font-weight: bold;
+    font-size: 120%;
   }
 `;
 
@@ -24,11 +53,14 @@ export const Test2 = () => {
   const [month, setMonth] = useState<Date>(nextMonth);
   const [range, setRange] = useState<DateRange>(defaultSelected);
   const [selectedDays, setSelectedDays] = useState<Date[]>([]);
+  const [selectedStart, setSelectedStart] = useState<Date[]>([]);
+  const [selectedEnd, setSelectedEnd] = useState<Date[]>([]);
 
   const handleDayClick: DayClickEventHandler = (day, modifiers) => {
     if (modifiers.selected) {
       setSelectedDays(prev => prev.filter(selectedDay => !isSameDay(day, selectedDay)));
-    } else {
+    }
+    else {
       setSelectedDays(prev => [...prev, day]);
     }
   };
@@ -36,21 +68,20 @@ export const Test2 = () => {
   const handleResetClick = () => {
     setRange({});
     setSelectedDays([]);
+    setSelectedStart([]);
+    setSelectedEnd([]);
   };
 
   const selectedInfo = () => {
-    if (range.from && range.to) {
-      const duration = differenceInDays(range.to, range.from) + 1;
+    if (selectedStart[0] && selectedEnd[0]) {
+      const duration = differenceInDays(selectedEnd[0], selectedStart[0]) + 1;
       return (
         <div>
-          <p>{`날짜 : ${range.from.getMonth() + 1}월 ${range.from.getDate()}일 ~ ${range.to.getMonth() + 1}월 ${range.to.getDate()}일`}</p>
+          <hr/>
+          <p>{`날짜 : ${selectedStart[0].getMonth() + 1}월 ${selectedStart[0].getDate()}일 ~ ${selectedEnd[0].getMonth() + 1}월 ${selectedEnd[0].getDate()}일`}</p>
           <p>{`기간 : ${duration}일`}</p>
+          <hr/>
         </div>
-      );
-    }
-    else {
-      return (
-        <p>날짜를 선택하세요</p>
       );
     }
   };
@@ -58,8 +89,8 @@ export const Test2 = () => {
   const footer = (
     <div>
       <p>{selectedInfo()}</p>
-      <button onClick={() => setMonth(today)}>Go to Today</button>
-      <button onClick={handleResetClick}>Reset</button>
+      <button className="btn btn-success me-2" onClick={() => setMonth(today)}>Today</button>
+      <button className="btn btn-primary me-2" onClick={handleResetClick}>Reset</button>
     </div>
   );
 
@@ -74,12 +105,41 @@ export const Test2 = () => {
             selected={range}
             month={month}
             onMonthChange={setMonth}
-            onSelect={range => setRange(range || defaultSelected)}
+            onSelect={range => {
+              setRange(range || defaultSelected);
+              if (range) {
+                let startDate:any = range.from;
+                let endDate:any = range.to;
+
+                // 시작 날짜만 선택했을 경우
+                if (startDate && !endDate) {
+                  setSelectedStart([startDate]);
+                  setSelectedEnd([]);
+                  return;
+                }
+
+                if (endDate && endDate < startDate) {
+                  [startDate, endDate] = [endDate, startDate];
+                }
+
+                setSelectedStart([startDate]);
+                setSelectedEnd([endDate]);
+              } else {
+                setSelectedStart([]);
+                setSelectedEnd([]);
+              }
+            }}
             onDayClick={handleDayClick}
             locale={ko}
             weekStartsOn={0}
             footer={footer}
-            modifiersClassNames={{ today: 'today' }}
+            modifiersClassNames={{
+              today: 'today',
+              selected: 'selected',
+              disabled: 'disabled',
+              outside: 'outside',
+              inside: 'inside'
+            }}
           />
         </div>
       </div>
