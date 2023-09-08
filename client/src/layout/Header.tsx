@@ -1,147 +1,233 @@
-// Header.tsx
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import "../assets/Custom.css";
 
-// ------------------------------------------------------------------------------------------------>
 export const Header = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // ---------------------------------------------------------------------------------------------->
   const NavList = () => {
+
+    // -------------------------------------------------------------------------------------------->
     return (
       <ul className="nav">
+        {/* main */}
         <li>
-          <Link to="/" className="nav-link fs-14 tc-w ms-2">
-            Home
-          </Link>
+          <div className="dropdown ms-2">
+            <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Main
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li className="py-1">
+                <Link to="/" className="dropdown-item">
+                  Home
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/test" className="dropdown-item">
+                  Test
+                </Link>
+              </li>
+            </ul>
+          </div>
         </li>
+        {/* user */}
         <li>
-          <Link to="/test" className="nav-link fs-14 tc-w ms-2">
-            Test
-          </Link>
+          <div className="dropdown ms-2">
+            <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              User
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li className="py-1">
+                <Link to="/userList" className="dropdown-item">
+                  UserList
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/userLogin" className="dropdown-item">
+                  Login
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/userInsert" className="dropdown-item">
+                  Signup
+                </Link>
+              </li>
+            </ul>
+          </div>
         </li>
+        {/* board */}
         <li>
-          <Link to="/userDetail" className="nav-link fs-14 tc-w ms-2">
-            User
-          </Link>
+          <div className="dropdown ms-2">
+            <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Board
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li className="py-1">
+                <Link to="/boardList" className="dropdown-item">
+                  BoardList
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/boardInsert" className="dropdown-item">
+                  BoardInsert
+                </Link>
+              </li>
+            </ul>
+          </div>
         </li>
+        {/* calendar */}
         <li>
-          <Link to="/boardList" className="nav-link fs-14 tc-w ms-2">
-            Board
-          </Link>
+          <div className="dropdown ms-2">
+            <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Calendar
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li className="py-1">
+                <Link to="/calendarList" className="dropdown-item">
+                  CalendarList
+                </Link>
+              </li>
+            </ul>
+          </div>
         </li>
+        {/* food */}
         <li>
-          <Link to="/calendarList" className="nav-link fs-14 tc-w ms-2">
-            Calendar
-          </Link>
+          <div className="dropdown ms-2">
+            <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Food
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li className="py-1">
+                <Link to="/foodSearch" className="dropdown-item">
+                  FoodSearch
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/foodList" className="dropdown-item">
+                  FoodList
+                </Link>
+              </li>
+            </ul>
+          </div>
         </li>
+        {/* workout */}
         <li>
-          <Link to="/foodSearch" className="nav-link fs-14 tc-w ms-2">
-            Food
-          </Link>
+          <div className="dropdown ms-2">
+              <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Workout
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li className="py-1">
+                  <Link to="/workoutList" className="nav-link fs-14 tc-w ms-2">
+                    WorkoutList
+                  </Link>
+                </li>
+                <li className="py-1">
+                  <Link to="/workoutInsert" className="nav-link fs-14 tc-w ms-2">
+                    WorkoutInsert
+                  </Link>
+                </li>
+              </ul>
+          </div>
         </li>
+        {/* sleep */}
         <li>
-          <Link to="/workoutList" className="nav-link fs-14 tc-w ms-2">
-            Workout
-          </Link>
-        </li>
-        <li>
-          <Link to="/sleepListDay" className="nav-link fs-14 tc-w ms-2">
-            SleepDay
-          </Link>
-        </li>
-        <li>
-          <Link to="/sleepListWeek" className="nav-link fs-14 tc-w ms-2">
-            SleepWeek
-          </Link>
-        </li>
-        <li>
-          <Link to="/sleepListMonth" className="nav-link fs-14 tc-w ms-2">
-            SleepMonth
-          </Link>
-        </li>
-        <li>
-          <Link to="/sleepListYear" className="nav-link fs-14 tc-w ms-2">
-            SleepYear
-          </Link>
-        </li>
-        <li>
-          <Link to="/sleepListSelect" className="nav-link fs-14 tc-w ms-2">
-            SleepSelect
-          </Link>
+          <div className="dropdown ms-2">
+            <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Sleep
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li className="py-1">
+                <Link to="/sleepListDay" className="dropdown-item">
+                  SleepDay
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/sleepListWeek" className="dropdown-item">
+                  SleepWeek
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/sleepListMonth" className="dropdown-item">
+                  SleepMonth
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/sleepListYear" className="dropdown-item">
+                  SleepYear
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link to="/sleepListSelect" className="dropdown-item">
+                  SleepSelect
+                </Link>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
     );
   };
 
   // ---------------------------------------------------------------------------------------------->
-  const FormList = () => {
-    // 로그인 x
-    const loginFalse = () => {
-      const buttonLogin = () => {
-        return (
-          <Link to="/userLogin">
-            <button type="button" className="btn btn-outline-light ms-2">
-              Login
-            </button>
-          </Link>
-        );
-      };
-      const buttonSignup = () => {
-        return (
-          <Link to="/userInsert">
-            <button type="button" className="btn btn-outline-light ms-2">
-              Signup
-            </button>
-          </Link>
-        );
-      };
+  const loginFalse = () => {
 
-      if (!user_id || user_id === "false") {
-        return (
-          <form className="form-group d-center">
-            {buttonLogin()}
-            {buttonSignup()}
-          </form>
-        );
-      }
+    const buttonLogin = () => {
+      return (
+        <Link to="/userLogin">
+          <button type="button" className="btn btn-outline-light ms-2">
+            Login
+          </button>
+        </Link>
+      );
     };
 
-    // 로그인 o
-    const loginTrue = () => {
-      if (user_id && user_id !== "false") {
-        return (
-          <form className="form-group d-center">
-            <button
-              type="button"
-              className="btn btn-outline-light ms-2"
-              onClick={() => {
-                sessionStorage.setItem("user_id", "false");
-                window.location.reload();
-              }}
-            >
-              Logout
-            </button>
-          </form>
-        );
-      }
+    const buttonSignup = () => {
+      return (
+        <Link to="/userInsert">
+          <button type="button" className="btn btn-outline-light ms-2">
+            Signup
+          </button>
+        </Link>
+      );
     };
 
-    return (
-      <div className="d-center">
-        {loginFalse()}
-        {loginTrue()}
-      </div>
-    );
+    if (!user_id || user_id === "false") {
+      return (
+        <form className="form-group d-center">
+          {buttonLogin()}
+          {buttonSignup()}
+        </form>
+      );
+    }
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // -------------------------------------------------------------------------------------------->
+  const loginTrue = () => {
+    if (user_id && user_id !== "false") {
+      return (
+        <form className="form-group d-center">
+          <button
+            type="button"
+            className="btn btn-outline-light ms-2"
+            onClick={() => {
+              sessionStorage.setItem("user_id", "false");
+              window.location.reload();
+            }}>
+            Logout
+          </button>
+        </form>
+      );
+    }
+  };
+
+  // ---------------------------------------------------------------------------------------------->
   return (
     <header className="container-fluid bg-dark">
       <div className="row d-center pt-3 pb-3">
         <div className="col-9">{NavList()}</div>
-        <div className="col-3">{FormList()}</div>
+        <div className="col-3">{loginFalse()}{loginTrue()}</div>
       </div>
     </header>
   );

@@ -4,57 +4,10 @@ import {Link, useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import { DayClickEventHandler, DateRange, DayPicker } from "react-day-picker";
-import { createGlobalStyle } from "styled-components";
 import { addMonths, isSameDay, differenceInDays } from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-
-// ------------------------------------------------------------------------------------------------>
-const TestStyle = createGlobalStyle`
-  .today, .rdp-caption_label, .rdp-head_cell {
-    font-weight: bolder;
-  }
-  .today, .rdp-caption_label {
-    font-size: 150%;
-  }
-  .rdp-head_cell {
-    font-size: 120%;
-  }
-  .today {
-    color: #ff0000;
-  }
-  .selected {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .selected:not([disabled]) {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .selected:hover {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .selected:hover:not([disabled]) {
-   background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .rdp-day:focus {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .rdp-day:active {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .disabled, .outside {
-    color: #999;
-  }
-  .inside {
-    color: #000;
-  }
-`;
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepList = () => {
@@ -235,7 +188,7 @@ export const SleepList = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container"><TestStyle />
+    <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
