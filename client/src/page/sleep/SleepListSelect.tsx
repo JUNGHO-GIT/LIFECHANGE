@@ -50,15 +50,6 @@ export const SleepListSelect = () => {
       setSelectedEndDay(selectedRange.to.getDate());
     }
   };
-  const handleResetClick = () => {
-    setSelectedStartYear(undefined);
-    setSelectedStartMonth(undefined);
-    setSelectedStartDay(undefined);
-    setSelectedEndYear(undefined);
-    setSelectedEndMonth(undefined);
-    setSelectedEndDay(undefined);
-    setRange(undefined);
-  };
   const handleDayClick = (day: Date) => {
     if (!range || !range.from) {
       setRange({ from: day, to: undefined });
@@ -77,25 +68,31 @@ export const SleepListSelect = () => {
   // ---------------------------------------------------------------------------------------------->
   const buttonSleepToday = () => {
     return (
-      <button
-        className="btn btn-success me-2"
-        onClick={() => {
-          setCurrentMonth(today);
-          setSelectedStartYear(undefined);
-          setSelectedStartMonth(undefined);
-          setSelectedStartDay(undefined);
-          setSelectedEndYear(undefined);
-          setSelectedEndMonth(undefined);
-          setSelectedEndDay(undefined);
-          setRange(undefined);
-        }}>
+      <button className="btn btn-success me-2" onClick={() => {
+        setCurrentMonth(today);
+        setSelectedStartYear(undefined);
+        setSelectedStartMonth(undefined);
+        setSelectedStartDay(undefined);
+        setSelectedEndYear(undefined);
+        setSelectedEndMonth(undefined);
+        setSelectedEndDay(undefined);
+        setRange(undefined);
+      }}>
         Today
       </button>
     );
   };
   const buttonSleepReset = () => {
     return (
-      <button className="btn btn-primary me-2" onClick={handleResetClick}>
+      <button className="btn btn-primary me-2" onClick={() =>{
+        setSelectedStartYear(undefined);
+        setSelectedStartMonth(undefined);
+        setSelectedStartDay(undefined);
+        setSelectedEndYear(undefined);
+        setSelectedEndMonth(undefined);
+        setSelectedEndDay(undefined);
+        setRange(undefined);
+      }}>
         Reset
       </button>
     );
