@@ -12,6 +12,7 @@ import "boxicons/css/boxicons.min.css";
 import 'react-day-picker/dist/style.css';
 import "react-datepicker/dist/react-datepicker.css";
 import "../assets/DatePicker.css";
+import "../assets/DayPicker.css";
 import "../assets/TimePicker.css";
 
 import { Resize } from "../components/Resize";
@@ -48,6 +49,11 @@ import { WorkoutInsert } from "../page/workout/WorkoutInsert";
 import { WorkoutDetail } from "../page/workout/WorkoutDetail";
 
 import { SleepList } from "../page/sleep/SleepList";
+import { SleepListDay } from "../page/sleep/SleepListDay";
+import { SleepListWeek } from "../page/sleep/SleepListWeek";
+import { SleepListMonth } from "../page/sleep/SleepListMonth";
+import { SleepListYear } from "../page/sleep/SleepListYear";
+import { SleepListSelect } from "../page/sleep/SleepListSelect";
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
 
@@ -64,27 +70,38 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/test" element={<Test2 />} />
+
           <Route path="/userLogin" element={<UserLogin />} />
           <Route path="/userInsert" element={<UserInsert />} />
           <Route path="/userDetail" element={<UserDetail />} />
           <Route path="/userList" element={<UserList />} />
           <Route path="/userUpdate" element={<UserUpdate />} />
           <Route path="/userDelete" element={<UserDelete />} />
+
           <Route path="/boardList" element={<BoardList />} />
           <Route path="/boardInsert" element={<BoardInsert />} />
           <Route path="/boardDetail" element={<BoardDetail />} />
           <Route path="/boardUpdate" element={<BoardUpdate />} />
+
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail" element={<CalendarDetail />} />
+
           <Route path="/foodSearch" element={<FoodSearch />} />
           <Route path="/foodInsert" element={<FoodInsert />} />
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/foodListPart" element={<FoodListPart />} />
+
           <Route path="/workoutList" element={<WorkoutList />} />
           <Route path="/workoutInsert" element={<WorkoutInsert />} />
           <Route path="/workoutDetail" element={<WorkoutDetail />} />
+
           <Route path="/sleepList" element={<SleepList />} />
+          <Route path="/sleepListDay" element={<SleepListDay />} />
+          <Route path="/sleepListWeek" element={<SleepListWeek />} />
+          <Route path="/sleepListMonth" element={<SleepListMonth />} />
+          <Route path="/sleepListYear" element={<SleepListYear />} />
+          <Route path="/sleepListSelect" element={<SleepListSelect />} />
           <Route path="/sleepInsert" element={<SleepInsert />} />
           <Route path="/sleepDetail" element={<SleepDetail />} />
         </Routes>

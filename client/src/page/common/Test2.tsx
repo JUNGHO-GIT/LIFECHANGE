@@ -6,65 +6,13 @@ import {
   MonthChangeEventHandler,
   WeekNumberClickEventHandler,
 } from "react-day-picker";
-import { createGlobalStyle } from "styled-components";
 import { addMonths, isSameDay, differenceInDays } from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
-const TestStyle = createGlobalStyle`
-  .today, .rdp-caption_label, .rdp-head_cell {
-    font-weight: bolder;
-  }
-  .today, .rdp-caption_label {
-    font-size: 150%;
-  }
-  .rdp-head_cell {
-    font-size: 120%;
-  }
-  .today {
-    color: #ff0000;
-  }
-  .selected {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .selected:not([disabled]) {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .selected:hover {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .selected:hover:not([disabled]) {
-   background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .rdp-day:focus {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .rdp-day:active {
-    background-color: #0d6efd !important;
-    color: #fff !important;
-  }
-  .disabled {
-    color: #999;
-  }
-  .outside {
-    color: #999;
-  }
-  .inside {
-    color: #000;
-  }
-`;
-
 // 1. 일별로 보기 --------------------------------------------------------------------------------->
 const DayComponent = () => {
-  const today = new Date(
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
-  );
+  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
 
   const [selectedYear, setSelectedYear] = useState<number>(today.getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(today.getMonth());
@@ -132,7 +80,7 @@ const DayComponent = () => {
   };
 
   return (
-    <div className="container"><TestStyle />
+    <div className="container">
       <div className="row">
         <div className="col-12">
           <DayPicker
@@ -164,9 +112,7 @@ const DayComponent = () => {
 
 // 2. 주별로 보기 --------------------------------------------------------------------------------->
 const WeekComponent = () => {
-  const today = new Date(
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
-  );
+  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(today);
 
@@ -340,11 +286,100 @@ const MonthComponent = () => {
   );
 };
 
-// 4. 선택한 날짜 범위로 보기 --------------------------------------------------------------------->
-const RangeComponent = () => {
-  const today = new Date(
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
+// 4. 년별로 보기 --------------------------------------------------------------------------------->
+const YearComponent = () => {
+  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const [selectedYear, setSelectedYear] = useState<Date | undefined>(today);
+
+  const handleYearChange: MonthChangeEventHandler = (day) => {
+    if (day) {
+      const yearDate = new Date(day.getFullYear(), 0, 1);
+      const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);
+      const nextMonth = differenceInDays(new Date(day.getFullYear() + 1, 0, 1), monthDate) / 30;
+      const prevMonth = differenceInDays(monthDate, yearDate) / 30;
+
+      if (nextMonth > prevMonth) {
+        setSelectedYear(new Date(day.getFullYear() + 1, 0, 1));
+      }
+      else {
+        setSelectedYear(new Date(day.getFullYear(), 0, 1));
+      }
+    }
+    else {
+      setSelectedYear(undefined);
+    }
+  };
+  const selectedInfo = () => {
+    if (selectedYear) {
+      return (
+        <div>
+          <hr />
+          <span>{`${selectedYear.getFullYear()}`}</span>
+          <hr />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <hr />
+          <span>선택된 날짜가 없습니다.</span>
+          <hr />
+        </div>
+      );
+    }
+  };
+  const footer = () => {
+    return (
+      <div>
+        <p>{selectedInfo()}</p>
+        <button className="btn btn-success me-2" onClick={() => {
+          setSelectedYear(today);
+        }}>
+          Today
+        </button>
+        <button className="btn btn-primary me-2" onClick={() => {
+          setSelectedYear(today);
+        }}>
+          Reset
+        </button>
+      </div>
+    );
+  };
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <DayPicker
+            mode="default"
+            selected={selectedYear}
+            showOutsideDays
+            locale={ko}
+            weekStartsOn={1}
+            month={selectedYear}
+            onMonthChange={handleYearChange}
+            modifiersClassNames={{
+              today: "today",
+              selected: "selected",
+              disabled: "disabled",
+              outside: "outside",
+              inside: "inside",
+            }}
+            footer={footer()}
+          />
+        </div>
+      </div>
+    </div>
   );
+};
+
+// 5. 선택한 날짜 범위로 보기 --------------------------------------------------------------------->
+const RangeComponent = () => {
+
+  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const [returnValue, setReturnValue] = useState<any>();
+
+
   const [selectedStartYear, setSelectedStartYear] = useState<number>();
   const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
   const [selectedStartDay, setSelectedStartDay] = useState<number>();
@@ -395,8 +430,7 @@ const RangeComponent = () => {
     }
   };
   const selectedInfo = () => {
-    if (
-      selectedStartYear &&
+    if ( selectedStartYear &&
       selectedStartMonth &&
       selectedStartDay &&
       selectedEndYear &&
@@ -487,12 +521,6 @@ export const Test2 = () => {
       </div>
       <div className="row mt-5">
         <div className="col-10">
-          <h5 className="fw-7">1. 일별로 보기</h5>
-          <DayComponent />
-        </div>
-      </div>
-      <div className="row mt-5">
-        <div className="col-10">
           <h5 className="fw-7">2. 주별로 보기</h5>
           <WeekComponent />
         </div>
@@ -505,7 +533,13 @@ export const Test2 = () => {
       </div>
       <div className="row mt-5">
         <div className="col-10">
-          <h5 className="fw-7">4. 선택한 범위로 보기</h5>
+          <h5 className="fw-7">4. 년별로 보기</h5>
+          <YearComponent />
+        </div>
+      </div>
+      <div className="row mt-5">
+        <div className="col-10">
+          <h5 className="fw-7">5. 선택한 범위로 보기</h5>
           <RangeComponent />
         </div>
       </div>
