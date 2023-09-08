@@ -438,12 +438,12 @@ const RangeComponent = () => {
       selectedEndDay
     ) {
       setReturnValue(
-        `${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`
+        `${selectedStartYear}-${selectedStartMonth}-${selectedStartDay}~${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`
       );
       return (
         <div>
           <hr />
-          {`${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`}
+          {`${selectedStartYear}-${selectedStartMonth}-${selectedStartDay}~${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`}
           <hr />
         </div>
       );

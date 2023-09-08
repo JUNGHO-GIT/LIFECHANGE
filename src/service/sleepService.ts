@@ -1,7 +1,7 @@
 // sleepService.ts
 import Sleep from "../schema/Sleep";
 import mongoose from "mongoose";
-import moment from "moment-timezone";
+import moment from "moment";
 
 // 1. sleepList ----------------------------------------------------------------------------------->
 export const sleepList = async (
@@ -9,12 +9,12 @@ export const sleepList = async (
   sleep_duration_param: any,
 ) => {
 
-  const startDay = sleep_duration_param.split(` ~ `)[0];
-  const endDay = sleep_duration_param.split(` ~ `)[1];
+  const startDay = moment(sleep_duration_param.split("~")[0], "YYYY-MM-DD");
+  const endDay = moment(sleep_duration_param.split("~")[1], "YYYY-MM-DD");
 
-  const totalDays = moment(endDay).diff(moment(startDay), 'days') + 1;
+  const totalDays = moment(endDay).diff(moment(startDay), "days") + 1;
 
-  const sleepsInRange = await Sleep.find({
+  const sleepsInRange = await Sleep.find ({
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
@@ -41,20 +41,21 @@ export const sleepList = async (
 
   return {
     averageSleepTime: moment
-      .utc(averageSleepTime * 60000)
-      .format("HH:mm")
-      .toString(),
+    .utc(averageSleepTime * 60000)
+    .format("HH:mm")
+    .toString(),
+
     averageSleepNight: moment
-      .utc(averageSleepNight * 60000)
-      .format("HH:mm")
-      .toString(),
+    .utc(averageSleepNight * 60000)
+    .format("HH:mm")
+    .toString(),
+
     averageSleepMorning: moment
-      .utc(averageSleepMorning * 60000)
-      .format("HH:mm")
-      .toString(),
+    .utc(averageSleepMorning * 60000)
+    .format("HH:mm")
+    .toString(),
   };
 };
-
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
 export const sleepDetail = async (_id_param: any) => {

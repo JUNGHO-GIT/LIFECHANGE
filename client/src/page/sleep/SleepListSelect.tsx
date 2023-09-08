@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
+import moment from "moment";
 import axios from "axios";
-import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListSelect = () => {
@@ -15,8 +15,13 @@ export const SleepListSelect = () => {
 
   const user_id = window.sessionStorage.getItem("user_id");
   const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+
   const [resultValue, setResultValue] = useState<string>("");
   const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
+  const [averageSleepTime, setAverageSleepTime] = useState();
+  const [averageSleepNight, setAverageSleepNight] = useState();
+  const [averageSleepMorning, setAverageSleepMorning] = useState();
+
   const [selectedStartYear, setSelectedStartYear] = useState<number>();
   const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
   const [selectedStartDay, setSelectedStartDay] = useState<number>();
@@ -25,11 +30,35 @@ export const SleepListSelect = () => {
   const [selectedEndDay, setSelectedEndDay] = useState<number>();
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(today);
-  const [averageSleepTime, setAverageSleepTime] = useState();
-  const [averageSleepNight, setAverageSleepNight] = useState();
-  const [averageSleepMorning, setAverageSleepMorning] = useState();
 
   // ---------------------------------------------------------------------------------------------->
+  useEffect(() => {
+    const formatValue = (value: number): string => {
+      return value < 10 ? `0${value}` : `${value}`;
+    };
+    if (
+      selectedStartYear &&
+      selectedStartMonth &&
+      selectedStartDay &&
+      selectedEndYear &&
+      selectedEndMonth &&
+      selectedEndDay
+    ) {
+      setResultValue(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)}~${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
+      setResultDuration(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)}~${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
+    }
+    else {
+      setResultValue("선택된 날짜가 없습니다.");
+    }
+  }, [
+    selectedStartYear,
+    selectedStartMonth,
+    selectedStartDay,
+    selectedEndYear,
+    selectedEndMonth,
+    selectedEndDay,
+  ]);
+
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
@@ -50,33 +79,7 @@ export const SleepListSelect = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-  useEffect(() => {
-    const formatValue = (value: number): string => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
 
-    if (
-      selectedStartYear &&
-      selectedStartMonth &&
-      selectedStartDay &&
-      selectedEndYear &&
-      selectedEndMonth &&
-      selectedEndDay
-    ) {
-      setResultValue(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)} ~ ${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
-      setResultDuration(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)} ~ ${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
-    }
-    else {
-      setResultValue("선택된 날짜가 없습니다.");
-    }
-  }, [
-    selectedStartYear,
-    selectedStartMonth,
-    selectedStartDay,
-    selectedEndYear,
-    selectedEndMonth,
-    selectedEndDay,
-  ]);
 
   // ---------------------------------------------------------------------------------------------->
   const handleDayRangeClick = (selectedRange: DateRange) => {
