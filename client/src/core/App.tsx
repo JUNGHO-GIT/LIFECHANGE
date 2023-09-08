@@ -2,8 +2,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./App.css";
-import "../assets/Custom.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -11,9 +9,10 @@ import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
 import 'react-day-picker/dist/style.css';
 import "react-datepicker/dist/react-datepicker.css";
+import "../assets/Custom.css";
 import "../assets/DatePicker.css";
-import "../assets/DayPicker.css";
 import "../assets/TimePicker.css";
+import "../assets/DayPicker.css";
 
 import { Resize } from "../components/Resize";
 import { Loader } from "../components/Loader";
