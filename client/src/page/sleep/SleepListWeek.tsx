@@ -31,9 +31,9 @@ export const SleepListWeek = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (range?.from && range?.to) {
-      setResultValue(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())}~${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
+      setResultValue(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
 
-      setResultDuration(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())}~${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
+      setResultDuration(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");

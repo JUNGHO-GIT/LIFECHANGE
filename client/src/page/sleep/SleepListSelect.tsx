@@ -44,11 +44,13 @@ export const SleepListSelect = () => {
       selectedEndMonth &&
       selectedEndDay
     ) {
-      setResultValue(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)}~${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
-      setResultDuration(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)}~${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
+      setResultValue(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)} ~ ${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
+
+      setResultDuration(`${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)} ~ ${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`);
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");
+      setResultDuration("0000-00-00 ~ 0000-00-00");
     }
   }, [
     selectedStartYear,
@@ -78,8 +80,6 @@ export const SleepListSelect = () => {
     };
     fetchSleepList();
   }, [user_id, resultDuration]);
-
-
 
   // ---------------------------------------------------------------------------------------------->
   const handleDayRangeClick = (selectedRange: DateRange) => {
