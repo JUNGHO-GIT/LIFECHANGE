@@ -14,9 +14,9 @@ export const SleepListMonth = () => {
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     if (selectedMonth) {
-      setResultValue(
-        `${selectedMonth.getFullYear()}-${selectedMonth.getMonth() + 1}`
-      );
+      setResultValue(`
+        ${selectedMonth.getFullYear()}-${selectedMonth.getMonth() + 1}
+      `);
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");

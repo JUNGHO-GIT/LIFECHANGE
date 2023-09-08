@@ -16,7 +16,9 @@ export const SleepListDay = () => {
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     if (selectedYear && selectedMonth !== undefined && selectedDay) {
-      setResultValue(`${selectedYear}-${selectedMonth + 1}-${selectedDay}`);
+      setResultValue(`
+        ${selectedYear}-${selectedMonth + 1}-${selectedDay}
+      `);
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");

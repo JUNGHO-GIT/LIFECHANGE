@@ -15,13 +15,11 @@ export const SleepListWeek = () => {
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     if (range?.from && range?.to) {
-      setResultValue(
-        `${range.from.getFullYear()}-${
-          range.from.getMonth() + 1
-        }-${range.from.getDate()} ~ ${range.to.getFullYear()}-${
-          range.to.getMonth() + 1
-        }-${range.to.getDate()}`
-      );
+      setResultValue(`
+        ${range.from.getFullYear()}-${range.from.getMonth() + 1}-${range.from.getDate()}
+        ~
+        ${range.to.getFullYear()}-${range.to.getMonth() + 1}-${range.to.getDate()}
+      `);
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");

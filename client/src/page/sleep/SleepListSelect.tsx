@@ -21,27 +21,19 @@ export const SleepListSelect = () => {
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     if (
-      selectedStartYear &&
-      selectedStartMonth &&
-      selectedStartDay &&
-      selectedEndYear &&
-      selectedEndMonth &&
-      selectedEndDay
+      selectedStartYear && selectedStartMonth && selectedStartDay &&
+      selectedEndYear && selectedEndMonth && selectedEndDay
     ) {
-      setResultValue(
-        `${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`
-      );
+      setResultValue (`
+        ${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}
+      `);
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");
     }
   }, [
-    selectedStartYear,
-    selectedStartMonth,
-    selectedStartDay,
-    selectedEndYear,
-    selectedEndMonth,
-    selectedEndDay,
+    selectedStartYear, selectedStartMonth, selectedStartDay,
+    selectedEndYear, selectedEndMonth, selectedEndDay,
   ]);
 
   // ---------------------------------------------------------------------------------------------->
@@ -96,8 +88,7 @@ export const SleepListSelect = () => {
           setSelectedEndMonth(undefined);
           setSelectedEndDay(undefined);
           setRange(undefined);
-        }}
-      >
+        }}>
         Today
       </button>
     );
