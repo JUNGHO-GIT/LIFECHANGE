@@ -132,8 +132,7 @@ const DayComponent = () => {
   };
 
   return (
-    <div className="container">
-      <TestStyle />
+    <div className="container"><TestStyle />
       <div className="row">
         <div className="col-12">
           <DayPicker
@@ -168,7 +167,6 @@ const WeekComponent = () => {
   const today = new Date(
     moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
   );
-
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(today);
 
@@ -218,11 +216,11 @@ const WeekComponent = () => {
         >
           Today
         </button>
-        <button
-          className="btn btn-primary me-2"
-          onClick={() => setRange(undefined)}
-        >
-          Reset
+        <button className="btn btn-success me-2" onClick={() => {
+          setCurrentMonth(today);
+          setRange(undefined);
+        }}>
+          Today
         </button>
       </div>
     );
@@ -258,12 +256,10 @@ const WeekComponent = () => {
   );
 };
 
+
 // 3. 월별로 보기 --------------------------------------------------------------------------------->
 const MonthComponent = () => {
-  const today = new Date(
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
-  );
-
+  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(today);
 
   const handleMonthChange: MonthChangeEventHandler = (day) => {
@@ -310,10 +306,7 @@ const MonthComponent = () => {
         >
           Today
         </button>
-        <button
-          className="btn btn-primary me-2"
-          onClick={() => setSelectedMonth(undefined)}
-        >
+        <button className="btn btn-primary me-2" onClick={() => setSelectedMonth(undefined)}>
           Reset
         </button>
       </div>
@@ -389,11 +382,12 @@ const RangeComponent = () => {
   const handleDayClick = (day: Date) => {
     if (!range || !range.from) {
       setRange({ from: day, to: undefined });
-    } else if (!range.to) {
+    }
+    else if (!range.to) {
       const newRange =
-        day > range.from
-          ? { from: range.from, to: day }
-          : { from: day, to: range.from };
+      day > range.from
+      ? { from: range.from, to: day }
+      : { from: day, to: range.from };
       handleDayRangeClick(newRange);
     }
     else {
@@ -493,6 +487,12 @@ export const Test2 = () => {
       </div>
       <div className="row mt-5">
         <div className="col-10">
+          <h5 className="fw-7">1. 일별로 보기</h5>
+          <DayComponent />
+        </div>
+      </div>
+      <div className="row mt-5">
+        <div className="col-10">
           <h5 className="fw-7">2. 주별로 보기</h5>
           <WeekComponent />
         </div>
@@ -503,7 +503,7 @@ export const Test2 = () => {
           <MonthComponent />
         </div>
       </div>
-      <div className="row mt-5 mb-20">
+      <div className="row mt-5">
         <div className="col-10">
           <h5 className="fw-7">4. 선택한 범위로 보기</h5>
           <RangeComponent />

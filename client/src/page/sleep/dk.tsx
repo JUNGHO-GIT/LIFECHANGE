@@ -106,17 +106,25 @@ export const SleepList = () => {
   // 3. flow -------------------------------------------------------------------------------------->
 
   // 4. logic ------------------------------------------------------------------------------------->
-  const logicSleepDayList = () => {
 
-    const handleDayClick:DayClickEventHandler = (param:any) => {
-      setSelectedDay(param.getDate());
-      setSelectedMonth(param.getMonth());
-      setSelectedYear(param.getFullYear());
-      setSleep_day(moment(param).format("YYYY-MM-DD").toString());
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableSleepDayList = () => {
+
+    const handleDayClick: DayClickEventHandler = (day, modifiers) => {
+      if (day) {
+        setSelectedDay(day.getDate());
+        setSelectedMonth(day.getMonth());
+        setSelectedYear(day.getFullYear());
+      }
+      else {
+        setSelectedDay(undefined);
+      }
     };
+
     const handleResetClick = () => {
       setSelectedDay(undefined);
     };
+
     const selectedInfo = () => {
       if (selectedDay !== undefined) {
         return (
@@ -130,15 +138,19 @@ export const SleepList = () => {
         );
       }
     };
+
     const footer = () => {
       return (
         <div>
           <p>{selectedInfo()}</p>
-          <button className="btn btn-success me-2" onClick={() => {
-            setSelectedMonth(today.getMonth());
-            setSelectedYear(today.getFullYear());
-            setSelectedDay(today.getDate());
-          }}>
+          <button
+            className="btn btn-success me-2"
+            onClick={() => {
+              setSelectedMonth(today.getMonth());
+              setSelectedYear(today.getFullYear());
+              setSelectedDay(today.getDate());
+            }}
+          >
             Today
           </button>
           <button className="btn btn-primary me-2" onClick={handleResetClick}>
@@ -147,66 +159,74 @@ export const SleepList = () => {
         </div>
       );
     };
-    return (
-      <DayPicker
-        mode="single"
-        showOutsideDays
-        selected={new Date(selectedYear, selectedMonth, selectedDay)}
-        month={new Date(selectedYear, selectedMonth)}
-        locale={ko}
-        weekStartsOn={0}
-        onDayClick={handleDayClick}
-        onMonthChange={(date) => {
-          setSelectedMonth(date.getMonth());
-          setSelectedYear(date.getFullYear());
-        }}
-        modifiersClassNames={{
-          today: "today",
-          selected: "selected",
-          disabled: "disabled",
-          outside: "outside",
-          inside: "inside",
-        }}
-        footer={footer()}
-      />
-    );
-  };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableSleepDayList = () => {
     return (
-      <table className="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Night</th>
-            <th>Morning</th>
-            <th>Time</th>
-            <th>day</th>
-            <th>week</th>
-            <th>month</th>
-            <th>year</th>
-            <th>regdate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {SLEEP_LIST.getDayResult.map((index: any) => (
-            <tr key={index._id}>
-              <td>
-                <a onClick={() => {buttonSleepDetail(index._id);}}>{index.sleep_title}</a>
-              </td>
-              <td>{index.sleep_night}</td>
-              <td>{index.sleep_morning}</td>
-              <td>{index.sleep_time}</td>
-              <td>{index.sleep_day}</td>
-              <td>{index.sleep_week}</td>
-              <td>{index.sleep_month}</td>
-              <td>{index.sleep_year}</td>
-              <td>{index.sleep_regdate}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="container"><TestStyle />
+        <div className="row">
+          <div className="col-12">
+            <DayPicker
+              mode="single"
+              showOutsideDays
+              selected={new Date(selectedYear, selectedMonth, selectedDay)}
+              month={new Date(selectedYear, selectedMonth)}
+              onMonthChange={(date) => {
+                setSelectedMonth(date.getMonth());
+                setSelectedYear(date.getFullYear());
+              }}
+              onSelect={handleDayClick}
+              locale={ko}
+              weekStartsOn={0}
+              footer={footer()}
+              modifiersClassNames={{
+                today: "today",
+                selected: "selected",
+                disabled: "disabled",
+                outside: "outside",
+                inside: "inside",
+              }}
+              onChange={(date:any) => {
+                setSleep_day(moment(date).format("YYYY-MM-DD").toString());
+              }}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <table className="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Night</th>
+                  <th>Morning</th>
+                  <th>Time</th>
+                  <th>day</th>
+                  <th>week</th>
+                  <th>month</th>
+                  <th>year</th>
+                  <th>regdate</th>
+                </tr>
+              </thead>
+              <tbody>
+                {SLEEP_LIST.getDayResult.map((index: any) => (
+                  <tr key={index._id}>
+                    <td>
+                      <a onClick={() => {buttonSleepDetail(index._id);}}>{index.sleep_title}</a>
+                    </td>
+                    <td>{index.sleep_night}</td>
+                    <td>{index.sleep_morning}</td>
+                    <td>{index.sleep_time}</td>
+                    <td>{index.sleep_day}</td>
+                    <td>{index.sleep_week}</td>
+                    <td>{index.sleep_month}</td>
+                    <td>{index.sleep_year}</td>
+                    <td>{index.sleep_regdate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     );
   };
 
@@ -235,26 +255,23 @@ export const SleepList = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container"><TestStyle />
+    <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-4">
-          {logicSleepDayList()}
-        </div>
-        <div className="col-8">
+        <div className="col-12 d-center">
           {tableSleepDayList()}
-          {buttonRefreshPage()}
-          {buttonSleepInsert()}
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-4">
-        </div>
-        <div className="col-8">
+        <div className="col-10">
+          <form className="form-inline">
+            {buttonRefreshPage()}
+            {buttonSleepInsert()}
+          </form>
         </div>
       </div>
     </div>
