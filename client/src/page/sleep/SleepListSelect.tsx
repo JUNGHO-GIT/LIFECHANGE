@@ -13,7 +13,10 @@ import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListSelect = () => {
+
   const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const [returnValue, setReturnValue] = useState<any>();
+
   const [selectedStartYear, setSelectedStartYear] = useState<number>();
   const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
   const [selectedStartDay, setSelectedStartDay] = useState<number>();
@@ -64,24 +67,20 @@ export const SleepListSelect = () => {
     }
   };
   const selectedInfo = () => {
-    if (
-      selectedStartYear &&
+    if ( selectedStartYear &&
       selectedStartMonth &&
       selectedStartDay &&
       selectedEndYear &&
       selectedEndMonth &&
       selectedEndDay
     ) {
+      setReturnValue(
+        `${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`
+      );
       return (
         <div>
           <hr />
-          <span>{`${selectedStartYear}`}-</span>
-          <span>{`${selectedStartMonth}`}-</span>
-          <span>{`${selectedStartDay}`}</span>
-          <span> ~ </span>
-          <span>{`${selectedEndYear}`}-</span>
-          <span>{`${selectedEndMonth}`}-</span>
-          <span>{`${selectedEndDay}`}</span>
+          {`${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`}
           <hr />
         </div>
       );

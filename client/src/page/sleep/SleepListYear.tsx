@@ -13,7 +13,10 @@ import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListYear = () => {
+
   const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const [returnValue, setReturnValue] = useState<any>();
+
   const [selectedYear, setSelectedYear] = useState<Date | undefined>(today);
 
   const handleYearChange: MonthChangeEventHandler = (day) => {
@@ -36,6 +39,7 @@ export const SleepListYear = () => {
   };
   const selectedInfo = () => {
     if (selectedYear) {
+      setReturnValue(`${selectedYear.getFullYear()}`);
       return (
         <div>
           <hr />

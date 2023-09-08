@@ -13,7 +13,10 @@ import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListWeek = () => {
+
   const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const [returnValue, setReturnValue] = useState<any>();
+
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(today);
 
@@ -24,16 +27,11 @@ export const SleepListWeek = () => {
   };
   const selectedInfo = () => {
     if (range?.from && range?.to) {
+      setReturnValue(`${range.from.getFullYear()}-${range.from.getMonth() + 1}-${range.from.getDate()} ~ ${range.to.getFullYear()}-${range.to.getMonth() + 1}-${range.to.getDate()}`);
       return (
         <div>
           <hr />
-          <span>{`${range.from.getFullYear()}`}-</span>
-          <span>{`${range.from.getMonth() + 1}`}-</span>
-          <span>{`${range.from.getDate()}`}</span>
-          <span> ~ </span>
-          <span>{`${range.to.getFullYear()}`}-</span>
-          <span>{`${range.to.getMonth() + 1}`}-</span>
-          <span>{`${range.to.getDate()}`}</span>
+          <span>{`${range.from.getFullYear()}-${range.from.getMonth() + 1}-${range.from.getDate()} ~ ${range.to.getFullYear()}-${range.to.getMonth() + 1}-${range.to.getDate()}`}</span>
           <hr />
         </div>
       );

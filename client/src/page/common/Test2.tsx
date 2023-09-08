@@ -288,6 +288,7 @@ const MonthComponent = () => {
 
 // 4. 년별로 보기 --------------------------------------------------------------------------------->
 const YearComponent = () => {
+
   const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const [selectedYear, setSelectedYear] = useState<Date | undefined>(today);
 
@@ -379,7 +380,6 @@ const RangeComponent = () => {
   const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const [returnValue, setReturnValue] = useState<any>();
 
-
   const [selectedStartYear, setSelectedStartYear] = useState<number>();
   const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
   const [selectedStartDay, setSelectedStartDay] = useState<number>();
@@ -437,16 +437,13 @@ const RangeComponent = () => {
       selectedEndMonth &&
       selectedEndDay
     ) {
+      setReturnValue(
+        `${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`
+      );
       return (
         <div>
           <hr />
-          <span>{`${selectedStartYear}`}-</span>
-          <span>{`${selectedStartMonth}`}-</span>
-          <span>{`${selectedStartDay}`}</span>
-          <span> ~ </span>
-          <span>{`${selectedEndYear}`}-</span>
-          <span>{`${selectedEndMonth}`}-</span>
-          <span>{`${selectedEndDay}`}</span>
+          {`${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`}
           <hr />
         </div>
       );
