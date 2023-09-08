@@ -64,6 +64,9 @@ export const SleepListYear = () => {
   const footer = () => {
     return (
       <div>
+        <hr />
+        <p>{resultValue}</p>
+        <hr />
         {buttonSleepToday()}
         {buttonSleepReset()}
       </div>
