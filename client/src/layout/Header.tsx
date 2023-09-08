@@ -80,6 +80,7 @@ export const Header = () => {
       {
         label: "Sleep",
         items: [
+          {to: "/sleepInsert", label: "SleepInsert"},
           {to: "/sleepListDay", label: "SleepDay"},
           {to: "/sleepListWeek", label: "SleepWeek"},
           {to: "/sleepListMonth", label: "SleepMonth"},

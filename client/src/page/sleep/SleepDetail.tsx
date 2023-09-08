@@ -14,7 +14,7 @@ export const SleepDetail = () => {
   // url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   // date
-  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();
@@ -31,9 +31,7 @@ export const SleepDetail = () => {
     sleep_morning : "",
     sleep_time : "",
     sleep_day : sleep_day,
-    sleep_week : "",
-    sleep_month : "",
-    sleep_year : "",
+    sleep_duration: "",
     sleep_regdate : koreanDate
   });
 
@@ -103,21 +101,21 @@ export const SleepDetail = () => {
         <thead>
           <tr>
             <th>Title</th>
+            <th>Day</th>
             <th>Night</th>
             <th>Morning</th>
             <th>Time</th>
             <th>regdate</th>
-            <th>week</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{SLEEP.sleep_title}</td>
+            <td>{SLEEP.sleep_day}</td>
             <td>{SLEEP.sleep_night}</td>
             <td>{SLEEP.sleep_morning}</td>
             <td>{SLEEP.sleep_time}</td>
             <td>{SLEEP.sleep_regdate}</td>
-            <td>{SLEEP.sleep_week}</td>
           </tr>
         </tbody>
       </table>

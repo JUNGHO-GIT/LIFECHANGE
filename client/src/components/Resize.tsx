@@ -13,14 +13,14 @@ export const Resize = () => {
       // Create an array to store all class names
       let classNames = [];
       for (let i = 10; i <= 400; i += 10) {
-        classNames.push('empty-' + i);
+        classNames.push("empty-" + i);
       }
 
       // Iterate over all class names
       classNames.forEach(function(className) {
 
         // Select all elements with the current class
-        let elements = document.querySelectorAll('.' + className);
+        let elements = document.querySelectorAll("." + className);
 
         // If viewport is less than or equal to 1200, remove class
         if(viewportWidth <= 1200) {
@@ -46,11 +46,11 @@ export const Resize = () => {
     handleResize();
 
     // Add event listener
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup on unmount
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []); // Empty array ensures this runs on mount and unmount only
 

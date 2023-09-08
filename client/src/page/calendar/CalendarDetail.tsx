@@ -16,7 +16,7 @@ export const CalendarDetail = () => {
   const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   // date
-  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();

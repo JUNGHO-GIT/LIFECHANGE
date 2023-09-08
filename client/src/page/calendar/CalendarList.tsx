@@ -15,7 +15,7 @@ export const CalendarList = () => {
   // url
   const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
   // date
-  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();
@@ -113,9 +113,9 @@ export const CalendarList = () => {
         );
       }
 
-      dayElement.data('dayParam', dayParam);
+      dayElement.data("dayParam", dayParam);
       dayElement.click(function () {
-        const clickedDayParam = $(this).data('dayParam');
+        const clickedDayParam = $(this).data("dayParam");
         navParam(`/calendarDetail`, {
           state: {
             user_id : user_id,

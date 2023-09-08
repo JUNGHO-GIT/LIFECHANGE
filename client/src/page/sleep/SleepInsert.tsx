@@ -12,10 +12,10 @@ export const SleepInsert = () => {
   // title
   const TITLE = "Sleep Insert";
   // url
-  const URL_SLEEP = "http://127.0.0.1:4000/sleep";
-  const URL_USER = "http://127.0.0.1:4000/user";
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_USER = process.env.REACT_APP_URL_USER;
   // date
-  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();
@@ -31,9 +31,6 @@ export const SleepInsert = () => {
     sleep_morning : "00:00",
     sleep_time : "00:00",
     sleep_day : sleep_day,
-    sleep_week : "",
-    sleep_month : "",
-    sleep_year : "",
     sleep_regdate : koreanDate
   });
 
@@ -83,7 +80,7 @@ export const SleepInsert = () => {
         const response = await axios.post (`${URL_SLEEP}/sleepInsert`, SLEEP);
         if (response.data === "success") {
           alert("Insert a sleep successfully");
-          window.location.href = "/sleepList";
+          window.location.href = "/sleepListSelect";
         }
         else {
           throw new Error("Server responded with an error");
@@ -157,7 +154,7 @@ export const SleepInsert = () => {
             value={SLEEP.sleep_night}
             disableClock={false}
             clockIcon={null}
-            format="HH:mm:ss"
+            format="HH:mm"
             locale="ko"
           />
         </div>
@@ -174,7 +171,7 @@ export const SleepInsert = () => {
             value={SLEEP.sleep_morning}
             disableClock={false}
             clockIcon={null}
-            format="HH:mm:ss"
+            format="HH:mm"
             locale="ko"
           />
         </div>
@@ -210,6 +207,7 @@ export const SleepInsert = () => {
         <div className="col-10">
           <form className="form-inline">
             {tableSleepInsert()}
+            {sleep_day}
             <br />
             {buttonSleepInsert()}
           </form>

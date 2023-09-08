@@ -15,7 +15,7 @@ export const BoardInsert = () => {
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const URL_USER = process.env.REACT_APP_URL_USER;
   // date
-  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();

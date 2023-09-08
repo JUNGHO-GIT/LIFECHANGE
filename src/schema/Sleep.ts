@@ -34,28 +34,7 @@ const SleepScheme = new mongoose.Schema ({
     },
     required : true
   },
-  sleep_week: {
-    type: String,
-    default : () => {
-      return "default";
-    },
-    required: true
-  },
-  sleep_month: {
-    type: String,
-    default : () => {
-      return "default";
-    },
-    required: true
-  },
-  sleep_year: {
-    type: String,
-    default : () => {
-      return "default";
-    },
-    required: true
-  },
-  sleep_select : {
+  sleep_duration : {
     type : String,
     default : () => {
       return "default";

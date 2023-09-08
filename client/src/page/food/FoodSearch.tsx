@@ -14,7 +14,7 @@ export const FoodSearch = () => {
   // url
   const URL_FOOD_API = process.env.REACT_APP_URL_FOOD_API;
   // date
-  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();

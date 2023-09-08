@@ -14,7 +14,7 @@ export const FoodInsert = () => {
   // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   // date
-  const koreanDate = moment.tz('Asia/Seoul').format('YYYY-MM-DD').toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();
@@ -74,7 +74,7 @@ export const FoodInsert = () => {
     ];
 
     for (const unit of units) {
-      const match = servingValue.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, 'gm'));
+      const match = servingValue.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, "gm"));
       if (match) {
         let regexValue = match[0];
         unit.replace.forEach(index => regexValue = regexValue.replace(index, ""));

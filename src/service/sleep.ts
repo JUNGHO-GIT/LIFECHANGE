@@ -24,22 +24,22 @@ export const sleepList = async (
 
   // 2. getWeek ----------------------------------------------------------------------------------->
   const getWeekLogic = async () => {
-    const currentMonth = moment(sleep_day_param, 'YYYY-MM-DD').format('MM');
+    const currentMonth = moment(sleep_day_param, "YYYY-MM-DD").format("MM");
     const currentRegdate = sleep_day_param;
 
     let weekValue;
     for(let i = 1; i <= 5; i++) {
       // 월요일
-      const startOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').startOf('week').add(1, 'days');
-      const startString = startOfWeek.format('YYYY-MM-DD').toString();
+      const startOfWeek = moment(sleep_day_param, "YYYY-MM-DD").startOf("week").add(1, "days");
+      const startString = startOfWeek.format("YYYY-MM-DD").toString();
 
       // 목요일
-      const thursdayOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').startOf('week').add(4, 'days');
-      const thursdayMonth = thursdayOfWeek.format('MM').toString();
+      const thursdayOfWeek = moment(sleep_day_param, "YYYY-MM-DD").startOf("week").add(4, "days");
+      const thursdayMonth = thursdayOfWeek.format("MM").toString();
 
       // 일요일
-      const endOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').endOf('week');
-      const endString = endOfWeek.format('YYYY-MM-DD').toString();
+      const endOfWeek = moment(sleep_day_param, "YYYY-MM-DD").endOf("week");
+      const endString = endOfWeek.format("YYYY-MM-DD").toString();
 
       if (thursdayMonth === currentMonth) {
         if (currentRegdate >= startString && currentRegdate <= endString) {
@@ -59,7 +59,7 @@ export const sleepList = async (
   const getMonthLogic = async () => {
     return await Sleep.find ({
       user_id : user_id_param,
-      sleep_month : moment(sleep_day_param, 'YYYY-MM-DD').format('MM')
+      sleep_month : moment(sleep_day_param, "YYYY-MM-DD").format("MM")
     });
   };
   const getMonthResult = await getMonthLogic();
@@ -68,7 +68,7 @@ export const sleepList = async (
   const getYearLogic = async () => {
     return await Sleep.find ({
       user_id : user_id_param,
-      sleep_year : moment(sleep_day_param, 'YYYY-MM-DD').format('YYYY')
+      sleep_year : moment(sleep_day_param, "YYYY-MM-DD").format("YYYY")
     });
   };
   const getYearResult = await getYearLogic();
@@ -100,23 +100,23 @@ export const sleepInsert = async (
 
   // 1. getWeek ---------------------------------------------------------------------------------->
   const getWeek = () => {
-    const currentMonth = koreanDate.format('MM');
+    const currentMonth = koreanDate.format("MM");
     const currentRegdate = sleep_param.sleep_day;
 
     let weekValue;
     for(let i = 1; i <= 5; i++) {
 
       // 월요일
-      const startOfWeek = moment().startOf('week').add(1, 'days');
-      const startString = startOfWeek.format('YYYY-MM-DD').toString();
+      const startOfWeek = moment().startOf("week").add(1, "days");
+      const startString = startOfWeek.format("YYYY-MM-DD").toString();
 
       // 목요일
-      const thursdayOfWeek = moment().startOf('week').add(4, 'days');
-      const thursdayMonth = thursdayOfWeek.format('MM').toString();
+      const thursdayOfWeek = moment().startOf("week").add(4, "days");
+      const thursdayMonth = thursdayOfWeek.format("MM").toString();
 
       // 일요일
-      const endOfWeek = moment().endOf('week');
-      const endString = endOfWeek.format('YYYY-MM-DD').toString();
+      const endOfWeek = moment().endOf("week");
+      const endString = endOfWeek.format("YYYY-MM-DD").toString();
 
       if (thursdayMonth === currentMonth) {
         if (currentRegdate >= startString && currentRegdate <= endString) {
@@ -130,12 +130,12 @@ export const sleepInsert = async (
 
   // 2. getMonth --------------------------------------------------------------------------------->
   const getMonth = () => {
-    return koreanDate.format('MM');
+    return koreanDate.format("MM");
   }
 
   // 3. getYear ---------------------------------------------------------------------------------->
   const getYear = () => {
-    return koreanDate.format('YYYY');
+    return koreanDate.format("YYYY");
   }
 
   // 4. sleepInsert ------------------------------------------------------------------------------->
