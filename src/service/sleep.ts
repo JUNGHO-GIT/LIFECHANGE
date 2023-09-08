@@ -1,4 +1,4 @@
-// sleepService.ts
+/* // sleepService.ts
 import Sleep from "../schema/Sleep";
 import * as mongoose from "mongoose";
 import moment from "moment-timezone";
@@ -13,147 +13,72 @@ export const sleepList = async (
   sleep_select_param : any
 ) => {
 
-  // 1. getDayAverage ----------------------------------------------------------------------------->
-  const getDayAverage = async () => {
-    return await Sleep.aggregate ([
-      {
-        $match : {
-          user_id : user_id_param,
-          sleep_day : sleep_day_param
-        }
-      },
-      {
-        $group : {
-          _id : "$sleep_day",
-          sleep_night : {
-            $avg : "$sleep_night"
-          },
-          sleep_morning : {
-            $avg : "$sleep_morning"
-          },
-          sleep_time : {
-            $avg : "$sleep_time"
-          }
+  // 1. getDay ------------------------------------------------------------------------------------>
+  const getDayLogic = async () => {
+    return await Sleep.find ({
+      user_id : user_id_param,
+      sleep_day : sleep_day_param
+    });
+  };
+  const getDayResult = await getDayLogic();
+
+  // 2. getWeek ----------------------------------------------------------------------------------->
+  const getWeekLogic = async () => {
+    const currentMonth = moment(sleep_day_param, 'YYYY-MM-DD').format('MM');
+    const currentRegdate = sleep_day_param;
+
+    let weekValue;
+    for(let i = 1; i <= 5; i++) {
+      // 월요일
+      const startOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').startOf('week').add(1, 'days');
+      const startString = startOfWeek.format('YYYY-MM-DD').toString();
+
+      // 목요일
+      const thursdayOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').startOf('week').add(4, 'days');
+      const thursdayMonth = thursdayOfWeek.format('MM').toString();
+
+      // 일요일
+      const endOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').endOf('week');
+      const endString = endOfWeek.format('YYYY-MM-DD').toString();
+
+      if (thursdayMonth === currentMonth) {
+        if (currentRegdate >= startString && currentRegdate <= endString) {
+          weekValue = `${i}번째 주: ${startString} ~ ${endString}`;
+          break;
         }
       }
-    ]);
-  }
-  const dayAverage = await getDayAverage();
+    }
+    return await Sleep.find ({
+      user_id : user_id_param,
+      sleep_week : weekValue
+    });
+  };
+  const getWeekResult = await getWeekLogic();
 
-  // 2. getWeekAverage ---------------------------------------------------------------------------->
-  const getWeekAverage = async () => {
-    return await Sleep.aggregate ([
-      {
-        $match : {
-          user_id : user_id_param,
-          sleep_week : sleep_week_param
-        }
-      },
-      {
-        $group : {
-          _id : "$sleep_week",
-          sleep_night : {
-            $avg : "$sleep_night"
-          },
-          sleep_morning : {
-            $avg : "$sleep_morning"
-          },
-          sleep_time : {
-            $avg : "$sleep_time"
-          }
-        }
-      }
-    ]);
-  }
-  const weekAverage = await getWeekAverage();
+  // 3. getMonth ---------------------------------------------------------------------------------->
+  const getMonthLogic = async () => {
+    return await Sleep.find ({
+      user_id : user_id_param,
+      sleep_month : moment(sleep_day_param, 'YYYY-MM-DD').format('MM')
+    });
+  };
+  const getMonthResult = await getMonthLogic();
 
-  // 3. getMonthAverage --------------------------------------------------------------------------->
-  const getMonthAverage = async () => {
-    return await Sleep.aggregate ([
-      {
-        $match : {
-          user_id : user_id_param,
-          sleep_month : sleep_month_param
-        }
-      },
-      {
-        $group : {
-          _id : "$sleep_month",
-          sleep_night : {
-            $avg : "$sleep_night"
-          },
-          sleep_morning : {
-            $avg : "$sleep_morning"
-          },
-          sleep_time : {
-            $avg : "$sleep_time"
-          }
-        }
-      }
-    ]);
-  }
-  const monthAverage = await getMonthAverage();
+  // 4. getYear ----------------------------------------------------------------------------------->
+  const getYearLogic = async () => {
+    return await Sleep.find ({
+      user_id : user_id_param,
+      sleep_year : moment(sleep_day_param, 'YYYY-MM-DD').format('YYYY')
+    });
+  };
+  const getYearResult = await getYearLogic();
 
-  // 4. getYearAverage ---------------------------------------------------------------------------->
-  const getYearAverage = async () => {
-    return await Sleep.aggregate ([
-      {
-        $match : {
-          user_id : user_id_param,
-          sleep_year : sleep_year_param
-        }
-      },
-      {
-        $group : {
-          _id : "$sleep_year",
-          sleep_night : {
-            $avg : "$sleep_night"
-          },
-          sleep_morning : {
-            $avg : "$sleep_morning"
-          },
-          sleep_time : {
-            $avg : "$sleep_time"
-          }
-        }
-      }
-    ]);
-  }
-  const yearAverage = await getYearAverage();
-
-  // 5. getSelectAverage -------------------------------------------------------------------------->
-  const getSelectAverage = async () => {
-    return await Sleep.aggregate ([
-      {
-        $match : {
-          user_id : user_id_param,
-          sleep_select : sleep_select_param
-        }
-      },
-      {
-        $group : {
-          _id : "$sleep_select",
-          sleep_night : {
-            $avg : "$sleep_night"
-          },
-          sleep_morning : {
-            $avg : "$sleep_morning"
-          },
-          sleep_time : {
-            $avg : "$sleep_time"
-          }
-        }
-      }
-    ]);
-  }
-  const selectAverage = await getSelectAverage();
-
+  // 5. return ------------------------------------------------------------------------------------>
   return ({
-    dayAverage,
-    weekAverage,
-    monthAverage,
-    yearAverage,
-    selectAverage
+    getDayResult,
+    getWeekResult,
+    getMonthResult,
+    getYearResult
   });
 };
 
@@ -252,3 +177,4 @@ export const sleepDelete = async (
   });
   return sleepDelete;
 };
+ */
