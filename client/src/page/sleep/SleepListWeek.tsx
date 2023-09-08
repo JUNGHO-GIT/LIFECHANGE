@@ -27,21 +27,6 @@ export const SleepListWeek = () => {
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
-    const formatValue = (value: number): string => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-    if (range?.from && range?.to) {
-      setResultValue(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
-
-      setResultDuration(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
-    }
-    else {
-      setResultValue("선택된 날짜가 없습니다.");
-    }
-  }, [range]);
-
-  // ---------------------------------------------------------------------------------------------->
-  useEffect(() => {
     const fetchSleepList = async () => {
       try {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
@@ -61,9 +46,22 @@ export const SleepListWeek = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-
-
   // ---------------------------------------------------------------------------------------------->
+  useEffect(() => {
+    const formatValue = (value: number): string => {
+      return value < 10 ? `0${value}` : `${value}`;
+    };
+    if (range?.from && range?.to) {
+      setResultValue(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
+
+      setResultDuration(`${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`);
+    }
+    else {
+      setResultValue("선택된 날짜가 없습니다.");
+    }
+  }, [range]);
+
+   ---------------------------------------------------------------------------------------------->
   const handleDayClick = (selectedDate: Date) => {
     const startOfWeek = moment(selectedDate).startOf("isoWeek").toDate();
     const endOfWeek = moment(selectedDate).endOf("isoWeek").toDate();
