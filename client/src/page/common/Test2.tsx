@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { DayClickEventHandler, DateRange, DayPicker } from 'react-day-picker';
+import {
+  DayClickEventHandler,
+  DateRange,
+  DayPicker,
+  MonthChangeEventHandler,
+  WeekNumberClickEventHandler,
+} from "react-day-picker";
 import { createGlobalStyle } from "styled-components";
-import { addMonths, isSameDay, differenceInDays } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import { addMonths, isSameDay, differenceInDays } from "date-fns";
+import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
@@ -43,7 +49,10 @@ const TestStyle = createGlobalStyle`
     background-color: #0d6efd !important;
     color: #fff !important;
   }
-  .disabled, .outside {
+  .disabled {
+    color: #999;
+  }
+  .outside {
     color: #999;
   }
   .inside {
@@ -51,45 +60,73 @@ const TestStyle = createGlobalStyle`
   }
 `;
 
-// ------------------------------------------------------------------------------------------------>
+// 1. 일별로 보기 --------------------------------------------------------------------------------->
 const DayComponent = () => {
-  const koreanDate = new Date(moment.tz('Asia/Seoul').format('YYYY-MM-DD'));
-  const today = new Date();
-  const nextMonth = addMonths(today, 1);
+  const today = new Date(
+    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
+  );
 
-  const [selectedYear, setSelectedYear] = useState<number | undefined>(undefined);
-  const [selectedMonth, setSelectedMonth] = useState<Date>(nextMonth);
-  const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined);
+  const [selectedYear, setSelectedYear] = useState<number>(today.getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState<number>(today.getMonth());
+  const [selectedDay, setSelectedDay] = useState<number | undefined>(
+    today.getDate()
+  );
 
   const handleDayClick: DayClickEventHandler = (day, modifiers) => {
-    setSelectedDay(day);
-    setSelectedMonth(day);
-    setSelectedYear(day.getFullYear());
+    if (day) {
+      setSelectedDay(day.getDate());
+      setSelectedMonth(day.getMonth());
+      setSelectedYear(day.getFullYear());
+    }
+    else {
+      setSelectedDay(undefined);
+    }
   };
 
   const handleResetClick = () => {
     setSelectedDay(undefined);
   };
 
+  const selectedInfo = () => {
+    if (selectedDay !== undefined) {
+      return (
+        <div>
+          <hr />
+          <span>{`${selectedYear}`}-</span>
+          <span>{`${selectedMonth + 1}`}-</span>
+          <span>{`${selectedDay}`}</span>
+          <hr />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <hr />
+          <span>선택된 날짜가 없습니다.</span>
+          <hr />
+        </div>
+      );
+    }
+  };
+
   const footer = () => {
-
-    const selectedInfo = () => {
-      if (selectedDay) {
-        return (
-          <div>
-            <hr/>
-            <p>{`날짜 : ${selectedDay.getMonth() + 1}월 ${selectedDay.getDate()}일`}</p>
-            <hr/>
-          </div>
-        );
-      }
-    };
-
     return (
       <div>
         <p>{selectedInfo()}</p>
-        <button className="btn btn-success me-2" onClick={() => setSelectedMonth(today)}>Today</button>
-        <button className="btn btn-primary me-2" onClick={handleResetClick}>Reset</button>
+        <button
+          className="btn btn-success me-2"
+          onClick={() => {
+            setSelectedMonth(today.getMonth());
+            setSelectedYear(today.getFullYear());
+            setSelectedDay(today.getDate());
+          }}
+        >
+          Today
+        </button>
+        <button className="btn btn-primary me-2" onClick={handleResetClick}>
+          Reset
+        </button>
       </div>
     );
   };
@@ -102,20 +139,23 @@ const DayComponent = () => {
           <DayPicker
             mode="single"
             showOutsideDays
-            selected={selectedDay}
-            month={selectedMonth}
-            onMonthChange={setSelectedMonth}
-            onSelect={handleDayClick}
+            selected={new Date(selectedYear, selectedMonth, selectedDay)}
+            month={new Date(selectedYear, selectedMonth)}
             locale={ko}
-            weekStartsOn={0}
-            footer={footer()}
-            modifiersClassNames={{
-              today: 'today',
-              selected: 'selected',
-              disabled: 'disabled',
-              outside: 'outside',
-              inside: 'inside'
+            weekStartsOn={1}
+            onDayClick={handleDayClick}
+            onMonthChange={(date) => {
+              setSelectedMonth(date.getMonth());
+              setSelectedYear(date.getFullYear());
             }}
+            modifiersClassNames={{
+              today: "today",
+              selected: "selected",
+              disabled: "disabled",
+              outside: "outside",
+              inside: "inside",
+            }}
+            footer={footer()}
           />
         </div>
       </div>
@@ -123,79 +163,317 @@ const DayComponent = () => {
   );
 };
 
-// ------------------------------------------------------------------------------------------------>
-const RangeComponent = () => {
-  const koreanDate = new Date(moment.tz('Asia/Seoul').format('YYYY-MM-DD'));
-  const today = new Date();
-  const nextMonth = addMonths(today, 1);
-  const defaultSelected = { from: koreanDate };
+// 2. 주별로 보기 --------------------------------------------------------------------------------->
+const WeekComponent = () => {
+  const today = new Date(
+    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
+  );
 
-  const [selectedYear, setSelectedYear] = useState<number | undefined>(undefined);
-  const [selectedMonth, setSelectedMonth] = useState<Date>(nextMonth);
-  const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined);
+  const [range, setRange] = useState<DateRange | undefined>();
+  const [currentMonth, setCurrentMonth] = useState<Date>(today);
 
-  const [range, setRange] = useState<DateRange>(defaultSelected);
-  const [selectedStart, setSelectedStart] = useState<Date[]>([]);
-  const [selectedEnd, setSelectedEnd] = useState<Date[]>([]);
+  const handleDayClick = (selectedDate: Date) => {
+    const startOfWeek = moment(selectedDate).startOf("isoWeek").toDate();
+    const endOfWeek = moment(selectedDate).endOf("isoWeek").toDate();
+    setRange({ from: startOfWeek, to: endOfWeek });
+  };
 
-  const handleResetClick = () => {
-    setRange({});
-    setSelectedStart([]);
-    setSelectedEnd([]);
+  const selectedInfo = () => {
+    if (range?.from && range?.to) {
+      return (
+        <div>
+          <hr />
+          <span>{`${range.from.getFullYear()}`}-</span>
+          <span>{`${range.from.getMonth() + 1}`}-</span>
+          <span>{`${range.from.getDate()}`}</span>
+          <span> ~ </span>
+          <span>{`${range.to.getFullYear()}`}-</span>
+          <span>{`${range.to.getMonth() + 1}`}-</span>
+          <span>{`${range.to.getDate()}`}</span>
+          <hr />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <hr />
+          <span>선택된 날짜가 없습니다.</span>
+          <hr />
+        </div>
+      );
+    }
   };
 
   const footer = () => {
-
-    const selectedInfo = () => {
-      if (selectedStart[0] && selectedEnd[0]) {
-        const duration = differenceInDays(selectedEnd[0], selectedStart[0]) + 1;
-        return (
-          <div>
-            <hr/>
-            <p>{`날짜 : ${selectedStart[0].getMonth() + 1}월 ${selectedStart[0].getDate()}일 ~ ${selectedEnd[0].getMonth() + 1}월 ${selectedEnd[0].getDate()}일`}</p>
-            <p>{`기간 : ${duration}일`}</p>
-            <hr/>
-          </div>
-        );
-      }
-    };
-
     return (
       <div>
         <p>{selectedInfo()}</p>
-        <button className="btn btn-success me-2" onClick={() => setSelectedMonth(today)}>Today</button>
-        <button className="btn btn-primary me-2" onClick={handleResetClick}>Reset</button>
+        <button
+          className="btn btn-success me-2"
+          onClick={() => {
+            setCurrentMonth(today);
+            setRange(undefined);
+          }}
+        >
+          Today
+        </button>
+        <button
+          className="btn btn-primary me-2"
+          onClick={() => setRange(undefined)}
+        >
+          Reset
+        </button>
       </div>
     );
   };
 
   return (
     <div className="container">
-      <TestStyle />
       <div className="row">
         <div className="col-12">
           <DayPicker
             mode="range"
             showOutsideDays
             selected={range}
+            month={currentMonth}
+            onDayClick={handleDayClick}
+            locale={ko}
+            weekStartsOn={1}
+            onMonthChange={(date) => {
+              setCurrentMonth(date);
+            }}
+            modifiersClassNames={{
+              today: "today",
+              selected: "selected",
+              disabled: "disabled",
+              outside: "outside",
+              inside: "inside",
+            }}
+            footer={footer()}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 3. 월별로 보기 --------------------------------------------------------------------------------->
+const MonthComponent = () => {
+  const today = new Date(
+    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
+  );
+
+  const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(today);
+
+  const handleMonthChange: MonthChangeEventHandler = (day) => {
+    if (day) {
+      const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);
+      setSelectedMonth(monthDate);
+    }
+    else {
+      setSelectedMonth(undefined);
+    }
+  };
+
+  const selectedInfo = () => {
+    if (selectedMonth) {
+      return (
+        <div>
+          <hr />
+          <span>{`${selectedMonth.getFullYear()}`}-</span>
+          <span>{`${selectedMonth.getMonth() + 1}`}</span>
+          <hr />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <hr />
+          <span>선택된 날짜가 없습니다.</span>
+          <hr />
+        </div>
+      );
+    }
+  };
+
+  const footer = () => {
+    return (
+      <div>
+        <p>{selectedInfo()}</p>
+        <button
+          className="btn btn-success me-2"
+          onClick={() => {
+            setSelectedMonth(today);
+          }}
+        >
+          Today
+        </button>
+        <button
+          className="btn btn-primary me-2"
+          onClick={() => setSelectedMonth(undefined)}
+        >
+          Reset
+        </button>
+      </div>
+    );
+  };
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <DayPicker
+            mode="default"
+            selected={selectedMonth}
+            showOutsideDays
+            locale={ko}
+            weekStartsOn={1}
             month={selectedMonth}
-            onMonthChange={setSelectedMonth}
-            onSelect={range => {
-                setRange(range || defaultSelected);
-                const [startDate, endDate] = range?.to && range.to < range.from ? [range.to, range.from] : [range?.from, range?.to];
-                setSelectedStart([startDate]);
-                setSelectedEnd([endDate]);
-              }}
-              locale={ko}
-              weekStartsOn={0}
-              footer={footer()}
-              modifiersClassNames={{
-                today: 'today',
-                selected: 'selected',
-                disabled: 'disabled',
-                outside: 'outside',
-                inside: 'inside'
-              }}
+            onMonthChange={handleMonthChange}
+            modifiersClassNames={{
+              today: "today",
+              selected: "selected",
+              disabled: "disabled",
+              outside: "outside",
+              inside: "inside",
+            }}
+            footer={footer()}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 4. 선택한 날짜 범위로 보기 --------------------------------------------------------------------->
+const RangeComponent = () => {
+  const today = new Date(
+    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
+  );
+  const [selectedStartYear, setSelectedStartYear] = useState<number>();
+  const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
+  const [selectedStartDay, setSelectedStartDay] = useState<number>();
+  const [selectedEndYear, setSelectedEndYear] = useState<number>();
+  const [selectedEndMonth, setSelectedEndMonth] = useState<number>();
+  const [selectedEndDay, setSelectedEndDay] = useState<number>();
+
+  const [range, setRange] = useState<DateRange | undefined>();
+  const [currentMonth, setCurrentMonth] = useState<Date>(today);
+
+  const handleDayRangeClick = (selectedRange: DateRange) => {
+    setRange(selectedRange);
+    if (selectedRange?.from) {
+      setSelectedStartYear(selectedRange.from.getFullYear());
+      setSelectedStartMonth(selectedRange.from.getMonth() + 1);
+      setSelectedStartDay(selectedRange.from.getDate());
+    }
+    if (selectedRange?.to) {
+      setSelectedEndYear(selectedRange.to.getFullYear());
+      setSelectedEndMonth(selectedRange.to.getMonth() + 1);
+      setSelectedEndDay(selectedRange.to.getDate());
+    }
+  };
+
+  const handleResetClick = () => {
+    setSelectedStartYear(undefined);
+    setSelectedStartMonth(undefined);
+    setSelectedStartDay(undefined);
+    setSelectedEndYear(undefined);
+    setSelectedEndMonth(undefined);
+    setSelectedEndDay(undefined);
+    setRange(undefined);
+  };
+
+  const handleDayClick = (day: Date) => {
+    if (!range || !range.from) {
+      setRange({ from: day, to: undefined });
+    } else if (!range.to) {
+      const newRange =
+        day > range.from
+          ? { from: range.from, to: day }
+          : { from: day, to: range.from };
+      handleDayRangeClick(newRange);
+    }
+    else {
+      setRange({ from: day, to: undefined });
+    }
+  };
+  const selectedInfo = () => {
+    if (
+      selectedStartYear &&
+      selectedStartMonth &&
+      selectedStartDay &&
+      selectedEndYear &&
+      selectedEndMonth &&
+      selectedEndDay
+    ) {
+      return (
+        <div>
+          <hr />
+          <span>{`${selectedStartYear}`}-</span>
+          <span>{`${selectedStartMonth}`}-</span>
+          <span>{`${selectedStartDay}`}</span>
+          <span> ~ </span>
+          <span>{`${selectedEndYear}`}-</span>
+          <span>{`${selectedEndMonth}`}-</span>
+          <span>{`${selectedEndDay}`}</span>
+          <hr />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <hr />
+          <span>선택된 날짜가 없습니다.</span>
+          <hr />
+        </div>
+      );
+    }
+  };
+  const footer = () => {
+    return (
+      <div>
+        <p>{selectedInfo()}</p>
+        <button
+          className="btn btn-success me-2"
+          onClick={() => {
+            setCurrentMonth(today);
+          }}
+        >
+          Today
+        </button>
+        <button className="btn btn-primary me-2" onClick={handleResetClick}>
+          Reset
+        </button>
+      </div>
+    );
+  };
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <DayPicker
+            mode="range"
+            showOutsideDays
+            selected={range}
+            month={currentMonth}
+            onDayClick={handleDayClick}
+            locale={ko}
+            weekStartsOn={1}
+            onMonthChange={(date) => {
+              setCurrentMonth(date);
+            }}
+            modifiersClassNames={{
+              today: "today",
+              selected: "selected",
+              disabled: "disabled",
+              outside: "outside",
+              inside: "inside",
+            }}
+            footer={footer()}
           />
         </div>
       </div>
@@ -207,11 +485,27 @@ const RangeComponent = () => {
 export const Test2 = () => {
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-6">
+      <div className="row mt-5">
+        <div className="col-10">
+          <h5 className="fw-7">1. 일별로 보기</h5>
           <DayComponent />
         </div>
-        <div className="col-6">
+      </div>
+      <div className="row mt-5">
+        <div className="col-10">
+          <h5 className="fw-7">2. 주별로 보기</h5>
+          <WeekComponent />
+        </div>
+      </div>
+      <div className="row mt-5">
+        <div className="col-10">
+          <h5 className="fw-7">3. 월별로 보기</h5>
+          <MonthComponent />
+        </div>
+      </div>
+      <div className="row mt-5 mb-20">
+        <div className="col-10">
+          <h5 className="fw-7">4. 선택한 범위로 보기</h5>
           <RangeComponent />
         </div>
       </div>

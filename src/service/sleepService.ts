@@ -8,11 +8,74 @@ export const sleepList = async (
   user_id_param : any,
   sleep_day_param : any
 ) => {
-  const sleepList = await Sleep.find ({
-    user_id : user_id_param,
-    sleep_day : sleep_day_param
+
+  // 1. getDay ------------------------------------------------------------------------------------>
+  const getDayLogic = async () => {
+    return await Sleep.find({
+      user_id : user_id_param,
+      sleep_day : sleep_day_param
+    });
+  };
+  const getDayResult = await getDayLogic();
+
+  // 2. getWeek ----------------------------------------------------------------------------------->
+  const getWeekLogic = async () => {
+    const currentMonth = moment(sleep_day_param, 'YYYY-MM-DD').format('MM');
+    const currentRegdate = sleep_day_param;
+
+    let weekValue;
+    for(let i = 1; i <= 5; i++) {
+      // 월요일
+      const startOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').startOf('week').add(1, 'days');
+      const startString = startOfWeek.format('YYYY-MM-DD').toString();
+
+      // 목요일
+      const thursdayOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').startOf('week').add(4, 'days');
+      const thursdayMonth = thursdayOfWeek.format('MM').toString();
+
+      // 일요일
+      const endOfWeek = moment(sleep_day_param, 'YYYY-MM-DD').endOf('week');
+      const endString = endOfWeek.format('YYYY-MM-DD').toString();
+
+      if (thursdayMonth === currentMonth) {
+        if (currentRegdate >= startString && currentRegdate <= endString) {
+          weekValue = `${i}번째 주: ${startString} ~ ${endString}`;
+          break;
+        }
+      }
+    }
+    return await Sleep.find ({
+      user_id : user_id_param,
+      sleep_week : weekValue
+    });
+  };
+  const getWeekResult = await getWeekLogic();
+
+  // 3. getMonth ---------------------------------------------------------------------------------->
+  const getMonthLogic = async () => {
+    return await Sleep.find ({
+      user_id : user_id_param,
+      sleep_month : moment(sleep_day_param, 'YYYY-MM-DD').format('MM')
+    });
+  };
+  const getMonthResult = await getMonthLogic();
+
+  // 4. getYear ----------------------------------------------------------------------------------->
+  const getYearLogic = async () => {
+    return await Sleep.find ({
+      user_id : user_id_param,
+      sleep_year : moment(sleep_day_param, 'YYYY-MM-DD').format('YYYY')
+    });
+  };
+  const getYearResult = await getYearLogic();
+
+  // 5. return ------------------------------------------------------------------------------------>
+  return ({
+    getDayResult,
+    getWeekResult,
+    getMonthResult,
+    getYearResult
   });
-  return sleepList;
 };
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
