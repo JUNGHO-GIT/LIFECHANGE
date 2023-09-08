@@ -1,5 +1,5 @@
 // SleepListYear.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DayClickEventHandler,
   DateRange,
@@ -13,63 +13,59 @@ import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListYear = () => {
-
-  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  const [returnValue, setReturnValue] = useState<any>();
+  const today = new Date(
+    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
+  );
+  const [resultValue, setResultValue] = useState<any>();
 
   const [selectedYear, setSelectedYear] = useState<Date | undefined>(today);
+
+  useEffect(() => {
+    if (selectedYear) {
+      setResultValue(`${selectedYear.getFullYear()}`);
+    } else {
+      setResultValue("선택된 날짜가 없습니다.");
+    }
+  }, [selectedYear]);
 
   const handleYearChange: MonthChangeEventHandler = (day) => {
     if (day) {
       const yearDate = new Date(day.getFullYear(), 0, 1);
       const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);
-      const nextMonth = differenceInDays(new Date(day.getFullYear() + 1, 0, 1), monthDate) / 30;
+      const nextMonth =
+        differenceInDays(new Date(day.getFullYear() + 1, 0, 1), monthDate) / 30;
       const prevMonth = differenceInDays(monthDate, yearDate) / 30;
 
       if (nextMonth > prevMonth) {
         setSelectedYear(new Date(day.getFullYear() + 1, 0, 1));
-      }
-      else {
+      } else {
         setSelectedYear(new Date(day.getFullYear(), 0, 1));
       }
-    }
-    else {
+    } else {
       setSelectedYear(undefined);
     }
   };
-  const selectedInfo = () => {
-    if (selectedYear) {
-      setReturnValue(`${selectedYear.getFullYear()}`);
-      return (
-        <div>
-          <hr />
-          <span>{`${selectedYear.getFullYear()}`}</span>
-          <hr />
-        </div>
-      );
-    }
-    else {
-      return (
-        <div>
-          <hr />
-          <span>선택된 날짜가 없습니다.</span>
-          <hr />
-        </div>
-      );
-    }
-  };
+
   const footer = () => {
     return (
       <div>
-        <p>{selectedInfo()}</p>
-        <button className="btn btn-success me-2" onClick={() => {
-          setSelectedYear(today);
-        }}>
+        <hr />
+        <p>{resultValue}</p>
+        <hr />
+        <button
+          className="btn btn-success me-2"
+          onClick={() => {
+            setSelectedYear(today);
+          }}
+        >
           Today
         </button>
-        <button className="btn btn-primary me-2" onClick={() => {
-          setSelectedYear(today);
-        }}>
+        <button
+          className="btn btn-primary me-2"
+          onClick={() => {
+            setSelectedYear(today);
+          }}
+        >
           Reset
         </button>
       </div>
@@ -77,7 +73,7 @@ export const SleepListYear = () => {
   };
   return (
     <div className="container">
-      <div className="row">
+      <div className="row d-center">
         <div className="col-12">
           <DayPicker
             mode="default"
@@ -101,4 +97,3 @@ export const SleepListYear = () => {
     </div>
   );
 };
-

@@ -1,5 +1,5 @@
 // SleepListWeek.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DayClickEventHandler,
   DateRange,
@@ -13,43 +13,40 @@ import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListWeek = () => {
-
-  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  const [returnValue, setReturnValue] = useState<any>();
+  const today = new Date(
+    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
+  );
+  const [resultValue, setResultValue] = useState<string>("");
 
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(today);
+
+  useEffect(() => {
+    if (range?.from && range?.to) {
+      setResultValue(
+        `${range.from.getFullYear()}-${
+          range.from.getMonth() + 1
+        }-${range.from.getDate()} ~ ${range.to.getFullYear()}-${
+          range.to.getMonth() + 1
+        }-${range.to.getDate()}`
+      );
+    } else {
+      setResultValue("선택된 날짜가 없습니다.");
+    }
+  }, [range]);
 
   const handleDayClick = (selectedDate: Date) => {
     const startOfWeek = moment(selectedDate).startOf("isoWeek").toDate();
     const endOfWeek = moment(selectedDate).endOf("isoWeek").toDate();
     setRange({ from: startOfWeek, to: endOfWeek });
   };
-  const selectedInfo = () => {
-    if (range?.from && range?.to) {
-      setReturnValue(`${range.from.getFullYear()}-${range.from.getMonth() + 1}-${range.from.getDate()} ~ ${range.to.getFullYear()}-${range.to.getMonth() + 1}-${range.to.getDate()}`);
-      return (
-        <div>
-          <hr />
-          <span>{`${range.from.getFullYear()}-${range.from.getMonth() + 1}-${range.from.getDate()} ~ ${range.to.getFullYear()}-${range.to.getMonth() + 1}-${range.to.getDate()}`}</span>
-          <hr />
-        </div>
-      );
-    }
-    else {
-      return (
-        <div>
-          <hr />
-          <span>선택된 날짜가 없습니다.</span>
-          <hr />
-        </div>
-      );
-    }
-  };
+
   const footer = () => {
     return (
       <div>
-        <p>{selectedInfo()}</p>
+        <hr />
+        <p>{resultValue}</p>
+        <hr />
         <button
           className="btn btn-success me-2"
           onClick={() => {
@@ -59,18 +56,21 @@ export const SleepListWeek = () => {
         >
           Today
         </button>
-        <button className="btn btn-success me-2" onClick={() => {
-          setCurrentMonth(today);
-          setRange(undefined);
-        }}>
-          Today
+        <button
+          className="btn btn-primary me-2"
+          onClick={() => {
+            setCurrentMonth(today);
+            setRange(undefined);
+          }}
+        >
+          Reset
         </button>
       </div>
     );
   };
   return (
     <div className="container">
-      <div className="row">
+      <div className="row d-center">
         <div className="col-12">
           <DayPicker
             mode="range"
