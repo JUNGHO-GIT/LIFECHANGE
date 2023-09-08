@@ -1,33 +1,24 @@
 // SleepListSelect.tsx
 import React, { useState, useEffect } from "react";
-import {
-  DayClickEventHandler,
-  DateRange,
-  DayPicker,
-  MonthChangeEventHandler,
-  WeekNumberClickEventHandler,
-} from "react-day-picker";
-import { addMonths, isSameDay, differenceInDays } from "date-fns";
+import { DateRange, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListSelect = () => {
-  const today = new Date(
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
-  );
-  const [resultValue, setResultValue] = useState<string>("");
 
+  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const [resultValue, setResultValue] = useState<string>("");
   const [selectedStartYear, setSelectedStartYear] = useState<number>();
   const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
   const [selectedStartDay, setSelectedStartDay] = useState<number>();
   const [selectedEndYear, setSelectedEndYear] = useState<number>();
   const [selectedEndMonth, setSelectedEndMonth] = useState<number>();
   const [selectedEndDay, setSelectedEndDay] = useState<number>();
-
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(today);
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     if (
       selectedStartYear &&
@@ -40,7 +31,8 @@ export const SleepListSelect = () => {
       setResultValue(
         `${selectedStartYear}-${selectedStartMonth}-${selectedStartDay} ~ ${selectedEndYear}-${selectedEndMonth}-${selectedEndDay}`
       );
-    } else {
+    }
+    else {
       setResultValue("선택된 날짜가 없습니다.");
     }
   }, [
@@ -52,6 +44,7 @@ export const SleepListSelect = () => {
     selectedEndDay,
   ]);
 
+  // ---------------------------------------------------------------------------------------------->
   const handleDayRangeClick = (selectedRange: DateRange) => {
     setRange(selectedRange);
     if (selectedRange?.from) {
@@ -65,7 +58,6 @@ export const SleepListSelect = () => {
       setSelectedEndDay(selectedRange.to.getDate());
     }
   };
-
   const handleResetClick = () => {
     setSelectedStartYear(undefined);
     setSelectedStartMonth(undefined);
@@ -75,41 +67,61 @@ export const SleepListSelect = () => {
     setSelectedEndDay(undefined);
     setRange(undefined);
   };
-
   const handleDayClick = (day: Date) => {
     if (!range || !range.from) {
       setRange({ from: day, to: undefined });
-    } else if (!range.to) {
-      const newRange =
-        day > range.from
-          ? { from: range.from, to: day }
-          : { from: day, to: range.from };
+    }
+    else if (!range.to) {
+      const newRange = day > range.from
+      ? { from: range.from, to: day }
+      : { from: day, to: range.from };
       handleDayRangeClick(newRange);
-    } else {
+    }
+    else {
       setRange({ from: day, to: undefined });
     }
   };
 
+  // ---------------------------------------------------------------------------------------------->
+  const buttonSleepToday = () => {
+    return (
+      <button
+        className="btn btn-success me-2"
+        onClick={() => {
+          setCurrentMonth(today);
+          setSelectedStartYear(undefined);
+          setSelectedStartMonth(undefined);
+          setSelectedStartDay(undefined);
+          setSelectedEndYear(undefined);
+          setSelectedEndMonth(undefined);
+          setSelectedEndDay(undefined);
+          setRange(undefined);
+        }}
+      >
+        Today
+      </button>
+    );
+  };
+  const buttonSleepReset = () => {
+    return (
+      <button className="btn btn-primary me-2" onClick={handleResetClick}>
+        Reset
+      </button>
+    );
+  };
   const footer = () => {
     return (
       <div>
         <hr />
         <p>{resultValue}</p>
         <hr />
-        <button
-          className="btn btn-success me-2"
-          onClick={() => {
-            setCurrentMonth(today);
-          }}
-        >
-          Today
-        </button>
-        <button className="btn btn-primary me-2" onClick={handleResetClick}>
-          Reset
-        </button>
+        {buttonSleepToday()}
+        {buttonSleepReset()}
       </div>
     );
   };
+
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="row d-center">

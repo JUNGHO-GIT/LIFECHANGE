@@ -1,71 +1,62 @@
 // SleepListDay.tsx
 import React, { useState, useEffect } from "react";
-import {
-  DayClickEventHandler,
-  DateRange,
-  DayPicker,
-  MonthChangeEventHandler,
-  WeekNumberClickEventHandler,
-} from "react-day-picker";
-import { addMonths, isSameDay, differenceInDays } from "date-fns";
+import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListDay = () => {
-  const today = new Date(
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
-  );
+
+  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const [resultValue, setResultValue] = useState<string>("");
   const [selectedYear, setSelectedYear] = useState<number>(today.getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(today.getMonth());
-  const [selectedDay, setSelectedDay] = useState<number | undefined>(
-    today.getDate()
-  );
+  const [selectedDay, setSelectedDay] = useState<number | undefined>(today.getDate());
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     if (selectedYear && selectedMonth !== undefined && selectedDay) {
       setResultValue(`${selectedYear}-${selectedMonth + 1}-${selectedDay}`);
-    } else {
+    }
+    else {
       setResultValue("선택된 날짜가 없습니다.");
     }
   }, [selectedYear, selectedMonth, selectedDay]);
 
+  // ---------------------------------------------------------------------------------------------->
   const handleDayClick: DayClickEventHandler = (day, modifiers) => {
     if (day) {
       setSelectedDay(day.getDate());
       setSelectedMonth(day.getMonth());
       setSelectedYear(day.getFullYear());
-    } else {
+    }
+    else {
       setSelectedDay(undefined);
     }
   };
 
-  const footer = () => {
-    const buttonSleepToday = () => {
-      return (
-        <button
-          className="btn btn-success me-2"
-          onClick={() => {
-            setSelectedMonth(today.getMonth());
-            setSelectedYear(today.getFullYear());
-            setSelectedDay(today.getDate());
-          }}
-        >
-          Today
-        </button>
-      );
-    };
-    const buttonSleepReset = () => {
-      const reset = () => {
+  // ---------------------------------------------------------------------------------------------->
+  const buttonSleepToday = () => {
+    return (
+      <button className="btn btn-success me-2" onClick={() => {
+        setSelectedMonth(today.getMonth());
+        setSelectedYear(today.getFullYear());
+        setSelectedDay(today.getDate());
+      }}>
+        Today
+      </button>
+    );
+  };
+  const buttonSleepReset = () => {
+    return (
+      <button className="btn btn-primary me-2" onClick={() => {
         setSelectedDay(undefined);
-      };
-      return (
-        <button className="btn btn-primary me-2" onClick={reset}>
-          Reset
-        </button>
-      );
-    };
+      }}>
+        Reset
+      </button>
+    );
+  };
+  const footer = () => {
     return (
       <div>
         <hr />
@@ -77,6 +68,7 @@ export const SleepListDay = () => {
     );
   };
 
+  // ---------------------------------------------------------------------------------------------->
   return (
     <div className="container">
       <div className="row d-center">
