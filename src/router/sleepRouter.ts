@@ -4,15 +4,35 @@ import * as sleepService from "../service/sleepService";
 
 const sleepRouter = Router();
 
-// 1. sleepList ----------------------------------------------------------------------------------->
+// 1-1. sleepList --------------------------------------------------------------------------------->
 sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   try {
     const sleepList = await sleepService.sleepList (
       req.query.user_id,
-      req.query.sleep_category,
+      req.query.sleep_duration,
     );
     if (sleepList) {
       res.send(sleepList);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 1-2. sleepAverage ------------------------------------------------------------------------------>
+sleepRouter.get("/sleepAverage", async (req: Request, res: Response) => {
+  try {
+    const sleepAverage = await sleepService.sleepAverage (
+      req.query.user_id,
+      req.query.sleep_duration,
+    );
+    if (sleepAverage) {
+      res.send(sleepAverage);
     }
     else {
       res.send("fail");

@@ -49,7 +49,7 @@ import { WorkoutInsert } from "../page/workout/WorkoutInsert";
 import { WorkoutDetail } from "../page/workout/WorkoutDetail";
 import { WorkoutUpdate } from "../page/workout/WorkoutUpdate";
 
-import { SleepList } from "../page/sleep/SleepList";
+import { SleepListDay } from "../page/sleep/SleepListDay";
 import { SleepListWeek } from "../page/sleep/SleepListWeek";
 import { SleepListMonth } from "../page/sleep/SleepListMonth";
 import { SleepListYear } from "../page/sleep/SleepListYear";
@@ -98,8 +98,7 @@ const App = () => {
           <Route path="/workoutDetail" element={<WorkoutDetail />} />
           <Route path="/workoutUpdate" element={<WorkoutUpdate />} />
 
-          <Route path="/sleepList" element={<SleepList />} />
-          <Route path="/sleepList" element={<SleepList />} />
+          <Route path="/sleepListDay" element={<SleepListDay />} />
           <Route path="/sleepListWeek" element={<SleepListWeek />} />
           <Route path="/sleepListMonth" element={<SleepListMonth />} />
           <Route path="/sleepListYear" element={<SleepListYear />} />

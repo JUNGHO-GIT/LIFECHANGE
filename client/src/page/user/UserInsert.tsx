@@ -27,35 +27,31 @@ export const UserInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserInsert = async () => {
-    try {
-      if (user_id === "" || user_pw === "") {
-        alert("Please enter both Id and Pw");
-        return;
-      }
-      const response = await axios.post (`${URL_USER}/userInsert`, {
-        user_id: user_id,
-        user_pw: user_pw,
-      });
-      if (response.data === "success") {
-        alert("Signup successful");
-        navParam("/userLogin");
-      }
-      else if (response.data === "duplicate") {
-        alert("This ID already exists");
-        setUserId("");
-        setUserPw("");
-      }
-      else if (response.data === "fail") {
-        alert("Incorrect Id or Pw");
-        setUserId("");
-        setUserPw("");
-      }
-      else {
-        alert(`${response.data}error`);
-      }
+
+    if (user_id === "" || user_pw === "") {
+      alert("Please enter both Id and Pw");
+      return;
     }
-    catch (error: any) {
-      alert(`Error fetching user data: ${error.message}`);
+    const response = await axios.post (`${URL_USER}/userInsert`, {
+      user_id: user_id,
+      user_pw: user_pw,
+    });
+    if (response.data === "success") {
+      alert("Signup successful");
+      navParam("/userLogin");
+    }
+    else if (response.data === "duplicate") {
+      alert("This ID already exists");
+      setUserId("");
+      setUserPw("");
+    }
+    else if (response.data === "fail") {
+      alert("Incorrect Id or Pw");
+      setUserId("");
+      setUserPw("");
+    }
+    else {
+      alert(`${response.data}error`);
     }
   };
 

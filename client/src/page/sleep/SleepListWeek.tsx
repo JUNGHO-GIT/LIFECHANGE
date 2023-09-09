@@ -21,13 +21,15 @@ export const SleepListWeek = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state 1
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
+  // state 2
   const [resultValue, setResultValue] = useState<string>();
   const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
-  // state 2
+  // state 3
   const [averageSleepTime, setAverageSleepTime] = useState<string>();
   const [averageSleepNight, setAverageSleepNight] = useState<string>();
   const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
-  // state 3
+  // state 4
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(koreanDate);
 
@@ -38,7 +40,7 @@ export const SleepListWeek = () => {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
             user_id: user_id,
-            sleep_category: resultDuration,
+            sleep_duration: resultDuration,
           },
         });
 
@@ -173,7 +175,7 @@ export const SleepListWeek = () => {
   const buttonSleepList = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
-        navParam("/sleepList");
+        navParam("/sleepListDay");
       }}>
         Day
       </button>

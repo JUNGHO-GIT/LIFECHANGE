@@ -40,22 +40,16 @@ export const FoodInsert = () => {
       food_fat: logicPerServing(params, fat),
     };
 
-    try {
-      const response = await axios.post(`${URL_FOOD}/foodInsert`, {
-        user_id : user_id,
-        FOOD : FOOD
-      });
-      if (response.data === "success") {
-        alert("Insert food successfully");
-        navParam(`/foodSearch`);
-      }
-      else {
-        alert(`${response.data}error`);
-      }
+    const response = await axios.post(`${URL_FOOD}/foodInsert`, {
+      user_id : user_id,
+      FOOD : FOOD
+    });
+    if (response.data === "success") {
+      alert("Insert food successfully");
+      navParam(`/foodSearch`);
     }
-    catch (err) {
-      console.error(err);
-      alert("Insert food failed");
+    else {
+      alert(`${response.data}error`);
     }
   };
 

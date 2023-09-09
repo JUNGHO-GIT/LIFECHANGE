@@ -101,7 +101,7 @@ export const Header = () => {
         label: "Sleep",
         items: [
           {to: "/sleepInsert", label: "SleepInsert"},
-          {to: "/sleepList", label: "SleepList"}
+          {to: "/sleepListDay", label: "SleepListDay"}
         ]
       }
     ];

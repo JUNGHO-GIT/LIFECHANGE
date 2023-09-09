@@ -33,6 +33,7 @@ export const SleepInsert = () => {
     setSleepDay();
   }, [sleep_day]);
 
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const setSleepTime = () => {
       if (SLEEP.sleep_night && SLEEP.sleep_morning) {
@@ -58,31 +59,26 @@ export const SleepInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepInsert = async () => {
-    try {
-      if (SLEEP.sleep_night === "") {
-        alert("Please enter a night");
-        return;
-      }
-      else if (SLEEP.sleep_morning === "") {
-        alert("Please enter a morning");
-        return;
+    if (SLEEP.sleep_night === "") {
+      alert("Please enter a night");
+      return;
+    }
+    else if (SLEEP.sleep_morning === "") {
+      alert("Please enter a morning");
+      return;
+    }
+    else {
+      const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
+        user_id : user_id,
+        SLEEP : SLEEP
+      });
+      if (response.data === "success") {
+        alert("Insert a sleep successfully");
+        navParam("/sleepListSelect");
       }
       else {
-        const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
-          user_id : user_id,
-          SLEEP : SLEEP
-        });
-        if (response.data === "success") {
-          alert("Insert a sleep successfully");
-          navParam("/sleepListSelect");
-        }
-        else {
-          throw new Error("Server responded with an error");
-        }
+        throw new Error("Server responded with an error");
       }
-    }
-    catch (error: any) {
-      alert(`Error fetching user data: ${error.message}`);
     }
   };
 
@@ -105,7 +101,7 @@ export const SleepInsert = () => {
     return (
       <div>
         <div className="d-center">
-          <span className="form-label me-4">User ID</span>
+          <span className="form-label me-4">ID</span>
           <input
             type="text"
             className="form-control"
@@ -151,22 +147,21 @@ export const SleepInsert = () => {
         </div>
         <br />
         <div className="d-center">
-          <span className="form-label me-4">Night</span>
-          <TimePicker
-            id="sleep_night"
-            name="sleep_night"
-            onChange={(event: any) => {
-              setSLEEP({ ...SLEEP, sleep_night: event });
-            }}
-            value={SLEEP.sleep_night}
-            disableClock={false}
-            clockIcon={null}
-            format="HH:mm"
-            locale="ko"
-          />
-        </div>
-        <br />
-        <div className="d-center">
+          <div className="input-group">
+            <span className="form-label me-4">Night</span>
+            <TimePicker
+              id="sleep_night"
+              name="sleep_night"
+              onChange={(event: any) => {
+                setSLEEP({ ...SLEEP, sleep_night: event });
+              }}
+              value={SLEEP.sleep_night}
+              disableClock={false}
+              clockIcon={null}
+              format="HH:mm"
+              locale="ko"
+            />
+          </div>
           <span className="form-label me-4">Morning</span>
           <TimePicker
             id="sleep_morning"

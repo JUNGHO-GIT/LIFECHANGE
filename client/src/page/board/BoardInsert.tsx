@@ -26,35 +26,29 @@ export const BoardInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowBoardInsert = async () => {
-    try {
-      if (BOARD.board_title === "") {
-        alert("Please enter a title");
-        return;
-      }
-      else if (BOARD.board_content === "") {
-        alert("Please enter a content");
-        return;
+
+    if (BOARD.board_title === "") {
+      alert("Please enter a title");
+      return;
+    }
+    else if (BOARD.board_content === "") {
+      alert("Please enter a content");
+      return;
+    }
+    else {
+      const response = await axios.post (`${URL_BOARD}/boardInsert`, {
+        user_id : user_id,
+        BOARD : BOARD,
+      });
+      if (response.data === "success") {
+        alert("Insert a board successfully");
+        navParam(`/boardList`);
       }
       else {
-        const response = await axios.post (`${URL_BOARD}/boardInsert`, {
-          user_id : user_id,
-          BOARD : BOARD,
-        });
-        if (response.data === "success") {
-          alert("Insert a board successfully");
-          navParam(`/boardList`);
-        }
-        else if (response.data === "fail") {
-          alert("Insert a board failed");
-        }
-        else {
-          alert(`${response.data}error`);
-        }
+        alert(`${response.data}error`);
       }
     }
-    catch (error: any) {
-      alert(`Error fetching board data: ${error.message}`);
-    }
+
   };
 
   // 4. logic ------------------------------------------------------------------------------------->

@@ -26,52 +26,48 @@ export const WorkoutInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkoutInsert = async () => {
-    try {
-      if (WORKOUT.workout_part === "") {
-        alert("Please enter part.");
-        return;
-      }
-      if (WORKOUT.workout_title === "") {
-        alert("Please enter title.");
-        return;
-      }
-      if (WORKOUT.workout_set === "") {
-        alert("Please enter set.");
-        return;
-      }
-      if (WORKOUT.workout_count === "") {
-        alert("Please enter count.");
-        return;
-      }
-      if (WORKOUT.workout_kg === "") {
-        alert("Please enter kg.");
-        return;
-      }
-      if (WORKOUT.workout_rest === "") {
-        alert("Please enter rest.");
-        return;
-      }
-      if (WORKOUT.workout_time === "") {
-        alert("Please enter time.");
-        return;
-      }
-      const response = await axios.post (`${URL_WORKOUT}/workoutInsert`, {
-        user_id : user_id,
-        WORKOUT : WORKOUT,
-      });
-      if (response.data === "success") {
-        alert("Insert a workout successfully");
-        navParam("/workoutList");
-      }
-      else if (response.data === "fail") {
-        alert("Insert a workout failure");
-      }
-      else {
-        throw new Error("Server responded with an error");
-      }
+
+    if (WORKOUT.workout_part === "") {
+      alert("Please enter part.");
+      return;
     }
-    catch (error: any) {
-      alert(`Error inserting workout data: ${error.message}`);
+    if (WORKOUT.workout_title === "") {
+      alert("Please enter title.");
+      return;
+    }
+    if (WORKOUT.workout_set === "") {
+      alert("Please enter set.");
+      return;
+    }
+    if (WORKOUT.workout_count === "") {
+      alert("Please enter count.");
+      return;
+    }
+    if (WORKOUT.workout_kg === "") {
+      alert("Please enter kg.");
+      return;
+    }
+    if (WORKOUT.workout_rest === "") {
+      alert("Please enter rest.");
+      return;
+    }
+    if (WORKOUT.workout_time === "") {
+      alert("Please enter time.");
+      return;
+    }
+    const response = await axios.post (`${URL_WORKOUT}/workoutInsert`, {
+      user_id : user_id,
+      WORKOUT : WORKOUT,
+    });
+    if (response.data === "success") {
+      alert("Insert a workout successfully");
+      navParam("/workoutList");
+    }
+    else if (response.data === "fail") {
+      alert("Insert a workout failure");
+    }
+    else {
+      throw new Error("Server responded with an error");
     }
   };
 

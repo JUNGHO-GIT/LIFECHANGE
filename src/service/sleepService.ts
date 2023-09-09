@@ -3,14 +3,34 @@ import Sleep from "../schema/Sleep";
 import mongoose from "mongoose";
 import moment from "moment";
 
-// 1. sleepList ----------------------------------------------------------------------------------->
+// 1-1. sleepList --------------------------------------------------------------------------------->
 export const sleepList = async (
   user_id_param: any,
-  sleep_category_param: any,
+  sleep_duration_param: any,
 ) => {
 
-  const startDay = sleep_category_param.split(` ~ `)[0];
-  const endDay = sleep_category_param.split(` ~ `)[1];
+  const startDay = sleep_duration_param.split(` ~ `)[0];
+  const endDay = sleep_duration_param.split(` ~ `)[1];
+
+  const sleepList = await Sleep.find({
+    user_id: user_id_param,
+    sleep_day: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  }).sort({sleep_day: -1});
+
+  return sleepList;
+};
+
+// 1-2. sleepAverage ------------------------------------------------------------------------------>
+export const sleepAverage = async (
+  user_id_param: any,
+  sleep_duration_param: any,
+) => {
+
+  const startDay = sleep_duration_param.split(` ~ `)[0];
+  const endDay = sleep_duration_param.split(` ~ `)[1];
 
   const sleepsInRange = await Sleep.find({
     user_id: user_id_param,
@@ -25,7 +45,7 @@ export const sleepList = async (
   let totalSleepMorning = 0;
 
   sleepsInRange.forEach((sleep) => {
-    // sleep_time 값을 분으로 변환
+
     const [hours, minutes] = sleep.sleep_time.split(":").map(Number);
     totalSleepTime += (hours * 60) + minutes;
 
@@ -33,7 +53,6 @@ export const sleepList = async (
     totalSleepMorning += moment.duration(`00:${sleep.sleep_morning}`).asMinutes();
   });
 
-  // sleepsInRange.length = 실제 데이터가 있는 날짜 수
   const averageSleepTime = totalSleepTime / sleepsInRange.length;
   const averageSleepNight = totalSleepNight / sleepsInRange.length;
   const averageSleepMorning = totalSleepMorning / sleepsInRange.length;
@@ -66,7 +85,7 @@ export const sleepInsert = async (
     sleep_morning : SLEEP_param.sleep_morning,
     sleep_time : SLEEP_param.sleep_time,
     sleep_day : SLEEP_param.sleep_day,
-    sleep_category : SLEEP_param.sleep_category,
+    sleep_duration : SLEEP_param.sleep_duration,
     sleep_regdate : SLEEP_param.sleep_regdate,
     sleep_update : SLEEP_param.sleep_update,
   });

@@ -79,7 +79,7 @@ export const SleepUpdate = () => {
       });
       if (response.data === "success") {
         alert("Update success");
-        navParam(`/sleepList`);
+        navParam(`/sleepListDay`);
       }
       else {
         alert("Update failed");
