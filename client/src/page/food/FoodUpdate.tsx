@@ -52,7 +52,7 @@ export const FoodUpdate = () => {
       });
       if (response.data === "success") {
         alert("Update success");
-        window.location.href = "/foodSearch";
+        navParam(`/foodSearch`);
       }
       else {
         alert("Update failed");

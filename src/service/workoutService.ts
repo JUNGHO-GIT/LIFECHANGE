@@ -26,21 +26,22 @@ export const workoutDetail = async (
 
 // 3. workoutInsert ------------------------------------------------------------------------------->
 export const workoutInsert = async (
-  workout_param : any
+  user_id_param : any,
+  WORKOUT_param : any
 ) => {
   const workoutInsert = await Workout.create ({
     _id : new mongoose.Types.ObjectId(),
-    user_id : workout_param.user_id,
-    workout_part : workout_param.workout_part,
-    workout_title : workout_param.workout_title,
-    workout_set : workout_param.workout_set,
-    workout_count : workout_param.workout_count,
-    workout_kg : workout_param.workout_kg,
-    workout_rest : workout_param.workout_rest,
-    workout_time : workout_param.workout_time,
-    workout_image : workout_param.workout_image,
-    workout_regdate : workout_param.workout_regdate,
-    workout_update : workout_param.workout_update,
+    user_id : user_id_param,
+    workout_part : WORKOUT_param.workout_part,
+    workout_title : WORKOUT_param,
+    workout_set : WORKOUT_param.workout_set,
+    workout_count : WORKOUT_param.workout_count,
+    workout_kg : WORKOUT_param.workout_kg,
+    workout_rest : WORKOUT_param.workout_rest,
+    workout_time : WORKOUT_param.workout_time,
+    workout_image : WORKOUT_param.workout_image,
+    workout_regdate : WORKOUT_param.workout_regdate,
+    workout_update : WORKOUT_param.workout_update,
   });
   return workoutInsert;
 };

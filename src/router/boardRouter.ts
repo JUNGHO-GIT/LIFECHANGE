@@ -45,7 +45,8 @@ boardRouter.get("/boardDetail", async (req: Request, res: Response) => {
 boardRouter.post("/boardInsert", async (req: Request, res: Response) => {
   try {
     const boardInsert = await boardService.boardInsert (
-      req.body
+      req.body.user_id,
+      req.body.BOARD
     );
     if (boardInsert) {
       res.send("success");

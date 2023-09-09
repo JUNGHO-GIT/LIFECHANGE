@@ -6,11 +6,11 @@ import moment from "moment";
 // 1. sleepList ----------------------------------------------------------------------------------->
 export const sleepList = async (
   user_id_param: any,
-  sleep_duration_param: any,
+  sleep_category_param: any,
 ) => {
 
-  const startDay = sleep_duration_param.split(` ~ `)[0];
-  const endDay = sleep_duration_param.split(` ~ `)[1];
+  const startDay = sleep_category_param.split(` ~ `)[0];
+  const endDay = sleep_category_param.split(` ~ `)[1];
 
   const sleepsInRange = await Sleep.find({
     user_id: user_id_param,
@@ -53,24 +53,26 @@ export const sleepDetail = async (_id_param: any) => {
   return sleepDetail;
 };
 
-// 4. sleepInsert ------------------------------------------------------------------------------->
+// 3. sleepInsert --------------------------------------------------------------------------------->
 export const sleepInsert = async (
-    sleep_param: any
-  )=> {
-  const sleepInsert = await Sleep.create({
-    _id: new mongoose.Types.ObjectId(),
-    user_id: sleep_param.user_id,
-    sleep_title: sleep_param.sleep_title,
-    sleep_night: sleep_param.sleep_night,
-    sleep_morning: sleep_param.sleep_morning,
-    sleep_time: sleep_param.sleep_time,
-    sleep_day: sleep_param.sleep_day,
-    sleep_list_duration: sleep_param.sleep_list_duration,
-    sleep_regdate: sleep_param.sleep_regdate,
-    sleep_update: sleep_param.sleep_update,
+  user_id_param: any,
+  SLEEP_param: any
+) => {
+  const sleepInsert = await Sleep.create ({
+    _id : new mongoose.Types.ObjectId(),
+    user_id : user_id_param,
+    sleep_title : SLEEP_param.sleep_title,
+    sleep_night : SLEEP_param.sleep_night,
+    sleep_morning : SLEEP_param.sleep_morning,
+    sleep_time : SLEEP_param.sleep_time,
+    sleep_day : SLEEP_param.sleep_day,
+    sleep_category : SLEEP_param.sleep_category,
+    sleep_regdate : SLEEP_param.sleep_regdate,
+    sleep_update : SLEEP_param.sleep_update,
   });
   return sleepInsert;
 };
+
 // 4. sleepUpdate --------------------------------------------------------------------------------->
 export const sleepUpdate = async (
   _id_param: any,

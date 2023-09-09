@@ -22,16 +22,7 @@ export const WorkoutInsert = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [WORKOUT, setWORKOUT] = useState({
-    user_id: sessionStorage.getItem("user_id"),
-    workout_part: "",
-    workout_title: "",
-    workout_set: "",
-    workout_count: "",
-    workout_kg: "",
-    workout_rest: "",
-    workout_time: "",
-  });
+  const [WORKOUT, setWORKOUT] = useState<any>({});
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkoutInsert = async () => {
@@ -64,10 +55,13 @@ export const WorkoutInsert = () => {
         alert("Please enter time.");
         return;
       }
-      const response = await axios.post (`${URL_WORKOUT}/workoutInsert`, WORKOUT);
+      const response = await axios.post (`${URL_WORKOUT}/workoutInsert`, {
+        user_id : user_id,
+        WORKOUT : WORKOUT,
+      });
       if (response.data === "success") {
         alert("Insert a workout successfully");
-        window.location.href = "/workoutList";
+        navParam("/workoutList");
       }
       else if (response.data === "fail") {
         alert("Insert a workout failure");
@@ -92,14 +86,12 @@ export const WorkoutInsert = () => {
             type="text"
             className="form-control"
             id="user_id"
-            placeholder="User ID"
-            value={WORKOUT.user_id ? WORKOUT.user_id : ""}
-            onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                user_id: e.target.value,
-              });
+            name="user_id"
+            value={user_id ? user_id : ""}
+            onChange={(event: any) => {
+              setWORKOUT({ ...WORKOUT, user_id: event.target.value });
             }}
+            readOnly
           />
           <label htmlFor="user_id">User ID</label>
         </div>

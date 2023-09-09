@@ -35,7 +35,7 @@ export const UserLogin = () => {
       if (response.data === "success") {
         alert("Login successful");
         window.sessionStorage.setItem("user_id", user_id);
-        window.location.href = "/";
+        navParam("/");
       }
       else if (response.data === "fail") {
         alert("Incorrect ID or PW");

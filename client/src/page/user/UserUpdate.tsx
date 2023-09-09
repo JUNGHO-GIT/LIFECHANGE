@@ -65,7 +65,7 @@ export const UserUpdate = () => {
           });
           if (response.data === "success") {
             alert("User Update success");
-            window.location.href = "/";
+            navParam("/");
           }
           else if (response.data === "fail") {
             alert("User Update fail");

@@ -53,7 +53,7 @@ export const WorkoutUpdate = () => {
       });
       if (response.data === "success") {
         alert("Update success");
-        window.location.href = "/workoutList";
+        navParam("/workoutList");
       }
       else {
         alert("Update failed");

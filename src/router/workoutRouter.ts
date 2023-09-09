@@ -47,7 +47,8 @@ workoutRouter.get("/workoutDetail", async (req: Request, res: Response) => {
 workoutRouter.post("/workoutInsert", async (req: Request, res: Response) => {
   try {
     const workoutInsert = await workoutService.workoutInsert (
-      req.body
+      req.body.user_id,
+      req.body.WORKOUT
     );
     if (workoutInsert) {
       res.send("success");

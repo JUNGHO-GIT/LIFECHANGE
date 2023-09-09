@@ -22,14 +22,15 @@ export const calendarDetail = async (
 
 // 3. calendarInsert ------------------------------------------------------------------------------>
 export const calendarInsert = async (
-  calendar_param : any
+  user_id_param : any,
+  CALENDAR_param : any
 ) => {
   const calendarInsert = await Calendar.create ({
     _id : new mongoose.Types.ObjectId(),
-    user_id : calendar_param.user_id,
-    calendar_title : calendar_param.calendar_title,
-    calendar_content : calendar_param.calendar_content,
-    calendar_date : calendar_param.calendar_date,
+    user_id : user_id_param,
+    calendar_title : CALENDAR_param.calendar_title,
+    calendar_content : CALENDAR_param.calendar_content,
+    calendar_date : CALENDAR_param.calendar_date,
   });
   return calendarInsert;
 };

@@ -23,17 +23,7 @@ export const SleepDetail = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // state
   const [sleep_day, setSleep_day] = useState(koreanDate);
-  const [SLEEP, setSLEEP] = useState<any> ({
-    _id : "",
-    user_id : user_id,
-    sleep_title : "",
-    sleep_night : "",
-    sleep_morning : "",
-    sleep_time : "",
-    sleep_day : sleep_day,
-    sleep_duration: "",
-    sleep_regdate : koreanDate
-  });
+  const [SLEEP, setSLEEP] = useState<any>({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

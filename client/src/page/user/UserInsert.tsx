@@ -38,7 +38,7 @@ export const UserInsert = () => {
       });
       if (response.data === "success") {
         alert("Signup successful");
-        window.location.href = "/userLogin";
+        navParam("/userLogin");
       }
       else if (response.data === "duplicate") {
         alert("This ID already exists");

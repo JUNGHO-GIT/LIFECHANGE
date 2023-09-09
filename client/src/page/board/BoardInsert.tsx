@@ -46,7 +46,7 @@ export const BoardInsert = () => {
         });
         if (response.data === "success") {
           alert("Insert a board successfully");
-          window.location.href = "/boardList";
+          navParam(`/boardList`);
         }
         else if (response.data === "fail") {
           alert("Insert a board failed");
@@ -72,7 +72,7 @@ export const BoardInsert = () => {
             className="form-control"
             id="user_id"
             placeholder="User ID"
-            value={user_id || ""}
+            value={user_id ? user_id : ""}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>

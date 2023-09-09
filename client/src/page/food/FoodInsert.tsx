@@ -42,11 +42,12 @@ export const FoodInsert = () => {
 
     try {
       const response = await axios.post(`${URL_FOOD}/foodInsert`, {
+        user_id : user_id,
         FOOD : FOOD
       });
       if (response.data === "success") {
         alert("Insert food successfully");
-        window.location.href = "/foodSearch";
+        navParam(`/foodSearch`);
       }
       else {
         alert(`${response.data}error`);

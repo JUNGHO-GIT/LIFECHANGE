@@ -9,7 +9,7 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   try {
     const sleepList = await sleepService.sleepList (
       req.query.user_id,
-      req.query.sleep_duration,
+      req.query.sleep_category,
     );
     if (sleepList) {
       res.send(sleepList);
@@ -47,7 +47,8 @@ sleepRouter.get("/sleepDetail", async (req: Request, res: Response) => {
 sleepRouter.post("/sleepInsert", async (req: Request, res: Response) => {
   try {
     const sleepInsert = await sleepService.sleepInsert (
-      req.body
+      req.body.user_id,
+      req.body.SLEEP
     );
     if (sleepInsert) {
       res.send("success");

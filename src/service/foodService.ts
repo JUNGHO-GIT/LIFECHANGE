@@ -58,11 +58,12 @@ export const foodDetail = async (
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (
+  uer_id_param : any,
   FOOD_pram : any
 ) => {
   const foodInsert = await Food.create ({
     _id : new mongoose.Types.ObjectId(),
-    user_id : FOOD_pram.user_id,
+    user_id : uer_id_param,
     food_title : FOOD_pram.food_title,
     food_brand : FOOD_pram.food_brand,
     food_category : FOOD_pram.food_category,

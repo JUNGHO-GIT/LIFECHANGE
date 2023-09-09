@@ -45,7 +45,7 @@ export const SleepListSelect = () => {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
             user_id : user_id,
-            sleep_duration : resultDuration,
+            sleep_category : resultDuration,
           },
         });
 

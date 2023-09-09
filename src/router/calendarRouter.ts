@@ -45,7 +45,8 @@ calendarRouter.get("/calendarDetail", async (req: Request, res: Response) => {
 calendarRouter.post("/calendarInsert", async (req: Request, res: Response) => {
   try {
     const calendarInsert = await calendarService.calendarInsert (
-      req.body
+      req.body.user_id,
+      req.body.CALENDAR
     );
     if (calendarInsert) {
       res.send("success");

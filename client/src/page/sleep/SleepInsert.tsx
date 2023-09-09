@@ -23,16 +23,7 @@ export const SleepInsert = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // state
   const [sleep_day, setSleep_day] = useState(koreanDate);
-  const [SLEEP, setSLEEP] = useState <any> ({
-    _id : "",
-    user_id : user_id,
-    sleep_title : "Title",
-    sleep_night : "00:00",
-    sleep_morning : "00:00",
-    sleep_time : "00:00",
-    sleep_day : sleep_day,
-    sleep_regdate : koreanDate
-  });
+  const [SLEEP, setSLEEP] = useState<any>({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -44,23 +35,23 @@ export const SleepInsert = () => {
 
   useEffect(() => {
     const setSleepTime = () => {
-      const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
-      const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_morning}:00Z`);
+      if (SLEEP.sleep_night && SLEEP.sleep_morning) {
+        const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
+        const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_morning}:00Z`);
 
-      if (morningDate < nightDate) {
-        morningDate.setDate(morningDate.getDate() + 1);
+        if (morningDate < nightDate) {
+          morningDate.setDate(morningDate.getDate() + 1);
+        }
+
+        const diff = morningDate.getTime() - nightDate.getTime();
+        const hours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+
+        setSLEEP((prevSleep: any) => ({
+          ...prevSleep,
+          sleep_time: `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`,
+        }));
       }
-
-      const diff = morningDate.getTime() - nightDate.getTime();
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-
-      setSLEEP ({
-        ...SLEEP,
-        sleep_time: `${String(hours).padStart(2, "0")}:${String(
-          minutes
-        ).padStart(2, "0")}`,
-      });
     };
     setSleepTime();
   }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_day]);
@@ -77,10 +68,13 @@ export const SleepInsert = () => {
         return;
       }
       else {
-        const response = await axios.post (`${URL_SLEEP}/sleepInsert`, SLEEP);
+        const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
+          user_id : user_id,
+          SLEEP : SLEEP
+        });
         if (response.data === "success") {
           alert("Insert a sleep successfully");
-          window.location.href = "/sleepListSelect";
+          navParam("/sleepListSelect");
         }
         else {
           throw new Error("Server responded with an error");
@@ -117,7 +111,7 @@ export const SleepInsert = () => {
             className="form-control"
             id="user_id"
             name="user_id"
-            value={SLEEP.user_id || ""}
+            value={user_id ? user_id : ""}
             onChange={(event: any) => {
               setSLEEP({ ...SLEEP, user_id: event.target.value });
             }}
@@ -137,6 +131,22 @@ export const SleepInsert = () => {
               setSLEEP({ ...SLEEP, sleep_title: event.target.value });
             }}
             placeholder="Title"
+          />
+        </div>
+        <br />
+        <div className="d-center">
+          <span className="form-label me-4">Day</span>
+          <input
+            type="text"
+            className="form-control"
+            id="sleep_day"
+            name="sleep_day"
+            value={SLEEP.sleep_day || ""}
+            onChange={(event: any) => {
+              setSLEEP({ ...SLEEP, sleep_day: event.target.value });
+            }}
+            placeholder="Day"
+            readOnly
           />
         </div>
         <br />
@@ -209,12 +219,12 @@ export const SleepInsert = () => {
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-10">
+        <div className="col-8">
           <form className="form-inline">
             {tableSleepInsert()}
-            {sleep_day}
             <br />
             {buttonSleepInsert()}
+            {buttonRefreshPage()}
           </form>
         </div>
       </div>

@@ -38,7 +38,7 @@ export const SleepListYear = () => {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
             user_id: user_id,
-            sleep_duration: resultDuration,
+            sleep_category: resultDuration,
           },
         });
 
@@ -81,7 +81,6 @@ export const SleepListYear = () => {
       setResultValue (
         `${selectedYear.getFullYear()}`
       );
-
       setResultDuration (
         `${selectedYear.getFullYear()}-01-01 ~ ${selectedYear.getFullYear()}-12-31`
       );

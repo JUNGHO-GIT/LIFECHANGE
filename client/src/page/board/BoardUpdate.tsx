@@ -52,7 +52,7 @@ export const BoardUpdate = () => {
       });
       if (response.data === "success") {
         alert("Update success");
-        window.location.href = "/boardList";
+        navParam(`/boardList`);
       }
       else {
         alert("Update failed");

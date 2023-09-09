@@ -68,6 +68,7 @@ foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
 foodRouter.post ("/foodInsert", async (req: Request, res: Response) => {
   try {
     const foodInsert = await foodService.foodInsert (
+      req.body.user_id,
       req.body.FOOD
     );
     if (foodInsert) {
