@@ -59,22 +59,12 @@ export const foodListPart = async (
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
 export const foodDetail = async (
-  _id_param : string,
-  user_id_param : string,
-  food_regdate_param : string,
+  _id_param : any
 ) => {
-  try {
-    const foodDetail = await Food.findOne ({
-      _id : _id_param,
-      user_id : user_id_param,
-      food_regdate : food_regdate_param,
-    });
-    return foodDetail;
-  }
-  catch (error) {
-    console.error(error);
-    throw error;
-  }
+  const foodDetail = await Food.findOne ({
+    _id : _id_param
+  });
+  return foodDetail;
 };
 
 // 3. foodInsert ---------------------------------------------------------------------------------->

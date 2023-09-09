@@ -49,9 +49,7 @@ foodRouter.get ("/foodListPart", async (req: Request, res: Response) => {
 foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
   try {
     const foodDetail = await foodService.foodDetail (
-      req.query._id as string,
-      req.query.user_id as string,
-      req.query.food_regdate as string,
+      req.query._id
     );
     if (foodDetail) {
       res.send(foodDetail);
@@ -93,7 +91,7 @@ foodRouter.put("/foodUpdate", async (req: Request, res: Response) => {
       req.body.FOOD
     );
     if (foodUpdate) {
-      res.send(foodUpdate);
+      res.send("success");
     }
     else {
       res.send("fail");

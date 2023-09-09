@@ -30,7 +30,7 @@ export const FoodUpdate = () => {
       try {
         const response = await axios.get(`${URL_FOOD}/foodDetail`, {
           params: {
-            _id: _id,
+            _id : _id,
           },
         });
         setFOOD(response.data);
@@ -52,7 +52,7 @@ export const FoodUpdate = () => {
       });
       if (response.data === "success") {
         alert("Update success");
-        window.location.href = "/foodList";
+        window.location.href = "/foodSearch";
       }
       else {
         alert("Update failed");
@@ -71,18 +71,47 @@ export const FoodUpdate = () => {
       <div>
         <div className="form-floating">
           <input type="text" className="form-control"  placeholder="User ID"
-          value={FOOD.user_id} readOnly />
-          <label htmlFor="user_id">User ID</label>
+          value={user_id || ""} readOnly />
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Title" value={FOOD.food_title} onChange={(e) => setFOOD({...FOOD, food_title: e.target.value})} />
+          <input type="text" className="form-control" placeholder="Name" value={FOOD.food_name}
+          onChange={(e) => setFOOD({...FOOD, food_name: e.target.value})} />
           <label htmlFor="floatingTitle">Title</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Content"
-          value={FOOD.food_content}
-          onChange={(e) => setFOOD({...FOOD, food_content: e.target.value})} />
-          <label htmlFor="floatingContent">Content</label>
+          <input type="text" className="form-control" placeholder="Brand" value={FOOD.food_brand}
+          onChange={(e) => setFOOD({...FOOD, food_brand: e.target.value})} />
+          <label htmlFor="floatingBrand">Brand</label>
+        </div>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="Category" value={FOOD.food_category}
+          onChange={(e) => setFOOD({...FOOD, food_category: e.target.value})} />
+          <label htmlFor="floatingCategory">Category</label>
+        </div>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="Serving" value={FOOD.food_serving}
+          onChange={(e) => setFOOD({...FOOD, food_serving: e.target.value})} />
+          <label htmlFor="floatingServing">Serving</label>
+        </div>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="Calories" value={FOOD.food_calories}
+          onChange={(e) => setFOOD({...FOOD, food_calories: e.target.value})} />
+          <label htmlFor="floatingCalories">Calories</label>
+        </div>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="Carb" value={FOOD.food_carb}
+          onChange={(e) => setFOOD({...FOOD, food_carb: e.target.value})} />
+          <label htmlFor="floatingCarb">Carb</label>
+        </div>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="Protein" value={FOOD.food_protein}
+          onChange={(e) => setFOOD({...FOOD, food_protein: e.target.value})} />
+          <label htmlFor="floatingProtein">Protein</label>
+        </div>
+        <div className="form-floating">
+          <input type="text" className="form-control" placeholder="Fat" value={FOOD.food_fat}
+          onChange={(e) => setFOOD({...FOOD, food_fat: e.target.value})} />
+          <label htmlFor="floatingFat">Fat</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Food Date"
@@ -101,6 +130,15 @@ export const FoodUpdate = () => {
       </button>
     );
   };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
+    );
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -116,6 +154,7 @@ export const FoodUpdate = () => {
             {tableFoodUpdate()}
             <br/>
             {buttonFoodUpdate()}
+            {buttonRefreshPage()}
           </form>
         </div>
       </div>

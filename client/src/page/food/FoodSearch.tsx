@@ -225,6 +225,15 @@ export const FoodSearch = () => {
       </button>
     );
   };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
+    );
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -268,6 +277,7 @@ export const FoodSearch = () => {
             {buttonFoodLunch()}
             {buttonFoodDinner()}
             {buttonFoodSnack()}
+            {buttonRefreshPage()}
           </div>
         </div>
       </div>

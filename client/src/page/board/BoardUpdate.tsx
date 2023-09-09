@@ -47,8 +47,8 @@ export const BoardUpdate = () => {
   const flowBoardUpdate = async () => {
     try {
       const response = await axios.put(`${URL_BOARD}/boardUpdate`, {
-        _id: BOARD._id,
-        BOARD: BOARD,
+        _id : BOARD._id,
+        BOARD : BOARD,
       });
       if (response.data === "success") {
         alert("Update success");

@@ -42,6 +42,7 @@ import { FoodInsert } from "../page/food/FoodInsert";
 import { FoodList } from "../page/food/FoodList";
 import { FoodDetail } from "../page/food/FoodDetail";
 import { FoodListPart } from "../page/food/FoodListPart";
+import { FoodUpdate } from "../page/food/FoodUpdate";
 
 import { WorkoutList } from "../page/workout/WorkoutList";
 import { WorkoutInsert } from "../page/workout/WorkoutInsert";
@@ -90,6 +91,7 @@ const App = () => {
           <Route path="/foodList" element={<FoodList />} />
           <Route path="/foodListPart" element={<FoodListPart />} />
           <Route path="/foodDetail" element={<FoodDetail />} />
+          <Route path="/foodUpdate" element={<FoodUpdate />} />
 
           <Route path="/workoutList" element={<WorkoutList />} />
           <Route path="/workoutInsert" element={<WorkoutInsert />} />

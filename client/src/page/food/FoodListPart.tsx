@@ -118,6 +118,15 @@ export const FoodListPart = () => {
       </p>
     );
   };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
+    );
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -140,6 +149,8 @@ export const FoodListPart = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           {tableFoodListPart()}
+          <br/>
+          {buttonRefreshPage()}
         </div>
       </div>
     </div>

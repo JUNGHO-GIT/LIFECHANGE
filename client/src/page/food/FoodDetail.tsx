@@ -33,8 +33,6 @@ export const FoodDetail = () => {
         const response = await axios.get(`${URL_FOOD}/foodDetail`, {
           params: {
             _id : _id,
-            user_id : user_id,
-            food_regdate : food_regdate,
           },
         });
         setFOOD(response.data);
@@ -127,10 +125,30 @@ export const FoodDetail = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
+  const buttonFoodUpdate = () => {
+    return (
+      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+        navParam(`/foodUpdate`, {
+          state: {_id},
+        });
+      }}>
+        Update
+      </button>
+    );
+  };
   const buttonFoodDelete = () => {
     return (
-      <button type="button" className="btn btn-danger" onClick={flowFoodDelete}>
+      <button type="button" className="btn btn-danger ms-2" onClick={flowFoodDelete}>
         Delete
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
       </button>
     );
   };
@@ -159,6 +177,8 @@ export const FoodDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           {buttonFoodDelete()}
+          {buttonFoodUpdate()}
+          {buttonRefreshPage()}
         </div>
       </div>
     </div>
