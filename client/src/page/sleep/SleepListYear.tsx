@@ -198,17 +198,13 @@ export const SleepListYear = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>날짜</th>
-            <th>기간</th>
-            <th>취침 시간</th>
-            <th>기상 시간</th>
-            <th>수면 시간</th>
+            <th>취침 평균</th>
+            <th>기상 평균</th>
+            <th>수면 평균</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{resultValue}</td>
-            <td>{resultDuration}</td>
             <td>{averageSleepNight}</td>
             <td>{averageSleepMorning}</td>
             <td>{averageSleepTime}</td>
@@ -304,12 +300,15 @@ export const SleepListYear = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-4">
+          <h2 className="mb-3 fw-9">년별로 조회</h2>
           {viewSleepDay()}
         </div>
         <div className="col-4">
+          <h2 className="mb-3 fw-9">수면 기록</h2>
           {tableSleepList()}
         </div>
         <div className="col-4">
+          <h2 className="mb-3 fw-9">수면 평균</h2>
           {tableSleepAverage()}
         </div>
       </div>
