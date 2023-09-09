@@ -93,8 +93,8 @@ userRouter.post("/userLogin", async (req: Request, res: Response) => {
 userRouter.put("/userUpdate", async (req: Request, res: Response) => {
   try {
     const userUpdate = await userService.userUpdate (
-      req.body.user_id,
-      req.body.user_pw
+      req.body._id,
+      req.body.USER
     );
     if (userUpdate) {
       res.send("success");

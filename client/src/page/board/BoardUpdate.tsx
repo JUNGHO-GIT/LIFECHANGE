@@ -30,7 +30,7 @@ export const BoardUpdate = () => {
       try {
         const response = await axios.get(`${URL_BOARD}/boardDetail`, {
           params: {
-            _id: _id,
+            _id : _id,
           },
         });
         setBOARD(response.data);
@@ -47,9 +47,8 @@ export const BoardUpdate = () => {
   const flowBoardUpdate = async () => {
     try {
       const response = await axios.put(`${URL_BOARD}/boardUpdate`, {
-        _id : _id,
-        board_title : BOARD.board_title,
-        board_content : BOARD.board_content,
+        _id: BOARD._id,
+        BOARD: BOARD,
       });
       if (response.data === "success") {
         alert("Update success");
@@ -97,17 +96,10 @@ export const BoardUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={flowBoardUpdate}>
-        Update
-      </button>
-    );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button className="btn btn-primary ms-2" type="button" onClick={() => {
+        flowBoardUpdate();
       }}>
-        Refresh
+        Update
       </button>
     );
   };
@@ -117,6 +109,15 @@ export const BoardUpdate = () => {
         navParam(`/boardList`);
       }}>
         List
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
       </button>
     );
   };

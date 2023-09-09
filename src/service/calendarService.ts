@@ -37,12 +37,12 @@ export const calendarInsert = async (
 // 4. calendarUpdate ------------------------------------------------------------------------------>
 export const calendarUpdate = async (
   _id_param : any,
-  calendar_param : any
+  CALENDAR_param : any
 ) => {
-  const calendarUpdate = await Calendar.updateOne ({
-    _id : _id_param,
-    $set : calendar_param
-  });
+  const calendarUpdate = await Calendar.updateOne (
+    {_id : _id_param},
+    {$set : CALENDAR_param}
+  );
   return calendarUpdate;
 };
 

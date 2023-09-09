@@ -45,14 +45,11 @@ export const WorkoutUpdate = () => {
   }, [_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-
-  // 4. logic ------------------------------------------------------------------------------------->
   const flowWorkoutUpdate = async () => {
     try {
-      const response = await axios.put(`${URL_WORKOUT}/workoutUpdate`, {
-        data: {
-          WORKOUT : WORKOUT,
-        },
+      const response = await axios.put (`${URL_WORKOUT}/workoutUpdate`, {
+        _id : WORKOUT._id,
+        WORKOUT : WORKOUT
       });
       if (response.data === "success") {
         alert("Update success");
@@ -66,6 +63,8 @@ export const WorkoutUpdate = () => {
       alert(`Error fetching workout data: ${error.message}`);
     }
   };
+
+  // 4. logic ------------------------------------------------------------------------------------->
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableWorkoutUpdate = () => {

@@ -47,10 +47,8 @@ export const FoodUpdate = () => {
   const flowFoodUpdate = async () => {
     try {
       const response = await axios.put (`${URL_FOOD}/foodUpdate`, {
-        data: {
-          _id: FOOD._id,
-          FOOD,
-        },
+        _id : FOOD._id,
+        FOOD : FOOD
       });
       if (response.data === "success") {
         alert("Update success");

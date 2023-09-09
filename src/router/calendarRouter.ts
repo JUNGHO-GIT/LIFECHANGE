@@ -65,7 +65,7 @@ calendarRouter.put("/calendarUpdate", async (req: Request, res: Response) => {
   try {
     const calendarUpdate = await calendarService.calendarUpdate (
       req.body._id,
-      req.body
+      req.body.CALENDAR
     );
     if (calendarUpdate) {
       res.send("success");

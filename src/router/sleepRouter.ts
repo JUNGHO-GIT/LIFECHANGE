@@ -67,7 +67,7 @@ sleepRouter.put("/sleepUpdate", async (req: Request, res: Response) => {
   try {
     const sleepUpdate = await sleepService.sleepUpdate (
       req.body._id,
-      req.body
+      req.body.SLEEP
     );
     if (sleepUpdate) {
       res.send("success");

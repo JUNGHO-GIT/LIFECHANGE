@@ -72,11 +72,14 @@ export const sleepInsert = async (
   return sleepInsert;
 };
 // 4. sleepUpdate --------------------------------------------------------------------------------->
-export const sleepUpdate = async (_id_param: any, sleep_param: any) => {
-  const sleepUpdate = await Sleep.updateOne({
-    _id: _id_param,
-    $set: sleep_param,
-  });
+export const sleepUpdate = async (
+  _id_param: any,
+  SLEEP_param: any
+) => {
+  const sleepUpdate = await Sleep.updateOne (
+    {_id: _id_param},
+    {$set: SLEEP_param},
+  );
   return sleepUpdate;
 };
 

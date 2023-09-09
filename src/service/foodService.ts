@@ -105,12 +105,12 @@ export const foodInsert = async (
 // 4. foodUpdate ---------------------------------------------------------------------------------->
 export const foodUpdate = async (
   _id_param : any,
-  food_param : any
+  FOOD_param : any
 ) => {
-  const foodUpdate = await Food.updateOne ({
-    _id : _id_param,
-    $set : food_param
-  });
+  const foodUpdate = await Food.updateOne (
+    {_id : _id_param},
+    {$set : FOOD_param},
+  );
   return foodUpdate;
 };
 

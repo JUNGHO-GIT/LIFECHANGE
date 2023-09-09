@@ -19,9 +19,9 @@ export const UserUpdate = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
+  const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [user_id, setUserId] = useState("");
-  const [user_pw, setUserPw] = useState("");
+  const [USER, setUSER] = useState<any>({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -32,7 +32,7 @@ export const UserUpdate = () => {
         const response = await axios.post (`${URL_USER}/userDetail`, {
           user_id: user_id,
         });
-        setUserId(response.data.user_id);
+        setUSER(response.data);
       }
       catch (error : any) {
         alert(`Error fetching user data: ${error.message}`);
@@ -44,14 +44,14 @@ export const UserUpdate = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserUpdate = async () => {
     try {
-      if (user_pw === "" || user_pw === null) {
+      if (USER.user_pw === "") {
         alert("Please enter your password");
         return;
       }
       else {
         const response = await axios.post (`${URL_USER}/userCheckIdPw`, {
-          user_id: user_id,
-          user_pw: user_pw,
+          user_id : user_id,
+          user_pw : USER.user_pw,
         });
         if (response.data === "fail") {
           alert("Incorrect password");
@@ -60,8 +60,8 @@ export const UserUpdate = () => {
         else if (response.data === "success") {
           const updatePw = prompt("Please enter a new password");
           const response = await axios.put(`${URL_USER}/userUpdate`, {
-            user_id: user_id,
-            user_pw: updatePw
+            user_id : user_id,
+            user_pw : updatePw
           });
           if (response.data === "success") {
             alert("User Update success");
@@ -92,8 +92,10 @@ export const UserUpdate = () => {
             className="form-control"
             id="user_id"
             placeholder="User ID"
-            value={user_id}
-            onChange={(e) => setUserId(e.target.value)}
+            value={user_id ? user_id : undefined}
+            onChange={(e) => {
+              setUSER({...USER, user_id: e.target.value});
+            }}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
@@ -103,8 +105,10 @@ export const UserUpdate = () => {
             className="form-control"
             id="user_pw"
             placeholder="User PW"
-            value={user_pw}
-            onChange={(e) => setUserPw(e.target.value)}
+            value={USER.user_pw}
+            onChange={(e) => {
+              setUSER({...USER, user_pw: e.target.value});
+            }}
           />
           <label htmlFor="user_pw">User PW</label>
         </div>

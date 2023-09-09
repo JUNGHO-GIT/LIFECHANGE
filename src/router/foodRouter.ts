@@ -90,7 +90,7 @@ foodRouter.put("/foodUpdate", async (req: Request, res: Response) => {
   try {
     const foodUpdate = await foodService.foodUpdate (
       req.body._id,
-      req.body
+      req.body.FOOD
     );
     if (foodUpdate) {
       res.send(foodUpdate);
