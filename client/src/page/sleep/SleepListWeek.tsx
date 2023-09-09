@@ -43,6 +43,26 @@ export const SleepListWeek = () => {
             sleep_duration: resultDuration,
           },
         });
+        setSLEEP_LIST(response.data);
+      }
+      catch (error: any) {
+        alert(`Error fetching sleep data: ${error.message}`);
+        setSLEEP_LIST([]);
+      }
+    };
+    fetchSleepList();
+  }, [user_id, resultDuration]);
+
+  // 2-2. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const fetchSleepAverage = async () => {
+      try {
+        const response = await axios.get(`${URL_SLEEP}/sleepAverage`, {
+          params: {
+            user_id: user_id,
+            sleep_duration: resultDuration,
+          },
+        });
 
         const isValidTime = (str: string) => {
           return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
@@ -70,10 +90,10 @@ export const SleepListWeek = () => {
         setAverageSleepMorning("00:00");
       }
     };
-    fetchSleepList();
+    fetchSleepAverage();
   }, [user_id, resultDuration]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
@@ -92,16 +112,26 @@ export const SleepListWeek = () => {
     }
   }, [range]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 2-4. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const savedDate = localStorage.getItem("selectedWeek");
+    if (savedDate) {
+      const parsedDate = new Date(savedDate);
+      const startOfWeek = moment(parsedDate).startOf("isoWeek").toDate();
+      const endOfWeek = moment(parsedDate).endOf("isoWeek").toDate();
+      setRange({ from: startOfWeek, to: endOfWeek });
+    }
+  }, []);
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
-  const handleDayClick = (selectedDate: Date) => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowDayClick = (selectedDate: Date) => {
     const startOfWeek = moment(selectedDate).startOf("isoWeek").toDate();
     const endOfWeek = moment(selectedDate).endOf("isoWeek").toDate();
     setRange({ from: startOfWeek, to: endOfWeek });
+    localStorage.setItem("selectedWeek", selectedDate.toISOString());
   };
 
-  // 4-2. logic ----------------------------------------------------------------------------------->
+  // 4-1. logic ----------------------------------------------------------------------------------->
   const viewSleepDay = () => {
     return (
       <DayPicker
@@ -109,7 +139,7 @@ export const SleepListWeek = () => {
         showOutsideDays
         selected={range}
         month={currentMonth}
-        onDayClick={handleDayClick}
+        onDayClick={flowDayClick}
         locale={ko}
         weekStartsOn={1}
         onMonthChange={(date) => {
@@ -126,8 +156,42 @@ export const SleepListWeek = () => {
     );
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
+    return (
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>날짜</th>
+            <th>기간</th>
+            <th>취침 시간</th>
+            <th>기상 시간</th>
+            <th>수면 시간</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SLEEP_LIST.map((index: any) => (
+            <tr>
+              <td className="pointer" onClick={() => {
+                navParam("/sleepDetail", {
+                  state: {_id: index._id}
+                }
+              )}}>
+                {index.sleep_day}
+              </td>
+              <td>{resultDuration}</td>
+              <td>{index.sleep_night}</td>
+              <td>{index.sleep_morning}</td>
+              <td>{index.sleep_time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // 5-2. table ----------------------------------------------------------------------------------->
+  const tableSleepAverage = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -235,13 +299,19 @@ export const SleepListWeek = () => {
           {buttonSleepListSelect()}
         </div>
       </div>
-      <div className="row d-center mt-5 mb-20">
+      <div className="row d-center mt-5">
         <div className="col-4">
           {viewSleepDay()}
         </div>
-        <div className="col-8">
+        <div className="col-4">
           {tableSleepList()}
-          <br/>
+        </div>
+        <div className="col-4">
+          {tableSleepAverage()}
+        </div>
+      </div>
+      <div className="row d-center mb-20">
+        <div className="col-6">
           {buttonSleepToday()}
           {buttonSleepReset()}
         </div>

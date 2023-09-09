@@ -65,8 +65,10 @@ export const sleepAverage = async (
 };
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
-export const sleepDetail = async (_id_param: any) => {
-  const sleepDetail = await Sleep.findOne({
+export const sleepDetail = async (
+  _id_param: any
+) => {
+  const sleepDetail = await Sleep.findOne ({
     _id: _id_param,
   });
   return sleepDetail;

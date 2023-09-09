@@ -30,9 +30,7 @@ export const SleepListDay = () => {
   const [averageSleepNight, setAverageSleepNight] = useState<string>();
   const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
   // state 4
-  const [selectedYear, setSelectedYear] = useState<number>(koreanDate.getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState<number>(koreanDate.getMonth());
-  const [selectedDay, setSelectedDay] = useState<number | undefined>(koreanDate.getDate());
+  const [selectedDay, setSelectedDay] = useState<any>(moment.tz("Asia/Seoul").format("YYYY-MM-DD"));
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -40,8 +38,8 @@ export const SleepListDay = () => {
       try {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id : user_id,
-            sleep_duration : resultDuration,
+            user_id: user_id,
+            sleep_duration: resultDuration,
           },
         });
         setSLEEP_LIST(response.data);
@@ -58,7 +56,7 @@ export const SleepListDay = () => {
   useEffect(() => {
     const fetchSleepAverage = async () => {
       try {
-        const response = await axios.get(`${URL_SLEEP}/sleepAverage`, {
+        const response = await axios.get (`${URL_SLEEP}/sleepAverage`, {
           params: {
             user_id : user_id,
             sleep_duration : resultDuration,
@@ -96,50 +94,42 @@ export const SleepListDay = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const formatValue = (value: number): string => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-    if (selectedYear && selectedMonth !== undefined && selectedDay) {
-      setResultValue (
-        `${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)}`
-      );
-      setResultDuration (
-        `${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)} ~ ${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)}`
-      );
+    if (selectedDay) {
+      setResultValue(selectedDay);
+      setResultDuration(`${selectedDay} ~ ${selectedDay}`);
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");
     }
-  }, [selectedYear, selectedMonth, selectedDay]);
+  }, [selectedDay]);
+
+  // 2-4. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const savedDate = localStorage.getItem("selectedDay");
+    if (savedDate) {
+      const parsedDate = new Date(savedDate);
+      setSelectedDay(moment(parsedDate).format("YYYY-MM-DD"));
+    }
+  }, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
-
-  // 4-1. logic ----------------------------------------------------------------------------------->
-  const handleDayClick: DayClickEventHandler = (day) => {
-    if (day) {
-      setSelectedDay(day.getDate());
-      setSelectedMonth(day.getMonth());
-      setSelectedYear(day.getFullYear());
-    }
-    else {
-      setSelectedDay(undefined);
-    }
+  const flowDayClick: DayClickEventHandler = (day) => {
+    setSelectedDay(moment(day).format("YYYY-MM-DD"));
+    localStorage.setItem("selectedDay", day.toISOString());
   };
 
-  // 4-2. logic ----------------------------------------------------------------------------------->
+  // 4-1. logic ----------------------------------------------------------------------------------->
   const viewSleepDay = () => {
     return (
       <DayPicker
         mode="single"
         showOutsideDays
-        selected={new Date(selectedYear, selectedMonth, selectedDay)}
-        month={new Date(selectedYear, selectedMonth)}
+        selected={selectedDay}
         locale={ko}
         weekStartsOn={1}
-        onDayClick={handleDayClick}
+        onDayClick={flowDayClick}
         onMonthChange={(date) => {
-          setSelectedMonth(date.getMonth());
-          setSelectedYear(date.getFullYear());
+          setSelectedDay(date);
         }}
         modifiersClassNames={{
           koreanDate: "koreanDate",
@@ -168,7 +158,13 @@ export const SleepListDay = () => {
         <tbody>
           {SLEEP_LIST.map((index: any) => (
             <tr>
-              <td>{index.sleep_day}</td>
+              <td className="pointer" onClick={() => {
+                navParam("/sleepDetail", {
+                  state: {_id: index._id}
+                }
+              )}}>
+                {index.sleep_day}
+              </td>
               <td>{resultDuration}</td>
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
@@ -210,9 +206,7 @@ export const SleepListDay = () => {
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setSelectedMonth(koreanDate.getMonth());
-        setSelectedYear(koreanDate.getFullYear());
-        setSelectedDay(koreanDate.getDate());
+        setSelectedDay(moment(koreanDate).format("YYYY-MM-DD"));
       }}>
         Today
       </button>
@@ -295,10 +289,10 @@ export const SleepListDay = () => {
           {viewSleepDay()}
         </div>
         <div className="col-4">
-          {tableSleepAverage()}
+          {tableSleepList()}
         </div>
         <div className="col-4">
-          {tableSleepList()}
+          {tableSleepAverage()}
         </div>
       </div>
       <div className="row d-center mb-20">

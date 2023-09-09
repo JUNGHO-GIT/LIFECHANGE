@@ -54,7 +54,7 @@ export const SleepDetail = () => {
       else {
         const response = await axios.delete(`${URL_SLEEP}/sleepDelete`, {
           params: {
-            _id: _id,
+            _id : _id,
           },
         });
         if (response.data === "success") {
