@@ -1,12 +1,10 @@
 // BoardInsert.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
+import {useNavigate, useLocation} from "react-router-dom";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const BoardInsert = () => {
 
   // title
@@ -26,8 +24,10 @@ export const BoardInsert = () => {
   const [board_content, setBoard_content] = useState("");
   const [board_regdate, setBoard_regdate] = useState(koreanDate);
 
-  // ---------------------------------------------------------------------------------------------->
-  const boardInsertFlow = async () => {
+  // 2. useEffect --------------------------------------------------------------------------------->
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowBoardInsert = async () => {
     try {
       if (board_title === "") {
         alert("Please enter a title");
@@ -61,8 +61,10 @@ export const BoardInsert = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const boardInsertTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableBoardInsert = () => {
     return (
       <div>
         <div className="form-floating">
@@ -106,8 +108,26 @@ export const BoardInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardInsert = () => {
     return (
-      <button className="btn btn-primary" type="button" onClick={boardInsertFlow}>
+      <button className="btn btn-primary" type="button" onClick={flowBoardInsert}>
         Insert
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
+    );
+  };
+  const buttonBoardList = () => {
+    return (
+      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+        navParam(`/boardList`);
+      }}>
+        List
       </button>
     );
   };
@@ -123,9 +143,11 @@ export const BoardInsert = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form  className="form-inline">
-            {boardInsertTable()}
+            {tableBoardInsert()}
             <br/>
             {buttonBoardInsert()}
+            {buttonRefreshPage()}
+            {buttonBoardList()}
           </form>
         </div>
       </div>

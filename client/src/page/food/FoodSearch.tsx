@@ -6,7 +6,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const FoodSearch = () => {
 
   // title
@@ -27,8 +27,28 @@ export const FoodSearch = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
 
-  // ---------------------------------------------------------------------------------------------->
-  const viewDate = () => {
+  // 2. useEffect --------------------------------------------------------------------------------->
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowFoodSearch = () => {
+    const url = `${URL_FOOD_API}/${lang}/search?query=${query}&page=${page}`;
+    axios.get(url)
+    .then((response) => {
+      setFOOD_SEARCH(response.data.items);
+    })
+    .catch((error: any) => {
+      alert(`Error fetching food data: ${error.message}`);
+      setFOOD_SEARCH([]);
+    });
+  };
+
+  const flowSearchChange = (e: any) => {
+    e.preventDefault();
+    setQuery(e.target.value);
+  };
+
+  // 4. logic ------------------------------------------------------------------------------------->
+  const logicViewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
@@ -40,22 +60,8 @@ export const FoodSearch = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const fetchFoodSearch = () => {
-    const url = `${URL_FOOD_API}/${lang}/search?query=${query}&page=${page}`;
-
-    axios.get(url)
-    .then((response) => {
-      setFOOD_SEARCH(response.data.items);
-    })
-    .catch((error: any) => {
-      alert(`Error fetching food data: ${error.message}`);
-      setFOOD_SEARCH([]);
-    });
-  };
-
-  // ---------------------------------------------------------------------------------------------->
-  const foodSearchTable = () => {
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableFoodSearch = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -88,86 +94,136 @@ export const FoodSearch = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const handleSearchChange = (e: any) => {
-    e.preventDefault();
-    setQuery(e.target.value);
+  // 6. button ------------------------------------------------------------------------------------>
+  const buttonPrevPage = () => {
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        if (!query) {
+          alert("검색어를 입력하세요");
+          return false;
+        }
+        else {
+          setPage((prevPage) => prevPage + 1);
+          flowFoodSearch();
+        }
+      }}>
+        이전
+      </button>
+    );
   };
-  const handleSearchButton = (e: any) => {
-    e.preventDefault();
-    if (!query) {
-      alert("검색어를 입력하세요");
-      return false;
-    }
-    else {
-      fetchFoodSearch();
-    }
+  const buttonNextPage = () => {
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        if (!query) {
+          alert("검색어를 입력하세요");
+          return false;
+        }
+        else {
+          setPage((prevPage) => Math.max(prevPage - 1, 1));
+          flowFoodSearch();
+        }
+      }}>
+        다음
+      </button>
+    );
   };
-  const handleNextPage = (e: any) => {
-    e.preventDefault();
-    if (!query) {
-      alert("검색어를 입력하세요");
-      return false;
-    }
-    else {
-      setPage((prevPage) => prevPage + 1);
-      fetchFoodSearch();
-    }
-  };
-  const handlePrevPage = (e: any) => {
-    e.preventDefault();
-    if (!query) {
-      alert("검색어를 입력하세요");
-      return false;
-    }
-    else {
-      setPage((prevPage) => Math.max(prevPage - 1, 1));
-      fetchFoodSearch();
-    }
+  const buttonFoodSearch = () => {
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        if (!query) {
+          alert("검색어를 입력하세요");
+          return false;
+        }
+        else {
+          setPage(0);
+          flowFoodSearch();
+        }
+      }}>
+        검색
+      </button>
+    );
   };
   const buttonFoodList = () => {
-    navParam(`/foodList`, {
-      state: {
-        user_id : user_id,
-        food_regdate : food_regdate
-      }
-    });
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        navParam(`/foodList`, {
+          state: {
+            user_id : user_id,
+            food_regdate : food_regdate
+          }
+        });
+      }}>
+        총합
+      </button>
+    );
   };
   const buttonFoodMorning = () => {
-    navParam(`/foodDetail`, {
-      state: {
-        user_id : user_id,
-        food_regdate : food_regdate,
-        food_category : "morning"
-      }
-    });
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        navParam(`/foodDetail`, {
+          state: {
+            user_id : user_id,
+            food_regdate : food_regdate,
+            food_category : "morning"
+          }
+        });
+      }}>
+        아침
+      </button>
+    );
   };
   const buttonFoodLunch = () => {
-    navParam(`/foodDetail`, {
-      state: {
-        user_id : user_id,
-        food_regdate : food_regdate,
-        food_category : "lunch"
-      }
-    });
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        navParam(`/foodDetail`, {
+          state: {
+            user_id : user_id,
+            food_regdate : food_regdate,
+            food_category : "lunch"
+          }
+        });
+      }}>
+        점심
+      </button>
+    );
   };
   const buttonFoodDinner = () => {
-    navParam(`/foodDetail`, {
-      state: {
-        user_id : user_id,
-        food_regdate : food_regdate,
-        food_category : "dinner"
-      }
-    });
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        navParam(`/foodDetail`, {
+          state: {
+            user_id : user_id,
+            food_regdate : food_regdate,
+            food_category : "dinner"
+          }
+        });
+      }}>
+        저녁
+      </button>
+    );
   };
   const buttonFoodSnack = () => {
-    navParam(`/foodDetail`, {
-      state: {
-        user_id : user_id,
-        food_regdate : food_regdate,
-        food_category : "snack"
-      }
-    });
+    return (
+      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+        e.preventDefault();
+        navParam(`/foodDetail`, {
+          state: {
+            user_id : user_id,
+            food_regdate : food_regdate,
+            food_category : "snack"
+          }
+        });
+      }}>
+        간식
+      </button>
+    );
   };
 
   // 7. return ------------------------------------------------------------------------------------>
@@ -181,38 +237,37 @@ export const FoodSearch = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewDate()}</span>
+            <span className="ms-4">{logicViewDate()}</span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
-          {foodSearchTable()}
+          {tableFoodSearch()}
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-4">
           <div className="btn-group mb-3">
-            <button className="btn btn-primary ms-2" onClick={handlePrevPage}>이전</button>
-            <button className="btn btn-primary ms-2" onClick={handleNextPage}>다음</button>
+            {buttonPrevPage()}
+            {buttonNextPage()}
           </div>
         </div>
         <div className="col-4">
           <div className="input-group mb-3">
-            <input type="text" className="form-control" value={query}
-            onChange={handleSearchChange}/>
-            <button className="btn btn-primary" onClick={handleSearchButton}>검색</button>
+            <input type="text" className="form-control" value={query} onChange={flowSearchChange} />
+            {buttonFoodSearch()}
           </div>
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-10">
           <div className="btn-group">
-            <button className="btn btn-primary ms-2" onClick={buttonFoodList}>총합</button>
-            <button className="btn btn-primary ms-2" onClick={buttonFoodMorning}>아침</button>
-            <button className="btn btn-primary ms-2" onClick={buttonFoodLunch}>점심</button>
-            <button className="btn btn-primary ms-2" onClick={buttonFoodDinner}>저녁</button>
-            <button className="btn btn-primary ms-2" onClick={buttonFoodSnack}>간식</button>
+            {buttonFoodList()}
+            {buttonFoodMorning()}
+            {buttonFoodLunch()}
+            {buttonFoodDinner()}
+            {buttonFoodSnack()}
           </div>
         </div>
       </div>

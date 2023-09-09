@@ -1,6 +1,6 @@
 // SleepListWeek.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import { DateRange, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
@@ -120,8 +120,33 @@ export const SleepListWeek = () => {
           outside: "outside",
           inside: "inside",
         }}
-        footer={footer()}
       />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableSleepList = () => {
+    return (
+      <table className="table table-bordered table-hover align-middle">
+        <thead className="table-dark">
+          <tr>
+            <th>날짜</th>
+            <th>기간</th>
+            <th>취침 시간</th>
+            <th>기상 시간</th>
+            <th>수면 시간</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{resultValue}</td>
+            <td>{resultDuration}</td>
+            <td>{averageSleepNight}</td>
+            <td>{averageSleepMorning}</td>
+            <td>{averageSleepTime}</td>
+          </tr>
+        </tbody>
+      </table>
     );
   };
 
@@ -145,19 +170,49 @@ export const SleepListWeek = () => {
       </button>
     );
   };
-  const footer = () => {
+  const buttonSleepList = () => {
     return (
-      <div>
-        <hr />
-        <p>{resultValue}</p>
-        <p>{resultDuration}</p>
-        <p>평균 취침 시간: {averageSleepNight}</p>
-        <p>평균 기상 시간: {averageSleepMorning}</p>
-        <p>평균 수면 시간: {averageSleepTime}</p>
-        <hr />
-        {buttonSleepToday()}
-        {buttonSleepReset()}
-      </div>
+      <button className="btn btn-primary me-2" onClick={() => {
+        navParam("/sleepList");
+      }}>
+        Day
+      </button>
+    );
+  };
+  const buttonSleepListWeek = () => {
+    return (
+      <button className="btn btn-primary me-2" onClick={() => {
+        navParam("/sleepListWeek");
+      }}>
+        Week
+      </button>
+    );
+  };
+  const buttonSleepListMonth = () => {
+    return (
+      <button className="btn btn-primary me-2" onClick={() => {
+        navParam("/sleepListMonth");
+      }}>
+        Month
+      </button>
+    );
+  };
+  const buttonSleepListYear = () => {
+    return (
+      <button className="btn btn-primary me-2" onClick={() => {
+        navParam("/sleepListYear");
+      }}>
+        Year
+      </button>
+    );
+  };
+  const buttonSleepListSelect = () => {
+    return (
+      <button className="btn btn-primary me-2" onClick={() => {
+        navParam("/sleepListSelect");
+      }}>
+        Select
+      </button>
     );
   };
 
@@ -169,9 +224,24 @@ export const SleepListWeek = () => {
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
+      <div className="row d-center mt-5">
+        <div className="col-6">
+          {buttonSleepList()}
+          {buttonSleepListWeek()}
+          {buttonSleepListMonth()}
+          {buttonSleepListYear()}
+          {buttonSleepListSelect()}
+        </div>
+      </div>
       <div className="row d-center mt-5 mb-20">
-        <div className="col-12">
+        <div className="col-4">
           {viewSleepDay()}
+        </div>
+        <div className="col-8">
+          {tableSleepList()}
+          <br/>
+          {buttonSleepToday()}
+          {buttonSleepReset()}
         </div>
       </div>
     </div>

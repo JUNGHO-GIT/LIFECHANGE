@@ -6,7 +6,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const CalendarDetail = () => {
 
   // title
@@ -25,32 +25,16 @@ export const CalendarDetail = () => {
   const calendar_year = location.state.calendar_year;
   const calendar_month = location.state.calendar_month;
   const calendar_day = location.state.calendar_day;
-  // state
+  // state 1
   const [FOOD_LIST, setFOOD_LIST] = useState<any>([]);
   const [WORKOUT_LIST, setWORKOUT_LIST] = useState<any>([]);
   const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
+  // state 2
   const [calendar_regdate, setCalendar_regdate]
   = useState(`${calendar_year}-${calendar_month}-${calendar_day}`);
   const [workout_regdate, setWorkout_regdate] = useState(koreanDate);
   const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-
-  // ---------------------------------------------------------------------------------------------->
-  const viewDate = () => {
-    return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={new Date(calendar_regdate)}
-        onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
-          setWorkout_regdate(selectedDate);
-          setSleep_regdate(selectedDate);
-        }}
-      />
-    );
-  };
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -72,7 +56,7 @@ export const CalendarDetail = () => {
     fetchFoodList();
   }, [user_id, food_regdate]);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutList = async () => {
       try {
@@ -92,7 +76,7 @@ export const CalendarDetail = () => {
     fetchWorkoutList();
   }, [user_id, workout_regdate]);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
@@ -112,8 +96,25 @@ export const CalendarDetail = () => {
     fetchSleepList();
   }, [user_id, workout_regdate]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const foodListTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+  const logicViewDate = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        popperPlacement="bottom"
+        selected={new Date(calendar_regdate)}
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setFood_regdate(selectedDate);
+          setWorkout_regdate(selectedDate);
+          setSleep_regdate(selectedDate);
+        }}
+      />
+    );
+  };
+
+  // 5-1. table ----------------------------------------------------------------------------------->
+  const tableFoodList = () => {
     return (
       <table className="table table-bordered border-dark">
         <thead className="table-dark">
@@ -138,8 +139,8 @@ export const CalendarDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const workoutListTable = () => {
+  // 5-2. table ----------------------------------------------------------------------------------->
+  const tableWorkoutList = () => {
     return (
       <table className="table table-bordered border-dark">
         <thead className="table-dark">
@@ -172,8 +173,8 @@ export const CalendarDetail = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const sleepListTable = () => {
+  // 5-3. table ----------------------------------------------------------------------------------->
+  const tableSleepList = () => {
     return (
       <table className="table table-bordered border-dark">
         <thead className="table-dark">
@@ -198,6 +199,8 @@ export const CalendarDetail = () => {
     );
   };
 
+  // 6. button ------------------------------------------------------------------------------------>
+
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container main">
@@ -209,18 +212,18 @@ export const CalendarDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewDate()}</span>
+            <span className="ms-4">{logicViewDate()}</span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">{foodListTable()}</div>
+        <div className="col-12">{tableFoodList()}</div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">{workoutListTable()}</div>
+        <div className="col-12">{tableWorkoutList()}</div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">{sleepListTable()}</div>
+        <div className="col-12">{tableSleepList()}</div>
       </div>
     </div>
   );

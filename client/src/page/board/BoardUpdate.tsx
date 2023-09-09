@@ -6,7 +6,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const BoardUpdate = () => {
 
   // title
@@ -24,7 +24,7 @@ export const BoardUpdate = () => {
   // state
   const [BOARD, setBOARD] = useState<any>({});
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
@@ -43,8 +43,8 @@ export const BoardUpdate = () => {
     fetchBoardDetail();
   }, [_id]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const boardUpdateFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowBoardUpdate = async () => {
     try {
       const response = await axios.put(`${URL_BOARD}/boardUpdate`, {
         _id : _id,
@@ -64,9 +64,10 @@ export const BoardUpdate = () => {
     }
   };
 
+  // 4. logic ------------------------------------------------------------------------------------->
 
-  // ---------------------------------------------------------------------------------------------->
-  const boardUpdateTable = () => {
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableBoardUpdate = () => {
     return (
       <div>
         <div className="form-floating">
@@ -96,8 +97,26 @@ export const BoardUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={boardUpdateFlow}>
+      <button className="btn btn-primary ms-2" type="button" onClick={flowBoardUpdate}>
         Update
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
+    );
+  };
+  const buttonBoardList = () => {
+    return (
+      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+        navParam(`/boardList`);
+      }}>
+        List
       </button>
     );
   };
@@ -113,9 +132,11 @@ export const BoardUpdate = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {boardUpdateTable()}
+            {tableBoardUpdate()}
             <br/>
             {buttonBoardUpdate()}
+            {buttonBoardList()}
+            {buttonRefreshPage()}
           </form>
         </div>
       </div>

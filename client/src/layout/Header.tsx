@@ -1,23 +1,43 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import "../assets/Custom.css";
+import React, {useState, useEffect} from "react";
+import {useNavigate, useLocation} from "react-router-dom";
+import { DayClickEventHandler, DayPicker } from "react-day-picker";
+import moment from "moment-timezone";
+import axios from "axios";
 
-// -------------------------------------------------------------------------------------------->
+// 1. main ---------------------------------------------------------------------------------------->
 export const Header = () => {
 
+  // title
+  const TITLE = "Header";
+  // url
+  const URL_HEADER = process.env.REACT_APP_URL_HEADER;
+  // date
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  // hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
+  // state
 
-  // -------------------------------------------------------------------------------------------->
-  const DropdownItem:React.FC<{to: string, label: string }> = ({ to, label }) => (
+  // 2. useEffect --------------------------------------------------------------------------------->
+
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4-1. logic ----------------------------------------------------------------------------------->
+  const DropdownItem: React.FC<{ to: string, label: string }> = ({ to, label }) => (
     <li className="py-1">
-      <Link to={to} className="dropdown-item">
+      <a href="#" onClick={(e) => {
+        e.preventDefault();
+        navParam(to);
+      }} className="dropdown-item">
         {label}
-      </Link>
+      </a>
     </li>
   );
 
-  // -------------------------------------------------------------------------------------------->
-  const DropdownMenu:React.FC<{ label: string, items: {to: string, label: string }[] }> = ({ label, items }) => (
+  // 4-2. logic ----------------------------------------------------------------------------------->
+  const DropdownMenu: React.FC<{ label: string, items: { to: string, label: string }[] }> = ({ label, items }) => (
     <li className="me-5">
       <div className="dropdown ms-2">
         <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -25,15 +45,15 @@ export const Header = () => {
         </a>
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
           {items.map(item => (
-            <DropdownItem key={item.to} {...item} />
+              <DropdownItem key={item.to} {...item} />
           ))}
         </ul>
       </div>
     </li>
   );
 
-  // -------------------------------------------------------------------------------------------->
-  const NavList = () => {
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableNaveList = () => {
     const menus = [
       {
         label: "Main",
@@ -81,11 +101,7 @@ export const Header = () => {
         label: "Sleep",
         items: [
           {to: "/sleepInsert", label: "SleepInsert"},
-          {to: "/sleepListDay", label: "SleepDay"},
-          {to: "/sleepListWeek", label: "SleepWeek"},
-          {to: "/sleepListMonth", label: "SleepMonth"},
-          {to: "/sleepListYear", label: "SleepYear"},
-          {to: "/sleepListSelect", label: "SleepSelect"}
+          {to: "/sleepList", label: "SleepList"}
         ]
       }
     ];
@@ -96,25 +112,20 @@ export const Header = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 6-1. button ---------------------------------------------------------------------------------->
   const loginFalse = () => {
-
     const buttonLogin = () => {
       return (
-        <Link to="/userLogin">
-          <button type="button" className="btn btn-outline-light ms-2">
-            Login
-          </button>
-        </Link>
+        <button type="button" className="btn btn-outline-light ms-2" onClick={() => navParam("/userLogin")}>
+          Login
+        </button>
       );
     };
     const buttonSignup = () => {
       return (
-        <Link to="/userInsert">
-          <button type="button" className="btn btn-outline-light ms-2">
-            Signup
-          </button>
-        </Link>
+        <button type="button" className="btn btn-outline-light ms-2" onClick={() => navParam("/userInsert")}>
+          Signup
+        </button>
       );
     };
     if (!user_id || user_id === "false") {
@@ -127,7 +138,7 @@ export const Header = () => {
     }
   };
 
-  // -------------------------------------------------------------------------------------------->
+  // 6-2. button ---------------------------------------------------------------------------------->
   const loginTrue = () => {
     if (user_id && user_id !== "false") {
       return (
@@ -146,11 +157,11 @@ export const Header = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <header className="container-fluid bg-dark">
       <div className="row d-center pt-3 pb-3">
-        <div className="col-9">{NavList()}</div>
+        <div className="col-9">{tableNaveList()}</div>
         <div className="col-3">{loginFalse()}{loginTrue()}</div>
       </div>
     </header>

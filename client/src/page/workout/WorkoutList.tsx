@@ -6,7 +6,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const WorkoutList = () => {
 
   // title
@@ -25,7 +25,7 @@ export const WorkoutList = () => {
   const [workout_regdate, setWorkout_regdate] = useState(koreanDate);
 
   // ---------------------------------------------------------------------------------------------->
-  const viewDate = () => {
+  const logicViewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
@@ -130,7 +130,7 @@ export const WorkoutList = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewDate()}</span>
+            <span className="ms-4">{logicViewDate()}</span>
           </h1>
         </div>
       </div>

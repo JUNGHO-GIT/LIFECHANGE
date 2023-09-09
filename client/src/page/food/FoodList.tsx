@@ -6,7 +6,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const FoodList = () => {
 
   // title
@@ -24,22 +24,7 @@ export const FoodList = () => {
   const [food_regdate, setFood_regdate] = useState(koreanDate);
   const [FOOD_LIST, setFOOD_LIST] = useState<any>([]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const viewDate = () => {
-    return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        selected={new Date(food_regdate)}
-        popperPlacement="bottom"
-        onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
-        }}
-      />
-    );
-  };
-
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodList = async () => {
       try {
@@ -59,8 +44,25 @@ export const FoodList = () => {
     fetchFoodList();
   }, [user_id, food_regdate]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const foodListTable = () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4. logic ------------------------------------------------------------------------------------->
+  const logicViewDate = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date(food_regdate)}
+        popperPlacement="bottom"
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setFood_regdate(selectedDate);
+        }}
+      />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableFoodList = () => {
     return (
       <table className="table table-striped">
         <thead>
@@ -85,27 +87,26 @@ export const FoodList = () => {
     );
   };
 
+  // 6. button ------------------------------------------------------------------------------------>
+
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">
-            {TITLE}
-            <span className="ms-4">(List)</span>
-          </h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewDate()}</span>
+            <span className="ms-4">{logicViewDate()}</span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-8">
-          {foodListTable()}
+          {tableFoodList()}
         </div>
       </div>
     </div>

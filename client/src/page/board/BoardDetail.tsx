@@ -1,6 +1,6 @@
 // BoardDetail.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -23,7 +23,7 @@ export const BoardDetail = () => {
   // state
   const [BOARD, setBOARD] = useState<any>({});
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
@@ -42,8 +42,8 @@ export const BoardDetail = () => {
     fetchBoardDetail();
   }, [_id]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const boardDeleteFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowBoardDelete = async () => {
     try {
       const confirm = window.confirm("Are you sure you want to delete?");
       if (!confirm) {
@@ -68,8 +68,10 @@ export const BoardDetail = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const boardDetailTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableBoardDetail = () => {
     return (
       <table className="table table-striped table-bordered">
         <tbody>
@@ -97,49 +99,38 @@ export const BoardDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardDelete = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-danger ms-2"
-        onClick={boardDeleteFlow}
-      >
+      <button type="button" className="btn btn-danger ms-2" onClick={flowBoardDelete}>
         Delete
       </button>
     );
   };
   const buttonBoardUpdate = (_id: string) => {
-    const navButton = () => {
-      navParam(`/boardUpdate`, {
-        state: {
-          _id,
-        },
-      });
-    };
     return (
-      <button
-        type="button"
-        className="btn btn-primary ms-2"
-        onClick={navButton}
-      >
+      <button type="button" className="btn btn-primary ms-2" onClick={(() => {
+        navParam(`/boardUpdate`, {
+          state: {_id},
+        });
+      })}>
         Update
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <Link to="/boardDetail">
-        <button type="button" className="btn btn-success ms-2">
-          Refresh
-        </button>
-      </Link>
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
     );
   };
   const buttonBoardList = () => {
     return (
-      <Link to="/boardList">
-        <button type="button" className="btn btn-secondary ms-2">
-          List
-        </button>
-      </Link>
+      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+        navParam(`/boardList`);
+      }}>
+        List
+      </button>
     );
   };
 
@@ -154,7 +145,7 @@ export const BoardDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {boardDetailTable()}
+            {tableBoardDetail()}
             <br />
             {buttonRefreshPage()}
             {buttonBoardUpdate(BOARD._id)}

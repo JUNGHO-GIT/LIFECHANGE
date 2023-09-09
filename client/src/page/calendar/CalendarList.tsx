@@ -7,7 +7,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 import $ from "jquery";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const CalendarList = () => {
 
   // title
@@ -21,11 +21,17 @@ export const CalendarList = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
+  const date = new Date();
   // state
 
-  // ---------------------------------------------------------------------------------------------->
-  const date = new Date();
-  const renderCalendar = () => {
+  // 2. useEffect --------------------------------------------------------------------------------->
+
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableCalendarList = () => {
 
     $("#calendar").empty();
     $("#year").text(date.getFullYear() + "년 ");
@@ -152,14 +158,16 @@ export const CalendarList = () => {
   $(document).ready(function () {
     $("#prev").click(function () {
       date.setMonth(date.getMonth() - 1);
-      renderCalendar();
+      tableCalendarList();
     });
     $("#next").click(function () {
       date.setMonth(date.getMonth() + 1);
-      renderCalendar();
+      tableCalendarList();
     });
-    renderCalendar();
+    tableCalendarList();
   });
+
+  // 6. button ------------------------------------------------------------------------------------>
 
   // 7. return ------------------------------------------------------------------------------------>
   return (

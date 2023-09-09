@@ -6,7 +6,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const FoodUpdate = () => {
 
   // title
@@ -24,7 +24,7 @@ export const FoodUpdate = () => {
   // state
   const [FOOD, setFOOD] = useState<any>({});
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
@@ -43,8 +43,8 @@ export const FoodUpdate = () => {
     fetchFoodDetail();
   }, [_id]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const foodUpdateFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowFoodUpdate = async () => {
     try {
       const response = await axios.put (`${URL_FOOD}/foodUpdate`, {
         data : {
@@ -65,8 +65,10 @@ export const FoodUpdate = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const foodUpdateTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableFoodUpdate = () => {
     return (
       <div>
         <div className="form-floating">
@@ -96,7 +98,7 @@ export const FoodUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonFoodUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={foodUpdateFlow}>
+      <button className="btn btn-primary ms-2" type="button" onClick={flowFoodUpdate}>
         Update
       </button>
     );
@@ -113,7 +115,7 @@ export const FoodUpdate = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {foodUpdateTable()}
+            {tableFoodUpdate()}
             <br/>
             {buttonFoodUpdate()}
           </form>

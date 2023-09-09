@@ -7,7 +7,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 import {WorkoutSelect} from "./WorkoutSelect";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const WorkoutInsert = () => {
 
   // title

@@ -1,12 +1,12 @@
 // BoardList.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const BoardList = () => {
 
   // title
@@ -23,7 +23,7 @@ export const BoardList = () => {
   // state
   const [BOARD_LIST, setBOARD_LIST] = useState<any>([]);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
@@ -38,8 +38,12 @@ export const BoardList = () => {
     fetchBoardList();
   }, []);
 
-  // ---------------------------------------------------------------------------------------------->
-  const boardListTable = () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableBoardList = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -52,11 +56,7 @@ export const BoardList = () => {
         <tbody>
           {BOARD_LIST.map((index : any) => (
             <tr key={index._id}>
-              <td>
-                <a onClick={() => buttonBoardDetail(index._id)} className="text-hover">
-                  {index.user_id}
-                </a>
-              </td>
+              <td>{buttonBoardDetail(index._id, index.user_id)}</td>
               <td>{index.board_title}</td>
               <td>{index.board_regdate}</td>
             </tr>
@@ -67,25 +67,41 @@ export const BoardList = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonBoardDetail = (_id: string) => {
-    navParam(`/boardDetail`, {
-      state: {
-        _id
-      }
-    });
-  };
-  const buttonRefreshPage = () => {
+  const buttonBoardDetail = (_id: string, userId: string) => {
     return (
-      <Link to="/boardList">
-        <button type="button" className="btn btn-success ms-2">Refresh</button>
-      </Link>
+      <p onClick={(e) => {
+        e.preventDefault();
+        navParam(`/boardDetail`, {state: {_id: _id}})
+      }}>
+        {userId}
+      </p>
     );
   };
   const buttonBoardInsert = () => {
     return (
-      <Link to="/boardInsert">
-        <button type="button" className="btn btn-primary ms-2">Insert</button>
-      </Link>
+      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+        navParam(`/boardInsert`);
+      }}>
+        Insert
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
+    );
+  };
+  const buttonBoardList = () => {
+    return (
+      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+        navParam(`/boardList`);
+      }}>
+        List
+      </button>
     );
   };
 
@@ -100,9 +116,11 @@ export const BoardList = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {boardListTable()}
+            {tableBoardList()}
+            <br/>
             {buttonRefreshPage()}
             {buttonBoardInsert()}
+            {buttonBoardList()}
           </form>
         </div>
       </div>

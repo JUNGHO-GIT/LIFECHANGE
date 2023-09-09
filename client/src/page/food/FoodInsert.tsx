@@ -1,12 +1,10 @@
 // FoodInsert.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
+import {useNavigate, useLocation} from "react-router-dom";
 import axios from "axios";
 import moment from "moment-timezone";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const FoodInsert = () => {
 
   // title
@@ -18,14 +16,10 @@ export const FoodInsert = () => {
   // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // val 1
   const user_id = window.sessionStorage.getItem("user_id");
   const params = new URLSearchParams(location.search);
-  // state
-  const [showGram, setShowGram] = useState(1);
-  const [category, setCategory] = useState("morning");
-
-  // ---------------------------------------------------------------------------------------------->
+  // val 2
   const title:any = params.get("title") ? params.get("title") : "x";
   const brand:any = params.get("brand") ? params.get("brand") : "x";
   const serving:any = params.get("serving");
@@ -33,9 +27,72 @@ export const FoodInsert = () => {
   const fat:any = Number(params.get("fat"));
   const carb:any = Number(params.get("carb"));
   const protein:any = Number(params.get("protein"));
+  // state
+  const [showGram, setShowGram] = useState(1);
+  const [category, setCategory] = useState("morning");
 
-  // ---------------------------------------------------------------------------------------------->
-  const totalServTable = () => {
+  // 2. useEffect --------------------------------------------------------------------------------->
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowFoodInsert = async (params: any) => {
+
+    const caloriesPer:any = ((calories/logicOneServing())*(Number(params))).toFixed(1);
+    const carbPer:any = ((carb/logicOneServing())*(Number(params))).toFixed(1);
+    const proteinPer:any = ((protein/logicOneServing())*(Number(params))).toFixed(1);
+    const fatPer:any = ((fat/logicOneServing())*(Number(params))).toFixed(1);
+
+    try {
+      const response  = await axios.post(`${URL_FOOD}/foodInsert`, {
+        user_id : user_id,
+        food_name : title,
+        food_brand : brand,
+        food_category: category,
+        food_serving : params,
+        food_calories : caloriesPer,
+        food_carb : carbPer,
+        food_protein : proteinPer,
+        food_fat : fatPer
+      });
+      if (response.data === "success") {
+        alert("Insert food successfully");
+        window.location.href = "/foodList";
+      }
+      else if (response.data === "fail") {
+        alert("Insert food failed");
+      }
+      else {
+        alert(`${response.data}error`);
+      }
+    }
+    catch (err) {
+      console.error(err);
+      alert("Insert food failed");
+    }
+  };
+
+  // 4. logic ------------------------------------------------------------------------------------->
+  const logicOneServing = () => {
+    const servingValue = serving.toString();
+    const units = [
+      { regex: /(g|ml)/gm, replace: ["g", "ml"], factor: 1 },
+      { regex: /(컵)/gm, replace: ["컵"], factor: 200 },
+      { regex: /(큰술|테이블스푼)/gm, replace: ["큰술", "테이블스푼"], factor: 15 },
+      { regex: /(작은술|스푼|티스푼)/gm, replace: ["작은술", "스푼", "티스푼"], factor: 5 }
+    ];
+
+    for (const unit of units) {
+      const match = servingValue.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, "gm"));
+      if (match) {
+        let regexValue = match[0];
+        unit.replace.forEach(index => regexValue = regexValue.replace(index, ""));
+        return Number(regexValue) * unit.factor;
+      }
+    }
+    return 1;
+  };
+
+  // 5-1. table ----------------------------------------------------------------------------------->
+  const tableTotalServing = () => {
     return (
       <div className="card">
         <div className="card-body">
@@ -63,136 +120,68 @@ export const FoodInsert = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const oneServCalc = () => {
-    const servingValue = serving.toString();
-    const units = [
-      { regex: /(g|ml)/gm, replace: ["g", "ml"], factor: 1 },
-      { regex: /(컵)/gm, replace: ["컵"], factor: 200 },
-      { regex: /(큰술|테이블스푼)/gm, replace: ["큰술", "테이블스푼"], factor: 15 },
-      { regex: /(작은술|스푼|티스푼)/gm, replace: ["작은술", "스푼", "티스푼"], factor: 5 }
-    ];
+  // 5-2. table ----------------------------------------------------------------------------------->
+  const tablePerServing = (params: any) => {
 
-    for (const unit of units) {
-      const match = servingValue.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, "gm"));
-      if (match) {
-        let regexValue = match[0];
-        unit.replace.forEach(index => regexValue = regexValue.replace(index, ""));
-        return Number(regexValue) * unit.factor;
-      }
-    }
-    return 1;
-  };
-
-  // ---------------------------------------------------------------------------------------------->
-  const perServTable = (params: any) => {
-
-    const caloriesPer:any = ((calories/oneServCalc())*(Number(params))).toFixed(1);
-    const carbPer:any = ((carb/oneServCalc())*(Number(params))).toFixed(1);
-    const proteinPer:any = ((protein/oneServCalc())*(Number(params))).toFixed(1);
-    const fatPer:any = ((fat/oneServCalc())*(Number(params))).toFixed(1);
-
-    const foodInsertFlow = async () => {
-      try {
-        const response  = await axios.post(`${URL_FOOD}/foodInsert`, {
-          user_id : user_id,
-          food_name : title,
-          food_brand : brand,
-          food_category: category,
-          food_serving : params,
-          food_calories : caloriesPer,
-          food_carb : carbPer,
-          food_protein : proteinPer,
-          food_fat : fatPer
-        });
-        if (response.data === "success") {
-          alert("Insert food successfully");
-          window.location.href = "/foodList";
-        }
-        else if (response.data === "fail") {
-          alert("Insert food failed");
-        }
-        else {
-          alert(`${response.data}error`);
-        }
-      }
-      catch (err) {
-        console.error(err);
-        alert("Insert food failed");
-      }
-    };
-
-    const foodInsertTable = () => {
-      return (
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">
-              {params}
-            </h4>
-            <p className="card-text">
-              <span>칼로리 : </span>
-              {caloriesPer ? caloriesPer : 0}
-            </p>
-            <p className="card-text">
-              <span>지방 : </span>
-              {fatPer ? fatPer : 0}
-            </p>
-            <p className="card-text">
-              <span>탄수화물 : </span>
-              {carbPer ? carbPer : 0}
-            </p>
-            <p className="card-text">
-              <span>단백질 : </span>
-              {proteinPer ? proteinPer : 0}
-            </p>
-          </div>
-        </div>
-      );
-    };
-
-    const buttonFoodInsert = () => {
-      return (
-        <button className="btn btn-primary" onClick={foodInsertFlow}>Insert</button>
-      );
-    };
-
-    const categoryFoodInsert = () => {
-      return (
-        <select className="form-select"onChange={e => {setCategory(e.target.value);}}>
-          <option value="morning">아침</option>
-          <option value="lunch">점심</option>
-          <option value="dinner">저녁</option>
-          <option value="snack">간식</option>
-        </select>
-      );
-    };
-
-    const inputFoodInsert = () => {
-      return (
-        <input type="number" className="form-control" defaultValue={1} min="1"
-          onChange={e => {
-            const value = Math.max(1, Number(e.target.value));
-            setShowGram(value);
-          }}
-        />
-      );
-    };
+    const caloriesPer:any = ((calories/logicOneServing())*(Number(params))).toFixed(1);
+    const carbPer:any = ((carb/logicOneServing())*(Number(params))).toFixed(1);
+    const proteinPer:any = ((protein/logicOneServing())*(Number(params))).toFixed(1);
+    const fatPer:any = ((fat/logicOneServing())*(Number(params))).toFixed(1);
 
     return (
-      <div className="row d-center">
-        <div className="col-6">
-          {foodInsertTable()}
-        </div>
-        <div className="col-6">
-          {categoryFoodInsert()}
-          <br/><br/>
-          {inputFoodInsert()}
-          <br/><br/>
-          {buttonFoodInsert()}
+      <div className="card">
+        <div className="card-body">
+          <h4 className="card-title">
+            {params}
+          </h4>
+          <p className="card-text">
+            <span>칼로리 : </span>
+            {caloriesPer ? caloriesPer : 0}
+          </p>
+          <p className="card-text">
+            <span>지방 : </span>
+            {fatPer ? fatPer : 0}
+          </p>
+          <p className="card-text">
+            <span>탄수화물 : </span>
+            {carbPer ? carbPer : 0}
+          </p>
+          <p className="card-text">
+            <span>단백질 : </span>
+            {proteinPer ? proteinPer : 0}
+          </p>
         </div>
       </div>
     );
   };
+
+  // 6. button ------------------------------------------------------------------------------------>
+  const buttonFoodCategory = () => {
+    return (
+      <select className="form-select"onChange={e => {setCategory(e.target.value);}}>
+        <option value="morning">아침</option>
+        <option value="lunch">점심</option>
+        <option value="dinner">저녁</option>
+        <option value="snack">간식</option>
+      </select>
+    );
+  };
+  const buttonFoodSelect = () => {
+    return (
+      <input type="number" className="form-control" defaultValue={1} min="1"
+        onChange={e => {
+          const value = Math.max(1, Number(e.target.value));
+          setShowGram(value);
+        }}
+      />
+    );
+  };
+  const buttonFoodInsert = () => {
+    return (
+      <button className="btn btn-primary" onClick={flowFoodInsert}>Insert</button>
+    );
+  };
+
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -209,10 +198,13 @@ export const FoodInsert = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-6">
-          {totalServTable()}
+          {tableTotalServing()}
         </div>
         <div className="col-6">
-          {perServTable(showGram)}
+          {buttonFoodCategory()}
+          {tablePerServing(showGram)}
+          {buttonFoodSelect()}
+          {buttonFoodInsert()}
         </div>
       </div>
     </div>
