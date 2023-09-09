@@ -178,10 +178,9 @@ export const FoodInsert = () => {
   };
   const buttonFoodInsert = () => {
     return (
-      <button className="btn btn-primary" onClick={flowFoodInsert}>Insert</button>
+      <button className="btn btn-primary" onClick={() => flowFoodInsert(showGram)}>Insert</button>
     );
   };
-
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
