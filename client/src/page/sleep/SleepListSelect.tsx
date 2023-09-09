@@ -21,15 +21,16 @@ export const SleepListSelect = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state 1
-  const [resultValue, setResultValue] = useState<string>("");
+  const [resultValue, setResultValue] = useState<string>();
   const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
-  const [averageSleepTime, setAverageSleepTime] = useState();
-  const [averageSleepNight, setAverageSleepNight] = useState();
-  const [averageSleepMorning, setAverageSleepMorning] = useState();
   // state 2
+  const [averageSleepTime, setAverageSleepTime] = useState<string>();
+  const [averageSleepNight, setAverageSleepNight] = useState<string>();
+  const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
+  // state 3
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(koreanDate);
-  // state 3
+  // state 4
   const [selectedStartYear, setSelectedStartYear] = useState<number>();
   const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
   const [selectedStartDay, setSelectedStartDay] = useState<number>();
@@ -37,27 +38,46 @@ export const SleepListSelect = () => {
   const [selectedEndMonth, setSelectedEndMonth] = useState<number>();
   const [selectedEndDay, setSelectedEndDay] = useState<number>();
 
-
-  // -------------------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id: user_id,
-            sleep_duration: resultDuration,
+            user_id : user_id,
+            sleep_duration : resultDuration,
           },
         });
-        setAverageSleepTime(response.data.averageSleepTime);
-        setAverageSleepNight(response.data.averageSleepNight);
-        setAverageSleepMorning(response.data.averageSleepMorning);
+
+        const isValidTime = (str: string) => {
+          return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
+        };
+        setAverageSleepTime (
+          isValidTime(response.data.averageSleepTime)
+          ? response.data.averageSleepTime
+          : "00:00"
+        );
+        setAverageSleepNight (
+          isValidTime(response.data.averageSleepNight)
+          ? response.data.averageSleepNight
+          : "00:00"
+        );
+        setAverageSleepMorning (
+          isValidTime(response.data.averageSleepMorning)
+          ? response.data.averageSleepMorning
+          : "00:00"
+        );
       }
       catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
+        setAverageSleepTime("00:00");
+        setAverageSleepNight("00:00");
+        setAverageSleepMorning("00:00");
       }
     };
     fetchSleepList();
   }, [user_id, resultDuration]);
+
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -65,12 +85,8 @@ export const SleepListSelect = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (
-      selectedStartYear &&
-      selectedStartMonth &&
-      selectedStartDay &&
-      selectedEndYear &&
-      selectedEndMonth &&
-      selectedEndDay
+      selectedStartYear && selectedStartMonth && selectedStartDay &&
+      selectedEndYear && selectedEndMonth && selectedEndDay
     ) {
       setResultValue (
         `${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)} ~ ${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`
@@ -83,14 +99,13 @@ export const SleepListSelect = () => {
     else {
       setResultValue ("선택된 날짜가 없습니다.");
       setResultDuration ("0000-00-00 ~ 0000-00-00");
+      setAverageSleepTime("00:00");
+      setAverageSleepNight("00:00");
+      setAverageSleepMorning("00:00");
     }
   }, [
-    selectedStartYear,
-    selectedStartMonth,
-    selectedStartDay,
-    selectedEndYear,
-    selectedEndMonth,
-    selectedEndDay,
+    selectedStartYear, selectedStartMonth, selectedStartDay,
+    selectedEndYear, selectedEndMonth, selectedEndDay,
   ]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -114,10 +129,9 @@ export const SleepListSelect = () => {
       setRange({ from: day, to: undefined });
     }
     else if (!range.to) {
-      const newRange =
-      day > range.from
-        ? { from: range.from, to: day }
-        : { from: day, to: range.from };
+      const newRange = day > range.from
+      ? { from: range.from, to: day }
+      : { from: day, to: range.from };
       handleDayRangeClick(newRange);
     }
     else {
@@ -164,9 +178,6 @@ export const SleepListSelect = () => {
         setSelectedEndYear(undefined);
         setSelectedEndMonth(undefined);
         setSelectedEndDay(undefined);
-        setAverageSleepTime(undefined);
-        setAverageSleepNight(undefined);
-        setAverageSleepMorning(undefined);
         setRange(undefined);
       }}>
         Today
@@ -176,15 +187,13 @@ export const SleepListSelect = () => {
   const buttonSleepReset = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
+        setCurrentMonth(koreanDate);
         setSelectedStartYear(undefined);
         setSelectedStartMonth(undefined);
         setSelectedStartDay(undefined);
         setSelectedEndYear(undefined);
         setSelectedEndMonth(undefined);
         setSelectedEndDay(undefined);
-        setAverageSleepTime(undefined);
-        setAverageSleepNight(undefined);
-        setAverageSleepMorning(undefined);
         setRange(undefined);
       }}>
         Reset

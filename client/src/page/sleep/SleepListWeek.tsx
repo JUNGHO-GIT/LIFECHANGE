@@ -21,12 +21,13 @@ export const SleepListWeek = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state 1
-  const [resultValue, setResultValue] = useState<string>("");
+  const [resultValue, setResultValue] = useState<string>();
   const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
-  const [averageSleepTime, setAverageSleepTime] = useState();
-  const [averageSleepNight, setAverageSleepNight] = useState();
-  const [averageSleepMorning, setAverageSleepMorning] = useState();
   // state 2
+  const [averageSleepTime, setAverageSleepTime] = useState<string>();
+  const [averageSleepNight, setAverageSleepNight] = useState<string>();
+  const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
+  // state 3
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(koreanDate);
 
@@ -40,12 +41,31 @@ export const SleepListWeek = () => {
             sleep_duration: resultDuration,
           },
         });
-        setAverageSleepTime(response.data.averageSleepTime);
-        setAverageSleepNight(response.data.averageSleepNight);
-        setAverageSleepMorning(response.data.averageSleepMorning);
+
+        const isValidTime = (str: string) => {
+          return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
+        };
+        setAverageSleepTime (
+          isValidTime(response.data.averageSleepTime)
+          ? response.data.averageSleepTime
+          : "00:00"
+        );
+        setAverageSleepNight (
+          isValidTime(response.data.averageSleepNight)
+          ? response.data.averageSleepNight
+          : "00:00"
+        );
+        setAverageSleepMorning (
+          isValidTime(response.data.averageSleepMorning)
+          ? response.data.averageSleepMorning
+          : "00:00"
+        );
       }
       catch (error: any) {
         alert(`Error fetching sleep data: ${error.message}`);
+        setAverageSleepTime("00:00");
+        setAverageSleepNight("00:00");
+        setAverageSleepMorning("00:00");
       }
     };
     fetchSleepList();
