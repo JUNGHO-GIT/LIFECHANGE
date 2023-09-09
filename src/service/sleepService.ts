@@ -82,7 +82,6 @@ export const sleepInsert = async (
   const sleepInsert = await Sleep.create ({
     _id : new mongoose.Types.ObjectId(),
     user_id : user_id_param,
-    sleep_title : SLEEP_param.sleep_title,
     sleep_night : SLEEP_param.sleep_night,
     sleep_morning : SLEEP_param.sleep_morning,
     sleep_time : SLEEP_param.sleep_time,

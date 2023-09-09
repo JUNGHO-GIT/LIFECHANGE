@@ -56,6 +56,7 @@ import { SleepListYear } from "../page/sleep/SleepListYear";
 import { SleepListSelect } from "../page/sleep/SleepListSelect";
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
+import { SleepUpdate } from "../page/sleep/SleepUpdate";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -105,6 +106,7 @@ const App = () => {
           <Route path="/sleepListSelect" element={<SleepListSelect />} />
           <Route path="/sleepInsert" element={<SleepInsert />} />
           <Route path="/sleepDetail" element={<SleepDetail />} />
+          <Route path="/sleepUpdate" element={<SleepUpdate />} />
         </Routes>
         <Footer />
       </Router>

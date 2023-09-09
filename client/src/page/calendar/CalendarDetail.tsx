@@ -179,7 +179,7 @@ export const CalendarDetail = () => {
       <table className="table table-bordered border-dark">
         <thead className="table-dark">
           <tr>
-            <th>title</th>
+            <th>day</th>
             <th>night</th>
             <th>morning</th>
             <th>time</th>
@@ -188,7 +188,7 @@ export const CalendarDetail = () => {
         <tbody>
           {SLEEP_LIST.map((index: any) => (
             <tr>
-              <td>{index.sleep_title}</td>
+              <td>{index.sleep_day}</td>
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
               <td>{index.sleep_time}</td>

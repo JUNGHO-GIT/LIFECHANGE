@@ -91,7 +91,6 @@ export const SleepDetail = () => {
       <table className="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>Title</th>
             <th>Day</th>
             <th>Night</th>
             <th>Morning</th>
@@ -101,7 +100,6 @@ export const SleepDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{SLEEP.sleep_title}</td>
             <td>{SLEEP.sleep_day}</td>
             <td>{SLEEP.sleep_night}</td>
             <td>{SLEEP.sleep_morning}</td>

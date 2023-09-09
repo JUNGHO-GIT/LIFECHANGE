@@ -44,6 +44,7 @@ export const SleepUpdate = () => {
     fetchSleepDetail();
   }, [_id]);
 
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const setSleepTime = () => {
       const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
@@ -73,9 +74,7 @@ export const SleepUpdate = () => {
     try {
       const response = await axios.put(`${URL_SLEEP}/sleepUpdate`, {
         _id : _id,
-        sleep_morning : SLEEP.sleep_morning,
-        sleep_night : SLEEP.sleep_night,
-        sleep_time : SLEEP.sleep_time,
+        SLEEP : SLEEP,
       });
       if (response.data === "success") {
         alert("Update success");
@@ -110,15 +109,9 @@ export const SleepUpdate = () => {
       <div>
         {/** user_id **/}
         <div className="d-center">
-          <span className="form-label me-4">User ID</span>
+          <span className="form-label me-4">ID</span>
           <input type="text" className="form-control"  placeholder="User ID"
           value={SLEEP.user_id} readOnly />
-        </div>
-        {/** sleep_title **/}
-        <div className="d-center">
-          <span className="form-label me-4">Sleep Title</span>
-          <input type="text" className="form-control"  placeholder="Sleep Title"
-          value={SLEEP.sleep_title} readOnly />
         </div>
         {/** night **/}
         <div className="d-center">
@@ -132,7 +125,7 @@ export const SleepUpdate = () => {
             value={SLEEP.sleep_night}
             disableClock={false}
             clockIcon={null}
-            format="HH:mm:ss"
+            format="HH:mm"
             locale="ko"
           />
         </div>
@@ -149,7 +142,7 @@ export const SleepUpdate = () => {
             value={SLEEP.sleep_morning}
             disableClock={false}
             clockIcon={null}
-            format="HH:mm:ss"
+            format="HH:mm"
             locale="ko"
           />
         </div>

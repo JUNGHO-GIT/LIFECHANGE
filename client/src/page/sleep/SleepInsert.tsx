@@ -116,21 +116,6 @@ export const SleepInsert = () => {
         </div>
         <br />
         <div className="d-center">
-          <span className="form-label me-4">Title</span>
-          <input
-            type="text"
-            className="form-control"
-            id="sleep_title"
-            name="sleep_title"
-            value={SLEEP.sleep_title || ""}
-            onChange={(event: any) => {
-              setSLEEP({ ...SLEEP, sleep_title: event.target.value });
-            }}
-            placeholder="Title"
-          />
-        </div>
-        <br />
-        <div className="d-center">
           <span className="form-label me-4">Day</span>
           <input
             type="text"

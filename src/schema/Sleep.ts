@@ -11,10 +11,6 @@ const SleepScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
-  sleep_title : {
-    type : String,
-    required : true
-  },
   sleep_night : {
     type : String,
     required : true
