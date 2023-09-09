@@ -31,7 +31,27 @@ export const SleepListSelect = () => {
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(today);
 
-  // ---------------------------------------------------------------------------------------------->
+  // -------------------------------------------------------------------------------------------->
+  useEffect(() => {
+    const fetchSleepList = async () => {
+      try {
+        const response = await axios.get(`${URL_SLEEP}/sleepList`, {
+          params: {
+            user_id: user_id,
+            sleep_duration: resultDuration,
+          },
+        });
+        setAverageSleepTime(response.data.averageSleepTime);
+        setAverageSleepNight(response.data.averageSleepNight);
+        setAverageSleepMorning(response.data.averageSleepMorning);
+      }
+      catch (error: any) {
+        alert(`Error fetching sleep data: ${error.message}`);
+      }
+    };
+    fetchSleepList();
+  }, [user_id, resultDuration]);
+
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
@@ -65,27 +85,7 @@ export const SleepListSelect = () => {
     selectedEndDay,
   ]);
 
-  useEffect(() => {
-    const fetchSleepList = async () => {
-      try {
-        const response = await axios.get(`${URL_SLEEP}/sleepList`, {
-          params: {
-            user_id: user_id,
-            sleep_duration: resultDuration,
-          },
-        });
-        setAverageSleepTime(response.data.averageSleepTime);
-        setAverageSleepNight(response.data.averageSleepNight);
-        setAverageSleepMorning(response.data.averageSleepMorning);
-      }
-      catch (error: any) {
-        alert(`Error fetching sleep data: ${error.message}`);
-      }
-    };
-    fetchSleepList();
-  }, [user_id, resultDuration]);
-
-  // ---------------------------------------------------------------------------------------------->
+   //--------------------------------------------------------------------------------------------->
   const handleDayRangeClick = (selectedRange: DateRange) => {
     setRange(selectedRange);
     if (selectedRange?.from) {
