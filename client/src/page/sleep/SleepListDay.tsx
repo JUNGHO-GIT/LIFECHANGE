@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
-import parseISO from 'date-fns/parseISO';
+import { parseISO } from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
 import {useLocalStorage} from "../../assets/ts/useLocalStorage";
@@ -24,7 +24,7 @@ export const SleepListDay = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // state
   const { value: SLEEP_LIST, setValue: setSLEEP_LIST }
-    = useLocalStorage ("sleepList_DAY", []);
+    = useLocalStorage<any> ("sleepList_DAY", []);
   const { value: resultValue, setValue: setResultValue }
     = useLocalStorage<Date | undefined> ("resultValue_DAY", undefined);
   const { value: resultDuration, setValue: setResultDuration }

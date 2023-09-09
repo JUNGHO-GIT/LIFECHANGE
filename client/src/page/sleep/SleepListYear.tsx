@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import { DayPicker, MonthChangeEventHandler} from "react-day-picker";
 import { differenceInDays } from "date-fns";
+import { parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
@@ -24,19 +25,19 @@ export const SleepListYear = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // state
   const { value : SLEEP_LIST, setValue : setSLEEP_LIST }
-    = useLocalStorage<any>("sleepList_YEAR", []);
+    = useLocalStorage<any> ("sleepList_YEAR", []);
   const { value : resultValue, setValue : setResultValue }
-    = useLocalStorage<string>("resultValue_YEAR", "");
+    = useLocalStorage<Date | undefined> ("resultValue_YEAR", undefined);
   const { value : resultDuration, setValue : setResultDuration }
-    = useLocalStorage<string>("resultDuration_YEAR", "0000-00-00 ~ 0000-00-00");
+    = useLocalStorage<string> ("resultDuration_YEAR", "0000-00-00 ~ 0000-00-00");
   const { value : averageSleepTime, setValue : setAverageSleepTime }
-    = useLocalStorage<string>("averageSleepTime_YEAR", "");
+    = useLocalStorage<string> ("averageSleepTime_YEAR", "00:00");
   const { value : averageSleepNight, setValue : setAverageSleepNight }
-    = useLocalStorage<string>("averageSleepNight_YEAR", "");
+    = useLocalStorage<string> ("averageSleepNight_YEAR", "00:00");
   const { value : averageSleepMorning, setValue : setAverageSleepMorning }
-    = useLocalStorage<string>("averageSleepMorning_YEAR", "");
+    = useLocalStorage<string> ("averageSleepMorning_YEAR", "00:00");
   const { value : selectedYear, setValue : setSelectedYear }
-    = useLocalStorage<Date | undefined>("selectedYear_YEAR", koreanDate);
+    = useLocalStorage<Date | undefined> ("selectedYear_YEAR", koreanDate);
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -102,14 +103,16 @@ export const SleepListYear = () => {
   useEffect(() => {
     if (selectedYear) {
       setResultValue (
-        `${selectedYear.getFullYear()}`
+        parseISO (
+          `${selectedYear.getFullYear()}`
+        )
       );
       setResultDuration (
         `${selectedYear.getFullYear()}-01-01 ~ ${selectedYear.getFullYear()}-12-31`
       );
     }
     else {
-      setResultValue ("선택된 날짜가 없습니다.");
+      setResultValue (undefined);
     }
   }, [selectedYear]);
 

@@ -1,12 +1,12 @@
 // SleepListWeek.tsx
-import React, {useState, useEffect} from "react";
+import React, { useEffect} from "react";
+import {useLocalStorage} from "../../assets/ts/useLocalStorage";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayPicker, DateRange, SelectRangeEventHandler } from "react-day-picker";
+import { DayPicker } from "react-day-picker";
 import { parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useLocalStorage} from "../../assets/ts/useLocalStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListWeek = () => {
@@ -46,8 +46,8 @@ export const SleepListWeek = () => {
       try {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id: user_id,
-            sleep_duration: resultDuration,
+            user_id : user_id,
+            sleep_duration : resultDuration,
           },
         });
         setSLEEP_LIST(response.data);
@@ -66,8 +66,8 @@ export const SleepListWeek = () => {
       try {
         const response = await axios.get(`${URL_SLEEP}/sleepAverage`, {
           params: {
-            user_id: user_id,
-            sleep_duration: resultDuration,
+            user_id : user_id,
+            sleep_duration : resultDuration,
           },
         });
 
@@ -111,7 +111,7 @@ export const SleepListWeek = () => {
       const toDate = new Date(selectedEndDay);
 
       setResultValue (
-        parseISO(
+        parseISO (
           `${fromDate.getFullYear()}-${formatValue(fromDate.getMonth() + 1)}-${formatValue(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatValue(toDate.getMonth() + 1)}-${formatValue(toDate.getDate())}`
         )
       );
@@ -125,15 +125,16 @@ export const SleepListWeek = () => {
     }
   }, [selectedStartDay, selectedEndDay]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // 3-1. flow ------------------------------------------------------------------------------------>
   const flowDayClick = (day: any) => {
     if (day) {
       const selectedDay = new Date(day);
+
       const startOfWeek = new Date(selectedDay);
       startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1);
 
       const endOfWeek = new Date(selectedDay);
-      endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay())); //
+      endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay()));
 
       setSelectedStartDay(startOfWeek);
       setSelectedEndDay(endOfWeek);

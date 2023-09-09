@@ -1,11 +1,12 @@
 // SleepListSelect.tsx
-import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
-import { DateRange, DayPicker } from "react-day-picker";
-import { ko } from "date-fns/locale";
-import moment from "moment";
-import axios from "axios";
+import React, { useEffect} from "react";
 import {useLocalStorage} from "../../assets/ts/useLocalStorage";
+import {useNavigate, useLocation} from "react-router-dom";
+import { DayPicker } from "react-day-picker";
+import { parseISO } from "date-fns";
+import { ko } from "date-fns/locale";
+import moment from "moment-timezone";
+import axios from "axios";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListSelect = () => {
@@ -23,21 +24,17 @@ export const SleepListSelect = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // state
   const { value: SLEEP_LIST, setValue: setSLEEP_LIST }
-    = useLocalStorage ("sleepList_SELECT", []);
+    = useLocalStorage<any> ("sleepList_SELECT", []);
   const { value: resultValue, setValue: setResultValue }
-    = useLocalStorage<string> ("resultValue_SELECT", "");
+    = useLocalStorage<Date | undefined> ("resultValue_SELECT", undefined);
   const { value: resultDuration, setValue: setResultDuration }
     = useLocalStorage<string> ("resultDuration_SELECT", "0000-00-00 ~ 0000-00-00");
   const { value: averageSleepTime, setValue: setAverageSleepTime }
-    = useLocalStorage<string> ("averageSleepTime_SELECT", "");
+    = useLocalStorage<string> ("averageSleepTime_SELECT", "00:00");
   const { value: averageSleepNight, setValue: setAverageSleepNight }
-    = useLocalStorage<string> ("averageSleepNight_SELECT", "");
+    = useLocalStorage<string> ("averageSleepNight_SELECT", "00:00");
   const { value: averageSleepMorning, setValue: setAverageSleepMorning }
-    = useLocalStorage<string> ("averageSleepMorning_SELECT", "");
-  const { value: range, setValue: setRange }
-    = useLocalStorage<DateRange | undefined> ("range_SELECT", undefined);
-  const { value: currentMonth, setValue: setCurrentMonth }
-    = useLocalStorage<Date> ("currentMonth_SELECT", koreanDate);
+    = useLocalStorage<string> ("averageSleepMorning_SELECT", "00:00");
   const { value: selectedStartDay, setValue: setSelectedStartDay }
     = useLocalStorage<Date | undefined> ("selectedStartDay_SELECT", undefined);
   const { value: selectedEndDay, setValue: setSelectedEndDay }
@@ -109,48 +106,58 @@ export const SleepListSelect = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (selectedStartDay && selectedEndDay) {
-      const formattedStart
-        = `${selectedStartDay.getFullYear()}-${formatValue(selectedStartDay.getMonth() + 1)}-${formatValue(selectedStartDay.getDate())}`;
 
-      const formattedEnd
-        = `${selectedEndDay.getFullYear()}-${formatValue(selectedEndDay.getMonth() + 1)}-${formatValue(selectedEndDay.getDate())}`;
+      const fromDate = new Date(selectedStartDay);
+      const toDate = new Date(selectedEndDay);
 
-      setResultValue(`${formattedStart} ~ ${formattedEnd}`);
-      setResultDuration(`${formattedStart} ~ ${formattedEnd}`);
+      setResultValue (
+        parseISO (
+          `${fromDate.getFullYear()}-${formatValue(fromDate.getMonth() + 1)}-${formatValue(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatValue(toDate.getMonth() + 1)}-${formatValue(toDate.getDate())}`
+        )
+      );
+      setResultDuration (
+        `${fromDate.getFullYear()}-${formatValue(fromDate.getMonth() + 1)}-${formatValue(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatValue(toDate.getMonth() + 1)}-${formatValue(toDate.getDate())}`
+      );
     }
     else {
-      setResultValue("선택된 날짜가 없습니다.");
+      setResultValue(undefined);
       setResultDuration("0000-00-00 ~ 0000-00-00");
-      setAverageSleepTime("00:00");
-      setAverageSleepNight("00:00");
-      setAverageSleepMorning("00:00");
     }
   }, [selectedStartDay, selectedEndDay]);
 
   // 3-1. flow ------------------------------------------------------------------------------------>
-  const flowDayRangeClick = (selectedRange: DateRange) => {
-    setRange(selectedRange);
-    if (selectedRange?.from) {
-      setSelectedStartDay(selectedRange.from);
-    }
-    if (selectedRange?.to) {
-      setSelectedEndDay(selectedRange.to);
-    }
-  };
+  const flowDayClick = (day: any) => {
+    if (day) {
+      const selectedDay = new Date(day);
 
-  // 3-2. flow ------------------------------------------------------------------------------------>
-  const flowDayClick = (day: Date) => {
-    if (!range || !range.from) {
-      setRange({ from: day, to: undefined });
-    }
-    else if (!range.to) {
-      const newRange = day > range.from
-      ? { from: range.from, to: day }
-      : { from: day, to: range.from };
-      flowDayRangeClick(newRange);
-    }
-    else {
-      setRange({ from: day, to: undefined });
+      if (selectedStartDay && selectedEndDay) {
+        if (selectedDay < selectedStartDay) {
+          setSelectedStartDay(selectedDay);
+        }
+        else if (selectedDay > selectedEndDay) {
+          setSelectedEndDay(selectedDay);
+        }
+        else {
+          setSelectedStartDay(selectedDay);
+          setSelectedEndDay(undefined);
+        }
+      }
+      else if (selectedStartDay) {
+        if (selectedDay < selectedStartDay) {
+          setSelectedEndDay(selectedStartDay);
+          setSelectedStartDay(selectedDay);
+        }
+        else if (selectedDay > selectedStartDay) {
+          setSelectedEndDay(selectedDay);
+        }
+        else {
+          setSelectedStartDay(undefined);
+          setSelectedEndDay(undefined);
+        }
+      }
+      else {
+        setSelectedStartDay(selectedDay);
+      }
     }
   };
 
@@ -159,15 +166,16 @@ export const SleepListSelect = () => {
     return (
       <DayPicker
         mode="range"
-        showOutsideDays
-        selected={range}
-        month={currentMonth}
-        onDayClick={flowDayClick}
         locale={ko}
         weekStartsOn={1}
-        onMonthChange={(date) => {
-          setCurrentMonth(date);
+        showOutsideDays
+        selected={selectedStartDay && selectedEndDay && {
+          from: selectedStartDay,
+          to: selectedEndDay,
         }}
+        month={selectedStartDay}
+        onDayClick={flowDayClick}
+        onMonthChange={(month) => setSelectedStartDay(month)}
         modifiersClassNames={{
           koreanDate: "koreanDate",
           selected: "selected",
@@ -239,14 +247,10 @@ export const SleepListSelect = () => {
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setCurrentMonth(koreanDate);
-        setSelectedStartDay(undefined);
-        setSelectedEndDay(undefined);
-        setRange(undefined);
-        localStorage.removeItem("currentMonth_SELECT");
+        setSelectedStartDay(koreanDate);
+        setSelectedEndDay(koreanDate);
         localStorage.removeItem("selectedStartDay_SELECT");
         localStorage.removeItem("selectedEndDay_SELECT");
-        localStorage.removeItem("range_SELECT");
       }}>
         Today
       </button>
@@ -255,14 +259,10 @@ export const SleepListSelect = () => {
   const buttonSleepReset = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
-        setCurrentMonth(koreanDate);
         setSelectedStartDay(undefined);
         setSelectedEndDay(undefined);
-        setRange(undefined);
-        localStorage.removeItem("currentMonth_SELECT");
         localStorage.removeItem("selectedStartDay_SELECT");
         localStorage.removeItem("selectedEndDay_SELECT");
-        localStorage.removeItem("range_SELECT");
       }}>
         Reset
       </button>

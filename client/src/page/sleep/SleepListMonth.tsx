@@ -5,6 +5,7 @@ import { DayPicker, MonthChangeEventHandler } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
+import { parseISO } from "date-fns";
 import {useLocalStorage} from "../../assets/ts/useLocalStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
@@ -25,17 +26,17 @@ export const SleepListMonth = () => {
   const { value : SLEEP_LIST, setValue : setSLEEP_LIST }
     = useLocalStorage<any>("sleepList_MONTH", []);
   const { value : resultValue, setValue : setResultValue }
-    = useLocalStorage<string>("resultValue_MONTH", "");
+    = useLocalStorage<Date | undefined> ("resultValue_MONTH", undefined);
   const { value : resultDuration, setValue : setResultDuration }
-    = useLocalStorage<string>("resultDuration_MONTH", "0000-00-00 ~ 0000-00-00");
+    = useLocalStorage<string> ("resultDuration_MONTH", "0000-00-00 ~ 0000-00-00");
   const { value : averageSleepTime, setValue : setAverageSleepTime }
-    = useLocalStorage<string>("averageSleepTime_MONTH", "");
+    = useLocalStorage<string> ("averageSleepTime_MONTH", "00:00");
   const { value : averageSleepNight, setValue : setAverageSleepNight }
-    = useLocalStorage<string>("averageSleepNight_MONTH", "");
+    = useLocalStorage<string> ("averageSleepNight_MONTH", "00:00");
   const { value : averageSleepMorning, setValue : setAverageSleepMorning }
-    = useLocalStorage<string>("averageSleepMorning_MONTH", "");
+    = useLocalStorage<string> ("averageSleepMorning_MONTH", "00:00");
   const { value : selectedMonth, setValue : setSelectedMonth }
-    = useLocalStorage<Date | undefined>("selectedMonth_MONTH", koreanDate);
+    = useLocalStorage<Date | undefined> ("selectedMonth_MONTH", koreanDate);
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -104,14 +105,16 @@ export const SleepListMonth = () => {
     };
     if (selectedMonth) {
       setResultValue (
-        `${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}`
+        parseISO (
+          `${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}`
+        )
       );
       setResultDuration (
         `${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}-01 ~ ${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}-31`
       );
     }
     else {
-      setResultValue ("선택된 날짜가 없습니다.");
+      setResultValue (undefined);
     }
   }, [selectedMonth]);
 
