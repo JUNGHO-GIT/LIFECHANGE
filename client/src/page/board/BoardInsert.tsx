@@ -20,29 +20,25 @@ export const BoardInsert = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [board_title, setBoard_title] = useState("");
-  const [board_content, setBoard_content] = useState("");
-  const [board_regdate, setBoard_regdate] = useState(koreanDate);
+  const [BOARD, setBOARD] = useState<any>({});
 
   // 2. useEffect --------------------------------------------------------------------------------->
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowBoardInsert = async () => {
     try {
-      if (board_title === "") {
+      if (BOARD.board_title === "") {
         alert("Please enter a title");
         return;
       }
-      else if (board_content === "") {
+      else if (BOARD.board_content === "") {
         alert("Please enter a content");
         return;
       }
       else {
         const response = await axios.post (`${URL_BOARD}/boardInsert`, {
-          user_id: user_id,
-          board_title: board_title,
-          board_content: board_content,
-          board_regdate: board_regdate,
+          user_id : user_id,
+          BOARD : BOARD,
         });
         if (response.data === "success") {
           alert("Insert a board successfully");
@@ -73,6 +69,9 @@ export const BoardInsert = () => {
             id="user_id"
             placeholder="User ID"
             value={user_id ? user_id : ""}
+            onChange={(event: any) => {
+              setBOARD({...BOARD, user_id: event.target.value});
+            }}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
@@ -81,10 +80,10 @@ export const BoardInsert = () => {
           <input type="text"
             className="form-control"
             placeholder="Title"
-            value={board_title}
+            value={BOARD.board_title}
             id="floatingTitle"
             onChange={(e) => {
-              setBoard_title(e.target.value);
+              setBOARD({...BOARD, board_title: e.target.value});
             }}
           />
           <label htmlFor="floatingTitle">Title</label>
@@ -93,10 +92,10 @@ export const BoardInsert = () => {
           <input type="text"
             className="form-control"
             placeholder="Content"
-            value={board_content}
+            value={BOARD.board_content}
             id="floatingContent"
             onChange={(e) => {
-              setBoard_content(e.target.value);
+              setBOARD({...BOARD, board_content: e.target.value});
             }}
           />
           <label htmlFor="floatingContent">Content</label>
