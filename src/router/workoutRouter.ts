@@ -66,7 +66,6 @@ workoutRouter.post("/workoutInsert", async (req: Request, res: Response) => {
 workoutRouter.put("/workoutUpdate", async (req: Request, res: Response) => {
   try {
     const workoutUpdate = await workoutService.workoutUpdate (
-      req.body._id,
       req.body
     );
     if (workoutUpdate) {

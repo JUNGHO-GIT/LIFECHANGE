@@ -93,7 +93,7 @@ foodRouter.put("/foodUpdate", async (req: Request, res: Response) => {
       req.body
     );
     if (foodUpdate) {
-      res.send("success");
+      res.send(foodUpdate);
     }
     else {
       res.send("fail");

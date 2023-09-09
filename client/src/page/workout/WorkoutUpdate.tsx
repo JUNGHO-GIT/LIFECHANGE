@@ -31,7 +31,7 @@ export const WorkoutUpdate = () => {
       try {
         const response = await axios.get(`${URL_WORKOUT}/workoutDetail`, {
           params: {
-            _id: _id,
+            _id : _id,
           },
         });
         setWORKOUT(response.data);
@@ -51,7 +51,6 @@ export const WorkoutUpdate = () => {
     try {
       const response = await axios.put(`${URL_WORKOUT}/workoutUpdate`, {
         data: {
-          _id : _id,
           WORKOUT : WORKOUT,
         },
       });
@@ -79,12 +78,7 @@ export const WorkoutUpdate = () => {
             id="user_id"
             placeholder="User ID"
             value={WORKOUT.user_id ? WORKOUT.user_id : ""}
-            onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                user_id: e.target.value,
-              });
-            }}
+            readOnly
           />
           <label htmlFor="user_id">User ID</label>
         </div>

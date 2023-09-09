@@ -47,11 +47,9 @@ export const workoutInsert = async (
 
 // 4. workoutUpdate ------------------------------------------------------------------------------->
 export const workoutUpdate = async (
-  _id_param : any,
   workout_param : any
 ) => {
   const workoutUpdate = await Workout.updateOne ({
-    _id : _id_param,
     $set : workout_param
   });
   return workoutUpdate;
