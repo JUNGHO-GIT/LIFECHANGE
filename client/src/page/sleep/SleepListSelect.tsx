@@ -52,6 +52,7 @@ export const SleepListSelect = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
+  // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
