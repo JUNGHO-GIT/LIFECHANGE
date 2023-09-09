@@ -1,10 +1,12 @@
 // SleepListWeek.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DateRange, DayPicker } from "react-day-picker";
+import { DayPicker, DateRange, SelectRangeEventHandler } from "react-day-picker";
+import { parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
+import {useLocalStorage} from "../../assets/ts/useLocalStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListWeek = () => {
@@ -20,18 +22,23 @@ export const SleepListWeek = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
-  // state 2
-  const [resultValue, setResultValue] = useState<string>();
-  const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
-  // state 3
-  const [averageSleepTime, setAverageSleepTime] = useState<string>();
-  const [averageSleepNight, setAverageSleepNight] = useState<string>();
-  const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
-  // state 4
-  const [range, setRange] = useState<DateRange | undefined>();
-  const [currentMonth, setCurrentMonth] = useState<Date>(koreanDate);
+  // state
+  const { value: SLEEP_LIST, setValue: setSLEEP_LIST }
+    = useLocalStorage<any> ("sleepList_WEEK", []);
+  const { value: resultValue, setValue: setResultValue }
+    = useLocalStorage<Date | undefined> ("resultValue_WEEK", undefined);
+  const { value: resultDuration, setValue: setResultDuration }
+    = useLocalStorage<string> ("resultDuration_WEEK", "0000-00-00 ~ 0000-00-00");
+  const { value: averageSleepTime, setValue: setAverageSleepTime }
+    = useLocalStorage<string> ("averageSleepTime_WEEK", "00:00");
+  const { value: averageSleepNight, setValue: setAverageSleepNight }
+    = useLocalStorage<string> ("averageSleepNight_WEEK", "00:00");
+  const { value: averageSleepMorning, setValue: setAverageSleepMorning }
+    = useLocalStorage<string> ("averageSleepMorning_WEEK", "00:00");
+  const { value: selectedStartDay, setValue: setSelectedStartDay }
+    = useLocalStorage<Date | undefined> ("selectedStartDay_WEEK", undefined);
+  const { value: selectedEndDay, setValue: setSelectedEndDay }
+    = useLocalStorage<Date | undefined> ("selectedEndDay_WEEK", undefined);
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -98,37 +105,39 @@ export const SleepListWeek = () => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-    if (range?.from && range?.to) {
-      setResultValue (
-        `${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`
-      );
 
+    if (selectedStartDay && selectedEndDay) {
+      const fromDate = new Date(selectedStartDay);
+      const toDate = new Date(selectedEndDay);
+
+      setResultValue (
+        parseISO(
+          `${fromDate.getFullYear()}-${formatValue(fromDate.getMonth() + 1)}-${formatValue(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatValue(toDate.getMonth() + 1)}-${formatValue(toDate.getDate())}`
+        )
+      );
       setResultDuration (
-        `${range.from.getFullYear()}-${formatValue(range.from.getMonth() + 1)}-${formatValue(range.from.getDate())} ~ ${range.to.getFullYear()}-${formatValue(range.to.getMonth() + 1)}-${formatValue(range.to.getDate())}`
+        `${fromDate.getFullYear()}-${formatValue(fromDate.getMonth() + 1)}-${formatValue(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatValue(toDate.getMonth() + 1)}-${formatValue(toDate.getDate())}`
       );
     }
     else {
-      setResultValue ("선택된 날짜가 없습니다.");
+      setResultValue(undefined);
+      setResultDuration("0000-00-00 ~ 0000-00-00");
     }
-  }, [range]);
-
-  // 2-4. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const savedDate = localStorage.getItem("selectedWeek");
-    if (savedDate) {
-      const parsedDate = new Date(savedDate);
-      const startOfWeek = moment(parsedDate).startOf("isoWeek").toDate();
-      const endOfWeek = moment(parsedDate).endOf("isoWeek").toDate();
-      setRange({ from: startOfWeek, to: endOfWeek });
-    }
-  }, []);
+  }, [selectedStartDay, selectedEndDay]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDayClick = (selectedDate: Date) => {
-    const startOfWeek = moment(selectedDate).startOf("isoWeek").toDate();
-    const endOfWeek = moment(selectedDate).endOf("isoWeek").toDate();
-    setRange({ from: startOfWeek, to: endOfWeek });
-    localStorage.setItem("selectedWeek", selectedDate.toISOString());
+  const flowDayClick = (day: any) => {
+    if (day) {
+      const selectedDay = new Date(day);
+      const startOfWeek = new Date(selectedDay);
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1);
+
+      const endOfWeek = new Date(selectedDay);
+      endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay())); //
+
+      setSelectedStartDay(startOfWeek);
+      setSelectedEndDay(endOfWeek);
+    }
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -136,15 +145,16 @@ export const SleepListWeek = () => {
     return (
       <DayPicker
         mode="range"
-        showOutsideDays
-        selected={range}
-        month={currentMonth}
-        onDayClick={flowDayClick}
         locale={ko}
         weekStartsOn={1}
-        onMonthChange={(date) => {
-          setCurrentMonth(date);
+        showOutsideDays
+        selected={selectedStartDay && selectedEndDay && {
+          from: selectedStartDay,
+          to: selectedEndDay,
         }}
+        month={selectedStartDay}
+        onDayClick={flowDayClick}
+        onMonthChange={(month) => setSelectedStartDay(month)}
         modifiersClassNames={{
           koreanDate: "koreanDate",
           selected: "selected",
@@ -216,9 +226,10 @@ export const SleepListWeek = () => {
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setCurrentMonth(koreanDate);
-        setRange(undefined);
-        localStorage.removeItem("selectedWeek");
+        setSelectedStartDay(koreanDate);
+        setSelectedEndDay(koreanDate);
+        localStorage.removeItem("selectedStartDay_WEEK");
+        localStorage.removeItem("selectedEndDay_WEEK");
       }}>
         Today
       </button>
@@ -227,8 +238,10 @@ export const SleepListWeek = () => {
   const buttonSleepReset = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
-        setRange(undefined);
-        localStorage.removeItem("selectedWeek");
+        setSelectedStartDay(undefined);
+        setSelectedEndDay(undefined);
+        localStorage.removeItem("selectedStartDay_WEEK");
+        localStorage.removeItem("selectedEndDay_WEEK");
       }}>
         Reset
       </button>

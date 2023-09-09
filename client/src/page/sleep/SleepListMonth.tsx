@@ -5,6 +5,7 @@ import { DayPicker, MonthChangeEventHandler } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
+import {useLocalStorage} from "../../assets/ts/useLocalStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListMonth = () => {
@@ -20,17 +21,21 @@ export const SleepListMonth = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
-  // state 2
-  const [resultValue, setResultValue] = useState<string>();
-  const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
-  // state 3
-  const [averageSleepTime, setAverageSleepTime] = useState<string>();
-  const [averageSleepNight, setAverageSleepNight] = useState<string>();
-  const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
-  // state 4
-  const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(koreanDate);
+  // state
+  const { value : SLEEP_LIST, setValue : setSLEEP_LIST }
+    = useLocalStorage<any>("sleepList_MONTH", []);
+  const { value : resultValue, setValue : setResultValue }
+    = useLocalStorage<string>("resultValue_MONTH", "");
+  const { value : resultDuration, setValue : setResultDuration }
+    = useLocalStorage<string>("resultDuration_MONTH", "0000-00-00 ~ 0000-00-00");
+  const { value : averageSleepTime, setValue : setAverageSleepTime }
+    = useLocalStorage<string>("averageSleepTime_MONTH", "");
+  const { value : averageSleepNight, setValue : setAverageSleepNight }
+    = useLocalStorage<string>("averageSleepNight_MONTH", "");
+  const { value : averageSleepMorning, setValue : setAverageSleepMorning }
+    = useLocalStorage<string>("averageSleepMorning_MONTH", "");
+  const { value : selectedMonth, setValue : setSelectedMonth }
+    = useLocalStorage<Date | undefined>("selectedMonth_MONTH", koreanDate);
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -110,19 +115,10 @@ export const SleepListMonth = () => {
     }
   }, [selectedMonth]);
 
-  // 2-4. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const savedDate = localStorage.getItem("selectedMonth");
-    if (savedDate) {
-      setSelectedMonth(new Date(savedDate));
-    }
-  }, []);
-
   // 3. flow -------------------------------------------------------------------------------------->
   const flowMonthChange: MonthChangeEventHandler = (day) => {
     const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);
     setSelectedMonth(monthDate);
-    localStorage.setItem("selectedMonth", monthDate.toISOString());
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -207,7 +203,7 @@ export const SleepListMonth = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedMonth(koreanDate);
-        localStorage.removeItem("selectedMonth");
+        localStorage.removeItem("selectedMonth_MONTH");
       }}>
         Today
       </button>
@@ -217,7 +213,7 @@ export const SleepListMonth = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedMonth(undefined);
-        localStorage.removeItem("selectedMonth");
+        localStorage.removeItem("selectedMonth_MONTH");
       }}>
         Reset
       </button>

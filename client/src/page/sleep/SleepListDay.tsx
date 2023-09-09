@@ -1,10 +1,12 @@
-// SleepList.tsx
+// SleepListDay.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
+import parseISO from 'date-fns/parseISO';
 import moment from "moment-timezone";
 import axios from "axios";
+import {useLocalStorage} from "../../assets/ts/useLocalStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListDay = () => {
@@ -20,17 +22,21 @@ export const SleepListDay = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
-  // state 2
-  const [resultValue, setResultValue] = useState<string>();
-  const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
-  // state 3
-  const [averageSleepTime, setAverageSleepTime] = useState<string>();
-  const [averageSleepNight, setAverageSleepNight] = useState<string>();
-  const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
-  // state 4
-  const [selectedDay, setSelectedDay] = useState<Date | undefined>();
+  // state
+  const { value: SLEEP_LIST, setValue: setSLEEP_LIST }
+    = useLocalStorage ("sleepList_DAY", []);
+  const { value: resultValue, setValue: setResultValue }
+    = useLocalStorage<Date | undefined> ("resultValue_DAY", undefined);
+  const { value: resultDuration, setValue: setResultDuration }
+    = useLocalStorage<string> ("resultDuration_DAY", "0000-00-00 ~ 0000-00-00");
+  const { value: averageSleepTime, setValue: setAverageSleepTime }
+    = useLocalStorage<string> ("averageSleepTime_DAY", "00:00");
+  const { value: averageSleepNight, setValue: setAverageSleepNight }
+    = useLocalStorage<string> ("averageSleepNight_DAY", "00:00");
+  const { value: averageSleepMorning, setValue: setAverageSleepMorning }
+    = useLocalStorage<string> ("averageSleepMorning_DAY", "00:00");
+  const { value: selectedDay, setValue: setSelectedDay }
+    = useLocalStorage<Date | undefined> ("selectedDay_DAY", undefined);
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -101,23 +107,14 @@ export const SleepListDay = () => {
       const year = selectedDay.getFullYear();
       const month = formatValue(selectedDay.getMonth() + 1);
       const date = formatValue(selectedDay.getDate());
-      setResultValue(`${year}-${month}-${date}`);
+      setResultValue(parseISO(`${year}-${month}-${date}`));
       setResultDuration(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
     }
   }, [selectedDay]);
 
-  // 2-4. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const savedDate = localStorage.getItem("selectedDay");
-    if (savedDate) {
-      setSelectedDay(new Date(savedDate));
-    }
-  }, []);
-
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDayClick: DayClickEventHandler = (day: Date) => {
+  const flowDayClick: DayClickEventHandler = (day:any) => {
     setSelectedDay(day);
-    localStorage.setItem("selectedDay", moment(day).format("YYYY-MM-DD"));
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -131,9 +128,7 @@ export const SleepListDay = () => {
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
-        onMonthChange={(date) => {
-          setSelectedDay(date);
-        }}
+        onMonthChange={(month) => setSelectedDay(month)}
         modifiersClassNames={{
           koreanDate: "koreanDate",
           selected: "selected",
@@ -206,7 +201,7 @@ export const SleepListDay = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedDay(koreanDate);
-        localStorage.removeItem("selectedDay");
+        localStorage.removeItem("selectedDay_DAY");
       }}>
         Today
       </button>
@@ -216,7 +211,7 @@ export const SleepListDay = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedDay(undefined);
-        localStorage.removeItem("selectedDay");
+        localStorage.removeItem("selectedDay_DAY");
       }}>
         Reset
       </button>

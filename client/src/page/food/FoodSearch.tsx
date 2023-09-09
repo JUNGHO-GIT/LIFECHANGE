@@ -26,15 +26,15 @@ export const FoodSearch = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-1. useEffect (localStorage) ---------------------------------------------------------------->
   useEffect(() => {
     // 로컬 스토리지에서 값을 가져옴
-    const savedFOOD_SEARCH = localStorage.getItem("FOOD");
-    const savedQuery = localStorage.getItem("QUERY");
-    const savedPage = localStorage.getItem("PAGE");
+    const savedFoodSearch = localStorage.getItem("FoodSearch");
+    const savedQuery = localStorage.getItem("FoodQuery");
+    const savedPage = localStorage.getItem("FoodPage");
 
-    if (savedFOOD_SEARCH) {
-      setFOOD_SEARCH(JSON.parse(savedFOOD_SEARCH));
+    if (savedFoodSearch) {
+      setFOOD_SEARCH(JSON.parse(savedFoodSearch));
     }
     if (savedQuery) {
       setQuery(savedQuery);
@@ -43,13 +43,11 @@ export const FoodSearch = () => {
       setPage(JSON.parse(savedPage));
     }
   }, []);
-
-  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     // 상태 값이 변경될 때마다 로컬 스토리지에 저장
-    localStorage.setItem("FOOD", JSON.stringify(FOOD_SEARCH));
-    localStorage.setItem("QUERY", query);
-    localStorage.setItem("PAGE", JSON.stringify(page));
+    localStorage.setItem("FoodSearch", JSON.stringify(FOOD_SEARCH));
+    localStorage.setItem("FoodQuery", query);
+    localStorage.setItem("FoodPage", JSON.stringify(page));
 
   }, [FOOD_SEARCH, query, page]);
 

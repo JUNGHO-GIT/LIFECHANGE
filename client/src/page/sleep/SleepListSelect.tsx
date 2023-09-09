@@ -5,6 +5,7 @@ import { DateRange, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment";
 import axios from "axios";
+import {useLocalStorage} from "../../assets/ts/useLocalStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListSelect = () => {
@@ -20,21 +21,27 @@ export const SleepListSelect = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
-  // state 2
-  const [resultValue, setResultValue] = useState<string>();
-  const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
-  // state 3
-  const [averageSleepTime, setAverageSleepTime] = useState<string>();
-  const [averageSleepNight, setAverageSleepNight] = useState<string>();
-  const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
-  // state 4
-  const [range, setRange] = useState<DateRange | undefined>();
-  const [currentMonth, setCurrentMonth] = useState<Date>(koreanDate);
-  // state 5
-  const [selectedStartDay, setSelectedStartDay] = useState<Date | undefined>();
-  const [selectedEndDay, setSelectedEndDay] = useState<Date | undefined>();
+  // state
+  const { value: SLEEP_LIST, setValue: setSLEEP_LIST }
+    = useLocalStorage ("sleepList_SELECT", []);
+  const { value: resultValue, setValue: setResultValue }
+    = useLocalStorage<string> ("resultValue_SELECT", "");
+  const { value: resultDuration, setValue: setResultDuration }
+    = useLocalStorage<string> ("resultDuration_SELECT", "0000-00-00 ~ 0000-00-00");
+  const { value: averageSleepTime, setValue: setAverageSleepTime }
+    = useLocalStorage<string> ("averageSleepTime_SELECT", "");
+  const { value: averageSleepNight, setValue: setAverageSleepNight }
+    = useLocalStorage<string> ("averageSleepNight_SELECT", "");
+  const { value: averageSleepMorning, setValue: setAverageSleepMorning }
+    = useLocalStorage<string> ("averageSleepMorning_SELECT", "");
+  const { value: range, setValue: setRange }
+    = useLocalStorage<DateRange | undefined> ("range_SELECT", undefined);
+  const { value: currentMonth, setValue: setCurrentMonth }
+    = useLocalStorage<Date> ("currentMonth_SELECT", koreanDate);
+  const { value: selectedStartDay, setValue: setSelectedStartDay }
+    = useLocalStorage<Date | undefined> ("selectedStartDay_SELECT", undefined);
+  const { value: selectedEndDay, setValue: setSelectedEndDay }
+    = useLocalStorage<Date | undefined> ("selectedEndDay_SELECT", undefined);
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -120,17 +127,6 @@ export const SleepListSelect = () => {
     }
   }, [selectedStartDay, selectedEndDay]);
 
-  // 2-4. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const savedDateRange = localStorage.getItem("selectedSelect");
-    if (savedDateRange) {
-      const parsedRange = JSON.parse(savedDateRange);
-      setSelectedStartDay(new Date(parsedRange.from));
-      setSelectedEndDay(new Date(parsedRange.to));
-      setRange({ from: new Date(parsedRange.from), to: new Date(parsedRange.to) });
-    }
-  }, []);
-
   // 3-1. flow ------------------------------------------------------------------------------------>
   const flowDayRangeClick = (selectedRange: DateRange) => {
     setRange(selectedRange);
@@ -140,7 +136,6 @@ export const SleepListSelect = () => {
     if (selectedRange?.to) {
       setSelectedEndDay(selectedRange.to);
     }
-    localStorage.setItem("selectedSelect", JSON.stringify(selectedRange));
   };
 
   // 3-2. flow ------------------------------------------------------------------------------------>
@@ -248,7 +243,10 @@ export const SleepListSelect = () => {
         setSelectedStartDay(undefined);
         setSelectedEndDay(undefined);
         setRange(undefined);
-        localStorage.removeItem("selectedSelect");
+        localStorage.removeItem("currentMonth_SELECT");
+        localStorage.removeItem("selectedStartDay_SELECT");
+        localStorage.removeItem("selectedEndDay_SELECT");
+        localStorage.removeItem("range_SELECT");
       }}>
         Today
       </button>
@@ -261,7 +259,10 @@ export const SleepListSelect = () => {
         setSelectedStartDay(undefined);
         setSelectedEndDay(undefined);
         setRange(undefined);
-        localStorage.removeItem("selectedSelect");
+        localStorage.removeItem("currentMonth_SELECT");
+        localStorage.removeItem("selectedStartDay_SELECT");
+        localStorage.removeItem("selectedEndDay_SELECT");
+        localStorage.removeItem("range_SELECT");
       }}>
         Reset
       </button>
