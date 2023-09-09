@@ -229,6 +229,7 @@ export const SleepListWeek = () => {
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedStartDay(koreanDate);
         setSelectedEndDay(koreanDate);
+        localStorage.removeItem("sleepList_WEEK");
         localStorage.removeItem("selectedStartDay_WEEK");
         localStorage.removeItem("selectedEndDay_WEEK");
       }}>
@@ -241,6 +242,7 @@ export const SleepListWeek = () => {
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedStartDay(undefined);
         setSelectedEndDay(undefined);
+        localStorage.removeItem("sleepList_WEEK");
         localStorage.removeItem("selectedStartDay_WEEK");
         localStorage.removeItem("selectedEndDay_WEEK");
       }}>

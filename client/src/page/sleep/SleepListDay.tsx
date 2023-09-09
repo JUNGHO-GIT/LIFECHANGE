@@ -201,6 +201,7 @@ export const SleepListDay = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedDay(koreanDate);
+        localStorage.removeItem("sleepList_DAY");
         localStorage.removeItem("selectedDay_DAY");
       }}>
         Today
@@ -211,6 +212,7 @@ export const SleepListDay = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedDay(undefined);
+        localStorage.removeItem("sleepList_DAY");
         localStorage.removeItem("selectedDay_DAY");
       }}>
         Reset
