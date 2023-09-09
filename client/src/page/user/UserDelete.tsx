@@ -58,14 +58,14 @@ export const UserDelete = () => {
         }
         if (response.data === "success") {
           const response = await axios.delete (`${URL_USER}/userDelete`, {
-            data: {
-              user_id: user_id,
-            },
+            params: {
+              user_id : user_id,
+            }
           });
           if (response.data === "success") {
             alert("User Delete Success");
             window.sessionStorage.clear();
-            window.location.href = "/";
+            navParam("/");
           }
           else if (response.data === "fail") {
             alert("User Delete Fail");

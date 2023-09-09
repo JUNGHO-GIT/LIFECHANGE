@@ -81,10 +81,10 @@ export const userUpdate = async (
 
 // 5. userDelete ---------------------------------------------------------------------------------->
 export const userDelete = async (
-  user_id_param : any
+  _id_param : any
 ) => {
-  const userDelete = await User.findOneAndDelete ({
-    user_id : user_id_param
+  const userDelete = await User.deleteOne ({
+    _id : _id_param,
   });
   return userDelete;
 };

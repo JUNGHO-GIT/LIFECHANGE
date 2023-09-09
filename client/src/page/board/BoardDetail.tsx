@@ -56,7 +56,8 @@ export const BoardDetail = () => {
           },
         });
         if (response.data === "success") {
-          window.location.href = "/";
+          alert("Delete success");
+          navParam(`/boardList`);
         }
         else {
           alert("Delete failed");

@@ -79,8 +79,10 @@ export const FoodSearch = () => {
             <tr>
               <td>
                 {buttonFoodInsert (
-                  index.title, index.brand, index.calories,
-                  index.fat, index.carb, index.protein, index.serving,
+                  index.title ? index.title : "x", index.brand ? index.brand : "x",
+                  index.calories ? index.calories : 0, index.fat ? index.fat : 0,
+                  index.carb ? index.carb : 0, index.protein ? index.protein : 0,
+                  index.serving ? index.serving : 0
                 )}
               </td>
               <td>{index.brand ? index.brand : "x"}</td>
@@ -97,18 +99,16 @@ export const FoodSearch = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonFoodInsert = (title: string, brand: string, calories: number, fat: number, carb: number, protein: number, serving: number) => {
+  const buttonFoodInsert = (
+    title: string, brand: string, calories: number, fat: number,
+    carb: number, protein: number, serving: number
+  ) => {
     return (
       <p onClick={() => {
         navParam(`/foodInsert`, {
           state: {
-            title : title,
-            brand : brand,
-            calories : calories,
-            fat : fat,
-            carb : carb,
-            protein : protein,
-            serving : serving
+            title : title, brand : brand, calories : calories, fat : fat,
+            carb : carb, protein : protein, serving : serving
           }
         });
       }}>

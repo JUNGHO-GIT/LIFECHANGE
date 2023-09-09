@@ -58,19 +58,19 @@ export const foodDetail = async (
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (
-  food_param: any
+  FOOD_pram : any
 ) => {
   const foodInsert = await Food.create ({
     _id : new mongoose.Types.ObjectId(),
-    user_id : food_param.user_id,
-    food_title : food_param.food_title,
-    food_brand : food_param.food_brand,
-    food_category : food_param.food_category,
-    food_serving : food_param.food_serving,
-    food_calories : food_param.food_calories,
-    food_carb : food_param.food_carb,
-    food_protein : food_param.food_protein,
-    food_fat : food_param.food_fat,
+    user_id : FOOD_pram.user_id,
+    food_title : FOOD_pram.food_title,
+    food_brand : FOOD_pram.food_brand,
+    food_category : FOOD_pram.food_category,
+    food_serving : FOOD_pram.food_serving,
+    food_calories : FOOD_pram.food_calories,
+    food_carb : FOOD_pram.food_carb,
+    food_protein : FOOD_pram.food_protein,
+    food_fat : FOOD_pram.food_fat,
   });
   return foodInsert;
 };
@@ -89,14 +89,10 @@ export const foodUpdate = async (
 
 // 5. foodDelete ---------------------------------------------------------------------------------->
 export const foodDelete = async (
-  _id_param : string,
-  user_id_param : string,
-  food_regdate_param : string,
+  _id_param : any
 ) => {
   const foodDelete = await Food.deleteOne ({
-    _id : _id_param,
-    user_id : user_id_param,
-    food_regdate : food_regdate_param,
+    _id : _id_param
   });
   return foodDelete;
 };

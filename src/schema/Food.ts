@@ -43,6 +43,11 @@ const FoodScheme = new mongoose.Schema ({
     type : Number,
     required : true
   },
+  food_select : {
+    type : String,
+    default : "daily",
+    required : false
+  },
   food_regdate : {
     type : String,
     default : () => {
@@ -56,11 +61,6 @@ const FoodScheme = new mongoose.Schema ({
       return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
-  },
-  food_select : {
-    type : String,
-    default : "daily",
-    required : false
   }
 });
 

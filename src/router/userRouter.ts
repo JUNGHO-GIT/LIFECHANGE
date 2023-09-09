@@ -133,7 +133,7 @@ userRouter.post("/userCheckIdPw", async (req: Request, res: Response) => {
 userRouter.delete("/userDelete", async (req: Request, res: Response) => {
   try {
     const userDelete = await userService.userDelete (
-      req.body.user_id
+      req.query._id
     );
     if (userDelete) {
       res.send("success");

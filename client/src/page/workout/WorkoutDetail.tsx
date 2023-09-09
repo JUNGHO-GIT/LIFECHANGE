@@ -52,8 +52,8 @@ export const WorkoutDetail = () => {
       }
       else {
         const response = await axios.delete(`${URL_WORKOUT}/workoutDelete`, {
-          data: {
-            _id : WORKOUT._id,
+          params: {
+            _id : WORKOUT._id
           },
         });
         if (response.data === "success") {

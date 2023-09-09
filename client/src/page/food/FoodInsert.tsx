@@ -16,16 +16,9 @@ export const FoodInsert = () => {
   // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val 1
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // val 2
-  const title = location.state.title;
-  const brand = location.state.brand;
-  const serving = location.state.serving;
-  const calories = location.state.calories ;
-  const fat = location.state.fat;
-  const carb = location.state.carb;
-  const protein = location.state.protein;
+  const {title, brand, serving, calories, fat, carb, protein} = location.state;
   // state
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
@@ -35,29 +28,25 @@ export const FoodInsert = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFoodInsert = async (params: any) => {
 
-    const caloriesPer:any = ((calories/logicOneServing())*(Number(params))).toFixed(1);
-    const carbPer:any = ((carb/logicOneServing())*(Number(params))).toFixed(1);
-    const proteinPer:any = ((protein/logicOneServing())*(Number(params))).toFixed(1);
-    const fatPer:any = ((fat/logicOneServing())*(Number(params))).toFixed(1);
+    const FOOD = {
+      user_id : user_id,
+      food_title: title,
+      food_brand: brand,
+      food_category: category,
+      food_serving: params,
+      food_calories: logicPerServing(params, calories),
+      food_carb: logicPerServing(params, carb),
+      food_protein: logicPerServing(params, protein),
+      food_fat: logicPerServing(params, fat),
+    };
 
     try {
-      const response  = await axios.post(`${URL_FOOD}/foodInsert`, {
-        user_id : user_id,
-        food_title : title,
-        food_brand : brand,
-        food_category: category,
-        food_serving : params,
-        food_calories : caloriesPer,
-        food_carb : carbPer,
-        food_protein : proteinPer,
-        food_fat : fatPer
+      const response = await axios.post(`${URL_FOOD}/foodInsert`, {
+        FOOD : FOOD
       });
       if (response.data === "success") {
         alert("Insert food successfully");
         window.location.href = "/foodSearch";
-      }
-      else if (response.data === "fail") {
-        alert("Insert food failed");
       }
       else {
         alert(`${response.data}error`);
@@ -69,90 +58,58 @@ export const FoodInsert = () => {
     }
   };
 
-  // 4. logic ------------------------------------------------------------------------------------->
+  // 4-1. logic ----------------------------------------------------------------------------------->
+  const logicPerServing = (param: number, nutrientValue: number) => {
+    return ((nutrientValue / logicOneServing()) * param).toFixed(1);
+  };
+
+  // 4-2. logic ----------------------------------------------------------------------------------->
   const logicOneServing = () => {
-    const servingValue = serving.toString();
+
     const units = [
-      { regex: /(g|ml)/gm, replace: ["g", "ml"], factor: 1 },
-      { regex: /(컵)/gm, replace: ["컵"], factor: 200 },
-      { regex: /(큰술|테이블스푼)/gm, replace: ["큰술", "테이블스푼"], factor: 15 },
-      { regex: /(작은술|스푼|티스푼)/gm, replace: ["작은술", "스푼", "티스푼"], factor: 5 }
+      {regex: /(g|ml)/gm, replace: ["g", "ml"], factor: 1},
+      {regex: /(컵)/gm, replace: ["컵"], factor: 200},
+      {regex: /(큰술|테이블스푼)/gm, replace: ["큰술", "테이블스푼"], factor: 15},
+      {regex: /(작은술|스푼|티스푼)/gm, replace: ["작은술", "스푼", "티스푼"], factor: 5},
     ];
 
     for (const unit of units) {
-      const match = servingValue.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, "gm"));
+      const match = serving.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, "gm"));
       if (match) {
         let regexValue = match[0];
-        unit.replace.forEach(index => regexValue = regexValue.replace(index, ""));
+        unit.replace.forEach((index) => (regexValue = regexValue.replace(index, "")));
         return Number(regexValue) * unit.factor;
       }
     }
     return 1;
   };
 
-  // 5-1. table ----------------------------------------------------------------------------------->
-  const tableTotalServing = () => {
-    return (
-      <div className="card">
-        <div className="card-body">
-          <h4 className="card-title">
-            {serving ? serving : 0}
-          </h4>
-          <p className="card-text">
-            <span>칼로리 : </span>
-            {calories ? calories : 0}
-          </p>
-          <p className="card-text">
-            <span>지방 : </span>
-            {fat ? fat : 0}
-          </p>
-          <p className="card-text">
-            <span>탄수화물 : </span>
-            {carb ? carb : 0}
-          </p>
-          <p className="card-text">
-            <span>단백질 : </span>
-            {protein ? protein : 0}
-          </p>
-        </div>
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableFoodInsert = (
+    servingAmount: number, title: string, nutrientValue: number
+  ) => (
+    <div className="card">
+      <div className="card-body">
+        <h4 className="card-title">{title}</h4>
+        <p className="card-text">
+          <span>칼로리 : </span>
+          {servingAmount ? logicPerServing(servingAmount, nutrientValue) : 0}
+        </p>
+        <p className="card-text">
+          <span>지방 : </span>
+          {fat ? fat : 0}
+        </p>
+        <p className="card-text">
+          <span>탄수화물 : </span>
+          {carb ? carb : 0}
+        </p>
+        <p className="card-text">
+          <span>단백질 : </span>
+          {protein ? protein : 0}
+        </p>
       </div>
-    );
-  };
-
-  // 5-2. table ----------------------------------------------------------------------------------->
-  const tablePerServing = (params: any) => {
-
-    const caloriesPer:any = ((calories/logicOneServing())*(Number(params))).toFixed(1);
-    const carbPer:any = ((carb/logicOneServing())*(Number(params))).toFixed(1);
-    const proteinPer:any = ((protein/logicOneServing())*(Number(params))).toFixed(1);
-    const fatPer:any = ((fat/logicOneServing())*(Number(params))).toFixed(1);
-
-    return (
-      <div className="card">
-        <div className="card-body">
-          <h4 className="card-title">
-            {params}
-          </h4>
-          <p className="card-text">
-            <span>칼로리 : </span>
-            {caloriesPer ? caloriesPer : 0}
-          </p>
-          <p className="card-text">
-            <span>지방 : </span>
-            {fatPer ? fatPer : 0}
-          </p>
-          <p className="card-text">
-            <span>탄수화물 : </span>
-            {carbPer ? carbPer : 0}
-          </p>
-          <p className="card-text">
-            <span>단백질 : </span>
-            {proteinPer ? proteinPer : 0}
-          </p>
-        </div>
-      </div>
-    );
-  };
+    </div>
+  );
 
   // 6. button ------------------------------------------------------------------------------------>
   const buttonFoodCategory = () => {
@@ -165,7 +122,7 @@ export const FoodInsert = () => {
       </select>
     );
   };
-  const buttonFoodSelect = () => {
+  const buttonFoodAmount = () => {
     return (
       <input type="number" className="form-control" defaultValue={1} min="1"
         onChange={e => {
@@ -201,20 +158,23 @@ export const FoodInsert = () => {
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
-      </div>
-      <div className="row d-center mt-5">
         <div className="col-10">
-          <h1 className="mb-3"><span>{title}</span><span>{brand}</span></h1>
+          <h1 className="mb-3">
+            <p>{title}</p>
+            <p>{brand}</p>
+          </h1>
+        </div>
+        <div className="col-6">{tableFoodInsert(0, serving ? serving : "0", calories)}</div>
+        <div className="col-6">{tableFoodInsert(showGram, showGram.toString(), calories)}</div>
+        <div className="col-6">
+          <div className="input-group mb-3">
+            {buttonFoodCategory()}
+            {buttonFoodAmount()}
+          </div>
         </div>
       </div>
-      <div className="row d-center mt-5">
-        <div className="col-6">
-          {tableTotalServing()}
-        </div>
-        <div className="col-6">
-          {buttonFoodCategory()}
-          {tablePerServing(showGram)}
-          {buttonFoodSelect()}
+      <div className="row d-center mb-20">
+        <div className="col-12">
           {buttonFoodInsert()}
           {buttonRefreshPage()}
         </div>

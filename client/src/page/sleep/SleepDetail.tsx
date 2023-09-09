@@ -68,7 +68,7 @@ export const SleepDetail = () => {
           },
         });
         if (response.data === "success") {
-          window.location.href = "/";
+          navParam(`/sleepList`);
         }
         else {
           alert("Delete failed");

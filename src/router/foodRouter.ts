@@ -68,7 +68,7 @@ foodRouter.get ("/foodDetail", async (req: Request, res: Response) => {
 foodRouter.post ("/foodInsert", async (req: Request, res: Response) => {
   try {
     const foodInsert = await foodService.foodInsert (
-      req.body
+      req.body.FOOD
     );
     if (foodInsert) {
       res.send("success");
@@ -107,9 +107,7 @@ foodRouter.put("/foodUpdate", async (req: Request, res: Response) => {
 foodRouter.delete ("/foodDelete", async (req: Request, res: Response) => {
   try {
     const foodDelete = await foodService.foodDelete (
-      req.query._id as string,
-      req.query.user_id as string,
-      req.query.food_regdate as string,
+      req.query._id
     );
     if (foodDelete) {
       res.send("success");

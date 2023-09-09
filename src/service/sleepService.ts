@@ -84,7 +84,9 @@ export const sleepUpdate = async (
 };
 
 // 5. sleepDelete --------------------------------------------------------------------------------->
-export const sleepDelete = async (_id_param: any) => {
+export const sleepDelete = async (
+  _id_param: any
+) => {
   const sleepDelete = await Sleep.deleteOne({
     _id: _id_param,
   });
