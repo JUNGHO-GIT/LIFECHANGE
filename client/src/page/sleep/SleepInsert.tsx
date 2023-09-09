@@ -34,7 +34,7 @@ export const SleepInsert = () => {
     sleep_regdate : koreanDate
   });
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const setSleepDay = () => {
       setSLEEP({ ...SLEEP, sleep_day: sleep_day });
@@ -110,7 +110,6 @@ export const SleepInsert = () => {
   const tableSleepInsert = () => {
     return (
       <div>
-        {/** user_id **/}
         <div className="d-center">
           <span className="form-label me-4">User ID</span>
           <input
@@ -126,7 +125,6 @@ export const SleepInsert = () => {
           />
         </div>
         <br />
-        {/** title **/}
         <div className="d-center">
           <span className="form-label me-4">Title</span>
           <input
@@ -142,7 +140,6 @@ export const SleepInsert = () => {
           />
         </div>
         <br />
-        {/** night **/}
         <div className="d-center">
           <span className="form-label me-4">Night</span>
           <TimePicker
@@ -159,7 +156,6 @@ export const SleepInsert = () => {
           />
         </div>
         <br />
-        {/** morning **/}
         <div className="d-center">
           <span className="form-label me-4">Morning</span>
           <TimePicker

@@ -23,7 +23,7 @@ export const UserDetail = () => {
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchUserDetail = async () => {
       const user_id = window.sessionStorage.getItem("user_id");

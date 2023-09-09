@@ -24,7 +24,7 @@ export const WorkoutUpdate = () => {
   // state
   const [WORKOUT, setWORKOUT] = useState<any>({});
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutDetail = async () => {
       try {

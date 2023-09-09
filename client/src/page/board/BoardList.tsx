@@ -23,7 +23,7 @@ export const BoardList = () => {
   // state
   const [BOARD_LIST, setBOARD_LIST] = useState<any>([]);
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardList = async () => {
       try {

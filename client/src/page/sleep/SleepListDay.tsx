@@ -1,32 +1,37 @@
 // SleepListDay.tsx
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const SleepListDay = () => {
 
   // title
   const TITLE = "Sleep List Day";
   // url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-
+  // date
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  // hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-
+  // state 1
   const [resultValue, setResultValue] = useState<string>("");
   const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
   const [averageSleepTime, setAverageSleepTime] = useState();
   const [averageSleepNight, setAverageSleepNight] = useState();
   const [averageSleepMorning, setAverageSleepMorning] = useState();
+  // state 2
+  const [selectedYear, setSelectedYear] = useState<number>(koreanDate.getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState<number>(koreanDate.getMonth());
+  const [selectedDay, setSelectedDay] = useState<number | undefined>(koreanDate.getDate());
 
-  const [selectedYear, setSelectedYear] = useState<number>(today.getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState<number>(today.getMonth());
-  const [selectedDay, setSelectedDay] = useState<number | undefined>(today.getDate());
-
-  // ---------------------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
@@ -47,7 +52,7 @@ export const SleepListDay = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
@@ -65,7 +70,9 @@ export const SleepListDay = () => {
     }
   }, [selectedYear, selectedMonth, selectedDay]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4-1. logic ----------------------------------------------------------------------------------->
   const handleDayClick: DayClickEventHandler = (day, modifiers) => {
     if (day) {
       setSelectedDay(day.getDate());
@@ -77,13 +84,42 @@ export const SleepListDay = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 4-2. logic ----------------------------------------------------------------------------------->
+  const viewSleepDay = () => {
+    return (
+      <DayPicker
+        mode="single"
+        showOutsideDays
+        selected={new Date(selectedYear, selectedMonth, selectedDay)}
+        month={new Date(selectedYear, selectedMonth)}
+        locale={ko}
+        weekStartsOn={1}
+        onDayClick={handleDayClick}
+        onMonthChange={(date) => {
+          setSelectedMonth(date.getMonth());
+          setSelectedYear(date.getFullYear());
+        }}
+        modifiersClassNames={{
+          koreanDate: "koreanDate",
+          selected: "selected",
+          disabled: "disabled",
+          outside: "outside",
+          inside: "inside",
+        }}
+        footer={footer()}
+      />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setSelectedMonth(today.getMonth());
-        setSelectedYear(today.getFullYear());
-        setSelectedDay(today.getDate());
+        setSelectedMonth(koreanDate.getMonth());
+        setSelectedYear(koreanDate.getFullYear());
+        setSelectedDay(koreanDate.getDate());
       }}>
         Today
       </button>
@@ -114,7 +150,7 @@ export const SleepListDay = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
@@ -124,27 +160,7 @@ export const SleepListDay = () => {
       </div>
       <div className="row d-center mt-5 mb-20">
         <div className="col-12">
-          <DayPicker
-            mode="single"
-            showOutsideDays
-            selected={new Date(selectedYear, selectedMonth, selectedDay)}
-            month={new Date(selectedYear, selectedMonth)}
-            locale={ko}
-            weekStartsOn={1}
-            onDayClick={handleDayClick}
-            onMonthChange={(date) => {
-              setSelectedMonth(date.getMonth());
-              setSelectedYear(date.getFullYear());
-            }}
-            modifiersClassNames={{
-              today: "today",
-              selected: "selected",
-              disabled: "disabled",
-              outside: "outside",
-              inside: "inside",
-            }}
-            footer={footer()}
-          />
+          {viewSleepDay()}
         </div>
       </div>
     </div>

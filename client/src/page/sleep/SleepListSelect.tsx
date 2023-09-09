@@ -1,35 +1,42 @@
 // SleepListSelect.tsx
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import { DateRange, DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment";
 import axios from "axios";
 
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const SleepListSelect = () => {
 
   // title
   const TITLE = "Sleep List Select";
   // url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-
+  // date
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  // hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-
+  // state 1
   const [resultValue, setResultValue] = useState<string>("");
   const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
   const [averageSleepTime, setAverageSleepTime] = useState();
   const [averageSleepNight, setAverageSleepNight] = useState();
   const [averageSleepMorning, setAverageSleepMorning] = useState();
-
+  // state 2
+  const [range, setRange] = useState<DateRange | undefined>();
+  const [currentMonth, setCurrentMonth] = useState<Date>(koreanDate);
+  // state 3
   const [selectedStartYear, setSelectedStartYear] = useState<number>();
   const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
   const [selectedStartDay, setSelectedStartDay] = useState<number>();
   const [selectedEndYear, setSelectedEndYear] = useState<number>();
   const [selectedEndMonth, setSelectedEndMonth] = useState<number>();
   const [selectedEndDay, setSelectedEndDay] = useState<number>();
-  const [range, setRange] = useState<DateRange | undefined>();
-  const [currentMonth, setCurrentMonth] = useState<Date>(today);
+
 
   // -------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -52,7 +59,7 @@ export const SleepListSelect = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
@@ -86,7 +93,9 @@ export const SleepListSelect = () => {
     selectedEndDay,
   ]);
 
-   //--------------------------------------------------------------------------------------------->
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4-1. logic ----------------------------------------------------------------------------------->
   const handleDayRangeClick = (selectedRange: DateRange) => {
     setRange(selectedRange);
     if (selectedRange?.from) {
@@ -116,46 +125,68 @@ export const SleepListSelect = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 4-2. logic ----------------------------------------------------------------------------------->
+  const viewSleepDay = () => {
+    return (
+      <DayPicker
+        mode="range"
+        showOutsideDays
+        selected={range}
+        month={currentMonth}
+        onDayClick={handleDayClick}
+        locale={ko}
+        weekStartsOn={1}
+        onMonthChange={(date) => {
+          setCurrentMonth(date);
+        }}
+        modifiersClassNames={{
+          koreanDate: "koreanDate",
+          selected: "selected",
+          disabled: "disabled",
+          outside: "outside",
+          inside: "inside",
+        }}
+        footer={footer()}
+      />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepToday = () => {
     return (
-      <button
-        className="btn btn-success me-2"
-        onClick={() => {
-          setCurrentMonth(today);
-          setSelectedStartYear(undefined);
-          setSelectedStartMonth(undefined);
-          setSelectedStartDay(undefined);
-          setSelectedEndYear(undefined);
-          setSelectedEndMonth(undefined);
-          setSelectedEndDay(undefined);
-          setAverageSleepTime(undefined);
-          setAverageSleepNight(undefined);
-          setAverageSleepMorning(undefined);
-          setRange(undefined);
-        }}
-      >
+      <button className="btn btn-success me-2" onClick={() => {
+        setCurrentMonth(koreanDate);
+        setSelectedStartYear(undefined);
+        setSelectedStartMonth(undefined);
+        setSelectedStartDay(undefined);
+        setSelectedEndYear(undefined);
+        setSelectedEndMonth(undefined);
+        setSelectedEndDay(undefined);
+        setAverageSleepTime(undefined);
+        setAverageSleepNight(undefined);
+        setAverageSleepMorning(undefined);
+        setRange(undefined);
+      }}>
         Today
       </button>
     );
   };
   const buttonSleepReset = () => {
     return (
-      <button
-        className="btn btn-primary me-2"
-        onClick={() => {
-          setSelectedStartYear(undefined);
-          setSelectedStartMonth(undefined);
-          setSelectedStartDay(undefined);
-          setSelectedEndYear(undefined);
-          setSelectedEndMonth(undefined);
-          setSelectedEndDay(undefined);
-          setAverageSleepTime(undefined);
-          setAverageSleepNight(undefined);
-          setAverageSleepMorning(undefined);
-          setRange(undefined);
-        }}
-      >
+      <button className="btn btn-primary me-2" onClick={() => {
+        setSelectedStartYear(undefined);
+        setSelectedStartMonth(undefined);
+        setSelectedStartDay(undefined);
+        setSelectedEndYear(undefined);
+        setSelectedEndMonth(undefined);
+        setSelectedEndDay(undefined);
+        setAverageSleepTime(undefined);
+        setAverageSleepNight(undefined);
+        setAverageSleepMorning(undefined);
+        setRange(undefined);
+      }}>
         Reset
       </button>
     );
@@ -176,7 +207,7 @@ export const SleepListSelect = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
@@ -186,26 +217,7 @@ export const SleepListSelect = () => {
       </div>
       <div className="row d-center mt-5 mb-20">
         <div className="col-12">
-          <DayPicker
-            mode="range"
-            showOutsideDays
-            selected={range}
-            month={currentMonth}
-            onDayClick={handleDayClick}
-            locale={ko}
-            weekStartsOn={1}
-            onMonthChange={(date) => {
-              setCurrentMonth(date);
-            }}
-            modifiersClassNames={{
-              today: "today",
-              selected: "selected",
-              disabled: "disabled",
-              outside: "outside",
-              inside: "inside",
-            }}
-            footer={footer()}
-          />
+          {viewSleepDay()}
         </div>
       </div>
     </div>

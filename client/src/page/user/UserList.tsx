@@ -23,7 +23,7 @@ export const UserList = () => {
   // state
   const [USER_LIST, setUSER_LIST] = useState<[]>([]);
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchUserList = async () => {
       try {

@@ -51,7 +51,7 @@ export const WorkoutSelect : React.FC<WorkoutSelectProps> = ({
     ],
   };
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (partOptions.length > 0 && !workoutPart) {
       setWorkoutPart(partOptions[0]);

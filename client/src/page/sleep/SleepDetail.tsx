@@ -35,7 +35,7 @@ export const SleepDetail = () => {
     sleep_regdate : koreanDate
   });
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepDetail = async () => {
       try {

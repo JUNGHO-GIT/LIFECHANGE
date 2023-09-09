@@ -1,30 +1,35 @@
 // SleepListMonth.tsx
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import { DayPicker, MonthChangeEventHandler } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 
-
-// ------------------------------------------------------------------------------------------------>
+// 1. main ---------------------------------------------------------------------------------------->
 export const SleepListMonth = () => {
+
   // title
   const TITLE = "Sleep List Month";
   // url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-
+  // date
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  // hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // val
   const user_id = window.sessionStorage.getItem("user_id");
-  const today = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-
+  // state 1
   const [resultValue, setResultValue] = useState<string>("");
   const [resultDuration, setResultDuration] = useState<string>("0000-00-00 ~ 0000-00-00");
   const [averageSleepTime, setAverageSleepTime] = useState();
   const [averageSleepNight, setAverageSleepNight] = useState();
   const [averageSleepMorning, setAverageSleepMorning] = useState();
+  // state 2
+  const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(koreanDate);
 
-  const [selectedMonth, setSelectedMonth] = useState<Date | undefined>(today);
-
-  // ---------------------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
@@ -45,7 +50,7 @@ export const SleepListMonth = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
@@ -64,7 +69,9 @@ export const SleepListMonth = () => {
     }
   }, [selectedMonth]);
 
-  // ---------------------------------------------------------------------------------------------->
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4-1. logic ----------------------------------------------------------------------------------->
   const handleMonthChange: MonthChangeEventHandler = (day) => {
     if (day) {
       const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);
@@ -75,11 +82,36 @@ export const SleepListMonth = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 4-2. logic ----------------------------------------------------------------------------------->
+  const viewSleepDay = () => {
+    return (
+      <DayPicker
+        mode="default"
+        selected={selectedMonth}
+        showOutsideDays
+        locale={ko}
+        weekStartsOn={1}
+        month={selectedMonth}
+        onMonthChange={handleMonthChange}
+        modifiersClassNames={{
+          koreanDate: "koreanDate",
+          selected: "selected",
+          disabled: "disabled",
+          outside: "outside",
+          inside: "inside",
+        }}
+        footer={footer()}
+      />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setSelectedMonth(today);
+        setSelectedMonth(koreanDate);
       }}>
         Today
       </button>
@@ -110,7 +142,7 @@ export const SleepListMonth = () => {
     );
   };
 
-  // ---------------------------------------------------------------------------------------------->
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
@@ -120,23 +152,7 @@ export const SleepListMonth = () => {
       </div>
       <div className="row d-center mt-5 mb-20">
         <div className="col-12">
-          <DayPicker
-            mode="default"
-            selected={selectedMonth}
-            showOutsideDays
-            locale={ko}
-            weekStartsOn={1}
-            month={selectedMonth}
-            onMonthChange={handleMonthChange}
-            modifiersClassNames={{
-              today: "today",
-              selected: "selected",
-              disabled: "disabled",
-              outside: "outside",
-              inside: "inside",
-            }}
-            footer={footer()}
-          />
+          {viewSleepDay()}
         </div>
       </div>
     </div>

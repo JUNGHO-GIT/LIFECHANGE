@@ -9,7 +9,6 @@ import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 
-
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepList = () => {
 
@@ -38,7 +37,7 @@ export const SleepList = () => {
   const [selectedMonth, setSelectedMonth] = useState<number>(today.getMonth());
   const [selectedDay, setSelectedDay] = useState<number | undefined>(today.getDate());
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {

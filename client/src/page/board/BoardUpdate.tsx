@@ -24,7 +24,7 @@ export const BoardUpdate = () => {
   // state
   const [BOARD, setBOARD] = useState<any>({});
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {

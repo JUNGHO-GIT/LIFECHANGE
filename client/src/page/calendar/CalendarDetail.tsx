@@ -52,7 +52,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodList = async () => {
       try {
@@ -72,7 +72,7 @@ export const CalendarDetail = () => {
     fetchFoodList();
   }, [user_id, food_regdate]);
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutList = async () => {
       try {
@@ -92,7 +92,7 @@ export const CalendarDetail = () => {
     fetchWorkoutList();
   }, [user_id, workout_regdate]);
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
