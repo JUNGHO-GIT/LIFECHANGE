@@ -33,12 +33,8 @@ export const SleepListSelect = () => {
   const [range, setRange] = useState<DateRange | undefined>();
   const [currentMonth, setCurrentMonth] = useState<Date>(koreanDate);
   // state 5
-  const [selectedStartYear, setSelectedStartYear] = useState<number>();
-  const [selectedStartMonth, setSelectedStartMonth] = useState<number>();
-  const [selectedStartDay, setSelectedStartDay] = useState<number>();
-  const [selectedEndYear, setSelectedEndYear] = useState<number>();
-  const [selectedEndMonth, setSelectedEndMonth] = useState<number>();
-  const [selectedEndDay, setSelectedEndDay] = useState<number>();
+  const [selectedStartDay, setSelectedStartDay] = useState<Date | undefined>();
+  const [selectedEndDay, setSelectedEndDay] = useState<Date | undefined>();
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -100,49 +96,51 @@ export const SleepListSelect = () => {
     fetchSleepAverage();
   }, [user_id, resultDuration]);
 
-
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-    if (
-      selectedStartYear && selectedStartMonth && selectedStartDay &&
-      selectedEndYear && selectedEndMonth && selectedEndDay
-    ) {
-      setResultValue (
-        `${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)} ~ ${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`
-      );
+    if (selectedStartDay && selectedEndDay) {
+      const formattedStart
+        = `${selectedStartDay.getFullYear()}-${formatValue(selectedStartDay.getMonth() + 1)}-${formatValue(selectedStartDay.getDate())}`;
 
-      setResultDuration (
-        `${selectedStartYear}-${formatValue(selectedStartMonth)}-${formatValue(selectedStartDay)} ~ ${selectedEndYear}-${formatValue(selectedEndMonth)}-${formatValue(selectedEndDay)}`
-      );
+      const formattedEnd
+        = `${selectedEndDay.getFullYear()}-${formatValue(selectedEndDay.getMonth() + 1)}-${formatValue(selectedEndDay.getDate())}`;
+
+      setResultValue(`${formattedStart} ~ ${formattedEnd}`);
+      setResultDuration(`${formattedStart} ~ ${formattedEnd}`);
     }
     else {
-      setResultValue ("선택된 날짜가 없습니다.");
-      setResultDuration ("0000-00-00 ~ 0000-00-00");
+      setResultValue("선택된 날짜가 없습니다.");
+      setResultDuration("0000-00-00 ~ 0000-00-00");
       setAverageSleepTime("00:00");
       setAverageSleepNight("00:00");
       setAverageSleepMorning("00:00");
     }
-  }, [
-    selectedStartYear, selectedStartMonth, selectedStartDay,
-    selectedEndYear, selectedEndMonth, selectedEndDay,
-  ]);
+  }, [selectedStartDay, selectedEndDay]);
+
+  // 2-4. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const savedDateRange = localStorage.getItem("selectedSelect");
+    if (savedDateRange) {
+      const parsedRange = JSON.parse(savedDateRange);
+      setSelectedStartDay(new Date(parsedRange.from));
+      setSelectedEndDay(new Date(parsedRange.to));
+      setRange({ from: new Date(parsedRange.from), to: new Date(parsedRange.to) });
+    }
+  }, []);
 
   // 3-1. flow ------------------------------------------------------------------------------------>
   const flowDayRangeClick = (selectedRange: DateRange) => {
     setRange(selectedRange);
     if (selectedRange?.from) {
-      setSelectedStartYear(selectedRange.from.getFullYear());
-      setSelectedStartMonth(selectedRange.from.getMonth() + 1);
-      setSelectedStartDay(selectedRange.from.getDate());
+      setSelectedStartDay(selectedRange.from);
     }
     if (selectedRange?.to) {
-      setSelectedEndYear(selectedRange.to.getFullYear());
-      setSelectedEndMonth(selectedRange.to.getMonth() + 1);
-      setSelectedEndDay(selectedRange.to.getDate());
+      setSelectedEndDay(selectedRange.to);
     }
+    localStorage.setItem("selectedSelect", JSON.stringify(selectedRange));
   };
 
   // 3-2. flow ------------------------------------------------------------------------------------>
@@ -167,6 +165,7 @@ export const SleepListSelect = () => {
       <DayPicker
         mode="range"
         showOutsideDays
+        selected={range}
         month={currentMonth}
         onDayClick={flowDayClick}
         locale={ko}
@@ -250,13 +249,10 @@ export const SleepListSelect = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setCurrentMonth(koreanDate);
-        setSelectedStartYear(undefined);
-        setSelectedStartMonth(undefined);
         setSelectedStartDay(undefined);
-        setSelectedEndYear(undefined);
-        setSelectedEndMonth(undefined);
         setSelectedEndDay(undefined);
         setRange(undefined);
+        localStorage.removeItem("selectedSelect");
       }}>
         Today
       </button>
@@ -266,13 +262,10 @@ export const SleepListSelect = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setCurrentMonth(koreanDate);
-        setSelectedStartYear(undefined);
-        setSelectedStartMonth(undefined);
         setSelectedStartDay(undefined);
-        setSelectedEndYear(undefined);
-        setSelectedEndMonth(undefined);
         setSelectedEndDay(undefined);
         setRange(undefined);
+        localStorage.removeItem("selectedSelect");
       }}>
         Reset
       </button>

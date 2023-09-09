@@ -30,7 +30,7 @@ export const SleepListDay = () => {
   const [averageSleepNight, setAverageSleepNight] = useState<string>();
   const [averageSleepMorning, setAverageSleepMorning] = useState<string>();
   // state 4
-  const [selectedDay, setSelectedDay] = useState<any>(moment.tz("Asia/Seoul").format("YYYY-MM-DD"));
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>();
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -94,12 +94,15 @@ export const SleepListDay = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    const formatValue = (value: number): string => {
+      return value < 10 ? `0${value}` : `${value}`;
+    };
     if (selectedDay) {
-      setResultValue(selectedDay);
-      setResultDuration(`${selectedDay} ~ ${selectedDay}`);
-    }
-    else {
-      setResultValue("선택된 날짜가 없습니다.");
+      const year = selectedDay.getFullYear();
+      const month = formatValue(selectedDay.getMonth() + 1);
+      const date = formatValue(selectedDay.getDate());
+      setResultValue(`${year}-${month}-${date}`);
+      setResultDuration(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
     }
   }, [selectedDay]);
 
@@ -107,15 +110,14 @@ export const SleepListDay = () => {
   useEffect(() => {
     const savedDate = localStorage.getItem("selectedDay");
     if (savedDate) {
-      const parsedDate = new Date(savedDate);
-      setSelectedDay(moment(parsedDate).format("YYYY-MM-DD"));
+      setSelectedDay(new Date(savedDate));
     }
   }, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDayClick: DayClickEventHandler = (day) => {
-    setSelectedDay(moment(day).format("YYYY-MM-DD"));
-    localStorage.setItem("selectedDay", day.toISOString());
+  const flowDayClick: DayClickEventHandler = (day: Date) => {
+    setSelectedDay(day);
+    localStorage.setItem("selectedDay", moment(day).format("YYYY-MM-DD"));
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -125,6 +127,7 @@ export const SleepListDay = () => {
         mode="single"
         showOutsideDays
         selected={selectedDay}
+        month={selectedDay}
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
@@ -206,7 +209,8 @@ export const SleepListDay = () => {
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setSelectedDay(moment(koreanDate).format("YYYY-MM-DD"));
+        setSelectedDay(koreanDate);
+        localStorage.removeItem("selectedDay");
       }}>
         Today
       </button>
@@ -216,6 +220,7 @@ export const SleepListDay = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedDay(undefined);
+        localStorage.removeItem("selectedDay");
       }}>
         Reset
       </button>

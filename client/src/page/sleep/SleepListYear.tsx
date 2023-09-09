@@ -223,6 +223,7 @@ export const SleepListYear = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedYear(koreanDate);
+        localStorage.removeItem("selectedYear");
       }}>
         Today
       </button>
@@ -232,6 +233,7 @@ export const SleepListYear = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedYear(undefined);
+        localStorage.removeItem("selectedYear");
       }}>
         Reset
       </button>

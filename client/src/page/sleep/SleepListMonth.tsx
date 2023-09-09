@@ -211,6 +211,7 @@ export const SleepListMonth = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedMonth(koreanDate);
+        localStorage.removeItem("selectedMonth");
       }}>
         Today
       </button>
@@ -220,6 +221,7 @@ export const SleepListMonth = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedMonth(undefined);
+        localStorage.removeItem("selectedMonth");
       }}>
         Reset
       </button>

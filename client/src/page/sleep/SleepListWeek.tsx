@@ -222,6 +222,7 @@ export const SleepListWeek = () => {
       <button className="btn btn-success me-2" onClick={() => {
         setCurrentMonth(koreanDate);
         setRange(undefined);
+        localStorage.removeItem("selectedWeek");
       }}>
         Today
       </button>
@@ -231,6 +232,7 @@ export const SleepListWeek = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setRange(undefined);
+        localStorage.removeItem("selectedWeek");
       }}>
         Reset
       </button>
