@@ -20,13 +20,38 @@ export const FoodSearch = () => {
   // val
   const lang = "ko";
   const user_id = window.sessionStorage.getItem("user_id");
-  // state
+  // state 1
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any>([]);
   const [food_regdate, setFood_regdate] = useState(koreanDate);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    // 로컬 스토리지에서 값을 가져옴
+    const savedFOOD_SEARCH = localStorage.getItem("FOOD");
+    const savedQuery = localStorage.getItem("QUERY");
+    const savedPage = localStorage.getItem("PAGE");
+
+    if (savedFOOD_SEARCH) {
+      setFOOD_SEARCH(JSON.parse(savedFOOD_SEARCH));
+    }
+    if (savedQuery) {
+      setQuery(savedQuery);
+    }
+    if (savedPage) {
+      setPage(JSON.parse(savedPage));
+    }
+  }, []);
+
+  // 2-2. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    // 상태 값이 변경될 때마다 로컬 스토리지에 저장
+    localStorage.setItem("FOOD", JSON.stringify(FOOD_SEARCH));
+    localStorage.setItem("QUERY", query);
+    localStorage.setItem("PAGE", JSON.stringify(page));
+
+  }, [FOOD_SEARCH, query, page]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFoodSearch = () => {
