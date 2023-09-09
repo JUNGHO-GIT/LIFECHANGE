@@ -21,7 +21,8 @@ export const CalendarDetail = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id");
+  const user_id = window.sessionStorage.getItem("user_id"
+  );
   const calendar_year = location.state.calendar_year;
   const calendar_month = location.state.calendar_month;
   const calendar_day = location.state.calendar_day;

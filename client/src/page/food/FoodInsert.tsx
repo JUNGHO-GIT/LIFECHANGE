@@ -17,7 +17,8 @@ export const FoodInsert = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id");
+  const user_id = window.sessionStorage.getItem("user_id"
+  );
   const {title, brand, serving, calories, fat, carb, protein} = location.state;
   // state
   const [showGram, setShowGram] = useState(1);

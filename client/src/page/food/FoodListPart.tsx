@@ -19,7 +19,8 @@ export const FoodListPart = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id");
+  const user_id = window.sessionStorage.getItem("user_id"
+  );
   const food_category = location.state.food_category;
   // state
   const [food_regdate, setFood_regdate] = useState(koreanDate);

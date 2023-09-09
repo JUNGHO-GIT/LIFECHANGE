@@ -7,7 +7,7 @@ import { parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useLocalStorage} from "../../assets/ts/useLocalStorage";
+import {useStorage} from "../../assets/ts/useStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListYear = () => {
@@ -23,21 +23,30 @@ export const SleepListYear = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state
-  const { value : SLEEP_LIST, setValue : setSLEEP_LIST }
-    = useLocalStorage<any> ("sleepList_YEAR", []);
-  const { value : resultValue, setValue : setResultValue }
-    = useLocalStorage<Date | undefined> ("resultValue_YEAR", undefined);
-  const { value : resultDuration, setValue : setResultDuration }
-    = useLocalStorage<string> ("resultDuration_YEAR", "0000-00-00 ~ 0000-00-00");
-  const { value : averageSleepTime, setValue : setAverageSleepTime }
-    = useLocalStorage<string> ("averageSleepTime_YEAR", "00:00");
-  const { value : averageSleepNight, setValue : setAverageSleepNight }
-    = useLocalStorage<string> ("averageSleepNight_YEAR", "00:00");
-  const { value : averageSleepMorning, setValue : setAverageSleepMorning }
-    = useLocalStorage<string> ("averageSleepMorning_YEAR", "00:00");
-  const { value : selectedYear, setValue : setSelectedYear }
-    = useLocalStorage<Date | undefined> ("selectedYear_YEAR", koreanDate);
+  // state 1
+  const [selectedType, setSelectedType] = useState<string>("list");
+  // state 2
+  const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any>(
+    "sleepList_YEAR", []
+  );
+  const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined>(
+    "resultValue_YEAR", undefined
+  );
+  const {value:resultDuration, setValue:setResultDuration} = useStorage<string>(
+    "resultDuration_YEAR", "0000-00-00 ~ 0000-00-00"
+  );
+  const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string>(
+    "averageSleepTime_YEAR", "00:00"
+  );
+  const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string>(
+    "averageSleepNight_YEAR", "00:00"
+  );
+  const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string>(
+    "averageSleepMorning_YEAR", "00:00"
+  );
+  const {value:selectedYear, setValue:setSelectedYear} = useStorage<Date | undefined>(
+    "selectedYear_YEAR", koreanDate
+  );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -160,9 +169,9 @@ export const SleepListYear = () => {
           <tr>
             <th>날짜</th>
             <th>기간</th>
-            <th>취침 시간</th>
-            <th>기상 시간</th>
-            <th>수면 시간</th>
+            <th>취침</th>
+            <th>기상</th>
+            <th>수면</th>
           </tr>
         </thead>
         <tbody>
@@ -231,49 +240,37 @@ export const SleepListYear = () => {
       </button>
     );
   };
-  const buttonSleepList = () => {
+
+  // 6-2. button ---------------------------------------------------------------------------------->
+  const selectSleepList = () => {
+    const currentPath = location.pathname || "";
     return (
-      <button className="btn btn-primary me-2" onClick={() => {
-        navParam("/sleepListDay");
-      }}>
-        Day
-      </button>
+      <div className="mb-3">
+        <select className="form-select" id="sleepList" value={currentPath} onChange={(e) => {navParam(e.target.value);}}>
+          <option value="/sleepListDay">Day</option>
+          <option value="/sleepListWeek">Week</option>
+          <option value="/sleepListMonth">Month</option>
+          <option value="/sleepListYear">Year</option>
+          <option value="/sleepListSelect">Select</option>
+        </select>
+      </div>
     );
   };
-  const buttonSleepListWeek = () => {
+  const selectSleepType = () => {
     return (
-      <button className="btn btn-primary me-2" onClick={() => {
-        navParam("/sleepListWeek");
-      }}>
-        Week
-      </button>
-    );
-  };
-  const buttonSleepListMonth = () => {
-    return (
-      <button className="btn btn-primary me-2" onClick={() => {
-        navParam("/sleepListMonth");
-      }}>
-        Month
-      </button>
-    );
-  };
-  const buttonSleepListYear = () => {
-    return (
-      <button className="btn btn-primary me-2" onClick={() => {
-        navParam("/sleepListYear");
-      }}>
-        Year
-      </button>
-    );
-  };
-  const buttonSleepListSelect = () => {
-    return (
-      <button className="btn btn-primary me-2" onClick={() => {
-        navParam("/sleepListSelect");
-      }}>
-        Select
-      </button>
+      <div className="mb-3">
+        <select className="form-select" id="sleepType" onChange={(e) => {
+          if (e.target.value === "list") {
+            setSelectedType("list");
+          }
+          else if (e.target.value === "average") {
+            setSelectedType("average");
+          }
+        }}>
+          <option value="list">List</option>
+          <option value="average">Average</option>
+        </select>
+      </div>
     );
   };
 
@@ -287,11 +284,10 @@ export const SleepListYear = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-6">
-          {buttonSleepList()}
-          {buttonSleepListWeek()}
-          {buttonSleepListMonth()}
-          {buttonSleepListYear()}
-          {buttonSleepListSelect()}
+          {selectSleepList()}
+        </div>
+        <div className="col-6">
+          {selectSleepType()}
         </div>
       </div>
       <div className="row d-center mt-5">
@@ -299,13 +295,9 @@ export const SleepListYear = () => {
           <h2 className="mb-3 fw-9">년별로 조회</h2>
           {viewSleepDay()}
         </div>
-        <div className="col-4">
-          <h2 className="mb-3 fw-9">수면 기록</h2>
-          {tableSleepList()}
-        </div>
-        <div className="col-4">
-          <h2 className="mb-3 fw-9">수면 평균</h2>
-          {tableSleepAverage()}
+        <div className="col-8">
+          {selectedType === "list" && tableSleepList()}
+          {selectedType === "average" && tableSleepAverage()}
         </div>
       </div>
       <div className="row d-center mb-20">
@@ -317,3 +309,4 @@ export const SleepListYear = () => {
     </div>
   );
 };
+

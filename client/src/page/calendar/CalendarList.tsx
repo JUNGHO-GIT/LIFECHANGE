@@ -20,7 +20,8 @@ export const CalendarList = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id");
+  const user_id = window.sessionStorage.getItem("user_id"
+  );
   const date = new Date();
   // state
 

@@ -20,7 +20,8 @@ export const UserInsert = () => {
   const location = useLocation();
   // val
   // state
-  const [user_id, setUserId] = useState("");
+  const [user_id, setUserId] = useState(""
+  );
   const [user_pw, setUserPw] = useState("");
 
   // 2. useEffect --------------------------------------------------------------------------------->

@@ -19,7 +19,8 @@ export const FoodUpdate = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id");
+  const user_id = window.sessionStorage.getItem("user_id"
+  );
   const _id = location.state._id;
   // state
   const [FOOD, setFOOD] = useState<any>({});

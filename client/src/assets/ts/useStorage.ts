@@ -1,10 +1,10 @@
-// useLocalStorage.ts
+// useStorage.ts
 import React, { useState, useEffect } from "react";
 import { parseISO, formatISO } from "date-fns";
 
 type SetStoredValue<T> = React.Dispatch<React.SetStateAction<T>>;
 
-export function useLocalStorage<T>(key: string, initialValue: T) {
+export function useStorage<T>(key: string, initialValue: T) {
 
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
@@ -46,7 +46,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
   }, [key, storedValue]);
 
   return {
-    value: storedValue,
-    setValue: setStoredValue as SetStoredValue<T>
+   value:storedValue,
+    setValue:setStoredValue as SetStoredValue<T>
   };
 }

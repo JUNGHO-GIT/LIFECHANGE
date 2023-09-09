@@ -23,7 +23,8 @@ export const FoodSearch = () => {
   // state 1
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any>([]);
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(""
+  );
   const [page, setPage] = useState(0);
 
   // 2-1. useEffect (localStorage) ---------------------------------------------------------------->
