@@ -101,7 +101,7 @@ export const SleepInsert = () => {
     return (
       <div>
         <div className="d-center">
-          <span className="form-label me-4">ID</span>
+          <span className="me-4">ID</span>
           <input
             type="text"
             className="form-control"
@@ -116,7 +116,7 @@ export const SleepInsert = () => {
         </div>
         <br />
         <div className="d-center">
-          <span className="form-label me-4">Day</span>
+          <span className="me-4">Day</span>
           <input
             type="text"
             className="form-control"
@@ -131,23 +131,22 @@ export const SleepInsert = () => {
           />
         </div>
         <br />
-        <div className="d-center">
-          <div className="input-group">
-            <span className="form-label me-4">Night</span>
-            <TimePicker
-              id="sleep_night"
-              name="sleep_night"
-              onChange={(event: any) => {
-                setSLEEP({ ...SLEEP, sleep_night: event });
-              }}
-              value={SLEEP.sleep_night}
-              disableClock={false}
-              clockIcon={null}
-              format="HH:mm"
-              locale="ko"
-            />
-          </div>
-          <span className="form-label me-4">Morning</span>
+        <div className="d-center input-group-prepend">
+          <span className="me-4">Night</span>
+          <TimePicker
+            id="sleep_night"
+            name="sleep_night"
+            onChange={(event: any) => {
+              setSLEEP({ ...SLEEP, sleep_night: event });
+            }}
+            value={SLEEP.sleep_night}
+            disableClock={false}
+            clockIcon={null}
+            format="HH:mm"
+            locale="ko"
+          />
+          &nbsp;&nbsp;
+          <span className="me-4">Morning</span>
           <TimePicker
             id="sleep_morning"
             name="sleep_morning"

@@ -107,15 +107,33 @@ export const SleepUpdate = () => {
   const tableSleepList = () => {
     return (
       <div>
-        {/** user_id **/}
         <div className="d-center">
-          <span className="form-label me-4">ID</span>
-          <input type="text" className="form-control"  placeholder="User ID"
-          value={SLEEP.user_id} readOnly />
+          <span className="me-4">ID</span>
+          <input
+            type="text"
+            className="form-control"
+            id="user_id"
+            name="user_id"
+            value={SLEEP.user_id}
+            readOnly
+          />
         </div>
-        {/** night **/}
+        <br />
         <div className="d-center">
-          <span className="form-label me-4">Night</span>
+          <span className="me-4">Day</span>
+          <input
+            type="text"
+            className="form-control"
+            id="sleep_day"
+            name="sleep_day"
+            value={SLEEP.sleep_day}
+            placeholder="Day"
+            readOnly
+          />
+        </div>
+        <br />
+        <div className="d-center input-group-prepend">
+          <span className="me-4">Night</span>
           <TimePicker
             id="sleep_night"
             name="sleep_night"
@@ -128,11 +146,8 @@ export const SleepUpdate = () => {
             format="HH:mm"
             locale="ko"
           />
-        </div>
-        <br />
-        {/** morning **/}
-        <div className="d-center">
-          <span className="form-label me-4">Morning</span>
+          &nbsp;&nbsp;
+          <span className="me-4">Morning</span>
           <TimePicker
             id="sleep_morning"
             name="sleep_morning"
