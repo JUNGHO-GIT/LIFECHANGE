@@ -7,7 +7,6 @@ import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListMonth = () => {
-
   // title
   const TITLE = "Sleep List Month";
   // url
