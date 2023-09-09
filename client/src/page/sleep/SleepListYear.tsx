@@ -138,7 +138,7 @@ export const SleepListYear = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableSleepList = () => {
     return (
-      <table className="table table-bordered table-hover align-middle">
+      <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
             <th>날짜</th>

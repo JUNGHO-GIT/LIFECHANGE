@@ -66,43 +66,41 @@ export const FoodListPart = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodListPart = () => {
     return (
-      <div>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>음식명</th>
-              <th>브랜드</th>
-              <th>서빙</th>
-              <th>칼로리</th>
-              <th>탄수화물</th>
-              <th>단백질</th>
-              <th>지방</th>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>음식명</th>
+            <th>브랜드</th>
+            <th>서빙</th>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
+          </tr>
+        </thead>
+        <tbody>
+          {FOOD.map((index: any, i: number) => (
+            <tr key={i}>
+              <td>
+                {buttonFoodDetail (
+                  index._id, index.food_title, index.food_regdate, index.food_category
+                )}
+              </td>
+              <td>{index.food_brand}</td>
+              <td>{index.food_serving}</td>
+              <td>{index.food_calories}</td>
+              <td>{index.food_carb}</td>
+              <td>{index.food_protein}</td>
+              <td>{index.food_fat}</td>
             </tr>
-          </thead>
-          <tbody>
-            {FOOD.map((index: any, i: number) => (
-              <tr key={i}>
-                <td>
-                  {buttonFoodDetail (
-                    index._id, index.food_name, index.food_regdate, index.food_category
-                  )}
-                </td>
-                <td>{index.food_brand}</td>
-                <td>{index.food_serving}</td>
-                <td>{index.food_calories}</td>
-                <td>{index.food_carb}</td>
-                <td>{index.food_protein}</td>
-                <td>{index.food_fat}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     );
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonFoodDetail = (_id:any, food_name:any, food_regdate:any, food_category:any) => {
+  const buttonFoodDetail = (_id:any, food_title:any, food_regdate:any, food_category:any) => {
     return (
       <p onClick={(e:any) => {
         e.preventDefault();
@@ -114,7 +112,7 @@ export const FoodListPart = () => {
           },
         });
       }}>
-        {food_name}
+        {food_title}
       </p>
     );
   };

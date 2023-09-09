@@ -45,8 +45,8 @@ export const UserList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableUserList = () => {
     return (
-      <table className="table table-striped table-bordered">
-        <thead>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
           <tr>
             <th>User ID</th>
             <th>User PW</th>

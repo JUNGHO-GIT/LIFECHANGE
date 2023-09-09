@@ -75,8 +75,8 @@ export const WorkoutDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableWorkoutDetail = () => {
     return (
-      <table className="table table-striped table-bordered">
-        <thead>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
           <tr>
             <th>ID</th>
             <th>Part</th>

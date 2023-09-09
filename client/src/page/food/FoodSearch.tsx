@@ -1,8 +1,7 @@
 // FoodSearch.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
@@ -63,8 +62,8 @@ export const FoodSearch = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodSearch = () => {
     return (
-      <table className="table table-striped table-bordered">
-        <thead>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
           <tr>
             <th>이름</th>
             <th>브랜드</th>
@@ -79,7 +78,10 @@ export const FoodSearch = () => {
           {FOOD_SEARCH.map((index : any) => (
             <tr>
               <td>
-                <Link to={`/foodInsert?title=${index.title}&brand=${index.brand}&calories=${index.calories}&fat=${index.fat}&carb=${index.carb}&protein=${index.protein}&serving=${index.serving}`}>{index.title}</Link>
+                {buttonFoodInsert (
+                  index.title, index.brand, index.calories,
+                  index.fat, index.carb, index.protein, index.serving,
+                )}
               </td>
               <td>{index.brand ? index.brand : "x"}</td>
               <td>{index.calories ? index.calories : 0}</td>
@@ -95,6 +97,25 @@ export const FoodSearch = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
+  const buttonFoodInsert = (title: string, brand: string, calories: number, fat: number, carb: number, protein: number, serving: number) => {
+    return (
+      <p onClick={() => {
+        navParam(`/foodInsert`, {
+          state: {
+            title : title,
+            brand : brand,
+            calories : calories,
+            fat : fat,
+            carb : carb,
+            protein : protein,
+            serving : serving
+          }
+        });
+      }}>
+        {title}
+      </p>
+    );
+  };
   const buttonPrevPage = () => {
     return (
       <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {

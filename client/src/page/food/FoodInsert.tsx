@@ -18,15 +18,14 @@ export const FoodInsert = () => {
   const location = useLocation();
   // val 1
   const user_id = window.sessionStorage.getItem("user_id");
-  const params = new URLSearchParams(location.search);
   // val 2
-  const title:any = params.get("title") ? params.get("title") : "x";
-  const brand:any = params.get("brand") ? params.get("brand") : "x";
-  const serving:any = params.get("serving");
-  const calories:any = Number(params.get("calories"));
-  const fat:any = Number(params.get("fat"));
-  const carb:any = Number(params.get("carb"));
-  const protein:any = Number(params.get("protein"));
+  const title = location.state.title;
+  const brand = location.state.brand;
+  const serving = location.state.serving;
+  const calories = location.state.calories ;
+  const fat = location.state.fat;
+  const carb = location.state.carb;
+  const protein = location.state.protein;
   // state
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
@@ -44,7 +43,7 @@ export const FoodInsert = () => {
     try {
       const response  = await axios.post(`${URL_FOOD}/foodInsert`, {
         user_id : user_id,
-        food_name : title,
+        food_title : title,
         food_brand : brand,
         food_category: category,
         food_serving : params,
@@ -55,7 +54,7 @@ export const FoodInsert = () => {
       });
       if (response.data === "success") {
         alert("Insert food successfully");
-        navParam("/foodSearch");
+        window.location.href = "/foodSearch";
       }
       else if (response.data === "fail") {
         alert("Insert food failed");
@@ -178,7 +177,11 @@ export const FoodInsert = () => {
   };
   const buttonFoodInsert = () => {
     return (
-      <button className="btn btn-primary" onClick={() => flowFoodInsert(showGram)}>Insert</button>
+      <button type="button" className="btn btn-primary" onClick={() => {
+        flowFoodInsert(showGram);
+      }}>
+        Insert
+      </button>
     );
   };
   const buttonRefreshPage = () => {

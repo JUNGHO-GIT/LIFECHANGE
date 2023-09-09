@@ -95,9 +95,9 @@ export const FoodDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodDetail = () => {
     return (
-      <div>
-        <table className="table table-striped">
-          <thead>
+
+        <table className="table table-bordered table-hover">
+          <thead className="table-dark">
             <tr>
               <th>음식명</th>
               <th>브랜드</th>
@@ -110,7 +110,7 @@ export const FoodDetail = () => {
           </thead>
           <tbody>
             <tr>
-              <td>{FOOD.food_name}</td>
+              <td>{FOOD.food_title}</td>
               <td>{FOOD.food_brand}</td>
               <td>{FOOD.food_serving}</td>
               <td>{FOOD.food_calories}</td>
@@ -120,7 +120,7 @@ export const FoodDetail = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+
     );
   };
 

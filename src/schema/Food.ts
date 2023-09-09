@@ -11,7 +11,7 @@ const FoodScheme = new mongoose.Schema ({
     type  : String,
     required : true
   },
-  food_name : {
+  food_title : {
     type : String,
     required : true
   },

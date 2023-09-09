@@ -64,8 +64,8 @@ export const FoodList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodList = () => {
     return (
-      <table className="table table-striped">
-        <thead>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
           <tr>
             <th>칼로리</th>
             <th>탄수화물</th>
