@@ -46,6 +46,8 @@ export const SleepListWeek = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
+
+
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
