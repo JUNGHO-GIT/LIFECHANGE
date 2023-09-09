@@ -39,15 +39,15 @@ export const foodList = async (
 
 // 1-2. foodListPart ------------------------------------------------------------------------------>
 export const foodListPart = async (
-  _id_param : string,
   user_id_param : string,
   food_regdate_param : string,
+  food_category_param : string
 ) => {
   try {
-    const foodListPart = await Food.findOne ({
-      _id : _id_param,
+    const foodListPart = await Food.find ({
       user_id : user_id_param,
       food_regdate : food_regdate_param,
+      food_category : food_category_param
     });
     return foodListPart;
   }
@@ -59,15 +59,15 @@ export const foodListPart = async (
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
 export const foodDetail = async (
+  _id_param : string,
   user_id_param : string,
   food_regdate_param : string,
-  food_category_param : string
 ) => {
   try {
-    const foodDetail = await Food.find ({
+    const foodDetail = await Food.findOne ({
+      _id : _id_param,
       user_id : user_id_param,
       food_regdate : food_regdate_param,
-      food_category : food_category_param
     });
     return foodDetail;
   }

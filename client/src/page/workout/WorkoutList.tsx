@@ -1,6 +1,6 @@
 // WorkoutList.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -24,21 +24,6 @@ export const WorkoutList = () => {
   const [WORKOUT_LIST, setWORKOUT_LIST] = useState<any>([]);
   const [workout_regdate, setWorkout_regdate] = useState(koreanDate);
 
-  // ---------------------------------------------------------------------------------------------->
-  const logicViewDate = () => {
-    return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        selected={new Date (workout_regdate)}
-        popperPlacement="bottom"
-        onChange={(date: any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setWorkout_regdate(selectedDate);
-        }}
-      />
-    );
-  };
-
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkoutList = async () => {
@@ -59,9 +44,25 @@ export const WorkoutList = () => {
     fetchWorkoutList();
   }, [user_id, workout_regdate]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const workoutListTable = () => {
+  // 3. flow -------------------------------------------------------------------------------------->
 
+  // 4. logic ------------------------------------------------------------------------------------->
+  const logicViewDate = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date (workout_regdate)}
+        popperPlacement="bottom"
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setWorkout_regdate(selectedDate);
+        }}
+      />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableWorkoutList = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -79,9 +80,7 @@ export const WorkoutList = () => {
         <tbody>
           {WORKOUT_LIST.map((index : any) => (
             <tr key={index}>
-              <td><a onClick={() => buttonWorkoutDetail(index._id)} className="text-hover">
-                {index.user_id}
-              </a></td>
+              <td>{buttonWorkoutDetail(index._id, index.user_id)}</td>
               <td>{index.workout_part}</td>
               <td>{index.workout_title}</td>
               <td>{index.workout_kg}</td>
@@ -97,25 +96,32 @@ export const WorkoutList = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonWorkoutDetail = (_id: string) => {
-    navParam(`/workoutDetail`, {
-      state: {
-        _id
-      }
-    });
-  };
-  const buttonRefreshPage = () => {
+  const buttonWorkoutDetail = (_id:string, user_id:string) => {
     return (
-      <Link to="/workoutList">
-        <button type="button" className="btn btn-success ms-2">Refresh</button>
-      </Link>
+      <p onClick={(e) => {
+        e.preventDefault();
+        navParam(`/workoutDetail`, {state: {_id: _id}})
+      }}>
+        {user_id}
+      </p>
     );
   };
   const buttonWorkoutInsert = () => {
     return (
-      <Link to="/workoutInsert">
-        <button type="button" className="btn btn-primary ms-2">Insert</button>
-      </Link>
+      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+        navParam(`/workoutInsert`);
+      }}>
+        Insert
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
     );
   };
 
@@ -137,7 +143,7 @@ export const WorkoutList = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {workoutListTable()}
+            {tableWorkoutList()}
             <br/>
             {buttonRefreshPage()}
             {buttonWorkoutInsert()}

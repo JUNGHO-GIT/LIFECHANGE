@@ -1,6 +1,6 @@
 // WorkoutDetail.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -43,8 +43,8 @@ export const WorkoutDetail = () => {
     fetchWorkoutDetail();
   }, [_id]);
 
-  // ---------------------------------------------------------------------------------------------->
-  const workoutDeleteFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowWorkoutDelete = async () => {
     try {
       const confirm = window.confirm("Are you sure you want to delete?");
       if (!confirm) {
@@ -70,8 +70,10 @@ export const WorkoutDetail = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const workoutDetailTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableWorkoutDetail = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -105,63 +107,53 @@ export const WorkoutDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkoutDelete = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-danger ms-2"
-        onClick={workoutDeleteFlow}
-      >
+      <button type="button" className="btn btn-danger ms-2" onClick={flowWorkoutDelete}>
         Delete
       </button>
     );
   };
   const buttonWorkoutUpdate = (_id: string) => {
-    const navButton = () =>
-      navParam(`/workoutUpdate`, {
-        state: {
-          _id,
-        },
-      });
     return (
-      <button
-        type="button"
-        className="btn btn-primary ms-2"
-        onClick={navButton}
-      >
+      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+        navParam(`/workoutUpdate`, {
+          state: {_id},
+        });
+      }}>
         Update
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <Link to="/workoutDetail">
-        <button type="button" className="btn btn-success ms-2">
-          Refresh
-        </button>
-      </Link>
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
     );
   };
   const buttonWorkoutList = () => {
     return (
-      <Link to="/workoutList">
-        <button type="button" className="btn btn-secondary ms-2">
-          List
-        </button>
-      </Link>
+      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+        navParam(`/workoutList`);
+      }}>
+        List
+      </button>
     );
   };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-flex justify-content-center mt-5">
+      <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {workoutDetailTable()}
+            {tableWorkoutDetail()}
             <br />
             {buttonRefreshPage()}
             {buttonWorkoutUpdate(WORKOUT._id)}

@@ -1,6 +1,6 @@
 // UserInsert.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -23,8 +23,10 @@ export const UserInsert = () => {
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // ---------------------------------------------------------------------------------------------->
-  const userInsertFlow = async () => {
+  // 2. useEffect --------------------------------------------------------------------------------->
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowUserInsert = async () => {
     try {
       if (user_id === "" || user_pw === "") {
         alert("Please enter both Id and Pw");
@@ -57,8 +59,10 @@ export const UserInsert = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const userInsertTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableUserInsert = () => {
     return (
       <div>
         <div className="form-floating">
@@ -90,23 +94,27 @@ export const UserInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <Link to="/userInsert">
-        <button type="button" className="btn btn-success ms-2">Refresh</button>
-      </Link>
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
     );
   };
   const buttonUserInsert = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={userInsertFlow}>
+      <button type="button" className="btn btn-primary ms-2" onClick={flowUserInsert}>
         Submit
       </button>
     );
   };
   const buttonUserList = () => {
     return (
-      <Link to="/userList">
-        <button type="button" className="btn btn-secondary ms-2">List</button>
-      </Link>
+      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+        navParam("/userList");
+      }}>
+        List
+      </button>
     );
   };
 
@@ -121,7 +129,7 @@ export const UserInsert = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {userInsertTable()}
+            {tableUserInsert()}
             <br/>
             {buttonUserInsert()}
             {buttonRefreshPage()}

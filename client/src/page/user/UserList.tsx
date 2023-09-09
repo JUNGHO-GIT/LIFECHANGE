@@ -1,6 +1,6 @@
 // UserList.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -23,7 +23,7 @@ export const UserList = () => {
   // state
   const [USER_LIST, setUSER_LIST] = useState<[]>([]);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchUserList = async () => {
       try {
@@ -38,8 +38,12 @@ export const UserList = () => {
     fetchUserList();
   }, []);
 
-  // ---------------------------------------------------------------------------------------------->
-  const userListTable = () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableUserList = () => {
     return (
       <table className="table table-striped table-bordered">
         <thead>
@@ -63,9 +67,11 @@ export const UserList = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <Link to="/userList">
-        <button type="button" className="btn btn-success ms-2">Refresh</button>
-      </Link>
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
     );
   };
 
@@ -80,7 +86,7 @@ export const UserList = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {userListTable()}
+            {tableUserList()}
             <br/>
             {buttonRefreshPage()}
           </form>

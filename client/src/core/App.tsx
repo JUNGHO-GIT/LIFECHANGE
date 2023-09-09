@@ -46,6 +46,7 @@ import { FoodListPart } from "../page/food/FoodListPart";
 import { WorkoutList } from "../page/workout/WorkoutList";
 import { WorkoutInsert } from "../page/workout/WorkoutInsert";
 import { WorkoutDetail } from "../page/workout/WorkoutDetail";
+import { WorkoutUpdate } from "../page/workout/WorkoutUpdate";
 
 import { SleepList } from "../page/sleep/SleepList";
 import { SleepListWeek } from "../page/sleep/SleepListWeek";
@@ -87,12 +88,13 @@ const App = () => {
           <Route path="/foodSearch" element={<FoodSearch />} />
           <Route path="/foodInsert" element={<FoodInsert />} />
           <Route path="/foodList" element={<FoodList />} />
-          <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/foodListPart" element={<FoodListPart />} />
+          <Route path="/foodDetail" element={<FoodDetail />} />
 
           <Route path="/workoutList" element={<WorkoutList />} />
           <Route path="/workoutInsert" element={<WorkoutInsert />} />
           <Route path="/workoutDetail" element={<WorkoutDetail />} />
+          <Route path="/workoutUpdate" element={<WorkoutUpdate />} />
 
           <Route path="/sleepList" element={<SleepList />} />
           <Route path="/sleepList" element={<SleepList />} />

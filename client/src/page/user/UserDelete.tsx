@@ -1,6 +1,6 @@
 // UserDelete.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -27,7 +27,6 @@ export const UserDelete = () => {
   useEffect(() => {
     const fetchUserDelete = async () => {
       const user_id = window.sessionStorage.getItem("user_id");
-
       try {
         const response = await axios.post (`${URL_USER}/userDetail`, {
           user_id: user_id,
@@ -41,8 +40,8 @@ export const UserDelete = () => {
     fetchUserDelete();
   }, []);
 
-  // ---------------------------------------------------------------------------------------------->
-  const userDeleteFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowUserDelete = async () => {
     try {
       if (user_pw === "" || user_pw === null) {
         alert("Please enter your password");
@@ -82,8 +81,10 @@ export const UserDelete = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const userDeleteTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableUserDelete = () => {
     return (
       <div>
         <div className="form-floating">
@@ -112,8 +113,17 @@ export const UserDelete = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonUserDelete = () => {
     return (
-      <button className="btn btn-primary" type="button" onClick={userDeleteFlow}>
-        User Delete
+      <button className="btn btn-primary" type="button" onClick={flowUserDelete}>
+        Delete
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
       </button>
     );
   };
@@ -129,9 +139,10 @@ export const UserDelete = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {userDeleteTable()}
+            {tableUserDelete()}
             <br/>
             {buttonUserDelete()}
+            {buttonRefreshPage()}
           </form>
         </div>
       </div>

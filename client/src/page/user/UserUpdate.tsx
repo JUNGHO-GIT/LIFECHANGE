@@ -1,6 +1,6 @@
 // UserUpdate.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -41,8 +41,8 @@ export const UserUpdate = () => {
     fetchUserUpdate();
   }, []);
 
-  // ---------------------------------------------------------------------------------------------->
-  const userUpdateFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowUserUpdate = async () => {
     try {
       if (user_pw === "" || user_pw === null) {
         alert("Please enter your password");
@@ -71,7 +71,7 @@ export const UserUpdate = () => {
             alert("User Update fail");
           }
           else {
-            alert("Error Ocurred in User Delete");
+            alert("Error Ocurred in User Update");
           }
         }
       }
@@ -81,8 +81,10 @@ export const UserUpdate = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const userUpdateTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableUserUpdate = () => {
     return (
       <div>
         <div className="form-floating">
@@ -113,8 +115,17 @@ export const UserUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonUserUpdate = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={userUpdateFlow}>
+      <button type="button" className="btn btn-primary ms-2" onClick={flowUserUpdate}>
         User Update
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
       </button>
     );
   };
@@ -130,9 +141,10 @@ export const UserUpdate = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {userUpdateTable()}
+            {tableUserUpdate()}
             <br/>
             {buttonUserUpdate()}
+            {buttonRefreshPage()}
           </form>
         </div>
       </div>

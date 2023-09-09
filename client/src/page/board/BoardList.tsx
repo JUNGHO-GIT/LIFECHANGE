@@ -67,13 +67,13 @@ export const BoardList = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonBoardDetail = (_id: string, userId: string) => {
+  const buttonBoardDetail = (_id: string, user_id: string) => {
     return (
       <p onClick={(e) => {
         e.preventDefault();
         navParam(`/boardDetail`, {state: {_id: _id}})
       }}>
-        {userId}
+        {user_id}
       </p>
     );
   };

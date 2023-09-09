@@ -1,6 +1,6 @@
 // FoodUpdate.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -47,10 +47,10 @@ export const FoodUpdate = () => {
   const flowFoodUpdate = async () => {
     try {
       const response = await axios.put (`${URL_FOOD}/foodUpdate`, {
-        data : {
-          _id : _id,
-          FOOD : FOOD
-        }
+        data: {
+          _id: FOOD._id,
+          FOOD,
+        },
       });
       if (response.data === "success") {
         alert("Update success");

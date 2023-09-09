@@ -55,7 +55,7 @@ export const FoodInsert = () => {
       });
       if (response.data === "success") {
         alert("Insert food successfully");
-        window.location.href = "/foodList";
+        navParam("/foodSearch");
       }
       else if (response.data === "fail") {
         alert("Insert food failed");

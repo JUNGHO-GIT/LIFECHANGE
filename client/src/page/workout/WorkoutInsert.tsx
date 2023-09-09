@@ -1,6 +1,6 @@
 // WorkoutInsert.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -33,8 +33,8 @@ export const WorkoutInsert = () => {
     workout_time: "",
   });
 
-  // ---------------------------------------------------------------------------------------------->
-  const workoutInsertFlow = async () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowWorkoutInsert = async () => {
     try {
       if (WORKOUT.workout_part === "") {
         alert("Please enter part.");
@@ -81,8 +81,10 @@ export const WorkoutInsert = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const workoutInsertTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableWorkoutInsert = () => {
     return (
       <div>
         <div className="form-floating">
@@ -195,12 +197,17 @@ export const WorkoutInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkoutInsert = () => {
     return (
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={workoutInsertFlow}
-      >
+      <button className="btn btn-primary" type="button" onClick={flowWorkoutInsert}>
         Insert
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
       </button>
     );
   };
@@ -216,9 +223,10 @@ export const WorkoutInsert = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {workoutInsertTable()}
+            {tableWorkoutInsert()}
             <br />
             {buttonWorkoutInsert()}
+            {buttonRefreshPage()}
           </form>
         </div>
       </div>

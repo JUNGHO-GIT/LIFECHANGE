@@ -165,7 +165,7 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodDetail`, {
+        navParam(`/foodListPart`, {
           state: {
             user_id : user_id,
             food_regdate : food_regdate,
@@ -181,7 +181,7 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodDetail`, {
+        navParam(`/foodListPart`, {
           state: {
             user_id : user_id,
             food_regdate : food_regdate,
@@ -197,7 +197,7 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodDetail`, {
+        navParam(`/foodListPart`, {
           state: {
             user_id : user_id,
             food_regdate : food_regdate,
@@ -213,7 +213,7 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodDetail`, {
+        navParam(`/foodListPart`, {
           state: {
             user_id : user_id,
             food_regdate : food_regdate,

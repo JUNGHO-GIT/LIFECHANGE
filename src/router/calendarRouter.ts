@@ -64,7 +64,7 @@ calendarRouter.post("/calendarInsert", async (req: Request, res: Response) => {
 calendarRouter.put("/calendarUpdate", async (req: Request, res: Response) => {
   try {
     const calendarUpdate = await calendarService.calendarUpdate (
-      req.query._id,
+      req.body._id,
       req.body
     );
     if (calendarUpdate) {

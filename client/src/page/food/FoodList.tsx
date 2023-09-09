@@ -1,6 +1,6 @@
 // FoodList.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -30,8 +30,8 @@ export const FoodList = () => {
       try {
         const response = await axios.get(`${URL_FOOD}/foodList`, {
           params: {
-            user_id: user_id,
-            food_regdate: food_regdate,
+            user_id : user_id,
+            food_regdate : food_regdate,
           },
         });
         setFOOD_LIST(response.data);

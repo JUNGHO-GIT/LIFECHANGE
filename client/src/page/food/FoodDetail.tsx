@@ -1,6 +1,6 @@
 // FoodDetail.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -19,11 +19,12 @@ export const FoodDetail = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
+  const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
   const food_category = location.state.food_category;
   // state
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-  const [FOOD, setFOOD] = useState<any>([]);
+  const [FOOD, setFOOD] = useState<any>({});
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
@@ -31,9 +32,9 @@ export const FoodDetail = () => {
       try {
         const response = await axios.get(`${URL_FOOD}/foodDetail`, {
           params: {
-            user_id: user_id,
-            food_category: food_category,
-            food_regdate: food_regdate,
+            _id : _id,
+            user_id : user_id,
+            food_regdate : food_regdate,
           },
         });
         setFOOD(response.data);
@@ -44,9 +45,39 @@ export const FoodDetail = () => {
       }
     };
     fetchFoodDetail();
-  }, [user_id, food_category, food_regdate]);
+  }, [_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
+  const flowFoodDelete = async () => {
+    try {
+      const response = await axios.delete(`${URL_FOOD}/foodDelete`, {
+        params: {
+          _id : _id,
+          user_id : user_id,
+          food_regdate : food_regdate,
+        },
+      });
+      if (response.data === "success") {
+        alert("삭제되었습니다.");
+        navParam(`/foodListPart`, {
+          state: {
+            user_id : user_id,
+            food_category : food_category,
+            food_regdate : food_regdate,
+          },
+        });
+      }
+      else if (response.data === "fail") {
+        alert("삭제에 실패하였습니다.");
+      }
+      else {
+        throw new Error(`Invalid response: ${response.data}`);
+      }
+    }
+    catch (error: any) {
+      alert(`Error fetching food data: ${error.message}`);
+    }
+  };
 
   // 4. logic ------------------------------------------------------------------------------------->
   const logicViewDate = () => {
@@ -57,8 +88,8 @@ export const FoodDetail = () => {
         popperPlacement="bottom"
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
         }}
+        readOnly
       />
     );
   };
@@ -80,27 +111,15 @@ export const FoodDetail = () => {
             </tr>
           </thead>
           <tbody>
-            {FOOD.map((index: any, i: number) => (
-              <tr key={i}>
-                <td onClick={() =>
-                  navParam(`/foodInfo`, {
-                    state: {
-                      _id : index._id,
-                      user_id : index.user_id,
-                      food_category : index.food_category
-                    },
-                  })
-                }>
-                  {index.food_name}
-                </td>
-                <td>{index.food_brand}</td>
-                <td>{index.food_serving}</td>
-                <td>{index.food_calories}</td>
-                <td>{index.food_carb}</td>
-                <td>{index.food_protein}</td>
-                <td>{index.food_fat}</td>
-              </tr>
-            ))}
+            <tr>
+              <td>{FOOD.food_name}</td>
+              <td>{FOOD.food_brand}</td>
+              <td>{FOOD.food_serving}</td>
+              <td>{FOOD.food_calories}</td>
+              <td>{FOOD.food_carb}</td>
+              <td>{FOOD.food_protein}</td>
+              <td>{FOOD.food_fat}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -108,16 +127,21 @@ export const FoodDetail = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
+  const buttonFoodDelete = () => {
+    return (
+      <button type="button" className="btn btn-danger" onClick={flowFoodDelete}>
+        Delete
+      </button>
+    );
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">
-            {TITLE}
-            <span className="ms-4">({food_category})</span>
-          </h1>
+          <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <span className="ms-4">({food_category})</span>
         </div>
       </div>
       <div className="row d-center mt-5">
@@ -130,6 +154,11 @@ export const FoodDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           {tableFoodDetail()}
+        </div>
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-10">
+          {buttonFoodDelete()}
         </div>
       </div>
     </div>

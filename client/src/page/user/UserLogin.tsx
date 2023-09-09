@@ -1,6 +1,6 @@
 // UserLogin.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -23,8 +23,10 @@ export const UserLogin = () => {
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // ---------------------------------------------------------------------------------------------->
-  const userLoginFlow = async () => {
+  // 2-1. useEffect ------------------------------------------------------------------------------->
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowUserLogin = async () => {
     try {
       const response = await axios.post (`${URL_USER}/userLogin`, {
         user_id: user_id,
@@ -48,8 +50,10 @@ export const UserLogin = () => {
     }
   };
 
-  // ---------------------------------------------------------------------------------------------->
-  const userLoginTable = () => {
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableUserLogin = () => {
     return (
       <div>
         <div className="form-floating">
@@ -69,8 +73,17 @@ export const UserLogin = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonUserLogin = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={userLoginFlow}>
+      <button type="button" className="btn btn-primary ms-2" onClick={flowUserLogin}>
         Log In
+      </button>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
       </button>
     );
   };
@@ -86,9 +99,10 @@ export const UserLogin = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {userLoginTable()}
+            {tableUserLogin()}
             <br/>
             {buttonUserLogin()}
+            {buttonRefreshPage()}
           </form>
         </div>
       </div>

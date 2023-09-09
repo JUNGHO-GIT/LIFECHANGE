@@ -1,6 +1,6 @@
 // UserDetail.tsx
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -27,7 +27,6 @@ export const UserDetail = () => {
   useEffect(() => {
     const fetchUserDetail = async () => {
       const user_id = window.sessionStorage.getItem("user_id");
-
       try {
         const response = await axios.post (`${URL_USER}/userDetail`, {
           user_id: user_id,
@@ -48,8 +47,12 @@ export const UserDetail = () => {
     fetchUserDetail();
   }, []);
 
-  // ---------------------------------------------------------------------------------------------->
-  const userDetailTable = () => {
+  // 3. flow -------------------------------------------------------------------------------------->
+
+  // 4. logic ------------------------------------------------------------------------------------->
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableUserDetail = () => {
     return (
       <div>
         <div className="form-floating">
@@ -79,30 +82,38 @@ export const UserDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <Link to="/userDetail">
-        <button type="button" className="btn btn-success ms-2">Refresh</button>
-      </Link>
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
+        Refresh
+      </button>
     );
   };
   const buttonUserUpdate = () => {
     return (
-      <Link to="/userUpdate">
-        <button type="button" className="btn btn-primary ms-2">Update</button>
-      </Link>
+      <button type="button" className="btn btn-warning ms-2" onClick={() => {
+        navParam("/userUpdate");
+      }}>
+        Update
+      </button>
     );
   };
   const buttonUserDelete = () => {
     return (
-      <Link to="/userDelete">
-        <button type="button" className="btn btn-danger ms-2">Delete</button>
-      </Link>
+      <button type="button" className="btn btn-danger ms-2" onClick={() => {
+        navParam("/userDelete");
+      }}>
+        Delete
+      </button>
     );
   };
   const buttonUserList = () => {
     return (
-      <Link to="/userList">
-        <button type="button" className="btn btn-secondary ms-2">List</button>
-      </Link>
+      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+        navParam("/userList");
+      }}>
+        List
+      </button>
     );
   };
 
@@ -117,7 +128,7 @@ export const UserDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {userDetailTable()}
+            {tableUserDetail()}
             <br/>
             {buttonRefreshPage()}
             {buttonUserUpdate()}
