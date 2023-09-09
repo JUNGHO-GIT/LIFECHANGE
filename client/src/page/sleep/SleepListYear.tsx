@@ -52,12 +52,16 @@ export const SleepListYear = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (selectedYear) {
-      setResultValue(`${selectedYear.getFullYear()}`);
+      setResultValue (
+        `${selectedYear.getFullYear()}`
+      );
 
-      setResultDuration(`${selectedYear.getFullYear()}-01-01 ~ ${selectedYear.getFullYear()}-12-31`);
+      setResultDuration (
+        `${selectedYear.getFullYear()}-01-01 ~ ${selectedYear.getFullYear()}-12-31`
+      );
     }
     else {
-      setResultValue("선택된 날짜가 없습니다.");
+      setResultValue ("선택된 날짜가 없습니다.");
     }
   }, [selectedYear]);
 

@@ -51,12 +51,16 @@ export const SleepListMonth = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (selectedMonth) {
-      setResultValue(`${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}`);
+      setResultValue (
+        `${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}`
+      );
 
-      setResultDuration(`${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}-01 ~ ${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}-31`);
+      setResultDuration (
+        `${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}-01 ~ ${selectedMonth.getFullYear()}-${formatValue(selectedMonth.getMonth() + 1)}-31`
+      );
     }
     else {
-      setResultValue("선택된 날짜가 없습니다.");
+      setResultValue ("선택된 날짜가 없습니다.");
     }
   }, [selectedMonth]);
 

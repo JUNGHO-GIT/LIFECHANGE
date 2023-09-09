@@ -53,8 +53,12 @@ export const SleepListDay = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (selectedYear && selectedMonth !== undefined && selectedDay) {
-      setResultValue(`${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)}`);
-      setResultDuration(`${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)} ~ ${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)}`);
+      setResultValue (
+        `${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)}`
+      );
+      setResultDuration (
+        `${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)} ~ ${selectedYear}-${formatValue(selectedMonth + 1)}-${formatValue(selectedDay)}`
+      );
     }
     else {
       setResultValue("선택된 날짜가 없습니다.");

@@ -34,13 +34,6 @@ const SleepScheme = new mongoose.Schema ({
     },
     required : true
   },
-  sleep_duration : {
-    type : String,
-    default : () => {
-      return "default";
-    },
-    required : true
-  },
   sleep_regdate: {
     type: String,
     default : () => {

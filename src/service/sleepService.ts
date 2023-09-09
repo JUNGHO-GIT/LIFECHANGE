@@ -12,8 +12,6 @@ export const sleepList = async (
   const startDay = sleep_duration_param.split(` ~ `)[0];
   const endDay = sleep_duration_param.split(` ~ `)[1];
 
-  const totalDays = moment(endDay).diff(moment(startDay), 'days') + 1;
-
   const sleepsInRange = await Sleep.find({
     user_id: user_id_param,
     sleep_day: {
@@ -35,9 +33,10 @@ export const sleepList = async (
     totalSleepMorning += moment.duration(`00:${sleep.sleep_morning}`).asMinutes();
   });
 
-  const averageSleepTime = totalSleepTime / totalDays;
-  const averageSleepNight = totalSleepNight / totalDays;
-  const averageSleepMorning = totalSleepMorning / totalDays;
+  // sleepsInRange.length는 실제 데이터가 있는 날짜 수를 나타냅니다.
+  const averageSleepTime = totalSleepTime / sleepsInRange.length;
+  const averageSleepNight = totalSleepNight / sleepsInRange.length;
+  const averageSleepMorning = totalSleepMorning / sleepsInRange.length;
 
   return {
     averageSleepTime: moment
@@ -54,6 +53,7 @@ export const sleepList = async (
       .toString(),
   };
 };
+
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
 export const sleepDetail = async (_id_param: any) => {
