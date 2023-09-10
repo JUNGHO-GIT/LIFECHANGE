@@ -22,10 +22,11 @@ export const SleepListDay = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // useState
+
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [selectedSleepType, setSelectedSleepType] = useState<string> ("list");
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
     "sleepList_DAY", []
   );
@@ -48,7 +49,7 @@ export const SleepListDay = () => {
     "selectedSleepDay_DAY", undefined
   );
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
@@ -68,7 +69,7 @@ export const SleepListDay = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepAverage = async () => {
       try {
@@ -108,7 +109,7 @@ export const SleepListDay = () => {
     fetchSleepAverage();
   }, [user_id, resultDuration]);
 
-  // 2-4. useEffect ------------------------------------------------------------------------------->
+  // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;

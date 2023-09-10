@@ -58,7 +58,7 @@ export const WorkDetail = () => {
         });
         if (response.data === "success") {
           alert("Delete Success");
-          navParam(`/workList`);
+          navParam(`/workListDay`);
         }
         else {
           alert("Delete failed");
@@ -135,7 +135,7 @@ export const WorkDetail = () => {
   const buttonWorkList = () => {
     return (
       <button type="button" className="btn btn-secondary ms-2" onClick={() => {
-        navParam(`/workList`);
+        navParam(`/workListDay`);
       }}>
         List
       </button>

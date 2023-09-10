@@ -52,7 +52,7 @@ export const WorkUpdate = () => {
       });
       if (response.data === "success") {
         alert("Update success");
-        navParam("/workList");
+        navParam("/workListDay");
       }
       else {
         alert("Update failed");

@@ -22,9 +22,11 @@ export const SleepListWeek = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
+
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [selectedSleepType, setSelectedSleepType] = useState<string> ("list");
-  // state 2
+
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
     "sleepList_WEEK", []
   );
@@ -50,7 +52,7 @@ export const SleepListWeek = () => {
     "selectedSleepEndDay_WEEK", undefined
   );
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
@@ -70,7 +72,7 @@ export const SleepListWeek = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepAverage = async () => {
       try {
@@ -110,7 +112,7 @@ export const SleepListWeek = () => {
     fetchSleepAverage();
   }, [user_id, resultDuration]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;

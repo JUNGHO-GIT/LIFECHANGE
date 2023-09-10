@@ -11,7 +11,7 @@ export const workList = async (
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
 
-  const workList = await Work.find({
+  const workList = await Work.find ({
     user_id: user_id_param,
     work_day: {
       $gte: startDay,

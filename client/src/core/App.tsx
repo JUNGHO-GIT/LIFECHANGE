@@ -44,15 +44,14 @@ import { FoodDetail } from "../page/food/FoodDetail";
 import { FoodListPart } from "../page/food/FoodListPart";
 import { FoodUpdate } from "../page/food/FoodUpdate";
 
-import { WorkList } from "../page/work/WorkList";
 import { WorkInsert } from "../page/work/WorkInsert";
 import { WorkDetail } from "../page/work/WorkDetail";
 import { WorkUpdate } from "../page/work/WorkUpdate";
-import { WorkListDay } from "../page/work/WorkList_Day";/*
+import { WorkListDay } from "../page/work/WorkList_Day";
 import { WorkListWeek } from "../page/work/WorkList_Week";
 import { WorkListMonth } from "../page/work/WorkList_Month";
 import { WorkListYear } from "../page/work/WorkList_Year";
-import { WorkListSelect } from "../page/work/WorkList_Select"; */
+import { WorkListSelect } from "../page/work/WorkList_Select";
 
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
@@ -98,15 +97,14 @@ const App = () => {
           <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/foodUpdate" element={<FoodUpdate />} />
 
-          <Route path="/workList" element={<WorkList />} />
           <Route path="/workInsert" element={<WorkInsert />} />
           <Route path="/workDetail" element={<WorkDetail />} />
           <Route path="/workUpdate" element={<WorkUpdate />} />
-          <Route path="/workListDay" element={<WorkListDay />} />{/*
+          <Route path="/workListDay" element={<WorkListDay />} />
           <Route path="/workListWeek" element={<WorkListWeek />} />
           <Route path="/workListMonth" element={<WorkListMonth />} />
           <Route path="/workListYear" element={<WorkListYear />} />
-          <Route path="/workListSelect" element={<WorkListSelect />} /> */}
+          <Route path="/workListSelect" element={<WorkListSelect />} />
 
           <Route path="/sleepInsert" element={<SleepInsert />} />
           <Route path="/sleepDetail" element={<SleepDetail />} />
