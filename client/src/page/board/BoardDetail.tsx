@@ -21,7 +21,7 @@ export const BoardDetail = () => {
   // val
   const _id = location.state._id;
   // state
-  const [BOARD, setBOARD] = useState<any>({});
+  const [BOARD, setBOARD] = useState<any> ({});
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {

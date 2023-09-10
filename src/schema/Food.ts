@@ -48,6 +48,13 @@ const FoodScheme = new mongoose.Schema ({
     default : "daily",
     required : false
   },
+  food_day : {
+    type : String,
+    default : () => {
+      return "default";
+    },
+    required : true
+  },
   food_regdate : {
     type : String,
     default : () => {

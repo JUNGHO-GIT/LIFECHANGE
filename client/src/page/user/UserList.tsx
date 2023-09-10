@@ -21,7 +21,7 @@ export const UserList = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [USER_LIST, setUSER_LIST] = useState<[]>([]);
+  const [USER_LIST, setUSER_LIST] = useState<[]> ([]);
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {

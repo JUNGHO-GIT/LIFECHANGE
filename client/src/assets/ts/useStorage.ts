@@ -12,7 +12,7 @@ export function useStorage<T> (key: string, initialValue: T)  {
   const item = localStorage.getItem(key);
 
   // ---------------------------------------------------------------------------------------------->
-  const [storedValue, setStoredValue] = useState<T>(() => {
+  const [storedValue, setStoredValue] = useState<T> (() => {
     try {
       if (item === null) {
         return initialValue;

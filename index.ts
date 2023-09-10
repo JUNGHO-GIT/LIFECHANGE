@@ -8,7 +8,7 @@ import userRouter from "./src/router/userRouter";
 import boardRouter from "./src/router/boardRouter";
 import foodRouter from "./src/router/foodRouter";
 import calendarRouter from "./src/router/calendarRouter";
-import workoutRouter from "./src/router/workoutRouter";
+import workRouter from "./src/router/workRouter";
 import sleepRouter from "./src/router/sleepRouter";
 
 mongoose.connect("mongodb://127.0.0.1:27017");
@@ -28,7 +28,7 @@ app.use("/user", userRouter);
 app.use("/board", boardRouter);
 app.use("/food", foodRouter);
 app.use("/calendar", calendarRouter);
-app.use("/workout", workoutRouter);
+app.use("/work", workRouter);
 app.use("/sleep", sleepRouter);
 
 app.listen(app.get("port"), () => {

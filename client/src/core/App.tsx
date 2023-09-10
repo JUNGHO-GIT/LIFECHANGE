@@ -44,23 +44,27 @@ import { FoodDetail } from "../page/food/FoodDetail";
 import { FoodListPart } from "../page/food/FoodListPart";
 import { FoodUpdate } from "../page/food/FoodUpdate";
 
-import { WorkoutList } from "../page/workout/WorkoutList";
-import { WorkoutInsert } from "../page/workout/WorkoutInsert";
-import { WorkoutDetail } from "../page/workout/WorkoutDetail";
-import { WorkoutUpdate } from "../page/workout/WorkoutUpdate";
+import { WorkList } from "../page/work/WorkList";
+import { WorkInsert } from "../page/work/WorkInsert";
+import { WorkDetail } from "../page/work/WorkDetail";
+import { WorkUpdate } from "../page/work/WorkUpdate";
+import { WorkListDay } from "../page/work/WorkList_Day";/*
+import { WorkListWeek } from "../page/work/WorkList_Week";
+import { WorkListMonth } from "../page/work/WorkList_Month";
+import { WorkListYear } from "../page/work/WorkList_Year";
+import { WorkListSelect } from "../page/work/WorkList_Select"; */
 
-import { SleepListDay } from "../page/sleep/SleepListDay";
-import { SleepListWeek } from "../page/sleep/SleepListWeek";
-import { SleepListMonth } from "../page/sleep/SleepListMonth";
-import { SleepListYear } from "../page/sleep/SleepListYear";
-import { SleepListSelect } from "../page/sleep/SleepListSelect";
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
 import { SleepUpdate } from "../page/sleep/SleepUpdate";
+import { SleepListDay } from "../page/sleep/SleepList_Day";
+import { SleepListWeek } from "../page/sleep/SleepList_Week";
+import { SleepListMonth } from "../page/sleep/SleepList_Month";
+import { SleepListYear } from "../page/sleep/SleepList_Year";
+import { SleepListSelect } from "../page/sleep/SleepList_Select";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
-  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="App">
       <Loader />
@@ -94,19 +98,24 @@ const App = () => {
           <Route path="/foodDetail" element={<FoodDetail />} />
           <Route path="/foodUpdate" element={<FoodUpdate />} />
 
-          <Route path="/workoutList" element={<WorkoutList />} />
-          <Route path="/workoutInsert" element={<WorkoutInsert />} />
-          <Route path="/workoutDetail" element={<WorkoutDetail />} />
-          <Route path="/workoutUpdate" element={<WorkoutUpdate />} />
+          <Route path="/workList" element={<WorkList />} />
+          <Route path="/workInsert" element={<WorkInsert />} />
+          <Route path="/workDetail" element={<WorkDetail />} />
+          <Route path="/workUpdate" element={<WorkUpdate />} />
+          <Route path="/workListDay" element={<WorkListDay />} />{/*
+          <Route path="/workListWeek" element={<WorkListWeek />} />
+          <Route path="/workListMonth" element={<WorkListMonth />} />
+          <Route path="/workListYear" element={<WorkListYear />} />
+          <Route path="/workListSelect" element={<WorkListSelect />} /> */}
 
+          <Route path="/sleepInsert" element={<SleepInsert />} />
+          <Route path="/sleepDetail" element={<SleepDetail />} />
+          <Route path="/sleepUpdate" element={<SleepUpdate />} />
           <Route path="/sleepListDay" element={<SleepListDay />} />
           <Route path="/sleepListWeek" element={<SleepListWeek />} />
           <Route path="/sleepListMonth" element={<SleepListMonth />} />
           <Route path="/sleepListYear" element={<SleepListYear />} />
           <Route path="/sleepListSelect" element={<SleepListSelect />} />
-          <Route path="/sleepInsert" element={<SleepInsert />} />
-          <Route path="/sleepDetail" element={<SleepDetail />} />
-          <Route path="/sleepUpdate" element={<SleepUpdate />} />
         </Routes>
         <Footer />
       </Router>

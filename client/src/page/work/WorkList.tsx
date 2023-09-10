@@ -1,4 +1,4 @@
-// WorkoutDetail.tsx
+// WorkList.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -7,73 +7,62 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const WorkoutDetail = () => {
+export const WorkList = () => {
 
   // title
-  const TITLE = "Workout Detail";
+  const TITLE = "Work List";
   // url
-  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  const URL_WORK = process.env.REACT_APP_URL_WORK;
   // date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [WORKOUT, setWORKOUT] = useState<any>({});
+  const [WORK_LIST, setWORK_LIST] = useState<any> ([]);
+  const [work_regdate, setWork_regdate] = useState(koreanDate);
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchWorkoutDetail = async () => {
+    const fetchWorkList = async () => {
       try {
-        const response = await axios.get(`${URL_WORKOUT}/workoutDetail`, {
+        const response = await axios.get (`${URL_WORK}/workList`, {
           params: {
-            _id: _id,
-          },
+            user_id: user_id,
+            work_regdate : work_regdate,
+          }
         });
-        setWORKOUT(response.data);
+        setWORK_LIST(response.data);
       }
       catch (error: any) {
-        alert(`Error fetching workout data: ${error.message}`);
-        setWORKOUT([]);
+        alert(`Error fetching work data: ${error.message}`);
+        setWORK_LIST([]);
       }
     };
-    fetchWorkoutDetail();
-  }, [_id]);
+    fetchWorkList();
+  }, [user_id, work_regdate]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowWorkoutDelete = async () => {
-    try {
-      const confirm = window.confirm("Are you sure you want to delete?");
-      if (!confirm) {
-        return;
-      }
-      else {
-        const response = await axios.delete(`${URL_WORKOUT}/workoutDelete`, {
-          params: {
-            _id : WORKOUT._id
-          },
-        });
-        if (response.data === "success") {
-          alert("Delete Success");
-          navParam(`/workoutList`);
-        }
-        else {
-          alert("Delete failed");
-        }
-      }
-    }
-    catch (error: any) {
-      alert(`Error fetching workout data: ${error.message}`);
-    }
-  };
 
   // 4. logic ------------------------------------------------------------------------------------->
+  const logicViewDate = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date (work_regdate)}
+        popperPlacement="bottom"
+        onChange={(date: any) => {
+          const selectedDate = date.toISOString().split("T")[0];
+          setWork_regdate(selectedDate);
+        }}
+      />
+    );
+  };
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableWorkoutDetail = () => {
+  const tableWorkList = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -89,37 +78,40 @@ export const WorkoutDetail = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{WORKOUT.user_id}</td>
-            <td>{WORKOUT.workout_part}</td>
-            <td>{WORKOUT.workout_title}</td>
-            <td>{WORKOUT.workout_kg}</td>
-            <td>{WORKOUT.workout_set}</td>
-            <td>{WORKOUT.workout_count}</td>
-            <td>{WORKOUT.workout_rest}</td>
-            <td>{WORKOUT.workout_time}</td>
-          </tr>
+          {WORK_LIST.map((index : any) => (
+            <tr key={index}>
+              <td>{buttonWorkDetail(index._id, index.user_id)}</td>
+              <td>{index.work_part}</td>
+              <td>{index.work_title}</td>
+              <td>{index.work_kg}</td>
+              <td>{index.work_set}</td>
+              <td>{index.work_count}</td>
+              <td>{index.work_rest}</td>
+              <td>{index.work_time}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     );
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonWorkoutDelete = () => {
+  const buttonWorkDetail = (_id:string, user_id:string) => {
     return (
-      <button type="button" className="btn btn-danger ms-2" onClick={flowWorkoutDelete}>
-        Delete
-      </button>
+      <p onClick={(e) => {
+        e.preventDefault();
+        navParam(`/workDetail`, {state: {_id: _id}})
+      }}>
+        {user_id}
+      </p>
     );
   };
-  const buttonWorkoutUpdate = (_id: string) => {
+  const buttonWorkInsert = () => {
     return (
       <button type="button" className="btn btn-primary ms-2" onClick={() => {
-        navParam(`/workoutUpdate`, {
-          state: {_id},
-        });
+        navParam(`/workInsert`);
       }}>
-        Update
+        Insert
       </button>
     );
   };
@@ -129,15 +121,6 @@ export const WorkoutDetail = () => {
         window.location.reload();
       }}>
         Refresh
-      </button>
-    );
-  };
-  const buttonWorkoutList = () => {
-    return (
-      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
-        navParam(`/workoutList`);
-      }}>
-        List
       </button>
     );
   };
@@ -151,14 +134,19 @@ export const WorkoutDetail = () => {
         </div>
       </div>
       <div className="row d-center mt-5">
+        <div className="col-12">
+          <h1 className="mb-3 fw-5">
+            <span className="ms-4">{logicViewDate()}</span>
+          </h1>
+        </div>
+      </div>
+      <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {tableWorkoutDetail()}
-            <br />
+            {tableWorkList()}
+            <br/>
             {buttonRefreshPage()}
-            {buttonWorkoutUpdate(WORKOUT._id)}
-            {buttonWorkoutDelete()}
-            {buttonWorkoutList()}
+            {buttonWorkInsert()}
           </form>
         </div>
       </div>

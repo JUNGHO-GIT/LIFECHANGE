@@ -1,19 +1,18 @@
-// SleepListYear.tsx
+// SleepListMonth.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayPicker, MonthChangeEventHandler} from "react-day-picker";
-import { differenceInDays } from "date-fns";
-import { parseISO } from "date-fns";
+import { DayPicker, MonthChangeEventHandler } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
+import { parseISO } from "date-fns";
 import {useStorage} from "../../assets/ts/useStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const SleepListYear = () => {
+export const SleepListMonth = () => {
 
   // title
-  const TITLE = "Sleep List Year";
+  const TITLE = "Sleep List Month";
   // url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   // date
@@ -24,28 +23,28 @@ export const SleepListYear = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state 1
-  const [selectedType, setSelectedType] = useState<string>("list");
+  const [selectedType, setSelectedType] = useState<string> ("list");
   // state 2
-  const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any>(
-    "sleepList_YEAR", []
+  const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
+    "sleepList_MONTH", []
   );
-  const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined>(
-    "resultValue_YEAR", undefined
+  const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
+    "resultValue_MONTH", undefined
   );
-  const {value:resultDuration, setValue:setResultDuration} = useStorage<string>(
-    "resultDuration_YEAR", "0000-00-00 ~ 0000-00-00"
+  const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
+    "resultDuration_MONTH", "0000-00-00 ~ 0000-00-00"
   );
-  const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string>(
-    "averageSleepTime_YEAR", "00:00"
+  const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string> (
+    "averageSleepTime_MONTH", "00:00"
   );
-  const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string>(
-    "averageSleepNight_YEAR", "00:00"
+  const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string> (
+    "averageSleepNight_MONTH", "00:00"
   );
-  const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string>(
-    "averageSleepMorning_YEAR", "00:00"
+  const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string> (
+    "averageSleepMorning_MONTH", "00:00"
   );
-  const {value:selectedYear, setValue:setSelectedYear} = useStorage<Date | undefined>(
-    "selectedYear_YEAR", koreanDate
+  const {value:selectedSleepMonth, setValue:setSelectedSleepMonth} = useStorage<Date | undefined> (
+    "selectedSleepMonth_MONTH", koreanDate
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -110,34 +109,28 @@ export const SleepListYear = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (selectedYear) {
+    const formatValue = (value: number): string => {
+      return value < 10 ? `0${value}` : `${value}`;
+    };
+    if (selectedSleepMonth) {
       setResultValue (
         parseISO (
-          `${selectedYear.getFullYear()}`
+          `${selectedSleepMonth.getFullYear()}-${formatValue(selectedSleepMonth.getMonth() + 1)}`
         )
       );
       setResultDuration (
-        `${selectedYear.getFullYear()}-01-01 ~ ${selectedYear.getFullYear()}-12-31`
+        `${selectedSleepMonth.getFullYear()}-${formatValue(selectedSleepMonth.getMonth() + 1)}-01 ~ ${selectedSleepMonth.getFullYear()}-${formatValue(selectedSleepMonth.getMonth() + 1)}-31`
       );
     }
     else {
       setResultValue (undefined);
     }
-  }, [selectedYear]);
+  }, [selectedSleepMonth]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowYearChange: MonthChangeEventHandler = (day) => {
-    const yearDate = new Date(day.getFullYear(), 0, 1);
+  const flowMonthChange: MonthChangeEventHandler = (day) => {
     const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);
-    const nextMonth = differenceInDays(new Date(day.getFullYear() + 1, 0, 1), monthDate) / 30;
-    const prevMonth = differenceInDays(monthDate, yearDate) / 30;
-
-    if (nextMonth > prevMonth) {
-      setSelectedYear(new Date(day.getFullYear() + 1, 0, 1));
-    }
-    else {
-      setSelectedYear(new Date(day.getFullYear(), 0, 1));
-    }
+    setSelectedSleepMonth(monthDate);
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -148,8 +141,8 @@ export const SleepListYear = () => {
         showOutsideDays
         locale={ko}
         weekStartsOn={1}
-        month={selectedYear}
-        onMonthChange={flowYearChange}
+        month={selectedSleepMonth}
+        onMonthChange={flowMonthChange}
         modifiersClassNames={{
           koreanDate: "koreanDate",
           selected: "selected",
@@ -221,9 +214,9 @@ export const SleepListYear = () => {
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setSelectedYear(koreanDate);
-        localStorage.removeItem("sleepList_YEAR");
-        localStorage.removeItem("selectedYear_YEAR");
+        setSelectedSleepMonth(koreanDate);
+        localStorage.removeItem("sleepList_MONTH");
+        localStorage.removeItem("selectedSleepMonth_MONTH");
       }}>
         Today
       </button>
@@ -232,9 +225,9 @@ export const SleepListYear = () => {
   const buttonSleepReset = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
-        setSelectedYear(undefined);
-        localStorage.removeItem("sleepList_YEAR");
-        localStorage.removeItem("selectedYear_YEAR");
+        setSelectedSleepMonth(undefined);
+        localStorage.removeItem("sleepList_MONTH");
+        localStorage.removeItem("selectedSleepMonth_MONTH");
       }}>
         Reset
       </button>
@@ -292,7 +285,7 @@ export const SleepListYear = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-4">
-          <h2 className="mb-3 fw-9">년별로 조회</h2>
+          <h2 className="mb-3 fw-9">월별로 조회</h2>
           {viewSleepDay()}
         </div>
         <div className="col-8">
@@ -309,4 +302,3 @@ export const SleepListYear = () => {
     </div>
   );
 };
-

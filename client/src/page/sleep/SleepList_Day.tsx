@@ -2,11 +2,11 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import { DayClickEventHandler, DayPicker } from "react-day-picker";
+import {useStorage} from "../../assets/ts/useStorage";
 import { ko } from "date-fns/locale";
 import { parseISO } from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useStorage} from "../../assets/ts/useStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListDay = () => {
@@ -22,39 +22,40 @@ export const SleepListDay = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
-  const [selectedType, setSelectedType] = useState<string>("list");
-  // state 2
-  const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any>(
+  // useState
+  const [selectedType, setSelectedType] = useState<string> ("list");
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
     "sleepList_DAY", []
   );
-  const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined>(
+  const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
     "resultValue_DAY", undefined
   );
-  const {value:resultDuration, setValue:setResultDuration} = useStorage<string>(
+  const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
     "resultDuration_DAY", "0000-00-00 ~ 0000-00-00"
   );
-  const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string>(
+  const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string> (
     "averageSleepTime_DAY", "00:00"
   );
-  const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string>(
+  const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string> (
     "averageSleepNight_DAY", "00:00"
   );
-  const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string>(
+  const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string> (
     "averageSleepMorning_DAY", "00:00"
   );
-  const {value:selectedDay, setValue:setSelectedDay} = useStorage<Date | undefined>(
-    "selectedDay_DAY", undefined
+  const {value:selectedSleepDay, setValue:setSelectedSleepDay} = useStorage<Date | undefined> (
+    "selectedSleepDay_DAY", undefined
   );
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
-        const response = await axios.get(`${URL_SLEEP}/sleepList`, {
+        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id: user_id,
-            sleep_duration: resultDuration,
+            user_id : user_id,
+            sleep_duration : resultDuration,
           },
         });
         setSLEEP_LIST(response.data);
@@ -67,7 +68,7 @@ export const SleepListDay = () => {
     fetchSleepList();
   }, [user_id, resultDuration]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepAverage = async () => {
       try {
@@ -107,23 +108,23 @@ export const SleepListDay = () => {
     fetchSleepAverage();
   }, [user_id, resultDuration]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatValue = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-    if (selectedDay) {
-      const year = selectedDay.getFullYear();
-      const month = formatValue(selectedDay.getMonth() + 1);
-      const date = formatValue(selectedDay.getDate());
+    if (selectedSleepDay) {
+      const year = selectedSleepDay.getFullYear();
+      const month = formatValue(selectedSleepDay.getMonth() + 1);
+      const date = formatValue(selectedSleepDay.getDate());
       setResultValue(parseISO(`${year}-${month}-${date}`));
       setResultDuration(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
     }
-  }, [selectedDay]);
+  }, [selectedSleepDay]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick: DayClickEventHandler = (day:any) => {
-    setSelectedDay(day);
+    setSelectedSleepDay(day);
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -132,12 +133,12 @@ export const SleepListDay = () => {
       <DayPicker
         mode="single"
         showOutsideDays
-        selected={selectedDay}
-        month={selectedDay}
+        selected={selectedSleepDay}
+        month={selectedSleepDay}
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
-        onMonthChange={(month) => setSelectedDay(month)}
+        onMonthChange={(month) => setSelectedSleepDay(month)}
         modifiersClassNames={{
           koreanDate: "koreanDate",
           selected: "selected",
@@ -209,9 +210,9 @@ export const SleepListDay = () => {
   const buttonSleepToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
-        setSelectedDay(koreanDate);
+        setSelectedSleepDay(koreanDate);
         localStorage.removeItem("sleepList_DAY");
-        localStorage.removeItem("selectedDay_DAY");
+        localStorage.removeItem("selectedSleepDay_DAY");
       }}>
         Today
       </button>
@@ -220,9 +221,9 @@ export const SleepListDay = () => {
   const buttonSleepReset = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
-        setSelectedDay(undefined);
+        setSelectedSleepDay(undefined);
         localStorage.removeItem("sleepList_DAY");
-        localStorage.removeItem("selectedDay_DAY");
+        localStorage.removeItem("selectedSleepDay_DAY");
       }}>
         Reset
       </button>

@@ -23,7 +23,7 @@ export const SleepUpdate = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // state
   const [sleep_day, setSleep_day] = useState(koreanDate);
-  const [SLEEP, setSLEEP] = useState<any>({});
+  const [SLEEP, setSLEEP] = useState<any> ({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

@@ -21,7 +21,7 @@ export const BoardList = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [BOARD_LIST, setBOARD_LIST] = useState<any>([]);
+  const [BOARD_LIST, setBOARD_LIST] = useState<any> ([]);
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {

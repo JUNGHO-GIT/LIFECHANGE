@@ -91,10 +91,10 @@ export const Header = () => {
         ]
       },
       {
-        label: "Workout",
+        label: "Work",
         items: [
-          {to: "/workoutList", label: "WorkoutList"},
-          {to: "/workoutInsert", label: "WorkoutInsert"}
+          {to: "/workInsert", label: "WorkInsert"},
+          {to: "/workListDay", label: "WorkListDay"}
         ]
       },
       {

@@ -13,7 +13,6 @@ export const SleepInsert = () => {
   const TITLE = "Sleep Insert";
   // url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const URL_USER = process.env.REACT_APP_URL_USER;
   // date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
@@ -21,16 +20,13 @@ export const SleepInsert = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state
+  // useState
   const [sleep_day, setSleep_day] = useState(koreanDate);
-  const [SLEEP, setSLEEP] = useState<any>({});
+  const [SLEEP, setSLEEP] = useState<any> ({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const setSleepDay = () => {
-      setSLEEP({ ...SLEEP, sleep_day: sleep_day });
-    };
-    setSleepDay();
+    setSLEEP({ ...SLEEP, sleep_day : sleep_day });
   }, [sleep_day]);
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
@@ -122,11 +118,11 @@ export const SleepInsert = () => {
             className="form-control"
             id="sleep_day"
             name="sleep_day"
+            placeholder="Day"
             value={SLEEP.sleep_day || ""}
             onChange={(event: any) => {
               setSLEEP({ ...SLEEP, sleep_day: event.target.value });
             }}
-            placeholder="Day"
             readOnly
           />
         </div>

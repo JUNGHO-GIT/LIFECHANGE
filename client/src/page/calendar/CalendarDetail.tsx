@@ -13,7 +13,7 @@ export const CalendarDetail = () => {
   const TITLE = "Calendar Detail";
   // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  const URL_WORK = process.env.REACT_APP_URL_WORK;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   // date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
@@ -27,13 +27,13 @@ export const CalendarDetail = () => {
   const calendar_month = location.state.calendar_month;
   const calendar_day = location.state.calendar_day;
   // state 1
-  const [FOOD_LIST, setFOOD_LIST] = useState<any>([]);
-  const [WORKOUT_LIST, setWORKOUT_LIST] = useState<any>([]);
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any>([]);
+  const [FOOD_LIST, setFOOD_LIST] = useState<any> ([]);
+  const [WORK_LIST, setWORK_LIST] = useState<any> ([]);
+  const [SLEEP_LIST, setSLEEP_LIST] = useState<any> ([]);
   // state 2
   const [calendar_regdate, setCalendar_regdate]
   = useState(`${calendar_year}-${calendar_month}-${calendar_day}`);
-  const [workout_regdate, setWorkout_regdate] = useState(koreanDate);
+  const [work_regdate, setWork_regdate] = useState(koreanDate);
   const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
   const [food_regdate, setFood_regdate] = useState(koreanDate);
 
@@ -59,23 +59,23 @@ export const CalendarDetail = () => {
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchWorkoutList = async () => {
+    const fetchWorkList = async () => {
       try {
-        const response = await axios.get(`${URL_WORKOUT}/workoutList`, {
+        const response = await axios.get(`${URL_WORK}/workList`, {
           params: {
             user_id: user_id,
-            workout_regdate: workout_regdate,
+            work_regdate: work_regdate,
           },
         });
-        setWORKOUT_LIST(response.data);
+        setWORK_LIST(response.data);
       }
       catch (error: any) {
-        alert(`Error fetching workout data: ${error.message}`);
-        setWORKOUT_LIST([]);
+        alert(`Error fetching work data: ${error.message}`);
+        setWORK_LIST([]);
       }
     };
-    fetchWorkoutList();
-  }, [user_id, workout_regdate]);
+    fetchWorkList();
+  }, [user_id, work_regdate]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -95,7 +95,7 @@ export const CalendarDetail = () => {
       }
     };
     fetchSleepList();
-  }, [user_id, workout_regdate]);
+  }, [user_id, work_regdate]);
 
   // 4. logic ------------------------------------------------------------------------------------->
   const logicViewDate = () => {
@@ -107,7 +107,7 @@ export const CalendarDetail = () => {
         onChange={(date: any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
-          setWorkout_regdate(selectedDate);
+          setWork_regdate(selectedDate);
           setSleep_regdate(selectedDate);
         }}
       />
@@ -141,7 +141,7 @@ export const CalendarDetail = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkoutList = () => {
+  const tableWorkList = () => {
     return (
       <table className="table table-bordered border-dark">
         <thead className="table-dark">
@@ -157,16 +157,16 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORKOUT_LIST.map((index: any) => (
+          {WORK_LIST.map((index: any) => (
             <tr>
               <td>{index.user_id}</td>
-              <td>{index.workout_part}</td>
-              <td>{index.workout_title}</td>
-              <td>{index.workout_kg}</td>
-              <td>{index.workout_set}</td>
-              <td>{index.workout_count}</td>
-              <td>{index.workout_rest}</td>
-              <td>{index.workout_time}</td>
+              <td>{index.work_part}</td>
+              <td>{index.work_title}</td>
+              <td>{index.work_kg}</td>
+              <td>{index.work_set}</td>
+              <td>{index.work_count}</td>
+              <td>{index.work_rest}</td>
+              <td>{index.work_time}</td>
             </tr>
           ))}
         </tbody>
@@ -221,7 +221,7 @@ export const CalendarDetail = () => {
         <div className="col-12">{tableFoodList()}</div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">{tableWorkoutList()}</div>
+        <div className="col-12">{tableWorkList()}</div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">{tableSleepList()}</div>

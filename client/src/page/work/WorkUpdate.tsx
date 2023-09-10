@@ -1,19 +1,18 @@
-// WorkoutUpdate.tsx
+// WorkUpdate.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {WorkoutSelect} from "./WorkoutSelect";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const WorkoutUpdate = () => {
+export const WorkUpdate = () => {
 
   // title
-  const TITLE = "Workout Update";
+  const TITLE = "Work Update";
   // url
-  const URL_WORKOUT = process.env.REACT_APP_URL_WORKOUT;
+  const URL_WORK = process.env.REACT_APP_URL_WORK;
   // date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
@@ -23,51 +22,51 @@ export const WorkoutUpdate = () => {
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [WORKOUT, setWORKOUT] = useState<any>({});
+  const [WORK, setWORK] = useState<any> ({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchWorkoutDetail = async () => {
+    const fetchWorkDetail = async () => {
       try {
-        const response = await axios.get(`${URL_WORKOUT}/workoutDetail`, {
+        const response = await axios.get(`${URL_WORK}/workDetail`, {
           params: {
             _id : _id,
           },
         });
-        setWORKOUT(response.data);
+        setWORK(response.data);
       }
       catch (error: any) {
-        alert(`Error fetching workout data: ${error.message}`);
-        setWORKOUT([]);
+        alert(`Error fetching work data: ${error.message}`);
+        setWORK([]);
       }
     };
-    fetchWorkoutDetail();
+    fetchWorkDetail();
   }, [_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowWorkoutUpdate = async () => {
+  const flowWorkUpdate = async () => {
     try {
-      const response = await axios.put (`${URL_WORKOUT}/workoutUpdate`, {
-        _id : WORKOUT._id,
-        WORKOUT : WORKOUT
+      const response = await axios.put (`${URL_WORK}/workUpdate`, {
+        _id : WORK._id,
+        WORK : WORK
       });
       if (response.data === "success") {
         alert("Update success");
-        navParam("/workoutList");
+        navParam("/workList");
       }
       else {
         alert("Update failed");
       }
     }
     catch (error: any) {
-      alert(`Error fetching workout data: ${error.message}`);
+      alert(`Error fetching work data: ${error.message}`);
     }
   };
 
   // 4. logic ------------------------------------------------------------------------------------->
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableWorkoutUpdate = () => {
+  const tableWorkUpdate = () => {
     return (
       <div>
         <div className="form-floating">
@@ -76,111 +75,100 @@ export const WorkoutUpdate = () => {
             className="form-control"
             id="user_id"
             placeholder="User ID"
-            value={WORKOUT.user_id ? WORKOUT.user_id : ""}
+            value={WORK.user_id ? WORK.user_id : ""}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
         </div>
-        <div>
-          <WorkoutSelect
-            workoutPart={WORKOUT.workout_part}
-            setWorkoutPart={(value : any) =>
-              setWORKOUT({ ...WORKOUT, workout_part: value })
-            }
-            workoutTitle={WORKOUT.workout_title}
-            setWorkoutTitle={(value: string) =>
-              setWORKOUT({ ...WORKOUT, workout_title: value })
-            }
-          />
-        </div>
+
         <div className="form-floating">
           <input
             type="text"
             className="form-control"
-            id="workout_set"
-            value={WORKOUT.workout_set ? WORKOUT.workout_set : ""}
+            id="work_set"
+            value={WORK.work_set ? WORK.work_set : ""}
             placeholder="Set"
             onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                workout_set: e.target.value,
+              setWORK({
+                ...WORK,
+                work_set: e.target.value,
               });
             }}
           />
-          <label htmlFor="workout_set">Set</label>
+          <label htmlFor="work_set">Set</label>
         </div>
         <div className="form-floating">
           <input
             type="text"
             className="form-control"
-            id="workout_count"
-            value={WORKOUT.workout_count ? WORKOUT.workout_count : ""}
+            id="work_count"
+            value={WORK.work_count ? WORK.work_count : ""}
             placeholder="Count"
             onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                workout_count: e.target.value,
+              setWORK({
+                ...WORK,
+                work_count: e.target.value,
               });
             }}
           />
-          <label htmlFor="workout_count">Count</label>
+          <label htmlFor="work_count">Count</label>
         </div>
         <div className="form-floating">
           <input
             type="text"
             className="form-control"
-            id="workout_kg"
-            value={WORKOUT.workout_kg ? WORKOUT.workout_kg : ""}
+            id="work_kg"
+            value={WORK.work_kg ? WORK.work_kg : ""}
             placeholder="Kg"
             onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                workout_kg: e.target.value,
+              setWORK({
+                ...WORK,
+                work_kg: e.target.value,
               });
             }}
           />
-          <label htmlFor="workout_kg">Kg</label>
+          <label htmlFor="work_kg">Kg</label>
         </div>
         <div className="form-floating">
           <input
             type="text"
             className="form-control"
-            id="workout_rest"
-            value={WORKOUT.workout_rest ? WORKOUT.workout_rest : ""}
+            id="work_rest"
+            value={WORK.work_rest ? WORK.work_rest : ""}
             placeholder="Rest"
             onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                workout_rest: e.target.value,
+              setWORK({
+                ...WORK,
+                work_rest: e.target.value,
               });
             }}
           />
-          <label htmlFor="workout_rest">Rest</label>
+          <label htmlFor="work_rest">Rest</label>
         </div>
         <div className="form-floating">
           <input
             type="text"
             className="form-control"
-            id="workout_time"
-            value={WORKOUT.workout_time ? WORKOUT.workout_time : ""}
+            id="work_time"
+            value={WORK.work_time ? WORK.work_time : ""}
             placeholder="Time"
             onChange={(e) => {
-              setWORKOUT({
-                ...WORKOUT,
-                workout_time: e.target.value,
+              setWORK({
+                ...WORK,
+                work_time: e.target.value,
               });
             }}
           />
-          <label htmlFor="workout_time">Time</label>
+          <label htmlFor="work_time">Time</label>
         </div>
       </div>
     );
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonWorkoutUpdate = () => {
+  const buttonWorkUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={flowWorkoutUpdate}>
+      <button className="btn btn-primary ms-2" type="button" onClick={flowWorkUpdate}>
         Update
       </button>
     );
@@ -206,9 +194,9 @@ export const WorkoutUpdate = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {tableWorkoutUpdate()}
+            {tableWorkUpdate()}
             <br/>
-            {buttonWorkoutUpdate()}
+            {buttonWorkUpdate()}
             {buttonRefreshPage()}
           </form>
         </div>

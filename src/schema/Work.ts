@@ -1,8 +1,8 @@
-// Workout.ts
+// Work.ts
 import mongoose from "mongoose";
 import moment from "moment-timezone";
 
-const WorkoutScheme = new mongoose.Schema ({
+const WorkScheme = new mongoose.Schema ({
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
@@ -11,42 +11,57 @@ const WorkoutScheme = new mongoose.Schema ({
     type :String,
     required : true
   },
-  workout_part : {
+  work_part : {
     type : String,
     required : true
   },
-  workout_title : {
+  work_title : {
     type : String,
     required : true
   },
-  workout_kg : {
+  work_kg : {
     type : String,
     required : true
   },
-  workout_set : {
+  work_set : {
     type : String,
     required : true
   },
-  workout_count : {
+  work_count : {
     type : String,
     required : true
   },
-  workout_rest : {
+  work_rest : {
     type : String,
     required : true
   },
-  workout_time : {
+  work_start : {
     type : String,
     required : true
   },
-  workout_regdate : {
+  work_end : {
+    type : String,
+    required : true
+  },
+  work_time : {
+    type : String,
+    required : true
+  },
+  work_day : {
+    type : String,
+    default : () => {
+      return "default";
+    },
+    required : true
+  },
+  work_regdate : {
     type : String,
     default : () => {
       return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
     required : true
   },
-  workout_update : {
+  work_update : {
     type : String,
     default : () => {
       return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -55,4 +70,4 @@ const WorkoutScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("Workout", WorkoutScheme);
+export default mongoose.model("Work", WorkScheme);

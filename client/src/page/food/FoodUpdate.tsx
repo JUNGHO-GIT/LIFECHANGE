@@ -23,7 +23,7 @@ export const FoodUpdate = () => {
   );
   const _id = location.state._id;
   // state
-  const [FOOD, setFOOD] = useState<any>({});
+  const [FOOD, setFOOD] = useState<any> ({});
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {

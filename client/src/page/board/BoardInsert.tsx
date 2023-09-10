@@ -20,7 +20,7 @@ export const BoardInsert = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [BOARD, setBOARD] = useState<any>({});
+  const [BOARD, setBOARD] = useState<any> ({});
 
   // 2. useEffect --------------------------------------------------------------------------------->
 

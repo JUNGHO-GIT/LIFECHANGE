@@ -21,7 +21,7 @@ export const UserUpdate = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [USER, setUSER] = useState<any>({});
+  const [USER, setUSER] = useState<any> ({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

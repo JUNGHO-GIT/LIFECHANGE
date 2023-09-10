@@ -24,7 +24,7 @@ export const FoodListPart = () => {
   const food_category = location.state.food_category;
   // state
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-  const [FOOD, setFOOD] = useState<any>([]);
+  const [FOOD, setFOOD] = useState<any> ([]);
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
@@ -134,7 +134,7 @@ export const FoodListPart = () => {
         <div className="col-12">
           <h1 className="mb-3 fw-9">
             {TITLE}
-            <span className="ms-4">({food_category})</span>
+            <span className="ms-4"> ({food_category})</span>
           </h1>
         </div>
       </div>
