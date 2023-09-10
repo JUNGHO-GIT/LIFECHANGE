@@ -6,18 +6,23 @@ import * as mongoose from "mongoose";
 export const workList = async (
   user_id_param: any,
   work_duration_param: any,
+  work_part_param: any,
+  work_title_param: any,
 ) => {
 
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
 
   const workList = await Work.find ({
-    user_id: user_id_param,
-    work_day: {
-      $gte: startDay,
-      $lte: endDay,
+    user_id:  user_id_param,
+    work_day : {
+      $gte : startDay,
+      $lte : endDay,
     },
-  }).sort({work_day: -1});
+    work_part : work_part_param,
+    work_title : work_title_param,
+
+  }).sort({work_day : -1});
 
   return workList;
 };
@@ -30,6 +35,7 @@ export const workAverage = async (
   const workAverage = await Work.find ({
     user_id: user_id_param,
     work_duration: work_duration_param,
+
   }).sort({work_day: -1});
 
   return workAverage;

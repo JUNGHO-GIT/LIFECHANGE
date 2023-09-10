@@ -10,6 +10,8 @@ workRouter.get("/workList", async (req: Request, res: Response) => {
     const workList = await workService.workList (
       req.query.user_id,
       req.query.work_duration,
+      req.query.work_part,
+      req.query.work_title,
     );
     if (workList) {
       res.send(workList);

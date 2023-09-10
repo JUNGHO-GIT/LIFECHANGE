@@ -153,7 +153,6 @@ export const WorkListYear = () => {
         month={selectedWorkYear}
         onMonthChange={flowYearChange}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
           selected: "selected",
           disabled: "disabled",
           outside: "outside",

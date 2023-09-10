@@ -146,7 +146,6 @@ export const WorkListMonth = () => {
         month={selectedWorkMonth}
         onMonthChange={flowMonthChange}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
           selected: "selected",
           disabled: "disabled",
           outside: "outside",

@@ -189,7 +189,6 @@ export const SleepListSelect = () => {
         onDayClick={flowDayClick}
         onMonthChange={(month) => setSelectedSleepStartDay(month)}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
           selected: "selected",
           disabled: "disabled",
           outside: "outside",

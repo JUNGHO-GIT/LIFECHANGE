@@ -46,7 +46,7 @@ export const WorkInsert = () => {
       const minutes = work_time_minutes % 60;
 
       const work_time_formatted
-      = `${String(hours).padStart(2, '0')}시간 ${String(minutes).padStart(2, '0')}분`;
+      = `${String(hours).padStart(2, "0")}시간 ${String(minutes).padStart(2, "0")}분`;
 
       setWORK({ ...WORK, work_time: work_time_formatted });
     };
@@ -143,9 +143,7 @@ export const WorkInsert = () => {
               <span className="input-group-text">Set</span>
               <input type="text" className="form-control" id="work_set"
                 placeholder="Set" onChange={(e) => {
-                  setWORK({
-                    ...WORK, work_set : e.target.value,
-                  });
+                  setWORK({ ...WORK, work_set : e.target.value });
                 }}
               />
             </div>
@@ -155,9 +153,7 @@ export const WorkInsert = () => {
               <span className="input-group-text">Count</span>
               <input type="text" className="form-control" id="work_count"
                 placeholder="Count" onChange={(e) => {
-                  setWORK({
-                    ...WORK, work_count : e.target.value,
-                  });
+                  setWORK({ ...WORK, work_count : e.target.value });
                 }}
               />
             </div>
@@ -169,9 +165,7 @@ export const WorkInsert = () => {
               <span className="input-group-text">Kg</span>
               <input type="text" className="form-control" id="work_kg"
                 placeholder="Kg" onChange={(e) => {
-                  setWORK({
-                    ...WORK, work_kg : e.target.value,
-                  });
+                  setWORK({ ...WORK, work_kg : e.target.value });
                 }}
               />
             </div>
@@ -181,9 +175,7 @@ export const WorkInsert = () => {
               <span className="input-group-text">Rest</span>
               <input type="text" className="form-control" id="work_rest"
                 placeholder="Rest" onChange={(e) => {
-                  setWORK({
-                    ...WORK, work_rest : e.target.value,
-                  });
+                  setWORK({ ...WORK, work_rest : e.target.value });
                 }}
               />
             </div>
@@ -195,9 +187,7 @@ export const WorkInsert = () => {
               <span className="input-group-text">Start</span>
               <TimePicker id="work_start" name="work_start" value={WORK.work_start}
                 disableClock={false} clockIcon={null} format="HH:mm" locale="ko"
-                onChange={(e:any) => {
-                  setWORK({ ...WORK, work_start:e });
-                }}
+                onChange={(e:any) => { setWORK({ ...WORK, work_start:e }); }}
               />
             </div>
           </div>
@@ -206,9 +196,7 @@ export const WorkInsert = () => {
               <span className="input-group-text">End</span>
               <TimePicker id="work_end" name="work_end" value={WORK.work_end}
                 disableClock={false} clockIcon={null} format="HH:mm" locale="ko"
-                onChange={(e:any) => {
-                  setWORK({ ...WORK, work_end:e });
-                }}
+                onChange={(e:any) => { setWORK({ ...WORK, work_end:e }); }}
               />
             </div>
           </div>
@@ -218,9 +206,8 @@ export const WorkInsert = () => {
             <div className="input-group mb-3">
               <span className="input-group-text">Time</span>
               <input type="text" className="form-control" id="work_time" name="work_time"
-                placeholder="Time" value={WORK.work_time || ""} onChange={(e:any) => {
-                  setWORK({ ...WORK, work_time: e.target.value });
-                }}
+                placeholder="Time" value={WORK.work_time || ""}
+                onChange={(e:any) => { setWORK({ ...WORK, work_time: e.target.value }); }}
                 readOnly
               />
             </div>

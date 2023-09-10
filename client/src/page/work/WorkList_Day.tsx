@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import {useStorage} from "../../assets/ts/useStorage";
+import { WorkPartSelect, WorkTitleSelect } from "./WorkSelect";
 import { ko } from "date-fns/locale";
 import { parseISO } from "date-fns";
 import moment from "moment-timezone";
@@ -25,6 +26,8 @@ export const WorkListDay = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [selectedWorkType, setSelectedWorkType] = useState<string> ("list");
+  const [selectedWorkPart, setSelectedWorkPart] = useState<string> ("");
+  const [selectedWorkTitle, setSelectedWorkTitle] = useState<string> ("");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
@@ -56,7 +59,9 @@ export const WorkListDay = () => {
         const response = await axios.get (`${URL_WORK}/workList`, {
           params: {
             user_id : user_id,
-            work_duration : resultDuration
+            work_duration : resultDuration,
+            work_part : selectedWorkPart,
+            work_title : selectedWorkTitle,
           }
         });
         setWORK_LIST(response.data);
@@ -67,7 +72,7 @@ export const WorkListDay = () => {
       }
     };
     fetchWorkList();
-  }, [user_id, resultDuration]);
+  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -77,6 +82,8 @@ export const WorkListDay = () => {
           params: {
             user_id : user_id,
             work_duration : resultDuration,
+            work_part : selectedWorkPart,
+            work_title : selectedWorkTitle,
           },
         });
         const isValidTime = (str: string) => {
@@ -106,7 +113,7 @@ export const WorkListDay = () => {
       }
     };
     fetchWorkAverage();
-  }, [user_id, resultDuration]);
+  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
 
   // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -140,11 +147,10 @@ export const WorkListDay = () => {
         onDayClick={flowDayClick}
         onMonthChange={(month) => setSelectedWorkDay(month)}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
-          selected: "selected",
-          disabled: "disabled",
-          outside: "outside",
-          inside: "inside",
+          selected : "selected",
+          disabled : "disabled",
+          outside : "outside",
+          inside : "inside",
         }}
       />
     );
@@ -212,7 +218,7 @@ export const WorkListDay = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 6-1. button ---------------------------------------------------------------------------------->
   const buttonWorkToday = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
@@ -270,6 +276,27 @@ export const WorkListDay = () => {
       </div>
     );
   };
+  const selectWorkPart = () => {
+    return (
+      <div className="mb-3">
+        <WorkPartSelect
+          work_part={selectedWorkPart}
+          setWorkPart={setSelectedWorkPart}
+        />
+      </div>
+    );
+  };
+  const selectWorkTitle = () => {
+    return (
+      <div className="mb-3">
+        <WorkTitleSelect
+          work_part={selectedWorkPart}
+          work_title={selectedWorkTitle}
+          setWorkTitle={setSelectedWorkTitle}
+        />
+      </div>
+    );
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -280,11 +307,17 @@ export const WorkListDay = () => {
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-6">
+        <div className="col-3">
           {selectWorkList()}
         </div>
-        <div className="col-6">
+        <div className="col-3">
           {selectWorkType()}
+        </div>
+        <div className="col-3">
+          {selectWorkPart()}
+        </div>
+        <div className="col-3">
+          {selectWorkTitle()}
         </div>
       </div>
       <div className="row d-center mt-5">

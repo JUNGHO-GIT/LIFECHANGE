@@ -172,7 +172,6 @@ export const WorkListWeek = () => {
           setSelectedWorkEndDay(month);
         }}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
           selected: "selected",
           disabled: "disabled",
           outside: "outside",

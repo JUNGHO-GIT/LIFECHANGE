@@ -172,7 +172,6 @@ export const SleepListWeek = () => {
           setSelectedSleepEndDay(month);
         }}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
           selected: "selected",
           disabled: "disabled",
           outside: "outside",

@@ -146,7 +146,6 @@ export const SleepListMonth = () => {
         month={selectedSleepMonth}
         onMonthChange={flowMonthChange}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
           selected: "selected",
           disabled: "disabled",
           outside: "outside",

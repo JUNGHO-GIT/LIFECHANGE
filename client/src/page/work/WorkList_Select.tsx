@@ -189,7 +189,6 @@ export const WorkListSelect = () => {
         onDayClick={flowDayClick}
         onMonthChange={(month) => setSelectedWorkStartDay(month)}
         modifiersClassNames={{
-          koreanDate: "koreanDate",
           selected: "selected",
           disabled: "disabled",
           outside: "outside",

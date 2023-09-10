@@ -1,22 +1,22 @@
 // WorkSelect.tsx
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 
 // ------------------------------------------------------------------------------------------------>
 interface WorkPartSelectProps {
   work_part: string;
-  setWorkPart: (value: string) => void;
+  setWorkPart: (value : string) => any;
 }
 interface WorkTitleSelectProps {
   work_part: string;
   work_title: string;
-  setWorkTitle: (value: string) => void;
+  setWorkTitle: (value : string) => any;
 }
 
 // ------------------------------------------------------------------------------------------------>
 const partOptions : string[] = [
   "등", "하체", "가슴", "어깨", "삼두", "이두", "유산소", "회복",
 ];
-const exerciseOptions : any = {
+const titleOptions : any = {
   등: [
     "데드리프트", "바벨로우", "덤벨로우", "시티드로우", "랫풀다운", "풀업",
   ],
@@ -45,18 +45,15 @@ const exerciseOptions : any = {
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkPartSelect : React.FC<WorkPartSelectProps> = ({
-  work_part, setWorkPart
+  work_part,
+  setWorkPart
 }) => {
 
-  useEffect(() => {
-    if (partOptions.length > 0 && !work_part) {
-      setWorkPart(partOptions[0]);
-    }
-  }, []);
-
   return (
-    <select className="form-select" onChange={(e) => setWorkPart(e.target.value)}>
-      {partOptions.map((part: any) => (
+    <select className="form-select" value={work_part} onChange={(e) => {
+      setWorkPart(e.target.value);
+    }}>
+      {partOptions.map((part) => (
         <option key={part} value={part}>
           {part}
         </option>
@@ -67,20 +64,28 @@ export const WorkPartSelect : React.FC<WorkPartSelectProps> = ({
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkTitleSelect: React.FC<WorkTitleSelectProps> = ({
-  work_part, work_title, setWorkTitle
+  work_part,
+  work_title,
+  setWorkTitle
 }) => {
 
   useEffect(() => {
-    if (work_part && exerciseOptions[work_part] && exerciseOptions[work_part].length > 0 && !work_title) {
-      setWorkTitle(exerciseOptions[work_part][0]);
+    if (titleOptions[work_part]) {
+      setWorkTitle(titleOptions[work_part][0]);
+    }
+    else {
+      setWorkTitle(titleOptions[partOptions[0]][0]);
     }
   }, [work_part]);
 
+
   return (
-    <select className="form-select" value={work_title} onChange={(e) => setWorkTitle(e.target.value)}>
-      {work_part && exerciseOptions[work_part].map((exercise: any) => (
-        <option key={exercise} value={exercise}>
-          {exercise}
+    <select className="form-select" value={work_title} onChange={(e) => {
+      setWorkTitle(e.target.value);
+    }}>
+      {work_part && titleOptions[work_part].map((title: any) => (
+        <option key={title} value={title}>
+          {title}
         </option>
       ))}
     </select>
