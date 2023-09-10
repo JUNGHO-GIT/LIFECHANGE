@@ -169,7 +169,7 @@ export const SleepListMonth = () => {
         </thead>
         <tbody>
           {SLEEP_LIST.map((index: any) => (
-            <tr>
+            <tr key={index._id}>
               <td className="pointer" onClick={() => {
                 navParam("/sleepDetail", {
                   state: {_id: index._id}

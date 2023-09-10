@@ -4,27 +4,27 @@ import {parseISO, formatISO} from "date-fns";
 // ------------------------------------------------------------------------------------------------>
 type SetStoredValue<T> = React.Dispatch<React.SetStateAction<T>>;
 
+
 // ------------------------------------------------------------------------------------------------>
 export function useStorage<T> (key: string, initialValue: T)  {
+
+  const datePattern = new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}");
+  const item = localStorage.getItem(key);
 
   // ---------------------------------------------------------------------------------------------->
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = localStorage.getItem(key);
       if (item === null) {
         return initialValue;
       }
-
-      const datePattern = new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}");
-      if (datePattern.test(item.trim())) {
+      else if (datePattern.test(item.trim())) {
         const parsedDate = parseISO(item);
         if (isNaN(parsedDate.getTime())) {
           throw new Error("Invalid date format");
         }
         return parsedDate as unknown as T;
       }
-
-      if (typeof item === "string") {
+      else if (typeof item === "string") {
         try {
           return JSON.parse(item) as T;
         }
@@ -32,7 +32,9 @@ export function useStorage<T> (key: string, initialValue: T)  {
           return initialValue;
         }
       }
-      return item;
+      else {
+        return item;
+      }
     }
     catch (error) {
       console.error(error);
@@ -57,7 +59,7 @@ export function useStorage<T> (key: string, initialValue: T)  {
 
   // ---------------------------------------------------------------------------------------------->
   return {
-    value: storedValue,
-    setValue: setStoredValue as SetStoredValue<T>,
+    value : storedValue,
+    setValue : setStoredValue as SetStoredValue<T>,
   };
 }

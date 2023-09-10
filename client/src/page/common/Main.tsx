@@ -49,21 +49,19 @@ const MainStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
- const CarouselFirst = () => {
-
+const CarouselFirst = () => {
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (window.sessionStorage.getItem("user_id") == null) {
       alert("Please userLogin to use this service.");
-    }
-    else {
+    } else {
       window.location.href = "http://www.junghomun.com:8888";
     }
   };
 
   return (
     <div className="carousel-item active">
-      <rect width="100%" height="100%" fill="#eeeeee" />
+      <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
       <div className="carousel-caption tt-s">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
@@ -74,10 +72,7 @@ const MainStyle = createGlobalStyle`
     </div>
   );
 };
-
-// ------------------------------------------------------------------------------------------------>
 const CarouselSecond = () => {
-
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     window.location.href = "http://www.junghomun.com:8888";
@@ -85,7 +80,7 @@ const CarouselSecond = () => {
 
   return (
     <div className="carousel-item">
-      <rect width="100%" height="100%" fill="#eeeeee" />
+      <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
       <div className="carousel-caption tt-c">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
@@ -96,10 +91,7 @@ const CarouselSecond = () => {
     </div>
   );
 };
-
-// ------------------------------------------------------------------------------------------------>
 const CarouselThird = () => {
-
   const enterIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     window.location.href = "http://www.junghomun.com:8888";
@@ -107,7 +99,7 @@ const CarouselThird = () => {
 
   return (
     <div className="carousel-item">
-      <rect width="100%" height="100%" fill="#eeeeee" />
+      <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
       <div className="carousel-caption tt-e">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
@@ -118,6 +110,7 @@ const CarouselThird = () => {
     </div>
   );
 };
+
 
 // ------------------------------------------------------------------------------------------------>
 export const Main = () => {
