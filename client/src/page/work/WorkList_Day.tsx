@@ -22,8 +22,9 @@ export const WorkListDay = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // useState
-  const [selectedType, setSelectedType] = useState<string> ("list");
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const [selectedWorkType, setSelectedWorkType] = useState<string> ("list");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
@@ -35,20 +36,20 @@ export const WorkListDay = () => {
   const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
     "resultDuration_DAY", "0000-00-00 ~ 0000-00-00"
   );
+  const {value:averageWorkStart, setValue:setAverageWorkStart} = useStorage<string> (
+    "averageWorkStart_DAY", "00:00"
+  );
+  const {value:averageWorkEnd, setValue:setAverageWorkEnd} = useStorage<string> (
+    "averageWorkEnd_DAY", "00:00"
+  );
   const {value:averageWorkTime, setValue:setAverageWorkTime} = useStorage<string> (
     "averageWorkTime_DAY", "00:00"
-  );
-  const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
-    "averageWorkNight_DAY", "00:00"
-  );
-  const {value:averageWorkMorning, setValue:setAverageWorkMorning} = useStorage<string> (
-    "averageWorkMorning_DAY", "00:00"
   );
   const {value:selectedWorkDay, setValue:setSelectedWorkDay} = useStorage<Date | undefined> (
     "selectedWorkDay_DAY", undefined
   );
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkList = async () => {
       try {
@@ -57,26 +58,6 @@ export const WorkListDay = () => {
             user_id : user_id,
             work_duration : resultDuration
           }
-        });
-        setWORK_LIST(response.data);
-      }
-      catch (error: any) {
-        alert(`Error fetching work data: ${error.message}`);
-        setWORK_LIST([]);
-      }
-    };
-    fetchWorkList();
-  }, [user_id, resultDuration]);
-
-  // 2-2. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const fetchWorkList = async () => {
-      try {
-        const response = await axios.get (`${URL_WORK}/workAverage`, {
-          params: {
-            user_id : user_id,
-            work_duration : resultDuration,
-          },
         });
         setWORK_LIST(response.data);
       }
@@ -98,35 +79,48 @@ export const WorkListDay = () => {
             work_duration : resultDuration,
           },
         });
-
         const isValidTime = (str: string) => {
           return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
         };
+        setAverageWorkStart (
+          isValidTime(response.data.averageWorkStart)
+          ? response.data.averageWorkStart
+          : "00:00"
+        );
+        setAverageWorkEnd (
+          isValidTime(response.data.averageWorkEnd)
+          ? response.data.averageWorkEnd
+          : "00:00"
+        );
         setAverageWorkTime (
           isValidTime(response.data.averageWorkTime)
           ? response.data.averageWorkTime
           : "00:00"
         );
-        setAverageWorkNight (
-          isValidTime(response.data.averageWorkNight)
-          ? response.data.averageWorkNight
-          : "00:00"
-        );
-        setAverageWorkMorning (
-          isValidTime(response.data.averageWorkMorning)
-          ? response.data.averageWorkMorning
-          : "00:00"
-        );
       }
       catch (error: any) {
         alert(`Error fetching work data: ${error.message}`);
+        setAverageWorkStart("00:00");
+        setAverageWorkEnd("00:00");
         setAverageWorkTime("00:00");
-        setAverageWorkNight("00:00");
-        setAverageWorkMorning("00:00");
       }
     };
     fetchWorkAverage();
   }, [user_id, resultDuration]);
+
+  // 2-4. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const formatValue = (value: number): string => {
+      return value < 10 ? `0${value}` : `${value}`;
+    };
+    if (selectedWorkDay) {
+      const year = selectedWorkDay.getFullYear();
+      const month = formatValue(selectedWorkDay.getMonth() + 1);
+      const date = formatValue(selectedWorkDay.getDate());
+      setResultValue(parseISO(`${year}-${month}-${date}`));
+      setResultDuration(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+    }
+  }, [selectedWorkDay]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick: DayClickEventHandler = (day:any) => {
@@ -180,7 +174,7 @@ export const WorkListDay = () => {
                   state: {_id: index._id}
                 }
               )}}>
-                {index.work_user_id}
+                {index.user_id}
               </td>
               <td>{index.work_part}</td>
               <td>{index.work_title}</td>
@@ -209,8 +203,8 @@ export const WorkListDay = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{averageWorkNight}</td>
-            <td>{averageWorkMorning}</td>
+            <td>{averageWorkStart}</td>
+            <td>{averageWorkEnd}</td>
             <td>{averageWorkTime}</td>
           </tr>
         </tbody>
@@ -264,10 +258,10 @@ export const WorkListDay = () => {
       <div className="mb-3">
         <select className="form-select" id="workType" onChange={(e) => {
           if (e.target.value === "list") {
-            setSelectedType("list");
+            setSelectedWorkType("list");
           }
           else if (e.target.value === "average") {
-            setSelectedType("average");
+            setSelectedWorkType("average");
           }
         }}>
           <option value="list">List</option>
@@ -299,8 +293,8 @@ export const WorkListDay = () => {
           {viewWorkDay()}
         </div>
         <div className="col-8">
-          {selectedType === "list" && tableWorkList()}
-          {selectedType === "average" && tableWorkAverage()}
+          {selectedWorkType === "list" && tableWorkList()}
+          {selectedWorkType === "average" && tableWorkAverage()}
         </div>
       </div>
       <div className="row d-center mb-20">
