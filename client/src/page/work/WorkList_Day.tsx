@@ -198,16 +198,40 @@ export const WorkListDay = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>취침 평균</th>
-            <th>기상 평균</th>
-            <th>수면 평균</th>
+            <th>타이틀</th>
+            <th>파트</th>
+            <th>횟수</th>
+            <th>무게</th>
+            <th>휴식</th>
+            <th>시간</th>
           </tr>
         </thead>
         <tbody>
+          {WORK_LIST.map((index: any) => (
+            <tr key={index._id}>
+              <td>{index.work_title}</td>
+              <td>{index.work_part}</td>
+              <td>{index.work_count}</td>
+              <td>{index.work_kg}</td>
+              <td>{index.work_rest}</td>
+              <td>{index.work_time}</td>
+            </tr>
+          ))}
           <tr>
-            <td>{averageWorkStart}</td>
-            <td>{averageWorkEnd}</td>
+            <td>합계</td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td>{averageWorkTime}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>평균</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{averageWorkTime}</td>
+            <td></td>
           </tr>
         </tbody>
       </table>

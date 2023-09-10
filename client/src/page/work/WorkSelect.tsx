@@ -4,12 +4,12 @@ import React, {useEffect} from "react";
 // ------------------------------------------------------------------------------------------------>
 interface WorkPartSelectProps {
   work_part: string;
-  setWorkPart: (value : string) => any;
+  setWorkPart: (value : any) => any;
 }
 interface WorkTitleSelectProps {
   work_part: string;
   work_title: string;
-  setWorkTitle: (value : string) => any;
+  setWorkTitle: (value : any) => any;
 }
 
 // ------------------------------------------------------------------------------------------------>
@@ -78,6 +78,9 @@ export const WorkTitleSelect: React.FC<WorkTitleSelectProps> = ({
     else if (titleOptions[work_part]) {
       setWorkTitle(titleOptions[work_part]);
     }
+    else {
+      setWorkTitle([]);
+    }
   }, [work_part]);
 
   const getCurrentTitles = () => {
@@ -85,9 +88,10 @@ export const WorkTitleSelect: React.FC<WorkTitleSelectProps> = ({
       return Object.values(titleOptions).flat();
     }
     else {
-      return titleOptions[work_part];
+      return titleOptions[work_part] || [];
     }
   }
+
   return (
     <select className="form-select" value={work_title} onChange={(e) => {
       const selectedValue = e.target.value;

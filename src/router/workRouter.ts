@@ -32,6 +32,8 @@ workRouter.get("/workAverage", async (req: Request, res: Response) => {
     const workAverage = await workService.workAverage (
       req.query.user_id,
       req.query.work_duration,
+      req.query.work_part,
+      req.query.work_title,
     );
     if (workAverage) {
       res.send(workAverage);

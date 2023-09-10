@@ -33,8 +33,8 @@ export const sleepAverage = async (
   const endDay = sleep_duration_param.split(` ~ `)[1];
 
   const sleepsInRange = await Sleep.find({
-    user_id: user_id_param,
-    sleep_day: {
+    user_id : user_id_param,
+    sleep_day : {
       $gte: startDay,
       $lte: endDay,
     },

@@ -40,14 +40,55 @@ export const workList = async (
 
 // 1-2. workAverage ------------------------------------------------------------------------------->
 export const workAverage = async (
-  user_id_param: any,
-  work_duration_param: any,
+  user_id_param : any,
+  work_duration_param : any,
+  work_part_param : any,
+  work_title_param : any,
 ) => {
-  const workAverage = await Work.find ({
-    user_id: user_id_param,
-    work_duration: work_duration_param,
 
-  }).sort({work_day: -1});
+  const startDay = work_duration_param.split(` ~ `)[0];
+  const endDay = work_duration_param.split(` ~ `)[1];
+
+  let partParam = {};
+
+  if (work_part_param = "전체") {
+    partParam = {
+      $in : ["등", "하체", "가슴", "어깨", "삼두", "이두", "유산소"]
+    };
+  }
+  else {
+    partParam = work_part_param;
+  }
+
+  const workAverage = await Work.aggregate ([
+    {
+      $match : {
+        user_id : user_id_param,
+        work_day : {
+          $gte : startDay,
+          $lte : endDay,
+        },
+        work_part : partParam,
+        work_title : work_title_param,
+      },
+    },
+    {
+      $group : {
+        _id : "$work_title",
+        work_title : {$first : "$work_title"},
+        work_part : {$first : "$work_part"},
+        work_count : {$avg : "$work_count"},
+        work_kg : {$avg : "$work_kg"},
+        work_rest : {$avg : "$work_rest"},
+        work_time : {$avg : "$work_time"},
+      },
+    },
+    {
+      $sort : {
+        work_title : 1,
+      },
+    },
+  ]);
 
   return workAverage;
 };

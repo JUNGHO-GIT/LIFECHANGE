@@ -46,7 +46,7 @@ export const WorkInsert = () => {
       const minutes = work_time_minutes % 60;
 
       const work_time_formatted
-      = `${String(hours).padStart(2, "0")}시간 ${String(minutes).padStart(2, "0")}분`;
+      = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 
       setWORK({ ...WORK, work_time: work_time_formatted });
     };
