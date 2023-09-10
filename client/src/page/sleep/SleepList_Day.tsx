@@ -23,7 +23,7 @@ export const SleepListDay = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // useState
-  const [selectedType, setSelectedType] = useState<string> ("list");
+  const [selectedSleepType, setSelectedSleepType] = useState<string> ("list");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
@@ -250,10 +250,10 @@ export const SleepListDay = () => {
       <div className="mb-3">
         <select className="form-select" id="sleepType" onChange={(e) => {
           if (e.target.value === "list") {
-            setSelectedType("list");
+            setSelectedSleepType("list");
           }
           else if (e.target.value === "average") {
-            setSelectedType("average");
+            setSelectedSleepType("average");
           }
         }}>
           <option value="list">List</option>
@@ -285,8 +285,8 @@ export const SleepListDay = () => {
           {viewSleepDay()}
         </div>
         <div className="col-8">
-          {selectedType === "list" && tableSleepList()}
-          {selectedType === "average" && tableSleepAverage()}
+          {selectedSleepType === "list" && tableSleepList()}
+          {selectedSleepType === "average" && tableSleepAverage()}
         </div>
       </div>
       <div className="row d-center mb-20">
