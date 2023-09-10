@@ -165,7 +165,10 @@ export const SleepListWeek = () => {
         }}
         month={selectedStartDay}
         onDayClick={flowDayClick}
-        onMonthChange={(month) => setSelectedStartDay(month)}
+        onMonthChange={(month) => {
+          setSelectedStartDay(month);
+          setSelectedEndDay(month);
+        }}
         modifiersClassNames={{
           koreanDate: "koreanDate",
           selected: "selected",
