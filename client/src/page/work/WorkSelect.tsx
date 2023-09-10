@@ -53,6 +53,7 @@ export const WorkPartSelect : React.FC<WorkPartSelectProps> = ({
     <select className="form-select" value={work_part} onChange={(e) => {
       setWorkPart(e.target.value);
     }}>
+      <option value="전체">전체</option>
       {partOptions.map((part) => (
         <option key={part} value={part}>
           {part}
@@ -70,20 +71,30 @@ export const WorkTitleSelect: React.FC<WorkTitleSelectProps> = ({
 }) => {
 
   useEffect(() => {
-    if (titleOptions[work_part]) {
-      setWorkTitle(titleOptions[work_part][0]);
+    if (work_part === "전체") {
+      const allTitles:any = Object.values(titleOptions).flat();
+      setWorkTitle(allTitles);
     }
-    else {
-      setWorkTitle(titleOptions[partOptions[0]][0]);
+    else if (titleOptions[work_part]) {
+      setWorkTitle(titleOptions[work_part]);
     }
   }, [work_part]);
 
-
+  const getCurrentTitles = () => {
+    if (work_part === "전체") {
+      return Object.values(titleOptions).flat();
+    }
+    else {
+      return titleOptions[work_part];
+    }
+  }
   return (
     <select className="form-select" value={work_title} onChange={(e) => {
-      setWorkTitle(e.target.value);
+      const selectedValue = e.target.value;
+      setWorkTitle(selectedValue === "전체" ? getCurrentTitles() : selectedValue);
     }}>
-      {work_part && titleOptions[work_part].map((title: any) => (
+      <option value="전체">전체</option>
+      {getCurrentTitles().map((title: string) => (
         <option key={title} value={title}>
           {title}
         </option>

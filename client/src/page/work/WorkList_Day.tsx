@@ -26,8 +26,8 @@ export const WorkListDay = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [selectedWorkType, setSelectedWorkType] = useState<string> ("list");
-  const [selectedWorkPart, setSelectedWorkPart] = useState<string> ("");
-  const [selectedWorkTitle, setSelectedWorkTitle] = useState<string> ("");
+  const [selectedWorkPart, setSelectedWorkPart] = useState<string> ("전체");
+  const [selectedWorkTitle, setSelectedWorkTitle] = useState<string> ("전체");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
@@ -71,11 +71,6 @@ export const WorkListDay = () => {
         setWORK_LIST([]);
       }
     };
-    fetchWorkList();
-  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
     const fetchWorkAverage = async () => {
       try {
         const response = await axios.get (`${URL_WORK}/workAverage`, {
@@ -112,6 +107,7 @@ export const WorkListDay = () => {
         setAverageWorkTime("00:00");
       }
     };
+    fetchWorkList();
     fetchWorkAverage();
   }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
 
