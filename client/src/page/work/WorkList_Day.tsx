@@ -1,9 +1,9 @@
-// WorkListDay.tsx
+/* // WorkListDay.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import {useStorage} from "../../assets/ts/useStorage";
-import { WorkPartSelect, WorkTitleSelect } from "./WorkSelect";
+import {WorkSelect} from "./WorkSelect";
 import { ko } from "date-fns/locale";
 import { parseISO } from "date-fns";
 import moment from "moment-timezone";
@@ -296,25 +296,14 @@ export const WorkListDay = () => {
       </div>
     );
   };
-  const selectWorkPart = () => {
+  const selectWork = () => {
     return (
-      <div className="mb-3">
-        <WorkPartSelect
-          work_part={selectedWorkPart}
-          setWorkPart={setSelectedWorkPart}
-        />
-      </div>
-    );
-  };
-  const selectWorkTitle = () => {
-    return (
-      <div className="mb-3">
-        <WorkTitleSelect
-          work_part={selectedWorkPart}
-          work_title={selectedWorkTitle}
-          setWorkTitle={setSelectedWorkTitle}
-        />
-      </div>
+      <WorkSelect
+        work_part={selectedWorkPart}
+        work_title={selectedWorkTitle}
+        setWorkPart={setSelectedWorkPart}
+        setWorkTitle={setSelectedWorkTitle}
+      />
     );
   };
 
@@ -334,10 +323,7 @@ export const WorkListDay = () => {
           {selectWorkType()}
         </div>
         <div className="col-3">
-          {selectWorkPart()}
-        </div>
-        <div className="col-3">
-          {selectWorkTitle()}
+          {selectWork()}
         </div>
       </div>
       <div className="row d-center mt-5">
@@ -359,3 +345,4 @@ export const WorkListDay = () => {
     </div>
   );
 };
+ */

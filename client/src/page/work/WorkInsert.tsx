@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import { WorkPartSelect, WorkTitleSelect } from "./WorkSelect";
+import {WorkSelect} from "./WorkSelect";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkInsert = () => {
@@ -24,7 +24,7 @@ export const WorkInsert = () => {
   // useState
   const [work_day, setWork_day] = useState(koreanDate);
   const [WORK, setWORK] = useState<any> ({});
-
+  const [renderAmount, setRenderAmount]  = useState<any> ({});
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setWORK({ ...WORK, work_day : work_day });
@@ -113,28 +113,21 @@ export const WorkInsert = () => {
           </div>
         </div>
         <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Part</span>
-              <WorkPartSelect
-                work_part={WORK.work_part}
-                setWorkPart={(work_part: any) => {
-                  setWORK({ ...WORK, work_part : work_part });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Title</span>
-              <WorkTitleSelect
-                work_part={WORK.work_part}
-                work_title={WORK.work_title}
-                setWorkTitle={(work_title: any) => {
-                  setWORK({ ...WORK, work_title : work_title });
-                }}
-              />
-            </div>
+          <div className="col-10">
+            <WorkSelect
+              work_renderAmount={renderAmount}
+              work_part={WORK.work_part}
+              work_title={WORK.work_title}
+              setWorkRenderAmount={(work_renderAmount: any) => {
+                setRenderAmount(work_renderAmount);
+              }}
+              setWorkPart={(work_part: any) => {
+                setWORK({ ...WORK, work_part : work_part });
+              }}
+              setWorkTitle={(work_title: any) => {
+                setWORK({ ...WORK, work_title : work_title });
+              }}
+            />
           </div>
         </div>
         <div className="row d-center">
