@@ -53,23 +53,24 @@ export const Test2 = () => {
 
   // ---------------------------------------------------------------------------------------------->
   const handleInsert = () => {
-    const data = selectedWorkTypes.map((type, index) => {
+    const data:any = selectedWorkTypes.map((type, index) => {
       const selectedWork = document.querySelectorAll("select")[index * 2 + 1].value;
+      let works: string;
+      let workType;
 
       if (type === "전체") {
-        const allWorkTypes = Object.keys(WORK[0]).filter(item => item !== "전체").join(", ");
-        return {
-          workType: allWorkTypes,
-          work: WORK[0]["전체"]
-        };
+        workType = Object.keys(WORK[0]).filter(item => item !== "전체").join(", ");
+        works = WORK[0]["전체"].join(', ');
       }
       else {
-        const works = selectedWork === "전체" ? WORK[0][type] : [selectedWork];
-        return {
-          workType: type,
-          work: works
-        };
+        works = selectedWork === "전체" ? WORK[0][type].join(', ') : selectedWork;
+        workType = type;
       }
+
+      return {
+        workType : workType,
+        work : works
+      };
     });
     setSelectedData(data);
   };
@@ -84,27 +85,23 @@ export const Test2 = () => {
   // ---------------------------------------------------------------------------------------------->
   const setAmount = () => {
     return (
-      <input
-        type="number"
-        className="form-control"
-        defaultValue={1}
-        value={workRenderAmount}
-        min={1}
-        onChange={(e) => {
-          const newAmount = Number(e.target.value);
-
-          setWorkRenderAmount(newAmount);
-
-          setSelectedWorkTypes((prev) => {
-            if (newAmount > prev.length) {
-              return [...prev, ...Array(newAmount - prev.length).fill("전체")];
-            }
-            else {
-              return prev.slice(0, newAmount);
-            }
-          });
-        }}
-      />
+      <div className="input-group">
+        <span className="input-group-text">운동 총 갯수</span>
+        <input type="number" className="form-control" defaultValue={1} value={workRenderAmount}
+          min={1} onChange={(e) => {
+            const newAmount = Number(e.target.value);
+            setWorkRenderAmount(newAmount);
+            setSelectedWorkTypes((prev) => {
+              if (newAmount > prev.length) {
+                return [...prev, ...Array(newAmount - prev.length).fill("전체")];
+              }
+              else {
+                return prev.slice(0, newAmount);
+              }
+            });
+          }}
+        />
+      </div>
     );
   };
 
@@ -113,32 +110,33 @@ export const Test2 = () => {
     let workRenderList = [];
 
     for (let i = 0; i < workRenderAmount; i++) {
-      workRenderList.push(
-        <div key={i}>
-          <select
-            value={selectedWorkTypes[i] || "전체"}
+      workRenderList.push (
+        <div className="input-group">
+          <span className="input-group-text">부위 - 운동</span>
+          <div key={i} className="d-flex">
+            <select value={selectedWorkTypes[i] || "전체"} className="form-select"
             onChange={(e) => {
               updateSelectedWorkType(i, e.target.value);
-            }}
-          >
-            {Object.keys(WORK[0]).map((item, index) => {
-              return (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
-          <select>
-            <option value="전체">전체</option>
-            {(WORK[0][selectedWorkTypes[i]] || []).map((item, index) => {
-              return (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
+            }}>
+              {Object.keys(WORK[0]).map((item, index) => {
+                return (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+            <select className="form-select">
+              <option value="전체">전체</option>
+              {(WORK[0][selectedWorkTypes[i]] || []).map((item, index) => {
+                return (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
         </div>
       );
     }
@@ -147,26 +145,14 @@ export const Test2 = () => {
 
   // ---------------------------------------------------------------------------------------------->
   return (
-    <div className="container mt-20">
-      <div className="row d-center">
-        <div className="col-3">
-          {setAmount()}
-        </div>
-        <div className="col-9">
-          {workRender()}
-          <button onClick={handleInsert}>Insert</button>
-        </div>
+    <div className="row d-center">
+      <div className="col-3">
+        {setAmount()}
       </div>
-      <div className="mt-20">
-        <h4>선택된 데이터:</h4>
-        <div>
-          {selectedData.map((data, index) => (
-            <div key={index}>
-              <span>{data.workType}</span> - <span>{data.work.join(', ')}</span>
-            </div>
-          ))}
-        </div>
+      <div className="col-9">
+        {workRender()}
       </div>
     </div>
   );
 };
+
