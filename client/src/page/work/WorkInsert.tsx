@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {WorkSelect} from "./WorkSelect";
+import { Test2 } from "../common/Test2";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkInsert = () => {
@@ -24,7 +24,7 @@ export const WorkInsert = () => {
   // useState
   const [work_day, setWork_day] = useState(koreanDate);
   const [WORK, setWORK] = useState<any> ({});
-  const [renderAmount, setRenderAmount]  = useState<any> ({});
+
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setWORK({ ...WORK, work_day : work_day });
@@ -114,20 +114,7 @@ export const WorkInsert = () => {
         </div>
         <div className="row d-center">
           <div className="col-10">
-            <WorkSelect
-              work_renderAmount={renderAmount}
-              work_part={WORK.work_part}
-              work_title={WORK.work_title}
-              setWorkRenderAmount={(work_renderAmount: any) => {
-                setRenderAmount(work_renderAmount);
-              }}
-              setWorkPart={(work_part: any) => {
-                setWORK({ ...WORK, work_part : work_part });
-              }}
-              setWorkTitle={(work_title: any) => {
-                setWORK({ ...WORK, work_title : work_title });
-              }}
-            />
+            <Test2 />
           </div>
         </div>
         <div className="row d-center">

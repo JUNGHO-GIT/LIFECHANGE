@@ -38,7 +38,7 @@ export const Test2 = () => {
     Array(workRenderAmount).fill("전체")
   );
   const [WORK, setWORK] = useState<Record<string, string[]>[]>([workArray]);
-  const [selectedData, setSelectedData] = useState<{workType: string, work: string[]}[]>([]);
+  const [selectedData, setSelectedData] = useState<{work_part: string, work: string[]}[]>([]);
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
@@ -55,21 +55,21 @@ export const Test2 = () => {
   const handleInsert = () => {
     const data:any = selectedWorkTypes.map((type, index) => {
       const selectedWork = document.querySelectorAll("select")[index * 2 + 1].value;
-      let works: string;
-      let workType;
+      let work_title: string;
+      let work_part;
 
       if (type === "전체") {
-        workType = Object.keys(WORK[0]).filter(item => item !== "전체").join(", ");
-        works = WORK[0]["전체"].join(', ');
+        work_part = Object.keys(WORK[0]).filter(item => item !== "전체").join(", ");
+        work_title = WORK[0]["전체"].join(', ');
       }
       else {
-        works = selectedWork === "전체" ? WORK[0][type].join(', ') : selectedWork;
-        workType = type;
+        work_title = selectedWork === "전체" ? WORK[0][type].join(', ') : selectedWork;
+        work_part = type;
       }
 
       return {
-        workType : workType,
-        work : works
+        work_part : work_part,
+        work_title : work_title
       };
     });
     setSelectedData(data);
