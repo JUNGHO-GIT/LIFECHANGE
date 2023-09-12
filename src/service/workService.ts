@@ -13,24 +13,13 @@ export const workList = async (
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
 
-  let partParam = {};
-
-  if (work_part_param = "전체") {
-    partParam = {
-      $in : ["등", "하체", "가슴", "어깨", "삼두", "이두", "유산소"]
-    };
-  }
-  else {
-    partParam = work_part_param;
-  }
-
   const workList = await Work.find ({
     user_id:  user_id_param,
     work_day : {
       $gte : startDay,
       $lte : endDay,
     },
-    work_part : partParam,
+    work_part : work_part_param,
     work_title : work_title_param,
 
   }).sort({work_day : -1});
@@ -49,17 +38,6 @@ export const workAverage = async (
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
 
-  let partParam = {};
-
-  if (work_part_param = "전체") {
-    partParam = {
-      $in : ["등", "하체", "가슴", "어깨", "삼두", "이두", "유산소"]
-    };
-  }
-  else {
-    partParam = work_part_param;
-  }
-
   const workAverage = await Work.aggregate ([
     {
       $match : {
@@ -68,7 +46,7 @@ export const workAverage = async (
           $gte : startDay,
           $lte : endDay,
         },
-        work_part : partParam,
+        work_part : work_part_param,
         work_title : work_title_param,
       },
     },

@@ -49,9 +49,6 @@ const WorkScheme = new mongoose.Schema ({
   },
   work_day : {
     type : String,
-    default : () => {
-      return "default";
-    },
     required : true
   },
   work_regdate : {

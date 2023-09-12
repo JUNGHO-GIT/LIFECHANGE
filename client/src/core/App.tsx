@@ -20,8 +20,8 @@ import { Header } from "../layout/Header";
 import { Footer } from "../layout/Footer";
 import { Hover } from "../components/Hover";
 import { Main } from "../page/common/Main";
-import { Test2 } from "../page/common/Test2";
-
+/* import { Test2 } from "../page/common/Test2";
+ */
 import { UserLogin } from "../page/user/UserLogin";
 import { UserInsert } from "../page/user/UserInsert";
 import { UserDetail } from "../page/user/UserDetail";
@@ -46,8 +46,8 @@ import { FoodUpdate } from "../page/food/FoodUpdate";
 
 import { WorkInsert } from "../page/work/WorkInsert";
 import { WorkDetail } from "../page/work/WorkDetail";
-import { WorkUpdate } from "../page/work/WorkUpdate";/*
-import { WorkListDay } from "../page/work/WorkList_Day"; */
+import { WorkUpdate } from "../page/work/WorkUpdate";
+import { WorkListDay } from "../page/work/WorkList_Day";
 import { WorkListWeek } from "../page/work/WorkList_Week";
 import { WorkListMonth } from "../page/work/WorkList_Month";
 import { WorkListYear } from "../page/work/WorkList_Year";
@@ -73,7 +73,7 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/test" element={<Test2 />} />
+          {/* <Route path="/test" element={<Test2 />} /> */}
 
           <Route path="/userLogin" element={<UserLogin />} />
           <Route path="/userInsert" element={<UserInsert />} />
@@ -99,8 +99,8 @@ const App = () => {
 
           <Route path="/workInsert" element={<WorkInsert />} />
           <Route path="/workDetail" element={<WorkDetail />} />
-          <Route path="/workUpdate" element={<WorkUpdate />} />{/*
-          <Route path="/workListDay" element={<WorkListDay />} /> */}
+          <Route path="/workUpdate" element={<WorkUpdate />} />
+          <Route path="/workListDay" element={<WorkListDay />} />
           <Route path="/workListWeek" element={<WorkListWeek />} />
           <Route path="/workListMonth" element={<WorkListMonth />} />
           <Route path="/workListYear" element={<WorkListYear />} />
