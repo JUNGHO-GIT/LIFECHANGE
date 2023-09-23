@@ -63,7 +63,7 @@ export const BoardInsert = () => {
             id="user_id"
             placeholder="User ID"
             value={user_id ? user_id : ""}
-            onChange={(event: any) => {
+            onChange={(event:any) => {
               setBOARD({...BOARD, user_id: event.target.value});
             }}
             readOnly

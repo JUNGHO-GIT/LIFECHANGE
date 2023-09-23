@@ -61,7 +61,7 @@ export const SleepListMonth = () => {
         });
         setSLEEP_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP_LIST([]);
       }
@@ -99,7 +99,7 @@ export const SleepListMonth = () => {
           : "00:00"
         );
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setAverageSleepTime("00:00");
         setAverageSleepNight("00:00");
@@ -169,7 +169,7 @@ export const SleepListMonth = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP_LIST.map((index: any) => (
+          {SLEEP_LIST.map((index:any) => (
             <tr key={index._id}>
               <td className="pointer" onClick={() => {
                 navParam("/sleepDetail", {

@@ -30,7 +30,7 @@ export const UserList = () => {
         const response = await axios.get (`${URL_USER}/userList`);
         setUSER_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching user data: ${error.message}`);
         setUSER_LIST([]);
       }

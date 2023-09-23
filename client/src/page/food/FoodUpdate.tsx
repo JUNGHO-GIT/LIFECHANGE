@@ -36,7 +36,7 @@ export const FoodUpdate = () => {
         });
         setFOOD(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching food data: ${error.message}`);
         setFOOD([]);
       }
@@ -59,7 +59,7 @@ export const FoodUpdate = () => {
         alert("Update failed");
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error fetching food data: ${error.message}`);
     }
   };

@@ -64,7 +64,7 @@ export const WorkListSelect = () => {
         });
         setWORK_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
       }
@@ -102,7 +102,7 @@ export const WorkListSelect = () => {
           : "00:00"
         );
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setAverageWorkTime("00:00");
         setAverageWorkNight("00:00");
@@ -138,7 +138,7 @@ export const WorkListSelect = () => {
   }, [selectedWorkStartDay, selectedWorkEndDay]);
 
   // 3-1. flow ------------------------------------------------------------------------------------>
-  const flowDayClick = (day: any) => {
+  const flowDayClick = (day:any) => {
     if (day) {
       const selectedDay = new Date(day);
 
@@ -212,7 +212,7 @@ export const WorkListSelect = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((index: any) => (
+          {WORK_LIST.map((index:any) => (
             <tr key={index._id}>
               <td className="pointer" onClick={() => {
                 navParam("/workDetail", {

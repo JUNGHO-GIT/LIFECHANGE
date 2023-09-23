@@ -64,7 +64,7 @@ export const SleepListSelect = () => {
         });
         setSLEEP_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP_LIST([]);
       }
@@ -102,7 +102,7 @@ export const SleepListSelect = () => {
           : "00:00"
         );
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setAverageSleepTime("00:00");
         setAverageSleepNight("00:00");
@@ -138,7 +138,7 @@ export const SleepListSelect = () => {
   }, [selectedSleepStartDay, selectedSleepEndDay]);
 
   // 3-1. flow ------------------------------------------------------------------------------------>
-  const flowDayClick = (day: any) => {
+  const flowDayClick = (day:any) => {
     if (day) {
       const selectedDay = new Date(day);
 
@@ -212,7 +212,7 @@ export const SleepListSelect = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP_LIST.map((index: any) => (
+          {SLEEP_LIST.map((index:any) => (
             <tr key={index._id}>
               <td className="pointer" onClick={() => {
                 navParam("/sleepDetail", {

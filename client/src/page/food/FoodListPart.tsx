@@ -39,7 +39,7 @@ export const FoodListPart = () => {
         });
         setFOOD(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching food data: ${error.message}`);
         setFOOD([]);
       }
@@ -56,7 +56,7 @@ export const FoodListPart = () => {
         dateFormat="yyyy-MM-dd"
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
-        onChange={(date: any) => {
+        onChange={(date:any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
         }}
@@ -80,7 +80,7 @@ export const FoodListPart = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD.map((index: any, i: number) => (
+          {FOOD.map((index:any, i: number) => (
             <tr key={i}>
               <td>
                 {buttonFoodDetail (

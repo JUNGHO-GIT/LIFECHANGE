@@ -12,7 +12,7 @@ export const boardList = async (
 
 // 2. boardDetail --------------------------------------------------------------------------------->
 export const boardDetail = async (
-  _id_param : any
+  _id_param :any
 ) => {
   const boardDetail = await Board.findOne ({
     _id : _id_param,
@@ -22,8 +22,8 @@ export const boardDetail = async (
 
 // 3. boardInsert --------------------------------------------------------------------------------->
 export const boardInsert = async (
-  user_id_param : any,
-  BOARD_param : any
+  user_id_param :any,
+  BOARD_param :any
 ) => {
   const boardInsert = await Board.create ({
     _id : new mongoose.Types.ObjectId(),
@@ -37,8 +37,8 @@ export const boardInsert = async (
 
 // 4. boardUpdate --------------------------------------------------------------------------------->
 export const boardUpdate = async (
-  _id_param : any,
-  BOARD_param : any
+  _id_param :any,
+  BOARD_param :any
 ) => {
   const boardUpdate = await Board.updateOne (
     {_id : _id_param},
@@ -49,7 +49,7 @@ export const boardUpdate = async (
 
 // 5. boardDelete --------------------------------------------------------------------------------->
 export const boardDelete = async (
-  _id_param : any
+  _id_param :any
 ) => {
   const boardDelete = await Board.deleteOne ({
     _id : _id_param,

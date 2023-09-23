@@ -12,7 +12,7 @@ export const userList = async (
 
 // 2. userDetail ---------------------------------------------------------------------------------->
 export const userDetail = async (
-  user_id_param : any
+  user_id_param :any
 ) => {
   const userDetail = await User.findOne ({
     user_id : user_id_param
@@ -22,8 +22,8 @@ export const userDetail = async (
 
 // 3. userInsert ---------------------------------------------------------------------------------->
 export const userInsert = async (
-  user_id_param : any,
-  user_pw_param : any
+  user_id_param :any,
+  user_pw_param :any
 ) => {
   const userInsert = await User.create ({
     _id : new mongoose.Types.ObjectId(),
@@ -35,7 +35,7 @@ export const userInsert = async (
 
 // 3-1. userCheckId ------------------------------------------------------------------------------->
 export const userCheckId = async (
-  user_id_param : any
+  user_id_param :any
 ) => {
   const userCheckId = await User.findOne ({
     user_id : user_id_param
@@ -45,8 +45,8 @@ export const userCheckId = async (
 
 // 3-2. userCheckIdPw ----------------------------------------------------------------------------->
 export const userCheckIdPw = async (
-  user_id_param : any,
-  user_pw_param : any
+  user_id_param :any,
+  user_pw_param :any
 ) => {
   const userCheckIdPw = await User.findOne ({
     user_id : user_id_param,
@@ -57,8 +57,8 @@ export const userCheckIdPw = async (
 
 // 3-3. userLogin --------------------------------------------------------------------------------->
 export const userLogin = async (
-  user_id_param : any,
-  user_pw_param : any
+  user_id_param :any,
+  user_pw_param :any
 ) => {
   const userLogin = await User.findOne ({
     user_id : user_id_param,
@@ -69,8 +69,8 @@ export const userLogin = async (
 
 // 4. userUpdate ---------------------------------------------------------------------------------->
 export const userUpdate = async (
-  user_id_param : any,
-  update_pw_param : any
+  user_id_param :any,
+  update_pw_param :any
 ) => {
   const userUpdate = await User.findOneAndUpdate ({
     user_id : user_id_param,
@@ -81,7 +81,7 @@ export const userUpdate = async (
 
 // 5. userDelete ---------------------------------------------------------------------------------->
 export const userDelete = async (
-  _id_param : any
+  _id_param :any
 ) => {
   const userDelete = await User.deleteOne ({
     _id : _id_param,

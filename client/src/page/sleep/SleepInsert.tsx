@@ -44,7 +44,7 @@ export const SleepInsert = () => {
         const hours = Math.floor(diff / 3600000);
         const minutes = Math.floor((diff % 3600000) / 60000);
 
-        setSLEEP((prevSleep: any) => ({
+        setSLEEP((prevSleep:any) => ({
           ...prevSleep,
           sleep_time: `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`,
         }));
@@ -104,7 +104,7 @@ export const SleepInsert = () => {
             id="user_id"
             name="user_id"
             value={user_id ? user_id : ""}
-            onChange={(event: any) => {
+            onChange={(event:any) => {
               setSLEEP({ ...SLEEP, user_id: event.target.value });
             }}
             readOnly
@@ -120,7 +120,7 @@ export const SleepInsert = () => {
             name="sleep_day"
             placeholder="Day"
             value={SLEEP.sleep_day || ""}
-            onChange={(event: any) => {
+            onChange={(event:any) => {
               setSLEEP({ ...SLEEP, sleep_day: event.target.value });
             }}
             readOnly
@@ -132,7 +132,7 @@ export const SleepInsert = () => {
           <TimePicker
             id="sleep_night"
             name="sleep_night"
-            onChange={(event: any) => {
+            onChange={(event:any) => {
               setSLEEP({ ...SLEEP, sleep_night: event });
             }}
             value={SLEEP.sleep_night}
@@ -146,7 +146,7 @@ export const SleepInsert = () => {
           <TimePicker
             id="sleep_morning"
             name="sleep_morning"
-            onChange={(event: any) => {
+            onChange={(event:any) => {
               setSLEEP({ ...SLEEP, sleep_morning: event });
             }}
             value={SLEEP.sleep_morning}

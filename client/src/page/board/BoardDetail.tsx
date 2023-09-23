@@ -34,7 +34,7 @@ export const BoardDetail = () => {
         });
         setBOARD(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching board data: ${error.message}`);
         setBOARD([]);
       }
@@ -64,7 +64,7 @@ export const BoardDetail = () => {
         }
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error fetching board data: ${error.message}`);
     }
   };

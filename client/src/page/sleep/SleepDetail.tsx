@@ -36,7 +36,7 @@ export const SleepDetail = () => {
         });
         setSLEEP(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP([]);
       }
@@ -66,7 +66,7 @@ export const SleepDetail = () => {
         }
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error fetching sleep data: ${error.message}`);
     }
   };
@@ -78,7 +78,7 @@ export const SleepDetail = () => {
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
         selected={new Date(sleep_day)}
-        onChange={(date: any) => {
+        onChange={(date:any) => {
           setSleep_day(moment(date).format("YYYY-MM-DD"));
         }}
       />

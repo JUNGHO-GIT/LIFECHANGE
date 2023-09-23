@@ -27,7 +27,7 @@ export const FoodInsert = () => {
   // 2. useEffect --------------------------------------------------------------------------------->
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowFoodInsert = async (params: any) => {
+  const flowFoodInsert = async (params:any) => {
 
     const FOOD = {
       user_id : user_id,

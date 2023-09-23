@@ -35,7 +35,7 @@ export const WorkUpdate = () => {
         });
         setWORK(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK([]);
       }
@@ -58,7 +58,7 @@ export const WorkUpdate = () => {
         alert("Update failed");
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error fetching work data: ${error.message}`);
     }
   };

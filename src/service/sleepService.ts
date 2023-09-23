@@ -5,8 +5,8 @@ import moment from "moment";
 
 // 1-1. sleepList --------------------------------------------------------------------------------->
 export const sleepList = async (
-  user_id_param: any,
-  sleep_duration_param: any,
+  user_id_param:any,
+  sleep_duration_param:any,
 ) => {
 
   const startDay = sleep_duration_param.split(` ~ `)[0];
@@ -25,8 +25,8 @@ export const sleepList = async (
 
 // 1-2. sleepAverage ------------------------------------------------------------------------------>
 export const sleepAverage = async (
-  user_id_param: any,
-  sleep_duration_param: any,
+  user_id_param:any,
+  sleep_duration_param:any,
 ) => {
 
   const startDay = sleep_duration_param.split(` ~ `)[0];
@@ -66,7 +66,7 @@ export const sleepAverage = async (
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
 export const sleepDetail = async (
-  _id_param: any
+  _id_param:any
 ) => {
   const sleepDetail = await Sleep.findOne ({
     _id: _id_param,
@@ -76,8 +76,8 @@ export const sleepDetail = async (
 
 // 3. sleepInsert --------------------------------------------------------------------------------->
 export const sleepInsert = async (
-  user_id_param: any,
-  SLEEP_param: any
+  user_id_param:any,
+  SLEEP_param:any
 ) => {
   const sleepInsert = await Sleep.create ({
     _id : new mongoose.Types.ObjectId(),
@@ -95,8 +95,8 @@ export const sleepInsert = async (
 
 // 4. sleepUpdate --------------------------------------------------------------------------------->
 export const sleepUpdate = async (
-  _id_param: any,
-  SLEEP_param: any
+  _id_param:any,
+  SLEEP_param:any
 ) => {
   const sleepUpdate = await Sleep.updateOne (
     {_id: _id_param},
@@ -107,7 +107,7 @@ export const sleepUpdate = async (
 
 // 5. sleepDelete --------------------------------------------------------------------------------->
 export const sleepDelete = async (
-  _id_param: any
+  _id_param:any
 ) => {
   const sleepDelete = await Sleep.deleteOne({
     _id: _id_param,

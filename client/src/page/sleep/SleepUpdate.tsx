@@ -36,7 +36,7 @@ export const SleepUpdate = () => {
         });
         setSLEEP(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP([]);
       }
@@ -84,7 +84,7 @@ export const SleepUpdate = () => {
         alert("Update failed");
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error updating sleep data: ${error.message}`);
     }
   };
@@ -96,7 +96,7 @@ export const SleepUpdate = () => {
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
         selected={new Date(sleep_day)}
-        onChange={(date: any) => {
+        onChange={(date:any) => {
           setSleep_day(moment(date).format("YYYY-MM-DD"));
         }}
       />
@@ -137,7 +137,7 @@ export const SleepUpdate = () => {
           <TimePicker
             id="sleep_night"
             name="sleep_night"
-            onChange={(event: any) => {
+            onChange={(event:any) => {
               setSLEEP({ ...SLEEP, sleep_night: event });
             }}
             value={SLEEP.sleep_night}
@@ -151,7 +151,7 @@ export const SleepUpdate = () => {
           <TimePicker
             id="sleep_morning"
             name="sleep_morning"
-            onChange={(event: any) => {
+            onChange={(event:any) => {
               setSLEEP({ ...SLEEP, sleep_morning: event });
             }}
             value={SLEEP.sleep_morning}

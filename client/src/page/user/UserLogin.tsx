@@ -46,7 +46,7 @@ export const UserLogin = () => {
         alert(`${response.data}error`);
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error fetching user data: ${error.message}`);
     }
   };

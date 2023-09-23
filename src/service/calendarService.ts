@@ -12,7 +12,7 @@ export const calendarList = async (
 
 // 2. calendarDetail ------------------------------------------------------------------------------>
 export const calendarDetail = async (
-  _id_param : any
+  _id_param :any
 ) => {
   const calendarDetail = await Calendar.findOne ({
     _id : _id_param,
@@ -22,8 +22,8 @@ export const calendarDetail = async (
 
 // 3. calendarInsert ------------------------------------------------------------------------------>
 export const calendarInsert = async (
-  user_id_param : any,
-  CALENDAR_param : any
+  user_id_param :any,
+  CALENDAR_param :any
 ) => {
   const calendarInsert = await Calendar.create ({
     _id : new mongoose.Types.ObjectId(),
@@ -37,8 +37,8 @@ export const calendarInsert = async (
 
 // 4. calendarUpdate ------------------------------------------------------------------------------>
 export const calendarUpdate = async (
-  _id_param : any,
-  CALENDAR_param : any
+  _id_param :any,
+  CALENDAR_param :any
 ) => {
   const calendarUpdate = await Calendar.updateOne (
     {_id : _id_param},
@@ -49,7 +49,7 @@ export const calendarUpdate = async (
 
 // 5. calendarDelete ------------------------------------------------------------------------------>
 export const calendarDelete = async (
-  _id_param : any
+  _id_param :any
 ) => {
   const calendarDelete = await Calendar.deleteOne ({
     _id : _id_param,

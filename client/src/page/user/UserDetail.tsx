@@ -41,7 +41,7 @@ export const UserDetail = () => {
           throw new Error("Server responded with an error");
         }
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching user data: ${error.message}`);
       }
     };

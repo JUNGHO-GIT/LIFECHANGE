@@ -61,7 +61,7 @@ export const WorkListMonth = () => {
         });
         setWORK_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
       }
@@ -99,7 +99,7 @@ export const WorkListMonth = () => {
           : "00:00"
         );
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setAverageWorkTime("00:00");
         setAverageWorkNight("00:00");
@@ -169,7 +169,7 @@ export const WorkListMonth = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((index: any) => (
+          {WORK_LIST.map((index:any) => (
             <tr key={index._id}>
               <td className="pointer" onClick={() => {
                 navParam("/workDetail", {

@@ -49,7 +49,7 @@ export const CalendarDetail = () => {
         });
         setFOOD_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching food data: ${error.message}`);
         setFOOD_LIST([]);
       }
@@ -69,7 +69,7 @@ export const CalendarDetail = () => {
         });
         setWORK_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
       }
@@ -89,7 +89,7 @@ export const CalendarDetail = () => {
         });
         setSLEEP_LIST(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP_LIST([]);
       }
@@ -104,7 +104,7 @@ export const CalendarDetail = () => {
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
         selected={new Date(calendar_regdate)}
-        onChange={(date: any) => {
+        onChange={(date:any) => {
           const selectedDate = date.toISOString().split("T")[0];
           setFood_regdate(selectedDate);
           setWork_regdate(selectedDate);
@@ -127,7 +127,7 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_LIST.map((index: any) => (
+          {FOOD_LIST.map((index:any) => (
             <tr>
               <td>{index.food_calories}</td>
               <td>{index.food_carb}</td>
@@ -157,7 +157,7 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((index: any) => (
+          {WORK_LIST.map((index:any) => (
             <tr>
               <td>{index.user_id}</td>
               <td>{index.work_part}</td>
@@ -187,7 +187,7 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP_LIST.map((index: any) => (
+          {SLEEP_LIST.map((index:any) => (
             <tr>
               <td>{index.sleep_day}</td>
               <td>{index.sleep_night}</td>

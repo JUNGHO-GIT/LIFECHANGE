@@ -34,7 +34,7 @@ export const UserDelete = () => {
         });
         setUserId(response.data.user_id);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching user data: ${error.message}`);
       }
     };
@@ -77,7 +77,7 @@ export const UserDelete = () => {
         }
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error fetching user data: ${error.message}`);
     }
   };

@@ -24,7 +24,7 @@ export const WorkInsert = () => {
   // useState
   const [workAmount, setWorkAmount] = useState<number>(1);
   const [workSection, setWorkSection] = useState<any>({});
-  const [workSectionState, setwWorkSectionState] = useState<any>({});
+  const [workSectionState, setWorkSectionState] = useState<any>({});
   const [work_day, setWork_day] = useState(koreanDate);
   const [work_part, setWork_part] = useState("전체");
   const [work_title, setWork_title] = useState("전체");
@@ -53,7 +53,7 @@ export const WorkInsert = () => {
     let resultTitle;
 
     Object.values(workArray).flatMap((value, index) => {
-      if (work_part == "전체 ") {
+      if (work_part == "전체") {
         if (
           work_part == "전체" &&
           work_title == "전체"
@@ -100,7 +100,7 @@ export const WorkInsert = () => {
       const hours = Math.floor(work_time_minutes / 60);
       const minutes = work_time_minutes % 60;
 
-      const work_time_formatted = `${String(hours).padStart(2, "0")}:${String(
+      const work_time_formatted = `${String(hours).padStart(2, "0")} : ${String (
         minutes
       ).padStart(2, "0")}`;
 
@@ -111,8 +111,8 @@ export const WorkInsert = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkInsert = async () => {
     const response = await axios.post(`${URL_WORK}/workInsert`, {
-      user_id: user_id,
-      WORK: WORK,
+      user_id : user_id,
+      WORK : WORK,
     });
     if (response.data === "success") {
       alert("Insert a work successfully");
@@ -133,7 +133,7 @@ export const WorkInsert = () => {
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
         selected={new Date(work_day)}
-        onChange={(date: any) => {
+        onChange={(date:any) => {
           setWork_day(moment(date).format("YYYY-MM-DD").toString());
         }}
       />
@@ -196,7 +196,7 @@ export const WorkInsert = () => {
                 placeholder="Set"
                 value={workSection.work_set}
                 onChange={(e) => {
-                  setWorkSection({ ...workSection, work_set: e.target.value });
+                  setWorkSection({ ...workSection, work_set : e.target.value });
                 }}
               />
             </div>
@@ -211,7 +211,7 @@ export const WorkInsert = () => {
                 placeholder="Count"
                 value={workSection.work_count}
                 onChange={(e) => {
-                  setWorkSection({ ...workSection, work_count: e.target.value });
+                  setWorkSection({ ...workSection, work_count : e.target.value });
                 }}
               />
             </div>
@@ -228,7 +228,7 @@ export const WorkInsert = () => {
                 placeholder="Kg"
                 value={workSection.work_kg}
                 onChange={(e) => {
-                  setWorkSection({ ...workSection, work_kg: e.target.value });
+                  setWorkSection({ ...workSection, work_kg : e.target.value });
                 }}
               />
             </div>
@@ -243,7 +243,7 @@ export const WorkInsert = () => {
                 placeholder="Rest"
                 value={workSection.work_rest}
                 onChange={(e) => {
-                  setWorkSection({ ...workSection, work_rest: e.target.value });
+                  setWorkSection({ ...workSection, work_rest : e.target.value });
                 }}
               />
             </div>
@@ -253,7 +253,7 @@ export const WorkInsert = () => {
     );
   };
 
-  // 5-2. table ------------------------------------------------------------------------------->
+  // 5-2. table ----------------------------------------------------------------------------------->
   const tableWorkInsert = () => {
     return (
       <div>
@@ -268,7 +268,7 @@ export const WorkInsert = () => {
                 name="user_id"
                 placeholder="ID"
                 value={user_id ? user_id : ""}
-                onChange={(e: any) => {
+                onChange={(e) => {
                   setWORK({ ...WORK, user_id: e.target.value });
                 }}
                 readOnly
@@ -285,7 +285,7 @@ export const WorkInsert = () => {
                 name="work_day"
                 placeholder="Day"
                 value={WORK.work_day}
-                onChange={(e: any) => {
+                onChange={(e) => {
                   setWork_day(e.target.value);
                 }}
                 readOnly
@@ -298,7 +298,7 @@ export const WorkInsert = () => {
             type="number"
             value={workAmount}
             onChange={(e) => {
-              setWorkAmount(e.target.value);
+              setWorkAmount(parseInt(e.target.value));
             }}
           />
         </div>
@@ -317,8 +317,8 @@ export const WorkInsert = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                onChange={(e: any) => {
-                  setWORK({ ...WORK, work_start: e });
+                onChange={(e) => {
+                  setWORK({ ...WORK, work_start : e });
                 }}
               />
             </div>
@@ -334,8 +334,8 @@ export const WorkInsert = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                onChange={(e: any) => {
-                  setWORK({ ...WORK, work_end: e });
+                onChange={(e) => {
+                  setWORK({ ...WORK, work_end : e });
                 }}
               />
             </div>
@@ -352,8 +352,8 @@ export const WorkInsert = () => {
                 name="work_time"
                 placeholder="Time"
                 value={WORK.work_time || ""}
-                onChange={(e: any) => {
-                  setWORK({ ...WORK, work_time: e.target.value });
+                onChange={(e) => {
+                  setWORK({ ...WORK, work_time : e.target.value });
                 }}
                 readOnly
               />
@@ -367,24 +367,16 @@ export const WorkInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkInsert = () => {
     return (
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={flowWorkInsert}
-      >
+      <button type="button" className="btn btn-primary" onClick={flowWorkInsert}>
         Insert
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-success ms-2"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
+      <button type="button" className="btn btn-success ms-2" onClick={() => {
+        window.location.reload();
+      }}>
         Refresh
       </button>
     );

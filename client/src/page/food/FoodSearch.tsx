@@ -59,13 +59,13 @@ export const FoodSearch = () => {
     .then((response) => {
       setFOOD_SEARCH(response.data.items);
     })
-    .catch((error: any) => {
+    .catch((error:any) => {
       alert(`Error fetching food data: ${error.message}`);
       setFOOD_SEARCH([]);
     });
   };
 
-  const flowSearchChange = (e: any) => {
+  const flowSearchChange = (e:any) => {
     e.preventDefault();
     setQuery(e.target.value);
   };
@@ -77,7 +77,7 @@ export const FoodSearch = () => {
         dateFormat="yyyy-MM-dd"
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
-        onChange={(date: any) => {}}
+        onChange={(date:any) => {}}
         readOnly
       />
     );
@@ -99,7 +99,7 @@ export const FoodSearch = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_SEARCH.map((index : any) => (
+          {FOOD_SEARCH.map((index :any) => (
             <tr>
               <td>
                 {buttonFoodInsert (

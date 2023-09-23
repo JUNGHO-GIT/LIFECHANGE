@@ -4,10 +4,10 @@ import * as mongoose from "mongoose";
 
 // 1-1. workList --------------------------------------------------------------------------------->
 export const workList = async (
-  user_id_param: any,
-  work_duration_param: any,
-  work_part_param: any,
-  work_title_param: any,
+  user_id_param:any,
+  work_duration_param:any,
+  work_part_param:any,
+  work_title_param:any,
 ) => {
 
   const startDay = work_duration_param.split(` ~ `)[0];
@@ -29,10 +29,10 @@ export const workList = async (
 
 // 1-2. workAverage ------------------------------------------------------------------------------->
 export const workAverage = async (
-  user_id_param : any,
-  work_duration_param : any,
-  work_part_param : any,
-  work_title_param : any,
+  user_id_param :any,
+  work_duration_param :any,
+  work_part_param :any,
+  work_title_param :any,
 ) => {
 
   const startDay = work_duration_param.split(` ~ `)[0];
@@ -73,7 +73,7 @@ export const workAverage = async (
 
 // 2. workDetail ---------------------------------------------------------------------------------->
 export const workDetail = async (
-  _id_param : any
+  _id_param :any
 ) => {
   const workDetail = await Work.findOne ({
     _id : _id_param,
@@ -83,8 +83,8 @@ export const workDetail = async (
 
 // 3. workInsert ---------------------------------------------------------------------------------->
 export const workInsert = async (
-  user_id_param : any,
-  WORK_param : any
+  user_id_param :any,
+  WORK_param :any
 ) => {
   const workInsert = await Work.create ({
     _id : new mongoose.Types.ObjectId(),
@@ -107,8 +107,8 @@ export const workInsert = async (
 
 // 4. workUpdate ---------------------------------------------------------------------------------->
 export const workUpdate = async (
-  _id_param : any,
-  WORK_param : any
+  _id_param :any,
+  WORK_param :any
 ) => {
   const workUpdate = await Work.updateOne (
     {_id : _id_param},
@@ -119,7 +119,7 @@ export const workUpdate = async (
 
 // 5. workDelete ------------------------------------------------------------------------------->
 export const workDelete = async (
-  _id_param : any
+  _id_param :any
 ) => {
   const workDelete = await Work.deleteOne ({
     _id : _id_param,

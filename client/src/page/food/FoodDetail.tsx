@@ -38,7 +38,7 @@ export const FoodDetail = () => {
         });
         setFOOD(response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching food data: ${error.message}`);
         setFOOD([]);
       }
@@ -73,7 +73,7 @@ export const FoodDetail = () => {
         throw new Error(`Invalid response: ${response.data}`);
       }
     }
-    catch (error: any) {
+    catch (error:any) {
       alert(`Error fetching food data: ${error.message}`);
     }
   };
@@ -85,7 +85,7 @@ export const FoodDetail = () => {
         dateFormat="yyyy-MM-dd"
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
-        onChange={(date: any) => {
+        onChange={(date:any) => {
           const selectedDate = date.toISOString().split("T")[0];
         }}
         readOnly
