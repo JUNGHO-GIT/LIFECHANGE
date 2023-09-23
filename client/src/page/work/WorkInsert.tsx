@@ -45,10 +45,10 @@ export const WorkInsert = () => {
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    let workPartAll = [];
+    let workPartAll:any = [];
     let resultPart;
 
-    let workTitleAll = [];
+    let workTitleAll:any = [];
     let resultTitle;
 
     Object.values(workArray).flatMap((value, index) => {
