@@ -1,12 +1,12 @@
 // WorkArray.tsx
 export const workArray2 = {
   0: {
-    workPart: ["전체"],
-    workTitle: ["전체"],
+    work_part: ["전체"],
+    work_title: ["전체"],
   },
   1: {
-    workPart: ["등"],
-    workTitle: [
+    work_part: ["등"],
+    work_title: [
       "전체",
       "데드리프트",
       "바벨로우",
@@ -17,8 +17,8 @@ export const workArray2 = {
     ],
   },
   2: {
-    workPart: ["하체"],
-    workTitle: [
+    work_part: ["하체"],
+    work_title: [
       "전체",
       "백스쿼트",
       "프론트스쿼트",
@@ -31,8 +31,8 @@ export const workArray2 = {
     ],
   },
   3: {
-    workPart: ["가슴"],
-    workTitle: [
+    work_part: ["가슴"],
+    work_title: [
       "전체",
       "바벨벤치프레스",
       "덤벨벤치프레스",
@@ -47,8 +47,8 @@ export const workArray2 = {
     ],
   },
   4: {
-    workPart: ["어깨"],
-    workTitle: [
+    work_part: ["어깨"],
+    work_title: [
       "전체",
       "밀리터리프레스",
       "바벨프레스",
@@ -62,8 +62,8 @@ export const workArray2 = {
     ],
   },
   5: {
-    workPart: ["삼두"],
-    workTitle: [
+    work_part: ["삼두"],
+    work_title: [
       "전체",
       "라잉트라이셉스익스텐션",
       "덤벨트라이셉스익스텐션",
@@ -75,8 +75,8 @@ export const workArray2 = {
     ],
   },
   6: {
-    workPart: ["이두"],
-    workTitle: [
+    work_part: ["이두"],
+    work_title: [
       "전체",
       "바벨컬",
       "덤벨컬",
@@ -88,8 +88,8 @@ export const workArray2 = {
     ],
   },
   7: {
-    workPart: ["유산소"],
-    workTitle: [
+    work_part: ["유산소"],
+    work_title: [
       "전체",
       "걷기",
       "달리기",
@@ -100,7 +100,7 @@ export const workArray2 = {
     ],
   },
   8: {
-    workPart: ["휴식"],
-    workTitle: ["휴식"],
+    work_part: ["휴식"],
+    work_title: ["휴식"],
   },
 };

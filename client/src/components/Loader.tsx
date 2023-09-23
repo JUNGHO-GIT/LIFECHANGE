@@ -49,8 +49,6 @@ const LoaderStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 export const Loader = () => {
-
-  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="background"><LoaderStyle />
       <div className="loader"></div>

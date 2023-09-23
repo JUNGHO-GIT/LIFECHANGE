@@ -11,7 +11,7 @@ const WorkScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
-  workSection : [{
+  workSection : {
     work_part: {
       type: String,
       required: true,
@@ -36,7 +36,7 @@ const WorkScheme = new mongoose.Schema({
       type: String,
       required: true,
     },
-  }],
+  },
   work_start: {
     type: String,
     required: true,

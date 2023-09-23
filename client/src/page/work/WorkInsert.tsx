@@ -48,33 +48,24 @@ export const WorkInsert = () => {
     let resultTitle;
 
     Object.values(workArray).flatMap((value, index) => {
-      if (work_part == "전체 ") {
-        if (
-          work_part == "전체" &&
-          work_title == "전체"
-        ) {
-          workPartAll.push(value.workPart[0]);
+      if (work_part == "전체") {
+        if (work_part == "전체" && work_title == "전체") {
+          workPartAll.push(value.work_part[0]);
           resultPart = workPartAll.join(",").slice(3);
           setWork_part(resultPart);
 
-          workTitleAll.push(value.workTitle);
+          workTitleAll.push(value.work_title);
           resultTitle = workTitleAll.join(",").slice(3);
           setWork_title(resultTitle);
         }
       }
       else if (work_part != "전체") {
-        if (
-          work_part == workArray[index].workPart &&
-          work_title == "전체"
-        ) {
-          workTitleAll.push(workArray[index].workTitle);
+        if (work_part == workArray[index].work_part && work_title == "전체") {
+          workTitleAll.push(workArray[index].work_title);
           resultTitle = workTitleAll.join(",").slice(3);
           setWork_title(resultTitle);
         }
-        if (
-          work_part == workArray[index].workPart &&
-          work_title != "전체"
-        ) {
+        if (work_part == workArray[index].work_part && work_title != "전체") {
           setSelectNumber(index);
         }
       }
@@ -136,7 +127,7 @@ export const WorkInsert = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableWorkSection = (i) => {
+  const tableWorkSection = (i:number) => {
     return (
       <div key={i}>
         <div className="row d-center">
@@ -147,15 +138,15 @@ export const WorkInsert = () => {
                 className="form-control"
                 onChange={(e) => {
                   setWork_part(e.target.value);
-                }}>
+                  setWork_title("전체");
+                }}
+              >
                 {Object.keys(workArray).flatMap((key) =>
-                  Object.values(workArray[key].workPart).flatMap((value, index) => {
-                    return (
-                      <option value={value} key={index}>
-                        {value}
-                      </option>
-                    );
-                  })
+                  Object.values(workArray[key].work_part).flatMap((value, index) => (
+                    <option value={value} key={`${key}-${index}`}>
+                      {value}
+                    </option>
+                  ))
                 )}
               </select>
             </div>
@@ -167,14 +158,13 @@ export const WorkInsert = () => {
                 className="form-control"
                 onChange={(e) => {
                   setWork_title(e.target.value);
-                }}>
-                {Object.values(workArray[selectNumber].workTitle).flatMap((value, index) => {
-                  return (
-                    <option value={value} key={index}>
-                      {value}
-                    </option>
-                  );
-                })}
+                }}
+              >
+                {Object.values(workArray[selectNumber].work_title).flatMap((value, index) => (
+                  <option value={value} key={`${selectNumber}-${index}`}>
+                    {value}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -186,7 +176,7 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id="work_set"
+                id={`work_set-${i}`}
                 placeholder="Set"
                 value={workSection.work_set}
                 onChange={(e) => {
@@ -201,7 +191,7 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id="work_count"
+                id={`work_count-${i}`}
                 placeholder="Count"
                 value={workSection.work_count}
                 onChange={(e) => {
@@ -218,7 +208,7 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id="work_kg"
+                id={`work_kg-${i}`}
                 placeholder="Kg"
                 value={workSection.work_kg}
                 onChange={(e) => {
@@ -233,7 +223,7 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id="work_rest"
+                id={`work_rest-${i}`}
                 placeholder="Rest"
                 value={workSection.work_rest}
                 onChange={(e) => {
@@ -247,7 +237,7 @@ export const WorkInsert = () => {
     );
   };
 
-  // 5-2. table ------------------------------------------------------------------------------->
+  // 5-2. table ----------------------------------------------------------------------------------->
   const tableWorkInsert = () => {
     return (
       <div>
