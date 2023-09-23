@@ -10,7 +10,7 @@ import { workArray2 } from "./WorkArray";
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkInsert = () => {
   // title
-  const TITLE = "Work InsertTT";
+  const TITLE = "Work Insert";
   // url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   // date
@@ -23,7 +23,7 @@ export const WorkInsert = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // useState
   const [workAmount, setWorkAmount] = useState<number>(1);
-  const [workSection, setWorkSection] = useState<any>({});
+  const [workSection, setWorkSection] = useState<any>([{}]);
   const [work_day, setWork_day] = useState(koreanDate);
   const [work_part, setWork_part] = useState("전체");
   const [work_title, setWork_title] = useState("전체");
@@ -35,13 +35,9 @@ export const WorkInsert = () => {
     setWORK({
       ...WORK,
       work_day : work_day,
-      workSection : {
-        ...workSection,
-        work_part : work_part,
-        work_title : work_title
-      }
+      workSection : workSection
     });
-  }, [work_day, work_part, work_title, workSection]);
+  }, [work_day, workSection]);
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -173,13 +169,12 @@ export const WorkInsert = () => {
                   setWork_title(e.target.value);
                 }}>
                 {Object.values(workArray[selectNumber].workTitle).flatMap((value, index) => {
-                    return (
-                      <option value={value} key={index}>
-                        {value}
-                      </option>
-                    );
-                  }
-                )}
+                  return (
+                    <option value={value} key={index}>
+                      {value}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
@@ -366,24 +361,16 @@ export const WorkInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkInsert = () => {
     return (
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={flowWorkInsert}
-      >
+      <button className="btn btn-primary ms-2" type="button" onClick={flowWorkInsert}>
         Insert
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-success ms-2"
-        onClick={() => {
-          window.location.reload();
-        }}
-      >
+      <button className="btn btn-success ms-2" type="button" onClick={() => {
+        window.location.reload();
+      }}>
         Refresh
       </button>
     );
