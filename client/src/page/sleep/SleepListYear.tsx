@@ -29,25 +29,25 @@ export const SleepListYear = () => {
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
-    "sleepList_YEAR", []
+    "sleepListYear", []
   );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValue_YEAR", undefined
+    "resultValueYear", undefined
   );
   const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDuration_YEAR", "0000-00-00 ~ 0000-00-00"
+    "resultDurationYear", "0000-00-00 ~ 0000-00-00"
   );
   const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string> (
-    "averageSleepTime_YEAR", "00:00"
+    "averageSleepTimeYear", "00:00"
   );
   const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string> (
-    "averageSleepNight_YEAR", "00:00"
+    "averageSleepNightYear", "00:00"
   );
   const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string> (
-    "averageSleepMorning_YEAR", "00:00"
+    "averageSleepMorningYear", "00:00"
   );
   const {value:selectedSleepYear, setValue:setSelectedSleepYear} = useStorage<Date | undefined> (
-    "selectedSleepYear_YEAR", koreanDate
+    "selectedSleepYear", koreanDate
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->

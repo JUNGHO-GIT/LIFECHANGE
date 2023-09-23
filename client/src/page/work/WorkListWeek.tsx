@@ -28,28 +28,28 @@ export const WorkListWeek = () => {
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
-    "workList_WEEK", []
+    "workListWeek", []
   );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValue_WEEK", undefined
+    "resultValueWeek", undefined
   );
   const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDuration_WEEK", "0000-00-00 ~ 0000-00-00"
+    "resultDurationWeek", "0000-00-00 ~ 0000-00-00"
   );
   const {value:averageWorkTime, setValue:setAverageWorkTime} = useStorage<string> (
-    "averageWorkTime_WEEK", "00:00"
+    "averageWorkTimeWeek", "00:00"
   );
   const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
-    "averageWorkNight_WEEK", "00:00"
+    "averageWorkNightWeek", "00:00"
   );
   const {value:averageWorkMorning, setValue:setAverageWorkMorning} = useStorage<string> (
-    "averageWorkMorning_WEEK", "00:00"
+    "averageWorkMorningWeek", "00:00"
   );
   const {value:selectedWorkStartDay, setValue:setSelectedWorkStartDay} = useStorage<Date | undefined> (
-    "selectedWorkStartDay_WEEK", undefined
+    "selectedWorkStartDayWeek", undefined
   );
   const {value:selectedWorkEndDay, setValue:setSelectedWorkEndDay} = useStorage<Date | undefined> (
-    "selectedWorkEndDay_WEEK", undefined
+    "selectedWorkEndDayWeek", undefined
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -243,9 +243,9 @@ export const WorkListWeek = () => {
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedWorkStartDay(koreanDate);
         setSelectedWorkEndDay(koreanDate);
-        localStorage.removeItem("workList_WEEK");
-        localStorage.removeItem("selectedWorkStartDay_WEEK");
-        localStorage.removeItem("selectedWorkEndDay_WEEK");
+        localStorage.removeItem("workList");
+        localStorage.removeItem("selectedWorkStartDay");
+        localStorage.removeItem("selectedWorkEndDay");
       }}>
         Today
       </button>
@@ -256,9 +256,9 @@ export const WorkListWeek = () => {
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedWorkStartDay(undefined);
         setSelectedWorkEndDay(undefined);
-        localStorage.removeItem("workList_WEEK");
-        localStorage.removeItem("selectedWorkStartDay_WEEK");
-        localStorage.removeItem("selectedWorkEndDay_WEEK");
+        localStorage.removeItem("workList");
+        localStorage.removeItem("selectedWorkStartDay");
+        localStorage.removeItem("selectedWorkEndDay");
       }}>
         Reset
       </button>

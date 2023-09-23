@@ -28,28 +28,28 @@ export const SleepListSelect = () => {
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
-    "sleepList_SELECT", []
+    "sleepListSelect", []
   );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValue_SELECT", undefined
+    "resultValueSelect", undefined
   );
   const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDuration_SELECT", "0000-00-00 ~ 0000-00-00"
+    "resultDurationSelect", "0000-00-00 ~ 0000-00-00"
   );
   const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string> (
-    "averageSleepTime_SELECT", "00:00"
+    "averageSleepTimeSelect", "00:00"
   );
   const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string> (
-    "averageSleepNight_SELECT", "00:00"
+    "averageSleepNightSelect", "00:00"
   );
   const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string> (
-    "averageSleepMorning_SELECT", "00:00"
+    "averageSleepMorningSelect", "00:00"
   );
   const {value:selectedSleepStartDay, setValue:setSelectedSleepStartDay} = useStorage<Date | undefined> (
-    "selectedSleepStartDay_SELECT", undefined
+    "selectedSleepStartDaySelect", undefined
   );
   const {value:selectedSleepEndDay, setValue:setSelectedSleepEndDay} = useStorage<Date | undefined> (
-    "selectedSleepEndDay_SELECT", undefined
+    "selectedSleepEndDaySelect", undefined
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -260,9 +260,9 @@ export const SleepListSelect = () => {
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedSleepStartDay(koreanDate);
         setSelectedSleepEndDay(koreanDate);
-        localStorage.removeItem("sleepList_SELECT");
-        localStorage.removeItem("selectedSleepStartDay_SELECT");
-        localStorage.removeItem("selectedSleepEndDay_SELECT");
+        localStorage.removeItem("sleepList");
+        localStorage.removeItem("selectedSleepStartDay");
+        localStorage.removeItem("selectedSleepEndDay");
       }}>
         Today
       </button>
@@ -273,9 +273,9 @@ export const SleepListSelect = () => {
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedSleepStartDay(undefined);
         setSelectedSleepEndDay(undefined);
-        localStorage.removeItem("sleepList_SELECT");
-        localStorage.removeItem("selectedSleepStartDay_SELECT");
-        localStorage.removeItem("selectedSleepEndDay_SELECT");
+        localStorage.removeItem("sleepList");
+        localStorage.removeItem("selectedSleepStartDay");
+        localStorage.removeItem("selectedSleepEndDay");
       }}>
         Reset
       </button>

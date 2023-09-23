@@ -29,25 +29,25 @@ export const WorkListYear = () => {
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
-    "workList_YEAR", []
+    "workListYear", []
   );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValue_YEAR", undefined
+    "resultValueYear", undefined
   );
   const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDuration_YEAR", "0000-00-00 ~ 0000-00-00"
+    "resultDurationYear", "0000-00-00 ~ 0000-00-00"
   );
   const {value:averageWorkTime, setValue:setAverageWorkTime} = useStorage<string> (
-    "averageWorkTime_YEAR", "00:00"
+    "averageWorkTimeYear", "00:00"
   );
   const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
-    "averageWorkNight_YEAR", "00:00"
+    "averageWorkNightYear", "00:00"
   );
   const {value:averageWorkMorning, setValue:setAverageWorkMorning} = useStorage<string> (
-    "averageWorkMorning_YEAR", "00:00"
+    "averageWorkMorningYear", "00:00"
   );
   const {value:selectedWorkYear, setValue:setSelectedWorkYear} = useStorage<Date | undefined> (
-    "selectedWorkYear_YEAR", koreanDate
+    "selectedWorkYearYear", koreanDate
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -62,7 +62,7 @@ export const WorkListYear = () => {
         });
         setWORK_LIST(response.data);
       }
-      catch (error:any) {
+      catch (error: any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
       }
@@ -100,7 +100,7 @@ export const WorkListYear = () => {
           : "00:00"
         );
       }
-      catch (error:any) {
+      catch (error: any) {
         alert(`Error fetching work data: ${error.message}`);
         setAverageWorkTime("00:00");
         setAverageWorkNight("00:00");
@@ -176,7 +176,7 @@ export const WorkListYear = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((index:any) => (
+          {WORK_LIST.map((index: any) => (
             <tr key={index._id}>
               <td className="pointer" onClick={() => {
                 navParam("/workDetail", {

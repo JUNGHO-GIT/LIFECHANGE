@@ -28,25 +28,25 @@ export const WorkListMonth = () => {
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
-    "workList_MONTH", []
+    "workListMonth", []
   );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValue_MONTH", undefined
+    "resultValueMonth", undefined
   );
   const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDuration_MONTH", "0000-00-00 ~ 0000-00-00"
+    "resultDurationMonth", "0000-00-00 ~ 0000-00-00"
   );
   const {value:averageWorkTime, setValue:setAverageWorkTime} = useStorage<string> (
-    "averageWorkTime_MONTH", "00:00"
+    "averageWorkTimeMonth", "00:00"
   );
   const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
-    "averageWorkNight_MONTH", "00:00"
+    "averageWorkNightMonth", "00:00"
   );
   const {value:averageWorkMorning, setValue:setAverageWorkMorning} = useStorage<string> (
-    "averageWorkMorning_MONTH", "00:00"
+    "averageWorkMorningMonth", "00:00"
   );
   const {value:selectedWorkMonth, setValue:setSelectedWorkMonth} = useStorage<Date | undefined> (
-    "selectedWorkMonth_MONTH", koreanDate
+    "selectedWorkMonth", koreanDate
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -216,8 +216,8 @@ export const WorkListMonth = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedWorkMonth(koreanDate);
-        localStorage.removeItem("workList_MONTH");
-        localStorage.removeItem("selectedWorkMonth_MONTH");
+        localStorage.removeItem("workList");
+        localStorage.removeItem("selectedWorkMonth");
       }}>
         Today
       </button>
@@ -227,8 +227,8 @@ export const WorkListMonth = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedWorkMonth(undefined);
-        localStorage.removeItem("workList_MONTH");
-        localStorage.removeItem("selectedWorkMonth_MONTH");
+        localStorage.removeItem("workList");
+        localStorage.removeItem("selectedWorkMonth");
       }}>
         Reset
       </button>

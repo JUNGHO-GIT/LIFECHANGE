@@ -28,25 +28,25 @@ export const SleepListMonth = () => {
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
-    "sleepList_MONTH", []
+    "sleepListMonth", []
   );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValue_MONTH", undefined
+    "resultValueMonth", undefined
   );
   const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDuration_MONTH", "0000-00-00 ~ 0000-00-00"
+    "resultDurationMonth", "0000-00-00 ~ 0000-00-00"
   );
   const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string> (
-    "averageSleepTime_MONTH", "00:00"
+    "averageSleepTimeMonth", "00:00"
   );
   const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string> (
-    "averageSleepNight_MONTH", "00:00"
+    "averageSleepNightMonth", "00:00"
   );
   const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string> (
-    "averageSleepMorning_MONTH", "00:00"
+    "averageSleepMorningMonth", "00:00"
   );
   const {value:selectedSleepMonth, setValue:setSelectedSleepMonth} = useStorage<Date | undefined> (
-    "selectedSleepMonth_MONTH", koreanDate
+    "selectedSleepMonth", koreanDate
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -216,8 +216,8 @@ export const SleepListMonth = () => {
     return (
       <button className="btn btn-success me-2" onClick={() => {
         setSelectedSleepMonth(koreanDate);
-        localStorage.removeItem("sleepList_MONTH");
-        localStorage.removeItem("selectedSleepMonth_MONTH");
+        localStorage.removeItem("sleepList");
+        localStorage.removeItem("selectedSleepMonth");
       }}>
         Today
       </button>
@@ -227,8 +227,8 @@ export const SleepListMonth = () => {
     return (
       <button className="btn btn-primary me-2" onClick={() => {
         setSelectedSleepMonth(undefined);
-        localStorage.removeItem("sleepList_MONTH");
-        localStorage.removeItem("selectedSleepMonth_MONTH");
+        localStorage.removeItem("sleepList");
+        localStorage.removeItem("selectedSleepMonth");
       }}>
         Reset
       </button>
