@@ -20,8 +20,7 @@ import { Header } from "../layout/Header";
 import { Footer } from "../layout/Footer";
 import { Hover } from "../components/Hover";
 import { Main } from "../page/common/Main";
-/* import { Test2 } from "../page/common/Test2";
- */
+
 import { UserLogin } from "../page/user/UserLogin";
 import { UserInsert } from "../page/user/UserInsert";
 import { UserDetail } from "../page/user/UserDetail";
@@ -47,20 +46,20 @@ import { FoodUpdate } from "../page/food/FoodUpdate";
 import { WorkInsert } from "../page/work/WorkInsert";
 import { WorkDetail } from "../page/work/WorkDetail";
 import { WorkUpdate } from "../page/work/WorkUpdate";
-import { WorkListDay } from "../page/work/WorkList_Day";
-import { WorkListWeek } from "../page/work/WorkList_Week";
-import { WorkListMonth } from "../page/work/WorkList_Month";
-import { WorkListYear } from "../page/work/WorkList_Year";
-import { WorkListSelect } from "../page/work/WorkList_Select";
+import { WorkListDay } from "../page/work/WorkListDay";
+import { WorkListWeek } from "../page/work/WorkListWeek";
+import { WorkListMonth } from "../page/work/WorkListMonth";
+import { WorkListYear } from "../page/work/WorkListYear";
+import { WorkListSelect } from "../page/work/WorkListSelect";
 
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
 import { SleepUpdate } from "../page/sleep/SleepUpdate";
-import { SleepListDay } from "../page/sleep/SleepList_Day";
-import { SleepListWeek } from "../page/sleep/SleepList_Week";
-import { SleepListMonth } from "../page/sleep/SleepList_Month";
-import { SleepListYear } from "../page/sleep/SleepList_Year";
-import { SleepListSelect } from "../page/sleep/SleepList_Select";
+import { SleepListDay } from "../page/sleep/SleepListDay";
+import { SleepListWeek } from "../page/sleep/SleepListWeek";
+import { SleepListMonth } from "../page/sleep/SleepListMonth";
+import { SleepListYear } from "../page/sleep/SleepListYear";
+import { SleepListSelect } from "../page/sleep/SleepListSelect";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -73,7 +72,6 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          {/* <Route path="/test" element={<Test2 />} /> */}
 
           <Route path="/userLogin" element={<UserLogin />} />
           <Route path="/userInsert" element={<UserInsert />} />
