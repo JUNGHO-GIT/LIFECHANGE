@@ -22,27 +22,23 @@ export const WorkInsert = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // useState
+  const [work_day, setWork_day] = useState<string>(koreanDate);
+  const [work_part, setWork_part] = useState<string>("전체");
+  const [work_title, setWork_title] = useState<string>("전체");
+  const [selectNumber, setSelectNumber] = useState<number>(0);
+  const [WORK, setWORK] = useState<any>({});
+
   const [workAmount, setWorkAmount] = useState<number>(1);
   const [workSection, setWorkSection] = useState<any>({});
-  const [workSectionState, setWorkSectionState] = useState<any>({});
-  const [work_day, setWork_day] = useState(koreanDate);
-  const [work_part, setWork_part] = useState("전체");
-  const [work_title, setWork_title] = useState("전체");
-  const [selectNumber, setSelectNumber] = useState(0);
-  const [WORK, setWORK] = useState<any>({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setWORK({
+    setWORK ({
       ...WORK,
       work_day : work_day,
-      workSection : {
-        ...workSection,
-        work_part : work_part,
-        work_title : work_title
-      }
+      workSection : workSection,
     });
-  }, [work_day, work_part, work_title, workSection]);
+  }, [work_day, workSection]);
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -55,8 +51,7 @@ export const WorkInsert = () => {
     Object.values(workArray).flatMap((value, index) => {
       if (work_part == "전체") {
         if (
-          work_part == "전체" &&
-          work_title == "전체"
+          work_part == "전체" && work_title == "전체"
         ) {
           workPartAll.push(value.workPart[0]);
           resultPart = workPartAll.join(",").slice(3);
@@ -69,16 +64,14 @@ export const WorkInsert = () => {
       }
       else if (work_part != "전체") {
         if (
-          work_part == workArray[index].workPart &&
-          work_title == "전체"
+          work_part == workArray[index].workPart && work_title == "전체"
         ) {
           workTitleAll.push(workArray[index].workTitle);
           resultTitle = workTitleAll.join(",").slice(3);
           setWork_title(resultTitle);
         }
         if (
-          work_part == workArray[index].workPart &&
-          work_title != "전체"
+          work_part == workArray[index].workPart && work_title != "전체"
         ) {
           setSelectNumber(index);
         }
@@ -141,18 +134,16 @@ export const WorkInsert = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableWorkSection = (i) => {
+  const tableWorkSection = (index:any) => {
     return (
-      <div key={i}>
+      <div key={index}>
         <div className="row d-center">
           <div className="col-5">
             <div className="input-group mb-3">
               <span className="input-group-text">운동파트</span>
-              <select
-                className="form-control"
-                onChange={(e) => {
-                  setWork_part(e.target.value);
-                }}>
+              <select className="form-control" onChange={(e) => {
+                setWork_part(e.target.value);
+              }}>
                 {Object.keys(workArray).flatMap((key) =>
                   Object.values(workArray[key].workPart).flatMap((value, index) => {
                     return (
@@ -168,11 +159,9 @@ export const WorkInsert = () => {
           <div className="col-5">
             <div className="input-group mb-3">
               <span className="input-group-text">운동종목</span>
-              <select
-                className="form-control"
-                onChange={(e) => {
-                  setWork_title(e.target.value);
-                }}>
+              <select className="form-control" onChange={(e) => {
+                setWork_title(e.target.value);
+              }}>
                 {Object.values(workArray[selectNumber].workTitle).flatMap((value, index) => {
                     return (
                       <option value={value} key={index}>
@@ -294,17 +283,13 @@ export const WorkInsert = () => {
           </div>
         </div>
         <div>
-          <input
-            type="number"
-            value={workAmount}
-            onChange={(e) => {
-              setWorkAmount(parseInt(e.target.value));
-            }}
-          />
+          <input type="number" value={workAmount} onChange={(e) => {
+            setWorkAmount(parseInt(e.target.value));
+          }} />
+          {Array.from({ length: workAmount }, (value, index) => {
+            return tableWorkSection(index);
+          })}
         </div>
-        {Array.from({length : workAmount}, (_, i) => {
-          return tableWorkSection(i)
-        })}
         <div className="row d-center">
           <div className="col-5">
             <div className="input-group mb-3">
