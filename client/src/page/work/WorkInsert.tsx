@@ -25,8 +25,8 @@ export const WorkInsert = () => {
   const [workAmount, setWorkAmount] = useState<number>(1);
   const [workSection, setWorkSection] = useState<any>([{}]);
   const [work_day, setWork_day] = useState(koreanDate);
-  const [work_part, setWork_part] = useState("전체");
-  const [work_title, setWork_title] = useState("전체");
+  const [work_part, setWork_part] = useState<any>("전체");
+  const [work_title, setWork_title] = useState<any>("전체");
   const [selectNumber, setSelectNumber] = useState(0);
   const [WORK, setWORK] = useState<any>({});
 
@@ -41,34 +41,52 @@ export const WorkInsert = () => {
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    let workPartAll:any = [];
-    let resultPart;
-
-    let workTitleAll:any = [];
-    let resultTitle;
+    let workPartAll: any = [];
+    let workTitleAll: any = [];
+    let resultPart: any;
+    let resultTitle: any;
 
     Object.values(workArray).forEach((value, index) => {
-      if (work_part === "전체" && work_title === "전체") {
+      if (
+        work_part === "전체" &&
+        work_title === "전체"
+      ) {
         workPartAll.push(value.workPart[0]);
-        resultPart = workPartAll.join(",").slice(3);
-        setWork_part(resultPart);
-
         workTitleAll.push(value.workTitle);
+        resultPart = workPartAll.join(",").slice(3);
         resultTitle = workTitleAll.join(",").slice(3);
+
+        setWork_part(resultPart);
         setWork_title(resultTitle);
+        setWorkSection((prevWorkSection:any[]) => [{
+          ...prevWorkSection[0],
+          work_part : resultPart,
+          work_title : resultTitle,
+        }]);
       }
-      else if (work_part != "전체") {
-        if (work_part == workArray[index].workPart[0] && work_title == "전체") {
-          workTitleAll.push(workArray[index].workTitle);
-          resultTitle = workTitleAll.join(",").slice(3);
-          setWork_title(resultTitle);
-        }
-        if (work_part == workArray[index].workPart[0] && work_title != "전체") {
-          setSelectNumber(index);
-        }
+      else if (
+        work_part !== "전체" &&
+        work_part === workArray[index].workPart[0] &&
+        work_title === "전체"
+      ) {
+        workTitleAll.push(workArray[index].workTitle);
+        resultTitle = workTitleAll.join(",").slice(3);
+
+        setWork_title(resultTitle);
+        setWorkSection((prevWorkSection:any[]) => [{
+          ...prevWorkSection[0],
+          work_title : resultTitle,
+        }]);
       }
-    })
-  }, [work_part, work_title]);
+      else if (
+        work_part !== "전체" &&
+        work_part === workArray[index].workPart[0] &&
+        work_title !== "전체"
+      ) {
+        setSelectNumber(index);
+      }
+    });
+  }, [work_part, work_title, workArray]);
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -146,17 +164,18 @@ export const WorkInsert = () => {
               <select
                 className="form-control"
                 id={`work_part-${i}`}
+                value={workSection[i]?.work_part}
                 onChange={(e) => {
                   setWork_part(e.target.value);
+                  setWork_title("전체");
                   updateWorkSection(i, "work_part", e.target.value);
                 }}>
-                {Object.keys(workArray).flatMap((key) =>
+                {Object.keys(workArray).flatMap((key:any) =>
                   Object.values(workArray[key].workPart).flatMap((value, index) => (
                     <option value={value} key={`${key}-${index}`}>
                       {value}
                     </option>
-                  ))
-                )}
+                )))}
               </select>
             </div>
           </div>
@@ -166,6 +185,7 @@ export const WorkInsert = () => {
               <select
                 className="form-control"
                 id={`work_title-${i}`}
+                value={workSection[i]?.work_title}
                 onChange={(e) => {
                   setWork_title(e.target.value);
                   updateWorkSection(i, "work_title", e.target.value);
@@ -291,7 +311,7 @@ export const WorkInsert = () => {
           <input type="number" value={workAmount} onChange={(e) => {
             setWorkAmount(parseInt(e.target.value));
           }}/>
-        {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
+          {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
         </div>
         <div className="row d-center">
           <div className="col-5">
