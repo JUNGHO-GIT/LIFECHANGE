@@ -86,14 +86,7 @@ export const workInsert = async (
   const workInsert = await Work.create ({
     _id : new mongoose.Types.ObjectId(),
     user_id : user_id_param,
-    workSection: {
-      work_part: WORK_param.workSection.work_part,
-      work_title: WORK_param.workSection.work_title,
-      work_set: WORK_param.workSection.work_set,
-      work_count: WORK_param.workSection.work_count,
-      work_kg: WORK_param.workSection.work_kg,
-      work_rest: WORK_param.workSection.work_rest
-    },
+    workSection : WORK_param.workSection,
     work_start : WORK_param.work_start,
     work_end : WORK_param.work_end,
     work_time : WORK_param.work_time,

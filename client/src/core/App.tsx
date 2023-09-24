@@ -20,6 +20,7 @@ import { Header } from "../layout/Header";
 import { Footer } from "../layout/Footer";
 import { Hover } from "../components/Hover";
 import { Main } from "../page/common/Main";
+import { TestInsert } from "../page/common/TestInsert";
 
 import { UserLogin } from "../page/user/UserLogin";
 import { UserInsert } from "../page/user/UserInsert";
@@ -72,6 +73,7 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/testInsert" element={<TestInsert />} />
 
           <Route path="/userLogin" element={<UserLogin />} />
           <Route path="/userInsert" element={<UserInsert />} />

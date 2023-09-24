@@ -1,10 +1,10 @@
 // WorkArray.tsx
-export const workArray2 = {
-  0: {
+export const workArray2 = [
+  {
     work_part: ["전체"],
     work_title: ["전체"],
   },
-  1: {
+  {
     work_part: ["등"],
     work_title: [
       "전체",
@@ -16,7 +16,7 @@ export const workArray2 = {
       "풀업",
     ],
   },
-  2: {
+  {
     work_part: ["하체"],
     work_title: [
       "전체",
@@ -30,7 +30,7 @@ export const workArray2 = {
       "레그컬",
     ],
   },
-  3: {
+  {
     work_part: ["가슴"],
     work_title: [
       "전체",
@@ -46,7 +46,7 @@ export const workArray2 = {
       "푸쉬업",
     ],
   },
-  4: {
+  {
     work_part: ["어깨"],
     work_title: [
       "전체",
@@ -61,7 +61,7 @@ export const workArray2 = {
       "페이스풀",
     ],
   },
-  5: {
+  {
     work_part: ["삼두"],
     work_title: [
       "전체",
@@ -74,7 +74,7 @@ export const workArray2 = {
       "킥백",
     ],
   },
-  6: {
+  {
     work_part: ["이두"],
     work_title: [
       "전체",
@@ -87,7 +87,7 @@ export const workArray2 = {
       "덤벨프리처컬",
     ],
   },
-  7: {
+  {
     work_part: ["유산소"],
     work_title: [
       "전체",
@@ -99,8 +99,8 @@ export const workArray2 = {
       "플랭크"
     ],
   },
-  8: {
+  {
     work_part: ["휴식"],
     work_title: ["휴식"],
   },
-};
+];

@@ -59,7 +59,7 @@ export const Header = () => {
         label: "Main",
         items: [
           {to: "/", label: "Home"},
-          {to: "/test", label: "Test"}
+          {to: "/testInsert", label: "TestInsert"},
         ]
       },
       {
