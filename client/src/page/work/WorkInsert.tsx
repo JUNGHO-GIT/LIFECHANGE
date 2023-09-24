@@ -35,7 +35,7 @@ export const WorkInsert = () => {
     setWORK({
       ...WORK,
       work_day: work_day,
-      workSection: Object.fromEntries(workSection.map((section, index) => [index, section])),
+      workSection : workSection,
     });
   }, [work_day, workSection]);
 
@@ -48,24 +48,22 @@ export const WorkInsert = () => {
     let resultTitle;
 
     Object.values(workArray).forEach((value, index) => {
-      if (work_part == "전체") {
-        if (work_part == "전체" && work_title == "전체") {
-          workPartAll.push(value.work_part[0]);
-          resultPart = workPartAll.join(",").slice(3);
-          setWork_part(resultPart);
+      if (work_part === "전체" && work_title === "전체") {
+        workPartAll.push(value.workPart[0]);
+        resultPart = workPartAll.join(",").slice(3);
+        setWork_part(resultPart);
 
-          workTitleAll.push(value.work_title);
-          resultTitle = workTitleAll.join(",").slice(3);
-          setWork_title(resultTitle);
-        }
+        workTitleAll.push(value.workTitle);
+        resultTitle = workTitleAll.join(",").slice(3);
+        setWork_title(resultTitle);
       }
       else if (work_part != "전체") {
-        if (work_part == workArray[index].work_part[0] && work_title == "전체") {
-          workTitleAll.push(workArray[index].work_title);
+        if (work_part == workArray[index].workPart[0] && work_title == "전체") {
+          workTitleAll.push(workArray[index].workTitle);
           resultTitle = workTitleAll.join(",").slice(3);
           setWork_title(resultTitle);
         }
-        if (work_part == workArray[index].work_part[0] && work_title != "전체") {
+        if (work_part == workArray[index].workPart[0] && work_title != "전체") {
           setSelectNumber(index);
         }
       }
@@ -131,6 +129,7 @@ export const WorkInsert = () => {
 
     const updateWorkSection = (i: number, key: string, value: any) => {
       const newWorkSection = [...workSection];
+
       if (!newWorkSection[i]) {
         newWorkSection[i] = {};
       }
@@ -149,11 +148,10 @@ export const WorkInsert = () => {
                 id={`work_part-${i}`}
                 onChange={(e) => {
                   setWork_part(e.target.value);
-                  setWork_title("전체");
                   updateWorkSection(i, "work_part", e.target.value);
                 }}>
                 {Object.keys(workArray).flatMap((key) =>
-                  Object.values(workArray[key].work_part).flatMap((value, index) => (
+                  Object.values(workArray[key].workPart).flatMap((value, index) => (
                     <option value={value} key={`${key}-${index}`}>
                       {value}
                     </option>
@@ -172,7 +170,7 @@ export const WorkInsert = () => {
                   setWork_title(e.target.value);
                   updateWorkSection(i, "work_title", e.target.value);
                 }}>
-                {Object.values(workArray[selectNumber].work_title).flatMap((value, index) => (
+                {Object.values(workArray[selectNumber].workTitle).flatMap((value, index) => (
                   <option value={value} key={`${selectNumber}-${index}`}>
                     {value}
                   </option>
@@ -293,7 +291,7 @@ export const WorkInsert = () => {
           <input type="number" value={workAmount} onChange={(e) => {
             setWorkAmount(parseInt(e.target.value));
           }}/>
-        {Array.from({length: workAmount}, (v, i) => i).map((i) => tableWorkSection(i))}
+        {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
         </div>
         <div className="row d-center">
           <div className="col-5">
