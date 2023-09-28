@@ -26,27 +26,29 @@ export const WorkListDay = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [selectedWorkType, setSelectedWorkType] = useState<string>("list");
-  const [selectedWorkPart, setSelectedWorkPart] = useState<string>("등");
-  const [selectedWorkTitle, setSelectedWorkTitle] = useState<string>("데드");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const { value: WORK_LIST, setValue: setWORK_LIST } = useStorage<any>(
+  const {value: WORK_LIST, setValue: setWORK_LIST} = useStorage<any>(
     "workListDAY", []
   );
-  const { value: resultValue, setValue: setResultValue } = useStorage<
-    Date | undefined
-  >("resultValueDAY", undefined);
-  const { value: resultDuration, setValue: setResultDuration } =
-    useStorage<string>("resultDurationDAY", "0000-00-00 ~ 0000-00-00");
-  const { value: averageWorkStart, setValue: setAverageWorkStart } =
-    useStorage<string>("averageWorkStartDAY", "00:00");
-  const { value: averageWorkEnd, setValue: setAverageWorkEnd } =
-    useStorage<string>("averageWorkEndDAY", "00:00");
-  const { value: averageWorkTime, setValue: setAverageWorkTime } =
-    useStorage<string>("averageWorkTimeDAY", "00:00");
-  const { value: selectedWorkDay, setValue: setSelectedWorkDay } = useStorage<
-    Date | undefined
-  >("selectedWorkDay", undefined);
+  const {value: resultValue, setValue: setResultValue} = useStorage<Date | undefined>(
+    "resultValueDAY", undefined
+  );
+  const {value: resultDuration, setValue: setResultDuration} = useStorage<string>(
+    "resultDurationDAY", "0000-00-00 ~ 0000-00-00"
+  );
+  const {value: averageWorkStart, setValue: setAverageWorkStart} =useStorage<string>(
+    "averageWorkStartDAY", "00:00"
+  );
+  const {value: averageWorkEnd, setValue: setAverageWorkEnd} = useStorage<string>(
+    "averageWorkEndDAY", "00:00"
+  );
+  const {value: averageWorkTime, setValue: setAverageWorkTime} = useStorage<string>(
+    "averageWorkTimeDAY", "00:00"
+  );
+  const {value: selectedWorkDay, setValue: setSelectedWorkDay} = useStorage<Date | undefined>(
+    "selectedWorkDay", undefined
+  );
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -68,7 +70,8 @@ export const WorkListDay = () => {
     fetchWorkList();
   }, [user_id, resultDuration]);
 
-  /**  const fetchWorkAverage = async () => {
+  /**
+  const fetchWorkAverage = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workAverage`, {
           params: {
@@ -104,7 +107,8 @@ export const WorkListDay = () => {
       }
     };
 
-  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]); **/
+  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
+  **/
 
   // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -164,23 +168,28 @@ export const WorkListDay = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((index : any) => (
-            <tr key={index._id}>
-              <td>{index.user_id}</td>
-              <td>{index.workSection?.work_part}</td>
-              <td>{index.workSection?.work_title}</td>
-              <td>{index.workSection?.work_kg}</td>
-              <td>{index.workSection?.work_set}</td>
-              <td>{index.workSection?.work_count}</td>
-              <td>{index.workSection?.work_rest}</td>
-              <td>{index.work_time}</td>
-            </tr>
-          ))}
+          {WORK_LIST.map((workList:any) => {
+            return (
+              workList.workSection.map((workSection:any) => (
+                <tr key={workSection._id}>
+                  <td>{workList.user_id}</td>
+                  <td>{workSection.work_part_val}</td>
+                  <td>{workSection.work_title_val}</td>
+                  <td>{workSection.work_kg}</td>
+                  <td>{workSection.work_set}</td>
+                  <td>{workSection.work_count}</td>
+                  <td>{workSection.work_rest}</td>
+                  <td>{workList.work_time}</td>
+                </tr>
+              ))
+            );
+          })}
         </tbody>
       </table>
     );
   };
-/**
+
+  /**
   // 5-2. table ----------------------------------------------------------------------------------->
   const tableWorkAverage = () => {
     return (
@@ -226,7 +235,7 @@ export const WorkListDay = () => {
       </table>
     );
   };
-**/
+  **/
 
   // 6-1. button ---------------------------------------------------------------------------------->
   const buttonWorkToday = () => {

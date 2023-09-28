@@ -12,28 +12,36 @@ const WorkScheme = new mongoose.Schema({
     required: true,
   },
   workSection : [{
-    work_part: {
+    work_part_idx : {
+      type: Number,
+      required: false,
+    },
+    work_part_val : {
       type: String,
       required: true,
     },
-    work_title: {
+    work_title_idx : {
+      type: Number,
+      required: false,
+    },
+    work_title_val : {
       type: String,
       required: true,
     },
     work_kg: {
-      type: String,
+      type: Number,
       required: true,
     },
     work_set: {
-      type: String,
+      type: Number,
       required: true,
     },
     work_count: {
-      type: String,
+      type: Number,
       required: true,
     },
     work_rest: {
-      type: String,
+      type: Number,
       required: true,
     },
   }],

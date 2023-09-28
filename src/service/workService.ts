@@ -1,6 +1,7 @@
 // workService.ts
 import Work from "../schema/Work";
 import * as mongoose from "mongoose";
+import { workPartAll, workTitleAll } from "../assets/ts/workArray";
 
 // 1-1. workList --------------------------------------------------------------------------------->
 export const workList = async (
