@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import { workPartArray, workTitleArray, workTotalArray } from "./WorkArray";
+import { workArray2 } from "./WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkInsert = () => {
@@ -18,17 +18,13 @@ export const WorkInsert = () => {
   // hook
   const navParam = useNavigate();
   const location = useLocation();
+  const workArray = workArray2;
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // useState
   const [work_day, setWork_day] = useState<string>(koreanDate);
-
   const [work_part, setWork_part] = useState<string>("전체");
   const [work_title, setWork_title] = useState<string>("전체");
-
-  const [selectedPartIndex, setSelectedPartIndex] = useState(0);
-  const [selectedTitleIndex, setSelectedTitleIndex] = useState(0);
-
   const [selectNumber, setSelectNumber] = useState<number>(0);
   const [WORK, setWORK] = useState<any>({});
 
@@ -52,7 +48,7 @@ export const WorkInsert = () => {
     let workTitleAll = [];
     let resultTitle;
 
-    Object.values(workTotalArray).flatMap((value, index) => {
+    Object.values(workArray).flatMap((value, index) => {
       if (work_part == "전체") {
         if (
           work_part == "전체" && work_title == "전체"
@@ -68,11 +64,16 @@ export const WorkInsert = () => {
       }
       else if (work_part != "전체") {
         if (
-          work_part == workTotalArray[index].workPart[0] && work_title == "전체"
+          work_part == workArray[index].workPart && work_title == "전체"
         ) {
-          workTitleAll.push(workTotalArray[index].workTitle);
+          workTitleAll.push(workArray[index].workTitle);
           resultTitle = workTitleAll.join(",").slice(3);
           setWork_title(resultTitle);
+        }
+        if (
+          work_part == workArray[index].workPart && work_title != "전체"
+        ) {
+          setSelectNumber(index);
         }
       }
     })
@@ -133,25 +134,24 @@ export const WorkInsert = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableWorkSection = (i:number) => {
+  const tableWorkSection = (index:any) => {
     return (
-      <div key={i}>
+      <div key={index}>
         <div className="row d-center">
           <div className="col-5">
             <div className="input-group mb-3">
               <span className="input-group-text">운동파트</span>
-              <select
-                className="form-control"
-                id={`work_part-${i}`}
-                onChange={(e) => {
-                  setWork_part(e.target.value);
-                  setSelectedPartIndex(parseInt(e.target.value));
-                  setSelectedTitleIndex(0);
-                }}>
-                {workPartArray.map((item, index) =>
-                  <option key={index} value={index}>
-                    {item.workPart}
-                  </option>
+              <select className="form-control" onChange={(e) => {
+                setWork_part(e.target.value);
+              }}>
+                {Object.keys(workArray).flatMap((key) =>
+                  Object.values(workArray[key].workPart).flatMap((value, index) => {
+                    return (
+                      <option value={value} key={index}>
+                        {value}
+                      </option>
+                    );
+                  })
                 )}
               </select>
             </div>
@@ -159,17 +159,16 @@ export const WorkInsert = () => {
           <div className="col-5">
             <div className="input-group mb-3">
               <span className="input-group-text">운동종목</span>
-              <select
-                className="form-control"
-                id={`work_title-${i}`}
-                onChange={(e) => {
-                  setWork_title(e.target.value);
-                  setSelectedTitleIndex(parseInt(e.target.value));
-                }}>
-                {workTitleArray[selectedPartIndex].workTitle.map((item, index) =>
-                  <option key={index} value={index}>
-                    {item}
-                  </option>
+              <select className="form-control" onChange={(e) => {
+                setWork_title(e.target.value);
+              }}>
+                {Object.values(workArray[selectNumber].workTitle).flatMap((value, index) => {
+                    return (
+                      <option value={value} key={index}>
+                        {value}
+                      </option>
+                    );
+                  }
                 )}
               </select>
             </div>
@@ -182,9 +181,9 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id={`work_set-${i}`}
+                id="work_set"
                 placeholder="Set"
-                value={workSection[i] ?. work_set}
+                value={workSection.work_set}
                 onChange={(e) => {
                   setWorkSection({ ...workSection, work_set : e.target.value });
                 }}
@@ -197,9 +196,9 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id={`work-count-${i}`}
+                id="work_count"
                 placeholder="Count"
-                value={workSection[i] ?. work_count}
+                value={workSection.work_count}
                 onChange={(e) => {
                   setWorkSection({ ...workSection, work_count : e.target.value });
                 }}
@@ -214,9 +213,9 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id={`work_kg-${i}`}
+                id="work_kg"
                 placeholder="Kg"
-                value={workSection[i] ?. work_kg}
+                value={workSection.work_kg}
                 onChange={(e) => {
                   setWorkSection({ ...workSection, work_kg : e.target.value });
                 }}
@@ -229,9 +228,9 @@ export const WorkInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id={`work_rest-${i}`}
+                id="work_rest"
                 placeholder="Rest"
-                value={workSection[i] ?. work_rest}
+                value={workSection.work_rest}
                 onChange={(e) => {
                   setWorkSection({ ...workSection, work_rest : e.target.value });
                 }}
@@ -288,9 +287,7 @@ export const WorkInsert = () => {
             setWorkAmount(parseInt(e.target.value));
           }} />
           {Array.from({ length: workAmount }, (value, index) => {
-            return new Array(1).fill(0).map((value, index) => {
-              return tableWorkSection(index);
-            });
+            return tableWorkSection(index);
           })}
         </div>
         <div className="row d-center">

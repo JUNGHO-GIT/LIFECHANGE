@@ -2,23 +2,99 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import { workArray2 } from "./WorkArray";
+
+// workPartArray ---------------------------------------------------------------------------------->
+const workPartArray = [
+  {
+    // 0
+    workPart: ["전체"],
+  },
+  {
+    // 1
+    workPart: ["등"],
+  },
+  {
+    // 2
+    workPart: ["하체"],
+  },
+  {
+    // 3
+    workPart: ["가슴"],
+  },
+  {
+    // 4
+    workPart: ["어깨"],
+  },
+  {
+    // 5
+    workPart: ["삼두"],
+  },
+  {
+    // 6
+    workPart: ["이두"],
+  },
+  {
+    // 7
+    workPart: ["유산소"],
+  },
+  {
+    // 8
+    workPart: ["휴식"],
+  },
+];
+
+// workTitleArray --------------------------------------------------------------------------------->
+const workTitleArray = [
+  {
+    // 0
+    workTitle : ["전체"],
+  },
+  {
+    // 1
+    workTitle : ["데드리프트", "바벨로우", "덤벨로우", "시티드로우", "랫풀다운", "풀업"],
+  },
+  {
+    // 2
+    workTitle : ["백스쿼트", "프론트스쿼트", "핵스쿼트", "바벨런지", "덤벨런지", "레그프레스", "레그익스텐션", "레그컬"],
+  },
+  {
+    // 3
+    workTitle : ["바벨벤치프레스", "덤벨벤치프레스", "머신벤치프레스", "인클라인벤치프레스", "디클라인벤치프레스", "덤벨플라이", "케이블플라이", "케이블크로스오버", "딥스", "푸쉬업"],
+  },
+  {
+    // 4
+    workTitle : ["밀리터리프레스", "바벨프레스", "덤벨프레스", "머신프레스", "비하인드넥프레스", "프론트레터럴레이즈", "사이드레터럴레이즈", "벤트오버레터럴레이즈", "페이스풀"],
+  },
+  {
+    // 5
+    workTitle : ["라잉트라이셉스익스텐션", "덤벨트라이셉스익스텐션", "오버헤드트라이셉스익스텐션", "클로즈그립벤치프레스", "케이블트라이셉스푸쉬다운", "케이블트라이셉스로프다운", "킥백"],
+  },
+  {
+    // 6
+    workTitle : ["바벨컬", "덤벨컬", "해머컬", "머신컬", "케이블컬", "바벨프리처컬", "덤벨프리처컬"],
+  },
+  {
+    // 7
+    workTitle : ["걷기", "달리기", "스텝퍼", "자전거", "수영", "플랭크"],
+  },
+  {
+    // 8
+    workTitle : ["휴식"],
+  },
+];
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const WorkInsert = () => {
+export const TestInsert = () => {
   // title
-  const TITLE = "Work Insert";
+  const TITLE = "Test Insert";
   // url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   // date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // hook
   const navParam = useNavigate();
-  const location = useLocation();
-  const workArray = workArray2;
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // useState
@@ -32,61 +108,12 @@ export const WorkInsert = () => {
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setWORK({
+    setWORK ({
       ...WORK,
       work_day: work_day,
       workSection : workSection,
     });
   }, [work_day, workSection]);
-
-  // 2-2. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    let workPartAll: any = [];
-    let workTitleAll: any = [];
-    let resultPart: any;
-    let resultTitle: any;
-
-    Object.values(workArray).map((value, index) => {
-      if (
-        work_part === "전체" &&
-        work_title === "전체"
-      ) {
-        workPartAll.push(value.workPart[0]);
-        workTitleAll.push(value.workTitle);
-        resultPart = workPartAll.join(",").slice(3);
-        resultTitle = workTitleAll.join(",").slice(3);
-
-        setWork_part(resultPart);
-        setWork_title(resultTitle);
-        setWorkSection((prevWorkSection: any[]) => [{
-          ...prevWorkSection[0],
-          work_part : resultPart,
-          work_title : resultTitle,
-        }]);
-      }
-      else if (
-        work_part !== "전체" &&
-        work_part === workArray[index].workPart[0] &&
-        work_title === "전체"
-      ) {
-        workTitleAll.push(workArray[index].workTitle);
-        resultTitle = workTitleAll.join(",").slice(3);
-
-        setWork_title(resultTitle);
-        setWorkSection((prevWorkSection: any[]) => [{
-          ...prevWorkSection[0],
-          work_title : resultTitle,
-        }]);
-      }
-      else if (
-        work_part !== "전체" &&
-        work_part === workArray[index].workPart[0] &&
-        work_title !== "전체"
-      ) {
-        setSelectNumber(index);
-      }
-    });
-  }, [work_part, work_title]);
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -110,24 +137,6 @@ export const WorkInsert = () => {
     }
   }, [WORK.work_start, WORK.work_end]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
-  const flowWorkInsert = async () => {
-    const response = await axios.post(`${URL_WORK}/workInsert`, {
-      user_id : user_id,
-      WORK : WORK,
-    });
-    if (response.data === "success") {
-      alert("Insert a work successfully");
-      navParam("/workListDay");
-    }
-    else if (response.data === "fail") {
-      alert("Insert a work failure");
-    }
-    else {
-      throw new Error("Server responded with an error");
-    }
-  };
-
   // 4. logic ------------------------------------------------------------------------------------->
   const viewWorkDay = () => {
     return (
@@ -145,16 +154,6 @@ export const WorkInsert = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableWorkSection = (i:number) => {
 
-    const updateWorkSection = (i: number, key: string, value: any) => {
-      const newWorkSection = [...workSection];
-
-      if (!newWorkSection[i]) {
-        newWorkSection[i] = {};
-      }
-      newWorkSection[i][key] = value;
-      setWorkSection(newWorkSection);
-    };
-
     return (
       <div key={i}>
         <div className="row d-center">
@@ -167,16 +166,18 @@ export const WorkInsert = () => {
                 value={workSection[i]?.work_part}
                 onChange={(e) => {
                   setWork_part(e.target.value);
-                  setWork_title("전체");
-                  updateWorkSection(i, "work_part", e.target.value);
+                  setWorkSection((prevWorkSection:any[]) => [{
+                    ...prevWorkSection[0],
+                    work_part : e.target.value,
+                  }]);
+                  console.log(workSection);
                 }}>
-                {Object.keys(workArray).flatMap((key) =>
+                {Object.keys(workArray).flatMap((key:any) =>
                   Object.values(workArray[key].workPart).flatMap((value, index) => (
                     <option value={value} key={`${key}-${index}`}>
                       {value}
                     </option>
-                  ))
-                )}
+                )))}
               </select>
             </div>
           </div>
@@ -186,10 +187,14 @@ export const WorkInsert = () => {
               <select
                 className="form-control"
                 id={`work_title-${i}`}
-                value={workSection[i]?.work_title}
+                value={workSection[i-0]?.work_title}
                 onChange={(e) => {
                   setWork_title(e.target.value);
-                  updateWorkSection(i, "work_title", e.target.value);
+                  setWorkSection((prevWorkSection:any[]) => [{
+                    ...prevWorkSection[0],
+                    work_title : e.target.value,
+                  }]);
+                  console.log(workSection);
                 }}>
                 {Object.values(workArray[selectNumber].workTitle).flatMap((value, index) => (
                   <option value={value} key={`${selectNumber}-${index}`}>
@@ -197,70 +202,6 @@ export const WorkInsert = () => {
                   </option>
                 ))}
               </select>
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Set</span>
-              <input
-                type="text"
-                className="form-control"
-                id={`work_set-${i}`}
-                placeholder="Set"
-                value={workSection[i]?.work_set}
-                onChange={(e) => {
-                  updateWorkSection(i, "work_set", e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Count</span>
-              <input
-                type="text"
-                className="form-control"
-                id={`work_count-${i}`}
-                placeholder="Count"
-                value={workSection[i]?.work_count}
-                onChange={(e) => {
-                  updateWorkSection(i, "work_count", e.target.value);
-                }}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Kg</span>
-              <input
-                type="text"
-                className="form-control"
-                id={`work_kg-${i}`}
-                placeholder="Kg"
-                value={workSection[i]?.work_kg}
-                onChange={(e) => {
-                  updateWorkSection(i, "work_kg", e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Rest</span>
-              <input
-                type="text"
-                className="form-control"
-                id={`work_rest-${i}`}
-                placeholder="Rest"
-                value={workSection[i]?.work_rest}
-                onChange={(e) => {
-                  updateWorkSection(i, "work_rest", e.target.value);
-                }}
-              />
             </div>
           </div>
         </div>
@@ -272,115 +213,15 @@ export const WorkInsert = () => {
   const tableWorkInsert = () => {
     return (
       <div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">ID</span>
-              <input
-                type="text"
-                className="form-control"
-                id="user_id"
-                name="user_id"
-                placeholder="ID"
-                value={user_id ? user_id : ""}
-                onChange={(e: any) => {
-                  setWORK({ ...WORK, user_id: e.target.value });
-                }}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Day</span>
-              <input
-                type="text"
-                className="form-control"
-                id="work_day"
-                name="work_day"
-                placeholder="Day"
-                value={WORK.work_day}
-                onChange={(e: any) => {
-                  setWork_day(e.target.value);
-                }}
-                readOnly
-              />
-            </div>
-          </div>
-        </div>
-        <div>
-          <input type="number" value={workAmount} onChange={(e) => {
-            setWorkAmount(parseInt(e.target.value));
-          }}/>
-          {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Start</span>
-              <TimePicker
-                id="work_start"
-                name="work_start"
-                value={WORK.work_start}
-                disableClock={false}
-                clockIcon={null}
-                format="HH:mm"
-                locale="ko"
-                onChange={(e: any) => {
-                  setWORK({ ...WORK, work_start: e });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group mb-3">
-              <span className="input-group-text">End</span>
-              <TimePicker
-                id="work_end"
-                name="work_end"
-                value={WORK.work_end}
-                disableClock={false}
-                clockIcon={null}
-                format="HH:mm"
-                locale="ko"
-                onChange={(e: any) => {
-                  setWORK({ ...WORK, work_end: e });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-10">
-            <div className="input-group mb-3">
-              <span className="input-group-text">Time</span>
-              <input
-                type="text"
-                className="form-control"
-                id="work_time"
-                name="work_time"
-                placeholder="Time"
-                value={WORK.work_time || ""}
-                onChange={(e: any) => {
-                  setWORK({ ...WORK, work_time: e.target.value });
-                }}
-                readOnly
-              />
-            </div>
-          </div>
-        </div>
+        <input type="number" value={workAmount} onChange={(e) => {
+          setWorkAmount(parseInt(e.target.value));
+        }}/>
+        {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
       </div>
     );
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonWorkInsert = () => {
-    return (
-      <button className="btn btn-primary ms-2" type="button" onClick={flowWorkInsert}>
-        Insert
-      </button>
-    );
-  };
   const buttonRefreshPage = () => {
     return (
       <button className="btn btn-success ms-2" type="button" onClick={() => {
@@ -411,7 +252,6 @@ export const WorkInsert = () => {
           <form className="form-inline">
             {tableWorkInsert()}
             <br />
-            {buttonWorkInsert()}
             {buttonRefreshPage()}
           </form>
         </div>

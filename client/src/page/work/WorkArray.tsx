@@ -1,10 +1,12 @@
-// WorkArray.tsx
-export const workArray2 = [
+// workTotalArray --------------------------------------------------------------------------------->
+export const workTotalArray = [
   {
+    // 0
     workPart: ["전체"],
     workTitle: ["전체"],
   },
   {
+    // 1
     workPart: ["등"],
     workTitle: [
       "전체",
@@ -17,6 +19,7 @@ export const workArray2 = [
     ],
   },
   {
+    // 2
     workPart: ["하체"],
     workTitle: [
       "전체",
@@ -31,6 +34,7 @@ export const workArray2 = [
     ],
   },
   {
+    // 3
     workPart: ["가슴"],
     workTitle: [
       "전체",
@@ -47,6 +51,7 @@ export const workArray2 = [
     ],
   },
   {
+    // 4
     workPart: ["어깨"],
     workTitle: [
       "전체",
@@ -62,6 +67,7 @@ export const workArray2 = [
     ],
   },
   {
+    // 5
     workPart: ["삼두"],
     workTitle: [
       "전체",
@@ -75,6 +81,7 @@ export const workArray2 = [
     ],
   },
   {
+    // 6
     workPart: ["이두"],
     workTitle: [
       "전체",
@@ -88,6 +95,7 @@ export const workArray2 = [
     ],
   },
   {
+    // 7
     workPart: ["유산소"],
     workTitle: [
       "전체",
@@ -100,7 +108,88 @@ export const workArray2 = [
     ],
   },
   {
+    // 8
     workPart: ["휴식"],
     workTitle: ["휴식"],
+  },
+];
+
+// workPartArray ---------------------------------------------------------------------------------->
+export const workPartArray = [
+  {
+    // 0
+    workPart: ["전체"],
+  },
+  {
+    // 1
+    workPart: ["등"],
+  },
+  {
+    // 2
+    workPart: ["하체"],
+  },
+  {
+    // 3
+    workPart: ["가슴"],
+  },
+  {
+    // 4
+    workPart: ["어깨"],
+  },
+  {
+    // 5
+    workPart: ["삼두"],
+  },
+  {
+    // 6
+    workPart: ["이두"],
+  },
+  {
+    // 7
+    workPart: ["유산소"],
+  },
+  {
+    // 8
+    workPart: ["휴식"],
+  },
+];
+
+// workTitleArray --------------------------------------------------------------------------------->
+export const workTitleArray = [
+  {
+    // 0
+    workTitle : ["전체"],
+  },
+  {
+    // 1
+    workTitle : ["데드리프트", "바벨로우", "덤벨로우", "시티드로우", "랫풀다운", "풀업"],
+  },
+  {
+    // 2
+    workTitle : ["백스쿼트", "프론트스쿼트", "핵스쿼트", "바벨런지", "덤벨런지", "레그프레스", "레그익스텐션", "레그컬"],
+  },
+  {
+    // 3
+    workTitle : ["바벨벤치프레스", "덤벨벤치프레스", "머신벤치프레스", "인클라인벤치프레스", "디클라인벤치프레스", "덤벨플라이", "케이블플라이", "케이블크로스오버", "딥스", "푸쉬업"],
+  },
+  {
+    // 4
+    workTitle : ["밀리터리프레스", "바벨프레스", "덤벨프레스", "머신프레스", "비하인드넥프레스", "프론트레터럴레이즈", "사이드레터럴레이즈", "벤트오버레터럴레이즈", "페이스풀"],
+  },
+  {
+    // 5
+    workTitle : ["라잉트라이셉스익스텐션", "덤벨트라이셉스익스텐션", "오버헤드트라이셉스익스텐션", "클로즈그립벤치프레스", "케이블트라이셉스푸쉬다운", "케이블트라이셉스로프다운", "킥백"],
+  },
+  {
+    // 6
+    workTitle : ["바벨컬", "덤벨컬", "해머컬", "머신컬", "케이블컬", "바벨프리처컬", "덤벨프리처컬"],
+  },
+  {
+    // 7
+    workTitle : ["걷기", "달리기", "스텝퍼", "자전거", "수영", "플랭크"],
+  },
+  {
+    // 8
+    workTitle : ["휴식"],
   },
 ];
