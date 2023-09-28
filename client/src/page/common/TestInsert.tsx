@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
+import { workTotalArray } from "../work/WorkArray";
 
 // workPartArray ---------------------------------------------------------------------------------->
 const workPartArray = [
@@ -97,6 +98,7 @@ export const TestInsert = () => {
   const navParam = useNavigate();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
+  const workArray = workTotalArray;
   // useState
   const [workAmount, setWorkAmount] = useState<number>(1);
   const [workSection, setWorkSection] = useState<any>([{}]);
