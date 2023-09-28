@@ -25,12 +25,13 @@ workRouter.get("/workList", async (req: Request, res: Response) => {
 });
 
 // 1-2. workAverage ------------------------------------------------------------------------------>
-workRouter.get("/workAverage", async (req: Request, res: Response) => {
+/* workRouter.get("/workAverage", async (req: Request, res: Response) => {
   try {
     const workAverage = await workService.workAverage (
       req.query.user_id,
       req.query.work_duration,
-      req.query.workSection
+      req.query.work_part_val,
+      req.query.work_title_val
     );
     if (workAverage) {
       res.send(workAverage);
@@ -43,7 +44,7 @@ workRouter.get("/workAverage", async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).send(err);
   }
-});
+}); */
 
 // 2. workDetail ---------------------------------------------------------------------------------->
 workRouter.get("/workDetail", async (req: Request, res: Response) => {

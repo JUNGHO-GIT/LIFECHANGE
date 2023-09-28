@@ -40,14 +40,12 @@ export const workList = async (
 export const workAverage = async (
   user_id_param: any,
   work_duration_param: any,
-  workSection_param: any
+  work_part_val_param: any,
+  work_title_val_param: any
 ) => {
 
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
-
-  const work_part_param = workSection_param.work_part_val;
-  const work_title_param = workSection_param.work_title_val;
 
   const workAverage = await Work.aggregate ([
     {
@@ -57,8 +55,8 @@ export const workAverage = async (
           $gte : startDay,
           $lte : endDay,
         },
-        work_part : work_part_param,
-        work_title : work_title_param
+        work_part :  work_part_val_param,
+        work_title : work_title_val_param
       },
     },
     {
