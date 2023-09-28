@@ -96,6 +96,14 @@ export const WorkInsert = () => {
         alert("Input a Time");
         return;
       }
+      if (workSection[i].work_part_val === "전체") {
+        alert("Input a Part");
+        return;
+      }
+      if (workSection[i].work_title_val === "전체") {
+        alert("Input a Title");
+        return;
+      }
       if (workSection[i].work_set === 0) {
         alert("Input a Set");
         return;

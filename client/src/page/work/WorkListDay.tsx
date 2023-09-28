@@ -31,13 +31,22 @@ export const WorkListDay = () => {
   const {value: WORK_LIST, setValue: setWORK_LIST} = useStorage<any>(
     "workListDAY", []
   );
+  const {value: WORK_AVERAGE, setValue: setWORK_AVERAGE} = useStorage<any>(
+    "workAverageDAY", []
+  );
+  const {value: selectedWorkPart, setValue: setSelectedWorkPart} = useStorage<string>(
+    "selectedWorkPartDAY", ""
+  );
+  const {value: selectedWorkTitle, setValue: setSelectedWorkTitle} = useStorage<string>(
+    "selectedWorkTitleDAY", ""
+  );
   const {value: resultValue, setValue: setResultValue} = useStorage<Date | undefined>(
     "resultValueDAY", undefined
   );
   const {value: resultDuration, setValue: setResultDuration} = useStorage<string>(
     "resultDurationDAY", "0000-00-00 ~ 0000-00-00"
   );
-  const {value: averageWorkStart, setValue: setAverageWorkStart} =useStorage<string>(
+  const {value: averageWorkStart, setValue: setAverageWorkStart} = useStorage<string>(
     "averageWorkStartDAY", "00:00"
   );
   const {value: averageWorkEnd, setValue: setAverageWorkEnd} = useStorage<string>(
@@ -67,48 +76,30 @@ export const WorkListDay = () => {
         setWORK_LIST([]);
       }
     };
-    fetchWorkList();
-  }, [user_id, resultDuration]);
-
-  /**
-  const fetchWorkAverage = async () => {
+    const fetchWorkAverage = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workAverage`, {
           params: {
             user_id: user_id,
             work_duration: resultDuration,
-            work_part: selectedWorkPart,
-            work_title: selectedWorkTitle,
+            workSection : WORK_LIST.map((workList:any) => {
+              return workList.workSection.map((workSection:any) => (
+                workSection.work_part_val,
+                workSection.work_title_val
+              ))
+            }).flat()
           },
         });
-        const isValidTime = (str: string) => {
-          return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
-        };
-        setAverageWorkStart(
-          isValidTime(response.data.averageWorkStart)
-            ? response.data.averageWorkStart
-            : "00:00"
-        );
-        setAverageWorkEnd(
-          isValidTime(response.data.averageWorkEnd)
-            ? response.data.averageWorkEnd
-            : "00:00"
-        );
-        setAverageWorkTime(
-          isValidTime(response.data.averageWorkTime)
-            ? response.data.averageWorkTime
-            : "00:00"
-        );
-      } catch (error: any) {
+        setWORK_AVERAGE(response.data);
+      }
+      catch (error: any) {
         alert(`Error fetching work data: ${error.message}`);
-        setAverageWorkStart("00:00");
-        setAverageWorkEnd("00:00");
-        setAverageWorkTime("00:00");
+        setWORK_AVERAGE([]);
       }
     };
-
-  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
-  **/
+    fetchWorkList();
+    fetchWorkAverage();
+  }, [user_id, resultDuration]);
 
   // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -189,79 +180,59 @@ export const WorkListDay = () => {
     );
   };
 
-  /**
   // 5-2. table ----------------------------------------------------------------------------------->
   const tableWorkAverage = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>타이틀</th>
-            <th>파트</th>
-            <th>횟수</th>
-            <th>무게</th>
-            <th>휴식</th>
-            <th>시간</th>
+            <th>Part</th>
+            <th>Title</th>
+            <th>Kg</th>
+            <th>Set</th>
+            <th>Count</th>
+            <th>Rest</th>
+            <th>Time</th>
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((index: any) => (
-            <tr key={index._id}>
-              <td>{index.work_title}</td>
-              <td>{index.work_part}</td>
-              <td>{index.work_count}</td>
-              <td>{index.work_kg}</td>
-              <td>{index.work_rest}</td>
-              <td>{index.work_time}</td>
-            </tr>
-          ))}
-          <tr>
-            <td>합계</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{averageWorkTime}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>평균</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{averageWorkTime}</td>
-            <td></td>
-          </tr>
+          {WORK_AVERAGE.map((workAverage:any) => {
+            return (
+              <tr key={workAverage._id}>
+                <td>{workAverage.work_part_val}</td>
+                <td>{workAverage.work_title_val}</td>
+                <td>{workAverage.work_kg}</td>
+                <td>{workAverage.work_set}</td>
+                <td>{workAverage.work_count}</td>
+                <td>{workAverage.work_rest}</td>
+                <td>{workAverage.work_time}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     );
   };
-  **/
 
   // 6-1. button ---------------------------------------------------------------------------------->
   const buttonWorkToday = () => {
     return (
-      <button
-        className="btn btn-success me-2"
-        onClick={() => {
-          setSelectedWorkDay(koreanDate);
-          localStorage.removeItem("workList_DAY");
-          localStorage.removeItem("selectedWorkDay_DAY");
-        }}
-      >
+      <button className="btn btn-success me-2" onClick={() => {
+        setSelectedWorkDay(koreanDate);
+        localStorage.removeItem("workList_DAY");
+        localStorage.removeItem("selectedWorkDay_DAY");
+      }}>
         Today
       </button>
     );
   };
   const buttonWorkReset = () => {
     return (
-      <button
-        className="btn btn-primary me-2"
-        onClick={() => {
-          setSelectedWorkDay(undefined);
-          localStorage.removeItem("workList_DAY");
-          localStorage.removeItem("selectedWorkDay_DAY");
-        }}
-      >
+      <button className="btn btn-primary me-2" onClick={() => {
+        setSelectedWorkDay(undefined);
+        localStorage.removeItem("workList_DAY");
+        localStorage.removeItem("selectedWorkDay_DAY");
+      }}>
         Reset
       </button>
     );
@@ -289,6 +260,29 @@ export const WorkListDay = () => {
       </div>
     );
   };
+  const selectWorkPart = () => {
+    return (
+      <div className="mb-3">
+        <select
+          className="form-select"
+          id="workPart"
+          onChange={(e) => {
+            setSelectedWorkPart(e.target.value);
+          }}
+        >
+          <option value="0">Part</option>
+          <option value="전체">전체</option>
+          <option value="가슴">가슴</option>
+          <option value="등">등</option>
+          <option value="어깨">어깨</option>
+          <option value="하체">하체</option>
+          <option value="복근">복근</option>
+          <option value="팔">팔</option>
+          <option value="기타">기타</option>
+        </select>
+      </div>
+    );
+  };
   const selectWorkType = () => {
     return (
       <div className="mb-3">
@@ -298,7 +292,8 @@ export const WorkListDay = () => {
           onChange={(e) => {
             if (e.target.value === "list") {
               setSelectedWorkType("list");
-            } else if (e.target.value === "average") {
+            }
+            else if (e.target.value === "average") {
               setSelectedWorkType("average");
             }
           }}
@@ -320,6 +315,7 @@ export const WorkListDay = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-3">{selectWorkList()}</div>
+
         <div className="col-3">{selectWorkType()}</div>
       </div>
       <div className="row d-center mt-5">
@@ -332,6 +328,7 @@ export const WorkListDay = () => {
         <div className="col-12">
           <form className="form-inline">
           {selectedWorkType === "list" && tableWorkList()}
+          {selectedWorkType === "average" && tableWorkAverage()}
           </form>
         </div>
       </div>

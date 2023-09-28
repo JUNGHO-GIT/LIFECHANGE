@@ -12,6 +12,19 @@ export const workList = async (
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
 
+  /**
+  const workSection = WORK_param.workSection;
+
+  for (let i = 0; i < workSection.length; i++) {
+    if (workSection[i].work_part_val == "전체") {
+      workSection[i].work_part_val = workPartAll;
+    }
+    if (workSection[i].work_title_val == "전체") {
+      workSection[i].work_title_val = workTitleAll;
+    }
+  }
+  **/
+
   const workList = await Work.find ({
     user_id:  user_id_param,
     work_day : {
@@ -24,16 +37,17 @@ export const workList = async (
 };
 
 // 1-2. workAverage ------------------------------------------------------------------------------->
-/**
 export const workAverage = async (
   user_id_param: any,
   work_duration_param: any,
-  work_part_param: any,
-  work_title_param: any
+  workSection_param: any
 ) => {
 
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
+
+  const work_part_param = workSection_param.work_part_val;
+  const work_title_param = workSection_param.work_title_val;
 
   const workAverage = await Work.aggregate ([
     {
@@ -67,7 +81,6 @@ export const workAverage = async (
 
   return workAverage;
 };
-**/
 
 // 2. workDetail ---------------------------------------------------------------------------------->
 export const workDetail = async (
