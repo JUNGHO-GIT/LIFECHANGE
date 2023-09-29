@@ -48,10 +48,12 @@ export const workAverage = async (
   const endDay = work_duration_param.split(` ~ `)[1];
 
   if (work_part_val_param === "전체") {
-    work_part_val_param = workPartAll[0].workPart;
+    let work_part_before = workPartAll[0].workPart.toString();
+    work_part_val_param = work_part_before.replace(/,/g, "|");
   }
   if (work_title_val_param === "전체") {
-    work_title_val_param = workTitleAll[0].workTitle;
+    let work_title_before = workTitleAll[0].workTitle.toString();
+    work_title_val_param = work_title_before.replace(/,/g, "|");
   }
 
   console.log("work_part_val_param  :  " + work_part_val_param);
@@ -63,24 +65,25 @@ export const workAverage = async (
     },
     {
       $match: {
-        "workSection.work_part_val": work_part_val_param,
-        "workSection.work_title_val": work_title_val_param,
-        user_id: user_id_param,
-        work_day: {
-          $gte: startDay,
-          $lte: endDay,
+        user_id : user_id_param,
+        "workSection.work_part_val" : {$regex : work_part_val_param},
+        "workSection.work_title_val" : {$regex : work_title_val_param},
+        work_day : {
+          $gte : startDay,
+          $lte : endDay,
         },
       },
     },
     {
       $group: {
         _id: "$workSection.work_title_val",
-        work_part_val : { $first: "$workSection.work_part_val" },
-        work_title_val : { $first: "$workSection.work_title_val" },
-        work_count_avg: { $avg: "$workSection.work_count" },
-        work_set_avg: { $avg: "$workSection.work_set" },
-        work_kg_avg: { $avg: "$workSection.work_kg" },
-        work_rest_avg: { $avg: "$workSection.work_rest" },
+        count: {$sum: 1},
+        work_part_val : {$first: "$workSection.work_part_val"},
+        work_title_val : {$first: "$workSection.work_title_val"},
+        work_count_avg: {$avg: "$workSection.work_count"},
+        work_set_avg: {$avg: "$workSection.work_set"},
+        work_kg_avg: {$avg: "$workSection.work_kg"},
+        work_rest_avg: {$avg: "$workSection.work_rest"},
       },
     },
     {
@@ -89,7 +92,6 @@ export const workAverage = async (
       },
     },
   ]);
-
   return workAverage;
 };
 

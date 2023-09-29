@@ -232,6 +232,7 @@ export const WorkListDay = () => {
                 <tr>
                   <th>Part</th>
                   <th>Title</th>
+                  <th>Count</th>
                   <th>Kg Average</th>
                   <th>Set Average</th>
                   <th>Count Average</th>
@@ -243,6 +244,7 @@ export const WorkListDay = () => {
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>
+                    <td>{workItem.count}</td>
                     <td>{workItem.work_kg_avg}</td>
                     <td>{workItem.work_set_avg}</td>
                     <td>{workItem.work_count_avg}</td>
