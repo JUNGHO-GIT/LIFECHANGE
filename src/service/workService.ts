@@ -47,38 +47,52 @@ export const workAverage = async (
   const startDay = work_duration_param.split(` ~ `)[0];
   const endDay = work_duration_param.split(` ~ `)[1];
 
+  if (work_part_val_param === "전체") {
+    work_part_val_param = workPartAll[0].workPart;
+  }
+  if (work_title_val_param === "전체") {
+    work_title_val_param = workTitleAll[0].workTitle;
+  }
+
+  console.log("work_part_val_param  :  " + work_part_val_param);
+  console.log("work_title_val_param  :  " + work_title_val_param);
+
   const workAverage = await Work.aggregate ([
     {
-      $match : {
-        user_id : user_id_param,
-        work_day : {
-          $gte : startDay,
-          $lte : endDay,
+      $unwind: "$workSection"
+    },
+    {
+      $match: {
+        "workSection.work_part_val": work_part_val_param,
+        "workSection.work_title_val": work_title_val_param,
+        user_id: user_id_param,
+        work_day: {
+          $gte: startDay,
+          $lte: endDay,
         },
-        work_part :  work_part_val_param,
-        work_title : work_title_val_param
       },
     },
     {
-      $group : {
-        _id : "$work_title",
-        work_title : {$first : "$work_title"},
-        work_part : {$first : "$work_part"},
-        work_count : {$avg : "$work_count"},
-        work_kg : {$avg : "$work_kg"},
-        work_rest : {$avg : "$work_rest"},
-        work_time : {$avg : "$work_time"},
+      $group: {
+        _id: "$workSection.work_title_val",
+        work_part_val : { $first: "$workSection.work_part_val" },
+        work_title_val : { $first: "$workSection.work_title_val" },
+        work_count_avg: { $avg: "$workSection.work_count" },
+        work_set_avg: { $avg: "$workSection.work_set" },
+        work_kg_avg: { $avg: "$workSection.work_kg" },
+        work_rest_avg: { $avg: "$workSection.work_rest" },
       },
     },
     {
-      $sort : {
-        work_title : 1,
+      $sort: {
+        _id: 1,
       },
     },
   ]);
 
   return workAverage;
 };
+
 
 // 2. workDetail ---------------------------------------------------------------------------------->
 export const workDetail = async (
@@ -121,7 +135,7 @@ export const workUpdate = async (
   return workUpdate;
 };
 
-// 5. workDelete ------------------------------------------------------------------------------->
+// 5. workDelete ---------------------------------------------------------------------------------->
 export const workDelete = async (
   _id_param : any
 ) => {
