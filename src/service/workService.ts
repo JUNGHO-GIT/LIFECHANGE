@@ -95,14 +95,30 @@ export const workAverage = async (
   return workAverage;
 };
 
-
-// 2. workDetail ---------------------------------------------------------------------------------->
+// 2. workDetail ------------------------------------------------------------------------------->
 export const workDetail = async (
-  _id_param : any
+  _id_param : any,
+  workSection_id_param : any
 ) => {
-  const workDetail = await Work.findOne ({
-    _id : _id_param,
-  });
+  console.log("log ==== _id_param :  " + _id_param);
+  console.log("log ==== workSection_id_param :  " + workSection_id_param);
+  
+  let workDetail;
+
+  if (workSection_id_param === null) {
+    workDetail = await Work.findOne({ _id: _id_param });
+  }
+  if (workSection_id_param !== null) {
+    const workScheme = await Work.findOne({ _id: _id_param });
+    if (workScheme) {
+      const matchedSection = workScheme.workSection.find((section: any) => section._id.toString() === workSection_id_param.toString());
+      workDetail = {
+        ...workScheme.toObject(),
+        workSection: [matchedSection]
+      };
+    }
+  }
+  console.log("log ==== workDetail :  " + JSON.stringify(workDetail));
   return workDetail;
 };
 
@@ -139,10 +155,44 @@ export const workUpdate = async (
 
 // 5. workDelete ---------------------------------------------------------------------------------->
 export const workDelete = async (
-  _id_param : any
+  _id_param : any,
+  workSection_id_param : any
 ) => {
-  const workDelete = await Work.deleteOne ({
-    _id : _id_param,
-  });
+  
+  console.log("log ==== _id_param :  " + _id_param);
+  console.log("log ==== workSection_id_param :  " + workSection_id_param);
+  
+  let workDelete;
+  
+  if (
+    workSection_id_param !== null ||
+    workSection_id_param !== undefined ||
+    workSection_id_param !== ""
+  ) {
+    // workSection_id_param이 제공되면 해당 섹션만 삭제합니다.
+    // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제합니다. 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거합니다.
+    workDelete = await Work.updateOne (
+      {
+        _id: _id_param
+      },
+      {
+        $pull: {
+          workSection: { _id: workSection_id_param }
+        }
+      }
+    );
+  }
+  else if (
+    workSection_id_param === null ||
+    workSection_id_param === undefined ||
+    workSection_id_param === ""
+  ) {
+    // workSection_id_param이 제공되지 않으면 전체 작업을 삭제합니다.
+    workDelete = await Work.deleteOne (
+      {
+        _id: _id_param
+      }
+    );
+  }
   return workDelete;
 };

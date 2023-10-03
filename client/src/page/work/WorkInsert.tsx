@@ -29,10 +29,6 @@ export const WorkInsert = () => {
     work_part_val: "전체",
     work_title_idx: 0,
     work_title_val: "전체",
-    work_set: 0,
-    work_count: 0,
-    work_kg: 0,
-    work_rest: 0,
   }]);
 
   // 2. useEffect --------------------------------------------------------------------------------->
@@ -175,10 +171,6 @@ export const WorkInsert = () => {
             work_part_val: "전체",
             work_title_idx: 0,
             work_title_val: "전체",
-            work_set: 0,
-            work_count: 0,
-            work_kg: 0,
-            work_rest: 0,
           };
           const newAmount = parseInt(e.target.value);
 

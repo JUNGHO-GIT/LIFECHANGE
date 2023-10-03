@@ -50,7 +50,8 @@ workRouter.get("/workAverage", async (req: Request, res: Response) => {
 workRouter.get("/workDetail", async (req: Request, res: Response) => {
   try {
     const workDetail = await workService.workDetail (
-      req.query._id
+      req.query._id,
+      req.query.workSection_id
     );
     if (workDetail) {
       res.send(workDetail);
@@ -109,7 +110,8 @@ workRouter.put("/workUpdate", async (req: Request, res: Response) => {
 workRouter.delete("/workDelete", async (req: Request, res: Response) => {
   try {
     const workDelete = await workService.workDelete (
-      req.query._id
+      req.query._id,
+      req.query.workSection_id
     );
     if (workDelete) {
       res.send("success");
