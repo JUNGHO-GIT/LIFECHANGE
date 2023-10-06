@@ -36,32 +36,20 @@ export const WorkListYear = () => {
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
     "workList(YEAR)", []
   );
-  const { value: WORK_AVERAGE, setValue: setWORK_AVERAGE } = useStorage<any>(
+  const {value: WORK_AVERAGE, setValue: setWORK_AVERAGE} = useStorage<any>(
     "workAverage(YEAR)", []
   );
-  const { value: selectedWorkPart, setValue: setSelectedWorkPart } =
-    useStorage<string>("selectedWorkPart(YEAR)", "전체");
-  const { value: selectedWorkTitle, setValue: setSelectedWorkTitle } =
-    useStorage<string>("selectedWorkTitle(YEAR)", "전체");
+  const {value: selectedWorkPart, setValue: setSelectedWorkPart} = useStorage<string>(
+    "selectedWorkPart(YEAR)", "전체"
+  );
+  const {value: selectedWorkTitle, setValue: setSelectedWorkTitle} = useStorage<string>(
+    "selectedWorkTitle(YEAR)", "전체"
+  );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
     "resultValue(YEAR)", undefined
   );
-  const { value: resultDuration, setValue: setResultDuration } =
-    useStorage<string>(
-      "resultDuration(YEAR)",
-      "0000-00-00 ~ 0000-00-00"
-    );
-  const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
-    "averageWorkStart(YEAR)", "00:00"
-  );
-  const {value:averageWorkMorning, setValue:setAverageWorkMorning} = useStorage<string> (
-    "averageWorkEnd(YEAR)", "00:00"
-  );
-  const {value:selectedWorkStartDay, setValue:setSelectedWorkStartDay} = useStorage<Date | undefined> (
-    "selectedWorkStartDay(YEAR)", undefined
-  );
-  const {value:selectedWorkEndDay, setValue:setSelectedWorkEndDay} = useStorage<Date | undefined> (
-    "selectedWorkEndDay(YEAR)", undefined
+  const {value: resultDuration, setValue: setResultDuration} = useStorage<string>(
+    "resultDuration(YEAR)", "0000-00-00 ~ 0000-00-00"
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->

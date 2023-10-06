@@ -28,41 +28,28 @@ export const WorkListMonth = () => {
   const [selectedWorkType, setSelectedWorkType] = useState<string>("list");
   const [selectedNumber, setSelectedNumber] = useState<number>(0);
   const {value:selectedWorkMonth, setValue:setSelectedWorkMonth} = useStorage<Date | undefined> (
-     "selectedWork(MONTH)", koreanDate
-   );
+    "selectedWork(MONTH)", koreanDate
+  );
 
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
     "workList(MONTH)", []
   );
-  const { value: WORK_AVERAGE, setValue: setWORK_AVERAGE } = useStorage<any>(
-    "workAverage(MONTH)",
-    []
+  const {value: WORK_AVERAGE, setValue: setWORK_AVERAGE} = useStorage<any>(
+    "workAverage(MONTH)", []
   );
-  const { value: selectedWorkPart, setValue: setSelectedWorkPart } =
-    useStorage<string>("selectedWorkPart(MONTH)", "전체");
-  const { value: selectedWorkTitle, setValue: setSelectedWorkTitle } =
-    useStorage<string>("selectedWorkTitle(MONTH)", "전체");
+  const {value: selectedWorkPart, setValue: setSelectedWorkPart} = useStorage<string>(
+    "selectedWorkPart(MONTH)", "전체"
+  );
+  const {value: selectedWorkTitle, setValue: setSelectedWorkTitle} = useStorage<string>(
+    "selectedWorkTitle(MONTH)", "전체"
+  );
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
     "resultValue(MONTH)", undefined
   );
-  const { value: resultDuration, setValue: setResultDuration } =
-    useStorage<string>(
-      "resultDuration(MONTH)",
-      "0000-00-00 ~ 0000-00-00"
-    );
-  const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
-    "averageWorkStart(MONTH)", "00:00"
-  );
-  const {value:averageWorkMorning, setValue:setAverageWorkMorning} = useStorage<string> (
-    "averageWorkEnd(MONTH)", "00:00"
-  );
-  const {value:selectedWorkStartDay, setValue:setSelectedWorkStartDay} = useStorage<Date | undefined> (
-    "selectedWorkStartDay(MONTH)", undefined
-  );
-  const {value:selectedWorkEndDay, setValue:setSelectedWorkEndDay} = useStorage<Date | undefined> (
-    "selectedWorkEndDay(MONTH)", undefined
+  const {value: resultDuration, setValue: setResultDuration} = useStorage<string>(
+    "resultDuration(MONTH)", "0000-00-00 ~ 0000-00-00"
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->

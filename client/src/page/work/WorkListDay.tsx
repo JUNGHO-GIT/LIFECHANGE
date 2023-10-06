@@ -30,29 +30,27 @@ export const WorkListDay = () => {
   const [selectedNumber, setSelectedNumber] = useState<number>(0);
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const { value: WORK_LIST, setValue: setWORK_LIST } = useStorage<any>(
-    "workList(DAY)",
-    []
+  const {value: WORK_LIST, setValue: setWORK_LIST} = useStorage<any>(
+    "workList(DAY)", []
   );
-  const { value: WORK_AVERAGE, setValue: setWORK_AVERAGE } = useStorage<any>(
-    "workAverage(DAY)",
-    []
+  const {value: WORK_AVERAGE, setValue: setWORK_AVERAGE} = useStorage<any>(
+    "workAverage(DAY)", []
   );
-  const { value: selectedWorkDay, setValue: setSelectedWorkDay } = useStorage<
-    Date | undefined
-  >("selectedWorkDay(DAY)", undefined);
-  const { value: selectedWorkPart, setValue: setSelectedWorkPart } =
-    useStorage<string>("selectedWorkPart(DAY)", "전체");
-  const { value: selectedWorkTitle, setValue: setSelectedWorkTitle } =
-    useStorage<string>("selectedWorkTitle(DAY)", "전체");
-  const { value: resultValue, setValue: setResultValue } = useStorage<Date | undefined>("resultValue(DAY)", undefined);
-  const { value: resultDuration, setValue: setResultDuration } =
-    useStorage<string>("resultDuration(DAY)", "0000-00-00 ~ 0000-00-00");
-  const { value: averageWorkStart, setValue: setAverageWorkStart } =
-    useStorage<string>("averageWorkStart(DAY)", "00:00");
-  const { value: averageWorkEnd, setValue: setAverageWorkEnd } =
-    useStorage<string>("averageWorkEnd(DAY)", "00:00");
-  const { value: averageWorkTime, setValue: setAverageWorkTime } = useStorage<string>("averageWorkTime(DAY)", "00:00");
+  const {value: selectedWorkDay, setValue: setSelectedWorkDay} = useStorage<Date|undefined>(
+    "selectedWorkDay(DAY)", undefined
+  );
+  const {value: selectedWorkPart, setValue: setSelectedWorkPart} = useStorage<string>(
+    "selectedWorkPart(DAY)", "전체"
+  );
+  const {value: selectedWorkTitle, setValue: setSelectedWorkTitle} = useStorage<string>(
+    "selectedWorkTitle(DAY)", "전체"
+  );
+  const {value: resultValue, setValue: setResultValue} = useStorage<Date | undefined>(
+    "resultValue(DAY)", undefined
+  );
+  const {value: resultDuration, setValue: setResultDuration} = useStorage<string>(
+    "resultDuration(DAY)", "0000-00-00 ~ 0000-00-00"
+  );
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
