@@ -7,6 +7,7 @@ import moment from "moment-timezone";
 import axios from "axios";
 import { parseISO } from "date-fns";
 import {useStorage} from "../../assets/ts/useStorage";
+import { workPartArray, workTitleArray } from "../work/WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListMonth = () => {
@@ -24,29 +25,44 @@ export const WorkListMonth = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [selectedWorkType, setSelectedWorkType] = useState<string> ("list");
+  const [selectedWorkType, setSelectedWorkType] = useState<string>("list");
+  const [selectedNumber, setSelectedNumber] = useState<number>(0);
+  const {value:selectedWorkMonth, setValue:setSelectedWorkMonth} = useStorage<Date | undefined> (
+     "selectedWork(MONTH)", koreanDate
+   );
+
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
-    "workListMonth", []
+    "workList(MONTH)", []
   );
+  const { value: WORK_AVERAGE, setValue: setWORK_AVERAGE } = useStorage<any>(
+    "workAverage(MONTH)",
+    []
+  );
+  const { value: selectedWorkPart, setValue: setSelectedWorkPart } =
+    useStorage<string>("selectedWorkPart(MONTH)", "전체");
+  const { value: selectedWorkTitle, setValue: setSelectedWorkTitle } =
+    useStorage<string>("selectedWorkTitle(MONTH)", "전체");
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValueMonth", undefined
+    "resultValue(MONTH)", undefined
   );
-  const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDurationMonth", "0000-00-00 ~ 0000-00-00"
-  );
-  const {value:averageWorkTime, setValue:setAverageWorkTime} = useStorage<string> (
-    "averageWorkTimeMonth", "00:00"
-  );
+  const { value: resultDuration, setValue: setResultDuration } =
+    useStorage<string>(
+      "resultDuration(MONTH)",
+      "0000-00-00 ~ 0000-00-00"
+    );
   const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
-    "averageWorkNightMonth", "00:00"
+    "averageWorkStart(MONTH)", "00:00"
   );
   const {value:averageWorkMorning, setValue:setAverageWorkMorning} = useStorage<string> (
-    "averageWorkMorningMonth", "00:00"
+    "averageWorkEnd(MONTH)", "00:00"
   );
-  const {value:selectedWorkMonth, setValue:setSelectedWorkMonth} = useStorage<Date | undefined> (
-    "selectedWorkMonth", koreanDate
+  const {value:selectedWorkStartDay, setValue:setSelectedWorkStartDay} = useStorage<Date | undefined> (
+    "selectedWorkStartDay(MONTH)", undefined
+  );
+  const {value:selectedWorkEndDay, setValue:setSelectedWorkEndDay} = useStorage<Date | undefined> (
+    "selectedWorkEndDay(MONTH)", undefined
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -69,7 +85,7 @@ export const WorkListMonth = () => {
     fetchWorkList();
   }, [user_id, resultDuration]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchWorkAverage = async () => {
       try {
@@ -77,37 +93,20 @@ export const WorkListMonth = () => {
           params: {
             user_id: user_id,
             work_duration: resultDuration,
+            work_part_val: selectedWorkPart,
+            work_title_val: selectedWorkTitle,
           },
         });
-
-        const isValidTime = (str: string) => {
-          return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
-        };
-        setAverageWorkTime (
-          isValidTime(response.data.averageWorkTime)
-          ? response.data.averageWorkTime
-          : "00:00"
-        );
-        setAverageWorkNight (
-          isValidTime(response.data.averageWorkNight)
-          ? response.data.averageWorkNight
-          : "00:00"
-        );
-        setAverageWorkMorning (
-          isValidTime(response.data.averageWorkMorning)
-          ? response.data.averageWorkMorning
-          : "00:00"
-        );
+        setWORK_AVERAGE(response.data);
+        console.log("WORK_AVERAGE : " + response.data);
       }
-      catch (error:any) {
+      catch (error: any) {
         alert(`Error fetching work data: ${error.message}`);
-        setAverageWorkTime("00:00");
-        setAverageWorkNight("00:00");
-        setAverageWorkMorning("00:00");
+        setWORK_AVERAGE([]);
       }
     };
     fetchWorkAverage();
-  }, [user_id, resultDuration]);
+  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -158,56 +157,132 @@ export const WorkListMonth = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableWorkList = () => {
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
-          <tr>
-            <th>날짜</th>
-            <th>기간</th>
-            <th>취침</th>
-            <th>기상</th>
-            <th>수면</th>
-          </tr>
-        </thead>
-        <tbody>
-          {WORK_LIST.map((index:any) => (
-            <tr key={index._id}>
-              <td className="pointer" onClick={() => {
-                navParam("/workDetail", {
-                  state: {_id: index._id}
-                }
-              )}}>
-                {index.work_day}
-              </td>
-              <td>{resultDuration}</td>
-              <td>{index.work_start}</td>
-              <td>{index.work_end}</td>
-              <td>{index.work_time}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <>
+        <div className="row d-center">
+          <div className="col-12">
+            <table className="table table-bordered table-hover">
+              <thead className="table-dark">
+                <tr>
+                  <th>Part</th>
+                  <th>Title</th>
+                  <th>Kg</th>
+                  <th>Set</th>
+                  <th>Count</th>
+                  <th>Rest</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {WORK_LIST.map((workItem : any) => {
+                  return workItem.workSection.map((workSection: any) => (
+                    <tr key={workSection._id}>
+                      <td
+                        className="pointer"
+                        onClick={() => {
+                          navParam("/workDetail", {
+                            state: {
+                              _id : workItem._id,
+                              workSection_id : workSection._id
+                            },
+                          });
+                        }}>
+                        {workSection.work_part_val}
+                      </td>
+                      <td>{workSection.work_title_val}</td>
+                      <td>{workSection.work_kg}</td>
+                      <td>{workSection.work_set}</td>
+                      <td>{workSection.work_count}</td>
+                      <td>{workSection.work_rest}</td>
+                      <td>{workItem.work_time}</td>
+                    </tr>
+                  ));
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </>
     );
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
   const tableWorkAverage = () => {
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
-          <tr>
-            <th>취침 평균</th>
-            <th>기상 평균</th>
-            <th>수면 평균</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{averageWorkNight}</td>
-            <td>{averageWorkMorning}</td>
-            <td>{averageWorkTime}</td>
-          </tr>
-        </tbody>
-      </table>
+      <>
+        <div className="row d-center">
+          <div className="col-6">
+            <div className="input-group mb-3">
+              <span className="input-group-text">파트</span>
+              <select
+                className="form-control"
+                id={`work_part_val`}
+                value={selectedWorkPart}
+                onChange={(e) => {
+                  setSelectedWorkPart(e.target.value);
+                  const index = workPartArray.findIndex(
+                    (item) => item.workPart[0] === e.target.value
+                  );
+                  setSelectedWorkTitle("전체");
+                  setSelectedNumber(index);
+                }}>
+                {workPartArray.map((value, key) => (
+                  <option key={key} value={value.workPart[0]}>
+                    {value.workPart[0]}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group mb-3">
+              <span className="input-group-text">종목</span>
+              <select
+                className="form-control"
+                id={`work_title_val`}
+                value={selectedWorkTitle}
+                onChange={(e) => {
+                  setSelectedWorkTitle(e.target.value);
+                }}>
+                {workTitleArray[selectedNumber].workTitle.map((value, key) => (
+                  <option key={key} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="row d-center">
+          <div className="col-12">
+            <table className="table table-bordered table-hover">
+              <thead className="table-dark">
+                <tr>
+                  <th>Part</th>
+                  <th>Title</th>
+                  <th>Count</th>
+                  <th>Kg Ave</th>
+                  <th>Set Ave</th>
+                  <th>Count Ave</th>
+                  <th>Rest Ave</th>
+                </tr>
+              </thead>
+              <tbody>
+                {WORK_AVERAGE?.map((workItem: any, index: number) => (
+                  <tr key={index}>
+                    <td>{workItem.work_part_val}</td>
+                    <td>{workItem.work_title_val}</td>
+                    <td>{workItem.count}</td>
+                    <td>{workItem.work_kg_avg}</td>
+                    <td>{workItem.work_set_avg}</td>
+                    <td>{workItem.work_count_avg}</td>
+                    <td>{workItem.work_rest_avg}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </>
     );
   };
 
@@ -274,28 +349,24 @@ export const WorkListMonth = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <h2 className="mb-3 fw-9">주별로 조회</h2>
         </div>
       </div>
-      <div className="row d-center mt-5">
-        <div className="col-6">
-          {selectWorkList()}
-        </div>
-        <div className="col-6">
-          {selectWorkType()}
-        </div>
+      <div className="row d-center mt-3">
+        <div className="col-3">{selectWorkList()}</div>
+        <div className="col-3">{selectWorkType()}</div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-4">
-          <h2 className="mb-3 fw-9">월별로 조회</h2>
+        <div className="col-md-6 col-12 d-center">
           {viewWorkDay()}
         </div>
-        <div className="col-8">
+        <div className="col-md-6 col-12">
           {selectedWorkType === "list" && tableWorkList()}
           {selectedWorkType === "average" && tableWorkAverage()}
         </div>
       </div>
-      <div className="row d-center mb-20">
-        <div className="col-6">
+      <div className="row mb-20">
+        <div className="col-12 d-center">
           {buttonWorkToday()}
           {buttonWorkReset()}
         </div>

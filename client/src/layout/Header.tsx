@@ -94,7 +94,11 @@ export const Header = () => {
         label: "Work",
         items: [
           {to: "/workInsert", label: "WorkInsert"},
-          {to: "/workListDay", label: "WorkListDay"}
+          {to: "/workListDay", label: "WorkListDay"},
+          {to: "/workListWeek", label: "WorkListWeek"},
+          {to: "/workListMonth", label: "WorkListMonth"},
+          {to: "/workListYear", label: "WorkListYear"},
+          {to: "/workListSelect", label: "WorkListSelect"},
         ]
       },
       {

@@ -165,7 +165,7 @@ export const WorkListDay = () => {
                         className="pointer"
                         onClick={() => {
                           navParam("/workDetail", {
-                            state: { 
+                            state: {
                               _id : workItem._id,
                               workSection_id : workSection._id
                             },
@@ -253,7 +253,7 @@ export const WorkListDay = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem, index) => (
+                {WORK_AVERAGE?.map((workItem: any, index: number) => (
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>

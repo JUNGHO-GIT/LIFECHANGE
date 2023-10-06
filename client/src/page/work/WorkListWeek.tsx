@@ -7,6 +7,7 @@ import { parseISO } from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
+import { workPartArray, workTitleArray } from "../work/WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListWeek = () => {
@@ -24,7 +25,8 @@ export const WorkListWeek = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [selectedWorkType, setSelectedWorkType] = useState<string> ("list");
+  const [selectedWorkType, setSelectedWorkType] = useState<string>("list");
+  const [selectedNumber, setSelectedNumber] = useState<number>(0);
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
@@ -35,15 +37,15 @@ export const WorkListWeek = () => {
     []
   );
   const { value: selectedWorkPart, setValue: setSelectedWorkPart } =
-    useStorage<string>("selectedWorkPart(DAY)", "전체");
+    useStorage<string>("selectedWorkPart(WEEK)", "전체");
   const { value: selectedWorkTitle, setValue: setSelectedWorkTitle } =
-    useStorage<string>("selectedWorkTitle(DAY)", "전체");
+    useStorage<string>("selectedWorkTitle(WEEK)", "전체");
   const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
     "resultValue(WEEK)", undefined
   );
   const { value: resultDuration, setValue: setResultDuration } =
     useStorage<string>(
-      "resultDuration(DAY)",
+      "resultDuration(WEEK)",
       "0000-00-00 ~ 0000-00-00"
     );
   const {value:averageWorkNight, setValue:setAverageWorkNight} = useStorage<string> (
@@ -197,7 +199,7 @@ export const WorkListWeek = () => {
                         className="pointer"
                         onClick={() => {
                           navParam("/workDetail", {
-                            state: { 
+                            state: {
                               _id : workItem._id,
                               workSection_id : workSection._id
                             },
@@ -284,7 +286,7 @@ export const WorkListWeek = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem, index) => (
+                {WORK_AVERAGE?.map((workItem: any, index: number) => (
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>
@@ -306,7 +308,7 @@ export const WorkListWeek = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkToday = () => {
     return (
-      <button 
+      <button
         className="btn btn-success me-2"
         onClick={() => {
           setSelectedWorkStartDay(koreanDate);
