@@ -207,8 +207,7 @@ export const WorkListDay = () => {
                   );
                   setSelectedWorkTitle("전체");
                   setSelectedNumber(index);
-                }}
-              >
+                }}>
                 {workPartArray.map((value, key) => (
                   <option key={key} value={value.workPart[0]}>
                     {value.workPart[0]}
@@ -285,8 +284,7 @@ export const WorkListDay = () => {
           localStorage.removeItem("selectedWorkDay(DAY)");
           localStorage.removeItem("selectedWorkPart(DAY)");
           localStorage.removeItem("selectedWorkTitle(DAY)");
-        }}
-      >
+        }}>
         Today
       </button>
     );
@@ -305,8 +303,7 @@ export const WorkListDay = () => {
           localStorage.removeItem("selectedWorkDay(DAY)");
           localStorage.removeItem("selectedWorkPart(DAY)");
           localStorage.removeItem("selectedWorkTitle(DAY)");
-        }}
-      >
+        }}>
         Reset
       </button>
     );
@@ -371,7 +368,7 @@ export const WorkListDay = () => {
         <div className="col-md-6 col-12 d-center">
           {viewWorkDay()}
         </div>
-        <div className="col-md-6 col-12">
+        <div className="col-md-6 col-12 d-center">
           {selectedWorkType === "list" && tableWorkList()}
           {selectedWorkType === "average" && tableWorkAverage()}
         </div>

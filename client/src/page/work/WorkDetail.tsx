@@ -91,7 +91,7 @@ export const WorkDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK?.workSection?.map((workItem) => (
+          {WORK?.workSection?.map((workItem:any) => (
             <tr key={workItem._id}>
               <td>{workItem.work_part_val}</td>
               <td>{workItem.work_title_val}</td>
