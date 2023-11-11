@@ -178,7 +178,7 @@ export const CalendarDetail = () => {
     <div className="container main">
       <div className="row d-center">
         <div className="col-12">
-          <h1 className="mb-3 fw-8">{TITLE}</h1>
+          <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">

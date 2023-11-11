@@ -1,22 +1,14 @@
-// index.tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 import App from "./core/App";
-import { useDynamicStyle } from "./assets/ts/useDynamicStyle";
+import "./index.css";
 import { reportWebVitals } from "./settings/reportWebVitals";
 
-const RootComponent= () => {
-  useDynamicStyle(document);
-  return (
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
-};
-
 ReactDOM.render (
-  <RootComponent />,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

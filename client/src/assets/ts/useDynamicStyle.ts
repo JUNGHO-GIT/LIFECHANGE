@@ -1,7 +1,12 @@
+// useDynamicStyle.ts
 import { useEffect, useLayoutEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 // Hook을 사용하여 동적 스타일을 적용하는 커스텀 훅
-export const useDynamicStyle = (baseElement = document) => {
+export const useDynamicStyle = (
+  baseElement:Document | HTMLElement = document,
+  locationName:string
+) => {
 
   // 스타일 속성과 단위를 매핑하는 객체
   const stylesNumber = {
@@ -81,15 +86,15 @@ export const useDynamicStyle = (baseElement = document) => {
     "pos-fix": {
       "position": "fixed",
     },
-    "pos-sta": {
+    "pos-stc": {
       "position": "static",
     },
   };
 
   // 유효한 클래스 이름인지 확인하는 함수
   const isValidClass = (className:string) => {
-    const isNumberBased = !!stylesNumber[className.split("-")[0]];
-    const isStringBased = !!stylesString[className];
+    let isNumberBased = !!stylesNumber[className.split("-")[0]];
+    let isStringBased = !!stylesString[className];
     return isNumberBased || isStringBased;
   };
 
@@ -112,15 +117,15 @@ export const useDynamicStyle = (baseElement = document) => {
   };
 
   // DOM 요소를 선택하는 셀렉터 생성
-  const numberSelector = Object.keys(stylesNumber).map((prefix) => `[class*="${prefix}-"]`).join(", ");
-  const stringSelector = Object.keys(stylesString).join(", ");
-  const selector = `${numberSelector}, ${stringSelector}`;
+  let numberSelector = Object.keys(stylesNumber).map((prefix) => `[class*="${prefix}-"]`).join(", ");
+  let stringSelector = Object.keys(stylesString).join(", ");
+  let selector = `${numberSelector}, ${stringSelector}`;
 
   // 요소에 스타일 적용
   useLayoutEffect(() => {
     baseElement.querySelectorAll(selector).forEach(applyStyle as (element:Element) => void);
 
-    const observer = new MutationObserver((mutations) => {
+    let observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === "childList") {
           mutation.addedNodes.forEach((node) => {
@@ -134,10 +139,13 @@ export const useDynamicStyle = (baseElement = document) => {
 
     observer.observe(baseElement, {
       childList: true,
-      subtree: true
+      subtree: true,
+      characterData: true,
+      attributes: true,
     });
 
-    return () => observer.disconnect();
-  }, []);
-
+    return () => {
+      observer.disconnect();
+    };
+  }, [locationName, baseElement, selector]);
 };

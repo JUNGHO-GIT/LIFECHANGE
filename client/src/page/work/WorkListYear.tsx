@@ -8,7 +8,7 @@ import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
-import { workPartArray, workTitleArray } from "../work/WorkArray";
+import {workPartArray, workTitleArray} from "../work/WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListYear = () => {
@@ -350,8 +350,8 @@ export const WorkListYear = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-8">{TITLE}</h1>
-          <h2 className="mb-3 fw-8">년별로 조회</h2>
+          <h1 className="mb-3 fw-7">{TITLE}</h1>
+          <h2 className="mb-3 fw-7">년별로 조회</h2>
         </div>
       </div>
       <div className="row d-center mt-3">
