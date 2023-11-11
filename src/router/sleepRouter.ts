@@ -9,7 +9,7 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   try {
     const sleepList = await sleepService.sleepList (
       req.query.user_id,
-      req.query.sleep_duration,
+      req.query.sleep_dur,
     );
     if (sleepList) {
       res.send(sleepList);
@@ -24,15 +24,15 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. sleepAverage ------------------------------------------------------------------------------>
-sleepRouter.get("/sleepAverage", async (req: Request, res: Response) => {
+// 1-2. sleepAvg ------------------------------------------------------------------------------>
+sleepRouter.get("/sleepAvg", async (req: Request, res: Response) => {
   try {
-    const sleepAverage = await sleepService.sleepAverage (
+    const sleepAvg = await sleepService.sleepAvg (
       req.query.user_id,
-      req.query.sleep_duration,
+      req.query.sleep_dur,
     );
-    if (sleepAverage) {
-      res.send(sleepAverage);
+    if (sleepAvg) {
+      res.send(sleepAvg);
     }
     else {
       res.send("fail");

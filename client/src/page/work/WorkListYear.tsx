@@ -26,30 +26,39 @@ export const WorkListYear = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [selectedWorkType, setSelectedWorkType] = useState<string>("list");
-  const [selectedNumber, setSelectedNumber] = useState<number>(0);
-  const {value:selectedWorkYear, setValue:setSelectedWorkYear} = useStorage<Date | undefined> (
-    "selectedWork(YEAR)", koreanDate
-  );
+  const [workType, setWorkType] = useState<string>("list");
+  const [number, setNumber] = useState<number>(0);
+    const {val:workYear, setVal:setWorkYear} = useStorage<Date | undefined> (
+     "work(YEAR)", koreanDate
+   );
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {value:WORK_LIST, setValue:setWORK_LIST} = useStorage<any> (
+  const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any> (
     "workList(YEAR)", []
   );
-  const {value: WORK_AVERAGE, setValue: setWORK_AVERAGE} = useStorage<any>(
-    "workAverage(YEAR)", []
+  const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
+    "workAvg(YEAR)", []
   );
-  const {value: selectedWorkPart, setValue: setSelectedWorkPart} = useStorage<string>(
-    "selectedWorkPart(YEAR)", "전체"
+  const {val:workPart, setVal:setWorkPart} = useStorage<string>("workPart(YEAR)", "전체");
+  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>("workTitle(YEAR)", "전체");
+  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined> (
+    "resVal(YEAR)", undefined
   );
-  const {value: selectedWorkTitle, setValue: setSelectedWorkTitle} = useStorage<string>(
-    "selectedWorkTitle(YEAR)", "전체"
+  const {val:resDur, setVal:setResDur} = useStorage<string>(
+      "resDur(YEAR)",
+      "0000-00-00 ~ 0000-00-00"
+    );
+  const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string> (
+    "avgWorkStart(YEAR)", "00:00"
   );
-  const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValue(YEAR)", undefined
+  const {val:avgWorkMorning, setVal:setAvgWorkMorning} = useStorage<string> (
+    "avgWorkEnd(YEAR)", "00:00"
   );
-  const {value: resultDuration, setValue: setResultDuration} = useStorage<string>(
-    "resultDuration(YEAR)", "0000-00-00 ~ 0000-00-00"
+  const {val:workStartDay, setVal:setWorkStartDay} = useStorage<Date | undefined> (
+    "workStartDay(YEAR)", undefined
+  );
+  const {val:workEndDay, setVal:setWorkEndDay} = useStorage<Date | undefined> (
+    "workEndDay(YEAR)", undefined
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -59,7 +68,7 @@ export const WorkListYear = () => {
         const response = await axios.get(`${URL_WORK}/workList`, {
           params: {
             user_id: user_id,
-            work_duration: resultDuration,
+            work_dur: resDur,
           },
         });
         setWORK_LIST(response.data);
@@ -70,18 +79,18 @@ export const WorkListYear = () => {
       }
     };
     fetchWorkList();
-  }, [user_id, resultDuration]);
+  }, [user_id, resDur]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchWorkAverage = async () => {
+    const fetchWorkAvg = async () => {
       try {
-        const response = await axios.get(`${URL_WORK}/workAverage`, {
+        const response = await axios.get(`${URL_WORK}/workAvg`, {
           params: {
             user_id: user_id,
-            work_duration: resultDuration,
-            work_part_val: selectedWorkPart,
-            work_title_val: selectedWorkTitle,
+            work_dur: resDur,
+            work_part_val: workPart,
+            work_title_val: workTitle,
           },
         });
         setWORK_AVERAGE(response.data);
@@ -92,25 +101,25 @@ export const WorkListYear = () => {
         setWORK_AVERAGE([]);
       }
     };
-    fetchWorkAverage();
-  }, [user_id, resultDuration, selectedWorkPart, selectedWorkTitle]);
+    fetchWorkAvg();
+  }, [user_id, resDur, workPart, workTitle]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (selectedWorkYear) {
-      setResultValue (
+    if (workYear) {
+      setResVal (
         parseISO (
-          `${selectedWorkYear.getFullYear()}`
+          `${workYear.getFullYear()}`
         )
       );
-      setResultDuration (
-        `${selectedWorkYear.getFullYear()}-01-01 ~ ${selectedWorkYear.getFullYear()}-12-31`
+      setResDur (
+        `${workYear.getFullYear()}-01-01 ~ ${workYear.getFullYear()}-12-31`
       );
     }
     else {
-      setResultValue (undefined);
+      setResVal (undefined);
     }
-  }, [selectedWorkYear]);
+  }, [workYear]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowYearChange: MonthChangeEventHandler = (day) => {
@@ -120,22 +129,22 @@ export const WorkListYear = () => {
     const prevMonth = differenceInDays(monthDate, yearDate) / 30;
 
     if (nextMonth > prevMonth) {
-      setSelectedWorkYear(new Date(day.getFullYear() + 1, 0, 1));
+      setWorkYear(new Date(day.getFullYear() + 1, 0, 1));
     }
     else {
-      setSelectedWorkYear(new Date(day.getFullYear(), 0, 1));
+      setWorkYear(new Date(day.getFullYear(), 0, 1));
     }
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewWorkDay = () => {
+  const viewWorkYear = () => {
     return (
       <DayPicker
         mode="default"
         showOutsideDays
         locale={ko}
         weekStartsOn={1}
-        month={selectedWorkYear}
+        month={workYear}
         onMonthChange={flowYearChange}
         modifiersClassNames={{
           selected: "selected",
@@ -150,7 +159,7 @@ export const WorkListYear = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableWorkList = () => {
     return (
-      <>
+      <div>
         <div className="row d-center">
           <div className="col-12">
             <table className="table table-bordered table-hover">
@@ -194,14 +203,14 @@ export const WorkListYear = () => {
             </table>
           </div>
         </div>
-      </>
+      </div>
     );
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkAverage = () => {
+  const tableWorkAvg = () => {
     return (
-      <>
+      <div>
         <div className="row d-center">
           <div className="col-6">
             <div className="input-group mb-3">
@@ -209,14 +218,14 @@ export const WorkListYear = () => {
               <select
                 className="form-control"
                 id={`work_part_val`}
-                value={selectedWorkPart}
-                onChange={(e) => {
-                  setSelectedWorkPart(e.target.value);
+                value={workPart}
+                onChange={(e:any) => {
+                  setWorkPart(e.target.value);
                   const index = workPartArray.findIndex(
                     (item) => item.workPart[0] === e.target.value
                   );
-                  setSelectedWorkTitle("전체");
-                  setSelectedNumber(index);
+                  setWorkTitle("전체");
+                  setNumber(index);
                 }}>
                 {workPartArray.map((value, key) => (
                   <option key={key} value={value.workPart[0]}>
@@ -232,11 +241,11 @@ export const WorkListYear = () => {
               <select
                 className="form-control"
                 id={`work_title_val`}
-                value={selectedWorkTitle}
-                onChange={(e) => {
-                  setSelectedWorkTitle(e.target.value);
+                value={workTitle}
+                onChange={(e:any) => {
+                  setWorkTitle(e.target.value);
                 }}>
-                {workTitleArray[selectedNumber].workTitle.map((value, key) => (
+                {workTitleArray[number].workTitle.map((value, key) => (
                   <option key={key} value={value}>
                     {value}
                   </option>
@@ -260,7 +269,7 @@ export const WorkListYear = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem: any, index: number) => (
+                {WORK_AVERAGE?.map((workItem:any, index:number) => (
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>
@@ -275,17 +284,17 @@ export const WorkListYear = () => {
             </table>
           </div>
         </div>
-      </>
+      </div>
     );
   };
 
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkToday = () => {
     return (
-      <button className="btn btn-success me-2" onClick={() => {
-        setSelectedWorkYear(koreanDate);
-        localStorage.removeItem("workList_YEAR");
-        localStorage.removeItem("selectedWorkYear_YEAR");
+      <button className="btn btn-sm btn-success me-2" onClick={() => {
+        setWorkYear(koreanDate);
+        localStorage.removeItem("workList(YEAR)");
+        localStorage.removeItem("work(YEAR)");
       }}>
         Today
       </button>
@@ -293,10 +302,10 @@ export const WorkListYear = () => {
   };
   const buttonWorkReset = () => {
     return (
-      <button className="btn btn-primary me-2" onClick={() => {
-        setSelectedWorkYear(undefined);
-        localStorage.removeItem("workList_YEAR");
-        localStorage.removeItem("selectedWorkYear_YEAR");
+      <button className="btn btn-sm btn-primary me-2" onClick={() => {
+        setWorkYear(undefined);
+        localStorage.removeItem("workList(YEAR)");
+        localStorage.removeItem("work(YEAR)");
       }}>
         Reset
       </button>
@@ -308,7 +317,7 @@ export const WorkListYear = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="workList" value={currentPath} onChange={(e) => {navParam(e.target.value);}}>
+        <select className="form-select" id="workList" value={currentPath} onChange={(e:any) => {navParam(e.target.value);}}>
           <option value="/workListDay">Day</option>
           <option value="/workListWeek">Week</option>
           <option value="/workListMonth">Month</option>
@@ -321,16 +330,16 @@ export const WorkListYear = () => {
   const selectWorkType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="workType" onChange={(e) => {
+        <select className="form-select" id="workType" onChange={(e:any) => {
           if (e.target.value === "list") {
-            setSelectedWorkType("list");
+            setWorkType("list");
           }
-          else if (e.target.value === "average") {
-            setSelectedWorkType("average");
+          else if (e.target.value === "avg") {
+            setWorkType("avg");
           }
         }}>
           <option value="list">List</option>
-          <option value="average">Average</option>
+          <option value="avg">Avg</option>
         </select>
       </div>
     );
@@ -342,7 +351,7 @@ export const WorkListYear = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
-          <h2 className="mb-3 fw-9">주별로 조회</h2>
+          <h2 className="mb-3 fw-9">년별로 조회</h2>
         </div>
       </div>
       <div className="row d-center mt-3">
@@ -351,11 +360,11 @@ export const WorkListYear = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-md-6 col-12 d-center">
-          {viewWorkDay()}
+          {viewWorkYear()}
         </div>
         <div className="col-md-6 col-12">
-          {selectedWorkType === "list" && tableWorkList()}
-          {selectedWorkType === "average" && tableWorkAverage()}
+          {workType === "list" && tableWorkList()}
+          {workType === "avg" && tableWorkAvg()}
         </div>
       </div>
       <div className="row mb-20">

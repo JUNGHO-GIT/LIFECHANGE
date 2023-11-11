@@ -22,7 +22,7 @@ export const SleepUpdate = () => {
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [sleep_day, setSleep_day] = useState(koreanDate);
+  const [sleepDay, setSleepDay] = useState(koreanDate);
   const [SLEEP, setSLEEP] = useState<any> ({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -47,8 +47,8 @@ export const SleepUpdate = () => {
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const setSleepTime = () => {
-      const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
-      const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_morning}:00Z`);
+      const nightDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_night}:00Z`);
+      const morningDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_morning}:00Z`);
 
       // 다음 날까지의 수면 시간을 고려
       if (morningDate < nightDate) {
@@ -67,7 +67,7 @@ export const SleepUpdate = () => {
       });
     };
     setSleepTime();
-  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_day]);
+  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleepDay]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepUpdate = async () => {
@@ -95,9 +95,9 @@ export const SleepUpdate = () => {
       <DatePicker
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
-        selected={new Date(sleep_day)}
+        selected={new Date(sleepDay)}
         onChange={(date:any) => {
-          setSleep_day(moment(date).format("YYYY-MM-DD"));
+          setSleepDay(moment(date).format("YYYY-MM-DD"));
         }}
       />
     );
@@ -124,9 +124,9 @@ export const SleepUpdate = () => {
           <input
             type="text"
             className="form-control"
-            id="sleep_day"
-            name="sleep_day"
-            value={SLEEP.sleep_day}
+            id="sleepDay"
+            name="sleepDay"
+            value={SLEEP.sleepDay}
             placeholder="Day"
             readOnly
           />
@@ -137,8 +137,8 @@ export const SleepUpdate = () => {
           <TimePicker
             id="sleep_night"
             name="sleep_night"
-            onChange={(event:any) => {
-              setSLEEP({ ...SLEEP, sleep_night: event });
+            onChange={(e:any) => {
+              setSLEEP({ ...SLEEP, sleep_night: e });
             }}
             value={SLEEP.sleep_night}
             disableClock={false}
@@ -151,8 +151,8 @@ export const SleepUpdate = () => {
           <TimePicker
             id="sleep_morning"
             name="sleep_morning"
-            onChange={(event:any) => {
-              setSLEEP({ ...SLEEP, sleep_morning: event });
+            onChange={(e:any) => {
+              setSLEEP({ ...SLEEP, sleep_morning: e });
             }}
             value={SLEEP.sleep_morning}
             disableClock={false}
@@ -168,7 +168,7 @@ export const SleepUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={flowSleepUpdate}>
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowSleepUpdate}>
         Update
       </button>
     );

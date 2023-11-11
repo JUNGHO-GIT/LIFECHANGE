@@ -20,8 +20,7 @@ export const UserDelete = () => {
   const location = useLocation();
   // val
   // state
-  const [user_id, setUserId] = useState(""
-  );
+  const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -93,7 +92,7 @@ export const UserDelete = () => {
             className="form-control"
             placeholder="User ID"
             value={user_id}
-            onChange={(e) => setUserId(e.target.value)}
+            onChange={(e:any) => setUserId(e.target.value)}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
@@ -103,7 +102,7 @@ export const UserDelete = () => {
             className="form-control"
             placeholder="User PW"
             value={user_pw}
-            onChange={(e) => setUserPw(e.target.value)}
+            onChange={(e:any) => setUserPw(e.target.value)}
           />
           <label htmlFor="user_pw">User PW</label>
         </div>
@@ -114,15 +113,15 @@ export const UserDelete = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonUserDelete = () => {
     return (
-      <button className="btn btn-primary" type="button" onClick={flowUserDelete}>
+      <button className="btn btn-sm btn-primary" type="button" onClick={flowUserDelete}>
         Delete
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>

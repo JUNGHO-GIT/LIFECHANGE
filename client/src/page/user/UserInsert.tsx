@@ -20,8 +20,7 @@ export const UserInsert = () => {
   const location = useLocation();
   // val
   // state
-  const [user_id, setUserId] = useState(""
-  );
+  const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
   // 2. useEffect --------------------------------------------------------------------------------->
@@ -67,7 +66,7 @@ export const UserInsert = () => {
             className="form-control"
             placeholder="ID"
             value={user_id}
-            onChange={(e) => {setUserId(e.target.value);}}
+            onChange={(e:any) => {setUserId(e.target.value);}}
           />
           <label htmlFor="floatingId">ID</label>
         </div>
@@ -78,7 +77,7 @@ export const UserInsert = () => {
             placeholder="Password"
             value={user_pw}
             id="floatingPassword"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setUserPw(e.target.value);
             }}
           />
@@ -91,8 +90,8 @@ export const UserInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -100,14 +99,14 @@ export const UserInsert = () => {
   };
   const buttonUserInsert = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={flowUserInsert}>
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserInsert}>
         Submit
       </button>
     );
   };
   const buttonUserList = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
         navParam("/userList");
       }}>
         List

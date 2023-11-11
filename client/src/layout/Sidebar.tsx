@@ -84,9 +84,9 @@ export const Sidebar = () => {
   useEffect(() => {
 
     // -------------------------------------------------------------------------------------------->
-    const closeNav = (event:any) => {
+    const closeNav = (e:any) => {
       const sidebarElement = document.getElementById("sidebar");
-      if (event.target !== sidebarElement && event.target.parentNode !== sidebarElement) {
+      if (e.target !== sidebarElement && e.target.parentNode !== sidebarElement) {
         sidebarOpen(false);
       }
     };

@@ -20,8 +20,7 @@ export const FoodDetail = () => {
   const location = useLocation();
   // val
   const _id = location.state._id;
-  const user_id = window.sessionStorage.getItem("user_id"
-  );
+  const user_id = window.sessionStorage.getItem("user_id");
   const food_category = location.state.food_category;
   // state
   const [food_regdate, setFood_regdate] = useState(koreanDate);
@@ -86,7 +85,8 @@ export const FoodDetail = () => {
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
         onChange={(date:any) => {
-          const selectedDate = date.toISOString().split("T")[0];
+          const formatDate = moment(date).format("YYYY-MM-DD").toString();
+          setFood_regdate(formatDate);
         }}
         readOnly
       />
@@ -128,7 +128,7 @@ export const FoodDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonFoodUpdate = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
         navParam(`/foodUpdate`, {
           state: {_id},
         });
@@ -139,15 +139,15 @@ export const FoodDetail = () => {
   };
   const buttonFoodDelete = () => {
     return (
-      <button type="button" className="btn btn-danger ms-2" onClick={flowFoodDelete}>
+      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowFoodDelete}>
         Delete
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>

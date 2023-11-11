@@ -17,8 +17,7 @@ export const FoodInsert = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id"
-  );
+  const user_id = window.sessionStorage.getItem("user_id");
   const {title, brand, serving, calories, fat, carb, protein} = location.state;
   // state
   const [showGram, setShowGram] = useState(1);
@@ -55,8 +54,8 @@ export const FoodInsert = () => {
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const logicPerServing = (param: number, nutrientValue: number) => {
-    return ((nutrientValue / logicOneServing()) * param).toFixed(1);
+  const logicPerServing = (param: number, nutrientVal: number) => {
+    return ((nutrientVal / logicOneServing()) * param).toFixed(1);
   };
 
   // 4-2. logic ----------------------------------------------------------------------------------->
@@ -72,9 +71,9 @@ export const FoodInsert = () => {
     for (const unit of units) {
       const match = serving.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, "gm"));
       if (match) {
-        let regexValue = match[0];
-        unit.replace.forEach((index) => (regexValue = regexValue.replace(index, "")));
-        return Number(regexValue) * unit.factor;
+        let regexVal = match[0];
+        unit.replace.forEach((index) => (regexVal = regexVal.replace(index, "")));
+        return Number(regexVal) * unit.factor;
       }
     }
     return 1;
@@ -82,14 +81,14 @@ export const FoodInsert = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodInsert = (
-    servingAmount: number, title: string, nutrientValue: number
+    servingAmount: number, title: string, nutrientVal: number
   ) => (
     <div className="card">
       <div className="card-body">
         <h4 className="card-title">{title}</h4>
         <p className="card-text">
           <span>칼로리 : </span>
-          {servingAmount ? logicPerServing(servingAmount, nutrientValue) : 0}
+          {servingAmount ? logicPerServing(servingAmount, nutrientVal) : 0}
         </p>
         <p className="card-text">
           <span>지방 : </span>
@@ -120,7 +119,7 @@ export const FoodInsert = () => {
   };
   const buttonFoodAmount = () => {
     return (
-      <input type="number" className="form-control" defaultValue={1} min="1"
+      <input type="number" className="form-control" defaultVal={1} min="1"
         onChange={e => {
           const value = Math.max(1, Number(e.target.value));
           setShowGram(value);
@@ -130,7 +129,7 @@ export const FoodInsert = () => {
   };
   const buttonFoodInsert = () => {
     return (
-      <button type="button" className="btn btn-primary" onClick={() => {
+      <button type="button" className="btn btn-sm btn-primary" onClick={() => {
         flowFoodInsert(showGram);
       }}>
         Insert
@@ -139,8 +138,8 @@ export const FoodInsert = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>

@@ -20,8 +20,7 @@ export const UserDetail = () => {
   const location = useLocation();
   // val
   // state
-  const [user_id, setUserId] = useState(""
-  );
+  const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -61,7 +60,7 @@ export const UserDetail = () => {
             className="form-control"
             placeholder="User ID"
             value={user_id}
-            onChange={(e) => {setUserId(e.target.value);}}
+            onChange={(e:any) => {setUserId(e.target.value);}}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
@@ -71,7 +70,7 @@ export const UserDetail = () => {
             className="form-control"
             placeholder="User PW"
             value={user_pw}
-            onChange={(e) => {setUserPw(e.target.value);}}
+            onChange={(e:any) => {setUserPw(e.target.value);}}
             readOnly
           />
           <label htmlFor="user_pw">User PW</label>
@@ -83,8 +82,8 @@ export const UserDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -92,7 +91,7 @@ export const UserDetail = () => {
   };
   const buttonUserUpdate = () => {
     return (
-      <button type="button" className="btn btn-warning ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-warning ms-2" onClick={() => {
         navParam("/userUpdate");
       }}>
         Update
@@ -101,7 +100,7 @@ export const UserDetail = () => {
   };
   const buttonUserDelete = () => {
     return (
-      <button type="button" className="btn btn-danger ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => {
         navParam("/userDelete");
       }}>
         Delete
@@ -110,7 +109,7 @@ export const UserDetail = () => {
   };
   const buttonUserList = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
         navParam("/userList");
       }}>
         List

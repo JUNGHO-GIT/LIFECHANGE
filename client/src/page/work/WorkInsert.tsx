@@ -1,6 +1,6 @@
 // WorkInsert.tsx
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -22,7 +22,7 @@ export const WorkInsert = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // useState
   const [WORK, setWORK] = useState<any>({});
-  const [work_day, setWork_day] = useState<string>(koreanDate);
+  const [workDay, setWorkDay] = useState<string>(koreanDate);
   const [workAmount, setWorkAmount] = useState<number>(1);
   const [workSection, setWorkSection] = useState<any[]>([{
     work_part_idx: 0,
@@ -31,21 +31,14 @@ export const WorkInsert = () => {
     work_title_val: "전체",
   }]);
 
-  // 2. useEffect --------------------------------------------------------------------------------->
-  useEffect(() => {
-
-    // 전체 WORK 콘솔
-    console.log(WORK);
-  }, [WORK]);
-
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setWORK ({
       ...WORK,
-      work_day : work_day,
+      workDay : workDay,
       workSection : workSection,
     });
-  }, [work_day, workSection]);
+  }, [workDay, workSection]);
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -71,59 +64,33 @@ export const WorkInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkInsert = async () => {
-    for (let i = 0; i < workAmount; i++) {
-      if (user_id === undefined || user_id === "") {
-        alert("Input a ID");
-        return;
-      }
-      if (work_day === undefined || work_day === "") {
-        alert("Input a Day");
-        return;
-      }
-      if (WORK.work_start === undefined || WORK.work_start === "") {
-        alert("Input a Start");
-        return;
-      }
-      if (WORK.work_end === undefined || WORK.work_end === "") {
-        alert("Input a End");
-        return;
-      }
-      if (WORK.work_time === undefined || WORK.work_time === "") {
-        alert("Input a Time");
-        return;
-      }
-      if (workSection[i].work_part_val === "전체") {
-        alert("Input a Part");
-        return;
-      }
-      if (workSection[i].work_title_val === "전체") {
-        alert("Input a Title");
-        return;
-      }
-      if (workSection[i].work_set === 0) {
-        alert("Input a Set");
-        return;
-      }
-      if (workSection[i].work_count === 0) {
-        alert("Input a Count");
-        return;
-      }
-      if (workSection[i].work_kg === 0) {
-        alert("Input a Kg");
-        return;
-      }
-      if (workSection[i].work_rest === 0) {
-        alert("Input a Rest");
-        return;
-      }
+    if (!user_id) {
+      alert("Input a ID");
+      return;
     }
-    const response = await axios.post(`${URL_WORK}/workInsert`, {
+    if (!workDay) {
+      alert("Input a Day");
+      return;
+    }
+    if (!WORK.work_start) {
+      alert("Input a Start");
+      return;
+    }
+    if (!WORK.work_end) {
+      alert("Input a End");
+      return;
+    }
+    if (!WORK.work_time) {
+      alert("Input a Time");
+      return;
+    }
+    const response = await axios.post (`${URL_WORK}/workInsert`, {
       user_id : user_id,
       WORK : WORK,
     });
     if (response.data === "success") {
       alert("Insert a work successfully");
-      navParam("/workListDay");
+      navParam("/workList");
     }
     else if (response.data === "fail") {
       alert("Insert a work failure");
@@ -152,10 +119,9 @@ export const WorkInsert = () => {
 
   // 4-2. handler --------------------------------------------------------------------------------->
   const handleWorkTitleChange = (i: number, e: any) => {
-    const newTitle = e.target.value;
-
+    let newTitle = e.target.value;
     setWorkSection((prev: any[]) => {
-      const updatedSection = [...prev];
+      let updatedSection = [...prev];
       updatedSection[i].work_title_val = newTitle;
       return updatedSection;
     });
@@ -165,18 +131,19 @@ export const WorkInsert = () => {
   const handleWorkAmountChange = () => {
     return (
       <div>
-        <input type="number" value={workAmount} onChange={(e) => {
-          const defaultSection = {
+        <input type="number" value={workAmount} min="1" onChange={(e:any) => {
+
+          let defaultSection = {
             work_part_idx: 0,
             work_part_val: "전체",
             work_title_idx: 0,
             work_title_val: "전체",
           };
-          const newAmount = parseInt(e.target.value);
+          let newAmount: number = parseInt(e.target.value);
 
           // amount 값이 증가했을 때 새로운 섹션들만 추가
           if (newAmount > workAmount) {
-            const additionalSections = Array(newAmount - workAmount).fill(defaultSection);
+            let additionalSections = Array(newAmount - workAmount).fill(defaultSection);
             setWorkSection(prev => [...prev, ...additionalSections]);
           }
           // amount 값이 감소했을 때 마지막 섹션부터 제거
@@ -197,9 +164,9 @@ export const WorkInsert = () => {
       <DatePicker
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
-        selected={new Date(work_day)}
+        selected={new Date(workDay)}
         onChange={(date:any) => {
-          setWork_day(moment(date).format("YYYY-MM-DD").toString());
+          setWorkDay(moment(date).format("YYYY-MM-DD").toString());
         }}
       />
     );
@@ -208,6 +175,7 @@ export const WorkInsert = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableWorkSection = (i: number) => {
 
+    // -------------------------------------------------------------------------------------------->
     const updateWorkArray
     = workSection[i] && workTitleArray[workSection[i].work_part_idx]
     ? workTitleArray[workSection[i].work_part_idx]?.workTitle
@@ -215,15 +183,15 @@ export const WorkInsert = () => {
 
     // -------------------------------------------------------------------------------------------->
     return (
-      <div key={i}>
+      <div key={i} className="mt-5">
         <div className="row d-center">
           <div className="col-5">
             <div className="input-group mb-3">
-              <span className="input-group-text">운동파트</span>
+              <span className="input-group-text">파트</span>
               <select
                 className="form-control"
                 id={`work_part_idx-${i}`}
-                onChange={(e) => handleWorkPartChange(i, e)}>
+                onChange={(e:any) => handleWorkPartChange(i, e)}>
                 {workPartArray.flatMap((key, index) => (
                   <option key={index} value={index}>
                     {key.workPart[0]}
@@ -234,11 +202,11 @@ export const WorkInsert = () => {
           </div>
           <div className="col-5">
             <div className="input-group mb-3">
-              <span className="input-group-text">운동종목</span>
+              <span className="input-group-text">종목</span>
               <select
                 className="form-control"
                 id={`work_title_val-${i}`}
-                onChange={(e) => handleWorkTitleChange(i, e)}>
+                onChange={(e:any) => handleWorkTitleChange(i, e)}>
                 {updateWorkArray.flatMap((title, index) => (
                   <option key={index} value={title}>
                     {title}
@@ -259,7 +227,7 @@ export const WorkInsert = () => {
                 id={`work_set-${i}`}
                 placeholder="Set"
                 value={workSection[i]?.work_set}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_set = parseInt(e.target.value);
@@ -279,7 +247,7 @@ export const WorkInsert = () => {
                 id={`work_count-${i}`}
                 placeholder="Count"
                 value={workSection[i]?.work_count}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_count = parseInt(e.target.value);
@@ -301,7 +269,7 @@ export const WorkInsert = () => {
                 id={`work_kg-${i}`}
                 placeholder="Kg"
                 value={workSection[i]?.work_kg}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_kg = parseInt(e.target.value);
@@ -321,7 +289,7 @@ export const WorkInsert = () => {
                 id={`work_rest-${i}`}
                 placeholder="Rest"
                 value={workSection[i]?.work_rest}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_rest = parseInt(e.target.value);
@@ -351,10 +319,10 @@ export const WorkInsert = () => {
                 name="user_id"
                 placeholder="ID"
                 value={user_id ? user_id : ""}
-                onChange={(e) => {
+                readOnly
+                onChange={(e:any) => {
                   setWORK({ ...WORK, user_id: e.target.value });
                 }}
-                readOnly
               />
             </div>
           </div>
@@ -365,20 +333,19 @@ export const WorkInsert = () => {
                 readOnly
                 type="text"
                 className="form-control"
-                id="work_day"
-                name="work_day"
+                id="workDay"
+                name="workDay"
                 placeholder="Day"
-                value={WORK?.work_day}
-                onChange={(e) => {
-                  setWork_day(e.target.value);
+                value={WORK?.workDay}
+                onChange={(e:any) => {
+                  setWorkDay(e.target.value);
                 }}
               />
             </div>
           </div>
         </div>
-        {handleWorkAmountChange()}
         <div className="row d-center">
-          <div className="col-5">
+          <div className="col-4">
             <div className="input-group mb-3">
               <span className="input-group-text">Start</span>
               <TimePicker
@@ -389,13 +356,13 @@ export const WorkInsert = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                onChange={(e) => {
-                  setWORK({ ...WORK, work_start : e });
+                onChange={(e:any) => {
+                  setWORK({ ...WORK, work_start: e });
                 }}
               />
             </div>
           </div>
-          <div className="col-5">
+          <div className="col-4">
             <div className="input-group mb-3">
               <span className="input-group-text">End</span>
               <TimePicker
@@ -406,15 +373,13 @@ export const WorkInsert = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setWORK({ ...WORK, work_end : e });
                 }}
               />
             </div>
           </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-10">
+          <div className="col-2">
             <div className="input-group mb-3">
               <span className="input-group-text">Time</span>
               <input
@@ -425,7 +390,7 @@ export const WorkInsert = () => {
                 name="work_time"
                 placeholder="Time"
                 value={WORK.work_time ? WORK.work_time : ""}
-                onChange={(e) => {
+                onChange={(e:any) => {
                   setWORK({ ...WORK, work_time : e.target.value });
                 }}
               />
@@ -439,15 +404,15 @@ export const WorkInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkInsert = () => {
     return (
-      <button type="button" className="btn btn-primary" onClick={flowWorkInsert}>
+      <button type="button" className="btn btn-sm btn-primary" onClick={flowWorkInsert}>
         Insert
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -465,12 +430,17 @@ export const WorkInsert = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewWorkDay()}</span>
+            <span>{viewWorkDay()}</span>
           </h1>
         </div>
+        <div className="col-12">
+          <h5 className="mb-3 fw-5">
+            <span>{handleWorkAmountChange()}</span>
+          </h5>
+        </div>
       </div>
-      <div className="row d-center mt-5">
-        <div className="col-10">
+      <div className="row d-center mt-5 mb-20">
+        <div className="col-12">
           <form className="form-inline">
             {tableWorkInsert()}
             <br />

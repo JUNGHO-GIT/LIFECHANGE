@@ -100,14 +100,14 @@ export const BoardDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardDelete = () => {
     return (
-      <button type="button" className="btn btn-danger ms-2" onClick={flowBoardDelete}>
+      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowBoardDelete}>
         Delete
       </button>
     );
   };
   const buttonBoardUpdate = (_id: string) => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={(() => {
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={(() => {
         navParam(`/boardUpdate`, {
           state: {_id},
         });
@@ -118,8 +118,8 @@ export const BoardDetail = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -127,7 +127,7 @@ export const BoardDetail = () => {
   };
   const buttonBoardList = () => {
     return (
-      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
         navParam(`/boardList`);
       }}>
         List

@@ -88,7 +88,7 @@ export const WorkUpdate = () => {
             id="work_set"
             value={WORK.work_set ? WORK.work_set : ""}
             placeholder="Set"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setWORK({
                 ...WORK,
                 work_set: e.target.value,
@@ -104,7 +104,7 @@ export const WorkUpdate = () => {
             id="work_count"
             value={WORK.work_count ? WORK.work_count : ""}
             placeholder="Count"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setWORK({
                 ...WORK,
                 work_count: e.target.value,
@@ -120,7 +120,7 @@ export const WorkUpdate = () => {
             id="work_kg"
             value={WORK.work_kg ? WORK.work_kg : ""}
             placeholder="Kg"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setWORK({
                 ...WORK,
                 work_kg: e.target.value,
@@ -136,7 +136,7 @@ export const WorkUpdate = () => {
             id="work_rest"
             value={WORK.work_rest ? WORK.work_rest : ""}
             placeholder="Rest"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setWORK({
                 ...WORK,
                 work_rest: e.target.value,
@@ -152,7 +152,7 @@ export const WorkUpdate = () => {
             id="work_time"
             value={WORK.work_time ? WORK.work_time : ""}
             placeholder="Time"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setWORK({
                 ...WORK,
                 work_time: e.target.value,
@@ -168,15 +168,15 @@ export const WorkUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={flowWorkUpdate}>
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowWorkUpdate}>
         Update
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>

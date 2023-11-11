@@ -23,8 +23,7 @@ export const FoodSearch = () => {
   // state 1
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any> ([]);
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-  const [query, setQuery] = useState(""
-  );
+  const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
 
   // 2-1. useEffect (localStorage) ---------------------------------------------------------------->
@@ -77,7 +76,10 @@ export const FoodSearch = () => {
         dateFormat="yyyy-MM-dd"
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
-        onChange={(date:any) => {}}
+        onChange={(date:any) => {
+          const formatDate = date.toISOString().split("T")[0];
+          setFood_regdate(formatDate);
+        }}
         readOnly
       />
     );
@@ -142,7 +144,7 @@ export const FoodSearch = () => {
   };
   const buttonPrevPage = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         if (!query) {
           alert("검색어를 입력하세요");
@@ -159,7 +161,7 @@ export const FoodSearch = () => {
   };
   const buttonNextPage = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         if (!query) {
           alert("검색어를 입력하세요");
@@ -176,7 +178,7 @@ export const FoodSearch = () => {
   };
   const buttonFoodSearch = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         if (!query) {
           alert("검색어를 입력하세요");
@@ -193,7 +195,7 @@ export const FoodSearch = () => {
   };
   const buttonFoodList = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         navParam(`/foodList`, {
           state: {
@@ -208,7 +210,7 @@ export const FoodSearch = () => {
   };
   const buttonFoodMorning = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         navParam(`/foodListPart`, {
           state: {
@@ -224,7 +226,7 @@ export const FoodSearch = () => {
   };
   const buttonFoodLunch = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         navParam(`/foodListPart`, {
           state: {
@@ -240,7 +242,7 @@ export const FoodSearch = () => {
   };
   const buttonFoodDinner = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         navParam(`/foodListPart`, {
           state: {
@@ -256,7 +258,7 @@ export const FoodSearch = () => {
   };
   const buttonFoodSnack = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={(e:any) => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
         navParam(`/foodListPart`, {
           state: {
@@ -272,8 +274,8 @@ export const FoodSearch = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>

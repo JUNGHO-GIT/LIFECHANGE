@@ -25,29 +25,29 @@ export const SleepListYear = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [selectedSleepType, setSelectedSleepType] = useState<string> ("list");
+  const [sleepType, setSleepType] = useState<string> ("list");
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {value:SLEEP_LIST, setValue:setSLEEP_LIST} = useStorage<any> (
+  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any> (
     "sleepListYear", []
   );
-  const {value:resultValue, setValue:setResultValue} = useStorage<Date | undefined> (
-    "resultValueYear", undefined
+  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined> (
+    "resValYear", undefined
   );
-  const {value:resultDuration, setValue:setResultDuration} = useStorage<string> (
-    "resultDurationYear", "0000-00-00 ~ 0000-00-00"
+  const {val:resDur, setVal:setResDur} = useStorage<string> (
+    "resDurYear", "0000-00-00 ~ 0000-00-00"
   );
-  const {value:averageSleepTime, setValue:setAverageSleepTime} = useStorage<string> (
-    "averageSleepTimeYear", "00:00"
+  const {val:avgSleepTime, setVal:setAvgSleepTime} = useStorage<string> (
+    "avgSleepTimeYear", "00:00"
   );
-  const {value:averageSleepNight, setValue:setAverageSleepNight} = useStorage<string> (
-    "averageSleepNightYear", "00:00"
+  const {val:avgSleepNight, setVal:setAvgSleepNight} = useStorage<string> (
+    "avgSleepNightYear", "00:00"
   );
-  const {value:averageSleepMorning, setValue:setAverageSleepMorning} = useStorage<string> (
-    "averageSleepMorningYear", "00:00"
+  const {val:avgSleepMorning, setVal:setAvgSleepMorning} = useStorage<string> (
+    "avgSleepMorningYear", "00:00"
   );
-  const {value:selectedSleepYear, setValue:setSelectedSleepYear} = useStorage<Date | undefined> (
-    "selectedSleepYear", koreanDate
+  const {val:sleepYear, setVal:setSleepYear} = useStorage<Date | undefined> (
+    "sleepYear", koreanDate
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -57,7 +57,7 @@ export const SleepListYear = () => {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
             user_id: user_id,
-            sleep_duration: resultDuration,
+            sleep_dur: resDur,
           },
         });
         setSLEEP_LIST(response.data);
@@ -68,64 +68,64 @@ export const SleepListYear = () => {
       }
     };
     fetchSleepList();
-  }, [user_id, resultDuration]);
+  }, [user_id, resDur]);
 
   // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchSleepAverage = async () => {
+    const fetchSleepAvg = async () => {
       try {
-        const response = await axios.get(`${URL_SLEEP}/sleepAverage`, {
+        const response = await axios.get(`${URL_SLEEP}/sleepAvg`, {
           params: {
             user_id: user_id,
-            sleep_duration: resultDuration,
+            sleep_dur: resDur,
           },
         });
 
         const isValidTime = (str: string) => {
           return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
         };
-        setAverageSleepTime (
-          isValidTime(response.data.averageSleepTime)
-          ? response.data.averageSleepTime
+        setAvgSleepTime (
+          isValidTime(response.data.avgSleepTime)
+          ? response.data.avgSleepTime
           : "00:00"
         );
-        setAverageSleepNight (
-          isValidTime(response.data.averageSleepNight)
-          ? response.data.averageSleepNight
+        setAvgSleepNight (
+          isValidTime(response.data.avgSleepNight)
+          ? response.data.avgSleepNight
           : "00:00"
         );
-        setAverageSleepMorning (
-          isValidTime(response.data.averageSleepMorning)
-          ? response.data.averageSleepMorning
+        setAvgSleepMorning (
+          isValidTime(response.data.avgSleepMorning)
+          ? response.data.avgSleepMorning
           : "00:00"
         );
       }
       catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
-        setAverageSleepTime("00:00");
-        setAverageSleepNight("00:00");
-        setAverageSleepMorning("00:00");
+        setAvgSleepTime("00:00");
+        setAvgSleepNight("00:00");
+        setAvgSleepMorning("00:00");
       }
     };
-    fetchSleepAverage();
-  }, [user_id, resultDuration]);
+    fetchSleepAvg();
+  }, [user_id, resDur]);
 
   // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (selectedSleepYear) {
-      setResultValue (
+    if (sleepYear) {
+      setResVal (
         parseISO (
-          `${selectedSleepYear.getFullYear()}`
+          `${sleepYear.getFullYear()}`
         )
       );
-      setResultDuration (
-        `${selectedSleepYear.getFullYear()}-01-01 ~ ${selectedSleepYear.getFullYear()}-12-31`
+      setResDur (
+        `${sleepYear.getFullYear()}-01-01 ~ ${sleepYear.getFullYear()}-12-31`
       );
     }
     else {
-      setResultValue (undefined);
+      setResVal (undefined);
     }
-  }, [selectedSleepYear]);
+  }, [sleepYear]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowYearChange: MonthChangeEventHandler = (day) => {
@@ -135,22 +135,22 @@ export const SleepListYear = () => {
     const prevMonth = differenceInDays(monthDate, yearDate) / 30;
 
     if (nextMonth > prevMonth) {
-      setSelectedSleepYear(new Date(day.getFullYear() + 1, 0, 1));
+      setSleepYear(new Date(day.getFullYear() + 1, 0, 1));
     }
     else {
-      setSelectedSleepYear(new Date(day.getFullYear(), 0, 1));
+      setSleepYear(new Date(day.getFullYear(), 0, 1));
     }
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewSleepDay = () => {
+  const viewSleepYear = () => {
     return (
       <DayPicker
         mode="default"
         showOutsideDays
         locale={ko}
         weekStartsOn={1}
-        month={selectedSleepYear}
+        month={sleepYear}
         onMonthChange={flowYearChange}
         modifiersClassNames={{
           selected: "selected",
@@ -183,9 +183,9 @@ export const SleepListYear = () => {
                   state: {_id: index._id}
                 }
               )}}>
-                {index.sleep_day}
+                {index.sleepDay}
               </td>
-              <td>{resultDuration}</td>
+              <td>{resDur}</td>
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
               <td>{index.sleep_time}</td>
@@ -197,7 +197,7 @@ export const SleepListYear = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableSleepAverage = () => {
+  const tableSleepAvg = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -209,9 +209,9 @@ export const SleepListYear = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{averageSleepNight}</td>
-            <td>{averageSleepMorning}</td>
-            <td>{averageSleepTime}</td>
+            <td>{avgSleepNight}</td>
+            <td>{avgSleepMorning}</td>
+            <td>{avgSleepTime}</td>
           </tr>
         </tbody>
       </table>
@@ -221,10 +221,10 @@ export const SleepListYear = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepToday = () => {
     return (
-      <button className="btn btn-success me-2" onClick={() => {
-        setSelectedSleepYear(koreanDate);
+      <button className="btn btn-sm btn-success me-2" onClick={() => {
+        setSleepYear(koreanDate);
         localStorage.removeItem("sleepList_YEAR");
-        localStorage.removeItem("selectedSleepYear_YEAR");
+        localStorage.removeItem("sleepYear_YEAR");
       }}>
         Today
       </button>
@@ -232,10 +232,10 @@ export const SleepListYear = () => {
   };
   const buttonSleepReset = () => {
     return (
-      <button className="btn btn-primary me-2" onClick={() => {
-        setSelectedSleepYear(undefined);
+      <button className="btn btn-sm btn-primary me-2" onClick={() => {
+        setSleepYear(undefined);
         localStorage.removeItem("sleepList_YEAR");
-        localStorage.removeItem("selectedSleepYear_YEAR");
+        localStorage.removeItem("sleepYear_YEAR");
       }}>
         Reset
       </button>
@@ -247,7 +247,7 @@ export const SleepListYear = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="sleepList" value={currentPath} onChange={(e) => {navParam(e.target.value);}}>
+        <select className="form-select" id="sleepList" value={currentPath} onChange={(e:any) => {navParam(e.target.value);}}>
           <option value="/sleepListDay">Day</option>
           <option value="/sleepListWeek">Week</option>
           <option value="/sleepListMonth">Month</option>
@@ -260,16 +260,16 @@ export const SleepListYear = () => {
   const selectSleepType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="sleepType" onChange={(e) => {
+        <select className="form-select" id="sleepType" onChange={(e:any) => {
           if (e.target.value === "list") {
-            setSelectedSleepType("list");
+            setSleepType("list");
           }
-          else if (e.target.value === "average") {
-            setSelectedSleepType("average");
+          else if (e.target.value === "avg") {
+            setSleepType("avg");
           }
         }}>
           <option value="list">List</option>
-          <option value="average">Average</option>
+          <option value="avg">Avg</option>
         </select>
       </div>
     );
@@ -281,28 +281,24 @@ export const SleepListYear = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-9">{TITLE}</h1>
-        </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-6">
-          {selectSleepList()}
-        </div>
-        <div className="col-6">
-          {selectSleepType()}
-        </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-4">
           <h2 className="mb-3 fw-9">년별로 조회</h2>
-          {viewSleepDay()}
-        </div>
-        <div className="col-8">
-          {selectedSleepType === "list" && tableSleepList()}
-          {selectedSleepType === "average" && tableSleepAverage()}
         </div>
       </div>
-      <div className="row d-center mb-20">
-        <div className="col-6">
+      <div className="row d-center mt-3">
+        <div className="col-3">{selectSleepList()}</div>
+        <div className="col-3">{selectSleepType()}</div>
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-md-6 col-12 d-center">
+          {viewSleepYear()}
+        </div>
+        <div className="col-md-6 col-12">
+          {sleepType === "list" && tableSleepList()}
+          {sleepType === "avg" && tableSleepAvg()}
+        </div>
+      </div>
+      <div className="row mb-20">
+        <div className="col-12 d-center">
           {buttonSleepToday()}
           {buttonSleepReset()}
         </div>
@@ -310,4 +306,3 @@ export const SleepListYear = () => {
     </div>
   );
 };
-

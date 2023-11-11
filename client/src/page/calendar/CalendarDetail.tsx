@@ -1,10 +1,14 @@
 // CalendarDetail.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
-import axios from "axios";
+import {useStorage} from "../../assets/ts/useStorage";
+import { ko } from "date-fns/locale";
+import { parseISO } from "date-fns";
 import moment from "moment-timezone";
+import axios from "axios";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const CalendarDetail = () => {
@@ -13,38 +17,46 @@ export const CalendarDetail = () => {
   const TITLE = "Calendar Detail";
   // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   // date
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // hook
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id"
-  );
-  const calendar_year = location.state.calendar_year;
-  const calendar_month = location.state.calendar_month;
-  const calendar_day = location.state.calendar_day;
+  const user_id = window.sessionStorage.getItem("user_id");
   // state 1
-  const [FOOD_LIST, setFOOD_LIST] = useState<any> ([]);
-  const [WORK_LIST, setWORK_LIST] = useState<any> ([]);
-  const [SLEEP_LIST, setSLEEP_LIST] = useState<any> ([]);
+  const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any> (
+    "foodListDay", []
+  );
+  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any> (
+    "sleepListDay", []
+  );
   // state 2
-  const [calendar_regdate, setCalendar_regdate]
-  = useState(`${calendar_year}-${calendar_month}-${calendar_day}`);
-  const [work_regdate, setWork_regdate] = useState(koreanDate);
-  const [sleep_regdate, setSleep_regdate] = useState(koreanDate);
-  const [food_regdate, setFood_regdate] = useState(koreanDate);
+  const {val:calendarDay, setVal:setCalendarDay}=useStorage<Date | undefined> (
+    "calendarDay", undefined
+  );
+  // state 3
+  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined> (
+    "resValDay", undefined
+  );
+  const {val:resDur, setVal:setResDur} = useStorage<string> (
+    "resDurDay", "0000-00-00 ~ 0000-00-00"
+  );
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2. useEffect --------------------------------------------------------------------------------->
+  useEffect(() => {
+    alert(JSON.stringify(location.state));
+  }, []);
+
+  // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodList = async () => {
       try {
         const response = await axios.get(`${URL_FOOD}/foodList`, {
           params: {
-            user_id: user_id,
-            food_regdate: food_regdate,
+            user_id : user_id,
+            food_regdate : calendarDay,
           },
         });
         setFOOD_LIST(response.data);
@@ -55,60 +67,51 @@ export const CalendarDetail = () => {
       }
     };
     fetchFoodList();
-  }, [user_id, food_regdate]);
+  }, [user_id, calendarDay]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const fetchWorkList = async () => {
-      try {
-        const response = await axios.get(`${URL_WORK}/workList`, {
-          params: {
-            user_id: user_id,
-            work_regdate: work_regdate,
-          },
-        });
-        setWORK_LIST(response.data);
-      }
-      catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
-        setWORK_LIST([]);
-      }
-    };
-    fetchWorkList();
-  }, [user_id, work_regdate]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 3. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepList = async () => {
       try {
         const response = await axios.get(`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id: user_id,
-            sleep_regdate: sleep_regdate,
+            user_id : user_id,
+            sleep_dur : resDur,
           },
         });
         setSLEEP_LIST(response.data);
       }
       catch (error:any) {
-        alert(`Error fetching sleep data: ${error.message}`);
+        alert(`Error fetching food data: ${error.message}`);
         setSLEEP_LIST([]);
       }
     };
     fetchSleepList();
-  }, [user_id, work_regdate]);
+  }, [user_id, calendarDay]);
 
-  // 4. logic ------------------------------------------------------------------------------------->
+  // 2-4. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const formatVal = (value: number): string => {
+      return value < 10 ? `0${value}` : `${value}`;
+    };
+    if (calendarDay) {
+      const year = calendarDay.getFullYear();
+      const month = formatVal(calendarDay.getMonth() + 1);
+      const date = formatVal(calendarDay.getDate());
+      setResVal(parseISO(`${year}-${month}-${date}`));
+      setResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+    }
+  }, [calendarDay]);
+
+  // 4-1. logic ----------------------------------------------------------------------------------->
   const logicViewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
-        selected={new Date(calendar_regdate)}
+        selected={calendarDay}
         onChange={(date:any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
-          setWork_regdate(selectedDate);
-          setSleep_regdate(selectedDate);
+          setCalendarDay(date);
         }}
       />
     );
@@ -140,56 +143,26 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkList = () => {
-    return (
-      <table className="table table-bordered border-dark">
-        <thead className="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Part</th>
-            <th>Title</th>
-            <th>Kg</th>
-            <th>Set</th>
-            <th>Count</th>
-            <th>Rest</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {WORK_LIST.map((index:any) => (
-            <tr>
-              <td>{index.user_id}</td>
-              <td>{index.work_part}</td>
-              <td>{index.work_title}</td>
-              <td>{index.work_kg}</td>
-              <td>{index.work_set}</td>
-              <td>{index.work_count}</td>
-              <td>{index.work_rest}</td>
-              <td>{index.work_time}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
-  // 5-3. table ----------------------------------------------------------------------------------->
+  // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
     return (
-      <table className="table table-bordered border-dark">
+      <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>day</th>
-            <th>night</th>
-            <th>morning</th>
-            <th>time</th>
+            <th>날짜</th>
+            <th>기간</th>
+            <th>취침</th>
+            <th>기상</th>
+            <th>수면</th>
           </tr>
         </thead>
         <tbody>
           {SLEEP_LIST.map((index:any) => (
-            <tr>
-              <td>{index.sleep_day}</td>
+            <tr key={index._id}>
+              <td>
+                {index.sleepDay}
+              </td>
+              <td>{resDur}</td>
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
               <td>{index.sleep_time}</td>
@@ -199,8 +172,6 @@ export const CalendarDetail = () => {
       </table>
     );
   };
-
-  // 6. button ------------------------------------------------------------------------------------>
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -219,9 +190,6 @@ export const CalendarDetail = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">{tableFoodList()}</div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12">{tableWorkList()}</div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">{tableSleepList()}</div>

@@ -91,7 +91,7 @@ export const WorkDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK?.workSection?.map((workItem:any) => (
+          {WORK?.workSection?.flatMap((workItem) => (
             <tr key={workItem._id}>
               <td>{workItem.work_part_val}</td>
               <td>{workItem.work_title_val}</td>
@@ -110,7 +110,7 @@ export const WorkDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkDelete = () => {
     return (
-      <button type="button" className="btn btn-danger ms-2" onClick={flowWorkDelete}>
+      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowWorkDelete}>
         Delete
       </button>
     );
@@ -119,7 +119,7 @@ export const WorkDetail = () => {
     return (
       <button
         type="button"
-        className="btn btn-primary ms-2"
+        className="btn btn-sm btn-primary ms-2"
         onClick={() => {
           navParam(`/workUpdate`, {
             state: {_id},
@@ -131,8 +131,8 @@ export const WorkDetail = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -140,7 +140,7 @@ export const WorkDetail = () => {
   };
   const buttonWorkList = () => {
     return (
-      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
         navParam(`/workListDay`);
       }}>
         List

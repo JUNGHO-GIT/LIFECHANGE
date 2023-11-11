@@ -19,8 +19,7 @@ export const FoodUpdate = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id"
-  );
+  const user_id = window.sessionStorage.getItem("user_id");
   const _id = location.state._id;
   // state
   const [FOOD, setFOOD] = useState<any> ({});
@@ -77,7 +76,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control"placeholder="Name"
-            value={FOOD.food_title} onChange={(e) => setFOOD({
+            value={FOOD.food_title} onChange={(e:any) => setFOOD({
               ...FOOD, food_title: e.target.value
             })}
           />
@@ -85,7 +84,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Brand"
-            value={FOOD.food_brand} onChange={(e) => setFOOD({
+            value={FOOD.food_brand} onChange={(e:any) => setFOOD({
               ...FOOD, food_brand: e.target.value
             })}
           />
@@ -93,7 +92,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Category"
-            value={FOOD.food_category} onChange={(e) => setFOOD({
+            value={FOOD.food_category} onChange={(e:any) => setFOOD({
               ...FOOD, food_category: e.target.value
             })}
           />
@@ -101,7 +100,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Serving"
-            value={FOOD.food_serving} onChange={(e) => setFOOD({
+            value={FOOD.food_serving} onChange={(e:any) => setFOOD({
               ...FOOD, food_serving: e.target.value
             })}
           />
@@ -109,7 +108,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Calories"
-            value={FOOD.food_calories} onChange={(e) => setFOOD({
+            value={FOOD.food_calories} onChange={(e:any) => setFOOD({
               ...FOOD, food_calories: e.target.value
             })}
           />
@@ -117,7 +116,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Carb"
-            value={FOOD.food_carb} onChange={(e) => setFOOD({
+            value={FOOD.food_carb} onChange={(e:any) => setFOOD({
               ...FOOD, food_carb: e.target.value
             })}
           />
@@ -125,7 +124,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Protein"
-            value={FOOD.food_protein} onChange={(e) => setFOOD({
+            value={FOOD.food_protein} onChange={(e:any) => setFOOD({
               ...FOOD, food_protein: e.target.value
             })}
           />
@@ -133,7 +132,7 @@ export const FoodUpdate = () => {
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Fat"
-            value={FOOD.food_fat} onChange={(e) => setFOOD({
+            value={FOOD.food_fat} onChange={(e:any) => setFOOD({
               ...FOOD, food_fat: e.target.value
             })}
           />
@@ -152,15 +151,15 @@ export const FoodUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonFoodUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={flowFoodUpdate}>
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowFoodUpdate}>
         Update
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>

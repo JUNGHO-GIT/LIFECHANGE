@@ -54,8 +54,8 @@ export const FoodList = () => {
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
         onChange={(date:any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
+          const formatDate = date.toISOString().split("T")[0];
+          setFood_regdate(formatDate);
         }}
       />
     );
@@ -90,8 +90,8 @@ export const FoodList = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>

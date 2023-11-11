@@ -63,8 +63,8 @@ export const BoardInsert = () => {
             id="user_id"
             placeholder="User ID"
             value={user_id ? user_id : ""}
-            onChange={(event:any) => {
-              setBOARD({...BOARD, user_id: event.target.value});
+            onChange={(e:any) => {
+              setBOARD({...BOARD, user_id: e.target.value});
             }}
             readOnly
           />
@@ -76,7 +76,7 @@ export const BoardInsert = () => {
             placeholder="Title"
             value={BOARD.board_title}
             id="floatingTitle"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setBOARD({...BOARD, board_title: e.target.value});
             }}
           />
@@ -88,7 +88,7 @@ export const BoardInsert = () => {
             placeholder="Content"
             value={BOARD.board_content}
             id="floatingContent"
-            onChange={(e) => {
+            onChange={(e:any) => {
               setBOARD({...BOARD, board_content: e.target.value});
             }}
           />
@@ -101,15 +101,15 @@ export const BoardInsert = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardInsert = () => {
     return (
-      <button className="btn btn-primary" type="button" onClick={flowBoardInsert}>
+      <button className="btn btn-sm btn-primary" type="button" onClick={flowBoardInsert}>
         Insert
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -117,7 +117,7 @@ export const BoardInsert = () => {
   };
   const buttonBoardList = () => {
     return (
-      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
         navParam(`/boardList`);
       }}>
         List

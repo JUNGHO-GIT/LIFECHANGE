@@ -75,13 +75,13 @@ export const BoardUpdate = () => {
           <label htmlFor="user_id">User ID</label>
         </div>
         <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Title" value={BOARD.board_title} onChange={(e) => setBOARD({...BOARD, board_title: e.target.value})} />
+          <input type="text" className="form-control" placeholder="Title" value={BOARD.board_title} onChange={(e:any) => setBOARD({...BOARD, board_title: e.target.value})} />
           <label htmlFor="floatingTitle">Title</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Content"
           value={BOARD.board_content}
-          onChange={(e) => setBOARD({...BOARD, board_content: e.target.value})} />
+          onChange={(e:any) => setBOARD({...BOARD, board_content: e.target.value})} />
           <label htmlFor="floatingContent">Content</label>
         </div>
         <div className="form-floating">
@@ -96,7 +96,7 @@ export const BoardUpdate = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonBoardUpdate = () => {
     return (
-      <button className="btn btn-primary ms-2" type="button" onClick={() => {
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={() => {
         flowBoardUpdate();
       }}>
         Update
@@ -105,7 +105,7 @@ export const BoardUpdate = () => {
   };
   const buttonBoardList = () => {
     return (
-      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
         navParam(`/boardList`);
       }}>
         List
@@ -114,8 +114,8 @@ export const BoardUpdate = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
