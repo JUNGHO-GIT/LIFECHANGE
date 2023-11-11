@@ -4,7 +4,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/ts/useStorage";
 import { ko } from "date-fns/locale";
-import { parseISO } from "date-fns";
+import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
 
@@ -24,29 +24,29 @@ export const SleepListDay = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [sleepType, setSleepType] = useState<string> ("list");
+  const [sleepType, setSleepType] = useState<string>("list");
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any> (
-    "sleepListDay", []
+  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
+    "sleepList(DAY)", []
   );
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined> (
-    "resValDay", undefined
+  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
+    "resVal(DAY)", undefined
   );
-  const {val:resDur, setVal:setResDur} = useStorage<string> (
-    "resDurDay", "0000-00-00 ~ 0000-00-00"
+  const {val:resDur, setVal:setResDur} = useStorage<string>(
+    "resDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
-  const {val:avgSleepTime, setVal:setAvgSleepTime} = useStorage<string> (
-    "avgSleepTimeDay", "00:00"
+  const {val:avgSleepTime, setVal:setAvgSleepTime} = useStorage<string>(
+    "avgSleepTime(DAY)", "00:00"
   );
-  const {val:avgSleepNight, setVal:setAvgSleepNight} = useStorage<string> (
-    "avgSleepNightDay", "00:00"
+  const {val:avgSleepNight, setVal:setAvgSleepNight} = useStorage<string>(
+    "avgSleepNight(DAY)", "00:00"
   );
-  const {val:avgSleepMorning, setVal:setAvgSleepMorning} = useStorage<string> (
-    "avgSleepMorningDay", "00:00"
+  const {val:avgSleepMorning, setVal:setAvgSleepMorning} = useStorage<string>(
+    "avgSleepMorning(DAY)", "00:00"
   );
-  const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined> (
-    "sleepDay", undefined
+  const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined>(
+    "sleep(DAY)", koreanDate
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -55,8 +55,8 @@ export const SleepListDay = () => {
       try {
         const response = await axios.get (`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id : user_id,
-            sleep_dur : resDur,
+            user_id: user_id,
+            sleep_dur: resDur,
           },
         });
         setSLEEP_LIST(response.data);
@@ -75,8 +75,8 @@ export const SleepListDay = () => {
       try {
         const response = await axios.get (`${URL_SLEEP}/sleepAvg`, {
           params: {
-            user_id : user_id,
-            sleep_dur : resDur,
+            user_id: user_id,
+            sleep_dur: resDur,
           },
         });
 
@@ -101,9 +101,6 @@ export const SleepListDay = () => {
       }
       catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
-        setAvgSleepTime("00:00");
-        setAvgSleepNight("00:00");
-        setAvgSleepMorning("00:00");
       }
     };
     fetchSleepAvg();
@@ -111,7 +108,7 @@ export const SleepListDay = () => {
 
   // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const formatVal = (value: number): string => {
+    const formatVal = (value:number):string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (sleepDay) {
@@ -156,7 +153,6 @@ export const SleepListDay = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>날짜</th>
             <th>기간</th>
             <th>취침</th>
             <th>기상</th>
@@ -171,9 +167,8 @@ export const SleepListDay = () => {
                   state: {_id: index._id}
                 }
               )}}>
-                {index.sleepDay}
+                {resDur}
               </td>
-              <td>{resDur}</td>
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
               <td>{index.sleep_time}</td>
@@ -190,6 +185,7 @@ export const SleepListDay = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
+            <th>기간</th>
             <th>취침 평균</th>
             <th>기상 평균</th>
             <th>수면 평균</th>
@@ -197,6 +193,7 @@ export const SleepListDay = () => {
         </thead>
         <tbody>
           <tr>
+            <td>{resDur}</td>
             <td>{avgSleepNight}</td>
             <td>{avgSleepMorning}</td>
             <td>{avgSleepTime}</td>
@@ -211,8 +208,8 @@ export const SleepListDay = () => {
     return (
       <button className="btn btn-sm btn-success me-2" onClick={() => {
         setSleepDay(koreanDate);
-        localStorage.removeItem("sleepList_DAY");
-        localStorage.removeItem("sleepDay_DAY");
+        localStorage.removeItem("sleepList(DAY)");
+        localStorage.removeItem("sleep(DAY)");
       }}>
         Today
       </button>
@@ -222,8 +219,8 @@ export const SleepListDay = () => {
     return (
       <button className="btn btn-sm btn-primary me-2" onClick={() => {
         setSleepDay(undefined);
-        localStorage.removeItem("sleepList_DAY");
-        localStorage.removeItem("sleepDay_DAY");
+        localStorage.removeItem("sleepList(DAY)");
+        localStorage.removeItem("sleepDay(DAY)");
       }}>
         Reset
       </button>
@@ -235,8 +232,11 @@ export const SleepListDay = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="sleepList" value={currentPath} onChange={(e:any) => {navParam(e.target.value);}}>
-          <option value="/sleepListDay">Day</option>
+        <select className="form-select" id="sleepList" value={currentPath}
+        onChange={(e:any) => {
+          navParam(e.target.value);}
+        }>
+          <option value="/sleepList">Day</option>
           <option value="/sleepListWeek">Week</option>
           <option value="/sleepListMonth">Month</option>
           <option value="/sleepListYear">Year</option>
@@ -268,8 +268,8 @@ export const SleepListDay = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
-          <h2 className="mb-3 fw-9">일별로 조회</h2>
+          <h1 className="mb-3 fw-8">{TITLE}</h1>
+          <h2 className="mb-3 fw-8">일별로 조회</h2>
         </div>
       </div>
       <div className="row d-center mt-3">

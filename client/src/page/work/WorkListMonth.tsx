@@ -1,11 +1,11 @@
 // WorkListMonth.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayPicker, MonthChangeEventHandler } from "react-day-picker";
+import {DayPicker, MonthChangeEventHandler} from "react-day-picker";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import { parseISO } from "date-fns";
+import {parseISO} from "date-fns";
 import {useStorage} from "../../assets/ts/useStorage";
 import { workPartArray, workTitleArray } from "../work/WorkArray";
 
@@ -27,13 +27,13 @@ export const WorkListMonth = () => {
   // 2-1. useState -------------------------------------------------------------------------------->
   const [workType, setWorkType] = useState<string>("list");
   const [number, setNumber] = useState<number>(0);
-  const {val:workMonth, setVal:setWorkMonth} = useStorage<Date | undefined> (
+  const {val:workMonth, setVal:setWorkMonth} = useStorage<Date | undefined>(
      "work(MONTH)", koreanDate
    );
 
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any> (
+  const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(MONTH)", []
   );
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
@@ -41,23 +41,23 @@ export const WorkListMonth = () => {
   );
   const {val:workPart, setVal:setWorkPart} = useStorage<string>("workPart(MONTH)", "전체");
   const {val:workTitle, setVal:setWorkTitle} = useStorage<string>("workTitle(MONTH)", "전체");
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined> (
+  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
     "resVal(MONTH)", undefined
   );
   const {val:resDur, setVal:setResDur} = useStorage<string>(
       "resDur(MONTH)",
       "0000-00-00 ~ 0000-00-00"
     );
-  const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string> (
+  const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
     "avgWorkStart(MONTH)", "00:00"
   );
-  const {val:avgWorkMorning, setVal:setAvgWorkMorning} = useStorage<string> (
+  const {val:avgWorkMorning, setVal:setAvgWorkMorning} = useStorage<string>(
     "avgWorkEnd(MONTH)", "00:00"
   );
-  const {val:workStartDay, setVal:setWorkStartDay} = useStorage<Date | undefined> (
+  const {val:workStartDay, setVal:setWorkStartDay} = useStorage<Date | undefined>(
     "workStartDay(MONTH)", undefined
   );
-  const {val:workEndDay, setVal:setWorkEndDay} = useStorage<Date | undefined> (
+  const {val:workEndDay, setVal:setWorkEndDay} = useStorage<Date | undefined>(
     "workEndDay(MONTH)", undefined
   );
 
@@ -312,7 +312,7 @@ export const WorkListMonth = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="workList" value={currentPath} onChange={(e:any) => {navParam(e.target.value);}}>
-          <option value="/workListDay">Day</option>
+          <option value="/workList">Day</option>
           <option value="/workListWeek">Week</option>
           <option value="/workListMonth">Month</option>
           <option value="/workListYear">Year</option>
@@ -344,8 +344,8 @@ export const WorkListMonth = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
-          <h2 className="mb-3 fw-9">월별로 조회</h2>
+          <h1 className="mb-3 fw-8">{TITLE}</h1>
+          <h2 className="mb-3 fw-8">월별로 조회</h2>
         </div>
       </div>
       <div className="row d-center mt-3">

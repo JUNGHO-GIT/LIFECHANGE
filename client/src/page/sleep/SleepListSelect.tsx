@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import {useStorage} from "../../assets/ts/useStorage";
 import {useNavigate, useLocation} from "react-router-dom";
 import { DayPicker } from "react-day-picker";
-import { parseISO } from "date-fns";
+import {parseISO} from "date-fns";
 import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
@@ -27,28 +27,28 @@ export const SleepListSelect = () => {
   const [sleepType, setSleepType] = useState<string> ("list");
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any> (
+  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
     "sleepListSelect", []
   );
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined> (
+  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
     "resValSelect", undefined
   );
-  const {val:resDur, setVal:setResDur} = useStorage<string> (
+  const {val:resDur, setVal:setResDur} = useStorage<string>(
     "resDurSelect", "0000-00-00 ~ 0000-00-00"
   );
-  const {val:avgSleepTime, setVal:setAvgSleepTime} = useStorage<string> (
+  const {val:avgSleepTime, setVal:setAvgSleepTime} = useStorage<string>(
     "avgSleepTimeSelect", "00:00"
   );
-  const {val:avgSleepNight, setVal:setAvgSleepNight} = useStorage<string> (
+  const {val:avgSleepNight, setVal:setAvgSleepNight} = useStorage<string>(
     "avgSleepNightSelect", "00:00"
   );
-  const {val:avgSleepMorning, setVal:setAvgSleepMorning} = useStorage<string> (
+  const {val:avgSleepMorning, setVal:setAvgSleepMorning} = useStorage<string>(
     "avgSleepMorningSelect", "00:00"
   );
-  const {val:sleepStartDay, setVal:setSleepStartDay} = useStorage<Date | undefined> (
+  const {val:sleepStartDay, setVal:setSleepStartDay} = useStorage<Date | undefined>(
     "sleepStartDaySelect", undefined
   );
-  const {val:sleepEndDay, setVal:setSleepEndDay} = useStorage<Date | undefined> (
+  const {val:sleepEndDay, setVal:setSleepEndDay} = useStorage<Date | undefined>(
     "sleepEndDaySelect", undefined
   );
 
@@ -288,7 +288,7 @@ export const SleepListSelect = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="sleepList" value={currentPath} onChange={(e:any) => {navParam(e.target.value);}}>
-          <option value="/sleepListDay">Day</option>
+          <option value="/sleepList">Day</option>
           <option value="/sleepListWeek">Week</option>
           <option value="/sleepListMonth">Month</option>
           <option value="/sleepListYear">Year</option>
@@ -320,8 +320,8 @@ export const SleepListSelect = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
-          <h2 className="mb-3 fw-9">선택별 조회</h2>
+          <h1 className="mb-3 fw-8">{TITLE}</h1>
+          <h2 className="mb-3 fw-8">선택별 조회</h2>
         </div>
       </div>
       <div className="row d-center mt-3">

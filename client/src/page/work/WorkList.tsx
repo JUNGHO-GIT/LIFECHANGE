@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { DayClickEventHandler, DayPicker } from "react-day-picker";
 import { useStorage } from "../../assets/ts/useStorage";
 import { ko } from "date-fns/locale";
-import { parseISO } from "date-fns";
+import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
 import { workPartArray, workTitleArray } from "./WorkArray";
@@ -330,7 +330,7 @@ export const WorkListDay = () => {
           onChange={(e:any) => {
             navParam(e.target.value);
           }}>
-          <option value="/workListDay">Day</option>
+          <option value="/workList">Day</option>
           <option value="/workListWeek">Week</option>
           <option value="/workListMonth">Month</option>
           <option value="/workListYear">Year</option>
@@ -365,8 +365,8 @@ export const WorkListDay = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
-          <h2 className="mb-3 fw-9">일별로 조회</h2>
+          <h1 className="mb-3 fw-8">{TITLE}</h1>
+          <h2 className="mb-3 fw-8">일별로 조회</h2>
         </div>
       </div>
       <div className="row d-center mt-3">

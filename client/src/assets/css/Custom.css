@@ -523,8 +523,7 @@ textarea.form-control {
   text-align: right !important;
 }
 
-/** loader ****************************************************************************************/
-/** <div class="background"><div class="loader"></div></div> **/
+/** <div class="background"><div class="loader"></div></div> **************************************/
 .background {
 	position: fixed;
 	top: 0;

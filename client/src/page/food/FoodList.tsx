@@ -103,7 +103,7 @@ export const FoodList = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <h1 className="mb-3 fw-8">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">

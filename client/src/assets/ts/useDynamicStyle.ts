@@ -7,6 +7,10 @@ export const useDynamicStyle = (baseElement = document) => {
   const stylesNumber = {
     w  : ["width", "%"],
     h  : ["height", "%"],
+    t  : ["top", "px"],
+    b  : ["bottom", "px"],
+    l  : ["left", "px"],
+    r  : ["right", "px"],
     p  : ["padding", "px"],
     pt : ["padding-top", "px"],
     pb : ["padding-bottom", "px"],
@@ -67,7 +71,19 @@ export const useDynamicStyle = (baseElement = document) => {
     "webkit-fill": {
       "width": "-webkit-fill-available",
       "height": "-webkit-fill-available",
-    }
+    },
+    "pos-rel": {
+      "position": "relative",
+    },
+    "pos-ab": {
+      "position": "absolute",
+    },
+    "pos-fix": {
+      "position": "fixed",
+    },
+    "pos-sta": {
+      "position": "static",
+    },
   };
 
   // 유효한 클래스 이름인지 확인하는 함수

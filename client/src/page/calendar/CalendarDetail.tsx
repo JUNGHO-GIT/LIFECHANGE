@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import {useStorage} from "../../assets/ts/useStorage";
 import { ko } from "date-fns/locale";
-import { parseISO } from "date-fns";
+import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
 
@@ -26,21 +26,21 @@ export const CalendarDetail = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   // state 1
-  const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any> (
+  const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
     "foodListDay", []
   );
-  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any> (
+  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
     "sleepListDay", []
   );
   // state 2
-  const {val:calendarDay, setVal:setCalendarDay}=useStorage<Date | undefined> (
+  const {val:calendarDay, setVal:setCalendarDay}=useStorage<Date | undefined>(
     "calendarDay", undefined
   );
   // state 3
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined> (
+  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
     "resValDay", undefined
   );
-  const {val:resDur, setVal:setResDur} = useStorage<string> (
+  const {val:resDur, setVal:setResDur} = useStorage<string>(
     "resDurDay", "0000-00-00 ~ 0000-00-00"
   );
 
@@ -178,7 +178,7 @@ export const CalendarDetail = () => {
     <div className="container main">
       <div className="row d-center">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <h1 className="mb-3 fw-8">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">

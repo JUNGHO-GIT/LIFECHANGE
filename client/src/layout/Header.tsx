@@ -18,7 +18,6 @@ export const Header = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state
 
   // 4-1. logic ----------------------------------------------------------------------------------->
   const DropdownItem: React.FC<{ to: string, label: string }> = ({ to, label }) => (

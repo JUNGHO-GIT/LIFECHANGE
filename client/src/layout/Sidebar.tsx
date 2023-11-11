@@ -2,7 +2,6 @@
 import React, {useState, useEffect} from "react";
 import {createGlobalStyle} from "styled-components";
 import {Link} from "react-router-dom";
-import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 const SidebarStyle = createGlobalStyle`
