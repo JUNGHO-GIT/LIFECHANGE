@@ -12,13 +12,8 @@
 }
 
 .react-time-picker__wrapper {
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 1rem;
   position: relative;
 }
@@ -31,7 +26,6 @@
 
 .react-time-picker__inputGroup {
   flex-grow: 1;
-  padding: 6px 0;
 }
 
 .react-time-picker__inputGroup__divider {

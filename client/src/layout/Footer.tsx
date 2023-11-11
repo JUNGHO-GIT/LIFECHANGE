@@ -4,8 +4,8 @@ import React from "react";
 // ------------------------------------------------------------------------------------------------>
 export const Footer = () => {
   return (
-    <footer className="container-fluid bg-dark pos-fix h-10 b-0">
-      <div className="row d-center pt-6 pe-20 pb-6 ps-20">
+    <footer className="container-fluid bg-dark pt-6 pe-20 pb-6 ps-20 mt-20">
+      <div className="row d-center">
         <div className="col-12">
           <p className="text-white fw-7">&copy; JUNGHO's Domain</p>
         </div>

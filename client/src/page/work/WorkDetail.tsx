@@ -14,7 +14,7 @@ export const WorkDetail = () => {
   // url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   // date
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // hook
   const navParam = useNavigate();
   const location = useLocation();

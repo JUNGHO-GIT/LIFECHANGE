@@ -1,15 +1,7 @@
-// useDynamicStyle.ts
-import {useLayoutEffect} from "react";
-import {useMutationObserver} from '@react-hooks-library/core'
-
-// useDynamicStyle -------------------------------------------------------------------------------->
-export const useDynamicStyle = (
-  baseElement:Document | HTMLElement | Element,
-  locationName:string
-) => {
+var dynamicStyle = function (baseElement = document) {
 
   // 숫자관련 스타일과 문자열 관련 스타일 --------------------------------------------------------->
-  const stylesNumber:any = {
+  var stylesNumber = {
     "w": ["width", "%"],
     "h": ["height", "%"],
     "t": ["top", "px"],
@@ -30,7 +22,7 @@ export const useDynamicStyle = (
     "fs": ["font-size", "px"],
   };
 
-  const stylesString:any = {
+  var stylesString = {
     "d-center": {
       "display": "flex",
       "justify-content": "center",
@@ -92,7 +84,7 @@ export const useDynamicStyle = (
   };
 
   // 스타일 맵 만들기 ----------------------------------------------------------------------------->
-  let styleMap:Map<string, any> = new Map();
+  var styleMap = new Map();
 
   Object.keys(stylesNumber).forEach((key) => {
     styleMap.set(key, {
@@ -109,22 +101,22 @@ export const useDynamicStyle = (
   });
 
   // 숫자 검증 및 적용 ---------------------------------------------------------------------------->
-  const applyNumberStyle = (element:HTMLElement, className:string) => {
-    let [prefix, value] = className.split("-");
-    let styleInfo = styleMap.get(prefix);
+  var applyNumberStyle = (element, className) => {
+    var [prefix, value] = className.split("-");
+    var styleInfo = styleMap.get(prefix);
 
     if (styleInfo && styleInfo.type === "number") {
-      let [property, unit] = styleInfo.styles;
-      let style = value + unit;
+      var [property, unit] = styleInfo.styles;
+      var style = value + unit;
       element.style.setProperty(property, style, "important");
     }
   };
 
   // 문자열 검증 및 적용 -------------------------------------------------------------------------->
-  const applyStringStyle = (element:HTMLElement, className:string) => {
-    let styleInfo = styleMap.get(className);
+  var applyStringStyle = (element, className) => {
+    var styleInfo = styleMap.get(className);
     if (styleInfo && styleInfo.type === "string") {
-      let style = styleInfo.styles;
+      var style = styleInfo.styles;
       Object.keys(style).forEach((property) => {
         element.style.setProperty(property, style[property], "important");
       });
@@ -132,29 +124,31 @@ export const useDynamicStyle = (
   };
 
   // 전체 스타일 검증 및 해당 함수 호출 ----------------------------------------------------------->
-  const checkAndApplyStyle = (element:HTMLElement) => {
-    let classNames:Array<string> = [];
+  var checkAndApplyStyle = (element) => {
+    var classNames = [];
 
     if (typeof element.className === "string") {
       classNames = element.className.split(" ").filter(Boolean);
     }
+    else {
+      classNames = Array.from(element.classList);
+    }
 
     classNames.forEach((className) => {
       if (styleMap.has(className)) {
-        let styleInfo = styleMap.get(className);
+        var styleInfo = styleMap.get(className);
         if (styleInfo) {
           if (styleInfo.type === "number") {
             applyNumberStyle(element, className);
-          }
-          else if (styleInfo.type === "string") {
+          } else if (styleInfo.type === "string") {
             applyStringStyle(element, className);
           }
         }
       }
       else {
-        let stylePrefix = className.split("-")[0];
+        var stylePrefix = className.split("-")[0];
         if (styleMap.has(stylePrefix)) {
-          let styleInfo = styleMap.get(stylePrefix);
+          var styleInfo = styleMap.get(stylePrefix);
           if (styleInfo && styleInfo.type === "number") {
             applyNumberStyle(element, className);
           }
@@ -163,30 +157,30 @@ export const useDynamicStyle = (
     });
   };
 
-  // useLayoutEffect를 사용해서 동적으로 스타일 적용 ---------------------------------------------->
-  useLayoutEffect(() => {
-    baseElement.querySelectorAll("*").forEach((element) => {
-      checkAndApplyStyle(element as HTMLElement);
-    });
+  // 동적 스타일 적용 ----------------------------------------------------------------------------->
+  baseElement.querySelectorAll("*").forEach((element) => {
+    checkAndApplyStyle(element);
+  });
 
-    let observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              checkAndApplyStyle(node as HTMLElement);
-            }
-          });
-        }
-      });
+  var observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "childList") {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            checkAndApplyStyle(node);
+          }
+        });
+      }
     });
+  });
 
-    observer.observe(baseElement, {
-      childList: true,
-      subtree: true,
-      attributes: true
-    });
-
-  }, [baseElement, locationName]);
+  observer.observe(baseElement, {
+    childList: true,
+    subtree: true
+  });
 
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  dynamicStyle();
+});

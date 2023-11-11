@@ -16,9 +16,7 @@ export const WorkListDay = () => {
   // url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   // date
-  const koreanDate = new Date (
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
-  );
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // hook
   const navParam = useNavigate();
   const location = useLocation();
@@ -27,7 +25,7 @@ export const WorkListDay = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [workType, setWorkType] = useState<string>("list");
-  const [number, setNumber] = useState<number>(0);
+  const [workNumber, setWorkNumber] = useState<number>(0);
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
@@ -111,7 +109,7 @@ export const WorkListDay = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (workDay) {
-      const year = workDay.getFullYear();
+      const year = formatVal(workDay.getFullYear());
       const month = formatVal(workDay.getMonth() + 1);
       const date = formatVal(workDay.getDate());
       setResVal(parseISO(`${year}-${month}-${date}`));
@@ -203,7 +201,7 @@ export const WorkListDay = () => {
       <div>
         <div className="row d-center">
           <div className="col-6">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">파트</span>
               <select
                 className="form-control"
@@ -215,7 +213,7 @@ export const WorkListDay = () => {
                     (item) => item.workPart[0] === e.target.value
                   );
                   setWorkTitle("전체");
-                  setNumber(index);
+                  setWorkNumber(index);
                 }}>
                 {workPartArray.map((value, key) => (
                   <option key={key} value={value.workPart[0]}>
@@ -226,7 +224,7 @@ export const WorkListDay = () => {
             </div>
           </div>
           <div className="col-6">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">종목</span>
               <select
                 className="form-control"
@@ -235,7 +233,7 @@ export const WorkListDay = () => {
                 onChange={(e:any) => {
                   setWorkTitle(e.target.value);
                 }}>
-                {workTitleArray[number].workTitle.map((value, key) => (
+                {workTitleArray[workNumber].workTitle.map((value, key) => (
                   <option key={key} value={value}>
                     {value}
                   </option>

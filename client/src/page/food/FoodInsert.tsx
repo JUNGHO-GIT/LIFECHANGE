@@ -162,7 +162,7 @@ export const FoodInsert = () => {
         <div className="col-6">{tableFoodInsert(0, serving ? serving : "0", calories)}</div>
         <div className="col-6">{tableFoodInsert(showGram, showGram.toString(), calories)}</div>
         <div className="col-6">
-          <div className="input-group mb-3">
+          <div className="input-group">
             {buttonFoodCategory()}
             {buttonFoodAmount()}
           </div>

@@ -37,8 +37,8 @@ export const CalendarDetail = () => {
     "calendarDay", undefined
   );
   // state 3
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
-    "resValDay", undefined
+  const {val:resVal, setVal:setResVal} = useStorage<string>(
+    "resValDay", "0000-00-00"
   );
   const {val:resDur, setVal:setResDur} = useStorage<string>(
     "resDurDay", "0000-00-00 ~ 0000-00-00"
@@ -46,8 +46,17 @@ export const CalendarDetail = () => {
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
-    alert(JSON.stringify(location.state));
-  }, []);
+    if (calendarDay) {
+      const viewDate = moment(calendarDay).format("YYYY-MM-DD").toString();
+      setResVal(`${viewDate}`);
+      setResDur(`${viewDate} ~ ${viewDate}`);
+    }
+  }, [calendarDay]);
+
+  // 2. useEffect --------------------------------------------------------------------------------->
+  useEffect(() => {
+    setCalendarDay(parseISO(location.state.calendar_date));
+  }, [location.state.calendar_date]);
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
@@ -56,7 +65,7 @@ export const CalendarDetail = () => {
         const response = await axios.get(`${URL_FOOD}/foodList`, {
           params: {
             user_id : user_id,
-            food_regdate : calendarDay,
+            food_regdate : resVal,
           },
         });
         setFOOD_LIST(response.data);
@@ -67,7 +76,7 @@ export const CalendarDetail = () => {
       }
     };
     fetchFoodList();
-  }, [user_id, calendarDay]);
+  }, [user_id, resVal]);
 
   // 3. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
@@ -87,23 +96,9 @@ export const CalendarDetail = () => {
       }
     };
     fetchSleepList();
-  }, [user_id, calendarDay]);
+  }, [user_id, resDur]);
 
-  // 2-4. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const formatVal = (value: number): string => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-    if (calendarDay) {
-      const year = calendarDay.getFullYear();
-      const month = formatVal(calendarDay.getMonth() + 1);
-      const date = formatVal(calendarDay.getDate());
-      setResVal(parseISO(`${year}-${month}-${date}`));
-      setResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
-    }
-  }, [calendarDay]);
-
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4. logic ------------------------------------------------------------------------------------->
   const logicViewDate = () => {
     return (
       <DatePicker
@@ -146,10 +141,9 @@ export const CalendarDetail = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
     return (
-      <table className="table table-bordered table-hover">
+      <table className="table table-bordered border-dark">
         <thead className="table-dark">
           <tr>
-            <th>날짜</th>
             <th>기간</th>
             <th>취침</th>
             <th>기상</th>
@@ -159,9 +153,6 @@ export const CalendarDetail = () => {
         <tbody>
           {SLEEP_LIST.map((index:any) => (
             <tr key={index._id}>
-              <td>
-                {index.sleepDay}
-              </td>
               <td>{resDur}</td>
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
@@ -184,15 +175,21 @@ export const CalendarDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{logicViewDate()}</span>
+            <span>
+              {logicViewDate()}
+            </span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">{tableFoodList()}</div>
+        <div className="col-12">
+          {tableFoodList()}
+        </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">{tableSleepList()}</div>
+        <div className="col-12">
+          {tableSleepList()}
+        </div>
       </div>
     </div>
   );

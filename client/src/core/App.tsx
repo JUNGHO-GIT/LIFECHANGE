@@ -10,6 +10,7 @@ import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
 import "react-day-picker/dist/style.css";
 import "react-datepicker/dist/react-datepicker.css";
+import "../assets/css/Custom.css";
 import "../assets/css/DatePicker.css";
 import "../assets/css/TimePicker.css";
 import "../assets/css/DayPicker.css";

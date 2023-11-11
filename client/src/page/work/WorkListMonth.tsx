@@ -26,12 +26,10 @@ export const WorkListMonth = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [workType, setWorkType] = useState<string>("list");
-  const [number, setNumber] = useState<number>(0);
+  const [workNumber, setWorkNumber] = useState<number>(0);
   const {val:workMonth, setVal:setWorkMonth} = useStorage<Date | undefined>(
-     "work(MONTH)", koreanDate
-   );
-
-
+    "work(MONTH)", koreanDate
+  );
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(MONTH)", []
@@ -45,9 +43,9 @@ export const WorkListMonth = () => {
     "resVal(MONTH)", undefined
   );
   const {val:resDur, setVal:setResDur} = useStorage<string>(
-      "resDur(MONTH)",
-      "0000-00-00 ~ 0000-00-00"
-    );
+    "resDur(MONTH)",
+    "0000-00-00 ~ 0000-00-00"
+  );
   const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
     "avgWorkStart(MONTH)", "00:00"
   );
@@ -207,7 +205,7 @@ export const WorkListMonth = () => {
       <div>
         <div className="row d-center">
           <div className="col-6">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">파트</span>
               <select
                 className="form-control"
@@ -219,7 +217,7 @@ export const WorkListMonth = () => {
                     (item) => item.workPart[0] === e.target.value
                   );
                   setWorkTitle("전체");
-                  setNumber(index);
+                  setWorkNumber(index);
                 }}>
                 {workPartArray.map((value, key) => (
                   <option key={key} value={value.workPart[0]}>
@@ -230,7 +228,7 @@ export const WorkListMonth = () => {
             </div>
           </div>
           <div className="col-6">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">종목</span>
               <select
                 className="form-control"
@@ -239,7 +237,7 @@ export const WorkListMonth = () => {
                 onChange={(e:any) => {
                   setWorkTitle(e.target.value);
                 }}>
-                {workTitleArray[number].workTitle.map((value, key) => (
+                {workTitleArray[workNumber].workTitle.map((value, key) => (
                   <option key={key} value={value}>
                     {value}
                   </option>

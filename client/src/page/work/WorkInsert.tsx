@@ -103,7 +103,6 @@ export const WorkInsert = () => {
   // 4-1. handler --------------------------------------------------------------------------------->
   const handleWorkPartChange = (i: number, e: any) => {
     const newIndex = parseInt(e.target.value);
-
     setWorkSection((prev: any[]) => {
       const updatedSection = [...prev];
       updatedSection[i] = {
@@ -131,29 +130,37 @@ export const WorkInsert = () => {
   const handleWorkAmountChange = () => {
     return (
       <div>
-        <input type="number" value={workAmount} min="1" onChange={(e:any) => {
+        <div className="row d-center">
+          <div className="col-4">
+            <input type="number" value={workAmount} min="1" className="form-control mb-30"
+            onChange={(e:any) => {
+              let defaultSection = {
+                work_part_idx: 0,
+                work_part_val: "전체",
+                work_title_idx: 0,
+                work_title_val: "전체",
+              };
+              let newAmount: number = parseInt(e.target.value);
 
-          let defaultSection = {
-            work_part_idx: 0,
-            work_part_val: "전체",
-            work_title_idx: 0,
-            work_title_val: "전체",
-          };
-          let newAmount: number = parseInt(e.target.value);
-
-          // amount 값이 증가했을 때 새로운 섹션들만 추가
-          if (newAmount > workAmount) {
-            let additionalSections = Array(newAmount - workAmount).fill(defaultSection);
-            setWorkSection(prev => [...prev, ...additionalSections]);
-          }
-          // amount 값이 감소했을 때 마지막 섹션부터 제거
-          else if (newAmount < workAmount) {
-            setWorkSection(prev => prev.slice(0, newAmount));
-          }
-          // workAmount 값 업데이트
-          setWorkAmount(newAmount);
-        }}/>
-        {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
+              // amount 값이 증가했을 때 새로운 섹션들만 추가
+              if (newAmount > workAmount) {
+                let additionalSections = Array(newAmount - workAmount).fill(defaultSection);
+                setWorkSection(prev => [...prev, ...additionalSections]);
+              }
+              // amount 값이 감소했을 때 마지막 섹션부터 제거
+              else if (newAmount < workAmount) {
+                setWorkSection(prev => prev.slice(0, newAmount));
+              }
+              // workAmount 값 업데이트
+              setWorkAmount(newAmount);
+            }}/>
+          </div>
+        </div>
+        <div className="row d-center">
+          <div className="col-12">
+            {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
+          </div>
+        </div>
       </div>
     );
   };
@@ -175,18 +182,16 @@ export const WorkInsert = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableWorkSection = (i: number) => {
 
-    // -------------------------------------------------------------------------------------------->
     const updateWorkArray
     = workSection[i] && workTitleArray[workSection[i].work_part_idx]
     ? workTitleArray[workSection[i].work_part_idx]?.workTitle
     : [];
 
-    // -------------------------------------------------------------------------------------------->
     return (
-      <div key={i} className="mt-5">
+      <div key={i} className="mb-20">
         <div className="row d-center">
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">파트</span>
               <select
                 className="form-control"
@@ -201,7 +206,7 @@ export const WorkInsert = () => {
             </div>
           </div>
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">종목</span>
               <select
                 className="form-control"
@@ -218,7 +223,7 @@ export const WorkInsert = () => {
         </div>
         <div className="row d-center">
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Set</span>
               <input
                 type="number"
@@ -238,7 +243,7 @@ export const WorkInsert = () => {
             </div>
           </div>
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Count</span>
               <input
                 type="number"
@@ -260,7 +265,7 @@ export const WorkInsert = () => {
         </div>
         <div className="row d-center">
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Kg</span>
               <input
                 type="number"
@@ -280,7 +285,7 @@ export const WorkInsert = () => {
             </div>
           </div>
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Rest</span>
               <input
                 type="number"
@@ -310,7 +315,7 @@ export const WorkInsert = () => {
       <div>
         <div className="row d-center">
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">ID</span>
               <input
                 type="text"
@@ -327,7 +332,7 @@ export const WorkInsert = () => {
             </div>
           </div>
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Day</span>
               <input
                 readOnly
@@ -345,12 +350,13 @@ export const WorkInsert = () => {
           </div>
         </div>
         <div className="row d-center">
-          <div className="col-4">
-            <div className="input-group mb-3">
+          <div className="col-5">
+            <div className="input-group">
               <span className="input-group-text">Start</span>
               <TimePicker
                 id="work_start"
                 name="work_start"
+                className="form-control"
                 value={WORK?.work_start}
                 disableClock={false}
                 clockIcon={null}
@@ -362,12 +368,13 @@ export const WorkInsert = () => {
               />
             </div>
           </div>
-          <div className="col-4">
-            <div className="input-group mb-3">
+          <div className="col-5">
+            <div className="input-group">
               <span className="input-group-text">End</span>
               <TimePicker
                 id="work_end"
                 name="work_end"
+                className="form-control"
                 value={WORK?.work_end}
                 disableClock={false}
                 clockIcon={null}
@@ -379,8 +386,10 @@ export const WorkInsert = () => {
               />
             </div>
           </div>
-          <div className="col-2">
-            <div className="input-group mb-3">
+        </div>
+        <div className="row d-center">
+          <div className="col-10">
+            <div className="input-group">
               <span className="input-group-text">Time</span>
               <input
                 readOnly
@@ -427,26 +436,24 @@ export const WorkInsert = () => {
           <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-center mt-5">
+      <div className="row d-center mt-5 mb-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
             <span>{viewWorkDay()}</span>
           </h1>
         </div>
+      </div>
+      <div className="row d-center mt-5">
         <div className="col-12">
-          <h5 className="mb-3 fw-5">
-            <span>{handleWorkAmountChange()}</span>
-          </h5>
+          {handleWorkAmountChange()}
         </div>
       </div>
       <div className="row d-center mt-5 mb-20">
         <div className="col-12">
-          <form className="form-inline">
-            {tableWorkInsert()}
-            <br />
-            {buttonWorkInsert()}
-            {buttonRefreshPage()}
-          </form>
+          {tableWorkInsert()}
+          <br />
+          {buttonWorkInsert()}
+          {buttonRefreshPage()}
         </div>
       </div>
     </div>

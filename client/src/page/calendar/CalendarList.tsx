@@ -16,9 +16,7 @@ export const CalendarList = () => {
   // url
   const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
   // date
-  const koreanDate = new Date (
-    moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString()
-  );
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // hook
   const navParam = useNavigate();
   const location = useLocation();
@@ -31,11 +29,12 @@ export const CalendarList = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick = (day:Date) => {
+    const clickDate = moment(day).format("YYYY-MM-DD").toString();
     setCalendarDay(day);
     navParam(`/calendarDetail`, {
       state: {
         user_id: user_id,
-        calendar_date: day,
+        calendar_date: clickDate,
       },
     });
   };
@@ -70,6 +69,7 @@ export const CalendarList = () => {
         className="btn btn-sm btn-success me-2"
         onClick={() => {
           setCalendarDay(koreanDate);
+          localStorage.removeItem("calendarDay(DAY)");
         }}>
         Today
       </button>
@@ -82,6 +82,7 @@ export const CalendarList = () => {
         className="btn btn-sm btn-primary me-2"
         onClick={() => {
           setCalendarDay(koreanDate);
+          localStorage.removeItem("calendarDay(DAY)");
         }}>
         Reset
       </button>

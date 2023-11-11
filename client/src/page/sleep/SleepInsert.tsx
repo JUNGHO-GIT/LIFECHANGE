@@ -103,7 +103,7 @@ export const SleepInsert = () => {
       <div>
         <div className="row d-center">
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">ID</span>
               <input
                 type="text"
@@ -120,7 +120,7 @@ export const SleepInsert = () => {
             </div>
           </div>
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Day</span>
               <input
                 readOnly
@@ -139,11 +139,12 @@ export const SleepInsert = () => {
         </div>
         <div className="row d-center">
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Night</span>
               <TimePicker
                 id="sleep_night"
                 name="sleep_night"
+                className="form-control"
                 value={SLEEP.sleep_night}
                 disableClock={false}
                 clockIcon={null}
@@ -156,11 +157,12 @@ export const SleepInsert = () => {
             </div>
           </div>
           <div className="col-5">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text">Morning</span>
               <TimePicker
                 id="sleep_morning"
                 name="sleep_morning"
+                className="form-control"
                 value={SLEEP.sleep_morning}
                 disableClock={false}
                 clockIcon={null}
@@ -185,8 +187,6 @@ export const SleepInsert = () => {
       </button>
     );
   };
-
-  // 6. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
@@ -214,12 +214,10 @@ export const SleepInsert = () => {
       </div>
       <div className="row d-center mt-5 mb-20">
         <div className="col-12">
-          <form className="form-inline">
-            {tableSleepInsert()}
-            <br />
-            {buttonSleepInsert()}
-            {buttonRefreshPage()}
-          </form>
+          {tableSleepInsert()}
+          <br />
+          {buttonSleepInsert()}
+          {buttonRefreshPage()}
         </div>
       </div>
     </div>

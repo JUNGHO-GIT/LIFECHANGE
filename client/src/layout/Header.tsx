@@ -33,8 +33,8 @@ export const Header = () => {
 
   // 4-2. logic ----------------------------------------------------------------------------------->
   const DropdownMenu: React.FC<{ label: string, items: { to: string, label: string }[] }> = ({ label, items }) => (
-    <li className="me-5">
-      <div className="dropdown ms-2">
+    <li className="me-30">
+      <div className="dropdown ms-5">
         <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           {label}
         </a>
@@ -153,7 +153,7 @@ export const Header = () => {
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <header className="container-fluid bg-dark">
-      <div className="row d-center pt-3 pb-3">
+      <div className="row d-center pt-15 pb-15">
         <div className="col-9">{tableNaveList()}</div>
         <div className="col-3">{loginFalse()}{loginTrue()}</div>
       </div>

@@ -310,7 +310,7 @@ export const FoodSearch = () => {
           </div>
         </div>
         <div className="col-4">
-          <div className="input-group mb-3">
+          <div className="input-group">
             <input type="text" className="form-control" value={query} onChange={flowSearchChange} />
             {buttonFoodSearch()}
           </div>
