@@ -1,35 +1,33 @@
 // useDynamicStyle.ts
 import {useLayoutEffect} from "react";
-import {useMutationObserver} from '@react-hooks-library/core'
 
 // useDynamicStyle -------------------------------------------------------------------------------->
 export const useDynamicStyle = (
-  baseElement:Document | HTMLElement | Element,
+  baseElement:Document,
   locationName:string
 ) => {
 
-  // 숫자관련 스타일과 문자열 관련 스타일 --------------------------------------------------------->
+  // 1-1. style 접두사 + css속성 + 단위 ----------------------------------------------------------->
   const stylesNumber:any = {
-    "w": ["width", "%"],
-    "h": ["height", "%"],
-    "t": ["top", "px"],
-    "b": ["bottom", "px"],
-    "l": ["left", "px"],
-    "r": ["right", "px"],
-    "p": ["padding", "px"],
-    "pt": ["padding-top", "px"],
-    "pb": ["padding-bottom", "px"],
-    "ps": ["padding-left", "px"],
-    "pe": ["padding-right", "px"],
-    "m": ["margin", "px"],
-    "mt": ["margin-top", "px"],
-    "mb": ["margin-bottom", "px"],
-    "ms": ["margin-left", "px"],
-    "me": ["margin-right", "px"],
-    "fw": ["font-weight", "00"],
-    "fs": ["font-size", "px"],
+    "w"  : ["width", "%"],
+    "h"  : ["height", "%"],
+    "p"  : ["padding", "px"],
+    "pt" : ["padding-top", "px"],
+    "pb" : ["padding-bottom", "px"],
+    "ps" : ["padding-left", "px"],
+    "pe" : ["padding-right", "px"],
+    "m"  : ["margin", "px"],
+    "mt" : ["margin-top", "px"],
+    "mb" : ["margin-bottom", "px"],
+    "ms" : ["margin-left", "px"],
+    "me" : ["margin-right", "px"],
+    "fw" : ["font-weight", "00"],
+    "fs" : ["font-size", "px"],
+    "fsr" : ["font-size", "rem"],
+    "z" : ["z-index", ""],
   };
 
+  // 1-2. style 접두사 + css속성 ------------------------------------------------------------------>
   const stylesString:any = {
     "d-center": {
       "display": "flex",
@@ -55,12 +53,18 @@ export const useDynamicStyle = (
     "d-flex": {
       "display": "flex",
     },
-    "d-inline-block": {
+    "d-inline": {
       "display": "inline-block",
     },
     "d-inline-flex": {
       "display": "inline-flex",
     },
+    "pos-static": {
+			"position": "static",
+		},
+		"pos-relative": {
+			"position": "relative",
+		},
     "over-hidden": {
       "overflow": "hidden",
     },
@@ -69,6 +73,7 @@ export const useDynamicStyle = (
     },
     "pointer": {
       "cursor": "pointer",
+      "caret-color": "transparent",
     },
     "resize-none": {
       "resize": "none",
@@ -76,6 +81,15 @@ export const useDynamicStyle = (
     "webkit-fill": {
       "width": "-webkit-fill-available",
       "height": "-webkit-fill-available",
+    },
+    "fw-normal": {
+      "font-weight": "normal",
+    },
+    "fw-bold": {
+      "font-weight": "bold",
+    },
+    "fw-bolder": {
+      "font-weight": "bolder",
     },
     "pos-rel": {
       "position": "relative",
@@ -138,6 +152,9 @@ export const useDynamicStyle = (
     if (typeof element.className === "string") {
       classNames = element.className.split(" ").filter(Boolean);
     }
+    else {
+      classNames = Array.from(element.classList);
+    }
 
     classNames.forEach((className) => {
       if (styleMap.has(className)) {
@@ -165,11 +182,11 @@ export const useDynamicStyle = (
 
   // useLayoutEffect를 사용해서 동적으로 스타일 적용 ---------------------------------------------->
   useLayoutEffect(() => {
-    baseElement.querySelectorAll("*").forEach((element) => {
-      checkAndApplyStyle(element as HTMLElement);
+    baseElement.querySelectorAll("*").forEach((element:HTMLElement | any) => {
+      checkAndApplyStyle(element);
     });
 
-    let observer = new MutationObserver((mutations) => {
+    const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === "childList") {
           mutation.addedNodes.forEach((node) => {
@@ -182,11 +199,14 @@ export const useDynamicStyle = (
     });
 
     observer.observe(baseElement, {
+      attributes: false,
       childList: true,
-      subtree: true,
-      attributes: true
+      subtree: true
     });
 
-  }, [baseElement, locationName]);
+    return () => {
+      observer.disconnect();
+    };
 
+  }, [baseElement, locationName]);
 };
