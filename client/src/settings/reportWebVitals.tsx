@@ -1,7 +1,10 @@
-// reportWebVitals.tsx
-import {ReportHandler} from "web-vitals";
+import { ReportHandler } from "web-vitals";
 
-export const reportWebVitals = (onPerfEntry: ReportHandler) => {
+const logWebVital = (metric: any) => {
+  console.log(metric);
+};
+
+export const reportWebVitals = (onPerfEntry: ReportHandler = logWebVital) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import("web-vitals").then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
       getCLS(onPerfEntry);

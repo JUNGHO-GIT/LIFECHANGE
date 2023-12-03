@@ -22,7 +22,7 @@ export const SleepDetail = () => {
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
   // state
-  const [sleep_day, setSleep_day] = useState(koreanDate);
+  const [sleepDay, setSleepDay] = useState(koreanDate);
   const [SLEEP, setSLEEP] = useState<any> ({});
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -77,9 +77,9 @@ export const SleepDetail = () => {
       <DatePicker
         dateFormat="yyyy-MM-dd"
         popperPlacement="bottom"
-        selected={new Date(sleep_day)}
+        selected={new Date(sleepDay)}
         onChange={(date:any) => {
-          setSleep_day(moment(date).format("YYYY-MM-DD"));
+          setSleepDay(moment(date).format("YYYY-MM-DD"));
         }}
       />
     );
@@ -100,7 +100,7 @@ export const SleepDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{SLEEP.sleep_day}</td>
+            <td>{SLEEP.sleepDay}</td>
             <td>{SLEEP.sleep_night}</td>
             <td>{SLEEP.sleep_morning}</td>
             <td>{SLEEP.sleep_time}</td>
@@ -114,14 +114,14 @@ export const SleepDetail = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonSleepDelete = () => {
     return (
-      <button type="button" className="btn btn-danger ms-2" onClick={flowSleepDelete}>
+      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowSleepDelete}>
         Delete
       </button>
     );
   };
   const buttonSleepUpdate = (_id: string) => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
         navParam(`/sleepUpdate`, {
           state: {_id},
         });
@@ -132,8 +132,8 @@ export const SleepDetail = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -141,7 +141,7 @@ export const SleepDetail = () => {
   };
   const buttonSleepList = () => {
     return (
-      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
         navParam(`/sleepListDay`);
       }}>
         List
@@ -154,7 +154,7 @@ export const SleepDetail = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">

@@ -2,20 +2,19 @@ import React, {useState, useEffect} from "react";
 import {parseISO, formatISO} from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-type SetStoredValue<T> = React.Dispatch<React.SetStateAction<T>>;
-
+type SetStoredVal<T> = React.Dispatch <React.SetStateAction<T>>;
 
 // ------------------------------------------------------------------------------------------------>
-export function useStorage<T> (key: string, initialValue: T)  {
+export function useStorage<T> (key: string, initialVal: T)  {
 
   const datePattern = new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}");
   const item = localStorage.getItem(key);
 
   // ---------------------------------------------------------------------------------------------->
-  const [storedValue, setStoredValue] = useState<T> (() => {
+  const [storedVal, setStoredVal] = useState<T> (() => {
     try {
       if (item === null) {
-        return initialValue;
+        return initialVal;
       }
       else if (datePattern.test(item.trim())) {
         const parsedDate = parseISO(item);
@@ -29,7 +28,7 @@ export function useStorage<T> (key: string, initialValue: T)  {
           return JSON.parse(item) as T;
         }
         catch {
-          return initialValue;
+          return initialVal;
         }
       }
       else {
@@ -38,28 +37,28 @@ export function useStorage<T> (key: string, initialValue: T)  {
     }
     catch (error) {
       console.error(error);
-      return initialValue;
+      return initialVal;
     }
   });
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
     try {
-      if (storedValue instanceof Date && !isNaN(storedValue.getTime())) {
-        localStorage.setItem(key, formatISO(storedValue));
+      if (storedVal instanceof Date && !isNaN(storedVal.getTime())) {
+        localStorage.setItem(key, formatISO(storedVal));
       }
       else {
-        localStorage.setItem(key, JSON.stringify(storedValue));
+        localStorage.setItem(key, JSON.stringify(storedVal));
       }
     }
     catch (error) {
       console.error(error);
     }
-  }, [key, storedValue]);
+  }, [key, storedVal]);
 
   // ---------------------------------------------------------------------------------------------->
   return {
-    value : storedValue,
-    setValue : setStoredValue as SetStoredValue<T>,
+    val : storedVal,
+    setVal : setStoredVal as SetStoredVal<T>,
   };
 }

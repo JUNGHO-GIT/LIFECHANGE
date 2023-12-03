@@ -1,40 +1,40 @@
 // sleepService.ts
 import Sleep from "../schema/Sleep";
-import mongoose from "mongoose";
+import * as mongoose from "mongoose";
 import moment from "moment";
 
 // 1-1. sleepList --------------------------------------------------------------------------------->
 export const sleepList = async (
   user_id_param:any,
-  sleep_duration_param:any,
+  sleep_dur_param:any,
 ) => {
 
-  const startDay = sleep_duration_param.split(` ~ `)[0];
-  const endDay = sleep_duration_param.split(` ~ `)[1];
+  const startDay = sleep_dur_param.split(` ~ `)[0];
+  const endDay = sleep_dur_param.split(` ~ `)[1];
 
   const sleepList = await Sleep.find({
     user_id: user_id_param,
-    sleep_day: {
+    sleepDay: {
       $gte: startDay,
       $lte: endDay,
     },
-  }).sort({sleep_day: -1});
+  }).sort({sleepDay: -1});
 
   return sleepList;
 };
 
-// 1-2. sleepAverage ------------------------------------------------------------------------------>
-export const sleepAverage = async (
+// 1-2. sleepAvg ------------------------------------------------------------------------------>
+export const sleepAvg = async (
   user_id_param:any,
-  sleep_duration_param:any,
+  sleep_dur_param:any,
 ) => {
 
-  const startDay = sleep_duration_param.split(` ~ `)[0];
-  const endDay = sleep_duration_param.split(` ~ `)[1];
+  const startDay = sleep_dur_param.split(` ~ `)[0];
+  const endDay = sleep_dur_param.split(` ~ `)[1];
 
   const sleepsInRange = await Sleep.find({
     user_id : user_id_param,
-    sleep_day : {
+    sleepDay : {
       $gte: startDay,
       $lte: endDay,
     },
@@ -53,14 +53,14 @@ export const sleepAverage = async (
     totalSleepMorning += moment.duration(`00:${sleep.sleep_morning}`).asMinutes();
   });
 
-  const averageSleepTime = totalSleepTime / sleepsInRange.length;
-  const averageSleepNight = totalSleepNight / sleepsInRange.length;
-  const averageSleepMorning = totalSleepMorning / sleepsInRange.length;
+  const avgSleepTime = totalSleepTime / sleepsInRange.length;
+  const avgSleepNight = totalSleepNight / sleepsInRange.length;
+  const avgSleepMorning = totalSleepMorning / sleepsInRange.length;
 
   return {
-    averageSleepTime : moment.utc(averageSleepTime * 60000).format("HH:mm").toString(),
-    averageSleepNight : moment.utc(averageSleepNight * 60000).format("HH:mm").toString(),
-    averageSleepMorning : moment.utc(averageSleepMorning * 60000).format("HH:mm").toString(),
+    avgSleepTime : moment.utc(avgSleepTime * 60000).format("HH:mm").toString(),
+    avgSleepNight : moment.utc(avgSleepNight * 60000).format("HH:mm").toString(),
+    avgSleepMorning : moment.utc(avgSleepMorning * 60000).format("HH:mm").toString(),
   };
 };
 
@@ -85,8 +85,8 @@ export const sleepInsert = async (
     sleep_night : SLEEP_param.sleep_night,
     sleep_morning : SLEEP_param.sleep_morning,
     sleep_time : SLEEP_param.sleep_time,
-    sleep_day : SLEEP_param.sleep_day,
-    sleep_duration : SLEEP_param.sleep_duration,
+    sleepDay : SLEEP_param.sleepDay,
+    sleep_dur : SLEEP_param.sleep_dur,
     sleep_regdate : SLEEP_param.sleep_regdate,
     sleep_update : SLEEP_param.sleep_update,
   });

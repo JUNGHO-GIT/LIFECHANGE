@@ -19,8 +19,7 @@ export const FoodListPart = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
-  const user_id = window.sessionStorage.getItem("user_id"
-  );
+  const user_id = window.sessionStorage.getItem("user_id");
   const food_category = location.state.food_category;
   // state
   const [food_regdate, setFood_regdate] = useState(koreanDate);
@@ -57,8 +56,8 @@ export const FoodListPart = () => {
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
         onChange={(date:any) => {
-          const selectedDate = date.toISOString().split("T")[0];
-          setFood_regdate(selectedDate);
+          const formatDate = date.toISOString().split("T")[0];
+          setFood_regdate(formatDate);
         }}
       />
     );
@@ -119,8 +118,8 @@ export const FoodListPart = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -132,7 +131,7 @@ export const FoodListPart = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">
+          <h1 className="mb-3 fw-7">
             {TITLE}
             <span className="ms-4"> ({food_category})</span>
           </h1>

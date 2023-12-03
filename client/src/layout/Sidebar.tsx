@@ -2,7 +2,6 @@
 import React, {useState, useEffect} from "react";
 import {createGlobalStyle} from "styled-components";
 import {Link} from "react-router-dom";
-import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 const SidebarStyle = createGlobalStyle`
@@ -84,9 +83,9 @@ export const Sidebar = () => {
   useEffect(() => {
 
     // -------------------------------------------------------------------------------------------->
-    const closeNav = (event:any) => {
+    const closeNav = (e:any) => {
       const sidebarElement = document.getElementById("sidebar");
-      if (event.target !== sidebarElement && event.target.parentNode !== sidebarElement) {
+      if (e.target !== sidebarElement && e.target.parentNode !== sidebarElement) {
         sidebarOpen(false);
       }
     };

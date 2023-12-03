@@ -20,8 +20,7 @@ export const UserLogin = () => {
   const location = useLocation();
   // val
   // state
-  const [user_id, setUserId] = useState(""
-  );
+  const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
@@ -59,12 +58,12 @@ export const UserLogin = () => {
       <div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="ID" value={user_id}
-          onChange={(e) => {setUserId(e.target.value);}} />
+          onChange={(e:any) => {setUserId(e.target.value);}} />
           <label htmlFor="floatingId">ID</label>
         </div>
         <div className="form-floating">
           <input type="text" className="form-control" placeholder="Password" value={user_pw}
-          onChange={(e) => {setUserPw(e.target.value);}} />
+          onChange={(e:any) => {setUserPw(e.target.value);}} />
           <label htmlFor="floatingPassword">Password</label>
         </div>
       </div>
@@ -74,15 +73,15 @@ export const UserLogin = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonUserLogin = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={flowUserLogin}>
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserLogin}>
         Log In
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -94,10 +93,10 @@ export const UserLogin = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-center mt-5">
+      <div className="row d-center mt-5 mb-20">
         <div className="col-10">
           <form className="form-inline">
             {tableUserLogin()}

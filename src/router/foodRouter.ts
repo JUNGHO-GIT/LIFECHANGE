@@ -8,8 +8,8 @@ const foodRouter = Router();
 foodRouter.get ("/foodList", async (req: Request, res: Response) => {
   try {
     const foodList = await foodService.foodList (
-      req.query.user_id as string,
-      req.query.food_regdate as string
+      req.query.user_id,
+      req.query.food_regdate
     );
     if (foodList) {
       res.send(foodList);

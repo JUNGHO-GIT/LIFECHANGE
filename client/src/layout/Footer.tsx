@@ -1,14 +1,13 @@
 // Footer.tsx
 import React from "react";
-import "../assets/css/Custom.css";
 
 // ------------------------------------------------------------------------------------------------>
 export const Footer = () => {
   return (
-    <footer className="container-fluid bg-dark pos-fx">
-      <div className="row d-center pb-6 pt-6">
-        <div className="col-12 d-center">
-          <span className="tc-w fw-8">&copy; JUNGHO's Domain</span>
+    <footer className="container-fluid bg-dark pt-6 pe-20 pb-6 ps-20 mt-20">
+      <div className="row d-center">
+        <div className="col-12">
+          <p className="text-white fw-7">&copy; JUNGHO's Domain</p>
         </div>
       </div>
     </footer>

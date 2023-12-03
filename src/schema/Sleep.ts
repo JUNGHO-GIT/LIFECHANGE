@@ -23,7 +23,7 @@ const SleepScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
-  sleep_day : {
+  sleepDay : {
     type : String,
     default : () => {
       return "default";
@@ -33,16 +33,16 @@ const SleepScheme = new mongoose.Schema ({
   sleep_regdate: {
     type: String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
-    required : true
+    required: true,
   },
   sleep_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
     },
-    required : false
+    required: true,
   }
 });
 

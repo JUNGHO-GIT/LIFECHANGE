@@ -1,15 +1,15 @@
-// index.tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 import App from "./core/App";
-import {reportWebVitals} from "./settings/reportWebVitals";
+import "./index.css";
+import { reportWebVitals } from "./settings/reportWebVitals";
 
-ReactDOM.render(
-  <React.StrictMode>
+ReactDOM.render (
+  <BrowserRouter>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root"),
+  </BrowserRouter>,
+  document.getElementById("root")
 );
 
 reportWebVitals(console.log);

@@ -57,7 +57,7 @@ const WorkScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
-  work_day: {
+  workDay: {
     type: String,
     default: () => {
       return "default";

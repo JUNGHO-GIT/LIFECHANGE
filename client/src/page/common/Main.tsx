@@ -65,7 +65,7 @@ const CarouselFirst = () => {
       <div className="carousel-caption tt-s">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
+        <a className="btn btn-sm btn-lg btn-primary" href="#" onClick={enterIn}>
           ENTER
         </a>
       </div>
@@ -84,7 +84,7 @@ const CarouselSecond = () => {
       <div className="carousel-caption tt-c">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
+        <a className="btn btn-sm btn-lg btn-primary" href="#" onClick={enterIn}>
           ENTER
         </a>
       </div>
@@ -103,7 +103,7 @@ const CarouselThird = () => {
       <div className="carousel-caption tt-e">
         <h1 className="mb-10">Managing Server</h1>
         <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-lg btn-primary" href="#" onClick={enterIn}>
+        <a className="btn btn-sm btn-lg btn-primary" href="#" onClick={enterIn}>
           ENTER
         </a>
       </div>

@@ -79,7 +79,7 @@ export const BoardList = () => {
   };
   const buttonBoardInsert = () => {
     return (
-      <button type="button" className="btn btn-primary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
         navParam(`/boardInsert`);
       }}>
         Insert
@@ -88,8 +88,8 @@ export const BoardList = () => {
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-success ms-2" onClick={() => {
-        window.location.reload();
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
       }}>
         Refresh
       </button>
@@ -97,7 +97,7 @@ export const BoardList = () => {
   };
   const buttonBoardList = () => {
     return (
-      <button type="button" className="btn btn-secondary ms-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
         navParam(`/boardList`);
       }}>
         List
@@ -110,7 +110,7 @@ export const BoardList = () => {
     <div className="container">
       <div className="row d-center mt-5">
         <div className="col-12">
-          <h1 className="mb-3 fw-9">{TITLE}</h1>
+          <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">

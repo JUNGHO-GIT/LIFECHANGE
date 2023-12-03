@@ -4,8 +4,8 @@ import * as mongoose from "mongoose";
 
 // 1-1. foodList ---------------------------------------------------------------------------------->
 export const foodList = async (
-  user_id_param : string,
-  food_regdate_param : string,
+  user_id_param: any,
+  food_regdate_param: any,
 ) => {
 
   let totalCalories = 0;
@@ -34,9 +34,9 @@ export const foodList = async (
 
 // 1-2. foodListPart ------------------------------------------------------------------------------>
 export const foodListPart = async (
-  user_id_param : string,
-  food_regdate_param : string,
-  food_category_param : string
+  user_id_param: any,
+  food_regdate_param: any,
+  food_category_param: any,
 ) => {
   const foodListPart = await Food.find ({
     user_id : user_id_param,
@@ -48,7 +48,7 @@ export const foodListPart = async (
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
 export const foodDetail = async (
-  _id_param :any
+  _id_param: any,
 ) => {
   const foodDetail = await Food.findOne ({
     _id : _id_param
@@ -58,8 +58,8 @@ export const foodDetail = async (
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (
-  uer_id_param :any,
-  FOOD_pram :any
+  uer_id_param: any,
+  FOOD_pram: any,
 ) => {
   const foodInsert = await Food.create ({
     _id : new mongoose.Types.ObjectId(),
@@ -78,8 +78,8 @@ export const foodInsert = async (
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
 export const foodUpdate = async (
-  _id_param :any,
-  FOOD_param :any
+  _id_param: any,
+  FOOD_param: any,
 ) => {
   const foodUpdate = await Food.updateOne (
     {_id : _id_param},
@@ -90,7 +90,7 @@ export const foodUpdate = async (
 
 // 5. foodDelete ---------------------------------------------------------------------------------->
 export const foodDelete = async (
-  _id_param :any
+  _id_param: any,
 ) => {
   const foodDelete = await Food.deleteOne ({
     _id : _id_param
