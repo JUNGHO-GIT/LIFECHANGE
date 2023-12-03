@@ -27,9 +27,7 @@ export const WorkListMonth = () => {
   // 2-1. useState -------------------------------------------------------------------------------->
   const [workType, setWorkType] = useState<string>("list");
   const [workNumber, setWorkNumber] = useState<number>(0);
-  const {val:workMonth, setVal:setWorkMonth} = useStorage<Date | undefined>(
-    "work(MONTH)", koreanDate
-  );
+
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(MONTH)", []
@@ -37,14 +35,20 @@ export const WorkListMonth = () => {
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
     "workAvg(MONTH)", []
   );
-  const {val:workPart, setVal:setWorkPart} = useStorage<string>("workPart(MONTH)", "전체");
-  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>("workTitle(MONTH)", "전체");
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
-    "resVal(MONTH)", undefined
+  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
+    "workPart(MONTH)", "전체"
   );
-  const {val:resDur, setVal:setResDur} = useStorage<string>(
-    "resDur(MONTH)",
-    "0000-00-00 ~ 0000-00-00"
+  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
+    "workTitle(MONTH)", "전체"
+  );
+  const {val:workMonth, setVal:setWorkMonth} = useStorage<Date | undefined>(
+    "work(MONTH)", koreanDate
+  );
+  const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
+    "workResVal(MONTH)", undefined
+  );
+  const {val:workResDur, setVal:setWorkResDur} = useStorage<string>(
+    "workResDur(MONTH)", "0000-00-00 ~ 0000-00-00"
   );
   const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
     "avgWorkStart(MONTH)", "00:00"
@@ -66,7 +70,7 @@ export const WorkListMonth = () => {
         const response = await axios.get(`${URL_WORK}/workList`, {
           params: {
             user_id: user_id,
-            work_dur: resDur,
+            work_dur: workResDur,
           },
         });
         setWORK_LIST(response.data);
@@ -77,7 +81,7 @@ export const WorkListMonth = () => {
       }
     };
     fetchWorkList();
-  }, [user_id, resDur]);
+  }, [user_id, workResDur]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -86,7 +90,7 @@ export const WorkListMonth = () => {
         const response = await axios.get(`${URL_WORK}/workAvg`, {
           params: {
             user_id: user_id,
-            work_dur: resDur,
+            work_dur: workResDur,
             work_part_val: workPart,
             work_title_val: workTitle,
           },
@@ -94,13 +98,13 @@ export const WorkListMonth = () => {
         setWORK_AVERAGE(response.data);
         console.log("WORK_AVERAGE : " + response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK_AVERAGE([]);
       }
     };
     fetchWorkAvg();
-  }, [user_id, resDur, workPart, workTitle]);
+  }, [user_id, workResDur, workPart, workTitle]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -108,17 +112,17 @@ export const WorkListMonth = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (workMonth) {
-      setResVal (
+      setWorkResVal (
         parseISO (
           `${workMonth.getFullYear()}-${formatVal(workMonth.getMonth() + 1)}`
         )
       );
-      setResDur (
+      setWorkResDur (
         `${workMonth.getFullYear()}-${formatVal(workMonth.getMonth() + 1)}-01 ~ ${workMonth.getFullYear()}-${formatVal(workMonth.getMonth() + 1)}-31`
       );
     }
     else {
-      setResVal (undefined);
+      setWorkResVal (undefined);
     }
   }, [workMonth]);
 

@@ -16,6 +16,7 @@
     "@types/oauth-signature": "^1.5.0",
     "@types/request-promise": "^4.1.48",
     "bcrypt": "^5.1.0",
+    "bcryptjs-react": "^2.4.6",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",

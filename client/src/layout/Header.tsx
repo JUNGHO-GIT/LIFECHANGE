@@ -20,24 +20,26 @@ export const Header = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const DropdownItem: React.FC<{ to: string, label: string }> = ({ to, label }) => (
-    <li className="py-1">
-      <a href="#" className="dropdown-item" onClick={(e) => {
+  const DropdownItem: React.FC<{to: string, label: string}> = ({to, label}) => (
+    <li className="pt-1 pb-1">
+      <div className="dropdown-item pointer" onClick={(e) => {
         e.preventDefault();
         navParam(to);
       }}>
         {label}
-      </a>
+      </div>
     </li>
   );
 
   // 4-2. logic ----------------------------------------------------------------------------------->
-  const DropdownMenu: React.FC<{ label: string, items: { to: string, label: string }[] }> = ({ label, items }) => (
+  const DropdownMenu: React.FC<{ label: string, items: {to: string, label: string}[] }> = ({
+    label, items
+  }) => (
     <li className="me-30">
       <div className="dropdown ms-5">
-        <a className="text-decoration-none text-light dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div className="text-decoration-none text-light dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
           {label}
-        </a>
+        </div>
         <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
           {items.map(item => (
             <DropdownItem key={item.to} {...item} />
@@ -79,21 +81,21 @@ export const Header = () => {
         label: "Food",
         items: [
           {to: "/foodSearch", label: "FoodSearch"},
-          {to: "/foodList", label: "FoodList"}
+          {to: "/foodListDay", label: "FoodList"}
         ]
       },
       {
         label: "Work",
         items: [
           {to: "/workInsert", label: "WorkInsert"},
-          {to: "/workList", label: "WorkList"},
+          {to: "/workListDay", label: "WorkList"},
         ]
       },
       {
         label: "Sleep",
         items: [
           {to: "/sleepInsert", label: "SleepInsert"},
-          {to: "/sleepList", label: "SleepList"}
+          {to: "/sleepListDay", label: "SleepList"}
         ]
       }
     ];
@@ -154,8 +156,13 @@ export const Header = () => {
   return (
     <header className="container-fluid bg-dark">
       <div className="row d-center pt-15 pb-15">
-        <div className="col-9">{tableNaveList()}</div>
-        <div className="col-3">{loginFalse()}{loginTrue()}</div>
+        <div className="col-9">
+          {tableNaveList()}
+        </div>
+        <div className="col-3">
+          {loginFalse()}
+          {loginTrue()}
+        </div>
       </div>
     </header>
   );

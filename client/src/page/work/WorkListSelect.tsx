@@ -35,15 +35,18 @@ export const WorkListSelect = () => {
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
     "workAvg(SELECT)", []
   );
-  const {val:workPart, setVal:setWorkPart} = useStorage<string>("workPart(SELECT)", "전체");
-  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>("workTitle(SELECT)", "전체");
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
-    "resVal(SELECT)", undefined
+  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
+    "workPart(SELECT)", "전체"
   );
-  const {val:resDur, setVal:setResDur} = useStorage<string>(
-      "resDur(SELECT)",
-      "0000-00-00 ~ 0000-00-00"
-    );
+  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
+    "workTitle(SELECT)", "전체"
+  );
+  const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
+    "workResVal(SELECT)", undefined
+  );
+  const {val:workResDur, setVal:setResDur} = useStorage<string>(
+    "workResDur(SELECT)", "0000-00-00 ~ 0000-00-00"
+  );
   const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
     "avgWorkStart(SELECT)", "00:00"
   );
@@ -64,7 +67,7 @@ export const WorkListSelect = () => {
         const response = await axios.get(`${URL_WORK}/workList`, {
           params: {
             user_id : user_id,
-            work_dur : resDur,
+            work_dur : workResDur,
           },
         });
         setWORK_LIST(response.data);
@@ -75,7 +78,7 @@ export const WorkListSelect = () => {
       }
     };
     fetchWorkList();
-  }, [user_id, resDur]);
+  }, [user_id, workResDur]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -84,7 +87,7 @@ export const WorkListSelect = () => {
         const response = await axios.get(`${URL_WORK}/workAvg`, {
           params: {
             user_id: user_id,
-            work_dur: resDur,
+            work_dur: workResDur,
             work_part_val: workPart,
             work_title_val: workTitle,
           },
@@ -92,13 +95,13 @@ export const WorkListSelect = () => {
         setWORK_AVERAGE(response.data);
         console.log("WORK_AVERAGE : " + response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK_AVERAGE([]);
       }
     };
     fetchWorkAvg();
-  }, [user_id, resDur, workPart, workTitle]);
+  }, [user_id, workResDur, workPart, workTitle]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -110,7 +113,7 @@ export const WorkListSelect = () => {
       const fromDate = new Date(workStartDay);
       const toDate = new Date(workEndDay);
 
-      setResVal (
+      setWorkResVal (
         parseISO (
           `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
         )
@@ -120,7 +123,7 @@ export const WorkListSelect = () => {
       );
     }
     else {
-      setResVal(undefined);
+      setWorkResVal(undefined);
       setResDur("0000-00-00 ~ 0000-00-00");
     }
   }, [workStartDay, workEndDay]);

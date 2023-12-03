@@ -1,17 +1,16 @@
 // WorkListWeek.tsx
-import React, { useState, useEffect } from "react";
-import {useStorage} from "../../assets/ts/useStorage";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayPicker } from "react-day-picker";
+import {DayClickEventHandler, DayPicker} from "react-day-picker";
+import {useStorage} from "../../assets/ts/useStorage";
+import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
-import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {workPartArray, workTitleArray} from "../work/WorkArray";
+import {workPartArray, workTitleArray} from "./WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListWeek = () => {
-
   // title
   const TITLE = "Work List Week";
   // url
@@ -35,15 +34,26 @@ export const WorkListWeek = () => {
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
     "workAvg(WEEK)", []
   );
-  const {val:workPart, setVal:setWorkPart} = useStorage<string>("workPart(WEEK)", "전체");
-  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>("workTitle(WEEK)", "전체");
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
-    "resVal(WEEK)", undefined
+
+  // 2-2. useStorage ------------------------------------------------------------------------------>
+  const {val:workDay, setVal:setWorkDay} = useStorage<Date | undefined>(
+    "workDay(WEEK)", undefined
   );
-  const {val:resDur, setVal:setResDur} = useStorage<string>(
-      "resDur(WEEK)",
-      "0000-00-00 ~ 0000-00-00"
-    );
+  const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
+    "workResVal(WEEK)", undefined
+  );
+  const {val:workResDur, setVal:setWorkResDur} = useStorage<string>(
+    "workResDur(WEEK)", "0000-00-00 ~ 0000-00-00"
+  );
+
+  // 2-3. useStorage ------------------------------------------------------------------------------>
+  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
+    "workPart(WEEK)", "전체"
+  );
+  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
+    "workTitle(WEEK)", "전체"
+  );
+
   const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
     "avgWorkStart(WEEK)", "00:00"
   );
@@ -64,7 +74,7 @@ export const WorkListWeek = () => {
         const response = await axios.get(`${URL_WORK}/workList`, {
           params: {
             user_id : user_id,
-            work_dur : resDur,
+            work_dur : workResDur,
           },
         });
         setWORK_LIST(response.data);
@@ -75,7 +85,7 @@ export const WorkListWeek = () => {
       }
     };
     fetchWorkList();
-  }, [user_id, resDur]);
+  }, [user_id, workResDur]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -84,7 +94,7 @@ export const WorkListWeek = () => {
         const response = await axios.get(`${URL_WORK}/workAvg`, {
           params: {
             user_id: user_id,
-            work_dur: resDur,
+            work_dur: workResDur,
             work_part_val: workPart,
             work_title_val: workTitle,
           },
@@ -92,13 +102,13 @@ export const WorkListWeek = () => {
         setWORK_AVERAGE(response.data);
         console.log("WORK_AVERAGE : " + response.data);
       }
-      catch (error: any) {
+      catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);
         setWORK_AVERAGE([]);
       }
     };
     fetchWorkAvg();
-  }, [user_id, resDur, workPart, workTitle]);
+  }, [user_id, workResDur, workPart, workTitle]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -110,18 +120,18 @@ export const WorkListWeek = () => {
       const fromDate = new Date(workStartDay);
       const toDate = new Date(workEndDay);
 
-      setResVal (
+      setWorkResVal (
         parseISO (
           `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
         )
       );
-      setResDur (
+      setWorkResDur (
         `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
       );
     }
     else {
-      setResVal(undefined);
-      setResDur("0000-00-00 ~ 0000-00-00");
+      setWorkResVal(undefined);
+      setWorkResDur("0000-00-00 ~ 0000-00-00");
     }
   }, [workStartDay, workEndDay]);
 
@@ -304,19 +314,17 @@ export const WorkListWeek = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonWorkToday = () => {
     return (
-      <button
-        className="btn btn-sm btn-success me-2"
-        onClick={() => {
-          setWorkStartDay(koreanDate);
-          setWorkEndDay(koreanDate);
-          setWorkPart("전체");
-          setWorkTitle("전체");
-          localStorage.removeItem("workList(WEEK)");
-          localStorage.removeItem("workAvg(WEEK)");
-          localStorage.removeItem("workStartDay(WEEK)");
-          localStorage.removeItem("workEndDay(WEEK)");
-          localStorage.removeItem("workPart(WEEK)");
-          localStorage.removeItem("workTitle(WEEK)");
+      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
+        setWorkStartDay(koreanDate);
+        setWorkEndDay(koreanDate);
+        setWorkPart("전체");
+        setWorkTitle("전체");
+        localStorage.removeItem("workList(WEEK)");
+        localStorage.removeItem("workAvg(WEEK)");
+        localStorage.removeItem("workStartDay(WEEK)");
+        localStorage.removeItem("workEndDay(WEEK)");
+        localStorage.removeItem("workPart(WEEK)");
+        localStorage.removeItem("workTitle(WEEK)");
       }}>
         Today
       </button>
@@ -324,19 +332,17 @@ export const WorkListWeek = () => {
   };
   const buttonWorkReset = () => {
     return (
-      <button
-        className="btn btn-sm btn-primary me-2"
-        onClick={() => {
-          setWorkStartDay(undefined);
-          setWorkEndDay(undefined);
-          setWorkPart("전체");
-          setWorkTitle("전체");
-          localStorage.removeItem("workList(WEEK)");
-          localStorage.removeItem("workAvg(WEEK)");
-          localStorage.removeItem("workStartDay(WEEK)");
-          localStorage.removeItem("workEndDay(WEEK)");
-          localStorage.removeItem("workPart(WEEK)");
-          localStorage.removeItem("workTitle(WEEK)");
+      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
+        setWorkStartDay(koreanDate);
+        setWorkEndDay(koreanDate);
+        setWorkPart("전체");
+        setWorkTitle("전체");
+        localStorage.removeItem("workList(WEEK)");
+        localStorage.removeItem("workAvg(WEEK)");
+        localStorage.removeItem("workStartDay(WEEK)");
+        localStorage.removeItem("workEndDay(WEEK)");
+        localStorage.removeItem("workPart(WEEK)");
+        localStorage.removeItem("workTitle(WEEK)");
       }}>
         Reset
       </button>
@@ -391,7 +397,7 @@ export const WorkListWeek = () => {
         <div className="col-3">{selectWorkList()}</div>
         <div className="col-3">{selectWorkType()}</div>
       </div>
-      <div className="row d-center mt-5">
+      <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
           {viewWorkWeek()}
         </div>

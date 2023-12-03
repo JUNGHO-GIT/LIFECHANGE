@@ -1,11 +1,14 @@
 // useDynamicStyle.ts
-import {useLayoutEffect} from "react";
+import {useEffect} from "react";
 
 // useDynamicStyle -------------------------------------------------------------------------------->
 export const useDynamicStyle = (
-  baseElement:Document,
-  locationName:string
+  baseElement: HTMLElement,
+  locationName: string
 ) => {
+
+  // 0. 현재 locationName 확인 -------------------------------------------------------------------->
+  localStorage.setItem("locationName", locationName);
 
   // 1-1. style 접두사 + css속성 + 단위 ----------------------------------------------------------->
   const stylesNumber:any = {
@@ -106,7 +109,7 @@ export const useDynamicStyle = (
   };
 
   // 스타일 맵 만들기 ----------------------------------------------------------------------------->
-  let styleMap:Map<string, any> = new Map();
+  const styleMap:Map<string, any> = new Map();
 
   Object.keys(stylesNumber).forEach((key) => {
     styleMap.set(key, {
@@ -148,7 +151,6 @@ export const useDynamicStyle = (
   // 전체 스타일 검증 및 해당 함수 호출 ----------------------------------------------------------->
   const checkAndApplyStyle = (element:HTMLElement) => {
     let classNames:Array<string> = [];
-
     if (typeof element.className === "string") {
       classNames = element.className.split(" ").filter(Boolean);
     }
@@ -180,12 +182,15 @@ export const useDynamicStyle = (
     });
   };
 
-  // useLayoutEffect를 사용해서 동적으로 스타일 적용 ---------------------------------------------->
-  useLayoutEffect(() => {
+  // useEffect를 사용 동적 스타일 적용 ------------------------------------------------------------>
+  useEffect(() => {
     baseElement.querySelectorAll("*").forEach((element:HTMLElement | any) => {
       checkAndApplyStyle(element);
     });
+  }, [baseElement, locationName]);
 
+  // useEffect를 사용 동적 스타일 적용 ------------------------------------------------------------>
+  useEffect(() => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === "childList") {
@@ -199,14 +204,10 @@ export const useDynamicStyle = (
     });
 
     observer.observe(baseElement, {
-      attributes: false,
+      attributes: true,
       childList: true,
-      subtree: true
+      subtree: true,
     });
-
-    return () => {
-      observer.disconnect();
-    };
 
   }, [baseElement, locationName]);
 };

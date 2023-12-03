@@ -1,4 +1,4 @@
-// FoodList.tsx
+// FoodListDay.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayClickEventHandler, DayPicker} from "react-day-picker";
@@ -9,7 +9,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const FoodList = () => {
+export const FoodListDay = () => {
 
   // title
   const TITLE = "Food List";

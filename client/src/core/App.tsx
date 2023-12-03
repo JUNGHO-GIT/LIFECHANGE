@@ -2,6 +2,7 @@
 import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {useDynamicStyle} from "../assets/ts/useDynamicStyle";
+import bcrypt from "bcryptjs-react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -39,7 +40,7 @@ import { CalendarDetail } from "../page/calendar/CalendarDetail";
 
 import { FoodSearch } from "../page/food/FoodSearch";
 import { FoodInsert } from "../page/food/FoodInsert";
-import { FoodList } from "../page/food/FoodList";
+import { FoodListDay } from "../page/food/FoodListDay";
 import { FoodDetail } from "../page/food/FoodDetail";
 import { FoodListPart } from "../page/food/FoodListPart";
 import { FoodUpdate } from "../page/food/FoodUpdate";
@@ -47,7 +48,7 @@ import { FoodUpdate } from "../page/food/FoodUpdate";
 import { WorkInsert } from "../page/work/WorkInsert";
 import { WorkDetail } from "../page/work/WorkDetail";
 import { WorkUpdate } from "../page/work/WorkUpdate";
-import { WorkListDay} from "../page/work/WorkList";
+import { WorkListDay} from "../page/work/WorkListDay";
 import { WorkListWeek } from "../page/work/WorkListWeek";
 import { WorkListMonth } from "../page/work/WorkListMonth";
 import { WorkListYear } from "../page/work/WorkListYear";
@@ -56,19 +57,19 @@ import { WorkListSelect } from "../page/work/WorkListSelect";
 import { SleepInsert } from "../page/sleep/SleepInsert";
 import { SleepDetail } from "../page/sleep/SleepDetail";
 import { SleepUpdate } from "../page/sleep/SleepUpdate";
-import { SleepListDay} from "../page/sleep/SleepList";
+import { SleepListDay} from "../page/sleep/SleepListDay";
 import { SleepListWeek } from "../page/sleep/SleepListWeek";
 import { SleepListMonth } from "../page/sleep/SleepListMonth";
 import { SleepListYear } from "../page/sleep/SleepListYear";
 import { SleepListSelect } from "../page/sleep/SleepListSelect";
 
-// App.tsx
-//...import...
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 
   const location = useLocation();
-  useDynamicStyle(document.body, location.pathname);
+  const uniqueSubFix = bcrypt.hashSync(location.pathname, 2);
+  let locationName = location.pathname + "/" + uniqueSubFix;
+  useDynamicStyle(document.body, locationName);
 
   return (
     <div className="App">
@@ -96,7 +97,7 @@ const App = () => {
 
         <Route path="/foodSearch" element={<FoodSearch />} />
         <Route path="/foodInsert" element={<FoodInsert />} />
-        <Route path="/foodList" element={<FoodList />} />
+        <Route path="/foodListDay" element={<FoodListDay />} />
         <Route path="/foodListPart" element={<FoodListPart />} />
         <Route path="/foodDetail" element={<FoodDetail />} />
         <Route path="/foodUpdate" element={<FoodUpdate />} />
@@ -104,7 +105,7 @@ const App = () => {
         <Route path="/workInsert" element={<WorkInsert />} />
         <Route path="/workDetail" element={<WorkDetail />} />
         <Route path="/workUpdate" element={<WorkUpdate />} />
-        <Route path="/workList" element={<WorkListDay />} />
+        <Route path="/workListDay" element={<WorkListDay />} />
         <Route path="/workListWeek" element={<WorkListWeek />} />
         <Route path="/workListMonth" element={<WorkListMonth />} />
         <Route path="/workListYear" element={<WorkListYear />} />
@@ -113,7 +114,7 @@ const App = () => {
         <Route path="/sleepInsert" element={<SleepInsert />} />
         <Route path="/sleepDetail" element={<SleepDetail />} />
         <Route path="/sleepUpdate" element={<SleepUpdate />} />
-        <Route path="/sleepList" element={<SleepListDay />} />
+        <Route path="/sleepListDay" element={<SleepListDay />} />
         <Route path="/sleepListWeek" element={<SleepListWeek />} />
         <Route path="/sleepListMonth" element={<SleepListMonth />} />
         <Route path="/sleepListYear" element={<SleepListYear />} />
