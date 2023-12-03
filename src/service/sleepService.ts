@@ -74,7 +74,6 @@ export const sleepAvg = async (
   return sleepAvg;
 };
 
-
 // 2. sleepDetail --------------------------------------------------------------------------------->
 export const sleepDetail = async (
   _id_param : any

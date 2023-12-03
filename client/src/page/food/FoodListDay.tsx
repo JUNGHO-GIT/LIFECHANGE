@@ -29,6 +29,9 @@ export const FoodListDay = () => {
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
     "foodList(DAY)", []
   );
+  const {val:FOOD_TOTAL, setVal:setFOOD_TOTAL} = useStorage<any>(
+    "foodTotal(DAY)", []
+  );
   const {val:FOOD_AVERAGE, setVal:setFOOD_AVERAGE} = useStorage<any>(
     "foodAvg(DAY)", []
   );
@@ -63,6 +66,23 @@ export const FoodListDay = () => {
         alert(`Error fetching food data: ${error.message}`);
       }
     };
+    // 1-2. total
+    const fetchFoodTotal = async () => {
+      try {
+        const response = await axios.get (`${URL_FOOD}/foodTotal`, {
+          params: {
+            user_id : user_id,
+            food_dur : foodResDur,
+          },
+        });
+        setFOOD_TOTAL(response.data);
+        console.log("FOOD_TOTAL : " + JSON.stringify(response.data));
+      }
+      catch (error:any) {
+        setFOOD_TOTAL([]);
+        alert(`Error fetching food data: ${error.message}`);
+      }
+    };
     // 2. average
     const fetchFoodAvg = async () => {
       try {
@@ -81,6 +101,7 @@ export const FoodListDay = () => {
       }
     };
     fetchFoodList();
+    fetchFoodTotal();
     fetchFoodAvg();
   }, [user_id, foodResDur]);
 
@@ -131,25 +152,27 @@ export const FoodListDay = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>기간</th>
-            <th>취침 시간</th>
-            <th>기상 시간</th>
-            <th>수면 시간</th>
+            <th>분류</th>
+            <th>음식명</th>
+            <th>브랜드</th>
+            <th>서빙</th>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD_LIST.map((index:any) => (
-            <tr key={index._id}>
-              <td className="pointer" onClick={() => {
-                navParam("/foodDetail", {
-                  state: {_id: index._id}
-                }
-              )}}>
-                {foodResDur}
-              </td>
-              <td>{index.food_night}</td>
-              <td>{index.food_morning}</td>
-              <td>{index.food_time}</td>
+          {FOOD_LIST.map((index:any, i: number) => (
+            <tr key={i}>
+              <td>{index.food_category}</td>
+              <td>{index.food_title}</td>
+              <td>{index.food_brand}</td>
+              <td>{index.food_serving}</td>
+              <td>{index.food_calories}</td>
+              <td>{index.food_carb}</td>
+              <td>{index.food_protein}</td>
+              <td>{index.food_fat}</td>
             </tr>
           ))}
         </tbody>
@@ -158,24 +181,50 @@ export const FoodListDay = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
+  const tableFoodTotal = () => {
+    return (
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
+          </tr>
+        </thead>
+        <tbody>
+          {FOOD_TOTAL.map((index:any, i: number) => (
+            <tr key={i}>
+              <td>{index.totalCalories}</td>
+              <td>{index.totalCarb}</td>
+              <td>{index.totalProtein}</td>
+              <td>{index.totalFat}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // 5-3. table ----------------------------------------------------------------------------------->
   const tableFoodAvg = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>기간</th>
-            <th>취침 평균</th>
-            <th>기상 평균</th>
-            <th>수면 평균</th>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD_AVERAGE.map((index:any) => (
-            <tr key={index._id}>
-              <td>{foodResDur}</td>
-              <td>{index.avgFoodNight}</td>
-              <td>{index.avgFoodMorning}</td>
-              <td>{index.avgFoodTime}</td>
+          {FOOD_AVERAGE.map((index:any, i: number) => (
+            <tr key={i}>
+              <td>{index.food_calories}</td>
+              <td>{index.food_carb}</td>
+              <td>{index.food_protein}</td>
+              <td>{index.food_fat}</td>
             </tr>
           ))}
         </tbody>
@@ -234,11 +283,15 @@ export const FoodListDay = () => {
           if (e.target.value === "list") {
             setFoodType("list");
           }
+          else if (e.target.value === "total") {
+            setFoodType("total");
+          }
           else if (e.target.value === "avg") {
             setFoodType("avg");
           }
         }}>
           <option value="list">List</option>
+          <option value="total">Total</option>
           <option value="avg">Avg</option>
         </select>
       </div>
@@ -268,6 +321,7 @@ export const FoodListDay = () => {
         </div>
         <div className="col-md-6 col-12">
           {foodType === "list" && tableFoodList()}
+          {foodType === "total" && tableFoodTotal()}
           {foodType === "avg" && tableFoodAvg()}
         </div>
       </div>

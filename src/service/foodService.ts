@@ -7,46 +7,118 @@ export const foodList = async (
   user_id_param: any,
   food_dur_param: any,
 ) => {
-
   const startDay = food_dur_param.split(` ~ `)[0];
   const endDay = food_dur_param.split(` ~ `)[1];
 
-  let totalCalories = 0;
-  let totalProtein = 0;
-  let totalCarb = 0;
-  let totalFat = 0;
-
-  const foodResultList = await Food.find ({
-    user_id : user_id_param,
+  const foodList = await Food.find({
+    user_id: user_id_param,
     food_day: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  }).sort({ food_day: -1 });
+
+  return foodList;
+};
+
+// 1-2. foodTotal --------------------------------------------------------------------------------->
+export const foodTotal = async (
+  user_id_param: any,
+  food_dur_param: any,
+) => {
+  const startDay = food_dur_param.split(` ~ `)[0];
+  const endDay = food_dur_param.split(` ~ `)[1];
+
+  const foodsInRange = await Food.find({
+    user_id : user_id_param,
+    food_day : {
       $gte : startDay,
       $lte : endDay,
     },
   });
-  foodResultList.forEach((index) => {
-    totalCalories += index.food_calories;
-    totalProtein += index.food_protein;
-    totalCarb += index.food_carb;
-    totalFat += index.food_fat;
+
+  // 데이터가 없는 경우 빈 배열 반환
+  if (foodsInRange.length === 0) {
+    return [];
+  }
+
+  let totalFoodCalories = 0;
+  let totalFoodProtein = 0;
+  let totalFoodCarb = 0;
+  let totalFoodFat = 0;
+
+  foodsInRange.forEach((food) => {
+    totalFoodCalories += food.food_calories;
+    totalFoodProtein += food.food_protein;
+    totalFoodCarb += food.food_carb;
+    totalFoodFat += food.food_fat;
   });
-  const foodList = [{
-    food_calories : totalCalories.toFixed(1),
-    food_protein : totalProtein.toFixed(1),
-    food_carb : totalCarb.toFixed(1),
-    food_fat : totalFat.toFixed(1)
+
+  const foodTotal = [{
+    totalCalories : totalFoodCalories.toFixed(2),
+    totalProtein : totalFoodProtein.toFixed(2),
+    totalCarb : totalFoodCarb.toFixed(2),
+    totalFat : totalFoodFat.toFixed(2),
   }];
-  return foodList;
+
+  // 배열 리턴
+  return foodTotal;
+};
+
+// 1-3. foodAvg ---------------------------------------------------------------------------------->
+export const foodAvg = async (
+  user_id_param: any,
+  food_dur_param: any,
+) => {
+
+  const startDay = food_dur_param.split(` ~ `)[0];
+  const endDay = food_dur_param.split(` ~ `)[1];
+
+  const foodsInRange = await Food.find({
+    user_id : user_id_param,
+    food_day : {
+      $gte : startDay,
+      $lte : endDay,
+    },
+  });
+
+  // 데이터가 없는 경우 빈 배열 반환
+  if (foodsInRange.length === 0) {
+    return [];
+  }
+
+  let totalFoodCalories = 0;
+  let totalFoodProtein = 0;
+  let totalFoodCarb = 0;
+  let totalFoodFat = 0;
+
+  foodsInRange.forEach((food) => {
+    totalFoodCalories += food.food_calories;
+    totalFoodProtein += food.food_protein;
+    totalFoodCarb += food.food_carb;
+    totalFoodFat += food.food_fat;
+  });
+
+  const foodAvg = [{
+    food_calories : (totalFoodCalories / foodsInRange.length).toFixed(2),
+    food_protein : (totalFoodProtein / foodsInRange.length).toFixed(2),
+    food_carb : (totalFoodCarb / foodsInRange.length).toFixed(2),
+    food_fat : (totalFoodFat / foodsInRange.length).toFixed(2),
+  }];
+
+  // 배열 리턴
+  return foodAvg;
 };
 
 // 1-2. foodSearchResult -------------------------------------------------------------------------->
 export const foodSearchResult = async (
   user_id_param: any,
-  food_regdate_param: any,
+  food_dur_param: any,
   food_category_param: any,
 ) => {
   const foodSearchResult = await Food.find ({
     user_id : user_id_param,
-    food_regdate : food_regdate_param,
+    food_regdate : food_dur_param,
     food_category : food_category_param
   });
   return foodSearchResult;

@@ -80,7 +80,7 @@ export const Header = () => {
       {
         label: "Food",
         items: [
-          {to: "/foodSearch", label: "FoodSearchList"},
+          {to: "/foodSearchList", label: "FoodSearchList"},
           {to: "/foodListDay", label: "FoodList"}
         ]
       },

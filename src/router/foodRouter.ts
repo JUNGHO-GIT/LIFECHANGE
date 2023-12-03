@@ -24,7 +24,47 @@ foodRouter.get ("/foodList", async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. foodSearchResult -------------------------------------------------------------------------->
+// 1-2. foodTotal --------------------------------------------------------------------------------->
+foodRouter.get ("/foodTotal", async (req: Request, res: Response) => {
+  try {
+    const foodTotal = await foodService.foodTotal (
+      req.query.user_id,
+      req.query.food_dur,
+    );
+    if (foodTotal) {
+      res.send(foodTotal);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 1-3. foodAvg ----------------------------------------------------------------------------------->
+foodRouter.get("/foodAvg", async (req: Request, res: Response) => {
+  try {
+    const foodAvg = await foodService.foodAvg (
+      req.query.user_id,
+      req.query.food_dur,
+    );
+    if (foodAvg) {
+      res.send(foodAvg);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 2-1. foodSearchResult -------------------------------------------------------------------------->
 foodRouter.get ("/foodSearchResult", async (req: Request, res: Response) => {
   try {
     const foodSearchResult = await foodService.foodSearchResult (

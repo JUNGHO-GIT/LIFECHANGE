@@ -57,7 +57,7 @@ export const FoodInsert = () => {
     });
     if (response.data === "success") {
       alert("Insert food successfully");
-      navParam(`/foodSearch`);
+      navParam("/foodListDay");
     }
     else {
       alert(`${response.data}error`);
