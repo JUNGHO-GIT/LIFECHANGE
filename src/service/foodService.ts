@@ -8,6 +8,9 @@ export const foodList = async (
   food_dur_param: any,
 ) => {
 
+  const startDay = food_dur_param.split(` ~ `)[0];
+  const endDay = food_dur_param.split(` ~ `)[1];
+
   let totalCalories = 0;
   let totalProtein = 0;
   let totalCarb = 0;
@@ -15,7 +18,10 @@ export const foodList = async (
 
   const foodResultList = await Food.find ({
     user_id : user_id_param,
-    foodDay : food_dur_param,
+    foodDay: {
+      $gte: startDay,
+      $lte: endDay,
+    },
   });
   foodResultList.forEach((index) => {
     totalCalories += index.food_calories;

@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/ts/useStorage";
-import { ko } from "date-fns/locale";
+import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
@@ -46,7 +46,7 @@ export const SleepListDay = () => {
     "avgSleepMorning(DAY)", "00:00"
   );
   const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined>(
-    "sleep(DAY)", koreanDate
+    "sleepDay(DAY)", koreanDate
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -79,7 +79,6 @@ export const SleepListDay = () => {
             sleep_dur: resDur,
           },
         });
-
         const isValidTime = (str: string) => {
           return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
         };
@@ -121,12 +120,12 @@ export const SleepListDay = () => {
   }, [sleepDay]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDayClick: DayClickEventHandler = (day:any) => {
-    setSleepDay(day);
-  };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
   const viewSleepDay = () => {
+    const flowDayClick: DayClickEventHandler = (day:any) => {
+      setSleepDay(day);
+    };
     return (
       <DayPicker
         mode="single"
@@ -209,7 +208,7 @@ export const SleepListDay = () => {
       <button className="btn btn-sm btn-success me-2" onClick={() => {
         setSleepDay(koreanDate);
         localStorage.removeItem("sleepList(DAY)");
-        localStorage.removeItem("sleep(DAY)");
+        localStorage.removeItem("sleepDay(DAY)");
       }}>
         Today
       </button>
@@ -218,7 +217,7 @@ export const SleepListDay = () => {
   const buttonSleepReset = () => {
     return (
       <button className="btn btn-sm btn-primary me-2" onClick={() => {
-        setSleepDay(undefined);
+        setSleepDay(koreanDate);
         localStorage.removeItem("sleepList(DAY)");
         localStorage.removeItem("sleepDay(DAY)");
       }}>
@@ -232,8 +231,7 @@ export const SleepListDay = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="sleepList" value={currentPath}
-        onChange={(e:any) => {
+        <select className="form-select" id="sleepList" value={currentPath} onChange={(e:any) => {
           navParam(e.target.value);
         }}>
           <option value="/sleepList">Day</option>
@@ -273,8 +271,12 @@ export const SleepListDay = () => {
         </div>
       </div>
       <div className="row d-center mt-3">
-        <div className="col-3">{selectSleepList()}</div>
-        <div className="col-3">{selectSleepType()}</div>
+        <div className="col-3">
+          {selectSleepList()}
+        </div>
+        <div className="col-3">
+          {selectSleepType()}
+        </div>
       </div>
       <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">

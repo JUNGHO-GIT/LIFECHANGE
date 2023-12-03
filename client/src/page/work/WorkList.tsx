@@ -1,9 +1,9 @@
-// WorkListDay.tsx
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { DayClickEventHandler, DayPicker } from "react-day-picker";
-import { useStorage } from "../../assets/ts/useStorage";
-import { ko } from "date-fns/locale";
+// WorkLis.tsx
+import React, {useState, useEffect} from "react";
+import {useNavigate, useLocation} from "react-router-dom";
+import {DayClickEventHandler, DayPicker} from "react-day-picker";
+import {useStorage} from "../../assets/ts/useStorage";
+import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
@@ -12,7 +12,7 @@ import {workPartArray, workTitleArray} from "./WorkArray";
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListDay = () => {
   // title
-  const TITLE = "Work List Day";
+  const TITLE = "Work List";
   // url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   // date
@@ -295,19 +295,16 @@ export const WorkListDay = () => {
   };
   const buttonWorkReset = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-sm btn-primary me-2"
-        onClick={() => {
-          setWorkDay(koreanDate);
-          setWorkPart("전체");
-          setWorkTitle("전체");
-          localStorage.removeItem("workList(DAY)");
-          localStorage.removeItem("workAvg(DAY)");
-          localStorage.removeItem("workDay(DAY)");
-          localStorage.removeItem("workPart(DAY)");
-          localStorage.removeItem("workTitle(DAY)");
-        }}>
+      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
+        setWorkDay(koreanDate);
+        setWorkPart("전체");
+        setWorkTitle("전체");
+        localStorage.removeItem("workList(DAY)");
+        localStorage.removeItem("workAvg(DAY)");
+        localStorage.removeItem("workDay(DAY)");
+        localStorage.removeItem("workPart(DAY)");
+        localStorage.removeItem("workTitle(DAY)");
+      }}>
         Reset
       </button>
     );

@@ -23,7 +23,7 @@ export const sleepList = async (
   return sleepList;
 };
 
-// 1-2. sleepAvg ------------------------------------------------------------------------------>
+// 1-2. sleepAvg ---------------------------------------------------------------------------------->
 export const sleepAvg = async (
   user_id_param:any,
   sleep_dur_param:any,
