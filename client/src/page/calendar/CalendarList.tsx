@@ -64,26 +64,20 @@ export const CalendarList = () => {
   // 6. button ------------------------------------------------------------------------------------>
   const buttonCalendarToday = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-sm btn-success me-2"
-        onClick={() => {
-          setCalendarDay(koreanDate);
-          localStorage.removeItem("calendarDay(DAY)");
-        }}>
+      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
+        setCalendarDay(koreanDate);
+        localStorage.removeItem("calendarDay(DAY)");
+      }}>
         Today
       </button>
     );
   };
   const buttonCalendarReset = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-sm btn-primary me-2"
-        onClick={() => {
-          setCalendarDay(koreanDate);
-          localStorage.removeItem("calendarDay(DAY)");
-        }}>
+      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
+        setCalendarDay(koreanDate);
+        localStorage.removeItem("calendarDay(DAY)");
+      }}>
         Reset
       </button>
     );

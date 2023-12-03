@@ -88,9 +88,9 @@ export const SleepDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableSleepInsert = () => {
     return (
-      <table className="table table-striped table-bordered">
-        <thead>
-          <tr>
+      <table className="table table-bordered table-hover">
+          <thead className="table-dark">
+            <tr>
             <th>Day</th>
             <th>Night</th>
             <th>Morning</th>

@@ -234,8 +234,8 @@ export const SleepListDay = () => {
       <div className="mb-3">
         <select className="form-select" id="sleepList" value={currentPath}
         onChange={(e:any) => {
-          navParam(e.target.value);}
-        }>
+          navParam(e.target.value);
+        }}>
           <option value="/sleepList">Day</option>
           <option value="/sleepListWeek">Week</option>
           <option value="/sleepListMonth">Month</option>

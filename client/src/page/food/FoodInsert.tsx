@@ -1,6 +1,8 @@
 // FoodInsert.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
@@ -19,17 +21,25 @@ export const FoodInsert = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   const {title, brand, serving, calories, fat, carb, protein} = location.state;
-  // state
+  // useState 1
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
+  // useState 2
+  const [FOOD, setFOOD] = useState<any>({});
+  const [foodDay, setFoodDay] = useState<string>(koreanDate);
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-1. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setFOOD ({
+      ...FOOD,
+      foodDay : foodDay,
+    });
+  }, [foodDay]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFoodInsert = async (params:any) => {
 
     const FOOD = {
-      user_id : user_id,
       food_title: title,
       food_brand: brand,
       food_category: category,
@@ -38,11 +48,12 @@ export const FoodInsert = () => {
       food_carb: logicPerServing(params, carb),
       food_protein: logicPerServing(params, protein),
       food_fat: logicPerServing(params, fat),
+      foodDay: foodDay,
     };
 
     const response = await axios.post(`${URL_FOOD}/foodInsert`, {
       user_id : user_id,
-      FOOD : FOOD
+      FOOD : FOOD,
     });
     if (response.data === "success") {
       alert("Insert food successfully");
@@ -51,6 +62,20 @@ export const FoodInsert = () => {
     else {
       alert(`${response.data}error`);
     }
+  };
+
+  // 4. logic ------------------------------------------------------------------------------------->
+  const viewFoodDay = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        popperPlacement="bottom"
+        selected={new Date(foodDay)}
+        onChange={(date:any) => {
+          setFoodDay(moment(date).format("YYYY-MM-DD").toString());
+        }}
+      />
+    );
   };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -119,8 +144,7 @@ export const FoodInsert = () => {
   };
   const buttonFoodAmount = () => {
     return (
-      <input type="number" className="form-control" defaultVal={1} min="1"
-        onChange={e => {
+      <input type="number" className="form-control" defaultValue={1} min="1" onChange={e => {
           const value = Math.max(1, Number(e.target.value));
           setShowGram(value);
         }}
@@ -153,14 +177,29 @@ export const FoodInsert = () => {
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
-        <div className="col-10">
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-12">
           <h1 className="mb-3">
             <p>{title}</p>
             <p>{brand}</p>
           </h1>
         </div>
-        <div className="col-6">{tableFoodInsert(0, serving ? serving : "0", calories)}</div>
-        <div className="col-6">{tableFoodInsert(showGram, showGram.toString(), calories)}</div>
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-12">
+          <h1 className="mb-3 fw-5">
+            <span>{viewFoodDay()}</span>
+          </h1>
+        </div>
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-6">
+          {tableFoodInsert(0, serving ? serving : "0", calories)}
+        </div>
+        <div className="col-6">
+          {tableFoodInsert(showGram, showGram.toString(), calories)}
+        </div>
         <div className="col-6">
           <div className="input-group">
             {buttonFoodCategory()}

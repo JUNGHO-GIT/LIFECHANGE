@@ -24,7 +24,6 @@ export const SleepInsert = () => {
   const [SLEEP, setSLEEP] = useState<any>({});
   const [sleepDay, setSleepDay] = useState<string>(koreanDate);
 
-
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setSLEEP({

@@ -31,7 +31,7 @@ export const FoodList = () => {
         const response = await axios.get(`${URL_FOOD}/foodList`, {
           params: {
             user_id : user_id,
-            food_regdate : food_regdate,
+            food_dur : food_regdate,
           },
         });
         setFOOD_LIST(response.data);

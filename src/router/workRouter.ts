@@ -24,7 +24,7 @@ workRouter.get("/workList", async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. workAvg ------------------------------------------------------------------------------>
+// 1-2. workAvg ----------------------------------------------------------------------------------->
 workRouter.get("/workAvg", async (req: Request, res: Response) => {
   try {
     const workAvg = await workService.workAvg (

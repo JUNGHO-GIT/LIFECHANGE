@@ -279,19 +279,16 @@ export const WorkListDay = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const buttonWorkToday = () => {
     return (
-      <button
-        type="button"
-        className="btn btn-sm btn-success me-2"
-        onClick={() => {
-          setWorkDay(koreanDate);
-          setWorkPart("전체");
-          setWorkTitle("전체");
-          localStorage.removeItem("workList(DAY)");
-          localStorage.removeItem("workAvg(DAY)");
-          localStorage.removeItem("workDay(DAY)");
-          localStorage.removeItem("workPart(DAY)");
-          localStorage.removeItem("workTitle(DAY)");
-        }}>
+      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
+        setWorkDay(koreanDate);
+        setWorkPart("전체");
+        setWorkTitle("전체");
+        localStorage.removeItem("workList(DAY)");
+        localStorage.removeItem("workAvg(DAY)");
+        localStorage.removeItem("workDay(DAY)");
+        localStorage.removeItem("workPart(DAY)");
+        localStorage.removeItem("workTitle(DAY)");
+      }}>
         Today
       </button>
     );

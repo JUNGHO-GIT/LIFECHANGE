@@ -1,5 +1,12 @@
 // Main.tsx
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {useNavigate, useLocation} from "react-router-dom";
+import { DayClickEventHandler, DayPicker } from "react-day-picker";
+import { useStorage } from "../../assets/ts/useStorage";
+import { ko } from "date-fns/locale";
+import {parseISO} from "date-fns";
+import moment from "moment-timezone";
+import axios from "axios";
 import {createGlobalStyle} from "styled-components";
 
 // ------------------------------------------------------------------------------------------------>
@@ -49,83 +56,64 @@ const MainStyle = createGlobalStyle`
 `;
 
 // ------------------------------------------------------------------------------------------------>
-const CarouselFirst = () => {
-  const enterIn = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    if (window.sessionStorage.getItem("user_id") == null) {
-      alert("Please userLogin to use this service.");
-    } else {
-      window.location.href = "http://www.junghomun.com:8888";
-    }
-  };
-
-  return (
-    <div className="carousel-item active">
-      <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
-      <div className="carousel-caption tt-s">
-        <h1 className="mb-10">Managing Server</h1>
-        <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-sm btn-lg btn-primary" href="#" onClick={enterIn}>
-          ENTER
-        </a>
-      </div>
-    </div>
-  );
-};
-const CarouselSecond = () => {
-  const enterIn = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    window.location.href = "http://www.junghomun.com:8888";
-  };
-
-  return (
-    <div className="carousel-item">
-      <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
-      <div className="carousel-caption tt-c">
-        <h1 className="mb-10">Managing Server</h1>
-        <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-sm btn-lg btn-primary" href="#" onClick={enterIn}>
-          ENTER
-        </a>
-      </div>
-    </div>
-  );
-};
-const CarouselThird = () => {
-  const enterIn = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    window.location.href = "http://www.junghomun.com:8888";
-  };
-
-  return (
-    <div className="carousel-item">
-      <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
-      <div className="carousel-caption tt-e">
-        <h1 className="mb-10">Managing Server</h1>
-        <p className="mb-10">Modification and management of servers running on Tomcat</p>
-        <a className="btn btn-sm btn-lg btn-primary" href="#" onClick={enterIn}>
-          ENTER
-        </a>
-      </div>
-    </div>
-  );
-};
-
-// ------------------------------------------------------------------------------------------------>
 export const Main = () => {
 
+  // date
+  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  // hook
+  const navParam = useNavigate();
+  const location = useLocation();
+  // val
+  const user_id = window.sessionStorage.getItem("user_id");
+
+  // ---------------------------------------------------------------------------------------------->
+  const CarouselFirst = () => {
+    const enterIn = (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      window.location.href = "http://www.junghomun.com:8888";
+    };
+    return (
+      <div className="carousel-item active">
+        <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
+        <div className="carousel-caption tt-s">
+          <h1 className="mb-10">Managing Server</h1>
+          <p className="mb-10">Modification and management of servers running on Tomcat</p>
+          <a className="btn btn-sm btn-lg btn-primary" href="#" onClick={enterIn}>ENTER</a>
+        </div>
+      </div>
+    );
+  };
+
+  // ---------------------------------------------------------------------------------------------->
+  const CarouselSecond = () => {
+    return (
+      <div className="carousel-item">
+        <div style={{ width: "100%", height: "100%", backgroundColor: "#eeeeee" }}></div>
+        <div className="carousel-caption tt-c">
+          <h1 className="mb-10">Calendar List</h1>
+          <p className="mb-10">Enter the date to view the calendar</p>
+          <button className="btn btn-sm btn-lg btn-primary" onClick={() => {
+            navParam(`/calendarList`);
+          }}>
+            ENTER
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  // 7. return ------------------------------------------------------------------------------------>
   return (
     <div className="main-container"><MainStyle />
       <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-indicators">
           <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
         </div>
         <div className="carousel-inner">
           <CarouselFirst />
           <CarouselSecond />
-          <CarouselThird />
         </div>
         <button className="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>

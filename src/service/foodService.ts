@@ -5,7 +5,7 @@ import * as mongoose from "mongoose";
 // 1-1. foodList ---------------------------------------------------------------------------------->
 export const foodList = async (
   user_id_param: any,
-  food_regdate_param: any,
+  food_dur_param: any,
 ) => {
 
   let totalCalories = 0;
@@ -15,7 +15,7 @@ export const foodList = async (
 
   const foodResultList = await Food.find ({
     user_id : user_id_param,
-    food_regdate : food_regdate_param
+    foodDay : food_dur_param,
   });
   foodResultList.forEach((index) => {
     totalCalories += index.food_calories;
@@ -72,6 +72,7 @@ export const foodInsert = async (
     food_carb : FOOD_pram.food_carb,
     food_protein : FOOD_pram.food_protein,
     food_fat : FOOD_pram.food_fat,
+    foodDay : FOOD_pram.foodDay,
   });
   return foodInsert;
 };
