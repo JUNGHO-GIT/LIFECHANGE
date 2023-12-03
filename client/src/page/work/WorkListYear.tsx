@@ -1,18 +1,17 @@
 // WorkListYear.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayPicker, MonthChangeEventHandler} from "react-day-picker";
-import { differenceInDays } from "date-fns";
+import {DayPicker, MonthChangeEventHandler} from "react-day-picker";
+import {differenceInDays} from "date-fns";
+import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
-import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
-import {workPartArray, workTitleArray} from "../work/WorkArray";
+import {workPartArray, workTitleArray} from "./WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListYear = () => {
-
   // title
   const TITLE = "Work List Year";
   // url
@@ -28,22 +27,18 @@ export const WorkListYear = () => {
   // 2-1. useState -------------------------------------------------------------------------------->
   const [workType, setWorkType] = useState<string>("list");
   const [workNumber, setWorkNumber] = useState<number>(0);
-    const {val:workYear, setVal:setWorkYear} = useStorage<Date | undefined>(
-     "work(YEAR)", koreanDate
-   );
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(YEAR)", []
   );
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
     "workAvg(YEAR)", []
   );
-  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
-    "workPart(YEAR)", "전체"
-  );
-  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
-    "workTitle(YEAR)", "전체"
+
+  // 2-3. useStorage ------------------------------------------------------------------------------>
+  const {val:workYear, setVal:setWorkYear} = useStorage<Date | undefined>(
+    "workYear(YEAR)", koreanDate
   );
   const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
     "workResVal(YEAR)", undefined
@@ -51,41 +46,35 @@ export const WorkListYear = () => {
   const {val:workResDur, setVal:setResDur} = useStorage<string>(
     "workResDur(YEAR)", "0000-00-00 ~ 0000-00-00"
   );
-  const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
-    "avgWorkStart(YEAR)", "00:00"
+
+  // 2-4. useStorage ------------------------------------------------------------------------------>
+  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
+    "workPart(YEAR)", "전체"
   );
-  const {val:avgWorkMorning, setVal:setAvgWorkMorning} = useStorage<string>(
-    "avgWorkEnd(YEAR)", "00:00"
-  );
-  const {val:workStartDay, setVal:setWorkStartDay} = useStorage<Date | undefined>(
-    "workStartDay(YEAR)", undefined
-  );
-  const {val:workEndDay, setVal:setWorkEndDay} = useStorage<Date | undefined>(
-    "workEndDay(YEAR)", undefined
+  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
+    "workTitle(YEAR)", "전체"
   );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    // 1. list
     const fetchWorkList = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workList`, {
           params: {
-            user_id: user_id,
-            work_dur: workResDur,
+            user_id : user_id,
+            work_dur : workResDur,
           },
         });
         setWORK_LIST(response.data);
+        console.log("WORK_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
-    fetchWorkList();
-  }, [user_id, workResDur]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
+    // 2. average
     const fetchWorkAvg = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workAvg`, {
@@ -97,13 +86,14 @@ export const WorkListYear = () => {
           },
         });
         setWORK_AVERAGE(response.data);
-        console.log("WORK_AVERAGE : " + response.data);
+        console.log("WORK_AVERAGE " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_AVERAGE([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
+    fetchWorkList();
     fetchWorkAvg();
   }, [user_id, workResDur, workPart, workTitle]);
 
@@ -272,7 +262,7 @@ export const WorkListYear = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem:any, index:number) => (
+                {WORK_AVERAGE?.map((workItem : any, index:number) => (
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>
@@ -296,8 +286,13 @@ export const WorkListYear = () => {
     return (
       <button className="btn btn-sm btn-success me-2" onClick={() => {
         setWorkYear(koreanDate);
+        setWorkPart("전체");
+        setWorkTitle("전체");
         localStorage.removeItem("workList(YEAR)");
-        localStorage.removeItem("work(YEAR)");
+        localStorage.removeItem("workAvg(YEAR)");
+        localStorage.removeItem("workYear(YEAR)");
+        localStorage.removeItem("workPart(YEAR)");
+        localStorage.removeItem("workTitle(YEAR)");
       }}>
         Today
       </button>
@@ -307,8 +302,13 @@ export const WorkListYear = () => {
     return (
       <button className="btn btn-sm btn-primary me-2" onClick={() => {
         setWorkYear(undefined);
+        setWorkPart("전체");
+        setWorkTitle("전체");
         localStorage.removeItem("workList(YEAR)");
-        localStorage.removeItem("work(YEAR)");
+        localStorage.removeItem("workAvg(YEAR)");
+        localStorage.removeItem("workYear(YEAR)");
+        localStorage.removeItem("workPart(YEAR)");
+        localStorage.removeItem("workTitle(YEAR)");
       }}>
         Reset
       </button>
@@ -320,8 +320,10 @@ export const WorkListYear = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="workList" value={currentPath} onChange={(e:any) => {navParam(e.target.value);}}>
-          <option value="/workList">Day</option>
+        <select className="form-select" id="workListYear" value={currentPath} onChange={(e:any) => {
+          navParam(e.target.value);
+        }}>
+          <option value="/workListDay">Day</option>
           <option value="/workListWeek">Week</option>
           <option value="/workListMonth">Month</option>
           <option value="/workListYear">Year</option>
@@ -361,7 +363,7 @@ export const WorkListYear = () => {
         <div className="col-3">{selectWorkList()}</div>
         <div className="col-3">{selectWorkType()}</div>
       </div>
-      <div className="row d-center mt-5">
+      <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
           {viewWorkYear()}
         </div>

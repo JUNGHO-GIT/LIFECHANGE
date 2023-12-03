@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 import moment from "moment-timezone";
 
-const WorkScheme = new mongoose.Schema({
+const WorkScheme = new mongoose.Schema ({
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -57,7 +57,7 @@ const WorkScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
-  workDay: {
+  work_day: {
     type: String,
     default: () => {
       return "default";

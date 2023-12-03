@@ -23,7 +23,7 @@ const SleepScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
-  sleepDay : {
+  sleep_day : {
     type : String,
     default : () => {
       return "default";

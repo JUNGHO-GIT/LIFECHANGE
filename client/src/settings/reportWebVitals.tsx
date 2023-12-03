@@ -1,4 +1,4 @@
-import { ReportHandler } from "web-vitals";
+import {ReportHandler} from "web-vitals";
 
 const logWebVital = (metric: any) => {
   console.log(metric);

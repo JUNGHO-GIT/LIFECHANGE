@@ -18,9 +18,9 @@ export const foodList = async (
 
   const foodResultList = await Food.find ({
     user_id : user_id_param,
-    foodDay: {
-      $gte: startDay,
-      $lte: endDay,
+    food_day: {
+      $gte : startDay,
+      $lte : endDay,
     },
   });
   foodResultList.forEach((index) => {
@@ -38,18 +38,18 @@ export const foodList = async (
   return foodList;
 };
 
-// 1-2. foodListPart ------------------------------------------------------------------------------>
-export const foodListPart = async (
+// 1-2. foodSearchResult -------------------------------------------------------------------------->
+export const foodSearchResult = async (
   user_id_param: any,
   food_regdate_param: any,
   food_category_param: any,
 ) => {
-  const foodListPart = await Food.find ({
+  const foodSearchResult = await Food.find ({
     user_id : user_id_param,
     food_regdate : food_regdate_param,
     food_category : food_category_param
   });
-  return foodListPart;
+  return foodSearchResult;
 };
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
@@ -78,7 +78,7 @@ export const foodInsert = async (
     food_carb : FOOD_pram.food_carb,
     food_protein : FOOD_pram.food_protein,
     food_fat : FOOD_pram.food_fat,
-    foodDay : FOOD_pram.foodDay,
+    food_day : FOOD_pram.foodDay,
   });
   return foodInsert;
 };

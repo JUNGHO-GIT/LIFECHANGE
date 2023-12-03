@@ -1,4 +1,4 @@
-// FoodSearch.tsx
+// FoodSearchList.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -6,7 +6,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const FoodSearch = () => {
+export const FoodSearchList = () => {
 
   // title
   const TITLE = "Food Search";
@@ -22,14 +22,14 @@ export const FoodSearch = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   // state 1
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any> ([]);
-  const [food_regdate, setFood_regdate] = useState(koreanDate);
+  const [foodDay, setFoodDay] = useState(koreanDate);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
 
   // 2-1. useEffect (localStorage) ---------------------------------------------------------------->
   useEffect(() => {
     // 로컬 스토리지에서 값을 가져옴
-    const savedFoodSearch = localStorage.getItem("FoodSearch");
+    const savedFoodSearch = localStorage.getItem("FoodSearchList");
     const savedQuery = localStorage.getItem("FoodQuery");
     const savedPage = localStorage.getItem("FoodPage");
 
@@ -45,7 +45,7 @@ export const FoodSearch = () => {
   }, []);
   useEffect(() => {
     // 상태 값이 변경될 때마다 로컬 스토리지에 저장
-    localStorage.setItem("FoodSearch", JSON.stringify(FOOD_SEARCH));
+    localStorage.setItem("FoodSearchList", JSON.stringify(FOOD_SEARCH));
     localStorage.setItem("FoodQuery", query);
     localStorage.setItem("FoodPage", JSON.stringify(page));
 
@@ -74,11 +74,11 @@ export const FoodSearch = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
-        selected={new Date(food_regdate)}
+        selected={new Date(foodDay)}
         popperPlacement="bottom"
         onChange={(date:any) => {
           const formatDate = date.toISOString().split("T")[0];
-          setFood_regdate(formatDate);
+          setFoodDay(formatDate);
         }}
         readOnly
       />
@@ -200,7 +200,7 @@ export const FoodSearch = () => {
         navParam(`/foodList`, {
           state: {
             user_id : user_id,
-            food_regdate : food_regdate
+            foodDur : foodDay
           }
         });
       }}>
@@ -212,10 +212,10 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodListPart`, {
+        navParam(`/foodSearchResult`, {
           state: {
             user_id : user_id,
-            food_regdate : food_regdate,
+            foodDur : foodDay,
             food_category : "morning"
           }
         });
@@ -228,10 +228,10 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodListPart`, {
+        navParam(`/foodSearchResult`, {
           state: {
             user_id : user_id,
-            food_regdate : food_regdate,
+            foodDur : foodDay,
             food_category : "lunch"
           }
         });
@@ -244,10 +244,10 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodListPart`, {
+        navParam(`/foodSearchResult`, {
           state: {
             user_id : user_id,
-            food_regdate : food_regdate,
+            foodDur : foodDay,
             food_category : "dinner"
           }
         });
@@ -260,10 +260,10 @@ export const FoodSearch = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={(e:any) => {
         e.preventDefault();
-        navParam(`/foodListPart`, {
+        navParam(`/foodSearchResult`, {
           state: {
             user_id : user_id,
-            food_regdate : food_regdate,
+            foodDur : foodDay,
             food_category : "snack"
           }
         });
@@ -293,7 +293,9 @@ export const FoodSearch = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <h1 className="mb-3 fw-5">
-            <span className="ms-4">{logicViewDate()}</span>
+            <span className="ms-4">
+              {logicViewDate()}
+            </span>
           </h1>
         </div>
       </div>

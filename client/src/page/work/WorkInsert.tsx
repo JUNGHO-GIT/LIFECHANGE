@@ -90,7 +90,7 @@ export const WorkInsert = () => {
     });
     if (response.data === "success") {
       alert("Insert a work successfully");
-      navParam("/workList");
+      navParam("/workListDay");
     }
     else if (response.data === "fail") {
       alert("Insert a work failure");

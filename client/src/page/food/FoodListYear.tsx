@@ -1,7 +1,8 @@
-// FoodListDay.tsx
+// FoodListYear.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayPicker, DayClickEventHandler} from "react-day-picker";
+import {DayPicker, MonthChangeEventHandler} from "react-day-picker";
+import {differenceInDays} from "date-fns";
 import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
@@ -9,9 +10,9 @@ import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const FoodListDay = () => {
+export const FoodListYear = () => {
   // title
-  const TITLE = "Food List Day";
+  const TITLE = "Food List Year";
   // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   // date
@@ -27,21 +28,21 @@ export const FoodListDay = () => {
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
-    "foodList(DAY)", []
+    "foodList(YEAR)", []
   );
   const {val:FOOD_AVERAGE, setVal:setFOOD_AVERAGE} = useStorage<any>(
-    "foodAvg(DAY)", []
+    "foodAvg(YEAR)", []
   );
 
   // 2-3. useStorage ------------------------------------------------------------------------------>
-  const {val:foodDay, setVal:setFoodDay} = useStorage<Date | undefined>(
-    "foodDay(DAY)", koreanDate
+  const {val:foodYear, setVal:setFoodYear} = useStorage<Date | undefined>(
+    "foodYear(YEAR)", koreanDate
   );
   const {val:foodResVal, setVal:setFoodResVal} = useStorage<Date | undefined>(
-    "foodResVal(DAY)", undefined
+    "foodResVal(YEAR)", undefined
   );
   const {val:foodResDur, setVal:setFoodResDur} = useStorage<string>(
-    "foodResDur(DAY)", "0000-00-00 ~ 0000-00-00"
+    "foodResDur(YEAR)", "0000-00-00 ~ 0000-00-00"
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -86,35 +87,44 @@ export const FoodListDay = () => {
 
   // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const formatVal = (value:number):string => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-    if (foodDay) {
-      const year = foodDay.getFullYear();
-      const month = formatVal(foodDay.getMonth() + 1);
-      const date = formatVal(foodDay.getDate());
-      setFoodResVal(parseISO(`${year}-${month}-${date}`));
-      setFoodResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+    if (foodYear) {
+      setFoodResVal (
+        parseISO (`${foodYear.getFullYear()}`)
+      );
+      setFoodResDur (
+        `${foodYear.getFullYear()}-01-01 ~ ${foodYear.getFullYear()}-12-31`
+      );
     }
-  }, [foodDay]);
+    else {
+      setFoodResVal (undefined);
+    }
+  }, [foodYear]);
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowYearChange: MonthChangeEventHandler = (day) => {
+    const yearDate = new Date(day.getFullYear(), 0, 1);
+    const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);
+    const nextMonth = differenceInDays(new Date(day.getFullYear() + 1, 0, 1), monthDate) / 30;
+    const prevMonth = differenceInDays(monthDate, yearDate) / 30;
+
+    if (nextMonth > prevMonth) {
+      setFoodYear(new Date(day.getFullYear() + 1, 0, 1));
+    }
+    else {
+      setFoodYear(new Date(day.getFullYear(), 0, 1));
+    }
+  };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewFoodDay = () => {
-    const flowDayClick: DayClickEventHandler = (day:any) => {
-      setFoodDay(day);
-    };
+  const viewFoodYear = () => {
     return (
       <DayPicker
-        mode="single"
+        mode="default"
         showOutsideDays
-        selected={foodDay}
-        month={foodDay}
         locale={ko}
         weekStartsOn={1}
-        onDayClick={flowDayClick}
-        onMonthChange={(month) => {
-          setFoodDay(month);
-        }}
+        month={foodYear}
+        onMonthChange={flowYearChange}
         modifiersClassNames={{
           selected: "selected",
           disabled: "disabled",
@@ -183,14 +193,14 @@ export const FoodListDay = () => {
     );
   };
 
-  // 6-1. button ---------------------------------------------------------------------------------->
+  // 6. button ------------------------------------------------------------------------------------>
   const buttonFoodToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setFoodDay(koreanDate);
-        localStorage.removeItem("foodList(DAY)");
-        localStorage.removeItem("foodAvg(DAY)");
-        localStorage.removeItem("foodDay(DAY)");
+        setFoodYear(koreanDate);
+        localStorage.removeItem("foodList(YEAR)");
+        localStorage.removeItem("foodAvg(YEAR)");
+        localStorage.removeItem("foodYear(YEAR)");
       }}>
         Today
       </button>
@@ -199,10 +209,10 @@ export const FoodListDay = () => {
   const buttonFoodReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setFoodDay(undefined);
-        localStorage.removeItem("foodList(DAY)");
-        localStorage.removeItem("foodAvg(DAY)");
-        localStorage.removeItem("foodDay(DAY)");
+        setFoodYear(undefined);
+        localStorage.removeItem("foodList(YEAR)");
+        localStorage.removeItem("foodAvg(YEAR)");
+        localStorage.removeItem("foodYear(YEAR)");
       }}>
         Reset
       </button>
@@ -214,7 +224,7 @@ export const FoodListDay = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="foodListDay" value={currentPath}
+        <select className="form-select" id="foodListYear" value={currentPath}
         onChange={(e:any) => {
           navParam(e.target.value);
         }}>
@@ -251,7 +261,7 @@ export const FoodListDay = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
-          <h2 className="mb-3 fw-7">일별로 조회</h2>
+          <h2 className="mb-3 fw-7">년별로 조회</h2>
         </div>
       </div>
       <div className="row d-center mt-3">
@@ -264,7 +274,7 @@ export const FoodListDay = () => {
       </div>
       <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
-          {viewFoodDay()}
+          {viewFoodYear()}
         </div>
         <div className="col-md-6 col-12">
           {foodType === "list" && tableFoodList()}

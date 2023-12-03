@@ -24,7 +24,7 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. sleepAvg ------------------------------------------------------------------------------>
+// 1-2. sleepAvg ---------------------------------------------------------------------------------->
 sleepRouter.get("/sleepAvg", async (req: Request, res: Response) => {
   try {
     const sleepAvg = await sleepService.sleepAvg (

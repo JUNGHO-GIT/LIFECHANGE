@@ -72,7 +72,7 @@ export const SleepInsert = () => {
     });
     if (response.data === "success") {
       alert("Insert a sleep successfully");
-      navParam("/sleepList");
+      navParam("/sleepListDay");
     }
     else if (response.data === "fail") {
       alert("Insert a sleep failure");

@@ -1,7 +1,7 @@
-// FoodListDay.tsx
+// FoodListWeek.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayPicker, DayClickEventHandler} from "react-day-picker";
+import {DayPicker} from "react-day-picker";
 import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
@@ -9,9 +9,9 @@ import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const FoodListDay = () => {
+export const FoodListWeek = () => {
   // title
-  const TITLE = "Food List Day";
+  const TITLE = "Food List Week";
   // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   // date
@@ -27,21 +27,24 @@ export const FoodListDay = () => {
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
-    "foodList(DAY)", []
+    "foodList(WEEK)", []
   );
   const {val:FOOD_AVERAGE, setVal:setFOOD_AVERAGE} = useStorage<any>(
-    "foodAvg(DAY)", []
+    "foodAvg(WEEK)", []
   );
 
   // 2-3. useStorage ------------------------------------------------------------------------------>
-  const {val:foodDay, setVal:setFoodDay} = useStorage<Date | undefined>(
-    "foodDay(DAY)", koreanDate
+  const {val:foodStartDay, setVal:setFoodStartDay} = useStorage<Date | undefined>(
+    "foodStartDay(WEEK)", undefined
+  );
+  const {val:foodEndDay, setVal:setFoodEndDay} = useStorage<Date | undefined>(
+    "foodEndDay(WEEK)", undefined
   );
   const {val:foodResVal, setVal:setFoodResVal} = useStorage<Date | undefined>(
-    "foodResVal(DAY)", undefined
+    "foodResVal(WEEK)", undefined
   );
   const {val:foodResDur, setVal:setFoodResDur} = useStorage<string>(
-    "foodResDur(DAY)", "0000-00-00 ~ 0000-00-00"
+    "foodResDur(WEEK)", "0000-00-00 ~ 0000-00-00"
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -89,31 +92,58 @@ export const FoodListDay = () => {
     const formatVal = (value:number):string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-    if (foodDay) {
-      const year = foodDay.getFullYear();
-      const month = formatVal(foodDay.getMonth() + 1);
-      const date = formatVal(foodDay.getDate());
-      setFoodResVal(parseISO(`${year}-${month}-${date}`));
-      setFoodResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+    if (foodStartDay && foodEndDay) {
+      const fromDate = new Date(foodStartDay);
+      const toDate = new Date(foodEndDay);
+
+      setFoodResVal (
+        parseISO (
+          `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
+        )
+      );
+      setFoodResDur (
+        `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
+      );
     }
-  }, [foodDay]);
+    else {
+      setFoodResVal(undefined);
+      setFoodResDur("0000-00-00 ~ 0000-00-00");
+    }
+  }, [foodStartDay, foodEndDay]);
+
+  // 3-1. flow ------------------------------------------------------------------------------------>
+  const flowDayClick = (day:any) => {
+    if (day) {
+      const selectedDay = new Date(day);
+
+      const startOfWeek = new Date(selectedDay);
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1);
+
+      const endOfWeek = new Date(selectedDay);
+      endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay()));
+
+      setFoodStartDay(startOfWeek);
+      setFoodEndDay(endOfWeek);
+    }
+  };
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewFoodDay = () => {
-    const flowDayClick: DayClickEventHandler = (day:any) => {
-      setFoodDay(day);
-    };
+  const viewFoodWeek = () => {
     return (
       <DayPicker
-        mode="single"
-        showOutsideDays
-        selected={foodDay}
-        month={foodDay}
+        mode="range"
         locale={ko}
         weekStartsOn={1}
+        showOutsideDays
+        selected={foodStartDay && foodEndDay && {
+          from: foodStartDay,
+          to: foodEndDay,
+        }}
+        month={foodStartDay}
         onDayClick={flowDayClick}
         onMonthChange={(month) => {
-          setFoodDay(month);
+          setFoodStartDay(month);
+          setFoodEndDay(month);
         }}
         modifiersClassNames={{
           selected: "selected",
@@ -187,10 +217,12 @@ export const FoodListDay = () => {
   const buttonFoodToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setFoodDay(koreanDate);
-        localStorage.removeItem("foodList(DAY)");
-        localStorage.removeItem("foodAvg(DAY)");
-        localStorage.removeItem("foodDay(DAY)");
+        setFoodStartDay(koreanDate);
+        setFoodEndDay(koreanDate);
+        localStorage.removeItem("foodList(WEEK)");
+        localStorage.removeItem("foodAvg(WEEK)");
+        localStorage.removeItem("foodStartDay(WEEK)");
+        localStorage.removeItem("foodEndDay(WEEK)");
       }}>
         Today
       </button>
@@ -199,10 +231,12 @@ export const FoodListDay = () => {
   const buttonFoodReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setFoodDay(undefined);
-        localStorage.removeItem("foodList(DAY)");
-        localStorage.removeItem("foodAvg(DAY)");
-        localStorage.removeItem("foodDay(DAY)");
+        setFoodStartDay(undefined);
+        setFoodEndDay(undefined);
+        localStorage.removeItem("foodList(WEEK)");
+        localStorage.removeItem("foodAvg(WEEK)");
+        localStorage.removeItem("foodStartDay(WEEK)");
+        localStorage.removeItem("foodEndDay(WEEK)");
       }}>
         Reset
       </button>
@@ -214,7 +248,7 @@ export const FoodListDay = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="foodListDay" value={currentPath}
+        <select className="form-select" id="foodListWeek" value={currentPath}
         onChange={(e:any) => {
           navParam(e.target.value);
         }}>
@@ -264,7 +298,7 @@ export const FoodListDay = () => {
       </div>
       <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
-          {viewFoodDay()}
+          {viewFoodWeek()}
         </div>
         <div className="col-md-6 col-12">
           {foodType === "list" && tableFoodList()}

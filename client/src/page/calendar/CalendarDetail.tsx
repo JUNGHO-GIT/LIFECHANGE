@@ -1,11 +1,11 @@
 // CalendarDetail.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayClickEventHandler, DayPicker } from "react-day-picker";
+import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import {useStorage} from "../../assets/ts/useStorage";
-import { ko } from "date-fns/locale";
+import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
@@ -164,9 +164,9 @@ export const CalendarDetail = () => {
         <thead className="table-dark">
           <tr>
             <th>기간</th>
-            <th>취침</th>
-            <th>기상</th>
-            <th>수면</th>
+            <th>취침 시간</th>
+            <th>기상 시간</th>
+            <th>수면 시간</th>
           </tr>
         </thead>
         <tbody>

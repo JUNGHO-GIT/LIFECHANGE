@@ -1,9 +1,9 @@
 // Main.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayClickEventHandler, DayPicker } from "react-day-picker";
-import { useStorage } from "../../assets/ts/useStorage";
-import { ko } from "date-fns/locale";
+import {DayClickEventHandler, DayPicker} from "react-day-picker";
+import {useStorage} from "../../assets/ts/useStorage";
+import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";

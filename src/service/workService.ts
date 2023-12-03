@@ -1,9 +1,10 @@
 // workService.ts
 import Work from "../schema/Work";
 import * as mongoose from "mongoose";
-import {workPartAll, workTitleAll } from "../assets/ts/workArray";
+import moment from "moment";
+import {workPartAll, workTitleAll} from "../assets/ts/workArray";
 
-// 1-1. workList --------------------------------------------------------------------------------->
+// 1-1. workList ---------------------------------------------------------------------------------->
 export const workList = async (
   user_id_param: any,
   work_dur_param: any
@@ -13,17 +14,17 @@ export const workList = async (
   const endDay = work_dur_param.split(` ~ `)[1];
 
   const workList = await Work.find ({
-    user_id:  user_id_param,
-    workDay : {
+    user_id: user_id_param,
+    work_day : {
       $gte : startDay,
       $lte : endDay,
-    }
-  }).sort({workDay : -1});
+    },
+  }).sort({work_day : -1});
 
   return workList;
 };
 
-// 1-2. workAvg ------------------------------------------------------------------------------->
+// 1-2. workAvg ----------------------------------------------------------------------------------->
 export const workAvg = async (
   user_id_param: any,
   work_dur_param: any,
@@ -38,12 +39,12 @@ export const workAvg = async (
     let work_part_before = workPartAll[0].workPart.toString();
     work_part_val_param = work_part_before.replace(/,/g, "|");
   }
+  // console.log("work_part_val_param  :  " + work_part_val_param);
+
   if (work_title_val_param === "전체") {
     let work_title_before = workTitleAll[0].workTitle.toString();
     work_title_val_param = work_title_before.replace(/,/g, "|");
   }
-
-  // console.log("work_part_val_param  :  " + work_part_val_param);
   // console.log("work_title_val_param  :  " + work_title_val_param);
 
   const workAvg = await Work.aggregate ([
@@ -52,7 +53,7 @@ export const workAvg = async (
       user_id : user_id_param,
       "workSection.work_part_val" : {$regex : work_part_val_param},
       "workSection.work_title_val" : {$regex : work_title_val_param},
-      workDay : {
+      work_day : {
         $gte : startDay,
         $lte : endDay,
       },
@@ -72,7 +73,7 @@ export const workAvg = async (
   return workAvg;
 };
 
-// 2. workDetail ------------------------------------------------------------------------------->
+// 2. workDetail ---------------------------------------------------------------------------------->
 export const workDetail = async (
   _id_param : any,
   workSection_id_param : any
@@ -89,7 +90,9 @@ export const workDetail = async (
   if (workSection_id_param !== null) {
     workScheme = await Work.findOne({ _id: _id_param });
     if (workScheme) {
-      const matchedSection = workScheme.workSection.find((section: any) => section._id.toString() === workSection_id_param.toString());
+      const matchedSection = workScheme.workSection.find((section: any) => {
+        return section._id.toString() === workSection_id_param.toString();
+      });
       workDetail = {
         ...workScheme.toObject(),
         workSection: [matchedSection]
@@ -112,7 +115,7 @@ export const workInsert = async (
     work_start : WORK_param.work_start,
     work_end : WORK_param.work_end,
     work_time : WORK_param.work_time,
-    workDay : WORK_param.workDay,
+    work_day : WORK_param.workDay,
     work_regdate : WORK_param.work_regdate,
     work_update : WORK_param.work_update,
   });
@@ -148,7 +151,8 @@ export const workDelete = async (
     workSection_id_param !== ""
   ) {
     // workSection_id_param이 제공되면 해당 섹션만 삭제합니다.
-    // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제합니다. 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거합니다.
+    // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제합니다.
+    // 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거합니다.
     workDelete = await Work.updateOne (
       {_id: _id_param},
       {$pull: {

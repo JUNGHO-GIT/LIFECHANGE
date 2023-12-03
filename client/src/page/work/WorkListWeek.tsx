@@ -1,12 +1,12 @@
 // WorkListWeek.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayClickEventHandler, DayPicker} from "react-day-picker";
-import {useStorage} from "../../assets/ts/useStorage";
+import {DayPicker} from "react-day-picker";
 import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
+import {useStorage} from "../../assets/ts/useStorage";
 import {workPartArray, workTitleArray} from "./WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
@@ -27,7 +27,7 @@ export const WorkListWeek = () => {
   const [workType, setWorkType] = useState<string>("list");
   const [workNumber, setWorkNumber] = useState<number>(0);
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(WEEK)", []
   );
@@ -35,9 +35,12 @@ export const WorkListWeek = () => {
     "workAvg(WEEK)", []
   );
 
-  // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:workDay, setVal:setWorkDay} = useStorage<Date | undefined>(
-    "workDay(WEEK)", undefined
+  // 2-3. useStorage ------------------------------------------------------------------------------>
+  const {val:workStartDay, setVal:setWorkStartDay} = useStorage<Date | undefined>(
+    "workStartDay(WEEK)", undefined
+  );
+  const {val:workEndDay, setVal:setWorkEndDay} = useStorage<Date | undefined>(
+    "workEndDay(WEEK)", undefined
   );
   const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
     "workResVal(WEEK)", undefined
@@ -46,7 +49,7 @@ export const WorkListWeek = () => {
     "workResDur(WEEK)", "0000-00-00 ~ 0000-00-00"
   );
 
-  // 2-3. useStorage ------------------------------------------------------------------------------>
+  // 2-4. useStorage ------------------------------------------------------------------------------>
   const {val:workPart, setVal:setWorkPart} = useStorage<string>(
     "workPart(WEEK)", "전체"
   );
@@ -54,21 +57,9 @@ export const WorkListWeek = () => {
     "workTitle(WEEK)", "전체"
   );
 
-  const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
-    "avgWorkStart(WEEK)", "00:00"
-  );
-  const {val:avgWorkMorning, setVal:setAvgWorkMorning} = useStorage<string>(
-    "avgWorkEnd(WEEK)", "00:00"
-  );
-  const {val:workStartDay, setVal:setWorkStartDay} = useStorage<Date | undefined>(
-    "workStartDay(WEEK)", undefined
-  );
-  const {val:workEndDay, setVal:setWorkEndDay} = useStorage<Date | undefined>(
-    "workEndDay(WEEK)", undefined
-  );
-
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    // 1. list
     const fetchWorkList = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workList`, {
@@ -78,17 +69,14 @@ export const WorkListWeek = () => {
           },
         });
         setWORK_LIST(response.data);
+        console.log("WORK_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
-    fetchWorkList();
-  }, [user_id, workResDur]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
+    // 2. average
     const fetchWorkAvg = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workAvg`, {
@@ -100,13 +88,14 @@ export const WorkListWeek = () => {
           },
         });
         setWORK_AVERAGE(response.data);
-        console.log("WORK_AVERAGE : " + response.data);
+        console.log("WORK_AVERAGE " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_AVERAGE([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
+    fetchWorkList();
     fetchWorkAvg();
   }, [user_id, workResDur, workPart, workTitle]);
 
@@ -115,7 +104,6 @@ export const WorkListWeek = () => {
     const formatVal = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-
     if (workStartDay && workEndDay) {
       const fromDate = new Date(workStartDay);
       const toDate = new Date(workEndDay);
@@ -292,7 +280,7 @@ export const WorkListWeek = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem:any, index:number) => (
+                {WORK_AVERAGE?.map((workItem : any, index:number) => (
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>
@@ -311,7 +299,7 @@ export const WorkListWeek = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 6-1. button ---------------------------------------------------------------------------------->
   const buttonWorkToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
@@ -354,10 +342,10 @@ export const WorkListWeek = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="workList" value={currentPath} onChange={(e:any) => {
+        <select className="form-select" id="workListWeek" value={currentPath} onChange={(e:any) => {
           navParam(e.target.value);
         }}>
-          <option value="/workList">Day</option>
+          <option value="/workListDay">Day</option>
           <option value="/workListWeek">Week</option>
           <option value="/workListMonth">Month</option>
           <option value="/workListYear">Year</option>

@@ -24,16 +24,16 @@ foodRouter.get ("/foodList", async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. foodListPart ------------------------------------------------------------------------------>
-foodRouter.get ("/foodListPart", async (req: Request, res: Response) => {
+// 1-2. foodSearchResult -------------------------------------------------------------------------->
+foodRouter.get ("/foodSearchResult", async (req: Request, res: Response) => {
   try {
-    const foodListPart = await foodService.foodListPart (
-      req.query.user_id as string,
-      req.query.food_regdate as string,
-      req.query.food_category as string
+    const foodSearchResult = await foodService.foodSearchResult (
+      req.query.user_id,
+      req.query.food_dur,
+      req.query.food_category,
     );
-    if (foodListPart) {
-      res.send(foodListPart);
+    if (foodSearchResult) {
+      res.send(foodSearchResult);
     }
     else {
       res.send("fail");

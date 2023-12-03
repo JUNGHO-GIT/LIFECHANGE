@@ -48,7 +48,7 @@ const FoodScheme = new mongoose.Schema ({
     default : "daily",
     required : false
   },
-  foodDay : {
+  food_day : {
     type : String,
     default : () => {
       return "default";

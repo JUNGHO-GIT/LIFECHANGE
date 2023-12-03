@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayClickEventHandler, DayPicker } from "react-day-picker";
+import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import moment from "moment-timezone";
 import axios from "axios";
 
@@ -80,7 +80,7 @@ export const Header = () => {
       {
         label: "Food",
         items: [
-          {to: "/foodSearch", label: "FoodSearch"},
+          {to: "/foodSearch", label: "FoodSearchList"},
           {to: "/foodListDay", label: "FoodList"}
         ]
       },

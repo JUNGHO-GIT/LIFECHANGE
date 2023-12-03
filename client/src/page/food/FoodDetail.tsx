@@ -57,7 +57,7 @@ export const FoodDetail = () => {
       });
       if (response.data === "success") {
         alert("삭제되었습니다.");
-        navParam(`/foodListPart`, {
+        navParam(`/foodSearchResult`, {
           state: {
             user_id : user_id,
             food_category : food_category,

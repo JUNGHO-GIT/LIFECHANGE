@@ -1,4 +1,4 @@
-// WorkList.tsx
+// WorkListDay.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayClickEventHandler, DayPicker} from "react-day-picker";
@@ -27,7 +27,7 @@ export const WorkListDay = () => {
   const [workType, setWorkType] = useState<string>("list");
   const [workNumber, setWorkNumber] = useState<number>(0);
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(DAY)", []
   );
@@ -35,7 +35,7 @@ export const WorkListDay = () => {
     "workAvg(DAY)", []
   );
 
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:workDay, setVal:setWorkDay} = useStorage<Date | undefined>(
     "workDay(DAY)", undefined
   );
@@ -46,7 +46,7 @@ export const WorkListDay = () => {
     "workResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
 
-  // 2-3. useStorage ------------------------------------------------------------------------------>
+  // 2-4. useStorage ------------------------------------------------------------------------------>
   const {val:workPart, setVal:setWorkPart} = useStorage<string>(
     "workPart(DAY)", "전체"
   );
@@ -54,19 +54,9 @@ export const WorkListDay = () => {
     "workTitle(DAY)", "전체"
   );
 
-  // 2-4. useStorage ------------------------------------------------------------------------------>
-  const {val:avgWorkStart, setVal:setAvgWorkStart} = useStorage<string>(
-    "avgWorkStart(DAY)", "00:00"
-  );
-  const {val:avgWorkEnd, setVal:setAvgWorkEnd} = useStorage<string>(
-    "avgWorkEnd(DAY)", "00:00"
-  );
-  const {val:avgWorkTime, setVal:setAvgWorkTime} = useStorage<string>(
-    "avgWorkTime(DAY)", "00:00"
-  );
-
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    // 1. list
     const fetchWorkList = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workList`, {
@@ -76,20 +66,17 @@ export const WorkListDay = () => {
           },
         });
         setWORK_LIST(response.data);
+        console.log("WORK_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
-    fetchWorkList();
-  }, [user_id, workResDur]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
+    // 2. average
     const fetchWorkAvg = async () => {
       try {
-        const response = await axios.get(`${URL_WORK}/workAvg`, {
+        const response = await axios.get (`${URL_WORK}/workAvg`, {
           params: {
             user_id: user_id,
             work_dur: workResDur,
@@ -98,13 +85,14 @@ export const WorkListDay = () => {
           },
         });
         setWORK_AVERAGE(response.data);
-        console.log("WORK_AVERAGE : " + response.data);
+        console.log("WORK_AVERAGE " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_AVERAGE([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
+    fetchWorkList();
     fetchWorkAvg();
   }, [user_id, workResDur, workPart, workTitle]);
 
@@ -122,13 +110,11 @@ export const WorkListDay = () => {
     }
   }, [workDay]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
-  const flowDayClick: DayClickEventHandler = (day: any) => {
-    setWorkDay(day);
-  };
-
   // 4-1. logic ----------------------------------------------------------------------------------->
   const viewWorkDay = () => {
+    const flowDayClick: DayClickEventHandler = (day: any) => {
+      setWorkDay(day);
+    };
     return (
       <DayPicker
         mode="single"
@@ -138,7 +124,9 @@ export const WorkListDay = () => {
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
-        onMonthChange={(month) => setWorkDay(month)}
+        onMonthChange={(month) => {
+          setWorkDay(month);
+        }}
         modifiersClassNames={{
           selected: "selected",
           disabled: "disabled",
@@ -152,51 +140,45 @@ export const WorkListDay = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableWorkList = () => {
     return (
-      <div>
-        <div className="row d-center">
-          <div className="col-12">
-            <table className="table table-bordered table-hover">
-              <thead className="table-dark">
-                <tr>
-                  <th>Part</th>
-                  <th>Title</th>
-                  <th>Kg</th>
-                  <th>Set</th>
-                  <th>Count</th>
-                  <th>Rest</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {WORK_LIST.map((workItem : any) => {
-                  return workItem.workSection.map((workSection: any) => (
-                    <tr key={workSection._id}>
-                      <td
-                        className="pointer"
-                        onClick={() => {
-                          navParam("/workDetail", {
-                            state: {
-                              _id : workItem._id,
-                              workSection_id : workSection._id
-                            },
-                          });
-                        }}>
-                        {workSection.work_part_val}
-                      </td>
-                      <td>{workSection.work_title_val}</td>
-                      <td>{workSection.work_kg}</td>
-                      <td>{workSection.work_set}</td>
-                      <td>{workSection.work_count}</td>
-                      <td>{workSection.work_rest}</td>
-                      <td>{workItem.work_time}</td>
-                    </tr>
-                  ));
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>Part</th>
+            <th>Title</th>
+            <th>Kg</th>
+            <th>Set</th>
+            <th>Count</th>
+            <th>Rest</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {WORK_LIST.map((workItem : any) => {
+            return workItem.workSection.map((workSection: any) => (
+              <tr key={workSection._id}>
+                <td
+                  className="pointer"
+                  onClick={() => {
+                    navParam("/workDetail", {
+                      state: {
+                        _id : workItem._id,
+                        workSection_id : workSection._id
+                      },
+                    });
+                  }}>
+                  {workSection.work_part_val}
+                </td>
+                <td>{workSection.work_title_val}</td>
+                <td>{workSection.work_kg}</td>
+                <td>{workSection.work_set}</td>
+                <td>{workSection.work_count}</td>
+                <td>{workSection.work_rest}</td>
+                <td>{workItem.work_time}</td>
+              </tr>
+            ));
+          })}
+        </tbody>
+      </table>
     );
   };
 
@@ -320,10 +302,10 @@ export const WorkListDay = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="workList" value={currentPath} onChange={(e:any) => {
+        <select className="form-select" id="workListDay" value={currentPath} onChange={(e:any) => {
           navParam(e.target.value);
         }}>
-          <option value="/workList">Day</option>
+          <option value="/workListDay">Day</option>
           <option value="/workListWeek">Week</option>
           <option value="/workListMonth">Month</option>
           <option value="/workListYear">Year</option>
@@ -360,8 +342,12 @@ export const WorkListDay = () => {
         </div>
       </div>
       <div className="row d-center mt-3">
-        <div className="col-3">{selectWorkList()}</div>
-        <div className="col-3">{selectWorkType()}</div>
+        <div className="col-3">
+          {selectWorkList()}
+        </div>
+        <div className="col-3">
+          {selectWorkType()}
+        </div>
       </div>
       <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">

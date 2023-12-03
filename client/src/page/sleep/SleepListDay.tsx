@@ -1,16 +1,15 @@
 // SleepListDay.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayClickEventHandler, DayPicker} from "react-day-picker";
-import {useStorage} from "../../assets/ts/useStorage";
+import {DayPicker, DayClickEventHandler} from "react-day-picker";
 import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
+import {useStorage} from "../../assets/ts/useStorage";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const SleepListDay = () => {
-
   // title
   const TITLE = "Sleep List Day";
   // url
@@ -30,80 +29,60 @@ export const SleepListDay = () => {
   const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
     "sleepList(DAY)", []
   );
-  const {val:resVal, setVal:setResVal} = useStorage<Date | undefined>(
-    "resVal(DAY)", undefined
+  const {val:SLEEP_AVERAGE, setVal:setSLEEP_AVERAGE} = useStorage<any>(
+    "sleepAvg(DAY)", []
   );
-  const {val:resDur, setVal:setResDur} = useStorage<string>(
-    "resDur(DAY)", "0000-00-00 ~ 0000-00-00"
-  );
-  const {val:avgSleepTime, setVal:setAvgSleepTime} = useStorage<string>(
-    "avgSleepTime(DAY)", "00:00"
-  );
-  const {val:avgSleepNight, setVal:setAvgSleepNight} = useStorage<string>(
-    "avgSleepNight(DAY)", "00:00"
-  );
-  const {val:avgSleepMorning, setVal:setAvgSleepMorning} = useStorage<string>(
-    "avgSleepMorning(DAY)", "00:00"
-  );
+
+  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined>(
     "sleepDay(DAY)", koreanDate
+  );
+  const {val:sleepResVal, setVal:setSleepResVal} = useStorage<Date | undefined>(
+    "sleepResVal(DAY)", undefined
+  );
+  const {val:sleepResDur, setVal:setSleepResDur} = useStorage<string>(
+    "sleepResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    // 1. list
     const fetchSleepList = async () => {
       try {
         const response = await axios.get (`${URL_SLEEP}/sleepList`, {
           params: {
-            user_id: user_id,
-            sleep_dur: resDur,
+            user_id : user_id,
+            sleep_dur : sleepResDur,
           },
         });
         setSLEEP_LIST(response.data);
+        console.log("SLEEP_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching sleep data: ${error.message}`);
         setSLEEP_LIST([]);
+        alert(`Error fetching sleep data: ${error.message}`);
       }
     };
-    fetchSleepList();
-  }, [user_id, resDur]);
-
-  // 2-4. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
+    // 2. average
     const fetchSleepAvg = async () => {
       try {
         const response = await axios.get (`${URL_SLEEP}/sleepAvg`, {
           params: {
-            user_id: user_id,
-            sleep_dur: resDur,
+            user_id : user_id,
+            sleep_dur : sleepResDur,
           },
         });
-        const isValidTime = (str: string) => {
-          return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(str);
-        };
-        setAvgSleepTime (
-          isValidTime(response.data.avgSleepTime)
-          ? response.data.avgSleepTime
-          : "00:00"
-        );
-        setAvgSleepNight (
-          isValidTime(response.data.avgSleepNight)
-          ? response.data.avgSleepNight
-          : "00:00"
-        );
-        setAvgSleepMorning (
-          isValidTime(response.data.avgSleepMorning)
-          ? response.data.avgSleepMorning
-          : "00:00"
-        );
+        setSLEEP_AVERAGE(response.data);
+        console.log("SLEEP_AVERAGE : " + JSON.stringify(response.data));
       }
       catch (error:any) {
+        setSLEEP_AVERAGE([]);
         alert(`Error fetching sleep data: ${error.message}`);
       }
     };
+    fetchSleepList();
     fetchSleepAvg();
-  }, [user_id, resDur]);
+  }, [user_id, sleepResDur]);
 
   // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -114,12 +93,10 @@ export const SleepListDay = () => {
       const year = sleepDay.getFullYear();
       const month = formatVal(sleepDay.getMonth() + 1);
       const date = formatVal(sleepDay.getDate());
-      setResVal(parseISO(`${year}-${month}-${date}`));
-      setResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+      setSleepResVal(parseISO(`${year}-${month}-${date}`));
+      setSleepResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
     }
   }, [sleepDay]);
-
-  // 3. flow -------------------------------------------------------------------------------------->
 
   // 4-1. logic ----------------------------------------------------------------------------------->
   const viewSleepDay = () => {
@@ -135,7 +112,9 @@ export const SleepListDay = () => {
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
-        onMonthChange={(month) => setSleepDay(month)}
+        onMonthChange={(month) => {
+          setSleepDay(month);
+        }}
         modifiersClassNames={{
           selected: "selected",
           disabled: "disabled",
@@ -153,9 +132,9 @@ export const SleepListDay = () => {
         <thead className="table-dark">
           <tr>
             <th>기간</th>
-            <th>취침</th>
-            <th>기상</th>
-            <th>수면</th>
+            <th>취침 시간</th>
+            <th>기상 시간</th>
+            <th>수면 시간</th>
           </tr>
         </thead>
         <tbody>
@@ -166,7 +145,7 @@ export const SleepListDay = () => {
                   state: {_id: index._id}
                 }
               )}}>
-                {resDur}
+                {sleepResDur}
               </td>
               <td>{index.sleep_night}</td>
               <td>{index.sleep_morning}</td>
@@ -191,23 +170,26 @@ export const SleepListDay = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{resDur}</td>
-            <td>{avgSleepNight}</td>
-            <td>{avgSleepMorning}</td>
-            <td>{avgSleepTime}</td>
-          </tr>
+          {SLEEP_AVERAGE.map((index:any) => (
+            <tr key={index._id}>
+              <td>{sleepResDur}</td>
+              <td>{index.avgSleepNight}</td>
+              <td>{index.avgSleepMorning}</td>
+              <td>{index.avgSleepTime}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 6-1. button ---------------------------------------------------------------------------------->
   const buttonSleepToday = () => {
     return (
-      <button className="btn btn-sm btn-success me-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setSleepDay(koreanDate);
         localStorage.removeItem("sleepList(DAY)");
+        localStorage.removeItem("sleepAvg(DAY)");
         localStorage.removeItem("sleepDay(DAY)");
       }}>
         Today
@@ -216,9 +198,10 @@ export const SleepListDay = () => {
   };
   const buttonSleepReset = () => {
     return (
-      <button className="btn btn-sm btn-primary me-2" onClick={() => {
-        setSleepDay(koreanDate);
+      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
+        setSleepDay(undefined);
         localStorage.removeItem("sleepList(DAY)");
+        localStorage.removeItem("sleepAvg(DAY)");
         localStorage.removeItem("sleepDay(DAY)");
       }}>
         Reset
@@ -231,10 +214,11 @@ export const SleepListDay = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="sleepList" value={currentPath} onChange={(e:any) => {
+        <select className="form-select" id="sleepListDay" value={currentPath}
+        onChange={(e:any) => {
           navParam(e.target.value);
         }}>
-          <option value="/sleepList">Day</option>
+          <option value="/sleepListDay">Day</option>
           <option value="/sleepListWeek">Week</option>
           <option value="/sleepListMonth">Month</option>
           <option value="/sleepListYear">Year</option>

@@ -1,17 +1,16 @@
 // WorkListSelect.tsx
-import React, { useState, useEffect } from "react";
-import {useStorage} from "../../assets/ts/useStorage";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import { DayPicker } from "react-day-picker";
+import {DayPicker} from "react-day-picker";
+import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
-import { ko } from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {workPartArray, workTitleArray} from "../work/WorkArray";
+import {useStorage} from "../../assets/ts/useStorage";
+import {workPartArray, workTitleArray} from "./WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListSelect = () => {
-
   // title
   const TITLE = "Work List Select";
   // url
@@ -28,40 +27,39 @@ export const WorkListSelect = () => {
   const [workType, setWorkType] = useState<string>("list");
   const [workNumber, setWorkNumber] = useState<number>(0);
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(SELECT)", []
   );
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
     "workAvg(SELECT)", []
   );
-  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
-    "workPart(SELECT)", "전체"
-  );
-  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
-    "workTitle(SELECT)", "전체"
-  );
-  const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
-    "workResVal(SELECT)", undefined
-  );
-  const {val:workResDur, setVal:setResDur} = useStorage<string>(
-    "workResDur(SELECT)", "0000-00-00 ~ 0000-00-00"
-  );
-  const {val:avgWorkNight, setVal:setAvgWorkNight} = useStorage<string>(
-    "avgWorkStart(SELECT)", "00:00"
-  );
-  const {val:avgWorkMorning, setVal:setAvgWorkMorning} = useStorage<string>(
-    "avgWorkEnd(SELECT)", "00:00"
-  );
+
+  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:workStartDay, setVal:setWorkStartDay} = useStorage<Date | undefined>(
     "workStartDay(SELECT)", undefined
   );
   const {val:workEndDay, setVal:setWorkEndDay} = useStorage<Date | undefined>(
     "workEndDay(SELECT)", undefined
   );
+  const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
+    "workResVal(SELECT)", undefined
+  );
+  const {val:workResDur, setVal:setWorkResDur} = useStorage<string>(
+    "workResDur(SELECT)", "0000-00-00 ~ 0000-00-00"
+  );
+
+  // 2-4. useStorage ------------------------------------------------------------------------------>
+  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
+    "workPart(SELECT)", "전체"
+  );
+  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
+    "workTitle(SELECT)", "전체"
+  );
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    // 1. list
     const fetchWorkList = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workList`, {
@@ -71,17 +69,14 @@ export const WorkListSelect = () => {
           },
         });
         setWORK_LIST(response.data);
+        console.log("WORK_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_LIST([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
-    fetchWorkList();
-  }, [user_id, workResDur]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
+    // 2. average
     const fetchWorkAvg = async () => {
       try {
         const response = await axios.get(`${URL_WORK}/workAvg`, {
@@ -93,13 +88,14 @@ export const WorkListSelect = () => {
           },
         });
         setWORK_AVERAGE(response.data);
-        console.log("WORK_AVERAGE : " + response.data);
+        console.log("WORK_AVERAGE " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching work data: ${error.message}`);
         setWORK_AVERAGE([]);
+        alert(`Error fetching work data: ${error.message}`);
       }
     };
+    fetchWorkList();
     fetchWorkAvg();
   }, [user_id, workResDur, workPart, workTitle]);
 
@@ -109,7 +105,6 @@ export const WorkListSelect = () => {
       return value < 10 ? `0${value}` : `${value}`;
     };
     if (workStartDay && workEndDay) {
-
       const fromDate = new Date(workStartDay);
       const toDate = new Date(workEndDay);
 
@@ -118,13 +113,13 @@ export const WorkListSelect = () => {
           `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
         )
       );
-      setResDur (
+      setWorkResDur (
         `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
       );
     }
     else {
       setWorkResVal(undefined);
-      setResDur("0000-00-00 ~ 0000-00-00");
+      setWorkResDur("0000-00-00 ~ 0000-00-00");
     }
   }, [workStartDay, workEndDay]);
 
@@ -178,7 +173,10 @@ export const WorkListSelect = () => {
         }}
         month={workStartDay}
         onDayClick={flowDayClick}
-        onMonthChange={(month) => setWorkStartDay(month)}
+        onMonthChange={(month) => {
+          setWorkStartDay(month);
+          setWorkEndDay(undefined);
+        }}
         modifiersClassNames={{
           selected: "selected",
           disabled: "disabled",
@@ -302,7 +300,7 @@ export const WorkListSelect = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem:any, index:number) => (
+                {WORK_AVERAGE?.map((workItem : any, index:number) => (
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>
@@ -324,12 +322,17 @@ export const WorkListSelect = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const buttonWorkToday = () => {
     return (
-      <button className="btn btn-sm btn-success me-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setWorkStartDay(koreanDate);
         setWorkEndDay(koreanDate);
+        setWorkPart("전체");
+        setWorkTitle("전체");
         localStorage.removeItem("workList(SELECT)");
+        localStorage.removeItem("workAvg(SELECT)");
         localStorage.removeItem("workStartDay(SELECT)");
         localStorage.removeItem("workEndDay(SELECT)");
+        localStorage.removeItem("workPart(SELECT)");
+        localStorage.removeItem("workTitle(SELECT)");
       }}>
         Today
       </button>
@@ -337,12 +340,17 @@ export const WorkListSelect = () => {
   };
   const buttonWorkReset = () => {
     return (
-      <button className="btn btn-sm btn-primary me-2" onClick={() => {
+      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setWorkStartDay(undefined);
         setWorkEndDay(undefined);
+        setWorkPart("전체");
+        setWorkTitle("전체");
         localStorage.removeItem("workList(SELECT)");
+        localStorage.removeItem("workAvg(SELECT)");
         localStorage.removeItem("workStartDay(SELECT)");
         localStorage.removeItem("workEndDay(SELECT)");
+        localStorage.removeItem("workPart(SELECT)");
+        localStorage.removeItem("workTitle(SELECT)");
       }}>
         Reset
       </button>
@@ -354,8 +362,10 @@ export const WorkListSelect = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="workList" value={currentPath} onChange={(e:any) => {navParam(e.target.value);}}>
-          <option value="/workList">Day</option>
+        <select className="form-select" id="workListSelect" value={currentPath} onChange={(e:any) => {
+          navParam(e.target.value);
+        }}>
+          <option value="/workListDay">Day</option>
           <option value="/workListWeek">Week</option>
           <option value="/workListMonth">Month</option>
           <option value="/workListYear">Year</option>
@@ -395,7 +405,7 @@ export const WorkListSelect = () => {
         <div className="col-3">{selectWorkList()}</div>
         <div className="col-3">{selectWorkType()}</div>
       </div>
-      <div className="row d-center mt-5">
+      <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
           {viewWorkSelect()}
         </div>

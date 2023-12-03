@@ -1,4 +1,4 @@
-// FoodListPart.tsx
+// FoodSearchResult.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -7,10 +7,10 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const FoodListPart = () => {
+export const FoodSearchResult = () => {
 
   // title
-  const TITLE = "Food ListPart";
+  const TITLE = "Food SearchResult";
   // url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   // date
@@ -22,18 +22,18 @@ export const FoodListPart = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const food_category = location.state.food_category;
   // state
-  const [food_regdate, setFood_regdate] = useState(koreanDate);
+  const [foodDay, setFoodDay] = useState(koreanDate);
   const [FOOD, setFOOD] = useState<any> ([]);
 
   // 2. useEffect --------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchFoodListPart = async () => {
+    const fetchFoodSearchResult = async () => {
       try {
-        const response = await axios.get(`${URL_FOOD}/foodListPart`, {
+        const response = await axios.get(`${URL_FOOD}/foodSearchResult`, {
           params: {
             user_id : user_id,
             food_category : food_category,
-            food_regdate : food_regdate,
+            foodDur : foodDay,
           },
         });
         setFOOD(response.data);
@@ -43,28 +43,26 @@ export const FoodListPart = () => {
         setFOOD([]);
       }
     };
-    fetchFoodListPart();
-  }, [user_id, food_category, food_regdate]);
-
-  // 3. flow -------------------------------------------------------------------------------------->
+    fetchFoodSearchResult();
+  }, [user_id, food_category, foodDay]);
 
   // 4. logic ------------------------------------------------------------------------------------->
   const logicViewDate = () => {
     return (
       <DatePicker
         dateFormat="yyyy-MM-dd"
-        selected={new Date(food_regdate)}
+        selected={new Date(foodDay)}
         popperPlacement="bottom"
         onChange={(date:any) => {
           const formatDate = date.toISOString().split("T")[0];
-          setFood_regdate(formatDate);
+          setFoodDay(formatDate);
         }}
       />
     );
   };
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodListPart = () => {
+  const tableFoodSearchResult = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -83,7 +81,7 @@ export const FoodListPart = () => {
             <tr key={i}>
               <td>
                 {buttonFoodDetail (
-                  index._id, index.food_title, index.food_regdate, index.food_category
+                  index._id, index.food_title, index.foodDay, index.food_category
                 )}
               </td>
               <td>{index.food_brand}</td>
@@ -100,14 +98,14 @@ export const FoodListPart = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonFoodDetail = (_id:any, food_title:any, food_regdate:any, food_category:any) => {
+  const buttonFoodDetail = (_id:any, food_title:any, foodDay:any, food_category:any) => {
     return (
       <p onClick={(e:any) => {
         e.preventDefault();
         navParam(`/foodDetail`, {
           state: {
             _id : _id,
-            food_regdate : food_regdate,
+            foodDur : foodDay,
             food_category : food_category,
           },
         });
@@ -146,7 +144,7 @@ export const FoodListPart = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-10">
-          {tableFoodListPart()}
+          {tableFoodSearchResult()}
           <br/>
           {buttonRefreshPage()}
         </div>
