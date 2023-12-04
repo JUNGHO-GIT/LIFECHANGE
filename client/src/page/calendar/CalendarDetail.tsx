@@ -70,17 +70,16 @@ export const CalendarDetail = () => {
         const response = await axios.get(`${URL_FOOD}/foodList`, {
           params: {
             user_id : user_id,
-            food_dur : resVal,
+            food_dur : resDur,
           },
         });
         setFOOD_LIST(response.data);
       }
       catch (error:any) {
-        alert(`Error fetching food data: ${error.message}`);
+        alert(JSON.stringify(error));
         setFOOD_LIST([]);
       }
     };
-    fetchFoodList();
     // 2) sleep
     const fetchSleepList = async () => {
       try {
@@ -93,11 +92,10 @@ export const CalendarDetail = () => {
         setSLEEP_LIST(response.data);
       }
       catch (error:any) {
-        alert(`Error fetching food data: ${error.message}`);
+        alert(JSON.stringify(error));
         setSLEEP_LIST([]);
       }
     };
-    fetchSleepList();
     // 3) work
     const fetchWorkList = async () => {
       try {
@@ -110,10 +108,12 @@ export const CalendarDetail = () => {
         setWORK_LIST(response.data);
       }
       catch (error:any) {
-        alert(`Error fetching food data: ${error.message}`);
+        alert(JSON.stringify(error));
         setWORK_LIST([]);
       }
     };
+    fetchFoodList();
+    fetchSleepList();
     fetchWorkList();
   }, [user_id, resDur]);
 

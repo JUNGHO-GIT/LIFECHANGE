@@ -6,17 +6,34 @@ import * as mongoose from "mongoose";
 export const foodList = async (
   user_id_param: any,
   food_dur_param: any,
+  food_category_param: any,
 ) => {
   const startDay = food_dur_param.split(` ~ `)[0];
   const endDay = food_dur_param.split(` ~ `)[1];
+  
+  let findQuery;
 
-  const foodList = await Food.find({
-    user_id: user_id_param,
-    food_day: {
-      $gte: startDay,
-      $lte: endDay,
-    },
-  }).sort({ food_day: -1 });
+  if (food_category_param !== "all") {
+    findQuery = {
+      user_id: user_id_param,
+      food_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      food_category: food_category_param,
+    };
+  }
+  else {
+    findQuery = {
+      user_id: user_id_param,
+      food_day: {
+        $gte: startDay,
+        $lte: endDay,
+      }
+    };
+  }
+
+  const foodList = await Food.find(findQuery).sort({ food_day: -1 });
 
   return foodList;
 };
@@ -25,17 +42,34 @@ export const foodList = async (
 export const foodTotal = async (
   user_id_param: any,
   food_dur_param: any,
+  food_category_param: any,
 ) => {
   const startDay = food_dur_param.split(` ~ `)[0];
   const endDay = food_dur_param.split(` ~ `)[1];
+  
+  let findQuery;
 
-  const foodsInRange = await Food.find({
-    user_id : user_id_param,
-    food_day : {
-      $gte : startDay,
-      $lte : endDay,
-    },
-  });
+  if (food_category_param !== "all") {
+    findQuery = {
+      user_id: user_id_param,
+      food_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      food_category: food_category_param,
+    };
+  }
+  else {
+    findQuery = {
+      user_id: user_id_param,
+      food_day: {
+        $gte: startDay,
+        $lte: endDay,
+      }
+    };
+  }
+
+  const foodsInRange = await Food.find(findQuery).sort({ food_day: -1 });
 
   // 데이터가 없는 경우 빈 배열 반환
   if (foodsInRange.length === 0) {
@@ -69,18 +103,35 @@ export const foodTotal = async (
 export const foodAvg = async (
   user_id_param: any,
   food_dur_param: any,
+  food_category_param: any,
 ) => {
 
   const startDay = food_dur_param.split(` ~ `)[0];
   const endDay = food_dur_param.split(` ~ `)[1];
 
-  const foodsInRange = await Food.find({
-    user_id : user_id_param,
-    food_day : {
-      $gte : startDay,
-      $lte : endDay,
-    },
-  });
+  let findQuery;
+
+  if (food_category_param !== "all") {
+    findQuery = {
+      user_id: user_id_param,
+      food_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      food_category: food_category_param,
+    };
+  }
+  else {
+    findQuery = {
+      user_id: user_id_param,
+      food_day: {
+        $gte: startDay,
+        $lte: endDay,
+      }
+    };
+  }
+
+  const foodsInRange = await Food.find(findQuery).sort({ food_day: -1 });
 
   // 데이터가 없는 경우 빈 배열 반환
   if (foodsInRange.length === 0) {

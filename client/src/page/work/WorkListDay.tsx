@@ -186,6 +186,7 @@ export const WorkListDay = () => {
   const tableWorkAvg = () => {
     return (
       <div>
+        {/** select **/}
         <div className="row d-center">
           <div className="col-6">
             <div className="input-group">
@@ -229,6 +230,7 @@ export const WorkListDay = () => {
             </div>
           </div>
         </div>
+        {/** /.select **/}
         <div className="row d-center">
           <div className="col-12">
             <table className="table table-bordered table-hover">

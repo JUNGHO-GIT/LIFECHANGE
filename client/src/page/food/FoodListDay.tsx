@@ -24,6 +24,7 @@ export const FoodListDay = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [foodType, setFoodType] = useState<string>("list");
+  const [foodCategory, setFoodCategory] = useState<string>("all");
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
@@ -56,6 +57,7 @@ export const FoodListDay = () => {
           params: {
             user_id : user_id,
             food_dur : foodResDur,
+            food_category : foodCategory
           },
         });
         setFOOD_LIST(response.data);
@@ -73,6 +75,7 @@ export const FoodListDay = () => {
           params: {
             user_id : user_id,
             food_dur : foodResDur,
+            food_category : foodCategory
           },
         });
         setFOOD_TOTAL(response.data);
@@ -90,6 +93,7 @@ export const FoodListDay = () => {
           params: {
             user_id : user_id,
             food_dur : foodResDur,
+            food_category : foodCategory
           },
         });
         setFOOD_AVERAGE(response.data);
@@ -103,7 +107,7 @@ export const FoodListDay = () => {
     fetchFoodList();
     fetchFoodTotal();
     fetchFoodAvg();
-  }, [user_id, foodResDur]);
+  }, [user_id, foodResDur, foodCategory]);
 
   // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -258,7 +262,7 @@ export const FoodListDay = () => {
     );
   };
 
-  // 6-2. button ---------------------------------------------------------------------------------->
+  // 6-2. select ---------------------------------------------------------------------------------->
   const selectFoodList = () => {
     const currentPath = location.pathname || "";
     return (
@@ -297,6 +301,35 @@ export const FoodListDay = () => {
       </div>
     );
   };
+  const selectFoodCategory = () => {
+    return (
+      <div className="mb-3">
+        <select className="form-select" id="foodCategory" onChange={(e:any) => {
+          if (e.target.value === "all") {
+            setFoodCategory("all");
+          }
+          else if (e.target.value === "morning") {
+            setFoodCategory("morning");
+          }
+          else if (e.target.value === "lunch") {
+            setFoodCategory("lunch");
+          }
+          else if (e.target.value === "dinner") {
+            setFoodCategory("dinner");
+          }
+          else if (e.target.value === "snack") {
+            setFoodCategory("snack");
+          }
+        }}>
+          <option value="all">All</option>
+          <option value="morning">Morning</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+          <option value="snack">Snack</option>
+        </select>
+      </div>
+    );
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -313,6 +346,9 @@ export const FoodListDay = () => {
         </div>
         <div className="col-3">
           {selectFoodType()}
+        </div>
+        <div className="col-3">
+          {selectFoodCategory()}
         </div>
       </div>
       <div className="row d-center mt-3">

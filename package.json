@@ -15,7 +15,7 @@
     "@types/mocha": "^10.0.1",
     "@types/oauth-signature": "^1.5.0",
     "@types/request-promise": "^4.1.48",
-    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.3.3",
     "bcryptjs-react": "^2.4.6",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",

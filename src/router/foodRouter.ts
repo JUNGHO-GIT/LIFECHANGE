@@ -10,6 +10,7 @@ foodRouter.get ("/foodList", async (req: Request, res: Response) => {
     const foodList = await foodService.foodList (
       req.query.user_id,
       req.query.food_dur,
+      req.query.food_category,
     );
     if (foodList) {
       res.send(foodList);
@@ -30,6 +31,7 @@ foodRouter.get ("/foodTotal", async (req: Request, res: Response) => {
     const foodTotal = await foodService.foodTotal (
       req.query.user_id,
       req.query.food_dur,
+      req.query.food_category,
     );
     if (foodTotal) {
       res.send(foodTotal);
@@ -50,6 +52,7 @@ foodRouter.get("/foodAvg", async (req: Request, res: Response) => {
     const foodAvg = await foodService.foodAvg (
       req.query.user_id,
       req.query.food_dur,
+      req.query.food_category,
     );
     if (foodAvg) {
       res.send(foodAvg);
