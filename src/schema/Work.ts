@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import moment from "moment-timezone";
 
 const WorkScheme = new mongoose.Schema ({
+
+  // 1. id
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -11,6 +13,8 @@ const WorkScheme = new mongoose.Schema ({
     type: String,
     required: true,
   },
+
+  // 2. components
   workSection : [{
     work_part_idx : {
       type: Number,
@@ -57,6 +61,8 @@ const WorkScheme = new mongoose.Schema ({
     type: String,
     required: true,
   },
+
+  // 3. date
   work_day: {
     type: String,
     default: () => {

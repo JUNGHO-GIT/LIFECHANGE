@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import moment from "moment-timezone";
 
 const CalendarScheme = new mongoose.Schema ({
+
+  // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
@@ -11,6 +13,8 @@ const CalendarScheme = new mongoose.Schema ({
     type :String,
     required : true
   },
+
+  // 2. components
   calendar_title : {
     type : String,
     required : true
@@ -30,6 +34,15 @@ const CalendarScheme = new mongoose.Schema ({
   calendar_image : {
     type : String,
     required : false
+  },
+
+  // 3. date
+  calendar_day : {
+    type : String,
+    default : () => {
+      return "default";
+    },
+    required : true
   },
   calendar_regdate : {
     type : String,

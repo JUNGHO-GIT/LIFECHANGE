@@ -2,6 +2,8 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema ({
+
+  // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true

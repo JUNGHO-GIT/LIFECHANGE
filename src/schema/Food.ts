@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import moment from "moment-timezone";
 
 const FoodScheme = new mongoose.Schema ({
+
+  // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
@@ -11,6 +13,8 @@ const FoodScheme = new mongoose.Schema ({
     type  : String,
     required : true
   },
+
+  // 2. components
   food_title : {
     type : String,
     required : true
@@ -48,6 +52,8 @@ const FoodScheme = new mongoose.Schema ({
     default : "daily",
     required : false
   },
+
+  // 3. date
   food_day : {
     type : String,
     default : () => {

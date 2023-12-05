@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import moment from "moment-timezone";
 
 const SleepScheme = new mongoose.Schema ({
+
+  // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
@@ -11,6 +13,8 @@ const SleepScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
+
+  // 2. components
   sleep_night : {
     type : String,
     required : true
@@ -23,6 +27,8 @@ const SleepScheme = new mongoose.Schema ({
     type : String,
     required : true
   },
+
+  // 3. date
   sleep_day : {
     type : String,
     default : () => {
