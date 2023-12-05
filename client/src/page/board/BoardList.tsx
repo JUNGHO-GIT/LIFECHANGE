@@ -54,7 +54,7 @@ export const BoardList = () => {
           </tr>
         </thead>
         <tbody>
-          {BOARD_LIST.map((index :any) => (
+          {BOARD_LIST.map((index: any) => (
             <tr key={index._id}>
               <td>{buttonBoardDetail(index._id, index.user_id)}</td>
               <td>{index.board_title}</td>

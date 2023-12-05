@@ -68,7 +68,7 @@ export const FoodListDay = () => {
         alert(`Error fetching food data: ${error.message}`);
       }
     };
-    // 1-2. total
+    // 2. total
     const fetchFoodTotal = async () => {
       try {
         const response = await axios.get (`${URL_FOOD}/foodTotal`, {
@@ -86,7 +86,7 @@ export const FoodListDay = () => {
         alert(`Error fetching food data: ${error.message}`);
       }
     };
-    // 2. average
+    // 3. average
     const fetchFoodAvg = async () => {
       try {
         const response = await axios.get (`${URL_FOOD}/foodAvg`, {
@@ -242,6 +242,7 @@ export const FoodListDay = () => {
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setFoodDay(koreanDate);
         localStorage.removeItem("foodList(DAY)");
+        localStorage.removeItem("foodTotal(DAY)");
         localStorage.removeItem("foodAvg(DAY)");
         localStorage.removeItem("foodDay(DAY)");
       }}>
@@ -254,6 +255,7 @@ export const FoodListDay = () => {
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setFoodDay(undefined);
         localStorage.removeItem("foodList(DAY)");
+        localStorage.removeItem("foodTotal(DAY)");
         localStorage.removeItem("foodAvg(DAY)");
         localStorage.removeItem("foodDay(DAY)");
       }}>

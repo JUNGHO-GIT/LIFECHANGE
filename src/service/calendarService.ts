@@ -5,54 +5,97 @@ import * as mongoose from "mongoose";
 // 1. calendarList -------------------------------------------------------------------------------->
 export const calendarList = async (
 ) => {
-  const calendarList = await Calendar.find (
-  );
-  return calendarList;
+
+  let findQuery;
+  let findResult;
+  let finalResult;
+
+  findQuery = {
+  };
+
+  findResult = await Calendar.find(findQuery).sort({ _id: -1 });
+
+  return findResult;
 };
 
 // 2. calendarDetail ------------------------------------------------------------------------------>
 export const calendarDetail = async (
-  _id_param :any
+  _id_param: any
 ) => {
-  const calendarDetail = await Calendar.findOne ({
-    _id : _id_param,
-  });
-  return calendarDetail;
+
+  let findQuery;
+  let findResult;
+  let finalResult;
+
+  findQuery = {
+    _id: _id_param
+  };
+
+  findResult = await Calendar.findOne(findQuery);
+
+  return findResult;
 };
 
 // 3. calendarInsert ------------------------------------------------------------------------------>
 export const calendarInsert = async (
-  user_id_param :any,
-  CALENDAR_param :any
+  user_id_param: any,
+  CALENDAR_param: any
 ) => {
-  const calendarInsert = await Calendar.create ({
+
+  let createQuery;
+  let createResult;
+  let finalResult;
+
+  createQuery = {
     _id : new mongoose.Types.ObjectId(),
     user_id : user_id_param,
     calendar_title : CALENDAR_param.calendar_title,
     calendar_content : CALENDAR_param.calendar_content,
     calendar_date : CALENDAR_param.calendar_date,
-  });
-  return calendarInsert;
+  };
+
+  createResult = await Calendar.create(createQuery);
+
+  return createResult;
 };
 
 // 4. calendarUpdate ------------------------------------------------------------------------------>
 export const calendarUpdate = async (
-  _id_param :any,
-  CALENDAR_param :any
+  _id_param: any,
+  CALENDAR_param: any
 ) => {
-  const calendarUpdate = await Calendar.updateOne (
-    {_id : _id_param},
-    {$set : CALENDAR_param}
+
+  let updateQuery;
+  let updateResult;
+  let finalResult;
+
+  updateQuery = {
+    filter_id : {_id : _id_param},
+    filter_set : {$set : CALENDAR_param}
+  };
+
+  updateResult = await CALENDAR_param.updateOne(
+    updateQuery.filter_id,
+    updateQuery.filter_set
   );
-  return calendarUpdate;
+
+  return updateResult;
 };
 
 // 5. calendarDelete ------------------------------------------------------------------------------>
 export const calendarDelete = async (
-  _id_param :any
+  _id_param: any
 ) => {
-  const calendarDelete = await Calendar.deleteOne ({
-    _id : _id_param,
-  });
-  return calendarDelete;
+
+  let deleteQuery;
+  let deleteResult;
+  let finalResult;
+
+  deleteQuery = {
+    _id : _id_param
+  };
+
+  deleteResult = await Calendar.deleteOne(deleteQuery);
+
+  return deleteResult;
 };

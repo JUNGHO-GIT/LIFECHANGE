@@ -24,10 +24,14 @@ export const FoodListSelect = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [foodType, setFoodType] = useState<string>("list");
+  const [foodCategory, setFoodCategory] = useState<string>("all");
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
     "foodList(SELECT)", []
+  );
+  const {val:FOOD_TOTAL, setVal:setFOOD_TOTAL} = useStorage<any>(
+    "foodTotal(SELECT)", []
   );
   const {val:FOOD_AVERAGE, setVal:setFOOD_AVERAGE} = useStorage<any>(
     "foodAvg(SELECT)", []
@@ -56,6 +60,7 @@ export const FoodListSelect = () => {
           params: {
             user_id : user_id,
             food_dur : foodResDur,
+            food_category : foodCategory
           },
         });
         setFOOD_LIST(response.data);
@@ -66,13 +71,32 @@ export const FoodListSelect = () => {
         alert(`Error fetching food data: ${error.message}`);
       }
     };
-    // 2. average
+    // 2. total
+    const fetchFoodTotal = async () => {
+      try {
+        const response = await axios.get (`${URL_FOOD}/foodTotal`, {
+          params: {
+            user_id : user_id,
+            food_dur : foodResDur,
+            food_category : foodCategory
+          },
+        });
+        setFOOD_TOTAL(response.data);
+        console.log("FOOD_TOTAL : " + JSON.stringify(response.data));
+      }
+      catch (error:any) {
+        setFOOD_TOTAL([]);
+        alert(`Error fetching food data: ${error.message}`);
+      }
+    };
+    // 3. average
     const fetchFoodAvg = async () => {
       try {
         const response = await axios.get (`${URL_FOOD}/foodAvg`, {
           params: {
             user_id : user_id,
             food_dur : foodResDur,
+            food_category : foodCategory
           },
         });
         setFOOD_AVERAGE(response.data);
@@ -84,8 +108,9 @@ export const FoodListSelect = () => {
       }
     };
     fetchFoodList();
+    fetchFoodTotal();
     fetchFoodAvg();
-  }, [user_id, foodResDur]);
+  }, [user_id, foodResDur, foodCategory]);
 
   // 2-5. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -181,25 +206,27 @@ export const FoodListSelect = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>기간</th>
-            <th>취침 시간</th>
-            <th>기상 시간</th>
-            <th>수면 시간</th>
+            <th>분류</th>
+            <th>음식명</th>
+            <th>브랜드</th>
+            <th>서빙</th>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD_LIST.map((index:any) => (
-            <tr key={index._id}>
-              <td className="pointer" onClick={() => {
-                navParam("/foodDetail", {
-                  state: {_id: index._id}
-                }
-              )}}>
-                {foodResDur}
-              </td>
-              <td>{index.food_night}</td>
-              <td>{index.food_morning}</td>
-              <td>{index.food_time}</td>
+          {FOOD_LIST.map((index:any, i: number) => (
+            <tr key={i}>
+              <td>{index.food_category}</td>
+              <td>{index.food_title}</td>
+              <td>{index.food_brand}</td>
+              <td>{index.food_serving}</td>
+              <td>{index.food_calories}</td>
+              <td>{index.food_carb}</td>
+              <td>{index.food_protein}</td>
+              <td>{index.food_fat}</td>
             </tr>
           ))}
         </tbody>
@@ -208,24 +235,50 @@ export const FoodListSelect = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
+  const tableFoodTotal = () => {
+    return (
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
+          </tr>
+        </thead>
+        <tbody>
+          {FOOD_TOTAL.map((index:any, i: number) => (
+            <tr key={i}>
+              <td>{index.totalCalories}</td>
+              <td>{index.totalCarb}</td>
+              <td>{index.totalProtein}</td>
+              <td>{index.totalFat}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // 5-3. table ----------------------------------------------------------------------------------->
   const tableFoodAvg = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>기간</th>
-            <th>취침 평균</th>
-            <th>기상 평균</th>
-            <th>수면 평균</th>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD_AVERAGE.map((index:any) => (
-            <tr key={index._id}>
-              <td>{foodResDur}</td>
-              <td>{index.avgFoodNight}</td>
-              <td>{index.avgFoodMorning}</td>
-              <td>{index.avgFoodTime}</td>
+          {FOOD_AVERAGE.map((index:any, i: number) => (
+            <tr key={i}>
+              <td>{index.food_calories}</td>
+              <td>{index.food_carb}</td>
+              <td>{index.food_protein}</td>
+              <td>{index.food_fat}</td>
             </tr>
           ))}
         </tbody>
@@ -240,6 +293,7 @@ export const FoodListSelect = () => {
         setFoodStartDay(koreanDate);
         setFoodEndDay(koreanDate);
         localStorage.removeItem("foodList(SELECT)");
+        localStorage.removeItem("foodTotal(SELECT)");
         localStorage.removeItem("foodAvg(SELECT)");
         localStorage.removeItem("foodStartDay(SELECT)");
         localStorage.removeItem("foodEndDay(SELECT)");
@@ -254,6 +308,7 @@ export const FoodListSelect = () => {
         setFoodStartDay(undefined);
         setFoodEndDay(undefined);
         localStorage.removeItem("foodList(SELECT)");
+        localStorage.removeItem("foodTotal(SELECT)");
         localStorage.removeItem("foodAvg(SELECT)");
         localStorage.removeItem("foodStartDay(SELECT)");
         localStorage.removeItem("foodEndDay(SELECT)");
@@ -298,6 +353,35 @@ export const FoodListSelect = () => {
       </div>
     );
   };
+  const selectFoodCategory = () => {
+    return (
+      <div className="mb-3">
+        <select className="form-select" id="foodCategory" onChange={(e:any) => {
+          if (e.target.value === "all") {
+            setFoodCategory("all");
+          }
+          else if (e.target.value === "morning") {
+            setFoodCategory("morning");
+          }
+          else if (e.target.value === "lunch") {
+            setFoodCategory("lunch");
+          }
+          else if (e.target.value === "dinner") {
+            setFoodCategory("dinner");
+          }
+          else if (e.target.value === "snack") {
+            setFoodCategory("snack");
+          }
+        }}>
+          <option value="all">All</option>
+          <option value="morning">Morning</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+          <option value="snack">Snack</option>
+        </select>
+      </div>
+    );
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -315,6 +399,9 @@ export const FoodListSelect = () => {
         <div className="col-3">
           {selectFoodType()}
         </div>
+        <div className="col-3">
+          {selectFoodCategory()}
+        </div>
       </div>
       <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
@@ -322,6 +409,7 @@ export const FoodListSelect = () => {
         </div>
         <div className="col-md-6 col-12">
           {foodType === "list" && tableFoodList()}
+          {foodType === "total" && tableFoodTotal()}
           {foodType === "avg" && tableFoodAvg()}
         </div>
       </div>

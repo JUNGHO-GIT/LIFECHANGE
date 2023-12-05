@@ -10,18 +10,24 @@ export const workList = async (
   work_dur_param: any
 ) => {
 
+  let findQuery;
+  let findResult;
+  let finalResult;
+
   const startDay = work_dur_param.split(` ~ `)[0];
   const endDay = work_dur_param.split(` ~ `)[1];
 
-  const workList = await Work.find ({
+  findQuery = {
     user_id: user_id_param,
-    work_day : {
-      $gte : startDay,
-      $lte : endDay,
-    },
-  }).sort({work_day : -1});
+    work_day: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
 
-  return workList;
+  findResult = await Work.find(findQuery).sort({ work_day: -1 });
+
+  return findResult;
 };
 
 // 1-2. workAvg ----------------------------------------------------------------------------------->
@@ -32,6 +38,10 @@ export const workAvg = async (
   work_title_val_param: any
 ) => {
 
+  let findQuery;
+  let findResult;
+  let finalResult;
+
   const startDay = work_dur_param.split(` ~ `)[0];
   const endDay = work_dur_param.split(` ~ `)[1];
 
@@ -39,68 +49,77 @@ export const workAvg = async (
     let work_part_before = workPartAll[0].workPart.toString();
     work_part_val_param = work_part_before.replace(/,/g, "|");
   }
-  // console.log("work_part_val_param  :  " + work_part_val_param);
 
   if (work_title_val_param === "전체") {
     let work_title_before = workTitleAll[0].workTitle.toString();
     work_title_val_param = work_title_before.replace(/,/g, "|");
   }
-  // console.log("work_title_val_param  :  " + work_title_val_param);
 
-  const workAvg = await Work.aggregate ([
+  findQuery = [
     {$unwind: "$workSection"},
     {$match: {
-      user_id : user_id_param,
-      "workSection.work_part_val" : {$regex : work_part_val_param},
-      "workSection.work_title_val" : {$regex : work_title_val_param},
-      work_day : {
-        $gte : startDay,
-        $lte : endDay,
+      user_id: user_id_param,
+      "workSection.work_part_val": {$regex: work_part_val_param},
+      "workSection.work_title_val": {$regex: work_title_val_param},
+      work_day: {
+        $gte: startDay,
+        $lte: endDay,
       },
     }},
     {$group: {
       _id: "$workSection.work_title_val",
       count: {$sum: 1},
-      work_part_val : {$first: "$workSection.work_part_val"},
-      work_title_val : {$first: "$workSection.work_title_val"},
+      work_part_val: {$first: "$workSection.work_part_val"},
+      work_title_val: {$first: "$workSection.work_title_val"},
       work_count_avg: {$avg: "$workSection.work_count"},
       work_set_avg: {$avg: "$workSection.work_set"},
       work_kg_avg: {$avg: "$workSection.work_kg"},
       work_rest_avg: {$avg: "$workSection.work_rest"},
-    }},
-    {$sort: {_id: 1}}
-  ]);
-  return workAvg;
+    }}
+  ];
+
+  findResult = await Work.aggregate(findQuery).sort({ _id: 1 });
+
+  return findResult;
 };
+
 
 // 2. workDetail ---------------------------------------------------------------------------------->
 export const workDetail = async (
   _id_param : any,
   workSection_id_param : any
 ) => {
-  console.log("log ==== _id_param :  " + _id_param);
-  console.log("log ==== workSection_id_param :  " + workSection_id_param);
 
-  let workDetail;
+  let findQuery;
+  let findResult;
+  let finalResult;
   let workScheme;
 
-  if (workSection_id_param === null) {
-    workDetail = await Work.findOne({ _id: _id_param });
+  if (!workSection_id_param) {
+    findQuery = {
+      _id: _id_param
+    };
+    findResult = await Work.findOne(findQuery);
+    finalResult = findResult;
   }
-  if (workSection_id_param !== null) {
-    workScheme = await Work.findOne({ _id: _id_param });
+  else {
+    findQuery = {
+      _id: _id_param
+    };
+    findResult = await Work.findOne(findQuery);
+    workScheme = findResult;
+
     if (workScheme) {
       const matchedSection = workScheme.workSection.find((section: any) => {
         return section._id.toString() === workSection_id_param.toString();
       });
-      workDetail = {
+      finalResult = {
         ...workScheme.toObject(),
         workSection: [matchedSection]
       };
     }
   }
-  console.log("log ==== workDetail :  " + JSON.stringify(workDetail));
-  return workDetail;
+  return finalResult;
 };
 
 // 3. workInsert ---------------------------------------------------------------------------------->
@@ -108,7 +127,12 @@ export const workInsert = async (
   user_id_param : any,
   WORK_param : any
 ) => {
-  const workInsert = await Work.create ({
+
+  let createQuery;
+  let createResult;
+  let finalResult;
+
+  createQuery = {
     _id : new mongoose.Types.ObjectId(),
     user_id : user_id_param,
     workSection : WORK_param.workSection,
@@ -118,8 +142,11 @@ export const workInsert = async (
     work_day : WORK_param.workDay,
     work_regdate : WORK_param.work_regdate,
     work_update : WORK_param.work_update,
-  });
-  return workInsert;
+  };
+
+  createResult = await Work.create(createQuery);
+
+  return createResult;
 };
 
 // 4. workUpdate ---------------------------------------------------------------------------------->
@@ -127,11 +154,22 @@ export const workUpdate = async (
   _id_param : any,
   WORK_param : any
 ) => {
-  const workUpdate = await Work.updateOne (
-    {_id : _id_param},
-    {$set : WORK_param}
+
+  let updateQuery;
+  let updateResult;
+  let finalResult;
+
+  updateQuery = {
+    filter_id : {_id : _id_param},
+    filter_set : {$set : WORK_param}
+  };
+
+  updateResult = await WORK_param.updateOne(
+    updateQuery.filter_id,
+    updateQuery.filter_set
   );
-  return workUpdate;
+
+  return updateResult;
 };
 
 // 5. workDelete ---------------------------------------------------------------------------------->
@@ -140,35 +178,37 @@ export const workDelete = async (
   workSection_id_param : any
 ) => {
 
-  console.log("log ==== _id_param :  " + _id_param);
-  console.log("log ==== workSection_id_param :  " + workSection_id_param);
+  let deleteQuery;
+  let deleteResult;
+  let finalResult;
 
-  let workDelete;
-
+  // workSection_id_param이 제공되면 해당 섹션만 삭제합니다.
+  // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제합니다.
+  // 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거합니다.
   if (
     workSection_id_param !== null &&
     workSection_id_param !== undefined &&
     workSection_id_param !== ""
   ) {
-    // workSection_id_param이 제공되면 해당 섹션만 삭제합니다.
-    // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제합니다.
-    // 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거합니다.
-    workDelete = await Work.updateOne (
+    deleteQuery = [
       {_id: _id_param},
       {$pull: {
         workSection: { _id: workSection_id_param }
       }}
-    );
+    ];
+    deleteResult = await Work.updateOne(deleteQuery);
   }
+
+  // workSection_id_param이 제공되지 않으면 전체 작업을 삭제합니다.
   else if (
     workSection_id_param === null ||
     workSection_id_param === undefined ||
     workSection_id_param === ""
   ) {
-    // workSection_id_param이 제공되지 않으면 전체 작업을 삭제합니다.
-    workDelete = await Work.deleteOne (
-      {_id: _id_param}
-    );
+    deleteQuery = {
+      _id: _id_param
+    };
+    deleteResult = await Work.deleteOne(deleteQuery);
   }
-  return workDelete;
+  return deleteResult;
 };

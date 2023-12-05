@@ -9,19 +9,24 @@ export const sleepList = async (
   sleep_dur_param: any,
 ) => {
 
+  let findQuery;
+  let findResult;
+  let finalResult;
+
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
 
-  const sleepList = await Sleep.find({
+  findQuery = {
     user_id: user_id_param,
-    sleep_day : {
-      $gte : startDay,
-      $lte : endDay,
-    },
-  }).sort({sleep_day : -1});
+    sleep_day: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
 
-  // 배열 리턴
-  return sleepList;
+  findResult = await Sleep.find(findQuery).sort({ sleep_day: -1 });
+
+  return findResult;
 };
 
 // 1-2. sleepAvg ---------------------------------------------------------------------------------->
@@ -30,19 +35,25 @@ export const sleepAvg = async (
   sleep_dur_param: any,
 ) => {
 
+  let findQuery;
+  let findResult;
+  let finalResult;
+
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
 
-  const sleepsInRange = await Sleep.find({
-    user_id : user_id_param,
-    sleep_day : {
-      $gte : startDay,
-      $lte : endDay,
-    },
-  });
+  findQuery = {
+    user_id: user_id_param,
+    sleep_day: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
+
+  findResult = await Sleep.find(findQuery).sort({ sleep_day: -1 });
 
   // 데이터가 없는 경우 빈 배열 반환
-  if (sleepsInRange.length === 0) {
+  if (findResult.length === 0) {
     return [];
   }
 
@@ -50,38 +61,45 @@ export const sleepAvg = async (
   let totalSleepNight = 0;
   let totalSleepMorning = 0;
 
-  sleepsInRange.forEach((sleep) => {
+  findResult.forEach((sleep) => {
     const [hours, minutes] = sleep.sleep_time.split(":").map(Number);
-    totalSleepTime += (hours * 60) + minutes;
-
     const [nightHours, nightMinutes] = sleep.sleep_night.split(":").map(Number);
     const [morningHours, morningMinutes] = sleep.sleep_morning.split(":").map(Number);
+    totalSleepTime += (hours * 60) + minutes;
     totalSleepNight += (nightHours * 60) + nightMinutes;
     totalSleepMorning += (morningHours * 60) + morningMinutes;
   });
 
-  const avgSleepTime = moment.utc((totalSleepTime / sleepsInRange.length) * 60000).format("HH:mm");
-  const avgSleepNight = moment.utc((totalSleepNight / sleepsInRange.length) * 60000).format("HH:mm");
-  const avgSleepMorning = moment.utc((totalSleepMorning / sleepsInRange.length) * 60000).format("HH:mm");
+  const avgSleepTime = moment.utc((totalSleepTime / findResult.length) * 60000).format("HH:mm");
+  const avgSleepNight = moment.utc((totalSleepNight / findResult.length) * 60000).format("HH:mm");
+  const avgSleepMorning = moment.utc((totalSleepMorning / findResult.length) * 60000).format("HH:mm");
 
-  const sleepAvg = [{
+  finalResult = [{
     "avgSleepTime" : avgSleepTime,
     "avgSleepNight" : avgSleepNight,
     "avgSleepMorning" : avgSleepMorning,
   }];
 
   // 배열 리턴
-  return sleepAvg;
+  return finalResult;
 };
 
 // 2. sleepDetail --------------------------------------------------------------------------------->
 export const sleepDetail = async (
   _id_param : any
 ) => {
-  const sleepDetail = await Sleep.findOne ({
+
+  let findQuery;
+  let findResult;
+  let finalResult;
+
+  findQuery = {
     _id: _id_param,
-  });
-  return sleepDetail;
+  };
+
+  findResult = await Sleep.findOne(findQuery);
+
+  return findResult;
 };
 
 // 3. sleepInsert --------------------------------------------------------------------------------->
@@ -89,18 +107,26 @@ export const sleepInsert = async (
   user_id_param : any,
   SLEEP_param : any
 ) => {
-  const sleepInsert = await Sleep.create ({
-    _id : new mongoose.Types.ObjectId(),
-    user_id : user_id_param,
-    sleep_night : SLEEP_param.sleep_night,
-    sleep_morning : SLEEP_param.sleep_morning,
-    sleep_time : SLEEP_param.sleep_time,
-    sleep_day : SLEEP_param.sleepDay,
-    sleep_dur : SLEEP_param.sleep_dur,
-    sleep_regdate : SLEEP_param.sleep_regdate,
-    sleep_update : SLEEP_param.sleep_update,
-  });
-  return sleepInsert;
+
+  let createQuery;
+  let createResult;
+  let finalResult;
+
+  createQuery = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    sleep_night: SLEEP_param.sleep_night,
+    sleep_morning: SLEEP_param.sleep_morning,
+    sleep_time: SLEEP_param.sleep_time,
+    sleep_day: SLEEP_param.sleepDay,
+    sleep_dur: SLEEP_param.sleep_dur,
+    sleep_regdate: SLEEP_param.sleep_regdate,
+    sleep_update: SLEEP_param.sleep_update,
+  };
+
+  createResult = await Sleep.create(createQuery);
+
+  return createResult;
 };
 
 // 4. sleepUpdate --------------------------------------------------------------------------------->
@@ -108,19 +134,38 @@ export const sleepUpdate = async (
   _id_param : any,
   SLEEP_param : any
 ) => {
-  const sleepUpdate = await Sleep.updateOne (
-    {_id : _id_param},
-    {$set : SLEEP_param},
+
+  let updateQuery;
+  let updateResult;
+  let finalResult;
+
+  updateQuery = {
+    filter_id : {_id : _id_param},
+    filter_set : {$set : SLEEP_param}
+  };
+
+  updateResult = await SLEEP_param.updateOne(
+    updateQuery.filter_id,
+    updateQuery.filter_set
   );
-  return sleepUpdate;
+
+  return updateResult;
 };
 
 // 5. sleepDelete --------------------------------------------------------------------------------->
 export const sleepDelete = async (
   _id_param : any
 ) => {
-  const sleepDelete = await Sleep.deleteOne({
+
+  let deleteQuery;
+  let deleteResult;
+  let finalResult;
+
+  deleteQuery = {
     _id: _id_param,
-  });
-  return sleepDelete;
+  };
+
+  deleteResult = await Sleep.deleteOne(deleteQuery);
+
+  return deleteResult;
 };

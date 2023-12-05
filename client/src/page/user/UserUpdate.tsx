@@ -34,7 +34,7 @@ export const UserUpdate = () => {
         });
         setUSER(response.data);
       }
-      catch (error :any) {
+      catch (error: any) {
         alert(`Error fetching user data: ${error.message}`);
       }
     };
@@ -76,7 +76,7 @@ export const UserUpdate = () => {
         }
       }
     }
-    catch (error :any) {
+    catch (error: any) {
       alert(`Error fetching user data: ${error.message}`);
     }
   };
