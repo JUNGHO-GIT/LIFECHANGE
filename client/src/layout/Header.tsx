@@ -19,7 +19,7 @@ export const Header = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {toggleDeveloperMode} = useDeveloperMode();
+  const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
 
   // 4-1. logic ----------------------------------------------------------------------------------->
   const DropdownItem: React.FC<{to: string, label: string}> = ({to, label}) => (
@@ -156,8 +156,10 @@ export const Header = () => {
 
   // 6-3. button ---------------------------------------------------------------------------------->
   const buttonDeveloperMode = () => {
+    const buttonClass
+    = isDeveloperMode ? "btn btn-sm btn-light ms-2" : "btn btn-sm btn-outline-light ms-2";
     return (
-      <button type="button" className="btn btn-sm btn-outline-light ms-2" onClick={() => {
+      <button type="button" className={buttonClass} onClick={() => {
         toggleDeveloperMode();
       }}>
         Dev

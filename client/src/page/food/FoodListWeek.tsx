@@ -64,7 +64,7 @@ export const FoodListWeek = () => {
           },
         });
         setFOOD_LIST(response.data);
-        console.log("FOOD_LIST : " + JSON.stringify(response.data));
+        log("FOOD_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setFOOD_LIST([]);
@@ -82,7 +82,7 @@ export const FoodListWeek = () => {
           },
         });
         setFOOD_TOTAL(response.data);
-        console.log("FOOD_TOTAL : " + JSON.stringify(response.data));
+        log("FOOD_TOTAL : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setFOOD_TOTAL([]);
@@ -100,7 +100,7 @@ export const FoodListWeek = () => {
           },
         });
         setFOOD_AVERAGE(response.data);
-        console.log("FOOD_AVERAGE : " + JSON.stringify(response.data));
+        log("FOOD_AVERAGE : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setFOOD_AVERAGE([]);

@@ -67,7 +67,7 @@ export const WorkListYear = () => {
           },
         });
         setWORK_LIST(response.data);
-        console.log("WORK_LIST " + JSON.stringify(response.data));
+        log("WORK_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setWORK_LIST([]);
@@ -86,7 +86,7 @@ export const WorkListYear = () => {
           },
         });
         setWORK_AVERAGE(response.data);
-        console.log("WORK_AVERAGE " + JSON.stringify(response.data));
+        log("WORK_AVERAGE " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setWORK_AVERAGE([]);

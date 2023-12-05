@@ -57,7 +57,7 @@ export const SleepListYear = () => {
           },
         });
         setSLEEP_LIST(response.data);
-        console.log("SLEEP_LIST : " + JSON.stringify(response.data));
+        log("SLEEP_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setSLEEP_LIST([]);
@@ -74,7 +74,7 @@ export const SleepListYear = () => {
           },
         });
         setSLEEP_AVERAGE(response.data);
-        console.log("SLEEP_AVERAGE : " + JSON.stringify(response.data));
+        log("SLEEP_AVERAGE : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setSLEEP_AVERAGE([]);
