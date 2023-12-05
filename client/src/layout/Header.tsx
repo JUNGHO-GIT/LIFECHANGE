@@ -99,7 +99,14 @@ export const Header = () => {
           {to: "/sleepInsert", label: "SleepInsert"},
           {to: "/sleepListDay", label: "SleepList"}
         ]
-      }
+      },
+      {
+        label: "Money",
+        items: [
+          {to: "/moneyInsert", label: "MoneyInsert"},
+          {to: "/moneyListDay", label: "MoneyList"}
+        ]
+      },
     ];
     return (
       <ul className="nav bg-dark rounded">

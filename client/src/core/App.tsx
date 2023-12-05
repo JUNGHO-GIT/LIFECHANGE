@@ -39,7 +39,6 @@ import {BoardUpdate} from "../page/board/BoardUpdate";
 import {CalendarList} from "../page/calendar/CalendarList";
 import {CalendarDetail} from "../page/calendar/CalendarDetail";
 
-
 import {FoodInsert} from "../page/food/FoodInsert";
 import {FoodDetail} from "../page/food/FoodDetail";
 import {FoodUpdate} from "../page/food/FoodUpdate";
