@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import moment from "moment-timezone";
 import axios from "axios";
+import {useDeveloperMode} from "../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const Header = () => {
-
   // title
   const TITLE = "Header";
   // url
@@ -18,6 +17,9 @@ export const Header = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {toggleDeveloperMode} = useDeveloperMode();
 
   // 4-1. logic ----------------------------------------------------------------------------------->
   const DropdownItem: React.FC<{to: string, label: string}> = ({to, label}) => (
@@ -152,6 +154,17 @@ export const Header = () => {
     }
   };
 
+  // 6-3. button ---------------------------------------------------------------------------------->
+  const buttonDeveloperMode = () => {
+    return (
+      <button type="button" className="btn btn-sm btn-outline-light ms-2" onClick={() => {
+        toggleDeveloperMode();
+      }}>
+        Dev
+      </button>
+    );
+  };
+
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <header className="container-fluid bg-dark">
@@ -159,7 +172,10 @@ export const Header = () => {
         <div className="col-9">
           {tableNaveList()}
         </div>
-        <div className="col-3">
+        <div className="col-1">
+          {buttonDeveloperMode()}
+        </div>
+        <div className="col-2">
           {loginFalse()}
           {loginTrue()}
         </div>

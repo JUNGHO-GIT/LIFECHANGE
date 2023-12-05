@@ -7,6 +7,7 @@ import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const FoodListDay = () => {
@@ -25,6 +26,7 @@ export const FoodListDay = () => {
   // 2-1. useState -------------------------------------------------------------------------------->
   const [foodType, setFoodType] = useState<string>("list");
   const [foodCategory, setFoodCategory] = useState<string>("all");
+  const {log} = useDeveloperMode();
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
@@ -61,7 +63,7 @@ export const FoodListDay = () => {
           },
         });
         setFOOD_LIST(response.data);
-        console.log("FOOD_LIST : " + JSON.stringify(response.data));
+        log("FOOD_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setFOOD_LIST([]);
@@ -79,7 +81,7 @@ export const FoodListDay = () => {
           },
         });
         setFOOD_TOTAL(response.data);
-        console.log("FOOD_TOTAL : " + JSON.stringify(response.data));
+        log("FOOD_TOTAL : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setFOOD_TOTAL([]);
@@ -97,7 +99,7 @@ export const FoodListDay = () => {
           },
         });
         setFOOD_AVERAGE(response.data);
-        console.log("FOOD_AVERAGE : " + JSON.stringify(response.data));
+        log("FOOD_AVERAGE : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         setFOOD_AVERAGE([]);

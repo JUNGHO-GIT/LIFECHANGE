@@ -2,6 +2,7 @@
 import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {useDynamicStyle} from "../assets/ts/useDynamicStyle";
+import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
 import bcrypt from "bcryptjs-react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -78,11 +79,13 @@ const App = () => {
 
   return (
     <div className="App">
+    <DeveloperModeProvider>
       <Loader />
       <Resize />
       <Hover />
       <Header />
       <Routes>
+
         <Route path="/" element={<Main />} />
 
         <Route path="/userLogin" element={<UserLogin />} />
@@ -128,8 +131,10 @@ const App = () => {
         <Route path="/sleepListMonth" element={<SleepListMonth />} />
         <Route path="/sleepListYear" element={<SleepListYear />} />
         <Route path="/sleepListSelect" element={<SleepListSelect />} />
+
       </Routes>
       <Footer />
+      </DeveloperModeProvider>
     </div>
   );
 };
