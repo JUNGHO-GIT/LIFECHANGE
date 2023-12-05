@@ -8,6 +8,7 @@ import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
 import {createGlobalStyle} from "styled-components";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 const MainStyle = createGlobalStyle`
@@ -65,6 +66,8 @@ export const Main = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
+  // log
+  const {log} = useDeveloperMode();
 
   // ---------------------------------------------------------------------------------------------->
   const CarouselFirst = () => {

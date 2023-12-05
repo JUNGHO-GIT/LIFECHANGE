@@ -9,6 +9,7 @@ import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const CalendarDetail = () => {
@@ -26,7 +27,10 @@ export const CalendarDetail = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
+  // log
+  const {log} = useDeveloperMode();
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any> (
     "foodListDay", []
   );

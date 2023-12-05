@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const FoodInsert = () => {
@@ -21,10 +22,12 @@ export const FoodInsert = () => {
   // val
   const user_id = window.sessionStorage.getItem("user_id");
   const {title, brand, serving, calories, fat, carb, protein} = location.state;
-  // useState 1
+  // log
+  const {log} = useDeveloperMode();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
-  // useState 2
   const [FOOD, setFOOD] = useState<any>({});
   const [foodDay, setFoodDay] = useState<string>(koreanDate);
 

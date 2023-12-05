@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const UserList = () => {
@@ -20,7 +21,10 @@ export const UserList = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // state
+  // log
+  const {log} = useDeveloperMode();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [USER_LIST, setUSER_LIST] = useState<[]> ([]);
 
   // 2. useEffect --------------------------------------------------------------------------------->

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const UserInsert = () => {
@@ -18,7 +19,8 @@ export const UserInsert = () => {
   // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // log
+  const {log} = useDeveloperMode();
   // state
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");

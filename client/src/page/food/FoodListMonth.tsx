@@ -7,6 +7,7 @@ import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const FoodListMonth = () => {
@@ -21,6 +22,8 @@ export const FoodListMonth = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
+  // log
+  const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [foodType, setFoodType] = useState<string>("list");

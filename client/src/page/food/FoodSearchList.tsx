@@ -4,6 +4,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const FoodSearchList = () => {
@@ -20,7 +21,10 @@ export const FoodSearchList = () => {
   // val
   const lang = "ko";
   const user_id = window.sessionStorage.getItem("user_id");
-  // state 1
+  // log
+  const {log} = useDeveloperMode();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any> ([]);
   const [foodDay, setFoodDay] = useState(koreanDate);
   const [query, setQuery] = useState("");

@@ -22,11 +22,12 @@ export const FoodListDay = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
+  // log
+  const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [foodType, setFoodType] = useState<string>("list");
   const [foodCategory, setFoodCategory] = useState<string>("all");
-  const {log} = useDeveloperMode();
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const UserDelete = () => {
@@ -18,8 +19,10 @@ export const UserDelete = () => {
   // hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
-  // state
+  // log
+  const {log} = useDeveloperMode();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 

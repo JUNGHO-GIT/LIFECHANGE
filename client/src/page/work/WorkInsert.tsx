@@ -6,6 +6,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {workPartArray, workTitleArray} from "../work/WorkArray";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkInsert = () => {
@@ -20,7 +21,10 @@ export const WorkInsert = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
-  // useState
+  // log
+  const {log} = useDeveloperMode();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [WORK, setWORK] = useState<any>({});
   const [workDay, setWorkDay] = useState<string>(koreanDate);
   const [workAmount, setWorkAmount] = useState<number>(1);

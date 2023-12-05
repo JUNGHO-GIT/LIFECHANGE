@@ -9,6 +9,7 @@ import moment from "moment-timezone";
 import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
 import {workPartArray, workTitleArray} from "./WorkArray";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListYear = () => {
@@ -23,6 +24,8 @@ export const WorkListYear = () => {
   const location = useLocation();
   // val
   const user_id = window.sessionStorage.getItem("user_id");
+  // log
+  const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [workType, setWorkType] = useState<string>("list");

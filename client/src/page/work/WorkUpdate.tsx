@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkUpdate = () => {
@@ -21,6 +22,8 @@ export const WorkUpdate = () => {
   // val
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
+  // log
+  const {log} = useDeveloperMode();
   // state
   const [WORK, setWORK] = useState<any> ({});
 
