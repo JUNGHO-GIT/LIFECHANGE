@@ -1,7 +1,6 @@
 // App.tsx
 import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
-import {useDynamicStyle} from "../assets/ts/useDynamicStyle";
 import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
 import bcrypt from "bcryptjs-react";
 
@@ -13,6 +12,7 @@ import "boxicons/css/boxicons.min.css";
 import "react-day-picker/dist/style.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "../assets/css/Custom.css";
+import "../assets/css/Jstyle.css";
 import "../assets/css/DatePicker.css";
 import "../assets/css/TimePicker.css";
 import "../assets/css/DayPicker.css";
@@ -70,11 +70,6 @@ import {SleepListSelect} from "../page/sleep/SleepListSelect";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
-
-  const location = useLocation();
-  const uniqueSubFix = bcrypt.hashSync(location.pathname, 2);
-  let locationName = location.pathname + "/" + uniqueSubFix;
-  useDynamicStyle(document.body, locationName);
 
   return (
     <div className="App">

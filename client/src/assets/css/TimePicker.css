@@ -61,7 +61,6 @@
 .react-time-picker__inputGroup__input:read-only {
   background: none;
 }
-
 .react-time-picker__button {
   background: none;
   border: none;
@@ -71,7 +70,6 @@
   outline: none;
   padding: 0 6px;
 }
-
 .react-time-picker__button:disabled {
   color: #ccc;
   cursor: default;
@@ -82,7 +80,6 @@
   height: 1em;
   width: 1em;
 }
-
 .react-time-picker__clear-button {
   background: none;
   border: none;
@@ -96,13 +93,10 @@
   top: 50%;
   transform: translateY(-50%);
 }
-
 .react-time-picker__clear-button:disabled {
   color: #ccc;
   cursor: pointer;
 }
-
-
 .react-time-picker__inputGroup__leadingZero {
   background: none;
   border: none;

@@ -15,11 +15,41 @@ const MoneyScheme = new mongoose.Schema ({
   },
 
   // 2. components
+  money_category: [{
+    money_category_first_idx: {
+      type: Number,
+      required: false,
+    },
+    money_category_first_val: {
+      type: String,
+      required: false,
+    },
+    money_category_second_idx: {
+      type: Number,
+      required: false,
+    },
+    money_category_second_val: {
+      type: String,
+      required: false,
+    },
+    money_category_third_idx: {
+      type: Number,
+      required: false,
+    },
+    money_category_third_val: {
+      type: String,
+      required: false,
+    },
+  }],
   money_title : {
     type : String,
     required : true
   },
   money_content :{
+    type : String,
+    required : true
+  },
+  money_amount : {
     type : String,
     required : true
   },
