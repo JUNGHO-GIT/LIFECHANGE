@@ -346,11 +346,15 @@ export const FoodListSelect = () => {
           if (e.target.value === "list") {
             setFoodType("list");
           }
+          else if (e.target.value === "total") {
+            setFoodType("total");
+          }
           else if (e.target.value === "avg") {
             setFoodType("avg");
           }
         }}>
           <option value="list">List</option>
+          <option value="total">Total</option>
           <option value="avg">Avg</option>
         </select>
       </div>
