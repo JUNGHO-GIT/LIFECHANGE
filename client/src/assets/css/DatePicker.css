@@ -1,11 +1,17 @@
+
+.dContainer {
+  display: inline-block !important;
+}
+
 /* 입력 필드 스타일 */
 .react-datepicker__input-container input {
   border: 1px solid #ccc !important;
   border-radius: 4px !important;
-  padding: 5px !important;
+  padding: 5px 0px 5px 0px !important;
   text-align: center !important;
   font-size: 20px !important;
   font-weight: 700 !important;
+  width: fit-content !important;
 }
 
 /* 헤더 부분 */

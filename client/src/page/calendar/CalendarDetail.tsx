@@ -124,15 +124,30 @@ export const CalendarDetail = () => {
 
   // 4. logic ------------------------------------------------------------------------------------->
   const logicViewDate = () => {
+    const calcDate = (days) => {
+      setCalendarDay((prevDate) => {
+        const newDate = new Date(prevDate);
+        newDate.setDate(newDate.getDate() + days);
+        return newDate;
+      });
+    };
     return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={calendarDay}
-        onChange={(date:any) => {
-          setCalendarDay(date);
-        }}
-      />
+      <div className="d-inline-flex">
+        <div className="black mt-4 me-5" onClick={() => calcDate(-1)}>
+          &#8592;
+        </div>
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          popperPlacement="bottom"
+          selected={calendarDay}
+          onChange={(date) => {
+            setCalendarDay(date);
+          }}
+        />
+        <div className="black mt-4 ms-5" onClick={() => calcDate(1)}>
+          &#8594;
+        </div>
+      </div>
     );
   };
 

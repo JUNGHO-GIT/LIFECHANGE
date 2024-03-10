@@ -46,6 +46,7 @@ export const CalendarList = () => {
   // 4-1. logic ----------------------------------------------------------------------------------->
   const viewDay = () => {
     return (
+      <>
       <DayPicker
         mode="single"
         showOutsideDays
@@ -62,6 +63,7 @@ export const CalendarList = () => {
           inside: "inside",
         }}
       />
+      </>
     );
   };
 
