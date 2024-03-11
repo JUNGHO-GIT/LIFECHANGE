@@ -1,4 +1,5 @@
 // workService.ts
+
 import Work from "../schema/Work";
 import * as mongoose from "mongoose";
 import moment from "moment";
@@ -46,12 +47,12 @@ export const workAvg = async (
   const endDay = work_dur_param.split(` ~ `)[1];
 
   if (work_part_val_param === "전체") {
-    let work_part_before = workPartAll[0].workPart.toString();
+    let work_part_before = workPartAll[0].toString();
     work_part_val_param = work_part_before.replace(/,/g, "|");
   }
 
   if (work_title_val_param === "전체") {
-    let work_title_before = workTitleAll[0].workTitle.toString();
+    let work_title_before = workTitleAll[0].work_title.toString();
     work_title_val_param = work_title_before.replace(/,/g, "|");
   }
 

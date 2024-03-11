@@ -218,14 +218,14 @@ export const WorkListYear = () => {
                 onChange={(e:any) => {
                   setWorkPart(e.target.value);
                   const index = workPartArray.findIndex(
-                    (item) => item.workPart[0] === e.target.value
+                    (item) => item.work_part[0] === e.target.value
                   );
                   setWorkTitle("전체");
                   setWorkNumber(index);
                 }}>
                 {workPartArray.map((value, key) => (
-                  <option key={key} value={value.workPart[0]}>
-                    {value.workPart[0]}
+                  <option key={key} value={value.work_part[0]}>
+                    {value.work_part[0]}
                   </option>
                 ))}
               </select>
@@ -241,7 +241,7 @@ export const WorkListYear = () => {
                 onChange={(e:any) => {
                   setWorkTitle(e.target.value);
                 }}>
-                {workTitleArray[workNumber].workTitle.map((value, key) => (
+                {workTitleArray[workNumber].work_title.map((value, key) => (
                   <option key={key} value={value}>
                     {value}
                   </option>

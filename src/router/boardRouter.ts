@@ -1,4 +1,5 @@
 // boardRouter.ts
+
 import {Router, Request, Response} from "express";
 import * as boardService from "../service/boardService";
 

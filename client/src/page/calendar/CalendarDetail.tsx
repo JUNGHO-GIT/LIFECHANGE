@@ -68,6 +68,7 @@ export const CalendarDetail = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+
     // 1) food
     const fetchFoodList = async () => {
       try {
@@ -85,6 +86,8 @@ export const CalendarDetail = () => {
         setFOOD_LIST([]);
       }
     };
+    fetchFoodList();
+
     // 2) sleep
     const fetchSleepList = async () => {
       try {
@@ -101,6 +104,8 @@ export const CalendarDetail = () => {
         setSLEEP_LIST([]);
       }
     };
+    fetchSleepList();
+
     // 3) work
     const fetchWorkList = async () => {
       try {
@@ -117,9 +122,8 @@ export const CalendarDetail = () => {
         setWORK_LIST([]);
       }
     };
-    fetchFoodList();
-    fetchSleepList();
     fetchWorkList();
+
   }, [user_id, resDur]);
 
   // 4. logic ------------------------------------------------------------------------------------->
@@ -133,7 +137,7 @@ export const CalendarDetail = () => {
     };
     return (
       <div className="d-inline-flex">
-        <div className="black mt-4 me-5" onClick={() => calcDate(-1)}>
+        <div className="black mt-4 me-5 pointer" onClick={() => calcDate(-1)}>
           &#8592;
         </div>
         <DatePicker
@@ -144,7 +148,7 @@ export const CalendarDetail = () => {
             setCalendarDay(date);
           }}
         />
-        <div className="black mt-4 ms-5" onClick={() => calcDate(1)}>
+        <div className="black mt-4 ms-5 pointer" onClick={() => calcDate(1)}>
           &#8594;
         </div>
       </div>

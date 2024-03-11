@@ -1,4 +1,5 @@
 // Money.ts
+
 import mongoose from "mongoose";
 import moment from "moment-timezone";
 
@@ -15,32 +16,6 @@ const MoneyScheme = new mongoose.Schema ({
   },
 
   // 2. components
-  money_category: [{
-    money_category_first_idx: {
-      type: Number,
-      required: false,
-    },
-    money_category_first_val: {
-      type: String,
-      required: false,
-    },
-    money_category_second_idx: {
-      type: Number,
-      required: false,
-    },
-    money_category_second_val: {
-      type: String,
-      required: false,
-    },
-    money_category_third_idx: {
-      type: Number,
-      required: false,
-    },
-    money_category_third_val: {
-      type: String,
-      required: false,
-    },
-  }],
   money_title : {
     type : String,
     required : true
@@ -52,6 +27,46 @@ const MoneyScheme = new mongoose.Schema ({
   money_amount : {
     type : String,
     required : true
+  },
+  money_memo : {
+    type : String,
+    required : false,
+  },
+  money_in: {
+    money_first_idx: {
+      type: Number,
+      required: false,
+    },
+    money_first_val: {
+      type: String,
+      required: false,
+    },
+    money_second_idx: {
+      type: Number,
+      required: false,
+    },
+    money_second_val: {
+      type: String,
+      required: false,
+    }
+  },
+  money_out: {
+    money_first_idx: {
+      type: Number,
+      required: false,
+    },
+    money_first_val: {
+      type: String,
+      required: false,
+    },
+    money_second_idx: {
+      type: Number,
+      required: false,
+    },
+    money_second_val: {
+      type: String,
+      required: false,
+    }
   },
 
   // 3. date

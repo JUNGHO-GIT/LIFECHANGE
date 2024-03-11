@@ -68,6 +68,15 @@ import {SleepListMonth} from "../page/sleep/SleepListMonth";
 import {SleepListYear} from "../page/sleep/SleepListYear";
 import {SleepListSelect} from "../page/sleep/SleepListSelect";
 
+/* import {MoneyInsert} from "../page/money/MoneyInsert";
+import {MoneyDetail} from "../page/money/MoneyDetail";
+import {MoneyUpdate} from "../page/money/MoneyUpdate";
+import {MoneyListDay} from "../page/money/MoneyListDay"; */
+/* import {MoneyListWeek} from "../page/money/MoneyListWeek";
+import {MoneyListMonth} from "../page/money/MoneyListMonth";
+import {MoneyListYear} from "../page/money/MoneyListYear";
+import {MoneyListSelect} from "../page/money/MoneyListSelect"; */
+
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 

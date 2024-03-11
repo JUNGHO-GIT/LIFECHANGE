@@ -1,4 +1,5 @@
 // useDeveloperMode.ts
+
 import React, { createContext, useContext, useState } from 'react';
 
 const defaultDeveloperModeContext = {

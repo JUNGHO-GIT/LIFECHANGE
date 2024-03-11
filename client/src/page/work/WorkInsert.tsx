@@ -112,9 +112,9 @@ export const WorkInsert = () => {
       updatedSection[i] = {
         ...updatedSection[i],
         work_part_idx: newIndex,
-        work_part_val: workPartArray[newIndex].workPart[0],
+        work_part_val: workPartArray[newIndex].work_part[0],
         work_title_idx: 0,
-        work_title_val: workTitleArray[newIndex].workTitle[0],
+        work_title_val: workTitleArray[newIndex].work_title[0],
       };
       return updatedSection;
     });
@@ -188,7 +188,7 @@ export const WorkInsert = () => {
 
     const updateWorkArray
     = workSection[i] && workTitleArray[workSection[i].work_part_idx]
-    ? workTitleArray[workSection[i].work_part_idx]?.workTitle
+    ? workTitleArray[workSection[i].work_part_idx]?.work_title
     : [];
 
     return (
@@ -203,7 +203,7 @@ export const WorkInsert = () => {
                 onChange={(e:any) => handleWorkPartChange(i, e)}>
                 {workPartArray.flatMap((key, index) => (
                   <option key={index} value={index}>
-                    {key.workPart[0]}
+                    {key.work_part[0]}
                   </option>
                 ))}
               </select>
