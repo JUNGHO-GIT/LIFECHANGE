@@ -3,7 +3,6 @@
 import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
-import bcrypt from "bcryptjs-react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -23,7 +22,6 @@ import {Loader} from "../components/Loader";
 import {Header} from "../layout/Header";
 import {Footer} from "../layout/Footer";
 import {Hover} from "../components/Hover";
-import {Main} from "../page/common/Main";
 
 import {UserLogin} from "../page/user/UserLogin";
 import {UserInsert} from "../page/user/UserInsert";
@@ -90,7 +88,9 @@ const App = () => {
       <Header />
       <Routes>
 
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<CalendarList />} />
+        <Route path="/calendarList" element={<CalendarList />} />
+        <Route path="/calendarDetail" element={<CalendarDetail />} />
 
         <Route path="/userLogin" element={<UserLogin />} />
         <Route path="/userInsert" element={<UserInsert />} />
@@ -103,9 +103,6 @@ const App = () => {
         <Route path="/boardInsert" element={<BoardInsert />} />
         <Route path="/boardDetail" element={<BoardDetail />} />
         <Route path="/boardUpdate" element={<BoardUpdate />} />
-
-        <Route path="/calendarList" element={<CalendarList />} />
-        <Route path="/calendarDetail" element={<CalendarDetail />} />
 
         <Route path="/foodInsert" element={<FoodInsert />} />
         <Route path="/foodDetail" element={<FoodDetail />} />

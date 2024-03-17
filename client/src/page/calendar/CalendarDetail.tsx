@@ -2,11 +2,8 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import {useStorage} from "../../assets/ts/useStorage";
-import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
@@ -21,6 +18,7 @@ export const CalendarDetail = () => {
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   // date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // hook
@@ -41,8 +39,11 @@ export const CalendarDetail = () => {
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any> (
     "workListDay", []
   );
+  const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage<any> (
+    "moneyListDay", []
+  );
   // state 2
-  const {val:calendarDay, setVal:setCalendarDay}=useStorage<Date | undefined> (
+  const {val:calendarDay, setVal:setCalendarDay} = useStorage<Date | undefined> (
     "calendarDay", undefined
   );
   // state 3
@@ -81,6 +82,7 @@ export const CalendarDetail = () => {
           },
         });
         setFOOD_LIST(response.data);
+        log("FOOD_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         alert(JSON.stringify(error));
@@ -99,6 +101,7 @@ export const CalendarDetail = () => {
           },
         });
         setSLEEP_LIST(response.data);
+        log("SLEEP_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         alert(JSON.stringify(error));
@@ -117,6 +120,7 @@ export const CalendarDetail = () => {
           },
         });
         setWORK_LIST(response.data);
+        log("WORK_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         alert(JSON.stringify(error));
@@ -125,13 +129,32 @@ export const CalendarDetail = () => {
     };
     fetchWorkList();
 
+    // 4) money
+    const fetchMoneyList = async () => {
+      try {
+        const response = await axios.get(`${URL_MONEY}/moneyList`, {
+          params: {
+            user_id : user_id,
+            money_dur : resDur,
+          },
+        });
+        setMONEY_LIST(response.data);
+        log("MONEY_LIST : " + JSON.stringify(response.data));
+      }
+      catch (error:any) {
+        alert(JSON.stringify(error));
+        setMONEY_LIST([]);
+      }
+    };
+    fetchMoneyList();
+
   }, [user_id, resDur]);
 
   // 4. logic ------------------------------------------------------------------------------------->
   const logicViewDate = () => {
-    const calcDate = (days) => {
+    const calcDate = (days: number) => {
       setCalendarDay((prevDate) => {
-        const newDate = new Date(prevDate);
+        const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
         return newDate;
       });
@@ -145,7 +168,7 @@ export const CalendarDetail = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={calendarDay}
-          onChange={(date) => {
+          onChange={(date: Date) => {
             setCalendarDay(date);
           }}
         />
@@ -257,6 +280,43 @@ export const CalendarDetail = () => {
     );
   };
 
+  // 5-4. table ----------------------------------------------------------------------------------->
+  const tableMoneyList = () => {
+    return (
+      <table className="table table-bordered border-dark table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>Part</th>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          {MONEY_LIST.map((moneyItem: any) => {
+            return moneyItem.moneySection.map((moneySection: any) => (
+              <tr key={moneySection._id}>
+                <td className="pointer" onClick={() => {
+                    navParam("/moneyDetail", {
+                      state: {
+                        _id: moneyItem._id,
+                        moneySection_id: moneySection._id
+                      },
+                    });
+                  }}>
+                  {moneySection.money_part_val}
+                </td>
+                <td>{moneySection.money_title_val}</td>
+                <td>{moneySection.money_amount}</td>
+                <td>{moneySection.money_content}</td>
+              </tr>
+            ));
+          })}
+        </tbody>
+      </table>
+    );
+  };
+
   // 6. button ------------------------------------------------------------------------------------>
   const buttonCalendarToday = () => {
     return (
@@ -309,6 +369,11 @@ export const CalendarDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           {tableWorkList()}
+        </div>
+      </div>
+      <div className="row d-center mt-5">
+        <div className="col-12">
+          {tableMoneyList()}
         </div>
       </div>
       <div className="row d-center mt-5">

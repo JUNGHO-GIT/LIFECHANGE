@@ -75,12 +75,6 @@ export const Header = () => {
         ]
       },
       {
-        label: "Calendar",
-        items: [
-          {to: "/calendarList", label: "CalendarList"}
-        ]
-      },
-      {
         label: "Food",
         items: [
           {to: "/foodSearchList", label: "FoodSearchList"},
