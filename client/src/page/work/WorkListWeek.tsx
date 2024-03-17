@@ -1,4 +1,5 @@
 // WorkListWeek.tsx
+
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
@@ -12,6 +13,7 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListWeek = () => {
+
   // title
   const TITLE = "Work List Week";
   // url
@@ -62,6 +64,7 @@ export const WorkListWeek = () => {
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+
     // 1. list
     const fetchWorkList = async () => {
       try {

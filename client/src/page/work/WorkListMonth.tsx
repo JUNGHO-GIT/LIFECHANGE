@@ -1,4 +1,5 @@
 // WorkListMonth.tsx
+
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayPicker, MonthChangeEventHandler} from "react-day-picker";
@@ -12,6 +13,7 @@ import {workPartArray, workTitleArray} from "./WorkArray";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkListMonth = () => {
+
   // title
   const TITLE = "Work List Month";
   // url
@@ -59,6 +61,7 @@ export const WorkListMonth = () => {
 
   // 2-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+
     // 1. list
     const fetchWorkList = async () => {
       try {
@@ -76,6 +79,8 @@ export const WorkListMonth = () => {
         alert(`Error fetching work data: ${error.message}`);
       }
     };
+    fetchWorkList();
+
     // 2. average
     const fetchWorkAvg = async () => {
       try {
@@ -95,7 +100,7 @@ export const WorkListMonth = () => {
         alert(`Error fetching work data: ${error.message}`);
       }
     };
-    fetchWorkList();
+
     fetchWorkAvg();
   }, [user_id, workResDur, workPart, workTitle]);
 

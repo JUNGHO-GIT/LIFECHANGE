@@ -1,4 +1,5 @@
 // MoneyListDay.tsx
+
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayClickEventHandler, DayPicker} from "react-day-picker";
@@ -12,6 +13,7 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const MoneyListDay = () => {
+
   // title
   const TITLE = "Money List Day";
   // url
@@ -150,11 +152,8 @@ export const MoneyListDay = () => {
           <tr>
             <th>Part</th>
             <th>Title</th>
-            <th>Kg</th>
-            <th>Set</th>
-            <th>Count</th>
-            <th>Rest</th>
-            <th>Time</th>
+            <th>Amount</th>
+            <th>Content</th>
           </tr>
         </thead>
         <tbody>
@@ -174,11 +173,8 @@ export const MoneyListDay = () => {
                   {moneySection.money_part_val}
                 </td>
                 <td>{moneySection.money_title_val}</td>
-                <td>{moneySection.money_kg}</td>
-                <td>{moneySection.money_set}</td>
-                <td>{moneySection.money_count}</td>
-                <td>{moneySection.money_rest}</td>
-                <td>{moneyItem.money_time}</td>
+                <td>{moneySection.money_amount}</td>
+                <td>{moneySection.money_content}</td>
               </tr>
             ));
           })}
@@ -191,11 +187,10 @@ export const MoneyListDay = () => {
   const tableMoneyAvg = () => {
     return (
       <div>
-        {/** select **/}
         <div className="row d-center">
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">파트</span>
+              <span className="input-group-text">대분류</span>
               <select
                 className="form-control"
                 id={`money_part_val`}
@@ -218,7 +213,7 @@ export const MoneyListDay = () => {
           </div>
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">종목</span>
+              <span className="input-group-text">소분류</span>
               <select
                 className="form-control"
                 id={`money_title_val`}
@@ -235,7 +230,6 @@ export const MoneyListDay = () => {
             </div>
           </div>
         </div>
-        {/** /.select **/}
         <div className="row d-center">
           <div className="col-12">
             <table className="table table-bordered table-hover">
@@ -243,11 +237,7 @@ export const MoneyListDay = () => {
                 <tr>
                   <th>Part</th>
                   <th>Title</th>
-                  <th>Count</th>
-                  <th>Kg Ave</th>
-                  <th>Set Ave</th>
-                  <th>Count Ave</th>
-                  <th>Rest Ave</th>
+                  <th>Amount</th>
                 </tr>
               </thead>
               <tbody>
@@ -255,11 +245,7 @@ export const MoneyListDay = () => {
                   <tr key={index}>
                     <td>{moneyItem.money_part_val}</td>
                     <td>{moneyItem.money_title_val}</td>
-                    <td>{moneyItem.count}</td>
-                    <td>{moneyItem.money_kg_avg}</td>
-                    <td>{moneyItem.money_set_avg}</td>
-                    <td>{moneyItem.money_count_avg}</td>
-                    <td>{moneyItem.money_rest_avg}</td>
+                    <td>{moneyItem.money_amount_avg}</td>
                   </tr>
                 ))}
               </tbody>

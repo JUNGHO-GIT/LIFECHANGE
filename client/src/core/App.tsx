@@ -1,4 +1,5 @@
 // App.tsx
+
 import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
@@ -69,13 +70,13 @@ import {SleepListYear} from "../page/sleep/SleepListYear";
 import {SleepListSelect} from "../page/sleep/SleepListSelect";
 
 import {MoneyInsert} from "../page/money/MoneyInsert";
-/* import {MoneyDetail} from "../page/money/MoneyDetail";
-import {MoneyUpdate} from "../page/money/MoneyUpdate"; */
+import {MoneyDetail} from "../page/money/MoneyDetail";
+import {MoneyUpdate} from "../page/money/MoneyUpdate";
 import {MoneyListDay} from "../page/money/MoneyListDay";
-/* import {MoneyListWeek} from "../page/money/MoneyListWeek";
+import {MoneyListWeek} from "../page/money/MoneyListWeek";
 import {MoneyListMonth} from "../page/money/MoneyListMonth";
 import {MoneyListYear} from "../page/money/MoneyListYear";
-import {MoneyListSelect} from "../page/money/MoneyListSelect"; */
+import {MoneyListSelect} from "../page/money/MoneyListSelect";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -136,9 +137,13 @@ const App = () => {
         <Route path="/sleepListSelect" element={<SleepListSelect />} />
 
         <Route path="/moneyInsert" element={<MoneyInsert />} />
-        {/* <Route path="/moneyDetail" element={<MoneyDetail />} />
-        <Route path="/moneyUpdate" element={<MoneyUpdate />} /> */}
+        <Route path="/moneyDetail" element={<MoneyDetail />} />
+        <Route path="/moneyUpdate" element={<MoneyUpdate />} />
         <Route path="/moneyListDay" element={<MoneyListDay />} />
+        <Route path="/moneyListWeek" element={<MoneyListWeek />} />
+        <Route path="/moneyListMonth" element={<MoneyListMonth />} />
+        <Route path="/moneyListYear" element={<MoneyListYear />} />
+        <Route path="/moneyListSelect" element={<MoneyListSelect />} />
 
       </Routes>
       <Footer />

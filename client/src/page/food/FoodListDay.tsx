@@ -1,4 +1,5 @@
 // FoodListDay.tsx
+
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayPicker, DayClickEventHandler} from "react-day-picker";
@@ -11,6 +12,7 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const FoodListDay = () => {
+
   // title
   const TITLE = "Food List Day";
   // url
@@ -53,6 +55,7 @@ export const FoodListDay = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+
     // 1. list
     const fetchFoodList = async () => {
       try {

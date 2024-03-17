@@ -72,10 +72,7 @@ export const moneyAvg = async (
       count: {$sum: 1},
       money_part_val: {$first: "$moneySection.money_part_val"},
       money_title_val: {$first: "$moneySection.money_title_val"},
-      money_count_avg: {$avg: "$moneySection.money_count"},
-      money_set_avg: {$avg: "$moneySection.money_set"},
-      money_kg_avg: {$avg: "$moneySection.money_kg"},
-      money_rest_avg: {$avg: "$moneySection.money_rest"},
+      money_amount_avg: {$avg: "$moneySection.money_amount"},
     }}
   ];
 
@@ -83,7 +80,6 @@ export const moneyAvg = async (
 
   return findResult;
 };
-
 
 // 2. moneyDetail --------------------------------------------------------------------------------->
 export const moneyDetail = async (
@@ -137,9 +133,6 @@ export const moneyInsert = async (
     _id : new mongoose.Types.ObjectId(),
     user_id : user_id_param,
     moneySection : MONEY_param.moneySection,
-    money_start : MONEY_param.money_start,
-    money_end : MONEY_param.money_end,
-    money_time : MONEY_param.money_time,
     money_day : MONEY_param.moneyDay,
     money_regdate : MONEY_param.money_regdate,
     money_update : MONEY_param.money_update,

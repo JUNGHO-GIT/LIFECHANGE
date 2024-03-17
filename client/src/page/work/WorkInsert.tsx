@@ -1,4 +1,5 @@
 // WorkInsert.tsx
+
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -10,6 +11,7 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
 export const WorkInsert = () => {
+
   // title
   const TITLE = "Work Insert";
   // url
@@ -20,6 +22,8 @@ export const WorkInsert = () => {
   const navParam = useNavigate();
   const location = useLocation();
   // val
+  const _id = location.state._id;
+  const workSection_id = location.state.workSection_id;
   const user_id = window.sessionStorage.getItem("user_id");
   // log
   const {log} = useDeveloperMode();
@@ -68,6 +72,7 @@ export const WorkInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkInsert = async () => {
+
     if (!user_id) {
       alert("Input a ID");
       return;
@@ -88,10 +93,12 @@ export const WorkInsert = () => {
       alert("Input a Time");
       return;
     }
+
     const response = await axios.post (`${URL_WORK}/workInsert`, {
       user_id : user_id,
       WORK : WORK,
     });
+
     if (response.data === "success") {
       alert("Insert a work successfully");
       navParam("/workListDay");
@@ -184,6 +191,107 @@ export const WorkInsert = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
+  const tableWorkInsert = () => {
+    return (
+      <div>
+        <div className="row d-center">
+          <div className="col-5">
+            <div className="input-group">
+              <span className="input-group-text">ID</span>
+              <input
+                type="text"
+                className="form-control"
+                id="user_id"
+                name="user_id"
+                placeholder="ID"
+                value={user_id ? user_id : ""}
+                readOnly
+                onChange={(e:any) => {
+                  setWORK({ ...WORK, user_id: e.target.value });
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-5">
+            <div className="input-group">
+              <span className="input-group-text">Day</span>
+              <input
+                readOnly
+                type="text"
+                className="form-control"
+                id="workDay"
+                name="workDay"
+                placeholder="Day"
+                value={WORK?.workDay}
+                onChange={(e:any) => {
+                  setWorkDay(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row d-center">
+          <div className="col-5">
+            <div className="input-group">
+              <span className="input-group-text">Start</span>
+              <TimePicker
+                id="work_start"
+                name="work_start"
+                className="form-control"
+                value={WORK?.work_start}
+                disableClock={false}
+                clockIcon={null}
+                format="HH:mm"
+                locale="ko"
+                onChange={(e:any) => {
+                  setWORK({ ...WORK, work_start: e });
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-5">
+            <div className="input-group">
+              <span className="input-group-text">End</span>
+              <TimePicker
+                id="work_end"
+                name="work_end"
+                className="form-control"
+                value={WORK?.work_end}
+                disableClock={false}
+                clockIcon={null}
+                format="HH:mm"
+                locale="ko"
+                onChange={(e:any) => {
+                  setWORK({ ...WORK, work_end : e });
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row d-center">
+          <div className="col-10">
+            <div className="input-group">
+              <span className="input-group-text">Time</span>
+              <input
+                readOnly
+                type="text"
+                className="form-control"
+                id="work_time"
+                name="work_time"
+                placeholder="Time"
+                value={WORK.work_time ? WORK.work_time : ""}
+                onChange={(e:any) => {
+                  setWORK({ ...WORK, work_time : e.target.value });
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // 5-2. table ----------------------------------------------------------------------------------->
   const tableWorkSection = (i: number) => {
 
     const updateWorkArray
@@ -304,107 +412,6 @@ export const WorkInsert = () => {
                     updatedSection[i].work_rest = parseInt(e.target.value);
                     return updatedSection;
                   });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkInsert = () => {
-    return (
-      <div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">ID</span>
-              <input
-                type="text"
-                className="form-control"
-                id="user_id"
-                name="user_id"
-                placeholder="ID"
-                value={user_id ? user_id : ""}
-                readOnly
-                onChange={(e:any) => {
-                  setWORK({ ...WORK, user_id: e.target.value });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">Day</span>
-              <input
-                readOnly
-                type="text"
-                className="form-control"
-                id="workDay"
-                name="workDay"
-                placeholder="Day"
-                value={WORK?.workDay}
-                onChange={(e:any) => {
-                  setWorkDay(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">Start</span>
-              <TimePicker
-                id="work_start"
-                name="work_start"
-                className="form-control"
-                value={WORK?.work_start}
-                disableClock={false}
-                clockIcon={null}
-                format="HH:mm"
-                locale="ko"
-                onChange={(e:any) => {
-                  setWORK({ ...WORK, work_start: e });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">End</span>
-              <TimePicker
-                id="work_end"
-                name="work_end"
-                className="form-control"
-                value={WORK?.work_end}
-                disableClock={false}
-                clockIcon={null}
-                format="HH:mm"
-                locale="ko"
-                onChange={(e:any) => {
-                  setWORK({ ...WORK, work_end : e });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-10">
-            <div className="input-group">
-              <span className="input-group-text">Time</span>
-              <input
-                readOnly
-                type="text"
-                className="form-control"
-                id="work_time"
-                name="work_time"
-                placeholder="Time"
-                value={WORK.work_time ? WORK.work_time : ""}
-                onChange={(e:any) => {
-                  setWORK({ ...WORK, work_time : e.target.value });
                 }}
               />
             </div>

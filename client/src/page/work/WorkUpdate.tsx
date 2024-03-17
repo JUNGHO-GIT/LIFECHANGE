@@ -1,8 +1,7 @@
 // WorkUpdate.tsx
+
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
@@ -37,6 +36,7 @@ export const WorkUpdate = () => {
           },
         });
         setWORK(response.data);
+        log("WORK : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         alert(`Error fetching work data: ${error.message}`);

@@ -15,23 +15,7 @@ const MoneyScheme = new mongoose.Schema ({
     required : true
   },
 
-  // 2. components
-  money_title : {
-    type : String,
-    required : true
-  },
-  money_content :{
-    type : String,
-    required : true
-  },
-  money_amount : {
-    type : String,
-    required : true
-  },
-  money_memo : {
-    type : String,
-    required : false,
-  },
+  // 2. section
   moneySection: [{
     money_part_idx : {
       type : Number,
@@ -48,7 +32,15 @@ const MoneyScheme = new mongoose.Schema ({
     money_title_val : {
       type : String,
       required : true
-    }
+    },
+    money_amount : {
+      type : Number,
+      required : true
+    },
+    money_content :{
+      type : String,
+      required : true
+    },
   }],
 
   // 3. date
