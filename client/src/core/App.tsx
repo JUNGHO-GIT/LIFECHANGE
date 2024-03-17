@@ -68,10 +68,10 @@ import {SleepListMonth} from "../page/sleep/SleepListMonth";
 import {SleepListYear} from "../page/sleep/SleepListYear";
 import {SleepListSelect} from "../page/sleep/SleepListSelect";
 
-/* import {MoneyInsert} from "../page/money/MoneyInsert";
-import {MoneyDetail} from "../page/money/MoneyDetail";
-import {MoneyUpdate} from "../page/money/MoneyUpdate";
-import {MoneyListDay} from "../page/money/MoneyListDay"; */
+import {MoneyInsert} from "../page/money/MoneyInsert";
+/* import {MoneyDetail} from "../page/money/MoneyDetail";
+import {MoneyUpdate} from "../page/money/MoneyUpdate"; */
+import {MoneyListDay} from "../page/money/MoneyListDay";
 /* import {MoneyListWeek} from "../page/money/MoneyListWeek";
 import {MoneyListMonth} from "../page/money/MoneyListMonth";
 import {MoneyListYear} from "../page/money/MoneyListYear";
@@ -134,6 +134,11 @@ const App = () => {
         <Route path="/sleepListMonth" element={<SleepListMonth />} />
         <Route path="/sleepListYear" element={<SleepListYear />} />
         <Route path="/sleepListSelect" element={<SleepListSelect />} />
+
+        <Route path="/moneyInsert" element={<MoneyInsert />} />
+        {/* <Route path="/moneyDetail" element={<MoneyDetail />} />
+        <Route path="/moneyUpdate" element={<MoneyUpdate />} /> */}
+        <Route path="/moneyListDay" element={<MoneyListDay />} />
 
       </Routes>
       <Footer />

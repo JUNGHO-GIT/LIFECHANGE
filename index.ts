@@ -11,6 +11,7 @@ import foodRouter from "./src/router/foodRouter";
 import calendarRouter from "./src/router/calendarRouter";
 import workRouter from "./src/router/workRouter";
 import sleepRouter from "./src/router/sleepRouter";
+import moneyRouter from "./src/router/moneyRouter";
 
 mongoose.connect("mongodb://127.0.0.1:27017");
 
@@ -21,6 +22,7 @@ app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
 });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "client/build")));
@@ -31,6 +33,7 @@ app.use("/food", foodRouter);
 app.use("/calendar", calendarRouter);
 app.use("/work", workRouter);
 app.use("/sleep", sleepRouter);
+app.use("/money", moneyRouter);
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://127.0.0.1:%d in %s mode", app.get("port"), app.get("env"));

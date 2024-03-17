@@ -32,42 +32,24 @@ const MoneyScheme = new mongoose.Schema ({
     type : String,
     required : false,
   },
-  money_in: {
-    money_first_idx: {
-      type: Number,
-      required: false,
+  moneySection: [{
+    money_part_idx : {
+      type : Number,
+      required : false
     },
-    money_first_val: {
-      type: String,
-      required: false,
+    money_part_val : {
+      type : String,
+      required : true
     },
-    money_second_idx: {
-      type: Number,
-      required: false,
+    money_title_idx : {
+      type : Number,
+      required : false
     },
-    money_second_val: {
-      type: String,
-      required: false,
+    money_title_val : {
+      type : String,
+      required : true
     }
-  },
-  money_out: {
-    money_first_idx: {
-      type: Number,
-      required: false,
-    },
-    money_first_val: {
-      type: String,
-      required: false,
-    },
-    money_second_idx: {
-      type: Number,
-      required: false,
-    },
-    money_second_val: {
-      type: String,
-      required: false,
-    }
-  },
+  }],
 
   // 3. date
   money_day : {

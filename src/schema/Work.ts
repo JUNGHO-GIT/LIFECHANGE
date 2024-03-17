@@ -16,6 +16,18 @@ const WorkScheme = new mongoose.Schema ({
   },
 
   // 2. components
+  work_start: {
+    type: String,
+    required: true,
+  },
+  work_end: {
+    type: String,
+    required: true,
+  },
+  work_time: {
+    type: String,
+    required: true,
+  },
   workSection : [{
     work_part_idx : {
       type: Number,
@@ -50,18 +62,6 @@ const WorkScheme = new mongoose.Schema ({
       required: true,
     },
   }],
-  work_start: {
-    type: String,
-    required: true,
-  },
-  work_end: {
-    type: String,
-    required: true,
-  },
-  work_time: {
-    type: String,
-    required: true,
-  },
 
   // 3. date
   work_day: {

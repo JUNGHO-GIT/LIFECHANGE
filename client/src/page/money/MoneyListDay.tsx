@@ -1,4 +1,4 @@
-// WorkListDay.tsx
+// MoneyListDay.tsx
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayClickEventHandler, DayPicker} from "react-day-picker";
@@ -7,15 +7,15 @@ import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {workPartArray, workTitleArray} from "./WorkArray";
+import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // 1. main ---------------------------------------------------------------------------------------->
-export const WorkListDay = () => {
+export const MoneyListDay = () => {
   // title
-  const TITLE = "Work List Day";
+  const TITLE = "Money List Day";
   // url
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   // date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // hook
@@ -27,108 +27,110 @@ export const WorkListDay = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [workType, setWorkType] = useState<string>("list");
-  const [workNumber, setWorkNumber] = useState<number>(0);
+  const [moneyType, setMoneyType] = useState<string>("list");
+  const [moneyNumber, setMoneyNumber] = useState<number>(0);
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
-    "workList(DAY)", []
+  const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage<any>(
+    "moneyList(DAY)", []
   );
-  const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
-    "workAvg(DAY)", []
+  const {val:MONEY_AVERAGE, setVal:setMONEY_AVERAGE} = useStorage<any>(
+    "moneyAvg(DAY)", []
   );
 
   // 2-3. useStorage ------------------------------------------------------------------------------>
-  const {val:workDay, setVal:setWorkDay} = useStorage<Date | undefined>(
-    "workDay(DAY)", undefined
+  const {val:moneyDay, setVal:setMoneyDay} = useStorage<Date | undefined>(
+    "moneyDay(DAY)", undefined
   );
-  const {val:workResVal, setVal:setWorkResVal} = useStorage<Date | undefined>(
-    "workResVal(DAY)", undefined
+  const {val:moneyResVal, setVal:setMoneyResVal} = useStorage<Date | undefined>(
+    "moneyResVal(DAY)", undefined
   );
-  const {val:workResDur, setVal:setWorkResDur} = useStorage<string>(
-    "workResDur(DAY)", "0000-00-00 ~ 0000-00-00"
+  const {val:moneyResDur, setVal:setMoneyResDur} = useStorage<string>(
+    "moneyResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
 
   // 2-4. useStorage ------------------------------------------------------------------------------>
-  const {val:workPart, setVal:setWorkPart} = useStorage<string>(
-    "workPart(DAY)", "전체"
+  const {val:moneyPart, setVal:setMoneyPart} = useStorage<string>(
+    "moneyPart(DAY)", "전체"
   );
-  const {val:workTitle, setVal:setWorkTitle} = useStorage<string>(
-    "workTitle(DAY)", "전체"
+  const {val:moneyTitle, setVal:setMoneyTitle} = useStorage<string>(
+    "moneyTitle(DAY)", "전체"
   );
 
   // 2-2. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+
     // 1. list
-    const fetchWorkList = async () => {
+    const fetchMoneyList = async () => {
       try {
-        const response = await axios.get(`${URL_WORK}/workList`, {
+        const response = await axios.get(`${URL_MONEY}/moneyList`, {
           params: {
             user_id : user_id,
-            work_dur : workResDur,
+            money_dur : moneyResDur,
           },
         });
-        setWORK_LIST(response.data);
-        log("WORK_LIST " + JSON.stringify(response.data));
+        setMONEY_LIST(response.data);
+        log("MONEY_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        setWORK_LIST([]);
-        alert(`Error fetching work data: ${error.message}`);
+        setMONEY_LIST([]);
+        alert(`Error fetching money data: ${error.message}`);
       }
     };
+    fetchMoneyList();
+
     // 2. average
-    const fetchWorkAvg = async () => {
+    const fetchMoneyAvg = async () => {
       try {
-        const response = await axios.get (`${URL_WORK}/workAvg`, {
+        const response = await axios.get (`${URL_MONEY}/moneyAvg`, {
           params: {
             user_id: user_id,
-            work_dur: workResDur,
-            work_part_val: workPart,
-            work_title_val: workTitle,
+            money_dur: moneyResDur,
+            money_part_val: moneyPart,
+            money_title_val: moneyTitle,
           },
         });
-        setWORK_AVERAGE(response.data);
-        log("WORK_AVERAGE " + JSON.stringify(response.data));
+        setMONEY_AVERAGE(response.data);
+        log("MONEY_AVERAGE " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        setWORK_AVERAGE([]);
-        alert(`Error fetching work data: ${error.message}`);
+        setMONEY_AVERAGE([]);
+        alert(`Error fetching money data: ${error.message}`);
       }
     };
-    fetchWorkList();
-    fetchWorkAvg();
-  }, [user_id, workResDur, workPart, workTitle]);
+    fetchMoneyAvg();
+  }, [user_id, moneyResDur, moneyPart, moneyTitle]);
 
   // 2-4. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatVal = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-    if (workDay) {
-      const year = formatVal(workDay.getFullYear());
-      const month = formatVal(workDay.getMonth() + 1);
-      const date = formatVal(workDay.getDate());
-      setWorkResVal(parseISO(`${year}-${month}-${date}`));
-      setWorkResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+    if (moneyDay) {
+      const year = formatVal(moneyDay.getFullYear());
+      const month = formatVal(moneyDay.getMonth() + 1);
+      const date = formatVal(moneyDay.getDate());
+      setMoneyResVal(parseISO(`${year}-${month}-${date}`));
+      setMoneyResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
     }
-  }, [workDay]);
+  }, [moneyDay]);
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewWorkDay = () => {
+  const viewMoneyDay = () => {
     const flowDayClick: DayClickEventHandler = (day: any) => {
-      setWorkDay(day);
+      setMoneyDay(day);
     };
     return (
       <DayPicker
         mode="single"
         showOutsideDays
-        selected={workDay}
-        month={workDay}
+        selected={moneyDay}
+        month={moneyDay}
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
         onMonthChange={(month) => {
-          setWorkDay(month);
+          setMoneyDay(month);
         }}
         modifiersClassNames={{
           selected: "selected",
@@ -141,7 +143,7 @@ export const WorkListDay = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableWorkList = () => {
+  const tableMoneyList = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -156,27 +158,27 @@ export const WorkListDay = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((workItem : any) => {
-            return workItem.workSection.map((workSection: any) => (
-              <tr key={workSection._id}>
+          {MONEY_LIST.map((moneyItem : any) => {
+            return moneyItem.moneySection.map((moneySection: any) => (
+              <tr key={moneySection._id}>
                 <td
                   className="pointer"
                   onClick={() => {
-                    navParam("/workDetail", {
+                    navParam("/moneyDetail", {
                       state: {
-                        _id : workItem._id,
-                        workSection_id : workSection._id
+                        _id : moneyItem._id,
+                        moneySection_id : moneySection._id
                       },
                     });
                   }}>
-                  {workSection.work_part_val}
+                  {moneySection.money_part_val}
                 </td>
-                <td>{workSection.work_title_val}</td>
-                <td>{workSection.work_kg}</td>
-                <td>{workSection.work_set}</td>
-                <td>{workSection.work_count}</td>
-                <td>{workSection.work_rest}</td>
-                <td>{workItem.work_time}</td>
+                <td>{moneySection.money_title_val}</td>
+                <td>{moneySection.money_kg}</td>
+                <td>{moneySection.money_set}</td>
+                <td>{moneySection.money_count}</td>
+                <td>{moneySection.money_rest}</td>
+                <td>{moneyItem.money_time}</td>
               </tr>
             ));
           })}
@@ -186,7 +188,7 @@ export const WorkListDay = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkAvg = () => {
+  const tableMoneyAvg = () => {
     return (
       <div>
         {/** select **/}
@@ -196,19 +198,19 @@ export const WorkListDay = () => {
               <span className="input-group-text">파트</span>
               <select
                 className="form-control"
-                id={`work_part_val`}
-                value={workPart}
+                id={`money_part_val`}
+                value={moneyPart}
                 onChange={(e:any) => {
-                  setWorkPart(e.target.value);
-                  const index = workPartArray.findIndex(
-                    (item) => item.work_part[0] === e.target.value
+                  setMoneyPart(e.target.value);
+                  const index = moneyPartArray.findIndex(
+                    (item) => item.money_part[0] === e.target.value
                   );
-                  setWorkTitle("전체");
-                  setWorkNumber(index);
+                  setMoneyTitle("전체");
+                  setMoneyNumber(index);
                 }}>
-                {workPartArray.map((value, key) => (
-                  <option key={key} value={value.work_part[0]}>
-                    {value.work_part[0]}
+                {moneyPartArray.map((value, key) => (
+                  <option key={key} value={value.money_part[0]}>
+                    {value.money_part[0]}
                   </option>
                 ))}
               </select>
@@ -219,12 +221,12 @@ export const WorkListDay = () => {
               <span className="input-group-text">종목</span>
               <select
                 className="form-control"
-                id={`work_title_val`}
-                value={workTitle}
+                id={`money_title_val`}
+                value={moneyTitle}
                 onChange={(e:any) => {
-                  setWorkTitle(e.target.value);
+                  setMoneyTitle(e.target.value);
                 }}>
-                {workTitleArray[workNumber].work_title.map((value, key) => (
+                {moneyTitleArray[moneyNumber].money_title.map((value, key) => (
                   <option key={key} value={value}>
                     {value}
                   </option>
@@ -249,15 +251,15 @@ export const WorkListDay = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem:any, index:number) => (
+                {MONEY_AVERAGE?.map((moneyItem:any, index:number) => (
                   <tr key={index}>
-                    <td>{workItem.work_part_val}</td>
-                    <td>{workItem.work_title_val}</td>
-                    <td>{workItem.count}</td>
-                    <td>{workItem.work_kg_avg}</td>
-                    <td>{workItem.work_set_avg}</td>
-                    <td>{workItem.work_count_avg}</td>
-                    <td>{workItem.work_rest_avg}</td>
+                    <td>{moneyItem.money_part_val}</td>
+                    <td>{moneyItem.money_title_val}</td>
+                    <td>{moneyItem.count}</td>
+                    <td>{moneyItem.money_kg_avg}</td>
+                    <td>{moneyItem.money_set_avg}</td>
+                    <td>{moneyItem.money_count_avg}</td>
+                    <td>{moneyItem.money_rest_avg}</td>
                   </tr>
                 ))}
               </tbody>
@@ -269,33 +271,33 @@ export const WorkListDay = () => {
   };
 
   // 6-1. button ---------------------------------------------------------------------------------->
-  const buttonWorkToday = () => {
+  const buttonMoneyToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setWorkDay(koreanDate);
-        setWorkPart("전체");
-        setWorkTitle("전체");
-        localStorage.removeItem("workList(DAY)");
-        localStorage.removeItem("workAvg(DAY)");
-        localStorage.removeItem("workDay(DAY)");
-        localStorage.removeItem("workPart(DAY)");
-        localStorage.removeItem("workTitle(DAY)");
+        setMoneyDay(koreanDate);
+        setMoneyPart("전체");
+        setMoneyTitle("전체");
+        localStorage.removeItem("moneyList(DAY)");
+        localStorage.removeItem("moneyAvg(DAY)");
+        localStorage.removeItem("moneyDay(DAY)");
+        localStorage.removeItem("moneyPart(DAY)");
+        localStorage.removeItem("moneyTitle(DAY)");
       }}>
         Today
       </button>
     );
   };
-  const buttonWorkReset = () => {
+  const buttonMoneyReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setWorkDay(koreanDate);
-        setWorkPart("전체");
-        setWorkTitle("전체");
-        localStorage.removeItem("workList(DAY)");
-        localStorage.removeItem("workAvg(DAY)");
-        localStorage.removeItem("workDay(DAY)");
-        localStorage.removeItem("workPart(DAY)");
-        localStorage.removeItem("workTitle(DAY)");
+        setMoneyDay(koreanDate);
+        setMoneyPart("전체");
+        setMoneyTitle("전체");
+        localStorage.removeItem("moneyList(DAY)");
+        localStorage.removeItem("moneyAvg(DAY)");
+        localStorage.removeItem("moneyDay(DAY)");
+        localStorage.removeItem("moneyPart(DAY)");
+        localStorage.removeItem("moneyTitle(DAY)");
       }}>
         Reset
       </button>
@@ -303,31 +305,31 @@ export const WorkListDay = () => {
   };
 
   // 6-2. button ---------------------------------------------------------------------------------->
-  const selectWorkList = () => {
+  const selectMoneyList = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="workListDay" value={currentPath} onChange={(e:any) => {
+        <select className="form-select" id="moneyListDay" value={currentPath} onChange={(e:any) => {
           navParam(e.target.value);
         }}>
-          <option value="/workListDay">Day</option>
-          <option value="/workListWeek">Week</option>
-          <option value="/workListMonth">Month</option>
-          <option value="/workListYear">Year</option>
-          <option value="/workListSelect">Select</option>
+          <option value="/moneyListDay">Day</option>
+          <option value="/moneyListWeek">Week</option>
+          <option value="/moneyListMonth">Month</option>
+          <option value="/moneyListYear">Year</option>
+          <option value="/moneyListSelect">Select</option>
         </select>
       </div>
     );
   };
-  const selectWorkType = () => {
+  const selectMoneyType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="workType" onChange={(e:any) => {
+        <select className="form-select" id="moneyType" onChange={(e:any) => {
           if (e.target.value === "list") {
-            setWorkType("list");
+            setMoneyType("list");
           }
           else if (e.target.value === "avg") {
-            setWorkType("avg");
+            setMoneyType("avg");
           }
         }}>
           <option value="list">List</option>
@@ -348,25 +350,25 @@ export const WorkListDay = () => {
       </div>
       <div className="row d-center mt-3">
         <div className="col-3">
-          {selectWorkList()}
+          {selectMoneyList()}
         </div>
         <div className="col-3">
-          {selectWorkType()}
+          {selectMoneyType()}
         </div>
       </div>
       <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
-          {viewWorkDay()}
+          {viewMoneyDay()}
         </div>
         <div className="col-md-6 col-12">
-          {workType === "list" && tableWorkList()}
-          {workType === "avg" && tableWorkAvg()}
+          {moneyType === "list" && tableMoneyList()}
+          {moneyType === "avg" && tableMoneyAvg()}
         </div>
       </div>
       <div className="row mb-20">
         <div className="col-12 d-center">
-          {buttonWorkToday()}
-          {buttonWorkReset()}
+          {buttonMoneyToday()}
+          {buttonMoneyReset()}
         </div>
       </div>
     </div>
