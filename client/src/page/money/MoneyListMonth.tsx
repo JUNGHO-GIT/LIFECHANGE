@@ -11,36 +11,30 @@ import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const MoneyListMonth = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Money List Month";
-  // url
+  // 1-2. url
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [moneyType, setMoneyType] = useState<string>("list");
-  const [moneyNumber, setMoneyNumber] = useState<number>(0);
-
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage<any>(
     "moneyList(MONTH)", []
   );
   const {val:MONEY_AVERAGE, setVal:setMONEY_AVERAGE} = useStorage<any>(
     "moneyAvg(MONTH)", []
   );
-
-  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:moneyMonth, setVal:setMoneyMonth} = useStorage<Date | undefined>(
     "moneyMonth(MONTH)", koreanDate
   );
@@ -50,8 +44,6 @@ export const MoneyListMonth = () => {
   const {val:moneyResDur, setVal:setMoneyResDur} = useStorage<string>(
     "moneyResDur(MONTH)", "0000-00-00 ~ 0000-00-00"
   );
-
-  // 2-4. useStorage ------------------------------------------------------------------------------>
   const {val:moneyPart, setVal:setMoneyPart} = useStorage<string>(
     "moneyPart(MONTH)", "전체"
   );
@@ -59,7 +51,11 @@ export const MoneyListMonth = () => {
     "moneyTitle(MONTH)", "전체"
   );
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [moneyType, setMoneyType] = useState<string>("list");
+  const [moneyNumber, setMoneyNumber] = useState<number>(0);
+
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
 
     // 1. list

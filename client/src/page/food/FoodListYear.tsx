@@ -11,28 +11,24 @@ import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const FoodListYear = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Food List Year";
-  // url
+  // 1-2. url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [foodType, setFoodType] = useState<string>("list");
-  const [foodCategory, setFoodCategory] = useState<string>("all");
-
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage<any>(
     "foodList(YEAR)", []
   );
@@ -42,8 +38,6 @@ export const FoodListYear = () => {
   const {val:FOOD_AVERAGE, setVal:setFOOD_AVERAGE} = useStorage<any>(
     "foodAvg(YEAR)", []
   );
-
-  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:foodYear, setVal:setFoodYear} = useStorage<Date | undefined>(
     "foodYear(YEAR)", koreanDate
   );
@@ -53,6 +47,10 @@ export const FoodListYear = () => {
   const {val:foodResDur, setVal:setFoodResDur} = useStorage<string>(
     "foodResDur(YEAR)", "0000-00-00 ~ 0000-00-00"
   );
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [foodType, setFoodType] = useState<string>("list");
+  const [foodCategory, setFoodCategory] = useState<string>("all");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -75,6 +73,8 @@ export const FoodListYear = () => {
         alert(`Error fetching food data: ${error.message}`);
       }
     };
+    fetchFoodList();
+
     // 2. total
     const fetchFoodTotal = async () => {
       try {
@@ -93,6 +93,8 @@ export const FoodListYear = () => {
         alert(`Error fetching food data: ${error.message}`);
       }
     };
+    fetchFoodTotal();
+
     // 3. average
     const fetchFoodAvg = async () => {
       try {
@@ -111,12 +113,10 @@ export const FoodListYear = () => {
         alert(`Error fetching food data: ${error.message}`);
       }
     };
-    fetchFoodList();
-    fetchFoodTotal();
     fetchFoodAvg();
   }, [user_id, foodResDur, foodCategory]);
 
-  // 2-5. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     if (foodYear) {
       setFoodResVal (

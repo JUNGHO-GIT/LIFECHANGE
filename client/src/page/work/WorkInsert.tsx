@@ -9,26 +9,26 @@ import moment from "moment-timezone";
 import {workPartArray, workTitleArray} from "../work/WorkArray";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const WorkInsert = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Work Insert";
-  // url
+  // 1-2. url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
-  const _id = location.state._id;
-  const workSection_id = location.state.workSection_id;
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK, setWORK] = useState<any>({});
   const [workDay, setWorkDay] = useState<string>(koreanDate);
   const [workAmount, setWorkAmount] = useState<number>(1);
@@ -39,7 +39,7 @@ export const WorkInsert = () => {
     work_title_val: "전체",
   }]);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     setWORK ({
       ...WORK,
@@ -48,7 +48,7 @@ export const WorkInsert = () => {
     });
   }, [workDay, workSection]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     if (WORK.work_start && WORK.work_end) {
       const work_start = moment(WORK.work_start, "HH:mm");
@@ -72,42 +72,44 @@ export const WorkInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkInsert = async () => {
+    try {
+      if (!user_id) {
+        alert("Input a ID");
+        return;
+      }
+      if (!workDay) {
+        alert("Input a Day");
+        return;
+      }
+      if (!WORK.work_start) {
+        alert("Input a Start");
+        return;
+      }
+      if (!WORK.work_end) {
+        alert("Input a End");
+        return;
+      }
+      if (!WORK.work_time) {
+        alert("Input a Time");
+        return;
+      }
 
-    if (!user_id) {
-      alert("Input a ID");
-      return;
-    }
-    if (!workDay) {
-      alert("Input a Day");
-      return;
-    }
-    if (!WORK.work_start) {
-      alert("Input a Start");
-      return;
-    }
-    if (!WORK.work_end) {
-      alert("Input a End");
-      return;
-    }
-    if (!WORK.work_time) {
-      alert("Input a Time");
-      return;
-    }
+      const response = await axios.post (`${URL_WORK}/workInsert`, {
+        user_id : user_id,
+        WORK : WORK,
+      });
+      log("WORK : " + JSON.stringify(response.data));
 
-    const response = await axios.post (`${URL_WORK}/workInsert`, {
-      user_id : user_id,
-      WORK : WORK,
-    });
-
-    if (response.data === "success") {
-      alert("Insert a work successfully");
-      navParam("/workListDay");
+      if (response.data === "success") {
+        alert("Insert a work successfully");
+        navParam("/workListDay");
+      }
+      else {
+        alert("Insert a work failure");
+      }
     }
-    else if (response.data === "fail") {
-      alert("Insert a work failure");
-    }
-    else {
-      throw new Error("Server responded with an error");
+    catch (error:any) {
+      alert(`Error inserting a work data: ${error.message}`);
     }
   };
 

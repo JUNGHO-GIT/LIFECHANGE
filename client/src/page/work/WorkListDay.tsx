@@ -11,36 +11,30 @@ import axios from "axios";
 import {workPartArray, workTitleArray} from "./WorkArray";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const WorkListDay = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Work List Day";
-  // url
+  // 1-2. url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [workType, setWorkType] = useState<string>("list");
-  const [workNumber, setWorkNumber] = useState<number>(0);
-
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(DAY)", []
   );
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
     "workAvg(DAY)", []
   );
-
-  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:workDay, setVal:setWorkDay} = useStorage<Date | undefined>(
     "workDay(DAY)", undefined
   );
@@ -50,8 +44,6 @@ export const WorkListDay = () => {
   const {val:workResDur, setVal:setWorkResDur} = useStorage<string>(
     "workResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
-
-  // 2-4. useStorage ------------------------------------------------------------------------------>
   const {val:workPart, setVal:setWorkPart} = useStorage<string>(
     "workPart(DAY)", "전체"
   );
@@ -59,7 +51,11 @@ export const WorkListDay = () => {
     "workTitle(DAY)", "전체"
   );
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [workType, setWorkType] = useState<string>("list");
+  const [workNumber, setWorkNumber] = useState<number>(0);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
     // 1. list
@@ -79,6 +75,8 @@ export const WorkListDay = () => {
         alert(`Error fetching work data: ${error.message}`);
       }
     };
+    fetchWorkList();
+
     // 2. average
     const fetchWorkAvg = async () => {
       try {
@@ -98,11 +96,10 @@ export const WorkListDay = () => {
         alert(`Error fetching work data: ${error.message}`);
       }
     };
-    fetchWorkList();
     fetchWorkAvg();
   }, [user_id, workResDur, workPart, workTitle]);
 
-  // 2-4. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatVal = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;

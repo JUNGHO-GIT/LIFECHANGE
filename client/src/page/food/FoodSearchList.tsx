@@ -7,25 +7,27 @@ import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const FoodSearchList = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Food Search";
-  // url
+  // 1-2. url
   const URL_FOOD_API = process.env.REACT_APP_URL_FOOD_API;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const lang = "ko";
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any> ([]);
   const [foodDay, setFoodDay] = useState(koreanDate);
   const [query, setQuery] = useState("");
@@ -62,6 +64,7 @@ export const FoodSearchList = () => {
     axios.get(url)
     .then((response) => {
       setFOOD_SEARCH(response.data.items);
+      log("FOOD_SEARCH : " + JSON.stringify(response.data.items));
     })
     .catch((error:any) => {
       alert(`Error fetching food data: ${error.message}`);

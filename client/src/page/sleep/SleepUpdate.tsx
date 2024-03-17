@@ -8,29 +8,31 @@ import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const SleepUpdate = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Sleep Update";
-  // url
+  // 1-2. url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [sleepDay, setSleepDay] = useState(koreanDate);
   const [SLEEP, setSLEEP] = useState<any> ({});
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     const fetchSleepDetail = async () => {
       try {
@@ -40,6 +42,7 @@ export const SleepUpdate = () => {
           },
         });
         setSLEEP(response.data);
+        log("SLEEP : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         alert(`Error fetching sleep data: ${error.message}`);
@@ -49,7 +52,7 @@ export const SleepUpdate = () => {
     fetchSleepDetail();
   }, [_id]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     const setSleepTime = () => {
       const nightDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_night}:00Z`);

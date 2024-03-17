@@ -9,24 +9,24 @@ import moment from "moment-timezone";
 import axios from "axios";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Calendar Detail";
-  // url
+  // 1-2. url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -42,11 +42,9 @@ export const CalendarDetail = () => {
   const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage<any> (
     "moneyListDay", []
   );
-  // state 2
   const {val:calendarDay, setVal:setCalendarDay} = useStorage<Date | undefined> (
     "calendarDay", undefined
   );
-  // state 3
   const {val:resVal, setVal:setResVal} = useStorage<string> (
     "resValDay", "0000-00-00"
   );
@@ -54,7 +52,7 @@ export const CalendarDetail = () => {
     "resDurDay", "0000-00-00 ~ 0000-00-00"
   );
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     if (calendarDay) {
       const viewDate = moment(calendarDay).format("YYYY-MM-DD").toString();
@@ -63,7 +61,7 @@ export const CalendarDetail = () => {
     }
   }, [calendarDay]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     setCalendarDay(parseISO(location.state.calendar_date));
   }, [location.state.calendar_date]);

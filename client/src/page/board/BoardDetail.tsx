@@ -2,8 +2,6 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
@@ -11,24 +9,26 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 // ------------------------------------------------------------------------------------------------>
 export const BoardDetail = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Board Detail";
-  // url
+  // 1-2. url
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const _id = location.state._id;
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [BOARD, setBOARD] = useState<any> ({});
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {

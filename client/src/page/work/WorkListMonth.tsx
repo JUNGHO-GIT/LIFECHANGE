@@ -11,36 +11,30 @@ import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 import {workPartArray, workTitleArray} from "./WorkArray";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const WorkListMonth = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Work List Month";
-  // url
+  // 1-2. url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [workType, setWorkType] = useState<string>("list");
-  const [workNumber, setWorkNumber] = useState<number>(0);
-
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any>(
     "workList(MONTH)", []
   );
   const {val:WORK_AVERAGE, setVal:setWORK_AVERAGE} = useStorage<any>(
     "workAvg(MONTH)", []
   );
-
-  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:workMonth, setVal:setWorkMonth} = useStorage<Date | undefined>(
     "workMonth(MONTH)", koreanDate
   );
@@ -50,8 +44,6 @@ export const WorkListMonth = () => {
   const {val:workResDur, setVal:setWorkResDur} = useStorage<string>(
     "workResDur(MONTH)", "0000-00-00 ~ 0000-00-00"
   );
-
-  // 2-4. useStorage ------------------------------------------------------------------------------>
   const {val:workPart, setVal:setWorkPart} = useStorage<string>(
     "workPart(MONTH)", "전체"
   );
@@ -59,7 +51,11 @@ export const WorkListMonth = () => {
     "workTitle(MONTH)", "전체"
   );
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [workType, setWorkType] = useState<string>("list");
+  const [workNumber, setWorkNumber] = useState<number>(0);
+
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
 
     // 1. list
@@ -100,7 +96,6 @@ export const WorkListMonth = () => {
         alert(`Error fetching work data: ${error.message}`);
       }
     };
-
     fetchWorkAvg();
   }, [user_id, workResDur, workPart, workTitle]);
 

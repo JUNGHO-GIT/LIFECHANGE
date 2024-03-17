@@ -2,33 +2,33 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "User Login";
-  // url
+  // 1-2. url
   const URL_USER = process.env.REACT_APP_URL_USER;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
-  // log
+  // 1-5. val
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserLogin = async () => {
@@ -37,17 +37,16 @@ export const UserLogin = () => {
         user_id: user_id,
         user_pw: user_pw,
       });
+      log("USER : " + JSON.stringify(response.data));
+
       if (response.data === "success") {
         alert("Login successful");
         window.sessionStorage.setItem("user_id", user_id);
         navParam("/");
       }
-      else if (response.data === "fail") {
+      else {
         alert("Incorrect ID or PW");
         window.sessionStorage.setItem("user_id", "false");
-      }
-      else {
-        alert(`${response.data}error`);
       }
     }
     catch (error:any) {

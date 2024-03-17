@@ -3,36 +3,37 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const FoodInsert = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Food Insert";
-  // url
+  // 1-2. url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
   const {title, brand, serving, calories, fat, carb, protein} = location.state;
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
   const [FOOD, setFOOD] = useState<any>({});
   const [foodDay, setFoodDay] = useState<string>(koreanDate);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     setFOOD ({
       ...FOOD,
@@ -42,29 +43,35 @@ export const FoodInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFoodInsert = async (params:any) => {
+    try {
+      const FOOD = {
+        food_title: title,
+        food_brand: brand,
+        food_category: category,
+        food_serving: params,
+        food_calories: logicPerServing(params, calories),
+        food_carb: logicPerServing(params, carb),
+        food_protein: logicPerServing(params, protein),
+        food_fat: logicPerServing(params, fat),
+        foodDay: foodDay,
+      };
 
-    const FOOD = {
-      food_title: title,
-      food_brand: brand,
-      food_category: category,
-      food_serving: params,
-      food_calories: logicPerServing(params, calories),
-      food_carb: logicPerServing(params, carb),
-      food_protein: logicPerServing(params, protein),
-      food_fat: logicPerServing(params, fat),
-      foodDay: foodDay,
-    };
+      const response = await axios.post(`${URL_FOOD}/foodInsert`, {
+        user_id : user_id,
+        FOOD : FOOD,
+      });
+      log("FOOD : " + JSON.stringify(FOOD));
 
-    const response = await axios.post(`${URL_FOOD}/foodInsert`, {
-      user_id : user_id,
-      FOOD : FOOD,
-    });
-    if (response.data === "success") {
-      alert("Insert food successfully");
-      navParam("/foodListDay");
+      if (response.data === "success") {
+        alert("Insert food successfully");
+        navParam("/foodListDay");
+      }
+      else {
+        alert(`${response.data}error`);
+      }
     }
-    else {
-      alert(`${response.data}error`);
+    catch (error:any) {
+      alert(`Error inserting food data: ${error.message}`);
     }
   };
 

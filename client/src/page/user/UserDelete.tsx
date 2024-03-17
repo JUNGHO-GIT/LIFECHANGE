@@ -2,32 +2,32 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const UserDelete = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "User Delete";
-  // url
+  // 1-2. url
   const URL_USER = process.env.REACT_APP_URL_USER;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     const fetchUserDelete = async () => {
       const user_id = window.sessionStorage.getItem("user_id");
@@ -36,6 +36,7 @@ export const UserDelete = () => {
           user_id: user_id,
         });
         setUserId(response.data.user_id);
+        log("USER : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         alert(`Error fetching user data: ${error.message}`);

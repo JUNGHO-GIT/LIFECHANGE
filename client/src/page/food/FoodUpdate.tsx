@@ -2,34 +2,34 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const FoodUpdate = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Food Update";
-  // url
+  // 1-2. url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
   const _id = location.state._id;
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [FOOD, setFOOD] = useState<any> ({});
 
-  // 2. useEffect --------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
@@ -39,6 +39,7 @@ export const FoodUpdate = () => {
           },
         });
         setFOOD(response.data);
+        log("FOOD : " + JSON.stringify(response.data));
       }
       catch (error:any) {
         alert(`Error fetching food data: ${error.message}`);

@@ -1,25 +1,26 @@
-import React, {useState, useEffect} from "react";
+// Header.tsx
+
+import React from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import moment from "moment-timezone";
-import axios from "axios";
 import {useDeveloperMode} from "../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const Header = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Header";
-  // url
+  // 1-2. url
   const URL_HEADER = process.env.REACT_APP_URL_HEADER;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
 
   // 4-1. logic ----------------------------------------------------------------------------------->

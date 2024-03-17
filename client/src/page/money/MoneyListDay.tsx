@@ -11,36 +11,30 @@ import axios from "axios";
 import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const MoneyListDay = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Money List Day";
-  // url
+  // 1-2. url
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [moneyType, setMoneyType] = useState<string>("list");
-  const [moneyNumber, setMoneyNumber] = useState<number>(0);
-
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage<any>(
     "moneyList(DAY)", []
   );
   const {val:MONEY_AVERAGE, setVal:setMONEY_AVERAGE} = useStorage<any>(
     "moneyAvg(DAY)", []
   );
-
-  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:moneyDay, setVal:setMoneyDay} = useStorage<Date | undefined>(
     "moneyDay(DAY)", undefined
   );
@@ -50,8 +44,6 @@ export const MoneyListDay = () => {
   const {val:moneyResDur, setVal:setMoneyResDur} = useStorage<string>(
     "moneyResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
-
-  // 2-4. useStorage ------------------------------------------------------------------------------>
   const {val:moneyPart, setVal:setMoneyPart} = useStorage<string>(
     "moneyPart(DAY)", "전체"
   );
@@ -59,7 +51,11 @@ export const MoneyListDay = () => {
     "moneyTitle(DAY)", "전체"
   );
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [moneyType, setMoneyType] = useState<string>("list");
+  const [moneyNumber, setMoneyNumber] = useState<number>(0);
+
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
 
     // 1. list
@@ -103,7 +99,7 @@ export const MoneyListDay = () => {
     fetchMoneyAvg();
   }, [user_id, moneyResDur, moneyPart, moneyTitle]);
 
-  // 2-4. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     const formatVal = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;

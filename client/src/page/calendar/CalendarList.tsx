@@ -5,32 +5,34 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/ts/useStorage";
 import {ko} from "date-fns/locale";
-import {parseISO} from "date-fns";
 import moment from "moment-timezone";
-import axios from "axios";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Calendar List";
-  // url
+  // 1-2. url
   const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:calendarDay, setVal:setCalendarDay} = useStorage<Date | undefined>(
     "calendarDay(DAY)", undefined
   );
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick = (day:Date) => {

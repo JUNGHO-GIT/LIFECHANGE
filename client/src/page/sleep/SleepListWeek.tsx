@@ -10,35 +10,30 @@ import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const SleepListWeek = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Sleep List Week";
-  // url
+  // 1-2. url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  // date
+  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [sleepType, setSleepType] = useState<string>("list");
-
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
     "sleepList(WEEK)", []
   );
   const {val:SLEEP_AVERAGE, setVal:setSLEEP_AVERAGE} = useStorage<any>(
     "sleepAvg(WEEK)", []
   );
-
-  // 2-3. useStorage ------------------------------------------------------------------------------>
   const {val:sleepStartDay, setVal:setSleepStartDay} = useStorage<Date | undefined>(
     "sleepStartDay(WEEK)", undefined
   );
@@ -51,6 +46,9 @@ export const SleepListWeek = () => {
   const {val:sleepResDur, setVal:setSleepResDur} = useStorage<string>(
     "sleepResDur(WEEK)", "0000-00-00 ~ 0000-00-00"
   );
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [sleepType, setSleepType] = useState<string>("list");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -72,6 +70,8 @@ export const SleepListWeek = () => {
         alert(`Error fetching sleep data: ${error.message}`);
       }
     };
+    fetchSleepList();
+
     // 2. average
     const fetchSleepAvg = async () => {
       try {
@@ -89,11 +89,10 @@ export const SleepListWeek = () => {
         alert(`Error fetching sleep data: ${error.message}`);
       }
     };
-    fetchSleepList();
     fetchSleepAvg();
   }, [user_id, sleepResDur]);
 
-  // 2-5. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     const formatVal = (value:number):string => {
       return value < 10 ? `0${value}` : `${value}`;

@@ -26,7 +26,7 @@ export const DeveloperModeProvider = (
     setIsDeveloperMode(!isDeveloperMode);
   };
 
-  // log
+  // 1-6. log
   const log = (message: string) => {
     if (isDeveloperMode) {
       console.log(message);

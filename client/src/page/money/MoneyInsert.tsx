@@ -3,30 +3,31 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {moneyPartArray, moneyTitleArray} from "../money/MoneyArray";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const MoneyInsert = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Money Insert";
-  // url
+  // 1-2. url
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [MONEY, setMONEY] = useState<any>({});
   const [moneyDay, setMoneyDay] = useState<string>(koreanDate);
   const [moneyAmount, setMoneyAmount] = useState<number>(1);
@@ -37,7 +38,7 @@ export const MoneyInsert = () => {
     money_title_val: "전체",
   }]);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setMONEY ({
       ...MONEY,
@@ -48,33 +49,32 @@ export const MoneyInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowMoneyInsert = async () => {
+    try {
+      if (!user_id) {
+        alert("Input a ID");
+        return;
+      }
+      if (!moneyDay) {
+        alert("Input a Day");
+        return;
+      }
 
-    // debug alert
-    alert (JSON.stringify(MONEY));
+      const response = await axios.post (`${URL_MONEY}/moneyInsert`, {
+        user_id : user_id,
+        MONEY : MONEY,
+      });
+      log("MONEY : " + JSON.stringify(MONEY));
 
-    if (!user_id) {
-      alert("Input a ID");
-      return;
+      if (response.data === "success") {
+        alert("Insert a money successfully");
+        navParam("/moneyListDay");
+      }
+      else {
+        alert("Insert a money failure");
+      }
     }
-    if (!moneyDay) {
-      alert("Input a Day");
-      return;
-    }
-
-    const response = await axios.post (`${URL_MONEY}/moneyInsert`, {
-      user_id : user_id,
-      MONEY : MONEY,
-    });
-
-    if (response.data === "success") {
-      alert("Insert a money successfully");
-      navParam("/moneyListDay");
-    }
-    else if (response.data === "fail") {
-      alert("Insert a money failure");
-    }
-    else {
-      throw new Error("Server responded with an error");
+    catch (error:any) {
+      alert(`Error inserting money data: ${error.message}`);
     }
   };
 

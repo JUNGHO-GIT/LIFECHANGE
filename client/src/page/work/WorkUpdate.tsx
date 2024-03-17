@@ -6,27 +6,30 @@ import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const WorkUpdate = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Work Update";
-  // url
+  // 1-2. url
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
-  // state
-  const [WORK, setWORK] = useState<any> ({});
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [WORK, setWORK] = useState<any>({});
+
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     const fetchWorkDetail = async () => {
       try {

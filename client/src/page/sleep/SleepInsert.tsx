@@ -8,28 +8,30 @@ import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-// 1. main ---------------------------------------------------------------------------------------->
+// ------------------------------------------------------------------------------------------------>
 export const SleepInsert = () => {
 
-  // title
+  // 1-1. title
   const TITLE = "Sleep Insert";
-  // url
+  // 1-2. url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  // date
+  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // hook
+  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // val
+  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // log
+  // 1-6. log
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP, setSLEEP] = useState<any>({});
   const [sleepDay, setSleepDay] = useState<string>(koreanDate);
 
-  // 2-1. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     setSLEEP({
       ...SLEEP,
@@ -37,7 +39,7 @@ export const SleepInsert = () => {
     });
   }, [sleepDay]);
 
-  // 2-2. useEffect ------------------------------------------------------------------------------->
+  // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     const setSleepTime = () => {
       if (SLEEP.sleep_night && SLEEP.sleep_morning) {
@@ -63,27 +65,32 @@ export const SleepInsert = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepInsert = async () => {
-    if (SLEEP.sleep_night === "") {
-      alert("Please enter a night");
-      return;
+    try {
+      if (SLEEP.sleep_night === "") {
+        alert("Please enter a night");
+        return;
+      }
+      else if (SLEEP.sleep_morning === "") {
+        alert("Please enter a morning");
+        return;
+      }
+
+      const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
+        user_id : user_id,
+        SLEEP : SLEEP
+      });
+      log("SLEEP : " + JSON.stringify(SLEEP));
+
+      if (response.data === "success") {
+        alert("Insert a sleep successfully");
+        navParam("/sleepListDay");
+      }
+      else {
+        alert("Insert a sleep failure");
+      }
     }
-    else if (SLEEP.sleep_morning === "") {
-      alert("Please enter a morning");
-      return;
-    }
-    const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
-      user_id : user_id,
-      SLEEP : SLEEP
-    });
-    if (response.data === "success") {
-      alert("Insert a sleep successfully");
-      navParam("/sleepListDay");
-    }
-    else if (response.data === "fail") {
-      alert("Insert a sleep failure");
-    }
-    else {
-      throw new Error("Server responded with an error");
+    catch (error:any) {
+      alert(`Error fetching sleep data: ${error.message}`);
     }
   };
 
