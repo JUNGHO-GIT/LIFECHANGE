@@ -5,6 +5,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -26,18 +27,20 @@ export const FoodInsert = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:foodDay, setVal:setFoodDay} = useStorage<Date | undefined> (
+    "foodDay", new Date(koreanDate)
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
   const [FOOD, setFOOD] = useState<any>({});
-  const [foodDay, setFoodDay] = useState<string>(koreanDate);
 
   // 2-3. useEffect -------------------------------------------------------------------------------
   useEffect(() => {
     setFOOD ({
       ...FOOD,
-      foodDay : foodDay,
+      foodDay: moment(foodDay).format("YYYY-MM-DD"),
     });
   }, [foodDay]);
 
@@ -53,7 +56,7 @@ export const FoodInsert = () => {
         food_carb: logicPerServing(params, carb),
         food_protein: logicPerServing(params, protein),
         food_fat: logicPerServing(params, fat),
-        foodDay: foodDay,
+        foodDay: moment(foodDay).format("YYYY-MM-DD"),
       };
 
       const response = await axios.post(`${URL_FOOD}/foodInsert`, {
@@ -75,17 +78,32 @@ export const FoodInsert = () => {
     }
   };
 
-  // 4. logic ------------------------------------------------------------------------------------->
+  // 4. view -------------------------------------------------------------------------------------->
   const viewFoodDay = () => {
+    const calcDate = (days: number) => {
+      setFoodDay((prevDate) => {
+        const newDate = prevDate ? new Date(prevDate) : new Date();
+        newDate.setDate(newDate.getDate() + days);
+        return newDate;
+      });
+    };
     return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={new Date(foodDay)}
-        onChange={(date:any) => {
-          setFoodDay(moment(date).format("YYYY-MM-DD").toString());
-        }}
-      />
+      <div className="d-inline-flex">
+        <div className="black mt-4 me-5 pointer" onClick={() => calcDate(-1)}>
+          &#8592;
+        </div>
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          popperPlacement="bottom"
+          selected={foodDay}
+          onChange={(date: Date) => {
+            setFoodDay(date);
+          }}
+        />
+        <div className="black mt-4 ms-5 pointer" onClick={() => calcDate(1)}>
+          &#8594;
+        </div>
+      </div>
     );
   };
 

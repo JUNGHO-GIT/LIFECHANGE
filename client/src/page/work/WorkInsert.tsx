@@ -1,12 +1,13 @@
 // WorkInsert.tsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {workPartArray, workTitleArray} from "../work/WorkArray";
+import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -20,17 +21,18 @@ export const WorkInsert = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // 1-4. hook
   const navParam = useNavigate();
-  const location = useLocation();
   // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
   // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:workDay, setVal:setWorkDay} = useStorage<Date | undefined> (
+    "workDay", new Date(koreanDate)
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK, setWORK] = useState<any>({});
-  const [workDay, setWorkDay] = useState<string>(koreanDate);
   const [workAmount, setWorkAmount] = useState<number>(1);
   const [workSection, setWorkSection] = useState<any[]>([{
     work_part_idx: 0,
@@ -43,7 +45,7 @@ export const WorkInsert = () => {
   useEffect(() => {
     setWORK ({
       ...WORK,
-      workDay : workDay,
+      workDay: moment(workDay).format("YYYY-MM-DD"),
       workSection : workSection,
     });
   }, [workDay, workSection]);
@@ -178,17 +180,32 @@ export const WorkInsert = () => {
     );
   };
 
-  // 4. logic ------------------------------------------------------------------------------------->
+  // 4. view -------------------------------------------------------------------------------------->
   const viewWorkDay = () => {
+    const calcDate = (days: number) => {
+      setWorkDay((prevDate) => {
+        const newDate = prevDate ? new Date(prevDate) : new Date();
+        newDate.setDate(newDate.getDate() + days);
+        return newDate;
+      });
+    };
     return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={new Date(workDay)}
-        onChange={(date:any) => {
-          setWorkDay(moment(date).format("YYYY-MM-DD").toString());
-        }}
-      />
+      <div className="d-inline-flex">
+        <div className="black mt-4 me-5 pointer" onClick={() => calcDate(-1)}>
+          &#8592;
+        </div>
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          popperPlacement="bottom"
+          selected={workDay}
+          onChange={(date: Date) => {
+            setWorkDay(date);
+          }}
+        />
+        <div className="black mt-4 ms-5 pointer" onClick={() => calcDate(1)}>
+          &#8594;
+        </div>
+      </div>
     );
   };
 

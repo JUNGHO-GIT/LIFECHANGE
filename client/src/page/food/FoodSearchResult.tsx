@@ -53,7 +53,7 @@ export const FoodSearchResult = () => {
     fetchFoodSearchResult();
   }, [user_id, food_category, foodDay]);
 
-  // 4. logic ------------------------------------------------------------------------------------->
+  // 4. view -------------------------------------------------------------------------------------->
   const logicViewDate = () => {
     return (
       <DatePicker

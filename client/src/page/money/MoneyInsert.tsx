@@ -1,11 +1,12 @@
 // MoneyInsert.tsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {moneyPartArray, moneyTitleArray} from "../money/MoneyArray";
+import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -19,17 +20,18 @@ export const MoneyInsert = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // 1-4. hook
   const navParam = useNavigate();
-  const location = useLocation();
   // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
   // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:moneyDay, setVal:setMoneyDay} = useStorage<Date | undefined> (
+    "moneyDay", new Date(koreanDate)
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [MONEY, setMONEY] = useState<any>({});
-  const [moneyDay, setMoneyDay] = useState<string>(koreanDate);
   const [moneyAmount, setMoneyAmount] = useState<number>(1);
   const [moneySection, setMoneySection] = useState<any[]>([{
     money_part_idx: 0,
@@ -42,7 +44,7 @@ export const MoneyInsert = () => {
   useEffect(() => {
     setMONEY ({
       ...MONEY,
-      moneyDay : moneyDay,
+      moneyDay: moment(moneyDay).format("YYYY-MM-DD"),
       moneySection : moneySection,
     });
   }, [moneyDay, moneySection]);
@@ -143,17 +145,32 @@ export const MoneyInsert = () => {
     );
   };
 
-  // 4. logic ------------------------------------------------------------------------------------->
+  // 4. view -------------------------------------------------------------------------------------->
   const viewMoneyDay = () => {
+    const calcDate = (days: number) => {
+      setMoneyDay((prevDate) => {
+        const newDate = prevDate ? new Date(prevDate) : new Date();
+        newDate.setDate(newDate.getDate() + days);
+        return newDate;
+      });
+    };
     return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={new Date(moneyDay)}
-        onChange={(date:any) => {
-          setMoneyDay(moment(date).format("YYYY-MM-DD").toString());
-        }}
-      />
+      <div className="d-inline-flex">
+        <div className="black mt-4 me-5 pointer" onClick={() => calcDate(-1)}>
+          &#8592;
+        </div>
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          popperPlacement="bottom"
+          selected={moneyDay}
+          onChange={(date: Date) => {
+            setMoneyDay(date);
+          }}
+        />
+        <div className="black mt-4 ms-5 pointer" onClick={() => calcDate(1)}>
+          &#8594;
+        </div>
+      </div>
     );
   };
 

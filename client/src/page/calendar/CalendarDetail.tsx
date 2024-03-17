@@ -3,10 +3,10 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
-import {useStorage} from "../../assets/ts/useStorage";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
+import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -148,8 +148,8 @@ export const CalendarDetail = () => {
 
   }, [user_id, resDur]);
 
-  // 4. logic ------------------------------------------------------------------------------------->
-  const logicViewDate = () => {
+  // 4. view -------------------------------------------------------------------------------------->
+  const viewCalendarDay = () => {
     const calcDate = (days: number) => {
       setCalendarDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
@@ -349,7 +349,7 @@ export const CalendarDetail = () => {
         <div className="col-12">
           <h1 className="mb-3 fw-5">
             <span>
-              {logicViewDate()}
+              {viewCalendarDay()}
             </span>
           </h1>
         </div>
