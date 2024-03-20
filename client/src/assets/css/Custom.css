@@ -4,8 +4,10 @@ html {
 }
 html, body {
   width: 100% !important;
+  height: 100% !important;
   max-width: 100% !important;
   overflow-x: hidden !important;
+  background-color: #f5f5f9 !important;
 }
 .main {
   margin-top: 50px;
@@ -29,6 +31,7 @@ textarea.form-control {
   display: none !important;
   -ms-overflow-style: none !important;
 }
+
 
 /** align *****************************************************************************************/
 .d-center {

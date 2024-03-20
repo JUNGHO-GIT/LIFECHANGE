@@ -2045,3 +2045,16 @@
 .p-sticky {
   position: sticky !important;
 }
+
+.box-top {
+  box-shadow: 0 -5px 0.375rem 0 rgba(161, 172, 184, 0.12) !important;
+}
+.box-right {
+  box-shadow: 5px -1rem 0.375rem 0 rgba(161, 172, 184, 0.12)  !important;
+}
+.box-bottom {
+  box-shadow: 0 5px 0.375rem 0 rgba(161, 172, 184, 0.12) !important;
+}
+.box-left {
+  box-shadow: -5px 0 0.375rem 0 rgba(161, 172, 184, 0.12) !important;
+}

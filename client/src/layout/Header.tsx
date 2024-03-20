@@ -172,7 +172,7 @@ export const Header = () => {
   // 4-3. view ------------------------------------------------------------------------------------>
   const Sidebar = () => {
     return (
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded`}>
+      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
         <p className="text-end pointer text-dark p-10" onClick={() => {
           setIsSidebar(!isSidebar);
         }}>
@@ -248,7 +248,7 @@ export const Header = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <header className="container-fluid bg-white mb-30">
+    <header className="container-fluid bg-white box-bottom mb-30">
       <SidebarStyle />
       <div className="row d-center pt-15 pb-15">
         <div className="col-1">
