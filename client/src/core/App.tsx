@@ -3,7 +3,6 @@
 import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
-import ThemeProvider from "../page/test/theme";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -83,14 +82,11 @@ import {PlanDetail} from "../page/plan/PlanDetail";
 import {PlanUpdate} from "../page/plan/PlanUpdate";
 import {PlanListDay} from "../page/plan/PlanListDay";
 
-import {Test} from "../page/test/Test";
-
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 
   return (
     <div className="App">
-      <ThemeProvider>
       <DeveloperModeProvider>
         <Loader />
         <Resize />
@@ -157,12 +153,9 @@ const App = () => {
           <Route path="/planUpdate" element={<PlanUpdate />} />
           <Route path="/planListDay" element={<PlanListDay />} />
 
-          <Route path="/test" element={<Test />} />
-
         </Routes>
         {/* <Footer /> */}
       </DeveloperModeProvider>
-      </ThemeProvider>
     </div>
   );
 };

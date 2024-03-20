@@ -1,9 +1,53 @@
 // Header.tsx
 
-import React from "react";
+import React, {useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../assets/ts/useDeveloperMode";
+import {createGlobalStyle} from "styled-components";
+
+// ------------------------------------------------------------------------------------------------>
+const SidebarStyle = createGlobalStyle`
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+
+  .sidebar {
+    position: fixed;
+    text-align: center;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #343a40;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+  }
+
+  .sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-closed {
+    transform: translateX(-100%);
+  }
+
+  .sidebar p {
+    color: white;
+    padding: 20px;
+  }
+
+`;
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -20,11 +64,60 @@ export const Header = () => {
   // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
-  const DropdownItem: React.FC<{to: string, label: string}> = ({to, label}) => (
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [isSidebar, setIsSidebar] = useState(false);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+
+  // 3. sidebar ----------------------------------------------------------------------------------->
+  const sidebar = () => {
+    return (
+      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-dark rounded`}>
+        <p className="text-center pointer" onClick={() => {
+          setIsSidebar(!isSidebar);
+        }}>
+          X
+        </p>
+        <div className="d-flex flex-column flex-shrink-0 p-3">
+          <ul className="nav nav-pills flex-column mb-auto">
+            <li className="nav-item">
+              <a href="#" className="nav-link active">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="#" className="nav-link text-light">
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="#" className="nav-link text-light">
+                Orders
+              </a>
+            </li>
+            <li>
+              <a href="#" className="nav-link text-light">
+                Products
+              </a>
+            </li>
+            <li>
+              <a href="#" className="nav-link text-light">
+                Customers
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
+  // 4-1. view ------------------------------------------------------------------------------------>
+  const DropdownItem: React.FC<{to: string, label: string}> = ({
+    to, label
+  }) => (
     <li className="pt-1 pb-1">
       <div className="dropdown-item pointer" onClick={(e) => {
         e.preventDefault();
@@ -35,7 +128,7 @@ export const Header = () => {
     </li>
   );
 
-  // 4-2. logic ----------------------------------------------------------------------------------->
+  // 4-2. view ------------------------------------------------------------------------------------>
   const DropdownMenu: React.FC<{ label: string, items: {to: string, label: string}[] }> = ({
     label, items
   }) => (
@@ -53,8 +146,8 @@ export const Header = () => {
     </li>
   );
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableNaveList = () => {
+  // 5-2. table ----------------------------------------------------------------------------------->
+  const tableNavList = () => {
     const menus = [
       {
         label: "Main",
@@ -186,9 +279,18 @@ export const Header = () => {
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <header className="container-fluid bg-dark">
+      <SidebarStyle />
       <div className="row d-center pt-15 pb-15">
-        <div className="col-9">
-          {tableNaveList()}
+        <div className="col-1">
+          {sidebar()}
+          <button type="button" className="btn btn-sm btn-outline-light ms-2" onClick={() => {
+            setIsSidebar(!isSidebar);
+          }}>
+            Sidebar
+          </button>
+        </div>
+        <div className="col-7">
+          {tableNavList()}
         </div>
         <div className="col-1">
           {buttonDeveloperMode()}
