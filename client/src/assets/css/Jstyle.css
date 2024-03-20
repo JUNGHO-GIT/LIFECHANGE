@@ -1936,6 +1936,43 @@
 .z-99 {z-index: 99 !important;}
 .z-100 {z-index: 100 !important;}
 
+.fw-100 {
+  font-weight: 100 !important;
+}
+.fw-200 {
+  font-weight: 200 !important;
+}
+.fw-300 {
+  font-weight: 300 !important;
+}
+.fw-400 {
+  font-weight: 400 !important;
+}
+.fw-500 {
+  font-weight: 500 !important;
+}
+.fw-600 {
+  font-weight: 600 !important;
+}
+.fw-700 {
+  font-weight: 700 !important;
+}
+.fw-800 {
+  font-weight: 800 !important;
+}
+.fw-900 {
+  font-weight: 900 !important;
+}
+.fw-normal {
+  font-weight: normal;
+}
+.fw-bold {
+  font-weight: bold;
+}
+.fw-bolder {
+  font-weight: bolder;
+}
+
 .d-center {
   display: flex;
   justify-content: center;
@@ -1989,28 +2026,22 @@
   width: -webkit-fill-available;
   height: -webkit-fill-available;
 }
+.text-dark {
+  color: #697A8D !important;
+}
 
-.fw-500 {
-  font-weight: 500 !important;
+.p-fixed {
+  position: fixed !important;
 }
-.fw-600 {
-  font-weight: 600 !important;
+.p-absolute {
+  position: absolute !important;
 }
-.fw-700 {
-  font-weight: 700 !important;
+.p-relative {
+  position: relative !important;
 }
-.fw-800 {
-  font-weight: 800 !important;
+.p-static {
+  position: static !important;
 }
-.fw-900 {
-  font-weight: 900 !important;
-}
-.fw-normal {
-  font-weight: normal;
-}
-.fw-bold {
-  font-weight: bold;
-}
-.fw-bolder {
-  font-weight: bolder;
+.p-sticky {
+  position: sticky !important;
 }

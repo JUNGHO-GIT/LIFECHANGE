@@ -14,18 +14,13 @@ import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListMonth = () => {
 
-  // 1-1. title
+  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Money List Month";
-  // 1-2. url
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-  // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>

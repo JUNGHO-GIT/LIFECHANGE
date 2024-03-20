@@ -155,6 +155,7 @@ const App = () => {
           <Route path="/planUpdate" element={<PlanUpdate />} />
           <Route path="/planListDay" element={<PlanListDay />} />
         </Routes>
+        <Footer />
       </DeveloperModeProvider>
     </div>
   );

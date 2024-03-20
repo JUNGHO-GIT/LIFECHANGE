@@ -9,13 +9,10 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
 
-  // 1-1. title
+  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "User Login";
-  // 1-2. url
   const URL_USER = process.env.REACT_APP_URL_USER;
-  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
   // 1-5. val

@@ -37,7 +37,7 @@ const SidebarStyle = createGlobalStyle`
   }
 
   .sidebar ul {
-    padding: 0;
+    padding: 5px 0px 0px 10px;
     list-style: none;
   }
 
@@ -64,17 +64,11 @@ const SidebarStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
-
-  // 1-1. title
   const TITLE = "Header";
-  // 1-2. url
   const URL_HEADER = process.env.REACT_APP_URL_HEADER;
-  // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
-  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -96,18 +90,76 @@ export const Header = () => {
   };
 
   // 4-1. view ------------------------------------------------------------------------------------>
+  const SidebarArray = [
+    {
+      label: "Main",
+      items: [
+        {to: "/", label: "Home"},
+      ]
+    },
+    {
+      label: "User",
+      items: [
+        {to: "/userList", label: "UserList"},
+      ]
+    },
+    {
+      label: "Board",
+      items: [
+        {to: "/boardInsert", label: "BoardInsert"},
+        {to: "/boardList", label: "BoardList"},
+      ]
+    },
+    {
+      label: "Food",
+      items: [
+        {to: "/foodSearchList", label: "FoodSearchList"},
+        {to: "/foodListDay", label: "FoodList"}
+      ]
+    },
+    {
+      label: "Work",
+      items: [
+        {to: "/workInsert", label: "WorkInsert"},
+        {to: "/workListDay", label: "WorkList"},
+      ]
+    },
+    {
+      label: "Sleep",
+      items: [
+        {to: "/sleepInsert", label: "SleepInsert"},
+        {to: "/sleepListDay", label: "SleepList"}
+      ]
+    },
+    {
+      label: "Money",
+      items: [
+        {to: "/moneyInsert", label: "MoneyInsert"},
+        {to: "/moneyListDay", label: "MoneyList"}
+      ]
+    },
+    {
+      label: "Plan",
+      items: [
+        {to: "/planInsert", label: "PlanInsert"},
+        {to: "/planListDay", label: "PlanList"}
+      ]
+    }
+  ];
+
+  // 4-2. view ------------------------------------------------------------------------------------>
   const SidebarItem: React.FC<{ label: string, items: { to: string, label: string }[] }> = ({
     label, items
   }) => (
-    <li className="text-center pointer mt-30">
+    <li className="text-start pointer mt-30 ps-20">
       <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => toggleExpand(label)}>
         {label}
       </div>
       <Collapse in={isExpended === label}>
         <ul>
           {items.map(({ to, label }) => (
-            <li key={to} className="fs-10 fw-400">
-              <div className="pointer" onClick={() => {navParam(to)}}>
+            <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
+              <div className="pointer" onClick={() => {navParam(to); setIsActive(to);}}>
                 {label}
               </div>
             </li>
@@ -117,74 +169,18 @@ export const Header = () => {
     </li>
   );
 
-  // 4-2. view ------------------------------------------------------------------------------------>
-  const sidebar = () => {
-    const menus = [
-      {
-        label: "Main",
-        items: [
-          {to: "/", label: "Home"},
-        ]
-      },
-      {
-        label: "User",
-        items: [
-          {to: "/userList", label: "UserList"},
-        ]
-      },
-      {
-        label: "Board",
-        items: [
-          {to: "/boardInsert", label: "BoardInsert"},
-          {to: "/boardList", label: "BoardList"},
-        ]
-      },
-      {
-        label: "Food",
-        items: [
-          {to: "/foodSearchList", label: "FoodSearchList"},
-          {to: "/foodListDay", label: "FoodList"}
-        ]
-      },
-      {
-        label: "Work",
-        items: [
-          {to: "/workInsert", label: "WorkInsert"},
-          {to: "/workListDay", label: "WorkList"},
-        ]
-      },
-      {
-        label: "Sleep",
-        items: [
-          {to: "/sleepInsert", label: "SleepInsert"},
-          {to: "/sleepListDay", label: "SleepList"}
-        ]
-      },
-      {
-        label: "Money",
-        items: [
-          {to: "/moneyInsert", label: "MoneyInsert"},
-          {to: "/moneyListDay", label: "MoneyList"}
-        ]
-      },
-      {
-        label: "Plan",
-        items: [
-          {to: "/planInsert", label: "PlanInsert"},
-          {to: "/planListDay", label: "PlanList"}
-        ]
-      }
-    ];
+  // 4-3. view ------------------------------------------------------------------------------------>
+  const Sidebar = () => {
     return (
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-light rounded`}>
-        <p className="text-center pointer text-black" onClick={() => {
+      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded`}>
+        <p className="text-end pointer text-dark p-10" onClick={() => {
           setIsSidebar(!isSidebar);
         }}>
           X
         </p>
         <div className="d-flex flex-column flex-shrink-0 p-3">
-          <ul className="nav nav-pills flex-column mb-auto fs-20 fw-600">
-            {menus.map(menu => <SidebarItem key={menu.label} {...menu} />)}
+          <ul className="nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark">
+            {SidebarArray.map(menu => <SidebarItem key={menu.label} {...menu} />)}
           </ul>
         </div>
       </div>
@@ -252,11 +248,11 @@ export const Header = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <header className="container-fluid bg-light mb-30">
+    <header className="container-fluid bg-white mb-30">
       <SidebarStyle />
       <div className="row d-center pt-15 pb-15">
         <div className="col-1">
-          {sidebar()}
+          {Sidebar()}
           <button type="button" className="btn btn-sm ms-2" onClick={() => {
             setIsSidebar(!isSidebar);
           }}>

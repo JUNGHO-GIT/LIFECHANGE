@@ -9,19 +9,14 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 // ------------------------------------------------------------------------------------------------>
 export const FoodUpdate = () => {
 
-  // 1-1. title
+  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Food Update";
-  // 1-2. url
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
   const _id = location.state._id;
-  // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>

@@ -10,25 +10,19 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
 
-  // 1-1. title
+  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Sleep Detail";
-  // 1-2. url
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
-  // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
-  // 1-5. val
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
-  // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [sleepDay, setSleepDay] = useState(koreanDate);
   const [SLEEP, setSLEEP] = useState<any> ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -79,18 +73,6 @@ export const SleepDetail = () => {
   };
 
   // 4. view -------------------------------------------------------------------------------------->
-  const viewSleepDay = () => {
-    return (
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={new Date(sleepDay)}
-        onChange={(date:any) => {
-          setSleepDay(moment(date).format("YYYY-MM-DD"));
-        }}
-      />
-    );
-  };
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableSleepInsert = () => {
@@ -162,13 +144,6 @@ export const SleepDetail = () => {
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
-        </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-10">
-          <h1 className="mb-3 fw-5">
-            <span className="ms-4">{viewSleepDay()}</span>
-          </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
