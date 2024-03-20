@@ -4,13 +4,14 @@ import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
 import "react-day-picker/dist/style.css";
 import "react-datepicker/dist/react-datepicker.css";
+
 import "../assets/css/Custom.css";
 import "../assets/css/Jstyle.css";
 import "../assets/css/DatePicker.css";
@@ -81,79 +82,83 @@ import {PlanDetail} from "../page/plan/PlanDetail";
 import {PlanUpdate} from "../page/plan/PlanUpdate";
 import {PlanListDay} from "../page/plan/PlanListDay";
 
+import {Test} from "../page/test/Test";
+
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 
   return (
     <div className="App">
-    <DeveloperModeProvider>
-      <Loader />
-      <Resize />
-      <Hover />
-      <Header />
-      <Routes>
+      <DeveloperModeProvider>
+        <Loader />
+        <Resize />
+        <Hover />
+        <Header />
+        <Routes>
 
-        <Route path="/" element={<CalendarList />} />
-        <Route path="/calendarList" element={<CalendarList />} />
-        <Route path="/calendarDetail" element={<CalendarDetail />} />
+          <Route path="/" element={<CalendarList />} />
+          <Route path="/calendarList" element={<CalendarList />} />
+          <Route path="/calendarDetail" element={<CalendarDetail />} />
 
-        <Route path="/userLogin" element={<UserLogin />} />
-        <Route path="/userInsert" element={<UserInsert />} />
-        <Route path="/userDetail" element={<UserDetail />} />
-        <Route path="/userList" element={<UserList />} />
-        <Route path="/userUpdate" element={<UserUpdate />} />
-        <Route path="/userDelete" element={<UserDelete />} />
+          <Route path="/userLogin" element={<UserLogin />} />
+          <Route path="/userInsert" element={<UserInsert />} />
+          <Route path="/userDetail" element={<UserDetail />} />
+          <Route path="/userList" element={<UserList />} />
+          <Route path="/userUpdate" element={<UserUpdate />} />
+          <Route path="/userDelete" element={<UserDelete />} />
 
-        <Route path="/boardList" element={<BoardList />} />
-        <Route path="/boardInsert" element={<BoardInsert />} />
-        <Route path="/boardDetail" element={<BoardDetail />} />
-        <Route path="/boardUpdate" element={<BoardUpdate />} />
+          <Route path="/boardList" element={<BoardList />} />
+          <Route path="/boardInsert" element={<BoardInsert />} />
+          <Route path="/boardDetail" element={<BoardDetail />} />
+          <Route path="/boardUpdate" element={<BoardUpdate />} />
 
-        <Route path="/foodInsert" element={<FoodInsert />} />
-        <Route path="/foodDetail" element={<FoodDetail />} />
-        <Route path="/foodUpdate" element={<FoodUpdate />} />
-        <Route path="/foodSearchList" element={<FoodSearchList />} />
-        <Route path="/foodSearchResult" element={<FoodSearchResult />} />
-        <Route path="/foodListDay" element={<FoodListDay />} />
-        <Route path="/foodListWeek" element={<FoodListWeek />} />
-        <Route path="/foodListMonth" element={<FoodListMonth />} />
-        <Route path="/foodListYear" element={<FoodListYear />} />
-        <Route path="/foodListSelect" element={<FoodListSelect />} />
+          <Route path="/foodInsert" element={<FoodInsert />} />
+          <Route path="/foodDetail" element={<FoodDetail />} />
+          <Route path="/foodUpdate" element={<FoodUpdate />} />
+          <Route path="/foodSearchList" element={<FoodSearchList />} />
+          <Route path="/foodSearchResult" element={<FoodSearchResult />} />
+          <Route path="/foodListDay" element={<FoodListDay />} />
+          <Route path="/foodListWeek" element={<FoodListWeek />} />
+          <Route path="/foodListMonth" element={<FoodListMonth />} />
+          <Route path="/foodListYear" element={<FoodListYear />} />
+          <Route path="/foodListSelect" element={<FoodListSelect />} />
 
-        <Route path="/workInsert" element={<WorkInsert />} />
-        <Route path="/workDetail" element={<WorkDetail />} />
-        <Route path="/workUpdate" element={<WorkUpdate />} />
-        <Route path="/workListDay" element={<WorkListDay />} />
-        <Route path="/workListWeek" element={<WorkListWeek />} />
-        <Route path="/workListMonth" element={<WorkListMonth />} />
-        <Route path="/workListYear" element={<WorkListYear />} />
-        <Route path="/workListSelect" element={<WorkListSelect />} />
+          <Route path="/workInsert" element={<WorkInsert />} />
+          <Route path="/workDetail" element={<WorkDetail />} />
+          <Route path="/workUpdate" element={<WorkUpdate />} />
+          <Route path="/workListDay" element={<WorkListDay />} />
+          <Route path="/workListWeek" element={<WorkListWeek />} />
+          <Route path="/workListMonth" element={<WorkListMonth />} />
+          <Route path="/workListYear" element={<WorkListYear />} />
+          <Route path="/workListSelect" element={<WorkListSelect />} />
 
-        <Route path="/sleepInsert" element={<SleepInsert />} />
-        <Route path="/sleepDetail" element={<SleepDetail />} />
-        <Route path="/sleepUpdate" element={<SleepUpdate />} />
-        <Route path="/sleepListDay" element={<SleepListDay />} />
-        <Route path="/sleepListWeek" element={<SleepListWeek />} />
-        <Route path="/sleepListMonth" element={<SleepListMonth />} />
-        <Route path="/sleepListYear" element={<SleepListYear />} />
-        <Route path="/sleepListSelect" element={<SleepListSelect />} />
+          <Route path="/sleepInsert" element={<SleepInsert />} />
+          <Route path="/sleepDetail" element={<SleepDetail />} />
+          <Route path="/sleepUpdate" element={<SleepUpdate />} />
+          <Route path="/sleepListDay" element={<SleepListDay />} />
+          <Route path="/sleepListWeek" element={<SleepListWeek />} />
+          <Route path="/sleepListMonth" element={<SleepListMonth />} />
+          <Route path="/sleepListYear" element={<SleepListYear />} />
+          <Route path="/sleepListSelect" element={<SleepListSelect />} />
 
-        <Route path="/moneyInsert" element={<MoneyInsert />} />
-        <Route path="/moneyDetail" element={<MoneyDetail />} />
-        <Route path="/moneyUpdate" element={<MoneyUpdate />} />
-        <Route path="/moneyListDay" element={<MoneyListDay />} />
-        <Route path="/moneyListWeek" element={<MoneyListWeek />} />
-        <Route path="/moneyListMonth" element={<MoneyListMonth />} />
-        <Route path="/moneyListYear" element={<MoneyListYear />} />
-        <Route path="/moneyListSelect" element={<MoneyListSelect />} />
+          <Route path="/moneyInsert" element={<MoneyInsert />} />
+          <Route path="/moneyDetail" element={<MoneyDetail />} />
+          <Route path="/moneyUpdate" element={<MoneyUpdate />} />
+          <Route path="/moneyListDay" element={<MoneyListDay />} />
+          <Route path="/moneyListWeek" element={<MoneyListWeek />} />
+          <Route path="/moneyListMonth" element={<MoneyListMonth />} />
+          <Route path="/moneyListYear" element={<MoneyListYear />} />
+          <Route path="/moneyListSelect" element={<MoneyListSelect />} />
 
-        <Route path="/planInsert" element={<PlanInsert />} />
-        <Route path="/planDetail" element={<PlanDetail />} />
-        <Route path="/planUpdate" element={<PlanUpdate />} />
-        <Route path="/planListDay" element={<PlanListDay />} />
+          <Route path="/planInsert" element={<PlanInsert />} />
+          <Route path="/planDetail" element={<PlanDetail />} />
+          <Route path="/planUpdate" element={<PlanUpdate />} />
+          <Route path="/planListDay" element={<PlanListDay />} />
 
-      </Routes>
-      <Footer />
+          <Route path="/test" element={<Test />} />
+
+        </Routes>
+        <Footer />
       </DeveloperModeProvider>
     </div>
   );
