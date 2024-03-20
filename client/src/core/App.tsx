@@ -1,7 +1,7 @@
 // App.tsx
 
 import React from "react";
-import {Routes, Route, useLocation} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";

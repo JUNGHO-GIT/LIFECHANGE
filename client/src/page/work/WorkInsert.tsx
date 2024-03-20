@@ -283,7 +283,7 @@ export const WorkInsert = () => {
           </div>
         </div>
         <div className="row d-center">
-          <div className="col-10">
+          <div className="col-12">
             <div className="input-group">
               <span className="input-group-text">Time</span>
               <input
@@ -455,7 +455,7 @@ export const WorkInsert = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container">
+    <div className="container-wrapper">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>

@@ -1,8 +1,8 @@
 // CalendarList.tsx
 
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayClickEventHandler, DayPicker} from "react-day-picker";
+import {DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/ts/useStorage";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
@@ -41,7 +41,7 @@ export const CalendarList = () => {
     });
   };
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ------------------------------------------------------------------------------------>
   const viewCalendarDay = () => {
     return (
       <DayPicker
@@ -62,6 +62,8 @@ export const CalendarList = () => {
       />
     );
   };
+
+  // 5. table ------------------------------------------------------------------------------------->
 
   // 6. button ------------------------------------------------------------------------------------>
   const buttonCalendarToday = () => {
@@ -87,7 +89,7 @@ export const CalendarList = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container">
+    <div className="container-wrapper">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>

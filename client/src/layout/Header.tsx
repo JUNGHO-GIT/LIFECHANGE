@@ -84,7 +84,6 @@ export const Header = () => {
     setIsActive(location.pathname);
   }, [location]);
 
-  // Toggle menu expansion
   const toggleExpand = (menuLabel:any) => {
     setIsExpended(isExpended === menuLabel ? null : menuLabel);
   };
@@ -236,7 +235,7 @@ export const Header = () => {
   // 6-3. button ---------------------------------------------------------------------------------->
   const buttonDeveloperMode = () => {
     const buttonClass
-    = isDeveloperMode ? "btn btn-sm btn-light ms-2" : "btn btn-sm ms-2";
+    = isDeveloperMode ? "btn btn-sm btn-secondary ms-2" : "btn btn-sm ms-2";
     return (
       <button type="button" className={buttonClass} onClick={() => {
         toggleDeveloperMode();

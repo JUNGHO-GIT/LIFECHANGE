@@ -15,8 +15,6 @@ export const UserLogin = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
-  // 1-5. val
-  // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -57,15 +55,23 @@ export const UserLogin = () => {
   const tableUserLogin = () => {
     return (
       <div>
-        <div className="form-floating">
-          <input type="text" className="form-control" placeholder="ID" value={user_id}
-          onChange={(e:any) => {setUserId(e.target.value);}} />
-          <label htmlFor="floatingId">ID</label>
+        <div className="input-group mb-10">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="ID"
+            value={user_id}
+            onChange={(e:any) => {setUserId(e.target.value);}}
+          />
         </div>
-        <div className="form-floating">
-          <input type="text" className="form-control" placeholder="Password" value={user_pw}
-          onChange={(e:any) => {setUserPw(e.target.value);}} />
-          <label htmlFor="floatingPassword">Password</label>
+        <div className="input-group mb-10">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Password"
+            value={user_pw}
+            onChange={(e:any) => {setUserPw(e.target.value);}}
+          />
         </div>
       </div>
     );
@@ -91,14 +97,14 @@ export const UserLogin = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container">
+    <div className="container-wrapper mh-30">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5 mb-20">
-        <div className="col-10">
+        <div className="col-12">
           <form className="form-inline">
             {tableUserLogin()}
             <br/>

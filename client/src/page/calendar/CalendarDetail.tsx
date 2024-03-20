@@ -334,7 +334,7 @@ export const CalendarDetail = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container main">
+    <div className="container-wrapper">
       <div className="row d-center">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
