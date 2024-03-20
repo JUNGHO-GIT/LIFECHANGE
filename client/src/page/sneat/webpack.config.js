@@ -2,9 +2,6 @@ const path = require('path');
 const glob = require('glob');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-// -------------------------------------------------------------------------------
-// Config
-
 const conf = (() => {
   const _conf = require('./build-config');
   return require('deepmerge').all([{}, _conf.base || {}, _conf[process.env.NODE_ENV] || {}]);
@@ -12,15 +9,8 @@ const conf = (() => {
 
 conf.distPath = path.resolve(__dirname, conf.distPath);
 
-// -------------------------------------------------------------------------------
-// NPM packages to transpile
-
 const TRANSPILE_PACKAGES = ['bootstrap', 'popper.js', 'shepherd.js'];
-
 const packageRegex = package => `(?:\\\\|\\/)${package}(?:\\\\|\\/).+?\\.js$`;
-
-// -------------------------------------------------------------------------------
-// Build config
 
 const collectEntries = () => {
   const fileList = glob.sync(`!(${conf.exclude.join('|')})/**/!(_)*.@(js|es6)`) || [];
@@ -112,14 +102,10 @@ const webpackConfig = {
   }
 };
 
-// -------------------------------------------------------------------------------
 // Sourcemaps
 if (conf.sourcemaps) {
   webpackConfig.devtool = conf.devtool;
 }
-
-// -------------------------------------------------------------------------------
-// Minify
 
 // Minifies sources by default in production mode
 if (process.env.NODE_ENV !== 'production' && conf.minify) {

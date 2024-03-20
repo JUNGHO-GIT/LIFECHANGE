@@ -109,6 +109,12 @@ export const Header = () => {
           {to: "/planInsert", label: "PlanInsert"},
           {to: "/planListDay", label: "PlanList"}
         ]
+      },
+      {
+        label: "Test",
+        items: [
+          {to: "/test", label: "Test"}
+        ]
       }
     ];
     return (

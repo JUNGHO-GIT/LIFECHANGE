@@ -1,8 +1,5 @@
 const path = require('path');
 
-// Config
-// -------------------------------------------------------------------------------
-
 const env = require('gulp-environment');
 process.env.NODE_ENV = env.current.name;
 
@@ -16,25 +13,15 @@ const conf = (() => {
 })();
 
 conf.distPath = path.resolve(__dirname, conf.distPath).replace(/\\/g, '/');
-
-// Modules
-// -------------------------------------------------------------------------------
-
 const { parallel, series, watch } = require('gulp');
 const del = require('del');
 const colors = require('ansi-colors');
 const browserSync = require('browser-sync').create();
 colors.enabled = require('color-support').hasBasic;
 
-// Utilities
-// -------------------------------------------------------------------------------
-
 function srcGlob(...src) {
   return src.concat(conf.exclude.map(d => `!${d}/**/*`));
 }
-
-// Tasks
-// -------------------------------------------------------------------------------
 
 const buildTasks = require('./tasks/build')(conf, srcGlob);
 const prodTasks = require('./tasks/prod')(conf);
@@ -48,8 +35,6 @@ const cleanTask = function () {
   });
 };
 
-// Watch
-// -------------------------------------------------------------------------------
 const watchTask = function () {
   watch(srcGlob('**/*.scss', '!fonts/**/*.scss'), buildTasks.css);
   watch(srcGlob('fonts/**/*.scss'), parallel(buildTasks.css, buildTasks.fonts));
@@ -57,8 +42,6 @@ const watchTask = function () {
   // watch(srcGlob('**/*.png', '**/*.gif', '**/*.jpg', '**/*.jpeg', '**/*.svg', '**/*.swf'), copyTasks.copyAssets)
 };
 
-// Serve
-// -------------------------------------------------------------------------------
 const serveTasks = function () {
   browserSync.init({
     // ? You can change server path variable from build-config.js file
@@ -76,16 +59,10 @@ const serveTasks = function () {
 };
 
 const serveTask = parallel([serveTasks, watchTask]);
-
-// Build (Dev & Prod)
-// -------------------------------------------------------------------------------
-
 const buildTask = conf.cleanDist
   ? series(cleanTask, env.current.name === 'production' ? [buildTasks.all, prodTasks.all] : buildTasks.all)
   : series(env.current.name === 'production' ? [buildTasks.all, prodTasks.all] : buildTasks.all);
 
-// Exports
-// -------------------------------------------------------------------------------
 module.exports = {
   default: buildTask,
   build: buildTask,
