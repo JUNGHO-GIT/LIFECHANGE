@@ -77,6 +77,8 @@ import {MoneyListYear} from "../page/money/MoneyListYear";
 import {MoneyListSelect} from "../page/money/MoneyListSelect";
 
 import {PlanInsert} from "../page/plan/PlanInsert";
+import {PlanDetail} from "../page/plan/PlanDetail";
+import {PlanUpdate} from "../page/plan/PlanUpdate";
 import {PlanListDay} from "../page/plan/PlanListDay";
 
 // ------------------------------------------------------------------------------------------------>
@@ -146,6 +148,8 @@ const App = () => {
         <Route path="/moneyListSelect" element={<MoneyListSelect />} />
 
         <Route path="/planInsert" element={<PlanInsert />} />
+        <Route path="/planDetail" element={<PlanDetail />} />
+        <Route path="/planUpdate" element={<PlanUpdate />} />
         <Route path="/planListDay" element={<PlanListDay />} />
 
       </Routes>

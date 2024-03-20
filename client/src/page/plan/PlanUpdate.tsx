@@ -90,22 +90,6 @@ export const PlanUpdate = () => {
           <input
             type="text"
             className="form-control"
-            id="plan_amount"
-            value={PLAN.plan_amount ? PLAN.plan_amount : ""}
-            placeholder="Amount"
-            onChange={(e:any) => {
-              setPLAN({
-                ...PLAN,
-                plan_amount: e.target.value,
-              });
-            }}
-          />
-          <label htmlFor="plan_amount">Amount</label>
-        </div>
-        <div className="form-floating">
-          <input
-            type="text"
-            className="form-control"
             id="plan_content"
             value={PLAN.plan_content ? PLAN.plan_content : ""}
             placeholder="Content"

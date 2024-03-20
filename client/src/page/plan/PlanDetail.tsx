@@ -89,7 +89,6 @@ export const PlanDetail = () => {
           <tr>
             <th>Part</th>
             <th>Title</th>
-            <th>Amount</th>
             <th>Content</th>
           </tr>
         </thead>
@@ -98,7 +97,6 @@ export const PlanDetail = () => {
             <tr key={planItem._id}>
               <td>{planItem.plan_part_val}</td>
               <td>{planItem.plan_title_val}</td>
-              <td>{planItem.plan_amount}</td>
               <td>{planItem.plan_content}</td>
             </tr>
           ))}

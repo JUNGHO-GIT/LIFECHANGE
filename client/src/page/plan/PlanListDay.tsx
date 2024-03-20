@@ -148,7 +148,6 @@ export const PlanListDay = () => {
           <tr>
             <th>Part</th>
             <th>Title</th>
-            <th>Amount</th>
             <th>Content</th>
           </tr>
         </thead>
@@ -169,7 +168,6 @@ export const PlanListDay = () => {
                   {planSection.plan_part_val}
                 </td>
                 <td>{planSection.plan_title_val}</td>
-                <td>{planSection.plan_amount}</td>
                 <td>{planSection.plan_content}</td>
               </tr>
             ));
@@ -241,7 +239,6 @@ export const PlanListDay = () => {
                   <tr key={index}>
                     <td>{planItem.plan_part_val}</td>
                     <td>{planItem.plan_title_val}</td>
-                    <td>{planItem.plan_amount_avg}</td>
                   </tr>
                 ))}
               </tbody>

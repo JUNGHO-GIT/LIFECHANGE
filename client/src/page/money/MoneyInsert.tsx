@@ -32,7 +32,7 @@ export const MoneyInsert = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [MONEY, setMONEY] = useState<any>({});
-  const [moneyAmount, setMoneyAmount] = useState<number>(1);
+  const [moneyCount, setMoneyCount] = useState<number>(1);
   const [moneySection, setMoneySection] = useState<any[]>([{
     money_part_idx: 0,
     money_part_val: "전체",
@@ -107,12 +107,12 @@ export const MoneyInsert = () => {
   };
 
   // 4-3. handler --------------------------------------------------------------------------------->
-  const handleMoneyAmountChange = () => {
+  const handleMoneyCountChange = () => {
     return (
       <div>
         <div className="row d-center">
           <div className="col-4">
-            <input type="number" value={moneyAmount} min="1" className="form-control mb-30"
+            <input type="number" value={moneyCount} min="1" className="form-control mb-30"
             onChange={(e:any) => {
               let defaultSection = {
                 money_part_idx: 0,
@@ -120,25 +120,25 @@ export const MoneyInsert = () => {
                 money_title_idx: 0,
                 money_title_val: "전체",
               };
-              let newAmount: number = parseInt(e.target.value);
+              let newCount: number = parseInt(e.target.value);
 
               // amount 값이 증가했을 때 새로운 섹션들만 추가
-              if (newAmount > moneyAmount) {
-                let additionalSections = Array(newAmount - moneyAmount).fill(defaultSection);
+              if (newCount > moneyCount) {
+                let additionalSections = Array(newCount - moneyCount).fill(defaultSection);
                 setMoneySection(prev => [...prev, ...additionalSections]);
               }
               // amount 값이 감소했을 때 마지막 섹션부터 제거
-              else if (newAmount < moneyAmount) {
-                setMoneySection(prev => prev.slice(0, newAmount));
+              else if (newCount < moneyCount) {
+                setMoneySection(prev => prev.slice(0, newCount));
               }
-              // moneyAmount 값 업데이트
-              setMoneyAmount(newAmount);
+              // moneyCount 값 업데이트
+              setMoneyCount(newCount);
             }}/>
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {Array.from({ length: moneyAmount }, (_, i) => tableMoneySection(i))}
+            {Array.from({ length: moneyCount }, (_, i) => tableMoneySection(i))}
           </div>
         </div>
       </div>
@@ -338,7 +338,7 @@ export const MoneyInsert = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
-          {handleMoneyAmountChange()}
+          {handleMoneyCountChange()}
         </div>
       </div>
       <div className="row d-center mt-5 mb-20">

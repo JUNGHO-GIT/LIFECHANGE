@@ -33,7 +33,7 @@ export const WorkInsert = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK, setWORK] = useState<any>({});
-  const [workAmount, setWorkAmount] = useState<number>(1);
+  const [workCount, setWorkCount] = useState<number>(1);
   const [workSection, setWorkSection] = useState<any[]>([{
     work_part_idx: 0,
     work_part_val: "전체",
@@ -142,12 +142,12 @@ export const WorkInsert = () => {
   };
 
   // 4-3. handler --------------------------------------------------------------------------------->
-  const handleWorkAmountChange = () => {
+  const handleWorkCountChange = () => {
     return (
       <div>
         <div className="row d-center">
           <div className="col-4">
-            <input type="number" value={workAmount} min="1" className="form-control mb-30"
+            <input type="number" value={workCount} min="1" className="form-control mb-30"
             onChange={(e:any) => {
               let defaultSection = {
                 work_part_idx: 0,
@@ -155,25 +155,25 @@ export const WorkInsert = () => {
                 work_title_idx: 0,
                 work_title_val: "전체",
               };
-              let newAmount: number = parseInt(e.target.value);
+              let newCount: number = parseInt(e.target.value);
 
-              // amount 값이 증가했을 때 새로운 섹션들만 추가
-              if (newAmount > workAmount) {
-                let additionalSections = Array(newAmount - workAmount).fill(defaultSection);
+              // count 값이 증가했을 때 새로운 섹션들만 추가
+              if (newCount > workCount) {
+                let additionalSections = Array(newCount - workCount).fill(defaultSection);
                 setWorkSection(prev => [...prev, ...additionalSections]);
               }
-              // amount 값이 감소했을 때 마지막 섹션부터 제거
-              else if (newAmount < workAmount) {
-                setWorkSection(prev => prev.slice(0, newAmount));
+              // count 값이 감소했을 때 마지막 섹션부터 제거
+              else if (newCount < workCount) {
+                setWorkSection(prev => prev.slice(0, newCount));
               }
-              // workAmount 값 업데이트
-              setWorkAmount(newAmount);
+              // workCount 값 업데이트
+              setWorkCount(newCount);
             }}/>
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {Array.from({ length: workAmount }, (_, i) => tableWorkSection(i))}
+            {Array.from({length: workCount}, (_, i) => tableWorkSection(i))}
           </div>
         </div>
       </div>
@@ -475,7 +475,7 @@ export const WorkInsert = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
-          {handleWorkAmountChange()}
+          {handleWorkCountChange()}
         </div>
       </div>
       <div className="row d-center mt-5 mb-20">

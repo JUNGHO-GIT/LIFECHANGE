@@ -32,7 +32,7 @@ export const PlanInsert = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [PLAN, setPLAN] = useState<any>({});
-  const [planAmount, setPlanAmount] = useState<number>(1);
+  const [planCount, setPlanCount] = useState<number>(1);
   const [planSection, setPlanSection] = useState<any[]>([{
     plan_part_idx: 0,
     plan_part_val: "전체",
@@ -107,12 +107,12 @@ export const PlanInsert = () => {
   };
 
   // 4-3. handler --------------------------------------------------------------------------------->
-  const handlePlanAmountChange = () => {
+  const handlePlanCountChange = () => {
     return (
       <div>
         <div className="row d-center">
           <div className="col-4">
-            <input type="number" value={planAmount} min="1" className="form-control mb-30"
+            <input type="number" value={planCount} min="1" className="form-control mb-30"
             onChange={(e:any) => {
               let defaultSection = {
                 plan_part_idx: 0,
@@ -120,25 +120,25 @@ export const PlanInsert = () => {
                 plan_title_idx: 0,
                 plan_title_val: "전체",
               };
-              let newAmount: number = parseInt(e.target.value);
+              let newCount: number = parseInt(e.target.value);
 
               // amount 값이 증가했을 때 새로운 섹션들만 추가
-              if (newAmount > planAmount) {
-                let additionalSections = Array(newAmount - planAmount).fill(defaultSection);
+              if (newCount > planCount) {
+                let additionalSections = Array(newCount - planCount).fill(defaultSection);
                 setPlanSection(prev => [...prev, ...additionalSections]);
               }
               // amount 값이 감소했을 때 마지막 섹션부터 제거
-              else if (newAmount < planAmount) {
-                setPlanSection(prev => prev.slice(0, newAmount));
+              else if (newCount < planCount) {
+                setPlanSection(prev => prev.slice(0, newCount));
               }
-              // planAmount 값 업데이트
-              setPlanAmount(newAmount);
+              // planCount 값 업데이트
+              setPlanCount(newCount);
             }}/>
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {Array.from({ length: planAmount }, (_, i) => tablePlanSection(i))}
+            {Array.from({ length: planCount }, (_, i) => tablePlanSection(i))}
           </div>
         </div>
       </div>
@@ -259,27 +259,7 @@ export const PlanInsert = () => {
           </div>
         </div>
         <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">Amount</span>
-              <input
-                type="number"
-                min="0"
-                className="form-control"
-                id={`plan_amount-${i}`}
-                placeholder="amount"
-                value={planSection[i]?.plan_amount}
-                onChange={(e:any) => {
-                  setPlanSection((prev: any[]) => {
-                    const updatedSection = [...prev];
-                    updatedSection[i].plan_amount = e.target.value;
-                    return updatedSection;
-                  });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
+          <div className="col-10">
             <div className="input-group">
               <span className="input-group-text">Content</span>
               <input
@@ -338,7 +318,7 @@ export const PlanInsert = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
-          {handlePlanAmountChange()}
+          {handlePlanCountChange()}
         </div>
       </div>
       <div className="row d-center mt-5 mb-20">
