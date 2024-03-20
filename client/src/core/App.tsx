@@ -3,6 +3,7 @@
 import React from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/ts/useDeveloperMode";
+import ThemeProvider from "../page/test/theme";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -89,6 +90,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <ThemeProvider>
       <DeveloperModeProvider>
         <Loader />
         <Resize />
@@ -158,8 +160,9 @@ const App = () => {
           <Route path="/test" element={<Test />} />
 
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </DeveloperModeProvider>
+      </ThemeProvider>
     </div>
   );
 };
