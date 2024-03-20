@@ -1,70 +1,10 @@
 // Header.tsx
-
-import React, {useState} from "react";
-import {useEffect} from "react";
-import {Collapse} from "react-bootstrap";
+import React from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../assets/ts/useDeveloperMode";
-import {createGlobalStyle} from "styled-components";
-
-// ------------------------------------------------------------------------------------------------>
-const SidebarStyle = createGlobalStyle`
-  .sidebar {
-    position: fixed;
-    text-align: center;
-    left: 0;
-    top: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #343a40;
-    transition: transform 0.3s ease;
-    transform: translateX(-100%);
-    z-index: 5;
-  }
-
-  .sidebar-open {
-    transform: translateX(0);
-  }
-
-  .sidebar-closed {
-    transform: translateX(-100%);
-  }
-
-  .highlight {
-    transition: background-color 0.5s ease;
-    background-color: #f0f0f0;
-  }
-
-  .sidebar ul {
-    padding: 0;
-    list-style: none;
-  }
-
-  .sidebar-item {
-    transition: background-color 0.3s ease;
-  }
-
-  .sidebar-item:hover {
-    background-color: #495057;
-  }
-
-  .collapse-enter-active, .collapse-exit-active {
-    transition: height 0.5s ease;
-  }
-
-  .collapse-enter, .collapse-exit-active {
-    height: 0;
-  }
-
-  .collapse-enter-active, .collapse-exit {
-    height: auto;
-  }
-`;
-
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
-
   // 1-1. title
   const TITLE = "Header";
   // 1-2. url
@@ -76,49 +16,38 @@ export const Header = () => {
   const location = useLocation();
   // 1-5. val
   const user_id = window.sessionStorage.getItem("user_id");
-
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
-
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [isSidebar, setIsSidebar] = useState(false);
-  const [isActive, setIsActive] = useState(location.pathname);
-  const [isExpended, setIsExpended] = useState({});
-
-  // 3-1. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setIsActive(location.pathname);
-  }, [location]);
-
-  // Toggle menu expansion
-  const toggleExpand = (menuLabel:any) => {
-    setIsExpended(isExpended === menuLabel ? null : menuLabel);
-  };
-
-  // 4-1. view ------------------------------------------------------------------------------------>
-  const SidebarItem: React.FC<{ label: string, items: { to: string, label: string }[] }> = ({
-    label, items
-  }) => (
-    <li className="text-center pointer mt-30">
-      <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => toggleExpand(label)}>
+  const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
+  // 4-1. logic ----------------------------------------------------------------------------------->
+  const DropdownItem: React.FC<{to: string, label: string}> = ({to, label}) => (
+    <li className="pt-1 pb-1">
+      <div className="dropdown-item pointer" onClick={(e) => {
+        e.preventDefault();
+        navParam(to);
+      }}>
         {label}
       </div>
-      <Collapse in={isExpended === label}>
-        <ul>
-          {items.map(({ to, label }) => (
-            <li key={to} className="fs-10 fw-400">
-              <div className="pointer" onClick={() => {navParam(to)}}>
-                {label}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Collapse>
     </li>
   );
-
-  // 4-2. view ------------------------------------------------------------------------------------>
-  const sidebar = () => {
+  // 4-2. logic ----------------------------------------------------------------------------------->
+  const DropdownMenu: React.FC<{ label: string, items: {to: string, label: string}[] }> = ({
+    label, items
+  }) => (
+    <li className="me-30">
+      <div className="dropdown ms-5">
+        <div className="text-decoration-none text-light dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
+          {label}
+        </div>
+        <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          {items.map(item => (
+            <DropdownItem key={item.to} {...item} />
+          ))}
+        </ul>
+      </div>
+    </li>
+  );
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableNaveList = () => {
     const menus = [
       {
         label: "Main",
@@ -173,29 +102,25 @@ export const Header = () => {
           {to: "/planInsert", label: "PlanInsert"},
           {to: "/planListDay", label: "PlanList"}
         ]
+      },
+      {
+        label: "Test",
+        items: [
+          {to: "/test", label: "Test"}
+        ]
       }
     ];
     return (
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-light rounded`}>
-        <p className="text-center pointer text-black" onClick={() => {
-          setIsSidebar(!isSidebar);
-        }}>
-          X
-        </p>
-        <div className="d-flex flex-column flex-shrink-0 p-3">
-          <ul className="nav nav-pills flex-column mb-auto fs-20 fw-600">
-            {menus.map(menu => <SidebarItem key={menu.label} {...menu} />)}
-          </ul>
-        </div>
-      </div>
+      <ul className="nav bg-dark rounded">
+        {menus.map(menu => <DropdownMenu key={menu.label} {...menu} />)}
+      </ul>
     );
   };
-
   // 6-1. button ---------------------------------------------------------------------------------->
   const loginFalse = () => {
     const buttonLogin = () => {
       return (
-        <button type="button" className="btn btn-sm ms-2" onClick={() => {
+        <button type="button" className="btn btn-sm btn-outline-light ms-2" onClick={() => {
           navParam("/userLogin");
         }}>
           Login
@@ -204,7 +129,7 @@ export const Header = () => {
     };
     const buttonSignup = () => {
       return (
-        <button type="button" className="btn btn-sm ms-2" onClick={() => {
+        <button type="button" className="btn btn-sm btn-outline-light ms-2" onClick={() => {
           navParam("/userInsert");
         }}>
           Signup
@@ -220,13 +145,12 @@ export const Header = () => {
       );
     }
   };
-
   // 6-2. button ---------------------------------------------------------------------------------->
   const loginTrue = () => {
     if (user_id && user_id !== "false") {
       return (
         <form className="form-group d-center">
-          <button type="button" className="btn btn-sm ms-2" onClick={() => {
+          <button type="button" className="btn btn-sm btn-outline-light ms-2" onClick={() => {
             sessionStorage.setItem("user_id", "false");
             window.location.reload();
           }}>
@@ -236,11 +160,10 @@ export const Header = () => {
       );
     }
   };
-
   // 6-3. button ---------------------------------------------------------------------------------->
   const buttonDeveloperMode = () => {
     const buttonClass
-    = isDeveloperMode ? "btn btn-sm btn-light ms-2" : "btn btn-sm ms-2";
+    = isDeveloperMode ? "btn btn-sm btn-light ms-2" : "btn btn-sm btn-outline-light ms-2";
     return (
       <button type="button" className={buttonClass} onClick={() => {
         toggleDeveloperMode();
@@ -249,22 +172,12 @@ export const Header = () => {
       </button>
     );
   };
-
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <header className="container-fluid bg-light mb-30">
-      <SidebarStyle />
+    <header className="container-fluid bg-dark">
       <div className="row d-center pt-15 pb-15">
-        <div className="col-1">
-          {sidebar()}
-          <button type="button" className="btn btn-sm ms-2" onClick={() => {
-            setIsSidebar(!isSidebar);
-          }}>
-            Sidebar
-          </button>
-        </div>
-        <div className="col-7">
-          &nbsp;
+        <div className="col-9">
+          {tableNaveList()}
         </div>
         <div className="col-1">
           {buttonDeveloperMode()}

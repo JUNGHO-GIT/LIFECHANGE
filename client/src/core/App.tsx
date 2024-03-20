@@ -82,6 +82,8 @@ import {PlanDetail} from "../page/plan/PlanDetail";
 import {PlanUpdate} from "../page/plan/PlanUpdate";
 import {PlanListDay} from "../page/plan/PlanListDay";
 
+import {Test} from "../page/test/Test";
+
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 
@@ -152,9 +154,7 @@ const App = () => {
           <Route path="/planDetail" element={<PlanDetail />} />
           <Route path="/planUpdate" element={<PlanUpdate />} />
           <Route path="/planListDay" element={<PlanListDay />} />
-
         </Routes>
-        {/* <Footer /> */}
       </DeveloperModeProvider>
     </div>
   );
