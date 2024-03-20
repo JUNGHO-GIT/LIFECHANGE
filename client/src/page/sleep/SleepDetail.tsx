@@ -31,7 +31,7 @@ export const SleepDetail = () => {
   const [sleepDay, setSleepDay] = useState(koreanDate);
   const [SLEEP, setSLEEP] = useState<any> ({});
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepDetail = async () => {
       try {

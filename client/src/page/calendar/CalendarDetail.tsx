@@ -52,7 +52,7 @@ export const CalendarDetail = () => {
     "resDurDay", "0000-00-00 ~ 0000-00-00"
   );
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (calendarDay) {
       const viewDate = moment(calendarDay).format("YYYY-MM-DD").toString();
@@ -61,7 +61,7 @@ export const CalendarDetail = () => {
     }
   }, [calendarDay]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setCalendarDay(parseISO(location.state.calendar_date));
   }, [location.state.calendar_date]);

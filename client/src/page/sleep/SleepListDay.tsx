@@ -89,7 +89,7 @@ export const SleepListDay = () => {
     fetchSleepAvg();
   }, [user_id, sleepResDur]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatVal = (value:number):string => {
       return value < 10 ? `0${value}` : `${value}`;

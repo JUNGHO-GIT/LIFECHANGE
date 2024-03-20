@@ -55,7 +55,7 @@ export const WorkListMonth = () => {
   const [workType, setWorkType] = useState<string>("list");
   const [workNumber, setWorkNumber] = useState<number>(0);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
     // 1. list

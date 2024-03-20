@@ -16,7 +16,7 @@ const WorkScheme = new mongoose.Schema ({
   },
 
   // 2. section
-  workSection : [{
+  workSection: [{
     work_part_idx : {
       type: Number,
       required: false,

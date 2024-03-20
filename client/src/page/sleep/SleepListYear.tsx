@@ -90,7 +90,7 @@ export const SleepListYear = () => {
     fetchSleepAvg();
   }, [user_id, sleepResDur]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (sleepYear) {
       setSleepResVal (

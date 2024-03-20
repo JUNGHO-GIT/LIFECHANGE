@@ -36,7 +36,7 @@ export const FoodInsert = () => {
   const [category, setCategory] = useState("morning");
   const [FOOD, setFOOD] = useState<any>({});
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setFOOD ({
       ...FOOD,

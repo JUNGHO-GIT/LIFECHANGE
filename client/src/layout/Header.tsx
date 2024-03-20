@@ -103,6 +103,13 @@ export const Header = () => {
           {to: "/moneyListDay", label: "MoneyList"}
         ]
       },
+      {
+        label: "Plan",
+        items: [
+          {to: "/planInsert", label: "PlanInsert"},
+          {to: "/planListDay", label: "PlanList"}
+        ]
+      }
     ];
     return (
       <ul className="nav bg-dark rounded">

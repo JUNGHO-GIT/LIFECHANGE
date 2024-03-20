@@ -115,7 +115,7 @@ export const FoodListDay = () => {
     fetchFoodAvg();
   }, [user_id, foodResDur, foodCategory]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatVal = (value:number):string => {
       return value < 10 ? `0${value}` : `${value}`;

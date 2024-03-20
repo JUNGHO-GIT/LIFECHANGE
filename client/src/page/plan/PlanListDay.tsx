@@ -1,4 +1,4 @@
-// MoneyListDay.tsx
+// PlanListDay.tsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,16 +8,16 @@ import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
+import {planPartArray, planTitleArray} from "./PlanArray";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyListDay = () => {
+export const PlanListDay = () => {
 
   // 1-1. title
-  const TITLE = "Money List Day";
+  const TITLE = "Plan List Day";
   // 1-2. url
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // 1-4. hook
@@ -29,106 +29,106 @@ export const MoneyListDay = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage<any>(
-    "moneyList(DAY)", []
+  const {val:PLAN_LIST, setVal:setPLAN_LIST} = useStorage<any>(
+    "planList(DAY)", []
   );
-  const {val:MONEY_AVERAGE, setVal:setMONEY_AVERAGE} = useStorage<any>(
-    "moneyAvg(DAY)", []
+  const {val:PLAN_AVERAGE, setVal:setPLAN_AVERAGE} = useStorage<any>(
+    "planAvg(DAY)", []
   );
-  const {val:moneyDay, setVal:setMoneyDay} = useStorage<Date | undefined>(
-    "moneyDay(DAY)", undefined
+  const {val:planDay, setVal:setPlanDay} = useStorage<Date | undefined>(
+    "planDay(DAY)", undefined
   );
-  const {val:moneyResVal, setVal:setMoneyResVal} = useStorage<Date | undefined>(
-    "moneyResVal(DAY)", undefined
+  const {val:planResVal, setVal:setPlanResVal} = useStorage<Date | undefined>(
+    "planResVal(DAY)", undefined
   );
-  const {val:moneyResDur, setVal:setMoneyResDur} = useStorage<string>(
-    "moneyResDur(DAY)", "0000-00-00 ~ 0000-00-00"
+  const {val:planResDur, setVal:setPlanResDur} = useStorage<string>(
+    "planResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
-  const {val:moneyPart, setVal:setMoneyPart} = useStorage<string>(
-    "moneyPart(DAY)", "전체"
+  const {val:planPart, setVal:setPlanPart} = useStorage<string>(
+    "planPart(DAY)", "전체"
   );
-  const {val:moneyTitle, setVal:setMoneyTitle} = useStorage<string>(
-    "moneyTitle(DAY)", "전체"
+  const {val:planTitle, setVal:setPlanTitle} = useStorage<string>(
+    "planTitle(DAY)", "전체"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [moneyType, setMoneyType] = useState<string>("list");
-  const [moneyNumber, setMoneyNumber] = useState<number>(0);
+  const [planType, setPlanType] = useState<string>("list");
+  const [planNumber, setPlanNumber] = useState<number>(0);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
     // 1. list
-    const fetchMoneyList = async () => {
+    const fetchPlanList = async () => {
       try {
-        const response = await axios.get(`${URL_MONEY}/moneyList`, {
+        const response = await axios.get(`${URL_PLAN}/planList`, {
           params: {
             user_id : user_id,
-            money_dur : moneyResDur,
+            plan_dur : planResDur,
           },
         });
-        setMONEY_LIST(response.data);
-        log("MONEY_LIST " + JSON.stringify(response.data));
+        setPLAN_LIST(response.data);
+        log("PLAN_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        setMONEY_LIST([]);
-        alert(`Error fetching money data: ${error.message}`);
+        setPLAN_LIST([]);
+        alert(`Error fetching plan data: ${error.message}`);
       }
     };
-    fetchMoneyList();
+    fetchPlanList();
 
     // 2. average
-    const fetchMoneyAvg = async () => {
+    const fetchPlanAvg = async () => {
       try {
-        const response = await axios.get (`${URL_MONEY}/moneyAvg`, {
+        const response = await axios.get (`${URL_PLAN}/planAvg`, {
           params: {
             user_id: user_id,
-            money_dur: moneyResDur,
-            money_part_val: moneyPart,
-            money_title_val: moneyTitle,
+            plan_dur: planResDur,
+            plan_part_val: planPart,
+            plan_title_val: planTitle,
           },
         });
-        setMONEY_AVERAGE(response.data);
-        log("MONEY_AVERAGE " + JSON.stringify(response.data));
+        setPLAN_AVERAGE(response.data);
+        log("PLAN_AVERAGE " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        setMONEY_AVERAGE([]);
-        alert(`Error fetching money data: ${error.message}`);
+        setPLAN_AVERAGE([]);
+        alert(`Error fetching plan data: ${error.message}`);
       }
     };
-    fetchMoneyAvg();
-  }, [user_id, moneyResDur, moneyPart, moneyTitle]);
+    fetchPlanAvg();
+  }, [user_id, planResDur, planPart, planTitle]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const formatVal = (value: number): string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-    if (moneyDay) {
-      const year = formatVal(moneyDay.getFullYear());
-      const month = formatVal(moneyDay.getMonth() + 1);
-      const date = formatVal(moneyDay.getDate());
-      setMoneyResVal(parseISO(`${year}-${month}-${date}`));
-      setMoneyResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+    if (planDay) {
+      const year = formatVal(planDay.getFullYear());
+      const month = formatVal(planDay.getMonth() + 1);
+      const date = formatVal(planDay.getDate());
+      setPlanResVal(parseISO(`${year}-${month}-${date}`));
+      setPlanResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
     }
-  }, [moneyDay]);
+  }, [planDay]);
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewMoneyDay = () => {
+  const viewPlanDay = () => {
     const flowDayClick: DayClickEventHandler = (day: any) => {
-      setMoneyDay(day);
+      setPlanDay(day);
     };
     return (
       <DayPicker
         mode="single"
         showOutsideDays
-        selected={moneyDay}
-        month={moneyDay}
+        selected={planDay}
+        month={planDay}
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
         onMonthChange={(month) => {
-          setMoneyDay(month);
+          setPlanDay(month);
         }}
         modifiersClassNames={{
           selected: "selected",
@@ -141,7 +141,7 @@ export const MoneyListDay = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableMoneyList = () => {
+  const tablePlanList = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -153,24 +153,24 @@ export const MoneyListDay = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY_LIST.map((moneyItem : any) => {
-            return moneyItem.moneySection.map((moneySection: any) => (
-              <tr key={moneySection._id}>
+          {PLAN_LIST.map((planItem : any) => {
+            return planItem.planSection.map((planSection: any) => (
+              <tr key={planSection._id}>
                 <td
                   className="pointer"
                   onClick={() => {
-                    navParam("/moneyDetail", {
+                    navParam("/planDetail", {
                       state: {
-                        _id : moneyItem._id,
-                        moneySection_id : moneySection._id
+                        _id : planItem._id,
+                        planSection_id : planSection._id
                       },
                     });
                   }}>
-                  {moneySection.money_part_val}
+                  {planSection.plan_part_val}
                 </td>
-                <td>{moneySection.money_title_val}</td>
-                <td>{moneySection.money_amount}</td>
-                <td>{moneySection.money_content}</td>
+                <td>{planSection.plan_title_val}</td>
+                <td>{planSection.plan_amount}</td>
+                <td>{planSection.plan_content}</td>
               </tr>
             ));
           })}
@@ -180,7 +180,7 @@ export const MoneyListDay = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableMoneyAvg = () => {
+  const tablePlanAvg = () => {
     return (
       <div>
         <div className="row d-center">
@@ -189,19 +189,19 @@ export const MoneyListDay = () => {
               <span className="input-group-text">대분류</span>
               <select
                 className="form-control"
-                id={`money_part_val`}
-                value={moneyPart}
+                id={`plan_part_val`}
+                value={planPart}
                 onChange={(e:any) => {
-                  setMoneyPart(e.target.value);
-                  const index = moneyPartArray.findIndex(
-                    (item) => item.money_part[0] === e.target.value
+                  setPlanPart(e.target.value);
+                  const index = planPartArray.findIndex(
+                    (item) => item.plan_part[0] === e.target.value
                   );
-                  setMoneyTitle("전체");
-                  setMoneyNumber(index);
+                  setPlanTitle("전체");
+                  setPlanNumber(index);
                 }}>
-                {moneyPartArray.map((value, key) => (
-                  <option key={key} value={value.money_part[0]}>
-                    {value.money_part[0]}
+                {planPartArray.map((value, key) => (
+                  <option key={key} value={value.plan_part[0]}>
+                    {value.plan_part[0]}
                   </option>
                 ))}
               </select>
@@ -212,12 +212,12 @@ export const MoneyListDay = () => {
               <span className="input-group-text">소분류</span>
               <select
                 className="form-control"
-                id={`money_title_val`}
-                value={moneyTitle}
+                id={`plan_title_val`}
+                value={planTitle}
                 onChange={(e:any) => {
-                  setMoneyTitle(e.target.value);
+                  setPlanTitle(e.target.value);
                 }}>
-                {moneyTitleArray[moneyNumber].money_title.map((value, key) => (
+                {planTitleArray[planNumber].plan_title.map((value, key) => (
                   <option key={key} value={value}>
                     {value}
                   </option>
@@ -237,11 +237,11 @@ export const MoneyListDay = () => {
                 </tr>
               </thead>
               <tbody>
-                {MONEY_AVERAGE?.map((moneyItem:any, index:number) => (
+                {PLAN_AVERAGE?.map((planItem:any, index:number) => (
                   <tr key={index}>
-                    <td>{moneyItem.money_part_val}</td>
-                    <td>{moneyItem.money_title_val}</td>
-                    <td>{moneyItem.money_amount_avg}</td>
+                    <td>{planItem.plan_part_val}</td>
+                    <td>{planItem.plan_title_val}</td>
+                    <td>{planItem.plan_amount_avg}</td>
                   </tr>
                 ))}
               </tbody>
@@ -253,33 +253,33 @@ export const MoneyListDay = () => {
   };
 
   // 6-1. button ---------------------------------------------------------------------------------->
-  const buttonMoneyToday = () => {
+  const buttonPlanToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setMoneyDay(koreanDate);
-        setMoneyPart("전체");
-        setMoneyTitle("전체");
-        localStorage.removeItem("moneyList(DAY)");
-        localStorage.removeItem("moneyAvg(DAY)");
-        localStorage.removeItem("moneyDay(DAY)");
-        localStorage.removeItem("moneyPart(DAY)");
-        localStorage.removeItem("moneyTitle(DAY)");
+        setPlanDay(koreanDate);
+        setPlanPart("전체");
+        setPlanTitle("전체");
+        localStorage.removeItem("planList(DAY)");
+        localStorage.removeItem("planAvg(DAY)");
+        localStorage.removeItem("planDay(DAY)");
+        localStorage.removeItem("planPart(DAY)");
+        localStorage.removeItem("planTitle(DAY)");
       }}>
         Today
       </button>
     );
   };
-  const buttonMoneyReset = () => {
+  const buttonPlanReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setMoneyDay(koreanDate);
-        setMoneyPart("전체");
-        setMoneyTitle("전체");
-        localStorage.removeItem("moneyList(DAY)");
-        localStorage.removeItem("moneyAvg(DAY)");
-        localStorage.removeItem("moneyDay(DAY)");
-        localStorage.removeItem("moneyPart(DAY)");
-        localStorage.removeItem("moneyTitle(DAY)");
+        setPlanDay(koreanDate);
+        setPlanPart("전체");
+        setPlanTitle("전체");
+        localStorage.removeItem("planList(DAY)");
+        localStorage.removeItem("planAvg(DAY)");
+        localStorage.removeItem("planDay(DAY)");
+        localStorage.removeItem("planPart(DAY)");
+        localStorage.removeItem("planTitle(DAY)");
       }}>
         Reset
       </button>
@@ -287,31 +287,31 @@ export const MoneyListDay = () => {
   };
 
   // 6-2. button ---------------------------------------------------------------------------------->
-  const selectMoneyList = () => {
+  const selectPlanList = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="moneyListDay" value={currentPath} onChange={(e:any) => {
+        <select className="form-select" id="planListDay" value={currentPath} onChange={(e:any) => {
           navParam(e.target.value);
         }}>
-          <option value="/moneyListDay">Day</option>
-          <option value="/moneyListWeek">Week</option>
-          <option value="/moneyListMonth">Month</option>
-          <option value="/moneyListYear">Year</option>
-          <option value="/moneyListSelect">Select</option>
+          <option value="/planListDay">Day</option>
+          <option value="/planListWeek">Week</option>
+          <option value="/planListMonth">Month</option>
+          <option value="/planListYear">Year</option>
+          <option value="/planListSelect">Select</option>
         </select>
       </div>
     );
   };
-  const selectMoneyType = () => {
+  const selectPlanType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="moneyType" onChange={(e:any) => {
+        <select className="form-select" id="planType" onChange={(e:any) => {
           if (e.target.value === "list") {
-            setMoneyType("list");
+            setPlanType("list");
           }
           else if (e.target.value === "avg") {
-            setMoneyType("avg");
+            setPlanType("avg");
           }
         }}>
           <option value="list">List</option>
@@ -332,25 +332,25 @@ export const MoneyListDay = () => {
       </div>
       <div className="row d-center mt-3">
         <div className="col-3">
-          {selectMoneyList()}
+          {selectPlanList()}
         </div>
         <div className="col-3">
-          {selectMoneyType()}
+          {selectPlanType()}
         </div>
       </div>
       <div className="row d-center mt-3">
         <div className="col-md-6 col-12 d-center">
-          {viewMoneyDay()}
+          {viewPlanDay()}
         </div>
         <div className="col-md-6 col-12">
-          {moneyType === "list" && tableMoneyList()}
-          {moneyType === "avg" && tableMoneyAvg()}
+          {planType === "list" && tablePlanList()}
+          {planType === "avg" && tablePlanAvg()}
         </div>
       </div>
       <div className="row mb-20">
         <div className="col-12 d-center">
-          {buttonMoneyToday()}
-          {buttonMoneyReset()}
+          {buttonPlanToday()}
+          {buttonPlanReset()}
         </div>
       </div>
     </div>

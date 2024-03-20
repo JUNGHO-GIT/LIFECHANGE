@@ -55,7 +55,7 @@ export const MoneyListMonth = () => {
   const [moneyType, setMoneyType] = useState<string>("list");
   const [moneyNumber, setMoneyNumber] = useState<number>(0);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
     // 1. list

@@ -116,7 +116,7 @@ export const FoodListYear = () => {
     fetchFoodAvg();
   }, [user_id, foodResDur, foodCategory]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (foodYear) {
       setFoodResVal (

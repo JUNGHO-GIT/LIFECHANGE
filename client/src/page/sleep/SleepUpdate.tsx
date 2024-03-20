@@ -32,7 +32,7 @@ export const SleepUpdate = () => {
   const [sleepDay, setSleepDay] = useState(koreanDate);
   const [SLEEP, setSLEEP] = useState<any> ({});
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const fetchSleepDetail = async () => {
       try {
@@ -52,7 +52,7 @@ export const SleepUpdate = () => {
     fetchSleepDetail();
   }, [_id]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const setSleepTime = () => {
       const nightDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_night}:00Z`);

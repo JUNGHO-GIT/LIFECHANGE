@@ -1,21 +1,21 @@
-// MoneyInsert.tsx
+// PlanInsert.tsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {moneyPartArray, moneyTitleArray} from "../money/MoneyArray";
+import {planPartArray, planTitleArray} from "../plan/PlanArray";
 import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyInsert = () => {
+export const PlanInsert = () => {
 
   // 1-1. title
-  const TITLE = "Money Insert";
+  const TITLE = "Plan Insert";
   // 1-2. url
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // 1-4. hook
@@ -26,119 +26,119 @@ export const MoneyInsert = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:moneyDay, setVal:setMoneyDay} = useStorage<Date | undefined> (
-    "moneyDay", new Date(koreanDate)
+  const {val:planDay, setVal:setPlanDay} = useStorage<Date | undefined> (
+    "planDay", new Date(koreanDate)
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY, setMONEY] = useState<any>({});
-  const [moneyAmount, setMoneyAmount] = useState<number>(1);
-  const [moneySection, setMoneySection] = useState<any[]>([{
-    money_part_idx: 0,
-    money_part_val: "전체",
-    money_title_idx: 0,
-    money_title_val: "전체",
+  const [PLAN, setPLAN] = useState<any>({});
+  const [planAmount, setPlanAmount] = useState<number>(1);
+  const [planSection, setPlanSection] = useState<any[]>([{
+    plan_part_idx: 0,
+    plan_part_val: "전체",
+    plan_title_idx: 0,
+    plan_title_val: "전체",
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setMONEY ({
-      ...MONEY,
-      moneyDay: moment(moneyDay).format("YYYY-MM-DD"),
-      moneySection : moneySection,
+    setPLAN ({
+      ...PLAN,
+      planDay: moment(planDay).format("YYYY-MM-DD"),
+      planSection : planSection,
     });
-  }, [moneyDay, moneySection]);
+  }, [planDay, planSection]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowMoneyInsert = async () => {
+  const flowPlanInsert = async () => {
     try {
       if (!user_id) {
         alert("Input a ID");
         return;
       }
-      if (!moneyDay) {
+      if (!planDay) {
         alert("Input a Day");
         return;
       }
 
-      const response = await axios.post (`${URL_MONEY}/moneyInsert`, {
+      const response = await axios.post (`${URL_PLAN}/planInsert`, {
         user_id : user_id,
-        MONEY : MONEY,
+        PLAN : PLAN,
       });
-      log("MONEY : " + JSON.stringify(MONEY));
+      log("PLAN : " + JSON.stringify(PLAN));
 
       if (response.data === "success") {
-        alert("Insert a money successfully");
-        navParam("/moneyListDay");
+        alert("Insert a plan successfully");
+        navParam("/planListDay");
       }
       else {
-        alert("Insert a money failure");
+        alert("Insert a plan failure");
       }
     }
     catch (error:any) {
-      alert(`Error inserting money data: ${error.message}`);
+      alert(`Error inserting plan data: ${error.message}`);
     }
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-  const handleMoneyPartChange = (i: number, e: any) => {
+  const handlePlanPartChange = (i: number, e: any) => {
     const newIndex = parseInt(e.target.value);
-    setMoneySection((prev: any[]) => {
+    setPlanSection((prev: any[]) => {
       const updatedSection = [...prev];
       updatedSection[i] = {
         ...updatedSection[i],
-        money_part_idx: newIndex,
-        money_part_val: moneyPartArray[newIndex].money_part[0],
-        money_title_idx: 0,
-        money_title_val: moneyTitleArray[newIndex].money_title[0],
+        plan_part_idx: newIndex,
+        plan_part_val: planPartArray[newIndex].plan_part[0],
+        plan_title_idx: 0,
+        plan_title_val: planTitleArray[newIndex].plan_title[0],
       };
       return updatedSection;
     });
   };
 
   // 4-2. handler --------------------------------------------------------------------------------->
-  const handleMoneyTitleChange = (i: number, e: any) => {
+  const handlePlanTitleChange = (i: number, e: any) => {
     let newTitle = e.target.value;
-    setMoneySection((prev: any[]) => {
+    setPlanSection((prev: any[]) => {
       let updatedSection = [...prev];
-      updatedSection[i].money_title_val = newTitle;
+      updatedSection[i].plan_title_val = newTitle;
       return updatedSection;
     });
   };
 
   // 4-3. handler --------------------------------------------------------------------------------->
-  const handleMoneyAmountChange = () => {
+  const handlePlanAmountChange = () => {
     return (
       <div>
         <div className="row d-center">
           <div className="col-4">
-            <input type="number" value={moneyAmount} min="1" className="form-control mb-30"
+            <input type="number" value={planAmount} min="1" className="form-control mb-30"
             onChange={(e:any) => {
               let defaultSection = {
-                money_part_idx: 0,
-                money_part_val: "전체",
-                money_title_idx: 0,
-                money_title_val: "전체",
+                plan_part_idx: 0,
+                plan_part_val: "전체",
+                plan_title_idx: 0,
+                plan_title_val: "전체",
               };
               let newAmount: number = parseInt(e.target.value);
 
               // amount 값이 증가했을 때 새로운 섹션들만 추가
-              if (newAmount > moneyAmount) {
-                let additionalSections = Array(newAmount - moneyAmount).fill(defaultSection);
-                setMoneySection(prev => [...prev, ...additionalSections]);
+              if (newAmount > planAmount) {
+                let additionalSections = Array(newAmount - planAmount).fill(defaultSection);
+                setPlanSection(prev => [...prev, ...additionalSections]);
               }
               // amount 값이 감소했을 때 마지막 섹션부터 제거
-              else if (newAmount < moneyAmount) {
-                setMoneySection(prev => prev.slice(0, newAmount));
+              else if (newAmount < planAmount) {
+                setPlanSection(prev => prev.slice(0, newAmount));
               }
-              // moneyAmount 값 업데이트
-              setMoneyAmount(newAmount);
+              // planAmount 값 업데이트
+              setPlanAmount(newAmount);
             }}/>
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {Array.from({ length: moneyAmount }, (_, i) => tableMoneySection(i))}
+            {Array.from({ length: planAmount }, (_, i) => tablePlanSection(i))}
           </div>
         </div>
       </div>
@@ -146,9 +146,9 @@ export const MoneyInsert = () => {
   };
 
   // 4. view -------------------------------------------------------------------------------------->
-  const viewMoneyDay = () => {
+  const viewPlanDay = () => {
     const calcDate = (days: number) => {
-      setMoneyDay((prevDate) => {
+      setPlanDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
         return newDate;
@@ -162,9 +162,9 @@ export const MoneyInsert = () => {
         <DatePicker
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
-          selected={moneyDay}
+          selected={planDay}
           onChange={(date: Date) => {
-            setMoneyDay(date);
+            setPlanDay(date);
           }}
         />
         <div className="black mt-4 ms-5 pointer" onClick={() => calcDate(1)}>
@@ -175,7 +175,7 @@ export const MoneyInsert = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableMoneyInsert = () => {
+  const tablePlanInsert = () => {
     return (
       <div className="row d-center">
         <div className="col-5">
@@ -190,7 +190,7 @@ export const MoneyInsert = () => {
               value={user_id ? user_id : ""}
               readOnly
               onChange={(e:any) => {
-                setMONEY({ ...MONEY, user_id: e.target.value });
+                setPLAN({ ...PLAN, user_id: e.target.value });
               }}
             />
           </div>
@@ -202,12 +202,12 @@ export const MoneyInsert = () => {
               readOnly
               type="text"
               className="form-control"
-              id="moneyDay"
-              name="moneyDay"
+              id="planDay"
+              name="planDay"
               placeholder="Day"
-              value={MONEY?.moneyDay}
+              value={PLAN?.planDay}
               onChange={(e:any) => {
-                setMoneyDay(e.target.value);
+                setPlanDay(e.target.value);
               }}
             />
           </div>
@@ -217,11 +217,11 @@ export const MoneyInsert = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableMoneySection = (i: number) => {
+  const tablePlanSection = (i: number) => {
 
-    const updateMoneyArray
-    = moneySection[i] && moneyTitleArray[moneySection[i].money_part_idx]
-    ? moneyTitleArray[moneySection[i].money_part_idx]?.money_title
+    const updatePlanArray
+    = planSection[i] && planTitleArray[planSection[i].plan_part_idx]
+    ? planTitleArray[planSection[i].plan_part_idx]?.plan_title
    : [];
 
     return (
@@ -232,11 +232,11 @@ export const MoneyInsert = () => {
               <span className="input-group-text">대분류</span>
               <select
                 className="form-control"
-                id={`money_part_idx-${i}`}
-                onChange={(e:any) => handleMoneyPartChange(i, e)}>
-                {moneyPartArray.flatMap((key, index) => (
+                id={`plan_part_idx-${i}`}
+                onChange={(e:any) => handlePlanPartChange(i, e)}>
+                {planPartArray.flatMap((key, index) => (
                   <option key={index} value={index}>
-                    {key.money_part[0]}
+                    {key.plan_part[0]}
                   </option>
                 ))}
               </select>
@@ -247,9 +247,9 @@ export const MoneyInsert = () => {
               <span className="input-group-text">소분류</span>
               <select
                 className="form-control"
-                id={`money_title_val-${i}`}
-                onChange={(e:any) => handleMoneyTitleChange(i, e)}>
-                {updateMoneyArray.flatMap((title, index) => (
+                id={`plan_title_val-${i}`}
+                onChange={(e:any) => handlePlanTitleChange(i, e)}>
+                {updatePlanArray.flatMap((title, index) => (
                   <option key={index} value={title}>
                     {title}
                   </option>
@@ -266,13 +266,13 @@ export const MoneyInsert = () => {
                 type="number"
                 min="0"
                 className="form-control"
-                id={`money_amount-${i}`}
+                id={`plan_amount-${i}`}
                 placeholder="amount"
-                value={moneySection[i]?.money_amount}
+                value={planSection[i]?.plan_amount}
                 onChange={(e:any) => {
-                  setMoneySection((prev: any[]) => {
+                  setPlanSection((prev: any[]) => {
                     const updatedSection = [...prev];
-                    updatedSection[i].money_amount = e.target.value;
+                    updatedSection[i].plan_amount = e.target.value;
                     return updatedSection;
                   });
                 }}
@@ -285,13 +285,13 @@ export const MoneyInsert = () => {
               <input
                 type="text"
                 className="form-control"
-                id={`money_content-${i}`}
+                id={`plan_content-${i}`}
                 placeholder="content"
-                value={moneySection[i]?.money_content}
+                value={planSection[i]?.plan_content}
                 onChange={(e:any) => {
-                  setMoneySection((prev: any[]) => {
+                  setPlanSection((prev: any[]) => {
                     const updatedSection = [...prev];
-                    updatedSection[i].money_content = e.target.value;
+                    updatedSection[i].plan_content = e.target.value;
                     return updatedSection;
                   });
                 }}
@@ -304,9 +304,9 @@ export const MoneyInsert = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonMoneyInsert = () => {
+  const buttonPlanInsert = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary" onClick={flowMoneyInsert}>
+      <button type="button" className="btn btn-sm btn-primary" onClick={flowPlanInsert}>
         Insert
       </button>
     );
@@ -332,20 +332,20 @@ export const MoneyInsert = () => {
       <div className="row d-center mt-5 mb-5">
         <div className="col-12">
           <h1 className="mb-3 fw-5">
-            <span>{viewMoneyDay()}</span>
+            <span>{viewPlanDay()}</span>
           </h1>
         </div>
       </div>
       <div className="row d-center mt-5">
         <div className="col-12">
-          {handleMoneyAmountChange()}
+          {handlePlanAmountChange()}
         </div>
       </div>
       <div className="row d-center mt-5 mb-20">
         <div className="col-12">
-          {tableMoneyInsert()}
+          {tablePlanInsert()}
           <br />
-          {buttonMoneyInsert()}
+          {buttonPlanInsert()}
           {buttonRefreshPage()}
         </div>
       </div>

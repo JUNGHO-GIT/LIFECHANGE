@@ -1,4 +1,4 @@
-// MoneyDetail.tsx
+// PlanDetail.tsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -7,12 +7,12 @@ import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDetail = () => {
+export const PlanDetail = () => {
 
   // 1-1. title
-  const TITLE = "Money Detail";
+  const TITLE = "Plan Detail";
   // 1-2. url
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   // 1-3. date
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   // 1-4. hook
@@ -20,7 +20,7 @@ export const MoneyDetail = () => {
   const location = useLocation();
   // 1-5. val
   const _id = location.state._id;
-  const moneySection_id = location.state.moneySection_id;
+  const planSection_id = location.state.planSection_id;
   const user_id = window.sessionStorage.getItem("user_id");
   // 1-6. log
   const {log} = useDeveloperMode();
@@ -28,46 +28,46 @@ export const MoneyDetail = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY, setMONEY] = useState<any> ({});
+  const [PLAN, setPLAN] = useState<any> ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchMoneyDetail = async () => {
+    const fetchPlanDetail = async () => {
       try {
-        const response = await axios.get(`${URL_MONEY}/moneyDetail`, {
+        const response = await axios.get(`${URL_PLAN}/planDetail`, {
           params: {
             _id : _id,
-            moneySection_id : moneySection_id
+            planSection_id : planSection_id
           },
         });
-        setMONEY(response.data);
-        log("MONEY : " + JSON.stringify(response.data));
+        setPLAN(response.data);
+        log("PLAN : " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching money data: ${error.message}`);
-        setMONEY({});
+        alert(`Error fetching plan data: ${error.message}`);
+        setPLAN({});
       }
     };
-    fetchMoneyDetail();
+    fetchPlanDetail();
   }, [_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowMoneyDelete = async () => {
+  const flowPlanDelete = async () => {
     try {
       const confirm = window.confirm("Are you sure you want to delete?");
       if (!confirm) {
         return;
       }
       else {
-        const response = await axios.delete(`${URL_MONEY}/moneyDelete`, {
+        const response = await axios.delete(`${URL_PLAN}/planDelete`, {
           params: {
             _id : _id,
-            moneySection_id : moneySection_id
+            planSection_id : planSection_id
           },
         });
         if (response.data === "success") {
           alert("Delete Success");
-          navParam(`/moneyListDay`);
+          navParam(`/planListDay`);
         }
         else {
           alert("Delete failed");
@@ -75,14 +75,14 @@ export const MoneyDetail = () => {
       }
     }
     catch (error:any) {
-      alert(`Error fetching money data: ${error.message}`);
+      alert(`Error fetching plan data: ${error.message}`);
     }
   };
 
   // 4. view -------------------------------------------------------------------------------------->
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableMoneyDetail = () => {
+  const tablePlanDetail = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -94,12 +94,12 @@ export const MoneyDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY?.moneySection?.flatMap((moneyItem: any) => (
-            <tr key={moneyItem._id}>
-              <td>{moneyItem.money_part_val}</td>
-              <td>{moneyItem.money_title_val}</td>
-              <td>{moneyItem.money_amount}</td>
-              <td>{moneyItem.money_content}</td>
+          {PLAN?.planSection?.flatMap((planItem: any) => (
+            <tr key={planItem._id}>
+              <td>{planItem.plan_part_val}</td>
+              <td>{planItem.plan_title_val}</td>
+              <td>{planItem.plan_amount}</td>
+              <td>{planItem.plan_content}</td>
             </tr>
           ))}
         </tbody>
@@ -108,20 +108,20 @@ export const MoneyDetail = () => {
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonMoneyDelete = () => {
+  const buttonPlanDelete = () => {
     return (
-      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowMoneyDelete}>
+      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowPlanDelete}>
         Delete
       </button>
     );
   };
-  const buttonMoneyUpdate = (_id: string) => {
+  const buttonPlanUpdate = (_id: string) => {
     return (
       <button
         type="button"
         className="btn btn-sm btn-primary ms-2"
         onClick={() => {
-          navParam(`/moneyUpdate`, {
+          navParam(`/planUpdate`, {
             state: {_id},
           });
         }}>
@@ -138,10 +138,10 @@ export const MoneyDetail = () => {
       </button>
     );
   };
-  const buttonMoneyList = () => {
+  const buttonPlanList = () => {
     return (
       <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(`/moneyListDay`);
+        navParam(`/planListDay`);
       }}>
         List
       </button>
@@ -158,15 +158,15 @@ export const MoneyDetail = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-12 d-center">
-          {tableMoneyDetail()}
+          {tablePlanDetail()}
         </div>
       </div>
       <div className="row mb-20">
         <div className="col-12 d-center">
           {buttonRefreshPage()}
-          {buttonMoneyUpdate(MONEY._id)}
-          {buttonMoneyDelete()}
-          {buttonMoneyList()}
+          {buttonPlanUpdate(PLAN._id)}
+          {buttonPlanDelete()}
+          {buttonPlanList()}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-// UserDelete.tsx
+// PlanUpdate.tsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -7,119 +7,126 @@ import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserDelete = () => {
+export const PlanUpdate = () => {
 
   // 1-1. title
-  const TITLE = "User Delete";
+  const TITLE = "Plan Update";
   // 1-2. url
-  const URL_USER = process.env.REACT_APP_URL_USER;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   // 1-3. date
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   // 1-4. hook
   const navParam = useNavigate();
   const location = useLocation();
+  // 1-5. val
+  const _id = location.state._id;
+  const user_id = window.sessionStorage.getItem("user_id");
   // 1-6. log
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [user_id, setUserId] = useState("");
-  const [user_pw, setUserPw] = useState("");
+  const [PLAN, setPLAN] = useState<any> ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchUserDelete = async () => {
-      const user_id = window.sessionStorage.getItem("user_id");
+    const fetchPlanDetail = async () => {
       try {
-        const response = await axios.post (`${URL_USER}/userDetail`, {
-          user_id: user_id,
+        const response = await axios.get(`${URL_PLAN}/planDetail`, {
+          params: {
+            _id : _id,
+          },
         });
-        setUserId(response.data.user_id);
-        log("USER : " + JSON.stringify(response.data));
+        setPLAN(response.data);
+        log("PLAN : " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        alert(`Error fetching user data: ${error.message}`);
+        alert(`Error fetching plan data: ${error.message}`);
+        setPLAN([]);
       }
     };
-    fetchUserDelete();
-  }, []);
+    fetchPlanDetail();
+  }, [_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowUserDelete = async () => {
+  const flowPlanUpdate = async () => {
     try {
-      if (user_pw === "" || user_pw === null) {
-        alert("Please enter your password");
-        return;
+      const response = await axios.put (`${URL_PLAN}/planUpdate`, {
+        _id : PLAN._id,
+        PLAN : PLAN
+      });
+      if (response.data === "success") {
+        alert("Update success");
+        navParam("/planListDay");
       }
       else {
-        const response = await axios.post(`${URL_USER}/userCheckIdPw`, {
-          user_id: user_id,
-          user_pw: user_pw,
-        });
-        if (response.data === "fail") {
-          alert("Incorrect password");
-          return;
-        }
-        if (response.data === "success") {
-          const response = await axios.delete (`${URL_USER}/userDelete`, {
-            params: {
-              user_id : user_id,
-            }
-          });
-          if (response.data === "success") {
-            alert("User Delete Success");
-            window.sessionStorage.clear();
-            navParam("/");
-          }
-          else if (response.data === "fail") {
-            alert("User Delete Fail");
-          }
-          else {
-            alert("Error Ocurred in User Delete");
-          }
-        }
+        alert("Update failed");
       }
     }
     catch (error:any) {
-      alert(`Error fetching user data: ${error.message}`);
+      alert(`Error fetching plan data: ${error.message}`);
     }
   };
 
   // 4. view -------------------------------------------------------------------------------------->
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableUserDelete = () => {
+  const tablePlanUpdate = () => {
     return (
       <div>
         <div className="form-floating">
-          <input type="text"
+          <input
+            type="text"
             className="form-control"
+            id="user_id"
             placeholder="User ID"
-            value={user_id}
-            onChange={(e:any) => setUserId(e.target.value)}
+            value={PLAN.user_id ? PLAN.user_id : ""}
             readOnly
           />
           <label htmlFor="user_id">User ID</label>
         </div>
         <div className="form-floating">
-          <input type="text"
+          <input
+            type="text"
             className="form-control"
-            placeholder="User PW"
-            value={user_pw}
-            onChange={(e:any) => setUserPw(e.target.value)}
+            id="plan_amount"
+            value={PLAN.plan_amount ? PLAN.plan_amount : ""}
+            placeholder="Amount"
+            onChange={(e:any) => {
+              setPLAN({
+                ...PLAN,
+                plan_amount: e.target.value,
+              });
+            }}
           />
-          <label htmlFor="user_pw">User PW</label>
+          <label htmlFor="plan_amount">Amount</label>
+        </div>
+        <div className="form-floating">
+          <input
+            type="text"
+            className="form-control"
+            id="plan_content"
+            value={PLAN.plan_content ? PLAN.plan_content : ""}
+            placeholder="Content"
+            onChange={(e:any) => {
+              setPLAN({
+                ...PLAN,
+                plan_content: e.target.value,
+              });
+            }}
+          />
+          <label htmlFor="plan_content">Content</label>
         </div>
       </div>
     );
   };
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonUserDelete = () => {
+  const buttonPlanUpdate = () => {
     return (
-      <button className="btn btn-sm btn-primary" type="button" onClick={flowUserDelete}>
-        Delete
+      <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowPlanUpdate}>
+        Update
       </button>
     );
   };
@@ -144,9 +151,9 @@ export const UserDelete = () => {
       <div className="row d-center mt-5">
         <div className="col-10">
           <form className="form-inline">
-            {tableUserDelete()}
+            {tablePlanUpdate()}
             <br/>
-            {buttonUserDelete()}
+            {buttonPlanUpdate()}
             {buttonRefreshPage()}
           </form>
         </div>

@@ -41,7 +41,7 @@ export const WorkInsert = () => {
     work_title_val: "전체",
   }]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setWORK ({
       ...WORK,
@@ -50,7 +50,7 @@ export const WorkInsert = () => {
     });
   }, [workDay, workSection]);
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (WORK.work_start && WORK.work_end) {
       const work_start = moment(WORK.work_start, "HH:mm");
@@ -316,7 +316,7 @@ export const WorkInsert = () => {
     const updateWorkArray
     = workSection[i] && workTitleArray[workSection[i].work_part_idx]
     ? workTitleArray[workSection[i].work_part_idx]?.work_title
-    : [];
+   : [];
 
     return (
       <div key={i} className="mb-20">
