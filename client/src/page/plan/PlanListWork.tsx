@@ -12,7 +12,7 @@ import {planPartArray, planTitleArray} from "./PlanArray";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanListDay = () => {
+export const PlanListWork = () => {
 
   // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Plan List Day";

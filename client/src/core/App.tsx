@@ -24,6 +24,8 @@ import {Header} from "../layout/Header";
 import {Footer} from "../layout/Footer";
 import {Hover} from "../components/Hover";
 
+import {DashboardList} from "../page/dashboard/Dashboard";
+
 import {UserLogin} from "../page/user/UserLogin";
 import {UserInsert} from "../page/user/UserInsert";
 import {UserDetail} from "../page/user/UserDetail";
@@ -81,8 +83,10 @@ import {PlanInsert} from "../page/plan/PlanInsert";
 import {PlanDetail} from "../page/plan/PlanDetail";
 import {PlanUpdate} from "../page/plan/PlanUpdate";
 import {PlanListDay} from "../page/plan/PlanListDay";
-
-import {Test} from "../page/test/Test";
+import {PlanListSleep} from "../page/plan/PlanListSleep";
+import {PlanListWork} from "../page/plan/PlanListWork";
+import {PlanListFood} from "../page/plan/PlanListFood";
+import {PlanListMoney} from "../page/plan/PlanListMoney";
 
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
@@ -96,7 +100,7 @@ const App = () => {
         <Header />
         <Routes>
 
-          <Route path="/" element={<CalendarList />} />
+          <Route path="/" element={<DashboardList />} />
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail" element={<CalendarDetail />} />
 
@@ -154,6 +158,10 @@ const App = () => {
           <Route path="/planDetail" element={<PlanDetail />} />
           <Route path="/planUpdate" element={<PlanUpdate />} />
           <Route path="/planListDay" element={<PlanListDay />} />
+          <Route path="/planListSleep" element={<PlanListSleep />} />
+          <Route path="/planListWork" element={<PlanListWork />} />
+          <Route path="/planListFood" element={<PlanListFood />} />
+          <Route path="/planListMoney" element={<PlanListMoney />} />
         </Routes>
         <Footer />
       </DeveloperModeProvider>

@@ -64,8 +64,6 @@ const SidebarStyle = createGlobalStyle`
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
-  const TITLE = "Header";
-  const URL_HEADER = process.env.REACT_APP_URL_HEADER;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
   const location = useLocation();
@@ -171,13 +169,17 @@ export const Header = () => {
   // 4-3. view ------------------------------------------------------------------------------------>
   const Sidebar = () => {
     return (
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
-        <p className="text-end pointer text-dark p-10" onClick={() => {
-          setIsSidebar(!isSidebar);
-        }}>
-          X
-        </p>
-        <div className="d-flex flex-column flex-shrink-0 p-3">
+      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"}
+      bg-white rounded box-right`}>
+        <div className="d-flex flex-column text-dark pointer p-10">
+          <h3 className="text-center">Changer</h3>
+          <p className="text-end" onClick={() => {
+            setIsSidebar(!isSidebar);
+          }}>
+            X
+          </p>
+        </div>
+        <div className="d-flex flex-column p-3">
           <ul className="nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark">
             {SidebarArray.map(menu => <SidebarItem key={menu.label} {...menu} />)}
           </ul>
@@ -208,7 +210,7 @@ export const Header = () => {
     };
     if (!user_id || user_id === "false") {
       return (
-        <form className="form-group d-center">
+        <form className="form-group d-right">
           {buttonLogin()}
           {buttonSignup()}
         </form>
@@ -220,7 +222,7 @@ export const Header = () => {
   const loginTrue = () => {
     if (user_id && user_id !== "false") {
       return (
-        <form className="form-group d-center">
+        <form className="form-group d-right">
           <button type="button" className="btn btn-sm ms-2" onClick={() => {
             sessionStorage.setItem("user_id", "false");
             window.location.reload();
@@ -247,28 +249,39 @@ export const Header = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <header className="container-fluid bg-white box-bottom mb-30">
-      <SidebarStyle />
-      <div className="row d-center pt-15 pb-15">
-        <div className="col-1">
-          {Sidebar()}
-          <button type="button" className="btn btn-sm ms-2" onClick={() => {
-            setIsSidebar(!isSidebar);
-          }}>
-            Sidebar
-          </button>
+    <div>
+      <header className="container-fluid bg-white box-bottom">
+        <SidebarStyle />
+        <div className="row d-center pt-15 pb-15">
+          <div className="col-1">
+            {Sidebar()}
+            <button type="button" className="btn btn-sm ms-2" onClick={() => {
+              setIsSidebar(!isSidebar);
+            }}>
+              Sidebar
+            </button>
+          </div>
+          <div className="col-7">
+            &nbsp;
+          </div>
+          <div className="col-1">
+            {buttonDeveloperMode()}
+          </div>
+          <div className="col-2">
+            {loginFalse()}
+            {loginTrue()}
+          </div>
         </div>
-        <div className="col-7">
-          &nbsp;
-        </div>
-        <div className="col-1">
-          {buttonDeveloperMode()}
-        </div>
-        <div className="col-2">
-          {loginFalse()}
-          {loginTrue()}
+      </header>
+      <div className="container-fluid mt-30 mb-30">
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-5">
+              {koreanDate.getFullYear()}년 {koreanDate.getMonth() + 1}월 {koreanDate.getDate()}일
+            </h1>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 };

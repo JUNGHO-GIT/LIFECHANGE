@@ -1,4 +1,4 @@
-// useDeveloperMode.ts
+// useDeveloperMode.tsx
 
 import React, { createContext, useContext, useState } from 'react';
 
