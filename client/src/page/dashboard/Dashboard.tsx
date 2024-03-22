@@ -1,7 +1,7 @@
 // DashboardList.tsx
 
 import React from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/ts/useStorage";
 import {ko} from "date-fns/locale";
@@ -13,10 +13,8 @@ export const DashboardList = () => {
 
   // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Dashboard List";
-  const URL_DASHBOARD = process.env.REACT_APP_URL_DASHBOARD;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
-  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
@@ -89,90 +87,71 @@ export const DashboardList = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container">
-      <div className="row mb-20">
-        <div className="col-12">
-          <div className="container-wrapper w-122">
-            <div className="row d-center mt-5">
-              <div className="col-12">
-                <h1 className="mb-3 fw-7">{TITLE}</h1>
-                <h2 className="mb-3 fw-7">일별로 조회</h2>
+    <div className="root-wrapper">
+      <div className="container-fluid">
+        <div className="row  mb-20">
+          <div className="col-12">
+            <div className="container-wrapper d-left">
+              <div className="row d-center mt-5">
+                <div className="col-12">
+                  <h1 className="mb-3 fw-7">{TITLE}</h1>
+                  <h2 className="mb-3 fw-7">일별로 조회</h2>
+                </div>
               </div>
-            </div>
-            <div className="row d-center mt-3">
-              <div className="col-md-6 col-12 d-center">
-                {viewDashboardDay()}
+              <div className="row d-center mt-3">
+                <div className="col-md-6 col-12 d-center">
+                  {viewDashboardDay()}
+                </div>
               </div>
-            </div>
-            <div className="row mb-20">
-              <div className="col-12 d-center">
-                {buttonDashboardToday()}
-                {buttonDashboardReset()}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-4">
-          <div className="container-wrapper">
-            <div className="row d-center mt-5">
-              <div className="col-12">
-                <h1 className="mb-3 fw-7">{TITLE}</h1>
-                <h2 className="mb-3 fw-7">일별로 조회</h2>
-              </div>
-            </div>
-            <div className="row d-center mt-3">
-              <div className="col-md-6 col-12 d-center">
-                {viewDashboardDay()}
-              </div>
-            </div>
-            <div className="row mb-20">
-              <div className="col-12 d-center">
-                {buttonDashboardToday()}
-                {buttonDashboardReset()}
+              <div className="row mb-20">
+                <div className="col-12 d-center">
+                  {buttonDashboardToday()}
+                  {buttonDashboardReset()}
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-4">
-          <div className="container-wrapper">
-            <div className="row d-center mt-5">
-              <div className="col-12">
-                <h1 className="mb-3 fw-7">{TITLE}</h1>
-                <h2 className="mb-3 fw-7">일별로 조회</h2>
+        <div className="row">
+          <div className="col-6">
+            <div className="container-wrapper">
+              <div className="row d-center mt-5">
+                <div className="col-12">
+                  <h1 className="mb-3 fw-7">{TITLE}</h1>
+                  <h2 className="mb-3 fw-7">일별로 조회</h2>
+                </div>
               </div>
-            </div>
-            <div className="row d-center mt-3">
-              <div className="col-md-6 col-12 d-center">
-                {viewDashboardDay()}
+              <div className="row d-center mt-3">
+                <div className="col-md-6 col-12 d-center">
+                  {viewDashboardDay()}
+                </div>
               </div>
-            </div>
-            <div className="row mb-20">
-              <div className="col-12 d-center">
-                {buttonDashboardToday()}
-                {buttonDashboardReset()}
+              <div className="row mb-20">
+                <div className="col-12 d-center">
+                  {buttonDashboardToday()}
+                  {buttonDashboardReset()}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-4">
-          <div className="container-wrapper">
-            <div className="row d-center mt-5">
-              <div className="col-12">
-                <h1 className="mb-3 fw-7">{TITLE}</h1>
-                <h2 className="mb-3 fw-7">일별로 조회</h2>
+          <div className="col-6">
+            <div className="container-wrapper">
+              <div className="row d-center mt-5">
+                <div className="col-12">
+                  <h1 className="mb-3 fw-7">{TITLE}</h1>
+                  <h2 className="mb-3 fw-7">일별로 조회</h2>
+                </div>
               </div>
-            </div>
-            <div className="row d-center mt-3">
-              <div className="col-md-6 col-12 d-center">
-                {viewDashboardDay()}
+              <div className="row d-center mt-3">
+                <div className="col-md-6 col-12 d-center">
+                  {viewDashboardDay()}
+                </div>
               </div>
-            </div>
-            <div className="row mb-20">
-              <div className="col-12 d-center">
-                {buttonDashboardToday()}
-                {buttonDashboardReset()}
+              <div className="row mb-20">
+                <div className="col-12 d-center">
+                  {buttonDashboardToday()}
+                  {buttonDashboardReset()}
+                </div>
               </div>
             </div>
           </div>

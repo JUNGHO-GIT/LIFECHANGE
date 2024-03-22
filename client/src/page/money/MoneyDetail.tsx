@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import axios from "axios";
-import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -12,12 +11,10 @@ export const MoneyDetail = () => {
   // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Money Detail";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
   const moneySection_id = location.state.moneySection_id;
-  const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -145,23 +142,25 @@ export const MoneyDetail = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
+    <div className="root-wrapper">
+      <div className="container-wrapper">
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-7">{TITLE}</h1>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12 d-center">
-          {tableMoneyDetail()}
+        <div className="row d-center mt-5">
+          <div className="col-12 d-center">
+            {tableMoneyDetail()}
+          </div>
         </div>
-      </div>
-      <div className="row mb-20">
-        <div className="col-12 d-center">
-          {buttonRefreshPage()}
-          {buttonMoneyUpdate(MONEY._id)}
-          {buttonMoneyDelete()}
-          {buttonMoneyList()}
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {buttonRefreshPage()}
+            {buttonMoneyUpdate(MONEY._id)}
+            {buttonMoneyDelete()}
+            {buttonMoneyList()}
+          </div>
         </div>
       </div>
     </div>

@@ -1,9 +1,8 @@
 // UserUpdate.tsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -12,9 +11,7 @@ export const UserUpdate = () => {
   // 1. components -------------------------------------------------------------------------------->
   const TITLE = "User Update";
   const URL_USER = process.env.REACT_APP_URL_USER;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
-  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
@@ -135,20 +132,22 @@ export const UserUpdate = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
+    <div className="root-wrapper">
+      <div className="container-wrapper">
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-7">{TITLE}</h1>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <form className="form-inline">
-            {tableUserUpdate()}
-            <br/>
-            {buttonUserUpdate()}
-            {buttonRefreshPage()}
-          </form>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <form className="form-inline">
+              {tableUserUpdate()}
+              <br/>
+              {buttonUserUpdate()}
+              {buttonRefreshPage()}
+            </form>
+          </div>
         </div>
       </div>
     </div>

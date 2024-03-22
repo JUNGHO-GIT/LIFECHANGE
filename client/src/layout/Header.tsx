@@ -4,67 +4,11 @@ import React, {useState} from "react";
 import {useEffect} from "react";
 import {Collapse} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
-import moment from "moment-timezone";
 import {useDeveloperMode} from "../assets/ts/useDeveloperMode";
-import {createGlobalStyle} from "styled-components";
-
-// ------------------------------------------------------------------------------------------------>
-const SidebarStyle = createGlobalStyle`
-  .sidebar {
-    position: fixed;
-    text-align: center;
-    left: 0;
-    top: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #343a40;
-    transition: transform 0.3s ease;
-    transform: translateX(-100%);
-    z-index: 5;
-  }
-
-  .sidebar-open {
-    transform: translateX(0);
-  }
-
-  .sidebar-closed {
-    transform: translateX(-100%);
-  }
-
-  .highlight {
-    transition: background-color 0.5s ease;
-    background-color: #f0f0f0;
-  }
-
-  .sidebar ul {
-    padding: 5px 0px 0px 10px;
-    list-style: none;
-  }
-
-  .sidebar-item {
-    transition: background-color 0.3s ease;
-  }
-
-  .sidebar-item:hover {
-    background-color: #495057;
-  }
-
-  .collapse-enter-active, .collapse-exit-active {
-    transition: height 0.5s ease;
-  }
-
-  .collapse-enter, .collapse-exit-active {
-    height: 0;
-  }
-
-  .collapse-enter-active, .collapse-exit {
-    height: auto;
-  }
-`;
+import {listArray} from "./ListArray";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
@@ -87,64 +31,6 @@ export const Header = () => {
   };
 
   // 4-1. view ------------------------------------------------------------------------------------>
-  const SidebarArray = [
-    {
-      label: "Main",
-      items: [
-        {to: "/", label: "Home"},
-      ]
-    },
-    {
-      label: "User",
-      items: [
-        {to: "/userList", label: "UserList"},
-      ]
-    },
-    {
-      label: "Board",
-      items: [
-        {to: "/boardInsert", label: "BoardInsert"},
-        {to: "/boardList", label: "BoardList"},
-      ]
-    },
-    {
-      label: "Food",
-      items: [
-        {to: "/foodSearchList", label: "FoodSearchList"},
-        {to: "/foodListDay", label: "FoodList"}
-      ]
-    },
-    {
-      label: "Work",
-      items: [
-        {to: "/workInsert", label: "WorkInsert"},
-        {to: "/workListDay", label: "WorkList"},
-      ]
-    },
-    {
-      label: "Sleep",
-      items: [
-        {to: "/sleepInsert", label: "SleepInsert"},
-        {to: "/sleepListDay", label: "SleepList"}
-      ]
-    },
-    {
-      label: "Money",
-      items: [
-        {to: "/moneyInsert", label: "MoneyInsert"},
-        {to: "/moneyListDay", label: "MoneyList"}
-      ]
-    },
-    {
-      label: "Plan",
-      items: [
-        {to: "/planInsert", label: "PlanInsert"},
-        {to: "/planListDay", label: "PlanList"}
-      ]
-    }
-  ];
-
-  // 4-2. view ------------------------------------------------------------------------------------>
   const SidebarItem: React.FC<{ label: string, items: { to: string, label: string }[] }> = ({
     label, items
   }) => (
@@ -166,24 +52,37 @@ export const Header = () => {
     </li>
   );
 
-  // 4-3. view ------------------------------------------------------------------------------------>
+  // 4-2. view ------------------------------------------------------------------------------------>
   const Sidebar = () => {
     return (
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"}
-      bg-white rounded box-right`}>
-        <div className="d-flex flex-column text-dark pointer p-10">
-          <h3 className="text-center">Changer</h3>
-          <p className="text-end" onClick={() => {
-            setIsSidebar(!isSidebar);
-          }}>
-            X
-          </p>
+      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
+        <div className="d-flex justify-content-between align-items-center text-dark pointer p-10">
+          <h3 className="ps-20">Changer</h3>
+          <p className="pt-10 pe-10" onClick={() => setIsSidebar(!isSidebar)}>X</p>
         </div>
         <div className="d-flex flex-column p-3">
           <ul className="nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark">
-            {SidebarArray.map(menu => <SidebarItem key={menu.label} {...menu} />)}
+            {listArray.map(menu => <SidebarItem key={menu.label} {...menu} />)}
           </ul>
         </div>
+      </div>
+    );
+  };
+
+  // 4-3. view ------------------------------------------------------------------------------------>
+  const Navbar = () => {
+    let preFix;
+    let subFix = isActive.split("/")[1];
+
+    listArray.forEach((menu) => {
+      if (isActive.includes(menu.label.toLowerCase())) {
+        preFix = menu.label;
+      }
+    });
+
+    return (
+      <div className="text-start">
+        <h1 className="fs-30 fw-500 ps-30">{preFix} / {subFix}</h1>
       </div>
     );
   };
@@ -250,8 +149,7 @@ export const Header = () => {
   // 7. return ------------------------------------------------------------------------------------>
   return (
     <div>
-      <header className="container-fluid bg-white box-bottom">
-        <SidebarStyle />
+      <div className="container-fluid bg-white box-bottom">
         <div className="row d-center pt-15 pb-15">
           <div className="col-1">
             {Sidebar()}
@@ -272,13 +170,13 @@ export const Header = () => {
             {loginTrue()}
           </div>
         </div>
-      </header>
-      <div className="container-fluid mt-30 mb-30">
-        <div className="row d-center mt-5">
-          <div className="col-12">
-            <h1 className="mb-3 fw-5">
-              {koreanDate.getFullYear()}년 {koreanDate.getMonth() + 1}월 {koreanDate.getDate()}일
-            </h1>
+      </div>
+      <div className="root-wrapper">
+        <div className="container-fluid">
+          <div className="row d-center pt-15 pb-15">
+            <div className="col-12">
+              {Navbar()}
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,50 @@
+.sidebar {
+  position: fixed;
+  text-align: center;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #343a40;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  z-index: 5;
+}
+
+.sidebar-open {
+  transform: translateX(0);
+}
+
+.sidebar-closed {
+  transform: translateX(-100%);
+}
+
+.highlight {
+  transition: background-color 0.5s ease;
+  background-color: #f0f0f0;
+}
+
+.sidebar ul {
+  padding: 5px 0px 0px 10px;
+  list-style: none;
+}
+
+.sidebar-item {
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-item:hover {
+  background-color: #495057;
+}
+
+.collapse-enter-active, .collapse-exit-active {
+  transition: height 0.5s ease;
+}
+
+.collapse-enter, .collapse-exit-active {
+  height: 0;
+}
+
+.collapse-enter-active, .collapse-exit {
+  height: auto;
+}

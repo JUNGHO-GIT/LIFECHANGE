@@ -1,9 +1,8 @@
 // UserLogin.tsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -12,9 +11,7 @@ export const UserLogin = () => {
   // 1. components -------------------------------------------------------------------------------->
   const TITLE = "User Login";
   const URL_USER = process.env.REACT_APP_URL_USER;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
-  const location = useLocation();
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>

@@ -1,9 +1,8 @@
 // UserList.tsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
@@ -12,10 +11,7 @@ export const UserList = () => {
   // 1. components -------------------------------------------------------------------------------->
   const TITLE = "User List";
   const URL_USER = process.env.REACT_APP_URL_USER;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
-  const location = useLocation();
-  const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -78,7 +74,8 @@ export const UserList = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container-wrapper">
+    <div className="root-wrapper">
+      <div className="container-wrapper">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
@@ -91,6 +88,7 @@ export const UserList = () => {
             <br/>
             {buttonRefreshPage()}
           </form>
+        </div>
         </div>
       </div>
     </div>

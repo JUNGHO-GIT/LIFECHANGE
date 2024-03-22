@@ -179,7 +179,8 @@ export const SleepUpdate = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container-wrapper">
+    <div className="root-wrapper">
+      <div className="container-wrapper">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
@@ -199,6 +200,7 @@ export const SleepUpdate = () => {
             <br/>
             {buttonSleepUpdate()}
           </form>
+        </div>
         </div>
       </div>
     </div>

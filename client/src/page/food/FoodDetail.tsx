@@ -98,7 +98,6 @@ export const FoodDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodDetail = () => {
     return (
-
         <table className="table table-bordered table-hover">
           <thead className="table-dark">
             <tr>
@@ -158,30 +157,32 @@ export const FoodDetail = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
-          <span className="ms-4"> ({food_category})</span>
+    <div className="root-wrapper">
+      <div className="container-wrapper">
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-7">{TITLE}</h1>
+            <span className="ms-4"> ({food_category})</span>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-5">
-            <span className="ms-4">{logicViewDate()}</span>
-          </h1>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-5">
+              <span className="ms-4">{logicViewDate()}</span>
+            </h1>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          {tableFoodDetail()}
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            {tableFoodDetail()}
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          {buttonFoodDelete()}
-          {buttonFoodUpdate()}
-          {buttonRefreshPage()}
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            {buttonFoodDelete()}
+            {buttonFoodUpdate()}
+            {buttonRefreshPage()}
+          </div>
         </div>
       </div>
     </div>

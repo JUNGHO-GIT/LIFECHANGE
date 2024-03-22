@@ -2386,21 +2386,21 @@
 
 .d-center {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
 }
 .d-left {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: left;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  text-align: left !important;
 }
 .d-right {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  text-align: right;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  text-align: right !important;
 }
 .d-none {
   display: none;
@@ -2461,13 +2461,3 @@
 .box-left {
   box-shadow: -5px 0 0.375rem 0 rgba(161, 172, 184, 0.12) !important;
 }
-
-.container-wrapper {
-  width: fit-content;
-  max-width: 100%;
-  padding: 20px;
-  margin: 0 auto;
-  box-shadow: 0 0 0.375rem 0 rgba(161, 172, 184, 0.12);
-  background-color: #fff;
-  border-radius: 0.5rem;
-};

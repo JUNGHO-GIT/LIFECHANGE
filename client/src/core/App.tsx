@@ -17,6 +17,7 @@ import "../assets/css/Jstyle.css";
 import "../assets/css/DatePicker.css";
 import "../assets/css/TimePicker.css";
 import "../assets/css/DayPicker.css";
+import "../assets/css/Header.css";
 
 import {Resize} from "../components/Resize";
 import {Loader} from "../components/Loader";

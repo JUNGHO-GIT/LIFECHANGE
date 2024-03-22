@@ -140,7 +140,8 @@ export const SleepDetail = () => {
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
-    <div className="container-wrapper">
+    <div className="root-wrapper">
+      <div className="container-wrapper">
       <div className="row d-center mt-5">
         <div className="col-12">
           <h1 className="mb-3 fw-7">{TITLE}</h1>
@@ -154,6 +155,7 @@ export const SleepDetail = () => {
           {buttonSleepUpdate(SLEEP._id)}
           {buttonRefreshPage()}
           {buttonSleepList()}
+        </div>
         </div>
       </div>
     </div>
