@@ -13,8 +13,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const PlanListSleep = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Plan List Day";
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());

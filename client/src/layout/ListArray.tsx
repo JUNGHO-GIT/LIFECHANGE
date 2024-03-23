@@ -29,35 +29,35 @@ export const listArray = [
     label: "Food",
     items: [
       {to: "/foodSearchList", label: "FoodSearchList"},
-      {to: "/foodListDay", label: "FoodList"}
+      {to: "/foodList", label: "FoodList"}
     ]
   },
   {
     label: "Work",
     items: [
       {to: "/workInsert", label: "WorkInsert"},
-      {to: "/workListDay", label: "WorkList"},
+      {to: "/workList", label: "WorkList"},
     ]
   },
   {
     label: "Sleep",
     items: [
       {to: "/sleepInsert", label: "SleepInsert"},
-      {to: "/sleepListDay", label: "SleepList"}
+      {to: "/sleepList", label: "SleepList"}
     ]
   },
   {
     label: "Money",
     items: [
       {to: "/moneyInsert", label: "MoneyInsert"},
-      {to: "/moneyListDay", label: "MoneyList"}
+      {to: "/moneyList", label: "MoneyList"}
     ]
   },
   {
     label: "Plan",
     items: [
       {to: "/planInsert", label: "PlanInsert"},
-      {to: "/planListDay", label: "PlanList"}
+      {to: "/planList", label: "PlanList"}
     ]
   }
 ];

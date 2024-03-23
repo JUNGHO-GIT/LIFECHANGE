@@ -13,8 +13,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListDay = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Money List Day";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());

@@ -13,8 +13,6 @@ import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListSelect = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Money List Select";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());

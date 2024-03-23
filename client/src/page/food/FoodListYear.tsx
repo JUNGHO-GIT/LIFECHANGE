@@ -13,8 +13,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodListYear = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Food List Year";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());

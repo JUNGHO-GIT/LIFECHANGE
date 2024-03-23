@@ -14,8 +14,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkListYear = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Work List Year";
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());

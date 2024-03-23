@@ -7,8 +7,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Money Detail";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const navParam = useNavigate();

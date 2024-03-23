@@ -13,8 +13,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkListDay = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Work List Day";
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());

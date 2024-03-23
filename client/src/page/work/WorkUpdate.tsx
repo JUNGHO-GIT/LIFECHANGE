@@ -8,8 +8,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkUpdate = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Work Update";
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

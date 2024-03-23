@@ -65,11 +65,7 @@ import {WorkListSelect} from "../page/work/WorkListSelect";
 import {SleepInsert} from "../page/sleep/SleepInsert";
 import {SleepDetail} from "../page/sleep/SleepDetail";
 import {SleepUpdate} from "../page/sleep/SleepUpdate";
-import {SleepListDay} from "../page/sleep/SleepListDay";
-import {SleepListWeek} from "../page/sleep/SleepListWeek";
-import {SleepListMonth} from "../page/sleep/SleepListMonth";
-import {SleepListYear} from "../page/sleep/SleepListYear";
-import {SleepListSelect} from "../page/sleep/SleepListSelect";
+import {SleepList} from "../page/sleep/SleepList";
 
 import {MoneyInsert} from "../page/money/MoneyInsert";
 import {MoneyDetail} from "../page/money/MoneyDetail";
@@ -142,11 +138,7 @@ const App = () => {
           <Route path="/sleepInsert" element={<SleepInsert />} />
           <Route path="/sleepDetail" element={<SleepDetail />} />
           <Route path="/sleepUpdate" element={<SleepUpdate />} />
-          <Route path="/sleepListDay" element={<SleepListDay />} />
-          <Route path="/sleepListWeek" element={<SleepListWeek />} />
-          <Route path="/sleepListMonth" element={<SleepListMonth />} />
-          <Route path="/sleepListYear" element={<SleepListYear />} />
-          <Route path="/sleepListSelect" element={<SleepListSelect />} />
+          <Route path="/sleepList" element={<SleepList />} />
 
           <Route path="/moneyInsert" element={<MoneyInsert />} />
           <Route path="/moneyDetail" element={<MoneyDetail />} />

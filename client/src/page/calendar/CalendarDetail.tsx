@@ -11,8 +11,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Calendar Detail";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;

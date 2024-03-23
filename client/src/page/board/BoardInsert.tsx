@@ -8,8 +8,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardInsert = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Board Insert";
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const URL_USER = process.env.REACT_APP_URL_USER;

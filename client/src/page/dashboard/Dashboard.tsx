@@ -10,8 +10,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashboardList = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Dashboard List";
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();

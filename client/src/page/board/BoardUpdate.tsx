@@ -10,8 +10,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardUpdate = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Board Update";
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

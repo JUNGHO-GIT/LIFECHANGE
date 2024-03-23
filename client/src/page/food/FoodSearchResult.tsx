@@ -9,8 +9,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearchResult = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Food SearchResult";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

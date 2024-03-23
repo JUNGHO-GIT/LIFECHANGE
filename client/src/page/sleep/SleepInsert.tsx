@@ -11,8 +11,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepInsert = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Sleep Insert";
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

@@ -7,8 +7,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserList = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "User List";
   const URL_USER = process.env.REACT_APP_URL_USER;
   const navParam = useNavigate();

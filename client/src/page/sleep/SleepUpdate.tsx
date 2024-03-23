@@ -10,8 +10,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepUpdate = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Sleep Update";
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

@@ -10,8 +10,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Calendar List";
   const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
