@@ -6,6 +6,12 @@ export const listArray = [
     ]
   },
   {
+    label: "Calendar",
+    items: [
+      {to: "/calendarList", label: "CalendarList"},
+    ]
+  },
+  {
     label: "User",
     items: [
       {to: "/userList", label: "UserList"},
