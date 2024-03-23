@@ -41,6 +41,8 @@ export const SleepListDay = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [sleepType, setSleepType] = useState<string>("list");
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -48,7 +50,7 @@ export const SleepListDay = () => {
     // 1. list
     const fetchSleepList = async () => {
       try {
-        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
+        const response = await axios.get (`${URL_SLEEP}/sleepList?page=${page}&limit=${limit}`, {
           params: {
             user_id : user_id,
             sleep_dur : sleepResDur,

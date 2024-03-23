@@ -8,16 +8,22 @@ import moment from "moment";
 export const sleepList = async (
   user_id_param: any,
   sleep_dur_param: any,
+  filter_param: any,
 ) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
 
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
 
-  findQuery = {
+  const page = filter_param.page;
+  const limit = filter_param.limit;
+
+  // number, day
+  let filterPre = filter_param.filterPre;
+
+  // asc, desc
+  let filterSub = filter_param.filterSub;
+
+  const findQuery = {
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
@@ -25,9 +31,30 @@ export const sleepList = async (
     }
   };
 
-  findResult = await Sleep.find(findQuery).sort({ sleep_day: -1 });
+  // 번호순 asc, desc 정렬, 날짜순 asc, desc 정렬
+  let sortCondition = {};
+  if (filterPre === "number") {
+    sortCondition = {sleep_number: filterSub};
+  }
+  else if (filterPre === "day") {
+    sortCondition = {sleep_day: filterSub};
+  }
 
-  return findResult;
+  const totalCount = await Sleep.countDocuments(findQuery);
+
+  // .find()에 정렬, 페이징 처리 추가
+  const findResult = await Sleep
+  .find(findQuery)
+  .sort(sortCondition)
+  .skip((page - 1) * limit)
+  .limit(limit);
+
+  let finalResult = {
+    totalCount: totalCount,
+    sleepList: findResult,
+  };
+
+  return finalResult;
 };
 
 // 1-2. sleepAvg ---------------------------------------------------------------------------------->

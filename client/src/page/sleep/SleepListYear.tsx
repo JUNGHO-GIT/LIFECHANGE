@@ -40,6 +40,13 @@ export const SleepListYear = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [sleepType, setSleepType] = useState<string>("list");
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [filter, setFilter] = useState({
+    filterPre: "number",
+    filterSub: "asc",
+    page: 1,
+    limit: 5,
+  });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -51,9 +58,11 @@ export const SleepListYear = () => {
           params: {
             user_id : user_id,
             sleep_dur : sleepResDur,
+            filter : filter,
           },
         });
-        setSLEEP_LIST(response.data);
+        setSLEEP_LIST(response.data.sleepList);
+        setTotalCount(response.data.totalCount);
         log("SLEEP_LIST : " + JSON.stringify(response.data));
       }
       catch (error:any) {
@@ -70,6 +79,7 @@ export const SleepListYear = () => {
           params: {
             user_id : user_id,
             sleep_dur : sleepResDur,
+            filter : filter,
           },
         });
         setSLEEP_AVERAGE(response.data);
@@ -81,7 +91,7 @@ export const SleepListYear = () => {
       }
     };
     fetchSleepAvg();
-  }, [user_id, sleepResDur]);
+  }, [user_id, sleepResDur, filter]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -134,63 +144,103 @@ export const SleepListYear = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableSleepList = () => {
-    const filterBox = () => {
+  const filterBox = () => {
+    const pageNumber = () => {
+      const pages = [];
+      const totalPages = Math.ceil(totalCount / filter.limit);
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(
+          <button
+            key={i}
+            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
+            onClick={() => setFilter({ ...filter, page: i })}
+          >
+            {i}
+          </button>
+        );
+      }
+      return pages;
+    };
+    const prevNumber = () => {
       return (
-        <div className="text-end w-10 mb-10">
-          <select className="form-select" id="sleepListFilter" onChange={(e:any) => {
-            if (e.target.value === "latest") {
-              setSLEEP_LIST(SLEEP_LIST.slice().sort((a:any, b:any) => {
-                return a.sleep_day < b.sleep_day ? 1 : -1;
-              }
-            ));
-          }
-          else if (e.target.value === "oldest") {
-            setSLEEP_LIST(SLEEP_LIST.slice().sort((a:any, b:any) => {
-              return a.sleep_day > b.sleep_day ? 1 : -1;
-            }));
-          }
-        }
-      }>
-            <option value="latest">최신순</option>
-            <option value="oldest">오래된순</option>
-          </select>
-        </div>
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({ ...filter, page: Math.max(1, filter.page - 1) })}
+        >
+          이전
+        </button>
+      );
+    }
+    const nextNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({ ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) })}
+        >
+          다음
+        </button>
       );
     }
 
     return (
-      <div>
-        {filterBox()}
-        <table className="table bg-white table-hover">
-          <thead className="table-primary">
-            <tr>
-              <th>번호</th>
-              <th>기간</th>
-              <th>취침 시간</th>
-              <th>기상 시간</th>
-              <th>수면 시간</th>
-            </tr>
-          </thead>
-          <tbody>
-            {SLEEP_LIST.map((index:any) => (
-              <tr key={index._id}>
-                <td className="pointer" onClick={() => {
-                  navParam("/sleepDetail", {
-                    state: {_id: index._id}
-                  }
-                )}}>
-                  {index.sleep_number}
-                </td>
-                <td>{index.sleep_day}</td>
-                <td>{index.sleep_night}</td>
-                <td>{index.sleep_morning}</td>
-                <td>{index.sleep_time}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="d-inline-flex">
+        <select className="form-select" id="sleepListSortField" onChange={(e) => {
+          setFilter({...filter, filterPre: e.target.value});
+        }}>
+          <option value="number" selected>번호순</option>
+          <option value="day">날짜순</option>
+        </select>
+        <select className="form-select" id="sleepListSortOrder" onChange={(e) => {
+          setFilter({...filter, filterSub: e.target.value});
+        }}>
+          <option value="ASC" selected>오름차순</option>
+          <option value="DESC">내림차순</option>
+        </select>
+        <select className="form-select" id="sleepListLimit" onChange={(e) => {
+          setFilter({...filter, limit: Number(e.target.value)});
+        }}>
+          <option value="5" selected>5개씩</option>
+          <option value="10">10개씩</option>
+          <option value="20">20개씩</option>
+        </select>
+        {prevNumber()}
+        {pageNumber()}
+        {nextNumber()}
       </div>
+    );
+  };
+
+  // 5-1. table ----------------------------------------------------------------------------------->
+  const tableSleepList = () => {
+    return (
+      <table className="table bg-white table-hover">
+        <thead className="table-primary">
+          <tr>
+            <th>번호</th>
+            <th>기간</th>
+            <th>취침 시간</th>
+            <th>기상 시간</th>
+            <th>수면 시간</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SLEEP_LIST.map((index:any) => (
+            <tr key={index._id}>
+              <td className="pointer" onClick={() => {
+                navParam("/sleepDetail", {
+                  state: {_id: index._id}
+                }
+              )}}>
+                {index.sleep_number}
+              </td>
+              <td>{index.sleep_day}</td>
+              <td>{index.sleep_night}</td>
+              <td>{index.sleep_morning}</td>
+              <td>{index.sleep_time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
   };
 
@@ -286,36 +336,39 @@ export const SleepListYear = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
-          <h2 className="mb-3 fw-7">년별로 조회</h2>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-7">{TITLE}</h1>
+            <h2 className="mb-3 fw-7">년별로 조회</h2>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-3">
-          {selectSleepList()}
+        <div className="row d-center mt-3">
+          <div className="col-3">
+            {selectSleepList()}
+          </div>
+          <div className="col-3">
+            {selectSleepType()}
+          </div>
         </div>
-        <div className="col-3">
-          {selectSleepType()}
+        <div className="row d-center mt-3">
+          <div className="col-12 d-center">
+            {viewSleepYear()}
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-12 d-center">
-          {viewSleepYear()}
+        <div className="row d-center mt-3">
+          <div className="col-12">
+            {sleepType === "list" && tableSleepList()}
+            {sleepType === "avg" && tableSleepAvg()}
+          </div>
+          <div className="col-12">
+            {filterBox()}
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-12">
-          {sleepType === "list" && tableSleepList()}
-          {sleepType === "avg" && tableSleepAvg()}
-        </div>
-      </div>
-      <div className="row mb-20">
-        <div className="col-12 d-center">
-          {buttonSleepToday()}
-          {buttonSleepReset()}
-        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {buttonSleepToday()}
+            {buttonSleepReset()}
+          </div>
         </div>
       </div>
     </div>
