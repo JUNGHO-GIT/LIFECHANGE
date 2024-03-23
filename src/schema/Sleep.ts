@@ -45,14 +45,14 @@ const SleepSchema = new mongoose.Schema ({
   sleep_regdate: {
     type: String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required: true,
   },
   sleep_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required: true,
   }
@@ -60,7 +60,7 @@ const SleepSchema = new mongoose.Schema ({
 
 SleepSchema.pre("save", async function(next) {
   if (this.isNew) {
-    this.sleep_number = await incrementSeq("sleep_number");
+    this.sleep_number = await incrementSeq("sleep_number", "Sleep");
   }
   next();
 });

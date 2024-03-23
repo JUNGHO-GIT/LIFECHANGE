@@ -180,7 +180,7 @@ export const SleepListYear = () => {
                     state: {_id: index._id}
                   }
                 )}}>
-                  {index._id}
+                  {index.sleep_number}
                 </td>
                 <td>{index.sleep_day}</td>
                 <td>{index.sleep_night}</td>

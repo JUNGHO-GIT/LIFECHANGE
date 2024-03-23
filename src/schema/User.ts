@@ -1,6 +1,7 @@
 // User.ts
 
 import mongoose from "mongoose";
+import moment from "moment-timezone";
 import {incrementSeq} from "./Counter";
 
 const UserSchema = new mongoose.Schema ({
@@ -22,11 +23,27 @@ const UserSchema = new mongoose.Schema ({
     type : String,
     required : true
   },
+
+  // 3. date
+  user_regdate : {
+    type : String,
+    default : () => {
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
+    },
+    required : true
+  },
+  user_update : {
+    type : String,
+    default : () => {
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
+    },
+    required : true
+  }
 });
 
 UserSchema.pre("save", async function(next) {
   if (this.isNew) {
-    this.user_number = await incrementSeq("user_number");
+    this.user_number = await incrementSeq("user_number", "User");
   }
   next();
 });

@@ -37,14 +37,14 @@ const BoardSchema = new mongoose.Schema ({
   board_regdate : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required : true
   },
   board_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required : true
   }

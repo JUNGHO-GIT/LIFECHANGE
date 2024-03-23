@@ -81,14 +81,14 @@ const WorkSchema = new mongoose.Schema ({
   work_regdate: {
     type: String,
     default: () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required: true,
   },
   work_update: {
     type: String,
     default: () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required: true,
   },
@@ -96,7 +96,7 @@ const WorkSchema = new mongoose.Schema ({
 
 WorkSchema.pre("save", async function(next) {
   if (this.isNew) {
-    this.work_number = await incrementSeq("work_number");
+    this.work_number = await incrementSeq("work_number", "Work");
   }
   next();
 });

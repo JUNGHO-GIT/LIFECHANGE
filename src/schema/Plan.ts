@@ -60,14 +60,14 @@ const PlanSchema = new mongoose.Schema ({
   plan_regdate : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required : true
   },
   plan_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required : true
   }
@@ -75,7 +75,7 @@ const PlanSchema = new mongoose.Schema ({
 
 PlanSchema.pre("save", async function(next) {
   if (this.isNew) {
-    this.plan_number = await incrementSeq("plan_number");
+    this.plan_number = await incrementSeq("plan_number", "Plan");
   }
   next();
 });

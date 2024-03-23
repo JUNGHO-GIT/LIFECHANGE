@@ -70,14 +70,14 @@ const FoodSchema = new mongoose.Schema ({
   food_regdate : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required : true
   },
   food_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
     },
     required : true
   }
@@ -85,7 +85,7 @@ const FoodSchema = new mongoose.Schema ({
 
 FoodSchema.pre("save", async function(next) {
   if (this.isNew) {
-    this.food_number = await incrementSeq("food_number");
+    this.food_number = await incrementSeq("food_number", "Food");
   }
   next();
 });
