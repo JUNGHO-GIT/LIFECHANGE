@@ -90,7 +90,7 @@ export const planDetail = async (
   let findQuery;
   let findResult;
   let finalResult;
-  let planScheme;
+  let planSchema;
 
   if (!planSection_id_param) {
     findQuery = {
@@ -104,14 +104,14 @@ export const planDetail = async (
       _id: _id_param
     };
     findResult = await Plan.findOne(findQuery);
-    planScheme = findResult;
+    planSchema = findResult;
 
-    if (planScheme) {
-      const matchedSection = planScheme.planSection?.find((section: any) => {
+    if (planSchema) {
+      const matchedSection = planSchema.planSection?.find((section: any) => {
         return section._id.toString() === planSection_id_param.toString();
       });
       finalResult = {
-        ...planScheme.toObject(),
+        ...planSchema.toObject(),
         planSection: [matchedSection]
       };
     }

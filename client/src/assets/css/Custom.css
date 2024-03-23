@@ -75,10 +75,11 @@ textarea.form-control {
 .root-wrapper {
   max-width: 60%;
   margin: 0 auto;
+  position: relative;
+  left: 150px;
 }
 
 .container-wrapper {
-  width: fit-content;
   padding: 20px;
   margin: 0 auto;
   box-shadow: 0 0 0.375rem 0 rgba(161, 172, 184, 0.12);

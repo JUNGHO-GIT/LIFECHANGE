@@ -2,8 +2,9 @@
 
 import mongoose from "mongoose";
 import moment from "moment-timezone";
+import {incrementSeq} from "./Counter";
 
-const BoardScheme = new mongoose.Schema ({
+const BoardSchema = new mongoose.Schema ({
 
   // 1. id
   _id : {
@@ -49,4 +50,4 @@ const BoardScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("Board", BoardScheme);
+export default mongoose.model("Board", BoardSchema);

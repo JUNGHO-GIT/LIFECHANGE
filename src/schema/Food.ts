@@ -2,13 +2,18 @@
 
 import mongoose from "mongoose";
 import moment from "moment-timezone";
+import {incrementSeq} from "./Counter";
 
-const FoodScheme = new mongoose.Schema ({
+const FoodSchema = new mongoose.Schema ({
 
   // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
+  },
+  food_number : {
+    type : Number,
+    unique : true
   },
   user_id : {
     type  : String,
@@ -78,4 +83,11 @@ const FoodScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("food", FoodScheme);
+FoodSchema.pre("save", async function(next) {
+  if (this.isNew) {
+    this.food_number = await incrementSeq("food_number");
+  }
+  next();
+});
+
+export default mongoose.model("food", FoodSchema);

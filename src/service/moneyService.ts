@@ -90,7 +90,7 @@ export const moneyDetail = async (
   let findQuery;
   let findResult;
   let finalResult;
-  let moneyScheme;
+  let moneySchema;
 
   if (!moneySection_id_param) {
     findQuery = {
@@ -104,14 +104,14 @@ export const moneyDetail = async (
       _id: _id_param
     };
     findResult = await Money.findOne(findQuery);
-    moneyScheme = findResult;
+    moneySchema = findResult;
 
-    if (moneyScheme) {
-      const matchedSection = moneyScheme.moneySection?.find((section: any) => {
+    if (moneySchema) {
+      const matchedSection = moneySchema.moneySection?.find((section: any) => {
         return section._id.toString() === moneySection_id_param.toString();
       });
       finalResult = {
-        ...moneyScheme.toObject(),
+        ...moneySchema.toObject(),
         moneySection: [matchedSection]
       };
     }

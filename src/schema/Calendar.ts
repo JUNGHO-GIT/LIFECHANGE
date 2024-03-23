@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import moment from "moment-timezone";
 
-const CalendarScheme = new mongoose.Schema ({
+const CalendarSchema = new mongoose.Schema ({
 
   // 1. id
   _id : {
@@ -61,4 +61,4 @@ const CalendarScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("Calendar", CalendarScheme);
+export default mongoose.model("Calendar", CalendarSchema);

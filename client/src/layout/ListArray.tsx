@@ -3,6 +3,7 @@ export const listArray = [
     label: "Main",
     items: [
       {to: "/", label: "Home"},
+      {to: "/test", label: "Test"},
     ]
   },
   {

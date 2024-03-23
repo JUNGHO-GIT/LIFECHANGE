@@ -13,8 +13,6 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepListYear = () => {
-
-  // 1. components -------------------------------------------------------------------------------->
   const TITLE = "Sleep List Year";
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -137,33 +135,62 @@ export const SleepListYear = () => {
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
+    const filterBox = () => {
+      return (
+        <div className="text-end w-10 mb-10">
+          <select className="form-select" id="sleepListFilter" onChange={(e:any) => {
+            if (e.target.value === "latest") {
+              setSLEEP_LIST(SLEEP_LIST.slice().sort((a:any, b:any) => {
+                return a.sleep_day < b.sleep_day ? 1 : -1;
+              }
+            ));
+          }
+          else if (e.target.value === "oldest") {
+            setSLEEP_LIST(SLEEP_LIST.slice().sort((a:any, b:any) => {
+              return a.sleep_day > b.sleep_day ? 1 : -1;
+            }));
+          }
+        }
+      }>
+            <option value="latest">최신순</option>
+            <option value="oldest">오래된순</option>
+          </select>
+        </div>
+      );
+    }
+
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
-          <tr>
-            <th>기간</th>
-            <th>취침 시간</th>
-            <th>기상 시간</th>
-            <th>수면 시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          {SLEEP_LIST.map((index:any) => (
-            <tr key={index._id}>
-              <td className="pointer" onClick={() => {
-                navParam("/sleepDetail", {
-                  state: {_id: index._id}
-                }
-              )}}>
-                {sleepResDur}
-              </td>
-              <td>{index.sleep_night}</td>
-              <td>{index.sleep_morning}</td>
-              <td>{index.sleep_time}</td>
+      <div>
+        {filterBox()}
+        <table className="table bg-white table-hover">
+          <thead className="table-primary">
+            <tr>
+              <th>번호</th>
+              <th>기간</th>
+              <th>취침 시간</th>
+              <th>기상 시간</th>
+              <th>수면 시간</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {SLEEP_LIST.map((index:any) => (
+              <tr key={index._id}>
+                <td className="pointer" onClick={() => {
+                  navParam("/sleepDetail", {
+                    state: {_id: index._id}
+                  }
+                )}}>
+                  {index._id}
+                </td>
+                <td>{index.sleep_day}</td>
+                <td>{index.sleep_night}</td>
+                <td>{index.sleep_morning}</td>
+                <td>{index.sleep_time}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   };
 
@@ -274,10 +301,12 @@ export const SleepListYear = () => {
         </div>
       </div>
       <div className="row d-center mt-3">
-        <div className="col-md-6 col-12 d-center">
+        <div className="col-12 d-center">
           {viewSleepYear()}
         </div>
-        <div className="col-md-6 col-12">
+      </div>
+      <div className="row d-center mt-3">
+        <div className="col-12">
           {sleepType === "list" && tableSleepList()}
           {sleepType === "avg" && tableSleepAvg()}
         </div>

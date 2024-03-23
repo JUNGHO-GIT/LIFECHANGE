@@ -2,13 +2,18 @@
 
 import mongoose from "mongoose";
 import moment from "moment-timezone";
+import {incrementSeq} from "./Counter";
 
-const WorkScheme = new mongoose.Schema ({
+const WorkSchema = new mongoose.Schema ({
 
   // 1. id
   _id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+  },
+  work_number: {
+    type: Number,
+    unique: true,
   },
   user_id: {
     type: String,
@@ -89,4 +94,11 @@ const WorkScheme = new mongoose.Schema ({
   },
 });
 
-export default mongoose.model("Work", WorkScheme);
+WorkSchema.pre("save", async function(next) {
+  if (this.isNew) {
+    this.work_number = await incrementSeq("work_number");
+  }
+  next();
+});
+
+export default mongoose.model("Work", WorkSchema);

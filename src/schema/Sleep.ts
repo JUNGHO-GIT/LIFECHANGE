@@ -2,13 +2,18 @@
 
 import mongoose from "mongoose";
 import moment from "moment-timezone";
+import {incrementSeq} from "./Counter";
 
-const SleepScheme = new mongoose.Schema ({
+const SleepSchema = new mongoose.Schema ({
 
   // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
+  },
+  sleep_number : {
+    type : Number,
+    unique : true,
   },
   user_id : {
     type : String,
@@ -53,4 +58,11 @@ const SleepScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("Sleep", SleepScheme);
+SleepSchema.pre("save", async function(next) {
+  if (this.isNew) {
+    this.sleep_number = await incrementSeq("sleep_number");
+  }
+  next();
+});
+
+export default mongoose.model("Sleep", SleepSchema);

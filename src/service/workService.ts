@@ -94,7 +94,7 @@ export const workDetail = async (
   let findQuery;
   let findResult;
   let finalResult;
-  let workScheme;
+  let workSchema;
 
   if (!workSection_id_param) {
     findQuery = {
@@ -108,14 +108,14 @@ export const workDetail = async (
       _id: _id_param
     };
     findResult = await Work.findOne(findQuery);
-    workScheme = findResult;
+    workSchema = findResult;
 
-    if (workScheme) {
-      const matchedSection = workScheme.workSection.find((section: any) => {
+    if (workSchema) {
+      const matchedSection = workSchema.workSection.find((section: any) => {
         return section._id.toString() === workSection_id_param.toString();
       });
       finalResult = {
-        ...workScheme.toObject(),
+        ...workSchema.toObject(),
         workSection: [matchedSection]
       };
     }

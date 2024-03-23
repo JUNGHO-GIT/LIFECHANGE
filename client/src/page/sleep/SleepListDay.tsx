@@ -128,8 +128,8 @@ export const SleepListDay = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
+      <table className="table table-responsive table-striped shadow-sm">
+        <thead className="bg-primary text-white">
           <tr>
             <th>기간</th>
             <th>취침 시간</th>
@@ -249,34 +249,34 @@ export const SleepListDay = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
-          <h2 className="mb-3 fw-7">일별로 조회</h2>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-7">{TITLE}</h1>
+            <h2 className="mb-3 fw-7">일별로 조회</h2>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-3">
-          {selectSleepList()}
+        <div className="row d-center mt-3">
+          <div className="col-3">
+            {selectSleepList()}
+          </div>
+          <div className="col-3">
+            {selectSleepType()}
+          </div>
         </div>
-        <div className="col-3">
-          {selectSleepType()}
+        <div className="row d-center mt-3">
+          <div className="col-md-6 col-12 d-center">
+            {viewSleepDay()}
+          </div>
+          <div className="col-md-6 col-12">
+            {sleepType === "list" && tableSleepList()}
+            {sleepType === "avg" && tableSleepAvg()}
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-md-6 col-12 d-center">
-          {viewSleepDay()}
-        </div>
-        <div className="col-md-6 col-12">
-          {sleepType === "list" && tableSleepList()}
-          {sleepType === "avg" && tableSleepAvg()}
-        </div>
-      </div>
-      <div className="row mb-20">
-        <div className="col-12 d-center">
-          {buttonSleepToday()}
-          {buttonSleepReset()}
-        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {buttonSleepToday()}
+            {buttonSleepReset()}
+          </div>
         </div>
       </div>
     </div>

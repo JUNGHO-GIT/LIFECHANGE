@@ -2,13 +2,18 @@
 
 import mongoose from "mongoose";
 import moment from "moment-timezone";
+import {incrementSeq} from "./Counter";
 
-const MoneyScheme = new mongoose.Schema ({
+const MoneySchema = new mongoose.Schema ({
 
   // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
+  },
+  money_number : {
+    type : Number,
+    unique : true
   },
   user_id : {
     type :String,
@@ -67,4 +72,11 @@ const MoneyScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("Money", MoneyScheme);
+MoneySchema.pre("save", async function(next) {
+  if (this.isNew) {
+    this.money_number = await incrementSeq("money_number");
+  }
+  next();
+});
+
+export default mongoose.model("Money", MoneySchema);

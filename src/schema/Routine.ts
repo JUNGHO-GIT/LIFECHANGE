@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import moment from "moment-timezone";
 
-const RoutineScheme = new mongoose.Schema ({
+const RoutineSchema = new mongoose.Schema ({
   _id : {
     type : mongoose.Schema.Types.ObjectId,
     required : true
@@ -52,4 +52,4 @@ const RoutineScheme = new mongoose.Schema ({
   }
 });
 
-export default mongoose.model("Routine", RoutineScheme);
+export default mongoose.model("Routine", RoutineSchema);

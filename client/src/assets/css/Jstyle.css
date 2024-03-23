@@ -2403,16 +2403,19 @@
   text-align: right !important;
 }
 .d-none {
-  display: none;
+  display: none !important;
 }
 .d-flex {
-  display: flex;
+  display: flex !important;
 }
 .d-inline {
-  display: inline-block;
+  display: inline-block !important;
 }
 .d-inline-flex {
-  display: inline-flex;
+  display: inline-flex !important;
+}
+.d-inline-box {
+  display: -webkit-inline-box !important;
 }
 
 .over-hidden {

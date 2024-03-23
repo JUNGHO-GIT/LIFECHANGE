@@ -89,6 +89,8 @@ import {PlanListWork} from "../page/plan/PlanListWork";
 import {PlanListFood} from "../page/plan/PlanListFood";
 import {PlanListMoney} from "../page/plan/PlanListMoney";
 
+import {Test} from "../page/test/Test";
+
 // ------------------------------------------------------------------------------------------------>
 const App = () => {
 
@@ -163,6 +165,8 @@ const App = () => {
           <Route path="/planListWork" element={<PlanListWork />} />
           <Route path="/planListFood" element={<PlanListFood />} />
           <Route path="/planListMoney" element={<PlanListMoney />} />
+
+          <Route path="/test" element={<Test />} />
         </Routes>
         <Footer />
       </DeveloperModeProvider>
