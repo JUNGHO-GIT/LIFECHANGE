@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {BarChart, Bar} from "recharts";
 import {LineChart, Line} from "recharts";
+import {ComposedChart, Area} from 'recharts';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDash = () => {
@@ -37,9 +38,9 @@ export const SleepDash = () => {
   ];
 
   const avgChartData = [
-    { name: "이번주 평균", 취침시간: 23, 수면시간: 7.5, 기상시간: 7.5 },
-    { name: "이번달 평균", 취침시간: 21.5, 수면시간: 7, 기상시간: 6.5 },
-    { name: "이번년 평균", 취침시간: 22, 수면시간: 9, 기상시간: 8 }
+    { name: "1월", 취침시간: 23, 수면시간: 7.5, 기상시간: 7.5 },
+    { name: "2월", 취침시간: 21.5, 수면시간: 7, 기상시간: 6.5 },
+    { name: "3월", 취침시간: 22, 수면시간: 9, 기상시간: 8 }
   ];
 
   //@ts-ignore
@@ -156,32 +157,28 @@ export const SleepDash = () => {
         <div className="container-wrapper mb-10">
           <div className="row d-center">
             <h1 className="ms-50 mb-10 fw-7 text-start">Average Sleep Data</h1>
-            {/** week */}
-            <div className="col-4">
-              <h3>이번주 평균</h3>
-              취침시간: {avgChartData[0].취침시간}
-              <br />
-              수면시간: {avgChartData[0].수면시간}
-              <br />
-              기상시간: {avgChartData[0].기상시간}
-            </div>
-            {/** month */}
-            <div className="col-4">
-              <h3>이번달 평균</h3>
-              취침시간: {avgChartData[1].취침시간}
-              <br />
-              수면시간: {avgChartData[1].수면시간}
-              <br />
-              기상시간: {avgChartData[1].기상시간}
-            </div>
-            {/** year */}
-            <div className="col-4">
-              <h3>이번년 평균</h3>
-              취침시간: {avgChartData[2].취침시간}
-              <br />
-              수면시간: {avgChartData[2].수면시간}
-              <br />
-              기상시간: {avgChartData[2].기상시간}
+            <div className="col-12">
+              <ResponsiveContainer width="100%" height={300}>
+                <ComposedChart
+                  width={500}
+                  height={400}
+                  data={avgChartData}
+                  margin={{
+                    top: 20,
+                    right: 80,
+                    bottom: 20,
+                    left: 20,
+                  }}
+                >
+                  <CartesianGrid stroke="#f5f5f5" />
+                  <XAxis dataKey="name" label={{ value: 'Pages', position: 'insideBottomRight', offset: 0 }} scale="band" />
+                  <YAxis label={{ value: 'Index', angle: -90, position: 'insideLeft' }} />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="취침시간" barSize={20} fill="#413ea0" />
+                  <Line type="monotone" dataKey="수면시간" stroke="#ff7300" />
+                </ComposedChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </div>

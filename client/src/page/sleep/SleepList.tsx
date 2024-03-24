@@ -25,7 +25,7 @@ export const SleepList = () => {
     typeSub: "list",
   });
   const [filter, setFilter] = useState({
-    filterPre: "number",
+    filterPre: "day",
     filterSub: "asc",
     page: 1,
     limit: 5,
@@ -339,8 +339,8 @@ export const SleepList = () => {
         <select className="form-select" id="sleepListSortField" onChange={(e) => {
           setFilter({...filter, filterPre: e.target.value});
         }}>
-          <option value="number" selected>번호순</option>
-          <option value="day">날짜순</option>
+          <option value="day" selected>날짜순</option>
+          <option value="number">번호순</option>
         </select>
         <select className="form-select" id="sleepListSortOrder" onChange={(e) => {
           setFilter({...filter, filterSub: e.target.value});
@@ -371,8 +371,11 @@ export const SleepList = () => {
             <th>번호</th>
             <th>기간</th>
             <th>취침 시간</th>
+            <th></th>
             <th>기상 시간</th>
+            <th></th>
             <th>수면 시간</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -387,8 +390,11 @@ export const SleepList = () => {
               </td>
               <td>{index.sleep_day}</td>
               <td>{index.sleep_night}</td>
+              <td><i className="bx bx-chevron-down"></i>x</td>
               <td>{index.sleep_morning}</td>
+              <td>x</td>
               <td>{index.sleep_time}</td>
+              <td>x</td>
             </tr>
           ))}
         </tbody>
