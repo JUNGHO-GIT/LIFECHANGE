@@ -56,6 +56,6 @@ export const Resize = () => {
   }, []); // Empty array ensures this runs on mount and unmount only
 
   return (
-    <></>
+    <React.Fragment></React.Fragment>
   );
 };

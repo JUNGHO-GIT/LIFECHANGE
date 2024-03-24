@@ -1,12 +1,36 @@
-db.collection("yourCollectionName").insertMany(
-  Array.from({ length: 100 }, (_, index) => ({
-    sleep_number: 0,
-    user_id: "123",
-    sleep_night: "11:01",
-    sleep_morning: "22:02",
-    sleep_time: "11:01",
-    sleep_day: "2024-03-22",
-    sleep_regdate: "2024-03-24",
-    sleep_update: "2024-03-24"
-  }))
-);
+SLEEP_LIST : {
+  "totalCount": 1,
+  "sleepList": [
+    {
+      "_id": "6600691cace2f8e5dd752f85",
+      "user_id": "123",
+      "sleep_night": "22:02",
+      "sleep_morning": "11:01",
+      "sleep_time": "12:59",
+      "sleep_planYn": "N",
+      "sleep_day": "2024-04-01",
+      "sleep_regdate": "2024-03-25-02:55:40",
+      "sleep_update": "2024-03-25-02:55:40",
+      "sleep_number": 29,
+      "__v": 0
+    }
+  ]
+}
+SLEEP_PLAN : {
+  "totalCount": 1,
+  "sleepList": [
+    {
+      "_id": "66006a9a76ae36716699a544",
+      "user_id": "123",
+      "sleep_night": "22:02",
+      "sleep_morning": "08:00",
+      "sleep_time": "09:58",
+      "sleep_planYn": "Y",
+      "sleep_day": "2024-04-01",
+      "sleep_regdate": "2024-03-25-03:02:02",
+      "sleep_update": "2024-03-25-03:02:02",
+      "sleep_number": 33,
+      "__v": 0
+    }
+  ]
+}

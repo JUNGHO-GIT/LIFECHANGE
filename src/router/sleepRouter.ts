@@ -11,6 +11,7 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
     const sleepList = await sleepService.sleepList (
       req.query.user_id,
       req.query.sleep_dur,
+      req.query.planYn,
       req.query.filter
     );
     if (sleepList) {
@@ -65,18 +66,27 @@ sleepRouter.get("/sleepDetail", async (req: Request, res: Response) => {
   }
 });
 
-// 3. sleepInsert --------------------------------------------------------------------------------->
+// 3-1. sleepInsert ------------------------------------------------------------------------------->
 sleepRouter.post("/sleepInsert", async (req: Request, res: Response) => {
   try {
-    const sleepInsert = await sleepService.sleepInsert (
+    const sleepCheckInsert = await sleepService.sleepCheckInsert (
       req.body.user_id,
       req.body.SLEEP
     );
-    if (sleepInsert) {
-      res.send("success");
+    if (sleepCheckInsert) {
+      res.send("duplicate");
     }
     else {
-      res.send("fail");
+      const sleepInsert = await sleepService.sleepInsert (
+        req.body.user_id,
+        req.body.SLEEP
+      );
+      if (sleepInsert) {
+        res.send("success");
+      }
+      else {
+        res.send("fail");
+      }
     }
   }
   catch (err) {

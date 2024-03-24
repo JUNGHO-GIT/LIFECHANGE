@@ -8,6 +8,7 @@ import moment from "moment";
 export const sleepList = async (
   user_id_param: any,
   sleep_dur_param: any,
+  planYn_param: any,
   filter_param: any,
 ) => {
 
@@ -18,30 +19,31 @@ export const sleepList = async (
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
 
-  const page = filter_param.page;
-  const limit = filter_param.limit;
-
-  // number, day
-  let filterPre = filter_param.filterPre;
+  // plan : Y, N
+  let filterPlan = planYn_param;
 
   // asc, desc
   let filterSub = filter_param.filterSub;
+
+  const page = filter_param.page;
+  const limit = filter_param.limit;
 
   findQuery = {
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
       $lte: endDay,
-    }
+    },
+    sleep_planYn: filterPlan,
   };
 
-  // 번호순 asc, desc 정렬, 날짜순 asc, desc 정렬
+  // asc, desc 정렬
   let sortCondition = {};
-  if (filterPre === "number") {
-    sortCondition = {sleep_number: filterSub};
+  if (filterSub === "asc") {
+    sortCondition = { sleep_day: 1 };
   }
-  else if (filterPre === "day") {
-    sortCondition = {sleep_day: filterSub};
+  else {
+    sortCondition = { sleep_day: -1 };
   }
 
   const totalCount = await Sleep.countDocuments(findQuery);
@@ -50,7 +52,7 @@ export const sleepList = async (
   findResult = await Sleep
     .find(findQuery)
     .sort(sortCondition)
-    .skip((page - 1) * limit)
+    .skip(Math.max(0, (page - 1) * limit))
     .limit(limit);
 
   finalResult = {
@@ -134,7 +136,27 @@ export const sleepDetail = async (
   return findResult;
 };
 
-// 3. sleepInsert --------------------------------------------------------------------------------->
+// 3-1. sleepCheckInsert -------------------------------------------------------------------------->
+export const sleepCheckInsert = async (
+  user_id_param: any,
+  SLEEP_param : any
+) => {
+
+  let findQuery;
+  let findResult;
+  let finalResult;
+
+  findQuery = {
+    user_id: user_id_param,
+    sleep_day: SLEEP_param.sleepDay,
+  };
+
+  findResult = await Sleep.findOne(findQuery);
+
+  return findResult;
+};
+
+// 3-2. sleepInsert ------------------------------------------------------------------------------->
 export const sleepInsert = async (
   user_id_param : any,
   SLEEP_param : any
@@ -150,6 +172,7 @@ export const sleepInsert = async (
     sleep_night: SLEEP_param.sleep_night,
     sleep_morning: SLEEP_param.sleep_morning,
     sleep_time: SLEEP_param.sleep_time,
+    sleep_planYn: SLEEP_param.sleep_planYn,
     sleep_day: SLEEP_param.sleepDay,
     sleep_dur: SLEEP_param.sleep_dur,
     sleep_regdate: SLEEP_param.sleep_regdate,

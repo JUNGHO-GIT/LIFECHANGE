@@ -25,6 +25,6 @@ export const Hover = () => {
   }, []);
 
   return (
-    <></>
+    <React.Fragment></React.Fragment>
   );
 };

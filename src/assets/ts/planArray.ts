@@ -23,7 +23,7 @@ export const planTotalArray = [
   ]},
   // 3
   {plan_part: [
-    "잠"
+    "수면"
   ],
   plan_title: [
     "전체", "취침시간", "기상시간", "수면시간"
@@ -39,7 +39,7 @@ export const planTotalArray = [
 
 // 1-1. planPartAll ------------------------------------------------------------------------------>
 export const planPartAll = [
-  "전체", "음식", "운동", "잠", "돈"
+  "전체", "음식", "운동", "수면", "돈"
 ];
 
 // 1-2. planPartArray ---------------------------------------------------------------------------->
@@ -51,7 +51,7 @@ export const planPartArray = [
   // 2
   {plan_part: ["운동"]},
   // 3
-  {plan_part: ["잠"]},
+  {plan_part: ["수면"]},
   // 4
   {plan_part: ["돈"]},
 ];

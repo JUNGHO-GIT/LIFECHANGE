@@ -24,7 +24,13 @@ export const SleepInsert = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState<any>({});
+  const [SLEEP, setSLEEP] = useState<any>({
+    sleepDay: moment(sleepDay).format("YYYY-MM-DD"),
+    sleep_night: "",
+    sleep_morning: "",
+    sleep_time: "",
+    sleep_planYn: "N",
+  });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -61,15 +67,6 @@ export const SleepInsert = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepInsert = async () => {
     try {
-      if (SLEEP.sleep_night === "") {
-        alert("Please enter a night");
-        return;
-      }
-      else if (SLEEP.sleep_morning === "") {
-        alert("Please enter a morning");
-        return;
-      }
-
       const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
         user_id : user_id,
         SLEEP : SLEEP
@@ -80,8 +77,16 @@ export const SleepInsert = () => {
         alert("Insert a sleep successfully");
         navParam("/sleepList");
       }
+      else if (response.data === "duplicate") {
+        alert("해당 날짜의 수면 데이터가 이미 존재합니다.");
+        return;
+      }
+      else if (response.data === "fail") {
+        alert("Insert a sleep failed");
+        return;
+      }
       else {
-        alert("Insert a sleep failure");
+        alert(`${response.data}error`);
       }
     }
     catch (error:any) {
@@ -122,6 +127,25 @@ export const SleepInsert = () => {
   const tableSleepInsert = () => {
     return (
       <div>
+        <div className="row d-center">
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">계획여부</span>
+              <select
+                id="sleep_planYn"
+                name="sleep_planYn"
+                className="form-select"
+                value={SLEEP.sleep_planYn}
+                onChange={(e) => {
+                  setSLEEP({ ...SLEEP, sleep_planYn: e.target.value });
+                }}
+              >
+                <option value="Y">계획</option>
+                <option value="N" selected>미계획</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div className="row d-center">
           <div className="col-6">
             <div className="input-group">

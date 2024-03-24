@@ -33,6 +33,11 @@ const SleepSchema = new mongoose.Schema ({
     type : String,
     required : true
   },
+  sleep_planYn : {
+    type : String,
+    default : "N",
+    required : true
+  },
 
   // 3. date
   sleep_day : {

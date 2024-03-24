@@ -37,7 +37,25 @@ export const userDetail = async (
   return findResult;
 };
 
-// 3. userInsert ---------------------------------------------------------------------------------->
+// 3-1. userCheckId ------------------------------------------------------------------------------->
+export const userCheckId = async (
+  user_id_param: any
+) => {
+
+  let findQuery;
+  let findResult;
+  let finalResult;
+
+  findQuery = {
+    user_id : user_id_param
+  };
+
+  findResult = await User.findOne(findQuery);
+
+  return findResult;
+};
+
+// 3-2. userInsert -------------------------------------------------------------------------------->
 export const userInsert = async (
   user_id_param: any,
   user_pw_param: any
@@ -58,25 +76,7 @@ export const userInsert = async (
   return createResult;
 };
 
-// 3-1. userCheckId ------------------------------------------------------------------------------->
-export const userCheckId = async (
-  user_id_param: any
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  findQuery = {
-    user_id : user_id_param
-  };
-
-  findResult = await User.findOne(findQuery);
-
-  return findResult;
-};
-
-// 3-2. userCheckIdPw ----------------------------------------------------------------------------->
+// 3-3. userCheckIdPw ----------------------------------------------------------------------------->
 export const userCheckIdPw = async (
   user_id_param: any,
   user_pw_param: any
@@ -96,7 +96,7 @@ export const userCheckIdPw = async (
   return findResult;
 };
 
-// 3-3. userLogin --------------------------------------------------------------------------------->
+// 3-4. userLogin --------------------------------------------------------------------------------->
 export const userLogin = async (
   user_id_param: any,
   user_pw_param: any
