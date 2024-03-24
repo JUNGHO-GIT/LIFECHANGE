@@ -36,7 +36,7 @@ export const listArray = [
     label: "Work",
     items: [
       {to: "/workInsert", label: "WorkInsert"},
-      {to: "/workList", label: "WorkList"},
+      {to: "/workListDay", label: "WorkList"},
     ]
   },
   {

@@ -10,7 +10,10 @@ planRouter.get("/planList", async (req: Request, res: Response) => {
   try {
     const planList = await planService.planList (
       req.query.user_id,
-      req.query.plan_dur
+      req.query.plan_dur,
+      req.query.filter,
+      req.query.plan_part_val,
+      req.query.plan_title_val
     );
     if (planList) {
       res.send(planList);

@@ -283,7 +283,7 @@ export const MoneyListMonth = () => {
     );
   };
 
-  // 6-2. button ---------------------------------------------------------------------------------->
+  // 6-2. select  --------------------------------------------------------------------------------->
   const selectMoneyList = () => {
     const currentPath = location.pathname || "";
     return (

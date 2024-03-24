@@ -80,11 +80,7 @@ import {MoneyListSelect} from "../page/money/MoneyListSelect";
 import {PlanInsert} from "../page/plan/PlanInsert";
 import {PlanDetail} from "../page/plan/PlanDetail";
 import {PlanUpdate} from "../page/plan/PlanUpdate";
-import {PlanListDay} from "../page/plan/PlanListDay";
-import {PlanListSleep} from "../page/plan/PlanListSleep";
-import {PlanListWork} from "../page/plan/PlanListWork";
-import {PlanListFood} from "../page/plan/PlanListFood";
-import {PlanListMoney} from "../page/plan/PlanListMoney";
+import {PlanList} from "../page/plan/PlanList";
 
 import {Test} from "../page/test/Test";
 
@@ -101,6 +97,8 @@ const App = () => {
         <Routes>
 
           <Route path="/" element={<DashList />} />
+          <Route path="/test" element={<Test />} />
+
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail" element={<CalendarDetail />} />
 
@@ -154,13 +152,7 @@ const App = () => {
           <Route path="/planInsert" element={<PlanInsert />} />
           <Route path="/planDetail" element={<PlanDetail />} />
           <Route path="/planUpdate" element={<PlanUpdate />} />
-          <Route path="/planListDay" element={<PlanListDay />} />
-          <Route path="/planListSleep" element={<PlanListSleep />} />
-          <Route path="/planListWork" element={<PlanListWork />} />
-          <Route path="/planListFood" element={<PlanListFood />} />
-          <Route path="/planListMoney" element={<PlanListMoney />} />
-
-          <Route path="/test" element={<Test />} />
+          <Route path="/planList" element={<PlanList />} />
         </Routes>
         <Footer />
       </DeveloperModeProvider>

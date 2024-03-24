@@ -2,33 +2,68 @@
 
 import Plan from "../schema/Plan";
 import * as mongoose from "mongoose";
-import moment from "moment";
 import {planPartAll, planTitleAll} from "../assets/ts/planArray";
 
 // 1-1. planList --------------------------------------------------------------------------------->
 export const planList = async (
   user_id_param: any,
-  plan_dur_param: any
+  plan_dur_param: any,
+  filter_param: any,
+  plan_part_val_param: any,
+  plan_title_val_param: any
 ) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
   const startDay = plan_dur_param.split(` ~ `)[0];
   const endDay = plan_dur_param.split(` ~ `)[1];
 
-  findQuery = {
-    user_id: user_id_param,
-    plan_day: {
-      $gte: startDay,
-      $lte: endDay,
-    }
+  // 페이지와 제한 값을 숫자로 변환
+  const page = parseInt(filter_param.page, 10);
+  const limit = parseInt(filter_param.limit, 10);
+
+  let sortCondition = {};
+  if (filter_param.filterPre === "number") {
+    sortCondition = {"planSection.plan_number": (filter_param.filterSub === "asc" ? 1 : -1)};
+  } else if (filter_param.filterPre === "day") {
+    sortCondition = {plan_day: (filter_param.filterSub === "asc" ? 1 : -1)};
+  }
+
+  // 집계 파이프라인
+  let findQuery = [
+    {$match: {
+      user_id: user_id_param,
+      plan_day: {$gte: startDay, $lte: endDay},
+    }},
+    {$addFields: {
+      planSection: {
+        $filter: {
+          input: "$planSection",
+          as: "section",
+          cond: {$and: [
+            ...(plan_part_val_param !== "전체" ? [{$eq: ["$$section.plan_part_val", plan_part_val_param]}] : []),
+            ...(plan_title_val_param !== "전체" ? [{$eq: ["$$section.plan_title_val", plan_title_val_param]}] : [])
+          ]}
+        }
+      }
+    }},
+    {$match: {"planSection.0": {$exists: true}}}
+  ];
+
+  // 쿼리 실행
+  const planQuery = Plan.aggregate(findQuery).sort(sortCondition);
+  const planCount = Plan.aggregate(findQuery).count("totalCount");
+
+  // 병렬로 실행
+  const [planList, total] = await Promise.all([
+    planQuery.skip((page - 1) * limit).limit(limit).exec(),
+    planCount.exec()
+  ]);
+
+  // totalCount를 추출
+  const totalCount = total.length > 0 ? total[0].totalCount : 0;
+
+  return {
+    totalCount,
+    planList,
   };
-
-  findResult = await Plan.find(findQuery).sort({ plan_day: -1 });
-
-  return findResult;
 };
 
 // 1-2. planAvg ---------------------------------------------------------------------------------->

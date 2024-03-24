@@ -58,7 +58,7 @@ export const SleepDetail = () => {
         });
         if (response.data === "success") {
           alert("Delete success");
-          navParam(`/sleepListDay`);
+          navParam(`/sleepList`);
         }
         else {
           alert("Delete failed");
@@ -129,7 +129,7 @@ export const SleepDetail = () => {
   const buttonSleepList = () => {
     return (
       <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(`/sleepListDay`);
+        navParam(`/sleepList`);
       }}>
         List
       </button>

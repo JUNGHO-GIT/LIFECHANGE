@@ -1,24 +1,26 @@
-// SleepList.tsx
+// PlanList.tsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {DayPicker} from "react-day-picker";
-import {differenceInDays} from "date-fns";
+import {DayClickEventHandler, DayPicker} from "react-day-picker";
+import {useStorage} from "../../assets/ts/useStorage";
 import {ko} from "date-fns/locale";
+import {differenceInDays} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
+import {planPartArray, planTitleArray} from "./PlanArray";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepList = () => {
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+export const PlanList = () => {
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const [planNumber, setPlanNumber] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [type, setType] = useState({
     typePre: "day",
@@ -32,74 +34,54 @@ export const SleepList = () => {
   });
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
-    `sleepList(${type.typePre})`, []
+  const {val:PLAN_LIST, setVal:setPLAN_LIST} = useStorage<any>(
+    `planList(${type.typePre})`, []
   );
-  const {val:SLEEP_PLAN, setVal:setSLEEP_PLAN} = useStorage<any>(
-    `sleepPlan(${type.typePre})`, []
+  const {val:planResDur, setVal:setPlanResDur} = useStorage<string>(
+    `planResDur(${type.typePre})`, "0000-00-00 ~ 0000-00-00"
   );
-  const {val:SLEEP_AVERAGE, setVal:setSLEEP_AVERAGE} = useStorage<any>(
-    `sleepAvg(${type.typePre})`, []
+  const {val:planStartDay, setVal:setPlanStartDay} = useStorage<Date | undefined>(
+    "planStartDay(${type.typePre})", undefined
   );
-  const {val:sleepResDur, setVal:setSleepResDur} = useStorage<string>(
-    `sleepResDur(${type.typePre})`, "0000-00-00 ~ 0000-00-00"
+  const {val:planEndDay, setVal:setPlanEndDay} = useStorage<Date | undefined>(
+    "planEndDay(${type.typePre})", undefined
   );
-  const {val:sleepStartDay, setVal:setSleepStartDay} = useStorage<Date | undefined>(
-    "sleepStartDay(${type.typePre})", undefined
+  const {val:planDay, setVal:setPlanDay} = useStorage<Date | undefined>(
+    `planDay(${type.typePre})`, koreanDate
   );
-  const {val:sleepEndDay, setVal:setSleepEndDay} = useStorage<Date | undefined>(
-    "sleepEndDay(${type.typePre})", undefined
+  const {val:planPart, setVal:setPlanPart} = useStorage<string>(
+    "planPart(DAY)", "전체"
   );
-  const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined>(
-    `sleepDay(${type.typePre})`, koreanDate
+  const {val:planTitle, setVal:setPlanTitle} = useStorage<string>(
+    "planTitle(DAY)", "전체"
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
     // 1. list
-    const fetchSleepList = async () => {
+    const fetchPlanList = async () => {
       try {
-        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
+        const response = await axios.get(`${URL_PLAN}/planList`, {
           params: {
             user_id : user_id,
-            sleep_dur : sleepResDur,
-            type : type,
+            plan_dur : planResDur,
             filter : filter,
+            plan_part_val : planPart,
+            plan_title_val : planTitle,
           },
         });
-        setSLEEP_LIST(response.data.sleepList);
+        setPLAN_LIST(response.data.planList);
         setTotalCount(response.data.totalCount);
-        log("SLEEP_LIST : " + JSON.stringify(response.data));
+        log("PLAN_LIST " + JSON.stringify(response.data));
       }
       catch (error:any) {
-        setSLEEP_LIST([]);
-        alert(`Error fetching sleep data: ${error.message}`);
+        setPLAN_LIST([]);
+        alert(`Error fetching plan data: ${error.message}`);
       }
     };
-    fetchSleepList();
-
-    // 3. average
-    const fetchSleepAvg = async () => {
-      try {
-        const response = await axios.get (`${URL_SLEEP}/sleepAvg`, {
-          params: {
-            user_id : user_id,
-            sleep_dur : sleepResDur,
-            filter : filter,
-          },
-        });
-        setSLEEP_AVERAGE(response.data);
-        log("SLEEP_AVERAGE : " + JSON.stringify(response.data));
-      }
-      catch (error:any) {
-        setSLEEP_AVERAGE([]);
-        alert(`Error fetching sleep data: ${error.message}`);
-      }
-    };
-    fetchSleepAvg();
-
-  }, [user_id, sleepResDur, type, filter]);
+    fetchPlanList();
+  }, [user_id, planResDur, planPart, planTitle, type, filter]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   const formatVal = (value:any) => {
@@ -116,20 +98,20 @@ export const SleepList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (sleepDay) {
+    if (planDay) {
       let result = "";
-      const year = sleepDay?.getFullYear();
-      const month = formatVal(sleepDay.getMonth() + 1);
+      const year = planDay?.getFullYear();
+      const month = formatVal(planDay.getMonth() + 1);
       switch (type.typePre) {
         case "day":
-          const date = formatVal(sleepDay.getDate());
+          const date = formatVal(planDay.getDate());
           result = `${year}-${month}-${date} ~ ${year}-${month}-${date}`;
           break;
         case "week":
-          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
+          result = getStartAndEndDate(planStartDay, planEndDay);
           break;
         case "select":
-          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
+          result = getStartAndEndDate(planStartDay, planEndDay);
           break;
         case "month":
           result = `${year}-${month}-01 ~ ${year}-${month}-31`;
@@ -138,12 +120,12 @@ export const SleepList = () => {
           result = `${year}-01-01 ~ ${year}-12-31`;
           break;
       }
-      setSleepResDur(result);
+      setPlanResDur(result);
     }
-  }, [type, sleepStartDay, sleepEndDay, sleepDay]);
+  }, [type, planStartDay, planEndDay, planDay]);
 
   // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewSleepList = () => {
+  const viewPlanList = () => {
 
     const formatVal = (value:number):string => {
       return value < 10 ? `0${value}` : `${value}`;
@@ -152,7 +134,7 @@ export const SleepList = () => {
       case "day":
         const handleDay = (day:any) => {
           const newDay = new Date(day);
-          setSleepDay(newDay);
+          setPlanDay(newDay);
         };
         return (
           <DayPicker
@@ -166,18 +148,18 @@ export const SleepList = () => {
             inside: "inside",
           }}
           mode="single"
-          selected={sleepDay}
-          month={sleepDay}
+          selected={planDay}
+          month={planDay}
           onDayClick={handleDay}
-          onMonthChange={(month) => setSleepDay(month)} />
+          onMonthChange={(month) => setPlanDay(month)} />
         );
       case "week":
         const handleWeek = (day:any) => {
           const selectedDay = new Date(day);
           const startOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() - selectedDay.getDay() + 1));
           const endOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() + (7 - selectedDay.getDay())));
-          setSleepStartDay(startOfWeek);
-          setSleepEndDay(endOfWeek);
+          setPlanStartDay(startOfWeek);
+          setPlanEndDay(endOfWeek);
         };
         return (
           <DayPicker
@@ -191,14 +173,14 @@ export const SleepList = () => {
             inside: "inside",
           }}
           mode="range"
-          selected={sleepStartDay && sleepEndDay && {from: sleepStartDay, to: sleepEndDay}}
-          month={sleepStartDay}
+          selected={planStartDay && planEndDay && {from: planStartDay, to: planEndDay}}
+          month={planStartDay}
           onDayClick={handleWeek}
-          onMonthChange={(month) => { setSleepStartDay(month); setSleepEndDay(undefined); }} />
+          onMonthChange={(month) => { setPlanStartDay(month); setPlanEndDay(undefined); }} />
         );
       case "month":
         const handleMonth = (month:any) => {
-          setSleepResDur(`${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-01 ~ ${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-31`);
+          setPlanResDur(`${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-01 ~ ${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-31`);
         };
         return (
           <DayPicker
@@ -212,7 +194,7 @@ export const SleepList = () => {
             inside: "inside",
           }}
           mode="default"
-          month={new Date(sleepResDur.split(" ~ ")[0])}
+          month={new Date(planResDur.split(" ~ ")[0])}
           onMonthChange={handleMonth} />
         );
       case "year":
@@ -222,10 +204,10 @@ export const SleepList = () => {
           const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
           const prevMonth = differenceInDays(monthDate, yearDate) / 30;
           if (nextMonth > prevMonth) {
-            setSleepResDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
+            setPlanResDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
           }
           else {
-            setSleepResDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
+            setPlanResDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
           }
         };
         return (
@@ -240,40 +222,40 @@ export const SleepList = () => {
             inside: "inside",
           }}
           mode="default"
-          month={new Date(sleepResDur.split(" ~ ")[0])}
+          month={new Date(planResDur.split(" ~ ")[0])}
           onMonthChange={handleYear} />
         );
       case "select":
         const handleSelect = (day:any) => {
           const selectedDay = new Date(day);
 
-          if (sleepStartDay && sleepEndDay) {
-            if (selectedDay < sleepStartDay) {
-              setSleepStartDay(selectedDay);
+          if (planStartDay && planEndDay) {
+            if (selectedDay < planStartDay) {
+              setPlanStartDay(selectedDay);
             }
-            else if (selectedDay > sleepEndDay) {
-              setSleepEndDay(selectedDay);
+            else if (selectedDay > planEndDay) {
+              setPlanEndDay(selectedDay);
             }
             else {
-              setSleepStartDay(selectedDay);
-              setSleepEndDay(undefined);
+              setPlanStartDay(selectedDay);
+              setPlanEndDay(undefined);
             }
           }
-          else if (sleepStartDay) {
-            if (selectedDay < sleepStartDay) {
-              setSleepEndDay(sleepStartDay);
-              setSleepStartDay(selectedDay);
+          else if (planStartDay) {
+            if (selectedDay < planStartDay) {
+              setPlanEndDay(planStartDay);
+              setPlanStartDay(selectedDay);
             }
-            else if (selectedDay > sleepStartDay) {
-              setSleepEndDay(selectedDay);
+            else if (selectedDay > planStartDay) {
+              setPlanEndDay(selectedDay);
             }
             else {
-              setSleepStartDay(undefined);
-              setSleepEndDay(undefined);
+              setPlanStartDay(undefined);
+              setPlanEndDay(undefined);
             }
           }
           else {
-            setSleepStartDay(selectedDay);
+            setPlanStartDay(selectedDay);
           }
         }
         return (
@@ -288,10 +270,10 @@ export const SleepList = () => {
             inside: "inside",
           }}
           mode="range"
-          selected={sleepStartDay && sleepEndDay && {from: sleepStartDay, to: sleepEndDay}}
-          month={sleepStartDay}
+          selected={planStartDay && planEndDay && {from: planStartDay, to: planEndDay}}
+          month={planStartDay}
           onDayClick={handleSelect}
-          onMonthChange={(month) => { setSleepStartDay(month); setSleepEndDay(undefined); }} />
+          onMonthChange={(month) => { setPlanStartDay(month); setPlanEndDay(undefined); }} />
         );
       default:
         return null;
@@ -346,126 +328,80 @@ export const SleepList = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableSleepList = () => {
-
-    const successOrNotGoal = (goal: string, real: string) => {
-      // 목표 시간과 실제 시간을 Date 객체로 변환
-      const goalDate = new Date(`2024-01-01T${goal}:00.000Z`);
-      const realDate = new Date(`2024-01-01T${real}:00.000Z`);
-
-      // 시간 차이 계산 (밀리초 단위)
-      const diff = Math.abs(realDate.getTime() - goalDate.getTime());
-
-      // 시간 차이를 분 단위로 변환
-      const diffMinutes = Math.floor(diff / 60000);
-
-      let textColor = "text-muted";
-      if (diffMinutes <= 10) {
-        textColor = "text-primary";
-      }
-      else if (diffMinutes <= 20) {
-        textColor = "text-success";
-      }
-      else if (diffMinutes <= 30) {
-        textColor = "text-warning";
-      }
-      else if (diffMinutes <= 40) {
-        textColor = "text-danger";
-      }
-
-      return textColor;
-    };
-
+  const tablePlanList = () => {
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
           <tr>
-            <th>날짜</th>
-            <th>분류</th>
-            <th>목표</th>
-            <th>실제</th>
-            <th></th>
+            <th>Part</th>
+            <th>Title</th>
+            <th>Content</th>
           </tr>
         </thead>
         <tbody>
-          {SLEEP_LIST.map((item:any) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td rowSpan={4} className="pointer" onClick={() => {
-                  navParam("/sleepDetail", {
-                    state: {_id: item._id}
-                  });
-                }}>
-                  {item.sleep_day}
+          {PLAN_LIST?.map((planItem : any) => {
+            return planItem.planSection?.map((planSection: any) => (
+              <tr key={planSection._id}>
+                <td
+                  className="pointer"
+                  onClick={() => {
+                    navParam("/planDetail", {
+                      state: {
+                        _id : planItem._id,
+                        planSection_id : planSection._id
+                      },
+                    });
+                  }}>
+                  {planSection.plan_part_val}
                 </td>
+                <td>{planSection.plan_title_val}</td>
+                <td>{planSection.plan_content}</td>
               </tr>
-              <tr>
-                <td>취침</td>
-                <td>{item.sleep_night}</td>
-                <td>{item.sleep_night}</td>
-                <td>
-                  <div className={`${successOrNotGoal(item.sleep_night, item.sleep_night)}`}>
-                    ●
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>기상</td>
-                <td>{item.sleep_morning}</td>
-                <td>{item.sleep_morning}</td>
-                <td>
-                  <div className={`${successOrNotGoal(item.sleep_morning, item.sleep_morning)}`}>
-                    ●
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>수면</td>
-                <td>{item.sleep_time}</td>
-                <td>{item.sleep_time}</td>
-                <td>
-                  <div className={`${successOrNotGoal(item.sleep_time, item.sleep_time)}`}>
-                    ●
-                  </div>
-                </td>
-              </tr>
-            </React.Fragment>
-          ))}
+            ));
+          })}
         </tbody>
       </table>
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
-  const buttonSleepToday = () => {
+  // 6-1. button ---------------------------------------------------------------------------------->
+  const buttonPlanToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setSleepDay(koreanDate);
-        localStorage.removeItem(`sleepList(${type.typePre})`);
-        localStorage.removeItem(`sleepStartDay(${type.typePre})`);
-        localStorage.removeItem(`sleepEndDay(${type.typePre})`);
-        localStorage.removeItem(`sleepDay(${type.typePre})`);
+        setPlanDay(koreanDate);
+        setPlanPart("전체");
+        setPlanTitle("전체");
+        localStorage.removeItem(`planList(${type.typePre})`);
+        localStorage.removeItem(`planStartDay(${type.typePre})`);
+        localStorage.removeItem(`planEndDay(${type.typePre})`);
+        localStorage.removeItem(`planDay(${type.typePre})`);
+        localStorage.removeItem(`planPart(${type.typePre})`);
+        localStorage.removeItem(`planTitle(${type.typePre})`);
       }}>
         Today
       </button>
     );
   };
-  const buttonSleepReset = () => {
+  const buttonPlanReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setSleepDay(koreanDate);
-        localStorage.removeItem(`sleepList(${type.typePre})`);
-        localStorage.removeItem(`sleepStartDay(${type.typePre})`);
-        localStorage.removeItem(`sleepEndDay(${type.typePre})`);
-        localStorage.removeItem(`sleepDay(${type.typePre})`);
+        setPlanDay(koreanDate);
+        setPlanPart("전체");
+        setPlanTitle("전체");
+        localStorage.removeItem(`planList(${type.typePre})`);
+        localStorage.removeItem(`planStartDay(${type.typePre})`);
+        localStorage.removeItem(`planEndDay(${type.typePre})`);
+        localStorage.removeItem(`planDay(${type.typePre})`);
+        localStorage.removeItem(`planPart(${type.typePre})`);
+        localStorage.removeItem(`planTitle(${type.typePre})`);
       }}>
         Reset
       </button>
     );
   };
 
-  // 6-2. select ---------------------------------------------------------------------------------->
-  const selectSleepList = () => {
+  // 6-2. select  --------------------------------------------------------------------------------->
+  const selectPlanList = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="typePre" onChange={(e:any) => {
@@ -494,27 +430,80 @@ export const SleepList = () => {
       </div>
     );
   };
+  const selectPlanPart = () => {
+    return (
+      <div className="mb-3">
+        <div className="input-group">
+          <span className="input-group-text">파트</span>
+          <select
+            className="form-control"
+            id={`plan_part_val`}
+            value={planPart}
+            onChange={(e:any) => {
+              setPlanPart(e.target.value);
+              const index = planPartArray.findIndex(
+                (item) => item.plan_part[0] === e.target.value
+              );
+              setPlanTitle("전체");
+              setPlanNumber(index);
+            }}>
+            {planPartArray.map((value, key) => (
+              <option key={key} value={value.plan_part[0]}>
+                {value.plan_part[0]}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+    );
+  }
+  const selectPlanTitle = () => {
+    return (
+      <div className="mb-3">
+        <div className="input-group">
+          <span className="input-group-text">종목</span>
+          <select
+            className="form-control"
+            id={`plan_title_val`}
+            value={planTitle}
+            onChange={(e:any) => {
+              setPlanTitle(e.target.value);
+            }}>
+            {planTitleArray[planNumber].plan_title.map((value, key) => (
+              <option key={key} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+    );
+  };
   const selectFilterSub = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="sleepListSortOrder" onChange={(e) => {
-          setFilter({...filter, filterSub: e.target.value});
-        }}>
-          <option value="asc" selected>오름차순</option>
-          <option value="desc">내림차순</option>
-        </select>
+        <div className="input-group">
+          <select className="form-select" id="planListSortOrder" onChange={(e) => {
+            setFilter({...filter, filterSub: e.target.value});
+          }}>
+            <option value="asc" selected>오름차순</option>
+            <option value="desc">내림차순</option>
+          </select>
+        </div>
       </div>
     );
   };
   const selectFilterPage = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="sleepListLimit" onChange={(e) => {
-          setFilter({...filter, limit: Number(e.target.value)});
-        }}>
-          <option value="5" selected>5</option>
-          <option value="10">10</option>
-        </select>
+        <div className="input-group">
+          <select className="form-select" id="planListLimit" onChange={(e) => {
+            setFilter({...filter, limit: Number(e.target.value)});
+          }}>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
       </div>
     );
   };
@@ -525,23 +514,29 @@ export const SleepList = () => {
       <div className="container-wrapper">
         <div className="row d-center mt-3">
           <div className="col-4">
-            {viewSleepList()}
+            {viewPlanList()}
           </div>
           <div className="col-8">
             <div className="row d-center mb-20">
-              <div className="col-3">
-                {selectSleepList()}
+              <div className="col-2">
+                {selectPlanList()}
               </div>
-              <div className="col-3">
+              <div className="col-2">
+                {selectPlanPart()}
+              </div>
+              <div className="col-2">
+                {selectPlanTitle()}
+              </div>
+              <div className="col-2">
                 {selectFilterSub()}
               </div>
-              <div className="col-3">
+              <div className="col-2">
                 {selectFilterPage()}
               </div>
             </div>
             <div className="row">
               <div className="col-12">
-                {tableSleepList()}
+                {tablePlanList()}
                 {filterBox()}
               </div>
             </div>
@@ -549,8 +544,8 @@ export const SleepList = () => {
         </div>
         <div className="row mt-20 mb-20">
           <div className="col-12 d-center">
-            {buttonSleepToday()}
-            {buttonSleepReset()}
+            {buttonPlanToday()}
+            {buttonPlanReset()}
           </div>
         </div>
       </div>

@@ -27,7 +27,7 @@ export const CalendarDetail = () => {
     "foodListDay", []
   );
   const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any> (
-    "sleepListDay", []
+    "sleepList", []
   );
   const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage<any> (
     "workListDay", []

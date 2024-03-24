@@ -42,7 +42,7 @@ const PlanSchema = new mongoose.Schema ({
       type : String,
       required : true
     },
-    plan_yn : {
+    plan_successYn : {
       type : Boolean,
       default : false,
       required : true

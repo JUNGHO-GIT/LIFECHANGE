@@ -8,10 +8,10 @@ import axios from "axios";
 import moment from "moment-timezone";
 import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
+import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepInsert = () => {
-  const TITLE = "Sleep Insert";
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
@@ -78,7 +78,7 @@ export const SleepInsert = () => {
 
       if (response.data === "success") {
         alert("Insert a sleep successfully");
-        navParam("/sleepListDay");
+        navParam("/sleepList");
       }
       else {
         alert("Insert a sleep failure");
@@ -100,8 +100,8 @@ export const SleepInsert = () => {
     };
     return (
       <div className="d-inline-flex">
-        <div className="black mt-4 me-5 pointer" onClick={() => calcDate(-1)}>
-          &#8592;
+        <div onClick={() => calcDate(-1)}>
+          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
         </div>
         <DatePicker
           dateFormat="yyyy-MM-dd"
@@ -111,8 +111,8 @@ export const SleepInsert = () => {
             setSleepDay(date);
           }}
         />
-        <div className="black mt-4 ms-5 pointer" onClick={() => calcDate(1)}>
-          &#8594;
+        <div onClick={() => calcDate(1)}>
+          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
         </div>
       </div>
     );
@@ -123,45 +123,9 @@ export const SleepInsert = () => {
     return (
       <div>
         <div className="row d-center">
-          <div className="col-5">
+          <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">ID</span>
-              <input
-                type="text"
-                className="form-control"
-                id="user_id"
-                name="user_id"
-                placeholder="ID"
-                value={user_id ? user_id : ""}
-                readOnly
-                onChange={(e:any) => {
-                  setSLEEP({ ...SLEEP, user_id: e.target.value });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">Day</span>
-              <input
-                readOnly
-                type="text"
-                className="form-control"
-                id="sleepDay"
-                name="sleepDay"
-                placeholder="Day"
-                value={SLEEP?.sleepDay}
-                onChange={(e:any) => {
-                  setSleepDay(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">Night</span>
+              <span className="input-group-text">취침시간</span>
               <TimePicker
                 id="sleep_night"
                 name="sleep_night"
@@ -177,9 +141,11 @@ export const SleepInsert = () => {
               />
             </div>
           </div>
-          <div className="col-5">
+        </div>
+        <div className="row d-center mt-3">
+          <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">Morning</span>
+              <span className="input-group-text">기상시간</span>
               <TimePicker
                 id="sleep_morning"
                 name="sleep_morning"
@@ -192,6 +158,24 @@ export const SleepInsert = () => {
                 onChange={(e:any) => {
                   setSLEEP({ ...SLEEP, sleep_morning: e });
                 }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row d-center mt-3">
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">수면시간</span>
+              <TimePicker
+                id="sleep_time"
+                name="sleep_time"
+                className="form-control"
+                value={SLEEP.sleep_time}
+                disableClock={true}
+                clockIcon={null}
+                format="HH:mm"
+                locale="ko"
+                disabled
               />
             </div>
           </div>
@@ -222,25 +206,20 @@ export const SleepInsert = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            <h1 className="mb-3 fw-5">
+              <span>{viewSleepDay()}</span>
+            </h1>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-5">
-            <span>{viewSleepDay()}</span>
-          </h1>
-        </div>
-      </div>
-      <div className="row d-center mt-5 mb-20">
-        <div className="col-12">
-          {tableSleepInsert()}
-          <br />
-          {buttonSleepInsert()}
-          {buttonRefreshPage()}
-        </div>
+        <div className="row d-center mt-5 mb-20">
+          <div className="col-12">
+            {tableSleepInsert()}
+            <br />
+            {buttonSleepInsert()}
+            {buttonRefreshPage()}
+          </div>
         </div>
       </div>
     </div>

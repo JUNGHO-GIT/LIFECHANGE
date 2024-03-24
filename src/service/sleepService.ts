@@ -11,6 +11,10 @@ export const sleepList = async (
   filter_param: any,
 ) => {
 
+  let findQuery;
+  let findResult;
+  let finalResult;
+
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
 
@@ -23,7 +27,7 @@ export const sleepList = async (
   // asc, desc
   let filterSub = filter_param.filterSub;
 
-  const findQuery = {
+  findQuery = {
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
@@ -43,13 +47,13 @@ export const sleepList = async (
   const totalCount = await Sleep.countDocuments(findQuery);
 
   // .find()에 정렬, 페이징 처리 추가
-  const findResult = await Sleep
-  .find(findQuery)
-  .sort(sortCondition)
-  .skip((page - 1) * limit)
-  .limit(limit);
+  findResult = await Sleep
+    .find(findQuery)
+    .sort(sortCondition)
+    .skip((page - 1) * limit)
+    .limit(limit);
 
-  let finalResult = {
+  finalResult = {
     totalCount: totalCount,
     sleepList: findResult,
   };
