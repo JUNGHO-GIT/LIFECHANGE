@@ -25,7 +25,7 @@ import {Header} from "../layout/Header";
 import {Footer} from "../layout/Footer";
 import {Hover} from "../components/Hover";
 
-import {DashboardList} from "../page/dashboard/Dashboard";
+import {DashList} from "../page/dash/Dash";
 
 import {UserLogin} from "../page/user/UserLogin";
 import {UserInsert} from "../page/user/UserInsert";
@@ -65,6 +65,7 @@ import {WorkListSelect} from "../page/work/WorkListSelect";
 import {SleepInsert} from "../page/sleep/SleepInsert";
 import {SleepDetail} from "../page/sleep/SleepDetail";
 import {SleepUpdate} from "../page/sleep/SleepUpdate";
+import {SleepDash} from "../page/sleep/SleepDash";
 import {SleepList} from "../page/sleep/SleepList";
 
 import {MoneyInsert} from "../page/money/MoneyInsert";
@@ -99,7 +100,7 @@ const App = () => {
         <Header />
         <Routes>
 
-          <Route path="/" element={<DashboardList />} />
+          <Route path="/" element={<DashList />} />
           <Route path="/calendarList" element={<CalendarList />} />
           <Route path="/calendarDetail" element={<CalendarDetail />} />
 
@@ -138,6 +139,7 @@ const App = () => {
           <Route path="/sleepInsert" element={<SleepInsert />} />
           <Route path="/sleepDetail" element={<SleepDetail />} />
           <Route path="/sleepUpdate" element={<SleepUpdate />} />
+          <Route path="/sleepDash" element={<SleepDash />} />
           <Route path="/sleepList" element={<SleepList />} />
 
           <Route path="/moneyInsert" element={<MoneyInsert />} />

@@ -42,6 +42,7 @@ export const listArray = [
   {
     label: "Sleep",
     items: [
+      {to: "/sleepDash", label: "SleepDash"},
       {to: "/sleepInsert", label: "SleepInsert"},
       {to: "/sleepList", label: "SleepList"}
     ]

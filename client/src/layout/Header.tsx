@@ -73,16 +73,37 @@ export const Header = () => {
   const Navbar = () => {
     let preFix;
     let subFix = isActive.split("/")[1];
+    let lowFix: string;
 
     listArray.forEach((menu) => {
       if (isActive.includes(menu.label.toLowerCase())) {
         preFix = menu.label;
+        lowFix = preFix.toLowerCase()
       }
     });
 
     return (
-      <div className="text-start">
-        <h1 className="fs-30 fw-500 ps-30">{preFix} / {subFix}</h1>
+      <div className="d-flex justify-content-between align-items-center">
+        <div className="text-start">
+          <h1 className="fs-30 fw-500 ps-30">{preFix} / {subFix}</h1>
+        </div>
+        <div className="text-end">
+          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
+            navParam(`/${lowFix}Dash`);
+          }}>
+            Dash
+          </button>
+          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
+            navParam(`/${lowFix}Insert`);
+          }}>
+            Insert
+          </button>
+          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
+            navParam(`/${lowFix}List`);
+          }}>
+            List
+          </button>
+        </div>
       </div>
     );
   };

@@ -1,4 +1,4 @@
-// DashboardList.tsx
+// DashList.tsx
 
 import React from "react";
 import {useNavigate} from "react-router-dom";
@@ -9,15 +9,15 @@ import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
-export const DashboardList = () => {
-  const TITLE = "Dashboard List";
+export const DashList = () => {
+  const TITLE = "Dash List";
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:dashboardDay, setVal:setDashboardDay} = useStorage<Date | undefined>(
+  const {val:dashboardDay, setVal:setDashDay} = useStorage<Date | undefined>(
     "dashboardDay(DAY)", undefined
   );
 
@@ -28,7 +28,7 @@ export const DashboardList = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick = (day:Date) => {
     const clickDate = moment(day).format("YYYY-MM-DD").toString();
-    setDashboardDay(day);
+    setDashDay(day);
     navParam(`/calendarDetail`, {
       state: {
         user_id: user_id,
@@ -38,7 +38,7 @@ export const DashboardList = () => {
   };
 
   // 4-1. view ------------------------------------------------------------------------------------>
-  const viewDashboardDay = () => {
+  const viewDashDay = () => {
     return (
       <DayPicker
         mode="single"
@@ -48,7 +48,7 @@ export const DashboardList = () => {
         locale={ko}
         weekStartsOn={1}
         onDayClick={flowDayClick}
-        onMonthChange={month => setDashboardDay(month)}
+        onMonthChange={month => setDashDay(month)}
         modifiersClassNames={{
           selected: "selected",
           disabled: "disabled",
@@ -62,20 +62,20 @@ export const DashboardList = () => {
   // 5. table ------------------------------------------------------------------------------------->
 
   // 6. button ------------------------------------------------------------------------------------>
-  const buttonDashboardToday = () => {
+  const buttonDashToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setDashboardDay(koreanDate);
+        setDashDay(koreanDate);
         localStorage.removeItem("dashboardDay(DAY)");
       }}>
         Today
       </button>
     );
   };
-  const buttonDashboardReset = () => {
+  const buttonDashReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setDashboardDay(koreanDate);
+        setDashDay(koreanDate);
         localStorage.removeItem("dashboardDay(DAY)");
       }}>
         Reset
@@ -98,13 +98,13 @@ export const DashboardList = () => {
               </div>
               <div className="row d-center mt-3">
                 <div className="col-md-6 col-12 d-center">
-                  {viewDashboardDay()}
+                  {viewDashDay()}
                 </div>
               </div>
               <div className="row mb-20">
                 <div className="col-12 d-center">
-                  {buttonDashboardToday()}
-                  {buttonDashboardReset()}
+                  {buttonDashToday()}
+                  {buttonDashReset()}
                 </div>
               </div>
             </div>
@@ -121,13 +121,13 @@ export const DashboardList = () => {
               </div>
               <div className="row d-center mt-3">
                 <div className="col-md-6 col-12 d-center">
-                  {viewDashboardDay()}
+                  {viewDashDay()}
                 </div>
               </div>
               <div className="row mb-20">
                 <div className="col-12 d-center">
-                  {buttonDashboardToday()}
-                  {buttonDashboardReset()}
+                  {buttonDashToday()}
+                  {buttonDashReset()}
                 </div>
               </div>
             </div>
@@ -142,13 +142,13 @@ export const DashboardList = () => {
               </div>
               <div className="row d-center mt-3">
                 <div className="col-md-6 col-12 d-center">
-                  {viewDashboardDay()}
+                  {viewDashDay()}
                 </div>
               </div>
               <div className="row mb-20">
                 <div className="col-12 d-center">
-                  {buttonDashboardToday()}
-                  {buttonDashboardReset()}
+                  {buttonDashToday()}
+                  {buttonDashReset()}
                 </div>
               </div>
             </div>

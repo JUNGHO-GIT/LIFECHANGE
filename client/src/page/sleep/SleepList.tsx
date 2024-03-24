@@ -99,50 +99,44 @@ export const SleepList = () => {
   }, [user_id, sleepResDur, type, filter]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
+  const formatVal = (value:any) => {
+    return value < 10 ? `0${value}` : `${value}`;
+  };
+
+  const getFormattedDate = (date:any) => {
+    return `${date.getFullYear()}-${formatVal(date.getMonth() + 1)}-${formatVal(date.getDate())}`;
+  };
+
+  const getStartAndEndDate = (startDay:any, endDay:any) => {
+    return `${getFormattedDate(new Date(startDay))} ~ ${getFormattedDate(new Date(endDay))}`;
+  };
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-
-    const formatVal = (value:number):string => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-
-    {/** day **/}
-    if (sleepDay && type.typePre === "day") {
-      const year = sleepDay.getFullYear();
+    if (sleepDay) {
+      let result = "";
+      const year = sleepDay?.getFullYear();
       const month = formatVal(sleepDay.getMonth() + 1);
-      const date = formatVal(sleepDay.getDate());
-      setSleepResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+      switch (type.typePre) {
+        case "day":
+          const date = formatVal(sleepDay.getDate());
+          result = `${year}-${month}-${date} ~ ${year}-${month}-${date}`;
+          break;
+        case "week":
+          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
+          break;
+        case "select":
+          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
+          break;
+        case "month":
+          result = `${year}-${month}-01 ~ ${year}-${month}-31`;
+          break;
+        case "year":
+          result = `${year}-01-01 ~ ${year}-12-31`;
+          break;
+      }
+      setSleepResDur(result);
     }
-
-    {/** week **/}
-    if (sleepDay && sleepStartDay && sleepEndDay && type.typePre === "week") {
-      const fromDate = new Date(sleepStartDay);
-      const toDate = new Date(sleepEndDay);
-      setSleepResDur (
-        `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
-      );
-    }
-
-    {/** month **/}
-    if (sleepDay && type.typePre === "month") {
-      setSleepResDur (
-        `${sleepDay.getFullYear()}-${formatVal(sleepDay.getMonth() + 1)}-01 ~ ${sleepDay.getFullYear()}-${formatVal(sleepDay.getMonth() + 1)}-31`
-      );
-    }
-
-    {/** year **/}
-    if (sleepDay && type.typePre === "year") {
-      setSleepResDur(`${sleepDay.getFullYear()}-01-01 ~ ${sleepDay.getFullYear()}-12-31`);
-    }
-
-    {/** select **/}
-    if (sleepDay && sleepStartDay && sleepEndDay && type.typePre === "select") {
-      const fromDate = new Date(sleepStartDay);
-      const toDate = new Date(sleepEndDay);
-      setSleepResDur (
-        `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
-      );
-    }
-
   }, [type, sleepStartDay, sleepEndDay, sleepDay]);
 
   // 4-1. logic ----------------------------------------------------------------------------------->
@@ -151,77 +145,12 @@ export const SleepList = () => {
     const formatVal = (value:number):string => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-
-    {/** day **/}
-    const handleDay = (day:any) => {
-      const newDay = new Date(day);
-      setSleepDay(newDay);
-    };
-
-    {/** week **/}
-    const handleWeek = (day:any) => {
-      const selectedDay = new Date(day);
-      const startOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() - selectedDay.getDay() + 1));
-      const endOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() + (7 - selectedDay.getDay())));
-      setSleepStartDay(startOfWeek);
-      setSleepEndDay(endOfWeek);
-    };
-
-    {/** month **/}
-    const handleMonth = (month:any) => {
-      setSleepResDur(`${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-01 ~ ${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-31`);
-    };
-
-    {/** year **/}
-    const handleYear = (year:any) => {
-      const yearDate = new Date(year.getFullYear(), 0, 1);
-      const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
-      const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
-      const prevMonth = differenceInDays(monthDate, yearDate) / 30;
-      if (nextMonth > prevMonth) {
-        setSleepResDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
-      }
-      else {
-        setSleepResDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
-      }
-    };
-
-    {/** select **/}
-    const handleSelect = (day:any) => {
-      const selectedDay = new Date(day);
-
-      if (sleepStartDay && sleepEndDay) {
-        if (selectedDay < sleepStartDay) {
-          setSleepStartDay(selectedDay);
-        }
-        else if (selectedDay > sleepEndDay) {
-          setSleepEndDay(selectedDay);
-        }
-        else {
-          setSleepStartDay(selectedDay);
-          setSleepEndDay(undefined);
-        }
-      }
-      else if (sleepStartDay) {
-        if (selectedDay < sleepStartDay) {
-          setSleepEndDay(sleepStartDay);
-          setSleepStartDay(selectedDay);
-        }
-        else if (selectedDay > sleepStartDay) {
-          setSleepEndDay(selectedDay);
-        }
-        else {
-          setSleepStartDay(undefined);
-          setSleepEndDay(undefined);
-        }
-      }
-      else {
-        setSleepStartDay(selectedDay);
-      }
-    }
-
     switch (type.typePre) {
       case "day":
+        const handleDay = (day:any) => {
+          const newDay = new Date(day);
+          setSleepDay(newDay);
+        };
         return (
           <DayPicker
           showOutsideDays={true}
@@ -240,6 +169,13 @@ export const SleepList = () => {
           onMonthChange={(month) => setSleepDay(month)} />
         );
       case "week":
+        const handleWeek = (day:any) => {
+          const selectedDay = new Date(day);
+          const startOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() - selectedDay.getDay() + 1));
+          const endOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() + (7 - selectedDay.getDay())));
+          setSleepStartDay(startOfWeek);
+          setSleepEndDay(endOfWeek);
+        };
         return (
           <DayPicker
           showOutsideDays={true}
@@ -258,8 +194,11 @@ export const SleepList = () => {
           onMonthChange={(month) => { setSleepStartDay(month); setSleepEndDay(undefined); }} />
         );
       case "month":
+        const handleMonth = (month:any) => {
+          setSleepResDur(`${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-01 ~ ${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-31`);
+        };
         return (
-            <DayPicker
+          <DayPicker
           showOutsideDays={true}
           locale={ko}
           weekStartsOn={1}
@@ -274,6 +213,18 @@ export const SleepList = () => {
           onMonthChange={handleMonth} />
         );
       case "year":
+        const handleYear = (year:any) => {
+          const yearDate = new Date(year.getFullYear(), 0, 1);
+          const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
+          const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
+          const prevMonth = differenceInDays(monthDate, yearDate) / 30;
+          if (nextMonth > prevMonth) {
+            setSleepResDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
+          }
+          else {
+            setSleepResDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
+          }
+        };
         return (
           <DayPicker
           showOutsideDays={true}
@@ -290,6 +241,38 @@ export const SleepList = () => {
           onMonthChange={handleYear} />
         );
       case "select":
+        const handleSelect = (day:any) => {
+          const selectedDay = new Date(day);
+
+          if (sleepStartDay && sleepEndDay) {
+            if (selectedDay < sleepStartDay) {
+              setSleepStartDay(selectedDay);
+            }
+            else if (selectedDay > sleepEndDay) {
+              setSleepEndDay(selectedDay);
+            }
+            else {
+              setSleepStartDay(selectedDay);
+              setSleepEndDay(undefined);
+            }
+          }
+          else if (sleepStartDay) {
+            if (selectedDay < sleepStartDay) {
+              setSleepEndDay(sleepStartDay);
+              setSleepStartDay(selectedDay);
+            }
+            else if (selectedDay > sleepStartDay) {
+              setSleepEndDay(selectedDay);
+            }
+            else {
+              setSleepStartDay(undefined);
+              setSleepEndDay(undefined);
+            }
+          }
+          else {
+            setSleepStartDay(selectedDay);
+          }
+        }
         return (
           <DayPicker
           showOutsideDays={true}
@@ -309,8 +292,8 @@ export const SleepList = () => {
         );
       default:
         return null;
-    }
-  }
+    };
+  };
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const filterBox = () => {
@@ -416,8 +399,8 @@ export const SleepList = () => {
   // 5-2. table ----------------------------------------------------------------------------------->
   const tableSleepAvg = () => {
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
+      <table className="table bg-white table-hover">
+        <thead className="table-primary">
           <tr>
             <th>기간</th>
             <th>취침 평균</th>
