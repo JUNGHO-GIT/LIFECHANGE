@@ -5,6 +5,25 @@ import * as sleepService from "../service/sleepService";
 
 const sleepRouter = Router();
 
+// 1-0. sleepDash --------------------------------------------------------------------------------->
+sleepRouter.get("/sleepDash", async (req: Request, res: Response) => {
+  try {
+    const sleepDash = await sleepService.sleepDash (
+      req.query.user_id
+    );
+    if (sleepDash) {
+      res.send(sleepDash);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
 // 1-1. sleepList --------------------------------------------------------------------------------->
 sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   try {

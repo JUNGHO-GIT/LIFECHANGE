@@ -12,6 +12,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkInsert = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Work Insert";
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

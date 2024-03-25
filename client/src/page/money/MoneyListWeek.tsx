@@ -13,6 +13,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListWeek = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Money List Week";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -134,7 +136,7 @@ export const MoneyListWeek = () => {
     }
   };
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewMoneyWeek = () => {
     return (
       <DayPicker

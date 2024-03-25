@@ -11,6 +11,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const PlanInsert = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Plan Insert";
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
@@ -18,12 +20,7 @@ export const PlanInsert = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:planDay, setVal:setPlanDay} = useStorage<Date | undefined> (
-    "planDay", new Date(koreanDate)
-  );
-
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [PLAN, setPLAN] = useState<any>({});
   const [planCount, setPlanCount] = useState<number>(1);
   const [planSection, setPlanSection] = useState<any[]>([{
@@ -32,6 +29,11 @@ export const PlanInsert = () => {
     plan_title_idx: 0,
     plan_title_val: "전체",
   }]);
+
+  // 2-2. useStorage ------------------------------------------------------------------------------>
+  const {val:planDay, setVal:setPlanDay} = useStorage<Date | undefined> (
+    "planDay", new Date(koreanDate)
+  );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

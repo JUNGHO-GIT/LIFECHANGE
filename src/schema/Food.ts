@@ -59,7 +59,14 @@ const FoodSchema = new mongoose.Schema ({
     required : false
   },
 
-  // 3. date
+  // 3. components
+  food_planYn : {
+    type : String,
+    default : "N",
+    required : true
+  },
+
+  // 4. date
   food_day : {
     type : String,
     default : () => {

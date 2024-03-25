@@ -13,6 +13,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListDay = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Money List Day";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -106,7 +108,7 @@ export const MoneyListDay = () => {
     }
   }, [moneyDay]);
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewMoneyDay = () => {
     const flowDayClick: DayClickEventHandler = (day: any) => {
       setMoneyDay(day);

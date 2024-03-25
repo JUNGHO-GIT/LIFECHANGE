@@ -13,6 +13,8 @@ import {workPartArray, workTitleArray} from "./WorkArray";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkListSelect = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Work List Select";
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -155,7 +157,7 @@ export const WorkListSelect = () => {
     }
   };
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewWorkSelect = () => {
     return (
       <DayPicker

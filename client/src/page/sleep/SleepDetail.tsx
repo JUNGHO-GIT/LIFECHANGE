@@ -9,6 +9,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Sleep Detail";
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
@@ -18,10 +20,10 @@ export const SleepDetail = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [SLEEP, setSLEEP] = useState<any> ({});
+
+  // 2-2. useStorage ------------------------------------------------------------------------------>
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -87,7 +89,7 @@ export const SleepDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{SLEEP.sleepDay}</td>
+            <td>{SLEEP.sleep_day}</td>
             <td>{SLEEP.sleep_night}</td>
             <td>{SLEEP.sleep_morning}</td>
             <td>{SLEEP.sleep_time}</td>

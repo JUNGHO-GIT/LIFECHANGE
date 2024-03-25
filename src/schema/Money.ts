@@ -48,7 +48,14 @@ const MoneySchema = new mongoose.Schema ({
     },
   }],
 
-  // 3. date
+  // 3. components
+  money_planYn : {
+    type : String,
+    default : "N",
+    required : true
+  },
+
+  // 4. date
   money_day : {
     type : String,
     default : () => {

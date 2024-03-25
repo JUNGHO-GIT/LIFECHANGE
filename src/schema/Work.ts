@@ -69,6 +69,11 @@ const WorkSchema = new mongoose.Schema ({
     type: String,
     required: true,
   },
+  work_planYn : {
+    type : String,
+    default : "N",
+    required : true
+  },
 
   // 4. date
   work_day: {

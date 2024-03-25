@@ -232,6 +232,9 @@ export const foodInsert = async (
     food_protein: FOOD_pram.food_protein,
     food_fat: FOOD_pram.food_fat,
     food_day: FOOD_pram.foodDay,
+    food_planYn: FOOD_pram.food_planYn,
+    food_regdate : FOOD_pram.food_regdate,
+    food_update : FOOD_pram.food_update,
   };
 
   createResult = await Food.create(createQuery);

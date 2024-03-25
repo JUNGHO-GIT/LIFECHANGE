@@ -7,6 +7,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserInsert = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const URL_USER = process.env.REACT_APP_URL_USER;
   const navParam = useNavigate();
   const {log} = useDeveloperMode();

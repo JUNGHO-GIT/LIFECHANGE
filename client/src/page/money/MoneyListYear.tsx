@@ -14,6 +14,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListYear = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Money List Year";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -124,7 +126,7 @@ export const MoneyListYear = () => {
     }
   };
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewMoneyYear = () => {
     return (
       <DayPicker

@@ -133,6 +133,7 @@ export const moneyInsert = async (
     _id : new mongoose.Types.ObjectId(),
     user_id : user_id_param,
     moneySection : MONEY_param.moneySection,
+    money_planYn : MONEY_param.money_planYn,
     money_day : MONEY_param.moneyDay,
     money_regdate : MONEY_param.money_regdate,
     money_update : MONEY_param.money_update,

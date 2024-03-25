@@ -13,6 +13,8 @@ import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListMonth = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Money List Month";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -113,7 +115,7 @@ export const MoneyListMonth = () => {
     }
   }, [moneyMonth]);
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewMoneyMonth = () => {
     const flowMonthChange: MonthChangeEventHandler = (day) => {
       const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);

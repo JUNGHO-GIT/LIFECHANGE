@@ -140,6 +140,7 @@ export const workInsert = async (
     work_start : WORK_param.work_start,
     work_end : WORK_param.work_end,
     work_time : WORK_param.work_time,
+    work_planYn : WORK_param.work_planYn,
     work_day : WORK_param.workDay,
     work_regdate : WORK_param.work_regdate,
     work_update : WORK_param.work_update,

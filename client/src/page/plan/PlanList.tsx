@@ -13,6 +13,8 @@ import {planPartArray, planTitleArray} from "./PlanArray";
 
 // ------------------------------------------------------------------------------------------------>
 export const PlanList = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
@@ -124,7 +126,7 @@ export const PlanList = () => {
     }
   }, [type, planStartDay, planEndDay, planDay]);
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewPlanList = () => {
 
     const formatVal = (value:number):string => {

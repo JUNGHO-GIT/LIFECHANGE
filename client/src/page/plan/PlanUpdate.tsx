@@ -8,6 +8,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const PlanUpdate = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Plan Update";
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

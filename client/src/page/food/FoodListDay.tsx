@@ -12,6 +12,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodListDay = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Food List Day";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -122,7 +124,7 @@ export const FoodListDay = () => {
     }
   }, [foodDay]);
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewFoodDay = () => {
     const flowDayClick: DayClickEventHandler = (day:any) => {
       setFoodDay(day);

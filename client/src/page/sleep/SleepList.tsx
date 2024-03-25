@@ -10,15 +10,21 @@ import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
+import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {BarChart, Bar} from "recharts";
+import {LineChart, Line} from "recharts";
+
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [totalCount, setTotalCount] = useState<number>(0);
   const [type, setType] = useState("day");
   const [filter, setFilter] = useState({
@@ -27,87 +33,100 @@ export const SleepList = () => {
     limit: 5,
   });
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
-    `sleepList(${type})`, []
-  );
-  const {val:SLEEP_PLAN, setVal:setSLEEP_PLAN} = useStorage<any>(
-    `sleepPlan(${type})`, []
+    `sleepList(${type})`, [{
+      _id: "",
+      sleep_dur: "0000-00-00 ~ 0000-00-00",
+      sleep_day: "0000-00-00",
+      sleep_night_real: "00:00",
+      sleep_time_real: "00:00",
+      sleep_morning_real: "00:00",
+      sleep_night_plan: "00:00",
+      sleep_time_plan: "00:00",
+      sleep_morning_plan: "00:00",
+    }]
   );
   const {val:sleepResDur, setVal:setSleepResDur} = useStorage<string>(
     `sleepResDur(${type})`, "0000-00-00 ~ 0000-00-00"
   );
   const {val:sleepStartDay, setVal:setSleepStartDay} = useStorage<Date | undefined>(
-    "sleepStartDay(${type})", undefined
+    `sleepStartDay(${type})`, undefined
   );
   const {val:sleepEndDay, setVal:setSleepEndDay} = useStorage<Date | undefined>(
-    "sleepEndDay(${type})", undefined
+    `sleepEndDay(${type})`, undefined
   );
   const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined>(
     `sleepDay(${type})`, koreanDate
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-
+  useEffect(() => {(async () => {
     // 1. list
-    const fetchSleepList = async () => {
-      try {
-        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
-          params: {
-            user_id: user_id,
-            sleep_dur: sleepResDur,
-            planYn: "N",
-            filter: filter,
-          },
-        });
-        setSLEEP_LIST(response.data.sleepList);
-        setTotalCount(response.data.totalCount);
-        log("SLEEP_LIST : " + JSON.stringify(response.data));
-      }
-      catch (error:any) {
-        setSLEEP_LIST([]);
-        alert(`Error fetching sleep data: ${error.message}`);
-      }
-    };
-    fetchSleepList();
+    const responseList = await axios.get(`${URL_SLEEP}/sleepList`, {
+      params: {
+        user_id: user_id,
+        sleep_dur: sleepResDur,
+        planYn: "N",
+        filter: filter,
+      },
+    });
 
     // 2. plan
-    const fetchSleepPlan = async () => {
-      try {
-        const response = await axios.get (`${URL_SLEEP}/sleepList`, {
-          params: {
-            user_id: user_id,
-            sleep_dur: sleepResDur,
-            planYn: "Y",
-            filter: filter,
-          },
-        });
-        setSLEEP_PLAN(response.data.sleepList);
-        setTotalCount(response.data.totalCount);
-        log("SLEEP_PLAN : " + JSON.stringify(response.data));
-      }
-      catch (error:any) {
-        setSLEEP_LIST([]);
-        alert(`Error fetching sleep data: ${error.message}`);
-      }
-    };
-    fetchSleepPlan();
+    const responsePlan = await axios.get(`${URL_SLEEP}/sleepList`, {
+      params: {
+        user_id: user_id,
+        sleep_dur: sleepResDur,
+        planYn: "Y",
+        filter: filter,
+      },
+    });
 
-  }, [user_id, sleepResDur, type, filter]);
+    // 3. merged
+    let mergedData = [];
+    if (responseList.data.sleepList.length > 0 || responsePlan.data.sleepList.length > 0) {
+      const allSleepDays
+        = [...responseList.data.sleepList, ...responsePlan.data.sleepList]
+        .map(item => item.sleep_day)
+        .filter((value, index, self) => self.indexOf(value) === index);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  const formatVal = (value:any) => {
-    return value < 10 ? `0${value}` : `${value}`;
-  };
+      mergedData = allSleepDays.map(sleep_day => {
+        const listItem
+          = responseList.data.sleepList.find((item:any) => item.sleep_day === sleep_day) || {};
+        const planItem
+          = responsePlan.data.sleepList.find((item:any) => item.sleep_day === sleep_day) || {};
+        return {
+          _id: listItem._id || "",
+          sleep_dur: sleepResDur,
+          sleep_day: sleep_day,
+          sleep_night_real: listItem.sleep_night || "00:00",
+          sleep_time_real: listItem.sleep_time || "00:00",
+          sleep_morning_real: listItem.sleep_morning || "00:00",
+          sleep_night_plan: planItem.sleep_night || "00:00",
+          sleep_time_plan: planItem.sleep_time || "00:00",
+          sleep_morning_plan: planItem.sleep_morning || "00:00",
+        };
+      });
+    }
+    else {
+      mergedData = [{
+        _id: "",
+        sleep_dur: "0000-00-00 ~ 0000-00-00",
+        sleep_day: "0000-00-00",
+        sleep_night_real: "00:00",
+        sleep_time_real: "00:00",
+        sleep_morning_real: "00:00",
+        sleep_night_plan: "00:00",
+        sleep_time_plan: "00:00",
+        sleep_morning_plan: "00:00",
+      }];
+    }
 
-  const getFormattedDate = (date:any) => {
-    return `${date.getFullYear()}-${formatVal(date.getMonth() + 1)}-${formatVal(date.getDate())}`;
-  };
+    setTotalCount(responseList.data.totalCount);
+    setSLEEP_LIST(mergedData);
+    log("SLEEP_LIST : " + JSON.stringify(mergedData));
 
-  const getStartAndEndDate = (startDay:any, endDay:any) => {
-    return `${getFormattedDate(new Date(startDay))} ~ ${getFormattedDate(new Date(endDay))}`;
-  };
+  })()}, [user_id, sleepResDur, type, filter]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -137,12 +156,92 @@ export const SleepList = () => {
     }
   }, [type, sleepStartDay, sleepEndDay, sleepDay]);
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
-  const viewSleepList = () => {
+  // 3-1. logic ----------------------------------------------------------------------------------->
+  const formatVal = (value:any) => {
+    return value < 10 ? `0${value}` : `${value}`;
+  };
+  const getFormattedDate = (date:any) => {
+    return `${date.getFullYear()}-${formatVal(date.getMonth() + 1)}-${formatVal(date.getDate())}`;
+  };
+  const getStartAndEndDate = (startDay:any, endDay:any) => {
+    return `${getFormattedDate(new Date(startDay))} ~ ${getFormattedDate(new Date(endDay))}`;
+  };
+  const successOrNot = (plan: string, real: string) => {
+    const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
+    const realDate = new Date(`1970-01-01T${real}:00.000Z`);
 
-    const formatVal = (value:number):string => {
-      return value < 10 ? `0${value}` : `${value}`;
+    // 실제 시간이 계획된 시간보다 이전인 경우 다음 날로 처리
+    if (realDate < planDate) {
+      realDate.setHours(realDate.getHours() + 24);
+    }
+    const diff = Math.abs(realDate.getTime() - planDate.getTime());
+    const diffMinutes = Math.floor(diff / 60000);
+
+    let textColor = "text-muted";
+    if (0 <= diffMinutes && diffMinutes <= 10) {
+      textColor = "text-primary";
+    }
+    if (10 < diffMinutes && diffMinutes <= 20) {
+      textColor = "text-success";
+    }
+    if (20 < diffMinutes && diffMinutes <= 30) {
+      textColor = "text-warning";
+    }
+    if (30 < diffMinutes) {
+      textColor = "text-danger";
+    }
+    return textColor;
+  };
+
+  // 3-2. logic ----------------------------------------------------------------------------------->
+  const filterBox = () => {
+    const pageNumber = () => {
+      const pages = [];
+      const totalPages = Math.ceil(totalCount / filter.limit);
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(
+          <button
+            key={i}
+            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
+            onClick={() => setFilter({ ...filter, page: i })}
+          >
+            {i}
+          </button>
+        );
+      }
+      return pages;
     };
+    const prevNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({ ...filter, page: Math.max(1, filter.page - 1) })}
+        >
+          이전
+        </button>
+      );
+    }
+    const nextNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({ ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) })}
+        >
+          다음
+        </button>
+      );
+    }
+    return (
+      <div className="d-inline-flex">
+        {prevNumber()}
+        {pageNumber()}
+        {nextNumber()}
+      </div>
+    );
+  };
+
+  // 4-1. view ----------------------------------------------------------------------------------->
+  const viewSleepList = () => {
     switch (type) {
       case "day":
         const handleDay = (day:any) => {
@@ -177,20 +276,24 @@ export const SleepList = () => {
         };
         return (
           <DayPicker
-          showOutsideDays={true}
-          locale={ko}
-          weekStartsOn={1}
-          modifiersClassNames={{
-            selected: "selected",
-            disabled: "disabled",
-            outside: "outside",
-            inside: "inside",
-          }}
-          mode="range"
-          selected={sleepStartDay && sleepEndDay && {from: sleepStartDay, to: sleepEndDay}}
-          month={sleepStartDay}
-          onDayClick={handleWeek}
-          onMonthChange={(month) => { setSleepStartDay(month); setSleepEndDay(undefined); }} />
+            showOutsideDays={true}
+            locale={ko}
+            weekStartsOn={1}
+            modifiersClassNames={{
+              selected: "selected",
+              disabled: "disabled",
+              outside: "outside",
+              inside: "inside",
+            }}
+            mode="range"
+            selected={sleepStartDay && sleepEndDay && {from: sleepStartDay, to: sleepEndDay}}
+            month={sleepStartDay}
+            onDayClick={handleWeek}
+            onMonthChange={(month) => {
+              setSleepStartDay(month);
+              setSleepEndDay(undefined);
+            }}
+          />
         );
       case "month":
         const handleMonth = (month:any) => {
@@ -300,82 +403,7 @@ export const SleepList = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const filterBox = () => {
-    const pageNumber = () => {
-      const pages = [];
-      const totalPages = Math.ceil(totalCount / filter.limit);
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(
-          <button
-            key={i}
-            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
-            onClick={() => setFilter({ ...filter, page: i })}
-          >
-            {i}
-          </button>
-        );
-      }
-      return pages;
-    };
-    const prevNumber = () => {
-      return (
-        <button
-          className="btn btn-sm btn-primary ms-10 me-10"
-          onClick={() => setFilter({ ...filter, page: Math.max(1, filter.page - 1) })}
-        >
-          이전
-        </button>
-      );
-    }
-    const nextNumber = () => {
-      return (
-        <button
-          className="btn btn-sm btn-primary ms-10 me-10"
-          onClick={() => setFilter({ ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) })}
-        >
-          다음
-        </button>
-      );
-    }
-    return (
-      <div className="d-inline-flex">
-        {prevNumber()}
-        {pageNumber()}
-        {nextNumber()}
-      </div>
-    );
-  };
-
-  // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
-
-    const successOrNot = (plan: string, real: string) => {
-      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
-      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
-
-      // 실제 시간이 계획된 시간보다 이전인 경우 다음 날로 처리
-      if (realDate < planDate) {
-        realDate.setHours(realDate.getHours() + 24);
-      }
-      const diff = Math.abs(realDate.getTime() - planDate.getTime());
-      const diffMinutes = Math.floor(diff / 60000);
-
-      let textColor = "text-muted";
-      if (0 <= diffMinutes && diffMinutes <= 10) {
-        textColor = "text-primary";
-      }
-      if (10 < diffMinutes && diffMinutes <= 20) {
-        textColor = "text-success";
-      }
-      if (20 < diffMinutes && diffMinutes <= 30) {
-        textColor = "text-warning";
-      }
-      if (30 < diffMinutes) {
-        textColor = "text-danger";
-      }
-      return textColor;
-    };
-
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -389,81 +417,44 @@ export const SleepList = () => {
         </thead>
         <tbody>
           {SLEEP_LIST.map((item:any) => (
-            <React.Fragment key={item._id}>
-              {SLEEP_PLAN.length > 0
-                ? (
-                  SLEEP_PLAN.map((plan:any) => (
-                    <React.Fragment key={plan._id}>
-                      <tr>
-                        <td rowSpan={4} className="pointer" onClick={() => {
-                          navParam("/sleepDetail", {
-                            state: {_id: item._id}
-                          });
-                        }}>
-                          {item.sleep_day}
-                        </td>
-                        <td>수면시간</td>
-                        <td>{plan.sleep_time || "x"}</td>
-                        <td>{item.sleep_time || "x"}</td>
-                        <td>
-                          <span className={successOrNot(plan.sleep_time, item.sleep_time)}>
-                            ●
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>취침시간</td>
-                        <td>{plan.sleep_night || "x"}</td>
-                        <td>{item.sleep_night || "x"}</td>
-                        <td>
-                          <span className={successOrNot(plan.sleep_night, item.sleep_night)}>
-                            ●
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>기상시간</td>
-                        <td>{plan.sleep_morning || "x"}</td>
-                        <td>{item.sleep_morning || "x"}</td>
-                        <td>
-                          <span className={successOrNot(plan.sleep_morning, item.sleep_morning)}>
-                            ●
-                          </span>
-                        </td>
-                      </tr>
-                    </React.Fragment>
-                  ))
-                )
-                : (
-                  <React.Fragment>
-                    <tr>
-                      <td rowSpan={3} className="pointer" onClick={() => {
-                        navParam("/sleepDetail", {
-                          state: {_id: item._id}
-                        });
-                      }}>
-                        {item.sleep_day}
-                      </td>
-                      <td>수면시간</td>
-                      <td>x</td>
-                      <td>{item.sleep_time || "x"}</td>
-                      <td>●</td>
-                    </tr>
-                    <tr>
-                      <td>취침시간</td>
-                      <td>x</td>
-                      <td>{item.sleep_night || "x"}</td>
-                      <td>●</td>
-                    </tr>
-                    <tr>
-                      <td>기상시간</td>
-                      <td>x</td>
-                      <td>{item.sleep_morning || "x"}</td>
-                      <td>●</td>
-                    </tr>
-                  </React.Fragment>
-                )
-              }
+            <React.Fragment key={item.sleep_day}>
+              <tr>
+                <td rowSpan={3} className="pointer" onClick={() => {
+                  navParam("/sleepDetail", {
+                    state: {_id: item._id}
+                  });
+                }}>
+                  {item.sleep_day}
+                </td>
+                <td>취침</td>
+                <td>{item.sleep_night_plan}</td>
+                <td>{item.sleep_night_real}</td>
+                <td>
+                  <span className={successOrNot(item.sleep_night_plan, item.sleep_night_real)}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>수면</td>
+                <td>{item.sleep_time_plan}</td>
+                <td>{item.sleep_time_real}</td>
+                <td>
+                  <span className={successOrNot(item.sleep_time_plan, item.sleep_time_real)}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>기상</td>
+                <td>{item.sleep_morning_plan}</td>
+                <td>{item.sleep_morning_real}</td>
+                <td>
+                  <span className={successOrNot(item.sleep_morning_plan, item.sleep_morning_real)}>
+                    ●
+                  </span>
+                </td>
+              </tr>
             </React.Fragment>
           ))}
         </tbody>
@@ -530,7 +521,7 @@ export const SleepList = () => {
     );
   };
 
-  // 6-4. select ---------------------------------------------------------------------------------->
+  // 6-3. select ---------------------------------------------------------------------------------->
   const selectFilterSub = () => {
     return (
       <div className="mb-3">
@@ -543,7 +534,6 @@ export const SleepList = () => {
       </div>
     );
   };
-
   const selectFilterPage = () => {
     return (
       <div className="mb-3">
@@ -563,7 +553,11 @@ export const SleepList = () => {
       <div className="container-wrapper">
         <div className="row d-center mt-3">
           <div className="col-4">
-            {viewSleepList()}
+            <div className="row d-center mb-20">
+              <div className="col-12">
+                {viewSleepList()}
+              </div>
+            </div>
           </div>
           <div className="col-8">
             <div className="row d-center mb-20">

@@ -10,6 +10,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodInsert = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Food Insert";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
@@ -100,7 +102,7 @@ export const FoodInsert = () => {
     );
   };
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const logicPerServing = (param: number, nutrientVal: number) => {
     return ((nutrientVal / logicOneServing()) * param).toFixed(1);
   };

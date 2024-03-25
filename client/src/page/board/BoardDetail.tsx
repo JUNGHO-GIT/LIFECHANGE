@@ -8,6 +8,8 @@ import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
 // ------------------------------------------------------------------------------------------------>
 export const BoardDetail = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Board Detail";
   const URL_BOARD = process.env.REACT_APP_URL_BOARD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();

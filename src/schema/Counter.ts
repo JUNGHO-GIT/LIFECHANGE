@@ -15,7 +15,6 @@ const counterSchema = new mongoose.Schema({
 
 const Counter = mongoose.model("Counter", counterSchema);
 
-// 시퀀스 증가 함수 개선
 async function incrementSeq(sequenceName: string, modelName: string): Promise<number> {
   try {
     // 시퀀스 번호 동기화 검증 로직

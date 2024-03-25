@@ -13,6 +13,8 @@ import {workPartArray, workTitleArray} from "./WorkArray";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkListMonth = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Work List Month";
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
@@ -112,7 +114,7 @@ export const WorkListMonth = () => {
     }
   }, [workMonth]);
 
-  // 4-1. logic ----------------------------------------------------------------------------------->
+  // 4-1. view ----------------------------------------------------------------------------------->
   const viewWorkMonth = () => {
     const flowMonthChange: MonthChangeEventHandler = (day) => {
       const monthDate = new Date(day.getFullYear(), day.getMonth(), 1);

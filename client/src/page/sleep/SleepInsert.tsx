@@ -12,25 +12,28 @@ import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepInsert = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const [SLEEP, setSLEEP] = useState<any>({
+    user_id: user_id,
+    sleep_day: koreanDate,
+    sleep_planYn: "N",
+    sleep_night: "00:00",
+    sleep_morning: "00:00",
+    sleep_time: "00:00",
+  });
+
+  // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined> (
     "sleepDay", new Date(koreanDate)
   );
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState<any>({
-    sleepDay: moment(sleepDay).format("YYYY-MM-DD"),
-    sleep_night: "",
-    sleep_morning: "",
-    sleep_time: "",
-    sleep_planYn: "N",
-  });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -43,9 +46,21 @@ export const SleepInsert = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const setSleepTime = () => {
-      if (SLEEP.sleep_night && SLEEP.sleep_morning) {
-        const nightDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_night}:00Z`);
-        const morningDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_morning}:00Z`);
+      if (!SLEEP.sleep_night || !SLEEP.sleep_morning) {
+        setSLEEP((prevSleep:any) => ({
+          ...prevSleep,
+          sleep_time: "00:00",
+        }));
+      }
+      else if (SLEEP.sleep_night === "00:00" && SLEEP.sleep_morning === "00:00") {
+        setSLEEP((prevSleep:any) => ({
+          ...prevSleep,
+          sleep_time: "00:00",
+        }));
+      }
+      else {
+        const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
+        const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_morning}:00Z`);
 
         if (morningDate < nightDate) {
           morningDate.setDate(morningDate.getDate() + 1);
@@ -62,7 +77,7 @@ export const SleepInsert = () => {
       }
     };
     setSleepTime();
-  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleepDay]);
+  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_day]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepInsert = async () => {
