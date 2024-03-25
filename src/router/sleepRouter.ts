@@ -46,26 +46,6 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. sleepAvg ---------------------------------------------------------------------------------->
-sleepRouter.get("/sleepAvg", async (req: Request, res: Response) => {
-  try {
-    const sleepAvg = await sleepService.sleepAvg (
-      req.query.user_id,
-      req.query.sleep_dur,
-    );
-    if (sleepAvg) {
-      res.send(sleepAvg);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
 // 2. sleepDetail --------------------------------------------------------------------------------->
 sleepRouter.get("/sleepDetail", async (req: Request, res: Response) => {
   try {

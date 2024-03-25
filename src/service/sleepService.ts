@@ -13,7 +13,10 @@ export const sleepDash = async (
   let findResult;
   let finalResult;
 
-  const findSleepData = async (startDay: string, endDay: string) => {
+  let listArray:any = [];
+  let avgArray:any = [];
+
+  const findSleepList = async (startDay: string, endDay: string) => {
     const listPlanN = await Sleep.find({
       user_id: user_id_param,
       sleep_day: {
@@ -57,33 +60,201 @@ export const sleepDash = async (
     return mergedData;
   };
 
-  // 오늘
-  const todayList = await findSleepData (
+  const findSleepAvg = async (name: string, startDay: string, endDay: string) => {
+    const listPlanN = await Sleep.find({
+      user_id: user_id_param,
+      sleep_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      sleep_planYn: "N",
+    });
+
+    const listPlanY = await Sleep.find({
+      user_id: user_id_param,
+      sleep_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      sleep_planYn: "Y",
+    });
+
+    if (listPlanN.length === 0 && listPlanY.length === 0) {
+      return {
+        name: name,
+        avg_night_real: "00:00",
+        avg_time_real: "00:00",
+        avg_morning_real: "00:00",
+        avg_night_plan: "00:00",
+        avg_time_plan: "00:00",
+        avg_morning_plan: "00:00",
+      };
+    }
+
+    let total_night_real = 0;
+    let total_time_real = 0;
+    let total_morning_real = 0;
+
+    let total_night_plan = 0;
+    let total_time_plan = 0;
+    let total_morning_plan = 0;
+
+    listPlanN.forEach((sleep) => {
+      const [hours, minutes] = sleep.sleep_time.split(":").map(Number);
+      const [nightHours, nightMinutes] = sleep.sleep_night.split(":").map(Number);
+      const [morningHours, morningMinutes] = sleep.sleep_morning.split(":").map(Number);
+      total_time_real += (hours * 60) + minutes;
+      total_night_real += (nightHours * 60) + nightMinutes;
+      total_morning_real += (morningHours * 60) + morningMinutes;
+    });
+
+    listPlanY.forEach((sleep) => {
+      const [hours, minutes] = sleep.sleep_time.split(":").map(Number);
+      const [nightHours, nightMinutes] = sleep.sleep_night.split(":").map(Number);
+      const [morningHours, morningMinutes] = sleep.sleep_morning.split(":").map(Number);
+      total_time_plan += (hours * 60) + minutes;
+      total_night_plan += (nightHours * 60) + nightMinutes;
+      total_morning_plan += (morningHours * 60) + morningMinutes;
+    });
+
+    const avg_night_real = moment.utc((total_night_real / listPlanN.length) * 60000).format("HH:mm");
+    const avg_time_real = moment.utc((total_time_real / listPlanN.length) * 60000).format("HH:mm");
+    const avg_morning_real = moment.utc((total_morning_real / listPlanN.length) * 60000).format("HH:mm");
+
+    const avg_night_plan = moment.utc((total_night_plan / listPlanY.length) * 60000).format("HH:mm");
+    const avg_time_plan = moment.utc((total_time_plan / listPlanY.length) * 60000).format("HH:mm");
+    const avg_morning_plan = moment.utc((total_morning_plan / listPlanY.length) * 60000).format("HH:mm");
+
+    return {
+      name: name,
+      avg_night_real: avg_night_real,
+      avg_time_real: avg_time_real,
+      avg_morning_real: avg_morning_real,
+      avg_night_plan: avg_night_plan,
+      avg_time_plan: avg_time_plan,
+      avg_morning_plan: avg_morning_plan,
+    };
+  };
+
+  // 오늘 (리스트)
+  const todayList = await findSleepList (
     moment().format("YYYY-MM-DD"),
     moment().format("YYYY-MM-DD")
   );
-
-  // 이번주
-  const weekList = await findSleepData (
+  // 이번주 (리스트)
+  const weekList = await findSleepList (
     moment().startOf("week").format("YYYY-MM-DD"),
     moment().endOf("week").format("YYYY-MM-DD")
   );
-
-  // 이번달
-  const monthList = await findSleepData (
+  // 이번달 (리스트)
+  const monthList = await findSleepList (
     moment().startOf("month").format("YYYY-MM-DD"),
     moment().endOf("month").format("YYYY-MM-DD")
   );
 
-  finalResult = {
+  // 이번주 기준 5주 전 (평균)
+  const beforeFiveWeekAvg = await findSleepAvg (
+    `~${moment().startOf("week").subtract(5, "weeks").format("YYYY-MM-DD")}`,
+    moment().startOf("week").subtract(5, "weeks").format("YYYY-MM-DD"),
+    moment().startOf("week").subtract(4, "weeks").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번주 기준 4주 전 (평균)
+  const beforeFourWeekAvg = await findSleepAvg (
+    `~${moment().startOf("week").subtract(4, "weeks").format("YYYY-MM-DD")}`,
+    moment().startOf("week").subtract(4, "weeks").format("YYYY-MM-DD"),
+    moment().startOf("week").subtract(3, "weeks").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번주 기준 3주 전 (평균)
+  const beforeThreeWeekAvg = await findSleepAvg (
+    `~${moment().startOf("week").subtract(3, "weeks").format("YYYY-MM-DD")}`,
+    moment().startOf("week").subtract(3, "weeks").format("YYYY-MM-DD"),
+    moment().startOf("week").subtract(2, "weeks").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번주 기준 2주 전 (평균)
+  const beforeTwoWeekAvg = await findSleepAvg (
+    `~${moment().startOf("week").subtract(2, "weeks").format("YYYY-MM-DD")}`,
+    moment().startOf("week").subtract(2, "weeks").format("YYYY-MM-DD"),
+    moment().startOf("week").subtract(1, "weeks").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번주 기준 1주 전 (평균)
+  const beforeOneWeekAvg = await findSleepAvg (
+    `~${moment().startOf("week").subtract(1, "weeks").format("YYYY-MM-DD")}`,
+    moment().startOf("week").subtract(1, "weeks").format("YYYY-MM-DD"),
+    moment().endOf("week").subtract(1, "weeks").format("YYYY-MM-DD")
+  );
+  // 이번주 (평균)
+  const beforeCurWeekAvg = await findSleepAvg (
+    `~${moment().startOf("week").format("YYYY-MM-DD")}`,
+    moment().startOf("week").format("YYYY-MM-DD"),
+    moment().endOf("week").format("YYYY-MM-DD")
+  );
+
+  // 이번달 기준 5달 전 (평균)
+  const beforeFiveMonthAvg = await findSleepAvg (
+    `~${moment().startOf("month").subtract(5, "months").format("YYYY-MM-DD")}`,
+    moment().startOf("month").subtract(5, "months").format("YYYY-MM-DD"),
+    moment().startOf("month").subtract(4, "months").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번달 기준 4달 전 (평균)
+  const beforeFourMonthAvg = await findSleepAvg (
+    `~${moment().startOf("month").subtract(4, "months").format("YYYY-MM-DD")}`,
+    moment().startOf("month").subtract(4, "months").format("YYYY-MM-DD"),
+    moment().startOf("month").subtract(3, "months").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번달 기준 3달 전 (평균)
+  const beforeThreeMonthAvg = await findSleepAvg (
+    `~${moment().startOf("month").subtract(3, "months").format("YYYY-MM-DD")}`,
+    moment().startOf("month").subtract(3, "months").format("YYYY-MM-DD"),
+    moment().startOf("month").subtract(2, "months").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번달 기준 2달 전 (평균)
+  const beforeTwoMonthAvg = await findSleepAvg (
+    `~${moment().startOf("month").subtract(2, "months").format("YYYY-MM-DD")}`,
+    moment().startOf("month").subtract(2, "months").format("YYYY-MM-DD"),
+    moment().startOf("month").subtract(1, "months").subtract(1, "days").format("YYYY-MM-DD")
+  );
+  // 이번달 기준 1달 전 (평균)
+  const beforeOneMonthAvg = await findSleepAvg (
+    `~${moment().startOf("month").subtract(1, "months").format("YYYY-MM-DD")}`,
+    moment().startOf("month").subtract(1, "months").format("YYYY-MM-DD"),
+    moment().endOf("month").subtract(1, "months").format("YYYY-MM-DD")
+  );
+  // 이번달 (평균)
+  const beforeCurMonthAvg = await findSleepAvg (
+    `~${moment().startOf("month").format("YYYY-MM-DD")}`,
+    moment().startOf("month").format("YYYY-MM-DD"),
+    moment().endOf("month").format("YYYY-MM-DD")
+  );
+
+  listArray = {
     todayList: todayList,
     weekList: weekList,
     monthList: monthList,
   };
 
-  console.log("===============================================");
-  console.log("finalResult : " + JSON.stringify(finalResult));
-  console.log("===============================================");
+  avgArray = {
+    weekAvg: [
+      beforeFiveWeekAvg,
+      beforeFourWeekAvg,
+      beforeThreeWeekAvg,
+      beforeTwoWeekAvg,
+      beforeOneWeekAvg,
+      beforeCurWeekAvg,
+    ],
+    monthAvg: [
+      beforeFiveMonthAvg,
+      beforeFourMonthAvg,
+      beforeThreeMonthAvg,
+      beforeTwoMonthAvg,
+      beforeOneMonthAvg,
+      beforeCurMonthAvg,
+    ],
+  };
+
+  finalResult = {
+    listArray: listArray,
+    avgArray: avgArray,
+  };
 
   return finalResult;
 };
@@ -147,60 +318,6 @@ export const sleepList = async (
     totalCount: totalCount,
     sleepList: findResult,
   };
-
-  return finalResult;
-};
-
-// 1-2. sleepAvg ---------------------------------------------------------------------------------->
-export const sleepAvg = async (
-  user_id_param: any,
-  sleep_dur_param: any,
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  const startDay = sleep_dur_param.split(` ~ `)[0];
-  const endDay = sleep_dur_param.split(` ~ `)[1];
-
-  findQuery = {
-    user_id: user_id_param,
-    sleep_day: {
-      $gte: startDay,
-      $lte: endDay,
-    }
-  };
-
-  findResult = await Sleep.find(findQuery).sort({ sleep_day: -1 });
-
-  // 데이터가 없는 경우 빈 배열 반환
-  if (findResult.length === 0) {
-    return [];
-  }
-
-  let totalSleepTime = 0;
-  let totalSleepNight = 0;
-  let totalSleepMorning = 0;
-
-  findResult.forEach((sleep) => {
-    const [hours, minutes] = sleep.sleep_time.split(":").map(Number);
-    const [nightHours, nightMinutes] = sleep.sleep_night.split(":").map(Number);
-    const [morningHours, morningMinutes] = sleep.sleep_morning.split(":").map(Number);
-    totalSleepTime += (hours * 60) + minutes;
-    totalSleepNight += (nightHours * 60) + nightMinutes;
-    totalSleepMorning += (morningHours * 60) + morningMinutes;
-  });
-
-  const avgSleepTime = moment.utc((totalSleepTime / findResult.length) * 60000).format("HH:mm");
-  const avgSleepNight = moment.utc((totalSleepNight / findResult.length) * 60000).format("HH:mm");
-  const avgSleepMorning = moment.utc((totalSleepMorning / findResult.length) * 60000).format("HH:mm");
-
-  finalResult = [{
-    "avgSleepTime" : avgSleepTime,
-    "avgSleepNight" : avgSleepNight,
-    "avgSleepMorning" : avgSleepMorning,
-  }];
 
   return finalResult;
 };

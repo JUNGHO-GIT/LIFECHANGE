@@ -20,14 +20,10 @@ export const SleepDash = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [activeKeys, setActiveKeys] = useState(["취침시간", "수면시간", "기상시간"]);
-  const [totalCount, setTotalCount] = useState<number>(0);
+  const [activeLine, setActiveLine] = useState(["취침", "수면", "기상"]);
+  const [activeAvg, setActiveAvg] = useState(["취침", "수면", "기상"]);
+  const [avgChartData, setAvgChartData] = useState<any>("real");
   const [type, setType] = useState("day");
-  const [filter, setFilter] = useState({
-    filterSub: "asc",
-    page: 1,
-    limit: 5,
-  });
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:SLEEP_LIST_BAR, setVal:setSLEEP_LIST_BAR} = useStorage<any>(
@@ -55,28 +51,15 @@ export const SleepDash = () => {
     }]
   );
   const {val:SLEEP_LIST_AVG, setVal:setSLEEP_LIST_AVG} = useStorage<any>(
-    `sleepListAvg(${type})`, [{
-      _id: "",
-      sleep_day: "0000-00-00",
-      sleep_night_real: "00:00",
-      sleep_time_real: "00:00",
-      sleep_morning_real: "00:00",
-      sleep_night_plan: "00:00",
-      sleep_time_plan: "00:00",
-      sleep_morning_plan: "00:00",
-    }]
-  );
-  const {val:sleepResDur, setVal:setSleepResDur} = useStorage<string>(
-    `sleepResDur(${type})`, "0000-00-00 ~ 0000-00-00"
-  );
-  const {val:sleepStartDay, setVal:setSleepStartDay} = useStorage<Date | undefined>(
-    `sleepStartDay(${type})`, undefined
-  );
-  const {val:sleepEndDay, setVal:setSleepEndDay} = useStorage<Date | undefined>(
-    `sleepEndDay(${type})`, undefined
-  );
-  const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined>(
-    `sleepDay(${type})`, koreanDate
+    `sleepListAvg(${type})`, {
+      name: "",
+      avg_night_real: "00:00",
+      avg_time_real: "00:00",
+      avg_morning_real: "00:00",
+      avg_night_plan: "00:00",
+      avg_time_plan: "00:00",
+      avg_morning_plan: "00:00",
+    }
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -86,20 +69,18 @@ export const SleepDash = () => {
         user_id: user_id,
       },
     });
-    setSLEEP_LIST_BAR(response.data.todayList);
-    setSLEEP_LIST_LINE(response.data.weekList);
-    setSLEEP_LIST_AVG(response.data.monthList);
-    log("SLEEP_LIST_BAR : " + JSON.stringify(response.data.todayList));
-    log("SLEEP_LIST_LINE : " + JSON.stringify(response.data.weekList));
-    log("SLEEP_LIST_AVG : " + JSON.stringify(response.data.monthList));
+    setSLEEP_LIST_BAR(response.data.listArray.todayList);
+    setSLEEP_LIST_LINE(response.data.listArray.weekList);
+    setSLEEP_LIST_AVG(response.data.avgArray.weekAvg);
+    log("SLEEP_LIST_BAR : " + JSON.stringify(response.data.listArray.todayList));
+    log("SLEEP_LIST_LINE : " + JSON.stringify(response.data.listArray.weekList));
+    log("SLEEP_LIST_AVG : " + JSON.stringify(response.data.avgArray.weekAvg));
   })()}, [user_id]);
 
   // 3. logic ------------------------------------------------------------------------------------->
   const successOrNot = (plan: string, real: string) => {
     const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
     const realDate = new Date(`1970-01-01T${real}:00.000Z`);
-
-    // 실제 시간이 계획된 시간보다 이전인 경우 다음 날로 처리
     if (realDate < planDate) {
       realDate.setHours(realDate.getHours() + 24);
     }
@@ -121,6 +102,7 @@ export const SleepDash = () => {
     }
     return textColor;
   };
+
   // 4. view -------------------------------------------------------------------------------------->
 
   // 5-1. bar ------------------------------------------------------------------------------------->
@@ -129,7 +111,7 @@ export const SleepDash = () => {
       const time = str.split(":");
       return parseFloat((parseInt(time[0], 10) + parseInt(time[1], 10) / 60).toFixed(1));
     };
-    const data = SLEEP_LIST_BAR.map((item:any) => {
+    const data = SLEEP_LIST_BAR?.map((item:any) => {
       return {
         name: "취침",
         목표: fmtStrToInt(item.sleep_night_plan),
@@ -152,13 +134,13 @@ export const SleepDash = () => {
     }));
     return (
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
+        <ComposedChart
           data={data}
           margin={{
-            top: 20,
-            right: 30,
+            top: 60,
+            right: 60,
+            bottom: 20,
             left: 20,
-            bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -174,11 +156,20 @@ export const SleepDash = () => {
               return tick;
             }}
           />
+          <Line
+            dataKey="목표"
+            type="monotone"
+            stroke="#ff7300"
+          />
+          <Bar
+            dataKey="실제"
+            type="monotone"
+            fill="#8884d8"
+            barSize={30}
+          />
           <Tooltip />
           <Legend />
-          <Bar dataKey="목표" fill="#8884d8" />
-          <Bar dataKey="실제" fill="#82ca9d" />
-        </BarChart>
+        </ComposedChart>
       </ResponsiveContainer>
     );
   };
@@ -230,9 +221,9 @@ export const SleepDash = () => {
     const lineChartData = SLEEP_LIST_LINE.map((item:any) => {
       return {
         name: item.sleep_day.substring(5, 10),
-        취침시간: parseFloat(item.sleep_night_real),
-        수면시간: parseFloat(item.sleep_time_real),
-        기상시간: parseFloat(item.sleep_morning_real),
+        취침: parseFloat(item.sleep_night_real),
+        수면: parseFloat(item.sleep_time_real),
+        기상: parseFloat(item.sleep_morning_real),
       };
     });
     return (
@@ -240,14 +231,17 @@ export const SleepDash = () => {
         <LineChart
           data={lineChartData}
           margin={{
-            top: 5,
-            right: 30,
+            top: 60,
+            right: 60,
+            bottom: 20,
             left: 20,
-            bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis
+            type="category"
+            dataKey="name"
+          />
           <YAxis
             type="number"
             domain={[0, 30]}
@@ -259,11 +253,17 @@ export const SleepDash = () => {
               return tick;
             }}
           />
+          {activeLine.includes("취침")
+            && <Line type="monotone" dataKey="취침" stroke="#8884d8" activeDot={{ r: 8 }} />
+          }
+          {activeLine.includes("수면")
+            && <Line type="monotone" dataKey="수면" stroke="#82ca9d" />
+          }
+          {activeLine.includes("기상")
+            && <Line type="monotone" dataKey="기상" stroke="#ffc658" />
+          }
           <Tooltip />
           <Legend />
-          {activeKeys.includes("취침시간") && <Line type="monotone" dataKey="취침시간" stroke="#8884d8" activeDot={{ r: 8 }} />}
-          {activeKeys.includes("수면시간") && <Line type="monotone" dataKey="수면시간" stroke="#82ca9d" />}
-          {activeKeys.includes("기상시간") && <Line type="monotone" dataKey="기상시간" stroke="#ffc658" />}
         </LineChart>
       </ResponsiveContainer>
     );
@@ -272,17 +272,17 @@ export const SleepDash = () => {
     return (
       <table className="table bg-white border">
         <tbody>
-          {["취침시간", "수면시간", "기상시간"].map((key, index) => (
+          {["취침", "수면", "기상"].map((key, index) => (
             <div key={index}>
               <input
                 type="checkbox"
-                checked={activeKeys.includes(key)}
+                checked={activeLine.includes(key)}
                 onChange={() => {
-                  if (activeKeys.includes(key)) {
-                    setActiveKeys(activeKeys.filter((item) => item !== key));
+                  if (activeLine.includes(key)) {
+                    setActiveLine(activeLine.filter((item) => item !== key));
                   }
                   else {
-                    setActiveKeys([...activeKeys, key]);
+                    setActiveLine([...activeLine, key]);
                   }
                 }}
               />
@@ -295,41 +295,133 @@ export const SleepDash = () => {
   };
 
   // 5-3. average -------------------------------------------------------------------------------->
-  const avgChartData = [
-    { name: "1월", 취침시간: 23, 수면시간: 7.5, 기상시간: 7.5 },
-    { name: "2월", 취침시간: 21.5, 수면시간: 7, 기상시간: 6.5 },
-    { name: "3월", 취침시간: 22, 수면시간: 9, 기상시간: 8 }
-  ];
   const chartSleepAvg = () => {
+    const chartDataReal = SLEEP_LIST_AVG.map((item: any) => ({
+      name: item.name,
+      "취침": parseFloat(item.avg_night_real),
+      "수면": parseFloat(item.avg_time_real),
+      "기상": parseFloat(item.avg_morning_real),
+    }));
+
+    const chartDataPlan = SLEEP_LIST_AVG.map((item: any) => ({
+      name: item.name,
+      "취침": parseFloat(item.avg_night_plan),
+      "수면": parseFloat(item.avg_time_plan),
+      "기상": parseFloat(item.avg_morning_plan),
+    }));
+
+    let chartData = avgChartData === "real" ? chartDataReal : chartDataPlan;
+
     return (
-      <ResponsiveContainer width="100%" height={300}>
-        <ComposedChart
-          width={500}
-          height={400}
-          data={avgChartData}
-          margin={{
-            top: 20,
-            right: 80,
-            bottom: 20,
-            left: 20,
-          }}
-        >
-          <CartesianGrid stroke="#f5f5f5" />
-          <XAxis dataKey="name" label={{ value: 'Pages', position: 'insideBottomRight', offset: 0 }} scale="band" />
-          <YAxis label={{ value: 'Index', angle: -90, position: 'insideLeft' }} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="취침시간" barSize={20} fill="#413ea0" />
-          <Line type="monotone" dataKey="수면시간" stroke="#ff7300" />
-        </ComposedChart>
-      </ResponsiveContainer>
+      <React.Fragment>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart
+            width={500}
+            height={400}
+            data={chartData}
+            margin={{
+              top: 60,
+              right: 60,
+              bottom: 20,
+              left: 20,
+            }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+            />
+            <XAxis
+              type="category"
+              dataKey="name"
+            />
+            <YAxis
+              type="number"
+              domain={[0, 30]}
+              ticks={[0, 6, 12, 18, 24, 30]}
+              tickFormatter={(tick) => {
+                if (tick > 24) {
+                  return `0${tick - 24}`;
+                }
+                return tick;
+              }}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                border: "1px solid #dddddd",
+                borderRadius: "7px",
+                padding: "10px"
+              }}
+            />
+            <Legend
+              verticalAlign="bottom"
+            />
+            {activeAvg.includes("취침") && (
+              <Bar type="monotone" dataKey="취침" barSize={20} fill="#413ea0" />
+            )}
+            {activeAvg.includes("수면") && (
+              <Bar type="monotone" dataKey="수면" barSize={20} fill="#ff7300" />
+            )}
+            {activeAvg.includes("기상") && (
+              <Bar type="monotone" dataKey="기상" barSize={20} fill="#8884d8" />
+            )}
+          </BarChart>
+        </ResponsiveContainer>
+      </React.Fragment>
     );
   }
   const tableSleepAvg = () => {
     return (
-      <></>
+      <table className="table bg-white border">
+        <div className="m-10">
+          <button
+            type="button"
+            className={`
+              btn btn-secondary btn-sm ${avgChartData === "real" ? "active" : ""}
+              me-10
+            `}
+            id="real"
+            onClick={() => {
+              setAvgChartData("real");
+            }}
+          >
+            실제
+          </button>
+          <button
+            type="button"
+            className={`
+              btn btn-secondary btn-sm ${avgChartData === "plan" ? "active" : ""}
+              me-10
+            `}
+            id="plan"
+            onClick={() => {
+              setAvgChartData("plan");
+            }}
+          >
+            계획
+          </button>
+        </div>
+        <tbody>
+          {["취침", "수면", "기상"].map((key, index) => (
+            <div key={index}>
+              <input
+                type="checkbox"
+                checked={activeAvg.includes(key)}
+                onChange={() => {
+                  if (activeAvg.includes(key)) {
+                    setActiveAvg(activeAvg.filter((item) => item !== key));
+                  }
+                  else {
+                    setActiveAvg([...activeAvg, key]);
+                  }
+                }}
+              />
+              {key}
+            </div>
+          ))}
+        </tbody>
+      </table>
     );
-  }
+  };
 
   // 7. return ------------------------------------------------------------------------------------>
   return (
@@ -357,8 +449,11 @@ export const SleepDash = () => {
         </div>
         <div className="container-wrapper mb-10">
           <div className="row d-center">
-            <div className="col-12">
+            <div className="col-10">
               {chartSleepAvg()}
+            </div>
+            <div className="col-2">
+              {tableSleepAvg()}
             </div>
           </div>
         </div>
