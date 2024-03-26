@@ -100,7 +100,7 @@ export const SleepDetail = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonSleepDelete = () => {
     return (
       <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowSleepDelete}>
@@ -138,7 +138,7 @@ export const SleepDetail = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

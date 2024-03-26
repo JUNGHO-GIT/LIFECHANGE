@@ -28,7 +28,7 @@ export const MoneyInsert = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [MONEY, setMONEY] = useState<any>({});
   const [moneyCount, setMoneyCount] = useState<number>(1);
-  const [moneySection, setMoneySection] = useState<any[]>([{
+  const [money_section, setMoneySection] = useState<any[]>([{
     money_part_idx: 0,
     money_part_val: "전체",
     money_title_idx: 0,
@@ -40,9 +40,9 @@ export const MoneyInsert = () => {
     setMONEY ({
       ...MONEY,
       moneyDay: moment(moneyDay).format("YYYY-MM-DD"),
-      moneySection : moneySection,
+      money_section : money_section,
     });
-  }, [moneyDay, moneySection]);
+  }, [moneyDay, money_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowMoneyInsert = async () => {
@@ -215,8 +215,8 @@ export const MoneyInsert = () => {
   const tableMoneySection = (i: number) => {
 
     const updateMoneyArray
-    = moneySection[i] && moneyTitleArray[moneySection[i].money_part_idx]
-    ? moneyTitleArray[moneySection[i].money_part_idx]?.money_title
+    = money_section[i] && moneyTitleArray[money_section[i].money_part_idx]
+    ? moneyTitleArray[money_section[i].money_part_idx]?.money_title
    : [];
 
     return (
@@ -263,7 +263,7 @@ export const MoneyInsert = () => {
                 className="form-control"
                 id={`money_amount-${i}`}
                 placeholder="amount"
-                value={moneySection[i]?.money_amount}
+                value={money_section[i]?.money_amount}
                 onChange={(e:any) => {
                   setMoneySection((prev: any[]) => {
                     const updatedSection = [...prev];
@@ -282,7 +282,7 @@ export const MoneyInsert = () => {
                 className="form-control"
                 id={`money_content-${i}`}
                 placeholder="content"
-                value={moneySection[i]?.money_content}
+                value={money_section[i]?.money_content}
                 onChange={(e:any) => {
                   setMoneySection((prev: any[]) => {
                     const updatedSection = [...prev];
@@ -298,7 +298,7 @@ export const MoneyInsert = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonMoneyInsert = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary" onClick={flowMoneyInsert}>
@@ -316,7 +316,7 @@ export const MoneyInsert = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

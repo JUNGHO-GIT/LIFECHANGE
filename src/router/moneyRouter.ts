@@ -52,7 +52,7 @@ moneyRouter.get("/moneyDetail", async (req: Request, res: Response) => {
   try {
     const moneyDetail = await moneyService.moneyDetail (
       req.query._id,
-      req.query.moneySection_id
+      req.query.money_section_id
     );
     if (moneyDetail) {
       res.send(moneyDetail);
@@ -112,7 +112,7 @@ moneyRouter.delete("/moneyDelete", async (req: Request, res: Response) => {
   try {
     const moneyDelete = await moneyService.moneyDelete (
       req.query._id,
-      req.query.moneySection_id
+      req.query.money_section_id
     );
     if (moneyDelete) {
       res.send("success");

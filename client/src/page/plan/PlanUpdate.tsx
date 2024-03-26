@@ -101,7 +101,7 @@ export const PlanUpdate = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonPlanUpdate = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowPlanUpdate}>
@@ -119,7 +119,7 @@ export const PlanUpdate = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

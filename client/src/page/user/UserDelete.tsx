@@ -108,7 +108,7 @@ export const UserDelete = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonUserDelete = () => {
     return (
       <button className="btn btn-sm btn-primary" type="button" onClick={flowUserDelete}>
@@ -126,7 +126,7 @@ export const UserDelete = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

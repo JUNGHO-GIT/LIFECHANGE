@@ -155,7 +155,7 @@ export const FoodInsert = () => {
     </div>
   );
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonFoodCategory = () => {
     return (
       <select className="form-select"onChange={e => {setCategory(e.target.value);}}>
@@ -194,7 +194,7 @@ export const FoodInsert = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

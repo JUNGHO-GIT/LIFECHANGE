@@ -21,7 +21,7 @@ const MoneySchema = new mongoose.Schema ({
   },
 
   // 2. section
-  moneySection: [{
+  money_section: [{
     money_part_idx : {
       type : Number,
       required : false

@@ -57,22 +57,22 @@ export const moneyAvg = async (
   }
 
   findQuery = [
-    {$unwind: "$moneySection"},
+    {$unwind: "$money_section"},
     {$match: {
       user_id: user_id_param,
-      "moneySection.money_part_val": {$regex: money_part_val_param},
-      "moneySection.money_title_val": {$regex: money_title_val_param},
+      "money_section.money_part_val": {$regex: money_part_val_param},
+      "money_section.money_title_val": {$regex: money_title_val_param},
       money_day: {
         $gte: startDay,
         $lte: endDay,
       },
     }},
     {$group: {
-      _id: "$moneySection.money_title_val",
+      _id: "$money_section.money_title_val",
       count: {$sum: 1},
-      money_part_val: {$first: "$moneySection.money_part_val"},
-      money_title_val: {$first: "$moneySection.money_title_val"},
-      money_amount_avg: {$avg: "$moneySection.money_amount"},
+      money_part_val: {$first: "$money_section.money_part_val"},
+      money_title_val: {$first: "$money_section.money_title_val"},
+      money_amount_avg: {$avg: "$money_section.money_amount"},
     }}
   ];
 
@@ -84,7 +84,7 @@ export const moneyAvg = async (
 // 2. moneyDetail --------------------------------------------------------------------------------->
 export const moneyDetail = async (
   _id_param : any,
-  moneySection_id_param : any
+  money_section_id_param : any
 ) => {
 
   let findQuery;
@@ -92,7 +92,7 @@ export const moneyDetail = async (
   let finalResult;
   let moneySchema;
 
-  if (!moneySection_id_param) {
+  if (!money_section_id_param) {
     findQuery = {
       _id: _id_param
     };
@@ -107,12 +107,12 @@ export const moneyDetail = async (
     moneySchema = findResult;
 
     if (moneySchema) {
-      const matchedSection = moneySchema.moneySection?.find((section: any) => {
-        return section._id.toString() === moneySection_id_param.toString();
+      const matchedSection = moneySchema.money_section?.find((section: any) => {
+        return section._id.toString() === money_section_id_param.toString();
       });
       finalResult = {
         ...moneySchema.toObject(),
-        moneySection: [matchedSection]
+        money_section: [matchedSection]
       };
     }
   }
@@ -132,7 +132,7 @@ export const moneyInsert = async (
   createQuery = {
     _id : new mongoose.Types.ObjectId(),
     user_id : user_id_param,
-    moneySection : MONEY_param.moneySection,
+    money_section : MONEY_param.money_section,
     money_planYn : MONEY_param.money_planYn,
     money_day : MONEY_param.moneyDay,
     money_regdate : MONEY_param.money_regdate,
@@ -170,35 +170,35 @@ export const moneyUpdate = async (
 // 5. moneyDelete --------------------------------------------------------------------------------->
 export const moneyDelete = async (
   _id_param : any,
-  moneySection_id_param : any
+  money_section_id_param : any
 ) => {
 
   let deleteQuery;
   let deleteResult;
   let finalResult;
 
-  // moneySection_id_param이 제공되면 해당 섹션만 삭제
+  // money_section_id_param이 제공되면 해당 섹션만 삭제
   // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제
   // 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거
   if (
-    moneySection_id_param !== null &&
-    moneySection_id_param !== undefined &&
-    moneySection_id_param !== ""
+    money_section_id_param !== null &&
+    money_section_id_param !== undefined &&
+    money_section_id_param !== ""
   ) {
     deleteQuery = [
       {_id: _id_param},
       {$pull: {
-        moneySection: { _id: moneySection_id_param }
+        money_section: { _id: money_section_id_param }
       }}
     ];
     deleteResult = await Money.updateOne(deleteQuery);
   }
 
-  // moneySection_id_param이 제공되지 않으면 전체 작업을 삭제
+  // money_section_id_param이 제공되지 않으면 전체 작업을 삭제
   else if (
-    moneySection_id_param === null ||
-    moneySection_id_param === undefined ||
-    moneySection_id_param === ""
+    money_section_id_param === null ||
+    money_section_id_param === undefined ||
+    money_section_id_param === ""
   ) {
     deleteQuery = {
       _id: _id_param

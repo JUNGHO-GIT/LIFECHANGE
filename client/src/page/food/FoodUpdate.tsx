@@ -149,7 +149,7 @@ export const FoodUpdate = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonFoodUpdate = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowFoodUpdate}>
@@ -167,7 +167,7 @@ export const FoodUpdate = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

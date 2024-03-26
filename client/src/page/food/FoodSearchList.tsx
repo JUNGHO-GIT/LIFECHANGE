@@ -126,7 +126,7 @@ export const FoodSearchList = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonFoodInsert = (
     title: string, brand: string, calories: number, fat: number,
     carb: number, protein: number, serving: number
@@ -284,7 +284,7 @@ export const FoodSearchList = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

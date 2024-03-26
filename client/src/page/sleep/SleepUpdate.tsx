@@ -242,7 +242,7 @@ export const SleepUpdate = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonSleepUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary" onClick={flowSleepUpdate}>
@@ -260,7 +260,7 @@ export const SleepUpdate = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

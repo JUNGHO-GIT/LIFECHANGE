@@ -74,7 +74,7 @@ export const UserLogin = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonUserLogin = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserLogin}>
@@ -92,22 +92,26 @@ export const UserLogin = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="container-wrapper mh-30">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
-        </div>
-      </div>
-      <div className="row d-center mt-5 mb-20">
-        <div className="col-12">
-          <form className="form-inline">
-            {tableUserLogin()}
-            <br/>
-            {buttonUserLogin()}
-            {buttonRefreshPage()}
-          </form>
+    <div className="root-wrapper">
+      <div className="container">
+        <div className="container-wrapper mb-30">
+          <div className="row d-center mt-5">
+            <div className="col-12">
+              <h1 className="mb-3 fw-7">{TITLE}</h1>
+            </div>
+          </div>
+          <div className="row d-center mt-5 mb-20">
+            <div className="col-12">
+              <form className="form-inline">
+                {tableUserLogin()}
+                <br/>
+                {buttonUserLogin()}
+                {buttonRefreshPage()}
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

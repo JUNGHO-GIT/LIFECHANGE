@@ -1,38 +1,56 @@
-SLEEP_LIST_AVG : [
+WORK_LIST : [
   {
-    "name": "~2024-02-18",
-    "avgSleepTime": "00:00",
-    "avgSleepNight": "00:00",
-    "avgSleepMorning": "00:00"
-  },
-  {
-    "name": "~2024-02-25",
-    "avgSleepTime": "08:33",
-    "avgSleepNight": "13:32",
-    "avgSleepMorning": "10:05"
-  },
-  {
-    "name": "~2024-03-03",
-    "avgSleepTime": "11:20",
-    "avgSleepNight": "15:01",
-    "avgSleepMorning": "18:21"
-  },
-  {
-    "name": "~2024-03-10",
-    "avgSleepTime": "11:50",
-    "avgSleepNight": "16:41",
-    "avgSleepMorning": "16:31"
-  },
-  {
-    "name": "~2024-03-17",
-    "avgSleepTime": "11:20",
-    "avgSleepNight": "14:41",
-    "avgSleepMorning": "18:01"
-  },
-  {
-    "name": "~2024-03-24",
-    "avgSleepTime": "08:08",
-    "avgSleepNight": "19:53",
-    "avgSleepMorning": "08:49"
+    "val": {
+      "_id": "6602143d275ab2f4e701366a",
+      "work_dur": "2024-03-26 ~ 2024-03-26",
+      "work_day": "2024-03-26",
+      "work_start": "11:01",
+      "work_end": "03:33",
+      "work_time": "07 : 28"
+    },
+    "real": [
+      {
+        "work_part_idx": 1,
+        "work_part_val": "등",
+        "work_title_idx": 0,
+        "work_title_val": "데드리프트",
+        "work_kg": 1,
+        "work_set": 1,
+        "work_count": 1,
+        "work_rest": 1
+      },
+      {
+        "work_part_idx": 1,
+        "work_part_val": "등",
+        "work_title_idx": 0,
+        "work_title_val": "데드리프트",
+        "work_kg": 2,
+        "work_set": 2,
+        "work_count": 2,
+        "work_rest": 2
+      }
+    ],
+    "plan": [
+      {
+        "work_part_idx": 1,
+        "work_part_val": "등",
+        "work_title_idx": 0,
+        "work_title_val": "데드리프트",
+        "work_kg": 1,
+        "work_set": 1,
+        "work_count": 1,
+        "work_rest": 1
+      },
+      {
+        "work_part_idx": 1,
+        "work_part_val": "등",
+        "work_title_idx": 0,
+        "work_title_val": "데드리프트",
+        "work_kg": 2,
+        "work_set": 2,
+        "work_count": 2,
+        "work_rest": 2
+      }
+    ]
   }
 ]

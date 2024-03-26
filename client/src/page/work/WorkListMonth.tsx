@@ -155,25 +155,25 @@ export const WorkListMonth = () => {
         </thead>
         <tbody>
           {WORK_LIST.map((workItem : any) => {
-            return workItem.workSection.map((workSection: any) => (
-              <tr key={workSection._id}>
+            return workItem.work_section.map((work_section: any) => (
+              <tr key={work_section._id}>
                 <td
                   className="pointer"
                   onClick={() => {
                     navParam("/workDetail", {
                       state: {
                         _id : workItem._id,
-                        workSection_id : workSection._id
+                        work_section_id : work_section._id
                       },
                     });
                   }}>
-                  {workSection.work_part_val}
+                  {work_section.work_part_val}
                 </td>
-                <td>{workSection.work_title_val}</td>
-                <td>{workSection.work_kg}</td>
-                <td>{workSection.work_set}</td>
-                <td>{workSection.work_count}</td>
-                <td>{workSection.work_rest}</td>
+                <td>{work_section.work_title_val}</td>
+                <td>{work_section.work_kg}</td>
+                <td>{work_section.work_set}</td>
+                <td>{work_section.work_count}</td>
+                <td>{work_section.work_rest}</td>
                 <td>{workItem.work_time}</td>
               </tr>
             ));
@@ -264,7 +264,7 @@ export const WorkListMonth = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonWorkToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
@@ -334,7 +334,7 @@ export const WorkListMonth = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

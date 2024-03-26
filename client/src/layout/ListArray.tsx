@@ -36,7 +36,12 @@ export const listArray = [
     label: "Work",
     items: [
       {to: "/workInsert", label: "WorkInsert"},
-      {to: "/workListDay", label: "WorkList"},
+      {to: "/workList", label: "WorkList"},
+      {to: "/workListDay", label: "WorkListDay"},
+      {to: "/workListWeek", label: "WorkListWeek"},
+      {to: "/workListMonth", label: "WorkListMonth"},
+      {to: "/workListYear", label: "WorkListYear"},
+      {to: "/workListSelect", label: "WorkListSelect"}
     ]
   },
   {

@@ -117,7 +117,7 @@ export const MoneyUpdate = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonMoneyUpdate = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowMoneyUpdate}>
@@ -135,7 +135,7 @@ export const MoneyUpdate = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

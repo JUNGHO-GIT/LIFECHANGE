@@ -11,6 +11,7 @@ import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
 import "react-day-picker/dist/style.css";
 import "react-datepicker/dist/react-datepicker.css";
+import "react-resizable/css/styles.css";
 
 import "../assets/css/Custom.css";
 import "../assets/css/Jstyle.css";
@@ -56,6 +57,7 @@ import {FoodListSelect} from "../page/food/FoodListSelect";
 import {WorkInsert} from "../page/work/WorkInsert";
 import {WorkDetail} from "../page/work/WorkDetail";
 import {WorkUpdate} from "../page/work/WorkUpdate";
+import {WorkList} from "../page/work/WorkList";
 import {WorkListDay} from "../page/work/WorkListDay";
 import {WorkListWeek} from "../page/work/WorkListWeek";
 import {WorkListMonth} from "../page/work/WorkListMonth";
@@ -128,6 +130,7 @@ const App = () => {
           <Route path="/workInsert" element={<WorkInsert />} />
           <Route path="/workDetail" element={<WorkDetail />} />
           <Route path="/workUpdate" element={<WorkUpdate />} />
+          <Route path="/workList" element={<WorkList />} />
           <Route path="/workListDay" element={<WorkListDay />} />
           <Route path="/workListWeek" element={<WorkListWeek />} />
           <Route path="/workListMonth" element={<WorkListMonth />} />

@@ -10,32 +10,12 @@ workRouter.get("/workList", async (req: Request, res: Response) => {
   try {
     const workList = await workService.workList (
       req.query.user_id,
-      req.query.work_dur
+      req.query.work_dur,
+      req.query.planYn,
+      req.query.filter
     );
     if (workList) {
       res.send(workList);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 1-2. workAvg ----------------------------------------------------------------------------------->
-workRouter.get("/workAvg", async (req: Request, res: Response) => {
-  try {
-    const workAvg = await workService.workAvg (
-      req.query.user_id,
-      req.query.work_dur,
-      req.query.work_part_val,
-      req.query.work_title_val,
-    );
-    if (workAvg) {
-      res.send(workAvg);
     }
     else {
       res.send("fail");
@@ -52,7 +32,7 @@ workRouter.get("/workDetail", async (req: Request, res: Response) => {
   try {
     const workDetail = await workService.workDetail (
       req.query._id,
-      req.query.workSection_id
+      req.query.work_section_id
     );
     if (workDetail) {
       res.send(workDetail);
@@ -112,7 +92,7 @@ workRouter.delete("/workDelete", async (req: Request, res: Response) => {
   try {
     const workDelete = await workService.workDelete (
       req.query._id,
-      req.query.workSection_id
+      req.query.work_section_id
     );
     if (workDelete) {
       res.send("success");

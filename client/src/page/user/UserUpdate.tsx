@@ -112,7 +112,7 @@ export const UserUpdate = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonUserUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserUpdate}>
@@ -130,7 +130,7 @@ export const UserUpdate = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

@@ -16,7 +16,7 @@ export const WorkDetail = () => {
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
-  const workSection_id = location.state.workSection_id;
+  const work_section_id = location.state.work_section_id;
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
@@ -32,7 +32,7 @@ export const WorkDetail = () => {
         const response = await axios.get(`${URL_WORK}/workDetail`, {
           params: {
             _id : _id,
-            workSection_id : workSection_id
+            work_section_id : work_section_id
           },
         });
         setWORK(response.data);
@@ -57,7 +57,7 @@ export const WorkDetail = () => {
         const response = await axios.delete(`${URL_WORK}/workDelete`, {
           params: {
             _id : _id,
-            workSection_id : workSection_id
+            work_section_id : work_section_id
           },
         });
         if (response.data === "success") {
@@ -92,7 +92,7 @@ export const WorkDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK?.workSection?.flatMap((workItem: any) => (
+          {WORK?.work_section?.flatMap((workItem: any) => (
             <tr key={workItem._id}>
               <td>{workItem.work_part_val}</td>
               <td>{workItem.work_title_val}</td>
@@ -108,7 +108,7 @@ export const WorkDetail = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonWorkDelete = () => {
     return (
       <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowWorkDelete}>
@@ -149,7 +149,7 @@ export const WorkDetail = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

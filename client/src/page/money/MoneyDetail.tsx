@@ -14,7 +14,7 @@ export const MoneyDetail = () => {
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
-  const moneySection_id = location.state.moneySection_id;
+  const money_section_id = location.state.money_section_id;
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -29,7 +29,7 @@ export const MoneyDetail = () => {
         const response = await axios.get(`${URL_MONEY}/moneyDetail`, {
           params: {
             _id : _id,
-            moneySection_id : moneySection_id
+            money_section_id : money_section_id
           },
         });
         setMONEY(response.data);
@@ -54,7 +54,7 @@ export const MoneyDetail = () => {
         const response = await axios.delete(`${URL_MONEY}/moneyDelete`, {
           params: {
             _id : _id,
-            moneySection_id : moneySection_id
+            money_section_id : money_section_id
           },
         });
         if (response.data === "success") {
@@ -86,7 +86,7 @@ export const MoneyDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY?.moneySection?.flatMap((moneyItem: any) => (
+          {MONEY?.money_section?.flatMap((moneyItem: any) => (
             <tr key={moneyItem._id}>
               <td>{moneyItem.money_part_val}</td>
               <td>{moneyItem.money_title_val}</td>
@@ -99,7 +99,7 @@ export const MoneyDetail = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonMoneyDelete = () => {
     return (
       <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowMoneyDelete}>
@@ -140,7 +140,7 @@ export const MoneyDetail = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

@@ -181,23 +181,23 @@ export const MoneyListWeek = () => {
               </thead>
               <tbody>
                 {MONEY_LIST.map((moneyItem : any) => {
-                  return moneyItem.moneySection.map((moneySection: any) => (
-                    <tr key={moneySection._id}>
+                  return moneyItem.money_section.map((money_section: any) => (
+                    <tr key={money_section._id}>
                       <td
                         className="pointer"
                         onClick={() => {
                           navParam("/moneyDetail", {
                             state: {
                               _id : moneyItem._id,
-                              moneySection_id : moneySection._id
+                              money_section_id : money_section._id
                             },
                           });
                         }}>
-                        {moneySection.money_part_val}
+                        {money_section.money_part_val}
                       </td>
-                      <td>{moneySection.money_title_val}</td>
-                      <td>{moneySection.money_amount}</td>
-                      <td>{moneySection.money_content}</td>
+                      <td>{money_section.money_title_val}</td>
+                      <td>{money_section.money_amount}</td>
+                      <td>{money_section.money_content}</td>
                     </tr>
                   ));
                 })}
@@ -355,7 +355,7 @@ export const MoneyListWeek = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

@@ -97,7 +97,7 @@ export const BoardDetail = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonBoardDelete = () => {
     return (
       <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowBoardDelete}>
@@ -135,7 +135,7 @@ export const BoardDetail = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

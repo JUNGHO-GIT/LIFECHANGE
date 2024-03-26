@@ -30,7 +30,7 @@ export const PlanList = () => {
   });
   const [filter, setFilter] = useState({
     filterPre: "day",
-    filterSub: "asc",
+    order: "asc",
     page: 1,
     limit: 5,
   });
@@ -486,7 +486,7 @@ export const PlanList = () => {
       <div className="mb-3">
         <div className="input-group">
           <select className="form-select" id="planListSortOrder" onChange={(e) => {
-            setFilter({...filter, filterSub: e.target.value});
+            setFilter({...filter, order: e.target.value});
           }}>
             <option value="asc" selected>오름차순</option>
             <option value="desc">내림차순</option>
@@ -510,7 +510,7 @@ export const PlanList = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

@@ -240,7 +240,7 @@ export const FoodListMonth = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonFoodToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
@@ -337,7 +337,7 @@ export const FoodListMonth = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

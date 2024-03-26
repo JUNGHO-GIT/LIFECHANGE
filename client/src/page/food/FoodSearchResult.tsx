@@ -99,7 +99,7 @@ export const FoodSearchResult = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonFoodDetail = (_id:any, food_title:any, foodDay:any, food_category:any) => {
     return (
       <p onClick={(e:any) => {
@@ -126,7 +126,7 @@ export const FoodSearchResult = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

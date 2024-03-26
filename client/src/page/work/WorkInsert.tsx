@@ -29,7 +29,7 @@ export const WorkInsert = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK, setWORK] = useState<any>({});
   const [workCount, setWorkCount] = useState<number>(1);
-  const [workSection, setWorkSection] = useState<any[]>([{
+  const [work_section, setWorkSection] = useState<any[]>([{
     work_part_idx: 0,
     work_part_val: "전체",
     work_title_idx: 0,
@@ -41,9 +41,9 @@ export const WorkInsert = () => {
     setWORK ({
       ...WORK,
       workDay: moment(workDay).format("YYYY-MM-DD"),
-      workSection : workSection,
+      work_section : work_section,
     });
-  }, [workDay, workSection]);
+  }, [workDay, work_section]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -309,8 +309,8 @@ export const WorkInsert = () => {
   const tableWorkSection = (i: number) => {
 
     const updateWorkArray
-    = workSection[i] && workTitleArray[workSection[i].work_part_idx]
-    ? workTitleArray[workSection[i].work_part_idx]?.work_title
+    = work_section[i] && workTitleArray[work_section[i].work_part_idx]
+    ? workTitleArray[work_section[i].work_part_idx]?.work_title
    : [];
 
     return (
@@ -357,7 +357,7 @@ export const WorkInsert = () => {
                 className="form-control"
                 id={`work_set-${i}`}
                 placeholder="Set"
-                value={workSection[i]?.work_set}
+                value={work_section[i]?.work_set}
                 onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
@@ -377,7 +377,7 @@ export const WorkInsert = () => {
                 className="form-control"
                 id={`work_count-${i}`}
                 placeholder="Count"
-                value={workSection[i]?.work_count}
+                value={work_section[i]?.work_count}
                 onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
@@ -399,7 +399,7 @@ export const WorkInsert = () => {
                 className="form-control"
                 id={`work_kg-${i}`}
                 placeholder="Kg"
-                value={workSection[i]?.work_kg}
+                value={work_section[i]?.work_kg}
                 onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
@@ -419,7 +419,7 @@ export const WorkInsert = () => {
                 className="form-control"
                 id={`work_rest-${i}`}
                 placeholder="Rest"
-                value={workSection[i]?.work_rest}
+                value={work_section[i]?.work_rest}
                 onChange={(e:any) => {
                   setWorkSection((prev: any[]) => {
                     const updatedSection = [...prev];
@@ -435,7 +435,7 @@ export const WorkInsert = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonWorkInsert = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary" onClick={flowWorkInsert}>
@@ -453,7 +453,7 @@ export const WorkInsert = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

@@ -100,7 +100,7 @@ export const BoardInsert = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonBoardInsert = () => {
     return (
       <button className="btn btn-sm btn-primary" type="button" onClick={flowBoardInsert}>
@@ -127,7 +127,7 @@ export const BoardInsert = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

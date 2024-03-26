@@ -278,7 +278,7 @@ export const PlanInsert = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonPlanInsert = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary" onClick={flowPlanInsert}>
@@ -296,7 +296,7 @@ export const PlanInsert = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

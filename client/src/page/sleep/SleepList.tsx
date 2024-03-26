@@ -10,10 +10,6 @@ import axios from "axios";
 import {useStorage} from "../../assets/ts/useStorage";
 import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
 
-import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {BarChart, Bar} from "recharts";
-import {LineChart, Line} from "recharts";
-
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
 
@@ -28,25 +24,12 @@ export const SleepList = () => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [type, setType] = useState("day");
   const [filter, setFilter] = useState({
-    filterSub: "asc",
+    order: "asc",
     page: 1,
     limit: 5,
   });
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
-    `sleepList(${type})`, [{
-      _id: "",
-      sleep_dur: "0000-00-00 ~ 0000-00-00",
-      sleep_day: "0000-00-00",
-      sleep_night_real: "00:00",
-      sleep_time_real: "00:00",
-      sleep_morning_real: "00:00",
-      sleep_night_plan: "00:00",
-      sleep_time_plan: "00:00",
-      sleep_morning_plan: "00:00",
-    }]
-  );
   const {val:sleepResDur, setVal:setSleepResDur} = useStorage<string>(
     `sleepResDur(${type})`, "0000-00-00 ~ 0000-00-00"
   );
@@ -58,6 +41,9 @@ export const SleepList = () => {
   );
   const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined>(
     `sleepDay(${type})`, koreanDate
+  );
+  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage<any>(
+    `sleepList(${type})`, []
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -83,50 +69,42 @@ export const SleepList = () => {
     });
 
     // 3. merged
-    let mergedData = [];
-    if (responseList.data.sleepList.length > 0 || responsePlan.data.sleepList.length > 0) {
-      const allSleepDays
-        = [...responseList.data.sleepList, ...responsePlan.data.sleepList]
-        .map(item => item.sleep_day)
-        .filter((value, index, self) => self.indexOf(value) === index);
+    let mergedData:any = [];
+    if (responseList.data.sleepList || responsePlan.data.sleepList) {
+      const allSleepDays = [...responseList.data.sleepList, ...responsePlan.data.sleepList]
+      .map(item => item.sleep_day)
+      .filter((value, index, self) => self.indexOf(value) === index);
 
-      mergedData = allSleepDays.map(sleep_day => {
+      mergedData = allSleepDays.map((day:any) => {
         const listItem
-          = responseList.data.sleepList.find((item:any) => item.sleep_day === sleep_day) || {};
+          = responseList.data.sleepList.find((item:any) => item.sleep_day === day) || {};
         const planItem
-          = responsePlan.data.sleepList.find((item:any) => item.sleep_day === sleep_day) || {};
+          = responsePlan.data.sleepList.find((item:any) => item.sleep_day === day) || {};
         return {
-          _id: listItem._id || "",
-          sleep_dur: sleepResDur,
-          sleep_day: sleep_day,
-          sleep_night_real: listItem.sleep_night || "00:00",
-          sleep_time_real: listItem.sleep_time || "00:00",
-          sleep_morning_real: listItem.sleep_morning || "00:00",
-          sleep_night_plan: planItem.sleep_night || "00:00",
-          sleep_time_plan: planItem.sleep_time || "00:00",
-          sleep_morning_plan: planItem.sleep_morning || "00:00",
+          val: {
+            _id: listItem._id,
+            sleep_dur: sleepResDur,
+            sleep_day: day,
+          },
+          real: {
+            sleep_night: listItem.sleep_night || "00:00",
+            sleep_time: listItem.sleep_time || "00:00",
+            sleep_morning: listItem.sleep_morning || "00:00",
+          },
+          plan: {
+            sleep_night: planItem.sleep_night || "00:00",
+            sleep_time: planItem.sleep_time || "00:00",
+            sleep_morning: planItem.sleep_morning || "00:00",
+          },
         };
       });
-    }
-    else {
-      mergedData = [{
-        _id: "",
-        sleep_dur: "0000-00-00 ~ 0000-00-00",
-        sleep_day: "0000-00-00",
-        sleep_night_real: "00:00",
-        sleep_time_real: "00:00",
-        sleep_morning_real: "00:00",
-        sleep_night_plan: "00:00",
-        sleep_time_plan: "00:00",
-        sleep_morning_plan: "00:00",
-      }];
-    }
+    };
 
     setTotalCount(responseList.data.totalCount);
     setSLEEP_LIST(mergedData);
     log("SLEEP_LIST : " + JSON.stringify(mergedData));
 
-  })()}, [user_id, sleepResDur, type, filter]);
+  })()}, [user_id, sleepResDur, filter]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -417,40 +395,40 @@ export const SleepList = () => {
         </thead>
         <tbody>
           {SLEEP_LIST.map((item:any) => (
-            <React.Fragment key={item.sleep_day}>
+            <React.Fragment key={item.val.sleep_day}>
               <tr>
                 <td rowSpan={3} className="pointer" onClick={() => {
                   navParam("/sleepDetail", {
-                    state: {_id: item._id}
+                    state: {_id: item.val._id}
                   });
                 }}>
-                  {item.sleep_day}
+                  {item.val.sleep_day}
                 </td>
                 <td>취침</td>
-                <td>{item.sleep_night_plan}</td>
-                <td>{item.sleep_night_real}</td>
+                <td>{item.plan.sleep_night}</td>
+                <td>{item.real.sleep_night}</td>
                 <td>
-                  <span className={successOrNot(item.sleep_night_plan, item.sleep_night_real)}>
+                  <span className={successOrNot(item.plan.sleep_night, item.real.sleep_night)}>
                     ●
                   </span>
                 </td>
               </tr>
               <tr>
                 <td>수면</td>
-                <td>{item.sleep_time_plan}</td>
-                <td>{item.sleep_time_real}</td>
+                <td>{item.plan.sleep_time}</td>
+                <td>{item.real.sleep_time}</td>
                 <td>
-                  <span className={successOrNot(item.sleep_time_plan, item.sleep_time_real)}>
+                  <span className={successOrNot(item.plan.sleep_time, item.real.sleep_time)}>
                     ●
                   </span>
                 </td>
               </tr>
               <tr>
                 <td>기상</td>
-                <td>{item.sleep_morning_plan}</td>
-                <td>{item.sleep_morning_real}</td>
+                <td>{item.plan.sleep_morning}</td>
+                <td>{item.real.sleep_morning}</td>
                 <td>
-                  <span className={successOrNot(item.sleep_morning_plan, item.sleep_morning_real)}>
+                  <span className={successOrNot(item.plan.sleep_morning, item.real.sleep_morning)}>
                     ●
                   </span>
                 </td>
@@ -462,7 +440,7 @@ export const SleepList = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonSleepToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
@@ -526,7 +504,7 @@ export const SleepList = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="sleepListSortOrder" onChange={(e) => {
-          setFilter({...filter, filterSub: e.target.value});
+          setFilter({...filter, order: e.target.value});
         }}>
           <option value="asc" selected>오름차순</option>
           <option value="desc">내림차순</option>
@@ -547,7 +525,7 @@ export const SleepList = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

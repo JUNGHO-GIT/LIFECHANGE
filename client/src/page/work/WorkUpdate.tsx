@@ -166,7 +166,7 @@ export const WorkUpdate = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonWorkUpdate = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={flowWorkUpdate}>
@@ -184,7 +184,7 @@ export const WorkUpdate = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">

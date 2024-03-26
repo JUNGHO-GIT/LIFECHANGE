@@ -21,9 +21,9 @@ export const planList = async (
 
   let sortCondition = {};
   if (filter_param.filterPre === "number") {
-    sortCondition = {"planSection.plan_number": (filter_param.filterSub === "asc" ? 1 : -1)};
+    sortCondition = {"planSection.plan_number": (filter_param.order === "asc" ? 1 : -1)};
   } else if (filter_param.filterPre === "day") {
-    sortCondition = {plan_day: (filter_param.filterSub === "asc" ? 1 : -1)};
+    sortCondition = {plan_day: (filter_param.order === "asc" ? 1 : -1)};
   }
 
   // 집계 파이프라인

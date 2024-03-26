@@ -9,10 +9,7 @@ export const sleepDash = async (
   user_id_param: any
 ) => {
 
-  let findQuery;
-  let findResult;
   let finalResult;
-
   let listArray:any = [];
   let avgArray:any = [];
 
@@ -279,7 +276,7 @@ export const sleepList = async (
   let filterPlan = planYn_param;
 
   // asc, desc
-  let filterSub = filter_param.filterSub;
+  let order = filter_param.order;
 
   // paging
   const page = filter_param.page === 0 ? 1 : filter_param.page;
@@ -296,7 +293,7 @@ export const sleepList = async (
 
   // asc, desc 정렬
   let sortCondition = {};
-  if (filterSub === "asc") {
+  if (order === "asc") {
     sortCondition = { sleep_day: 1 };
   }
   else {
@@ -329,7 +326,6 @@ export const sleepDetail = async (
 
   let findQuery;
   let findResult;
-  let finalResult;
 
   findQuery = {
     _id: _id_param,
@@ -348,7 +344,6 @@ export const sleepCheckInsert = async (
 
   let findQuery;
   let findResult;
-  let finalResult;
 
   findQuery = {
     user_id: user_id_param,
@@ -369,7 +364,6 @@ export const sleepInsert = async (
 
   let createQuery;
   let createResult;
-  let finalResult;
 
   createQuery = {
     _id: new mongoose.Types.ObjectId(),
@@ -397,7 +391,6 @@ export const sleepUpdate = async (
 
   let updateQuery;
   let updateResult;
-  let finalResult;
 
   updateQuery = {
     filter_id : {_id : _id_param},
@@ -405,11 +398,6 @@ export const sleepUpdate = async (
   };
 
   updateResult = await Sleep.updateOne(updateQuery.filter_id, updateQuery.filter_set);
-
-  console.log("===============================================");
-  console.log("_id : " + _id_param);
-  console.log("SLEEP : " + JSON.stringify(updateResult));
-  console.log("===============================================");
 
   return updateResult;
 };
@@ -421,7 +409,6 @@ export const sleepDelete = async (
 
   let deleteQuery;
   let deleteResult;
-  let finalResult;
 
   deleteQuery = {
     _id: _id_param,

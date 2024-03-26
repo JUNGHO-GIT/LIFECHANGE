@@ -95,7 +95,7 @@ export const BoardUpdate = () => {
     );
   };
 
-  // 6. button ------------------------------------------------------------------------------------>
+  // 9. button ------------------------------------------------------------------------------------>
   const buttonBoardUpdate = () => {
     return (
       <button className="btn btn-sm btn-primary ms-2" type="button" onClick={() => {
@@ -124,7 +124,7 @@ export const BoardUpdate = () => {
     );
   };
 
-  // 7. return ------------------------------------------------------------------------------------>
+  // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
