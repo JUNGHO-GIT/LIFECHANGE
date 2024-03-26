@@ -217,13 +217,24 @@ export const WorkList = () => {
     switch (type) {
       case "day":
         const handleDay = (day:any) => {
-          setCalendarOpen(false);
           const newDay = new Date(day);
           setWorkDay(newDay);
         };
         return (
           <Draggable>
             <div className={`dayPicker-container ${calendarOpen ? "" : "d-none"}`}>
+              <span
+                className="d-right fw-700 pointer"
+                onClick={() => setCalendarOpen(false)}
+                style={{
+                position: "absolute",
+                right: "15px",
+                top: "10px",
+              }}
+              >
+                X
+              </span>
+              <div className="h-2"></div>
               <DayPicker
                 showOutsideDays={true}
                 locale={ko}
@@ -233,6 +244,17 @@ export const WorkList = () => {
                 month={workDay}
                 onDayClick={handleDay}
                 onMonthChange={(month) => setWorkDay(month)}
+                styles={{
+                  head_cell: {
+                    width: "60px",
+                  },
+                  table: {
+                    maxWidth: "none",
+                  },
+                  day: {
+                    margin: "auto",
+                  },
+                }}
                 modifiersClassNames={{
                   selected: "selected",
                   disabled: "disabled",
@@ -245,7 +267,6 @@ export const WorkList = () => {
         );
       case "week":
         const handleWeek = (day:any) => {
-          setCalendarOpen(false);
           const selectedDay = new Date(day);
           const startOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() - selectedDay.getDay() + 1));
           const endOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() + (7 - selectedDay.getDay())));
@@ -279,7 +300,6 @@ export const WorkList = () => {
         );
       case "month":
         const handleMonth = (month:any) => {
-          setCalendarOpen(false);
           setWorkResDur(`${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-01 ~ ${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-31`);
         };
         return (
@@ -304,7 +324,6 @@ export const WorkList = () => {
         );
       case "year":
         const handleYear = (year:any) => {
-          setCalendarOpen(false);
           const yearDate = new Date(year.getFullYear(), 0, 1);
           const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
           const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
@@ -338,7 +357,6 @@ export const WorkList = () => {
         );
       case "select":
         const handleSelect = (day:any) => {
-          setCalendarOpen(false);
           const selectedDay = new Date(day);
           if (workStartDay && workEndDay) {
             if (selectedDay < workStartDay) {
