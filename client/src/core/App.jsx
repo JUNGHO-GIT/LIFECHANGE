@@ -100,7 +100,7 @@ export const App = () => {
           <Route path="/calendar/list" element={<CalendarList />} />
           <Route path="/calendar/detail" element={<CalendarDetail />} />
 
-          <Route path="/userLogin" element={<UserLogin />} />
+          <Route path="/user/login" element={<UserLogin />} />
           <Route path="/user/insert" element={<UserInsert />} />
           <Route path="/user/detail" element={<UserDetail />} />
           <Route path="/user/list" element={<UserList />} />
