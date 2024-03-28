@@ -24,7 +24,7 @@ export const FoodSearchResult = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [foodDay, setFoodDay] = useState(koreanDate);
-  const [FOOD, setFOOD] = useState<any> ([]);
+  const [FOOD, setFOOD] = useState ([]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -79,7 +79,7 @@ export const FoodSearchResult = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD.map((index:any, i: number) => (
+          {FOOD.map((index:any, i) => (
             <tr key={i}>
               <td>
                 {buttonFoodDetail (

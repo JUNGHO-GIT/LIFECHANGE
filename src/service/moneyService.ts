@@ -7,8 +7,8 @@ import {moneyPartAll, moneyTitleAll} from "../assets/ts/moneyArray";
 
 // 1-1. moneyList --------------------------------------------------------------------------------->
 export const moneyList = async (
-  user_id_param: any,
-  money_dur_param: any
+  user_id_param,
+  money_dur_param
 ) => {
 
   let findQuery;
@@ -33,10 +33,10 @@ export const moneyList = async (
 
 // 1-2. moneyAvg ---------------------------------------------------------------------------------->
 export const moneyAvg = async (
-  user_id_param: any,
-  money_dur_param: any,
-  money_part_val_param: any,
-  money_title_val_param: any
+  user_id_param,
+  money_dur_param,
+  money_part_val_param,
+  money_title_val_param
 ) => {
 
   let findQuery;
@@ -83,8 +83,8 @@ export const moneyAvg = async (
 
 // 2. moneyDetail --------------------------------------------------------------------------------->
 export const moneyDetail = async (
-  _id_param : any,
-  money_section_id_param : any
+  _id_param ,
+  money_section_id_param
 ) => {
 
   let findQuery;
@@ -107,7 +107,7 @@ export const moneyDetail = async (
     moneySchema = findResult;
 
     if (moneySchema) {
-      const matchedSection = moneySchema.money_section?.find((section: any) => {
+      const matchedSection = moneySchema.money_section?.find((section) => {
         return section._id.toString() === money_section_id_param.toString();
       });
       finalResult = {
@@ -121,8 +121,8 @@ export const moneyDetail = async (
 
 // 3. moneyInsert --------------------------------------------------------------------------------->
 export const moneyInsert = async (
-  user_id_param : any,
-  MONEY_param : any
+  user_id_param ,
+  MONEY_param
 ) => {
 
   let createQuery;
@@ -146,8 +146,8 @@ export const moneyInsert = async (
 
 // 4. moneyUpdate --------------------------------------------------------------------------------->
 export const moneyUpdate = async (
-  _id_param : any,
-  MONEY_param : any
+  _id_param ,
+  MONEY_param
 ) => {
 
   let updateQuery;
@@ -169,8 +169,8 @@ export const moneyUpdate = async (
 
 // 5. moneyDelete --------------------------------------------------------------------------------->
 export const moneyDelete = async (
-  _id_param : any,
-  money_section_id_param : any
+  _id_param ,
+  money_section_id_param
 ) => {
 
   let deleteQuery;

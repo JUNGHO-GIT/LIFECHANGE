@@ -13,15 +13,13 @@ export const SleepDetail = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Sleep Detail";
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
-  const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState<any> ({});
+  const [SLEEP, setSLEEP] = useState ({});
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
 
@@ -90,8 +88,8 @@ export const SleepDetail = () => {
         <tbody>
           <tr>
             <td>{SLEEP.sleep_day}</td>
-            <td>{SLEEP.sleep_night}</td>
-            <td>{SLEEP.sleep_morning}</td>
+            <td>{SLEEP.sleep_start}</td>
+            <td>{SLEEP.sleep_end}</td>
             <td>{SLEEP.sleep_time}</td>
             <td>{SLEEP.sleep_regdate}</td>
           </tr>

@@ -47,8 +47,8 @@ export const WorkListDay = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [workType, setWorkType] = useState<string>("list");
-  const [workNumber, setWorkNumber] = useState<number>(0);
+  const [workType, setWorkType] = useState("list");
+  const [workNumber, setWorkNumber] = useState(0);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -110,7 +110,7 @@ export const WorkListDay = () => {
 
   // 4-1. view ----------------------------------------------------------------------------------->
   const viewWorkDay = () => {
-    const flowDayClick: DayClickEventHandler = (day: any) => {
+    const flowDayClick: DayClickEventHandler = (day) => {
       setWorkDay(day);
     };
     return (
@@ -151,8 +151,8 @@ export const WorkListDay = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((workItem : any) => {
-            return workItem.work_section.map((work_section: any) => (
+          {WORK_LIST.map((workItem ) => {
+            return workItem.work_section.map((work_section) => (
               <tr key={work_section._id}>
                 <td
                   className="pointer"

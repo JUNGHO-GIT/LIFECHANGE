@@ -37,7 +37,7 @@ export const CalendarDetail = () => {
   const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage<any> (
     "moneyListDay", []
   );
-  const {val:calendarDay, setVal:setCalendarDay} = useStorage<Date | undefined> (
+  const {val:calendarDay, setVal:setCalendarDay} = useStorage (
     "calendarDay", undefined
   );
   const {val:resVal, setVal:setResVal} = useStorage<string> (
@@ -145,7 +145,7 @@ export const CalendarDetail = () => {
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewCalendarDay = () => {
-    const calcDate = (days: number) => {
+    const calcDate = (days) => {
       setCalendarDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
@@ -161,7 +161,7 @@ export const CalendarDetail = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={calendarDay}
-          onChange={(date: Date) => {
+          onChange={(date) => {
             setCalendarDay(date);
           }}
         />
@@ -220,8 +220,8 @@ export const CalendarDetail = () => {
               )}}>
                 {resDur}
               </td>
-              <td>{index.sleep_night}</td>
-              <td>{index.sleep_morning}</td>
+              <td>{index.sleep_start}</td>
+              <td>{index.sleep_end}</td>
               <td>{index.sleep_time}</td>
             </tr>
           ))}
@@ -246,8 +246,8 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((workItem : any) => {
-            return workItem.work_section.map((work_section: any) => (
+          {WORK_LIST.map((workItem ) => {
+            return workItem.work_section.map((work_section) => (
               <tr key={work_section._id}>
                 <td className="pointer" onClick={() => {
                     navParam("/workDetail", {
@@ -286,8 +286,8 @@ export const CalendarDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY_LIST.map((moneyItem: any) => {
-            return moneyItem.money_section.map((money_section: any) => (
+          {MONEY_LIST.map((moneyItem) => {
+            return moneyItem.money_section.map((money_section) => (
               <tr key={money_section._id}>
                 <td className="pointer" onClick={() => {
                     navParam("/moneyDetail", {

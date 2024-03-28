@@ -5,9 +5,9 @@ import * as mongoose from "mongoose";
 
 // 1-1. foodList ---------------------------------------------------------------------------------->
 export const foodList = async (
-  user_id_param: any,
-  food_dur_param: any,
-  food_category_param: any,
+  user_id_param,
+  food_dur_param,
+  food_category_param,
 ) => {
 
   let findQuery;
@@ -44,9 +44,9 @@ export const foodList = async (
 
 // 1-2. foodTotal --------------------------------------------------------------------------------->
 export const foodTotal = async (
-  user_id_param: any,
-  food_dur_param: any,
-  food_category_param: any,
+  user_id_param,
+  food_dur_param,
+  food_category_param,
 ) => {
 
   let findQuery;
@@ -108,9 +108,9 @@ export const foodTotal = async (
 
 // 1-3. foodAvg ----------------------------------------------------------------------------------->
 export const foodAvg = async (
-  user_id_param: any,
-  food_dur_param: any,
-  food_category_param: any,
+  user_id_param,
+  food_dur_param,
+  food_category_param,
 ) => {
 
   let findQuery;
@@ -172,9 +172,9 @@ export const foodAvg = async (
 
 // 1-2. foodSearchResult -------------------------------------------------------------------------->
 export const foodSearchResult = async (
-  user_id_param: any,
-  food_dur_param: any,
-  food_category_param: any,
+  user_id_param,
+  food_dur_param,
+  food_category_param,
 ) => {
 
   let findQuery;
@@ -194,7 +194,7 @@ export const foodSearchResult = async (
 
 // 2-1. foodDetail -------------------------------------------------------------------------------->
 export const foodDetail = async (
-  _id_param: any,
+  _id_param,
 ) => {
 
   let findQuery;
@@ -212,8 +212,8 @@ export const foodDetail = async (
 
 // 3. foodInsert ---------------------------------------------------------------------------------->
 export const foodInsert = async (
-  uer_id_param: any,
-  FOOD_pram: any,
+  uer_id_param,
+  FOOD_pram,
 ) => {
 
   let createQuery;
@@ -244,8 +244,8 @@ export const foodInsert = async (
 
 // 4. foodUpdate ---------------------------------------------------------------------------------->
 export const foodUpdate = async (
-  _id_param: any,
-  FOOD_param: any,
+  _id_param,
+  FOOD_param,
 ) => {
 
   let updateQuery;
@@ -268,7 +268,7 @@ export const foodUpdate = async (
 
 // 5. foodDelete ---------------------------------------------------------------------------------->
 export const foodDelete = async (
-  _id_param: any,
+  _id_param,
 ) => {
 
   let deleteQuery;

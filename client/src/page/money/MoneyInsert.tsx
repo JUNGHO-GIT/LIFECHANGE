@@ -21,13 +21,13 @@ export const MoneyInsert = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:moneyDay, setVal:setMoneyDay} = useStorage<Date | undefined> (
+  const {val:moneyDay, setVal:setMoneyDay} = useStorage (
     "moneyDay", new Date(koreanDate)
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY, setMONEY] = useState<any>({});
-  const [moneyCount, setMoneyCount] = useState<number>(1);
+  const [MONEY, setMONEY] = useState({});
+  const [moneyCount, setMoneyCount] = useState(1);
   const [money_section, setMoneySection] = useState<any[]>([{
     money_part_idx: 0,
     money_part_val: "전체",
@@ -76,9 +76,9 @@ export const MoneyInsert = () => {
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-  const handleMoneyPartChange = (i: number, e: any) => {
+  const handleMoneyPartChange = (i, e) => {
     const newIndex = parseInt(e.target.value);
-    setMoneySection((prev: any[]) => {
+    setMoneySection((prev[]) => {
       const updatedSection = [...prev];
       updatedSection[i] = {
         ...updatedSection[i],
@@ -92,9 +92,9 @@ export const MoneyInsert = () => {
   };
 
   // 4-2. handler --------------------------------------------------------------------------------->
-  const handleMoneyTitleChange = (i: number, e: any) => {
+  const handleMoneyTitleChange = (i, e) => {
     let newTitle = e.target.value;
-    setMoneySection((prev: any[]) => {
+    setMoneySection((prev[]) => {
       let updatedSection = [...prev];
       updatedSection[i].money_title_val = newTitle;
       return updatedSection;
@@ -115,7 +115,7 @@ export const MoneyInsert = () => {
                 money_title_idx: 0,
                 money_title_val: "전체",
               };
-              let newCount: number = parseInt(e.target.value);
+              let newCount = parseInt(e.target.value);
 
               // amount 값이 증가했을 때 새로운 섹션들만 추가
               if (newCount > moneyCount) {
@@ -142,7 +142,7 @@ export const MoneyInsert = () => {
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewMoneyDay = () => {
-    const calcDate = (days: number) => {
+    const calcDate = (days) => {
       setMoneyDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
@@ -158,7 +158,7 @@ export const MoneyInsert = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={moneyDay}
-          onChange={(date: Date) => {
+          onChange={(date) => {
             setMoneyDay(date);
           }}
         />
@@ -212,7 +212,7 @@ export const MoneyInsert = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableMoneySection = (i: number) => {
+  const tableMoneySection = (i) => {
 
     const updateMoneyArray
     = money_section[i] && moneyTitleArray[money_section[i].money_part_idx]
@@ -265,7 +265,7 @@ export const MoneyInsert = () => {
                 placeholder="amount"
                 value={money_section[i]?.money_amount}
                 onChange={(e:any) => {
-                  setMoneySection((prev: any[]) => {
+                  setMoneySection((prev[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].money_amount = e.target.value;
                     return updatedSection;
@@ -284,7 +284,7 @@ export const MoneyInsert = () => {
                 placeholder="content"
                 value={money_section[i]?.money_content}
                 onChange={(e:any) => {
-                  setMoneySection((prev: any[]) => {
+                  setMoneySection((prev[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].money_content = e.target.value;
                     return updatedSection;

@@ -30,8 +30,8 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
     const sleepList = await sleepService.sleepList (
       req.query.user_id,
       req.query.sleep_dur,
+      req.query.filter,
       req.query.planYn,
-      req.query.filter
     );
     if (sleepList) {
       res.send(sleepList);
@@ -50,7 +50,10 @@ sleepRouter.get("/sleepList", async (req: Request, res: Response) => {
 sleepRouter.get("/sleepDetail", async (req: Request, res: Response) => {
   try {
     const sleepDetail = await sleepService.sleepDetail (
-      req.query._id
+      req.query._id,
+      req.query.user_id,
+      req.query.sleep_day,
+      req.query.planYn
     );
     if (sleepDetail) {
       res.send(sleepDetail);
@@ -68,24 +71,16 @@ sleepRouter.get("/sleepDetail", async (req: Request, res: Response) => {
 // 3-1. sleepInsert ------------------------------------------------------------------------------->
 sleepRouter.post("/sleepInsert", async (req: Request, res: Response) => {
   try {
-    const sleepCheckInsert = await sleepService.sleepCheckInsert (
+    const sleepInsert = await sleepService.sleepInsert (
       req.body.user_id,
-      req.body.SLEEP
+      req.body.SLEEP,
+      req.body.planYn
     );
-    if (sleepCheckInsert) {
-      res.send("duplicate");
+    if (sleepInsert) {
+      res.send("success");
     }
     else {
-      const sleepInsert = await sleepService.sleepInsert (
-        req.body.user_id,
-        req.body.SLEEP
-      );
-      if (sleepInsert) {
-        res.send("success");
-      }
-      else {
-        res.send("fail");
-      }
+      res.send("fail");
     }
   }
   catch (err) {

@@ -21,7 +21,7 @@ export const userList = async (
 
 // 2. userDetail ---------------------------------------------------------------------------------->
 export const userDetail = async (
-  user_id_param: any
+  user_id_param
 ) => {
 
   let findQuery;
@@ -39,7 +39,7 @@ export const userDetail = async (
 
 // 3-1. userCheckId ------------------------------------------------------------------------------->
 export const userCheckId = async (
-  user_id_param: any
+  user_id_param
 ) => {
 
   let findQuery;
@@ -57,8 +57,8 @@ export const userCheckId = async (
 
 // 3-2. userInsert -------------------------------------------------------------------------------->
 export const userInsert = async (
-  user_id_param: any,
-  user_pw_param: any
+  user_id_param,
+  user_pw_param
 ) => {
 
   let createQuery;
@@ -78,8 +78,8 @@ export const userInsert = async (
 
 // 3-3. userCheckIdPw ----------------------------------------------------------------------------->
 export const userCheckIdPw = async (
-  user_id_param: any,
-  user_pw_param: any
+  user_id_param,
+  user_pw_param
 ) => {
 
   let findQuery;
@@ -98,8 +98,8 @@ export const userCheckIdPw = async (
 
 // 3-4. userLogin --------------------------------------------------------------------------------->
 export const userLogin = async (
-  user_id_param: any,
-  user_pw_param: any
+  user_id_param,
+  user_pw_param
 ) => {
 
   let findQuery;
@@ -118,8 +118,8 @@ export const userLogin = async (
 
 // 4. userUpdate ---------------------------------------------------------------------------------->
 export const userUpdate = async (
-  user_id_param: any,
-  update_pw_param: any
+  user_id_param,
+  update_pw_param
 ) => {
 
   let updateQuery;
@@ -138,7 +138,7 @@ export const userUpdate = async (
 
 // 5. userDelete ---------------------------------------------------------------------------------->
 export const userDelete = async (
-  _id_param: any
+  _id_param
 ) => {
 
   let deleteQuery;

@@ -22,13 +22,13 @@ export const WorkInsert = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:workDay, setVal:setWorkDay} = useStorage<Date | undefined> (
+  const {val:workDay, setVal:setWorkDay} = useStorage (
     "workDay", new Date(koreanDate)
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK, setWORK] = useState<any>({});
-  const [workCount, setWorkCount] = useState<number>(1);
+  const [WORK, setWORK] = useState({});
+  const [workCount, setWorkCount] = useState(1);
   const [work_section, setWorkSection] = useState<any[]>([{
     work_part_idx: 0,
     work_part_val: "전체",
@@ -111,9 +111,9 @@ export const WorkInsert = () => {
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-  const handleWorkPartChange = (i: number, e: any) => {
+  const handleWorkPartChange = (i, e) => {
     const newIndex = parseInt(e.target.value);
-    setWorkSection((prev: any[]) => {
+    setWorkSection((prev[]) => {
       const updatedSection = [...prev];
       updatedSection[i] = {
         ...updatedSection[i],
@@ -127,9 +127,9 @@ export const WorkInsert = () => {
   };
 
   // 4-2. handler --------------------------------------------------------------------------------->
-  const handleWorkTitleChange = (i: number, e: any) => {
+  const handleWorkTitleChange = (i, e) => {
     let newTitle = e.target.value;
-    setWorkSection((prev: any[]) => {
+    setWorkSection((prev[]) => {
       let updatedSection = [...prev];
       updatedSection[i].work_title_val = newTitle;
       return updatedSection;
@@ -150,7 +150,7 @@ export const WorkInsert = () => {
                 work_title_idx: 0,
                 work_title_val: "전체",
               };
-              let newCount: number = parseInt(e.target.value);
+              let newCount = parseInt(e.target.value);
 
               // count 값이 증가했을 때 새로운 섹션들만 추가
               if (newCount > workCount) {
@@ -177,7 +177,7 @@ export const WorkInsert = () => {
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewWorkDay = () => {
-    const calcDate = (days: number) => {
+    const calcDate = (days) => {
       setWorkDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
@@ -193,7 +193,7 @@ export const WorkInsert = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={workDay}
-          onChange={(date: Date) => {
+          onChange={(date) => {
             setWorkDay(date);
           }}
         />
@@ -306,7 +306,7 @@ export const WorkInsert = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkSection = (i: number) => {
+  const tableWorkSection = (i) => {
 
     const updateWorkArray
     = work_section[i] && workTitleArray[work_section[i].work_part_idx]
@@ -359,7 +359,7 @@ export const WorkInsert = () => {
                 placeholder="Set"
                 value={work_section[i]?.work_set}
                 onChange={(e:any) => {
-                  setWorkSection((prev: any[]) => {
+                  setWorkSection((prev[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_set = parseInt(e.target.value);
                     return updatedSection;
@@ -379,7 +379,7 @@ export const WorkInsert = () => {
                 placeholder="Count"
                 value={work_section[i]?.work_count}
                 onChange={(e:any) => {
-                  setWorkSection((prev: any[]) => {
+                  setWorkSection((prev[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_count = parseInt(e.target.value);
                     return updatedSection;
@@ -401,7 +401,7 @@ export const WorkInsert = () => {
                 placeholder="Kg"
                 value={work_section[i]?.work_kg}
                 onChange={(e:any) => {
-                  setWorkSection((prev: any[]) => {
+                  setWorkSection((prev[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_kg = parseInt(e.target.value);
                     return updatedSection;
@@ -421,7 +421,7 @@ export const WorkInsert = () => {
                 placeholder="Rest"
                 value={work_section[i]?.work_rest}
                 onChange={(e:any) => {
-                  setWorkSection((prev: any[]) => {
+                  setWorkSection((prev[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].work_rest = parseInt(e.target.value);
                     return updatedSection;

@@ -18,7 +18,7 @@ export const UserUpdate = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [USER, setUSER] = useState<any> ({});
+  const [USER, setUSER] = useState ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -30,7 +30,7 @@ export const UserUpdate = () => {
         setUSER(response.data);
         log("USER : " + JSON.stringify(response.data));
       }
-      catch (error: any) {
+      catch (error) {
         alert(`Error fetching user data: ${error.message}`);
       }
     };
@@ -72,7 +72,7 @@ export const UserUpdate = () => {
         }
       }
     }
-    catch (error: any) {
+    catch (error) {
       alert(`Error fetching user data: ${error.message}`);
     }
   };

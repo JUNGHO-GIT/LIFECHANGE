@@ -21,8 +21,8 @@ export const PlanInsert = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [PLAN, setPLAN] = useState<any>({});
-  const [planCount, setPlanCount] = useState<number>(1);
+  const [PLAN, setPLAN] = useState({});
+  const [planCount, setPlanCount] = useState(1);
   const [planSection, setPlanSection] = useState<any[]>([{
     plan_part_idx: 0,
     plan_part_val: "전체",
@@ -31,7 +31,7 @@ export const PlanInsert = () => {
   }]);
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:planDay, setVal:setPlanDay} = useStorage<Date | undefined> (
+  const {val:planDay, setVal:setPlanDay} = useStorage (
     "planDay", new Date(koreanDate)
   );
 
@@ -76,9 +76,9 @@ export const PlanInsert = () => {
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-  const handlePlanPartChange = (i: number, e: any) => {
+  const handlePlanPartChange = (i, e) => {
     const newIndex = parseInt(e.target.value);
-    setPlanSection((prev: any[]) => {
+    setPlanSection((prev[]) => {
       const updatedSection = [...prev];
       updatedSection[i] = {
         ...updatedSection[i],
@@ -92,9 +92,9 @@ export const PlanInsert = () => {
   };
 
   // 4-2. handler --------------------------------------------------------------------------------->
-  const handlePlanTitleChange = (i: number, e: any) => {
+  const handlePlanTitleChange = (i, e) => {
     let newTitle = e.target.value;
-    setPlanSection((prev: any[]) => {
+    setPlanSection((prev[]) => {
       let updatedSection = [...prev];
       updatedSection[i].plan_title_val = newTitle;
       return updatedSection;
@@ -115,7 +115,7 @@ export const PlanInsert = () => {
                 plan_title_idx: 0,
                 plan_title_val: "전체",
               };
-              let newCount: number = parseInt(e.target.value);
+              let newCount = parseInt(e.target.value);
 
               // amount 값이 증가했을 때 새로운 섹션들만 추가
               if (newCount > planCount) {
@@ -142,7 +142,7 @@ export const PlanInsert = () => {
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewPlanDay = () => {
-    const calcDate = (days: number) => {
+    const calcDate = (days) => {
       setPlanDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
@@ -158,7 +158,7 @@ export const PlanInsert = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={planDay}
-          onChange={(date: Date) => {
+          onChange={(date) => {
             setPlanDay(date);
           }}
         />
@@ -212,7 +212,7 @@ export const PlanInsert = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tablePlanSection = (i: number) => {
+  const tablePlanSection = (i) => {
 
     const updatePlanArray
     = planSection[i] && planTitleArray[planSection[i].plan_part_idx]
@@ -264,7 +264,7 @@ export const PlanInsert = () => {
                 placeholder="content"
                 value={planSection[i]?.plan_content}
                 onChange={(e:any) => {
-                  setPlanSection((prev: any[]) => {
+                  setPlanSection((prev[]) => {
                     const updatedSection = [...prev];
                     updatedSection[i].plan_content = e.target.value;
                     return updatedSection;

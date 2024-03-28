@@ -31,8 +31,10 @@ workRouter.get("/workList", async (req: Request, res: Response) => {
 workRouter.get("/workDetail", async (req: Request, res: Response) => {
   try {
     const workDetail = await workService.workDetail (
-      req.query._id,
-      req.query.work_section_id
+      req.query.user_id,
+      req.query.work_day,
+      req.query.planYn,
+      req.query._id
     );
     if (workDetail) {
       res.send(workDetail);

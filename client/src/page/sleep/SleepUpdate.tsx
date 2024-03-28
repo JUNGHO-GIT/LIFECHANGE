@@ -23,18 +23,18 @@ export const SleepUpdate = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined> (
+  const {val:sleepDay, setVal:setSleepDay} = useStorage (
     "sleepDay", new Date(koreanDate)
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState<any>({
+  const [SLEEP, setSLEEP] = useState({
     _id: _id,
     user_id: user_id,
     sleep_day: koreanDate,
     sleep_planYn: "N",
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
+    sleep_start: "00:00",
+    sleep_end: "00:00",
     sleep_time: "00:00",
   });
 
@@ -69,21 +69,21 @@ export const SleepUpdate = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const setSleepTime = () => {
-      if (!SLEEP.sleep_night || !SLEEP.sleep_morning) {
+      if (!SLEEP.sleep_start || !SLEEP.sleep_end) {
         setSLEEP((prevSleep:any) => ({
           ...prevSleep,
           sleep_time: "00:00",
         }));
       }
-      else if (SLEEP.sleep_night === "00:00" && SLEEP.sleep_morning === "00:00") {
+      else if (SLEEP.sleep_start === "00:00" && SLEEP.sleep_end === "00:00") {
         setSLEEP((prevSleep:any) => ({
           ...prevSleep,
           sleep_time: "00:00",
         }));
       }
       else {
-        const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
-        const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_morning}:00Z`);
+        const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_start}:00Z`);
+        const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_end}:00Z`);
 
         if (morningDate < nightDate) {
           morningDate.setDate(morningDate.getDate() + 1);
@@ -100,7 +100,7 @@ export const SleepUpdate = () => {
       }
     };
     setSleepTime();
-  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_day]);
+  }, [SLEEP.sleep_start, SLEEP.sleep_end, SLEEP.sleep_day]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepUpdate = async () => {
@@ -130,7 +130,7 @@ export const SleepUpdate = () => {
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewSleepDay = () => {
-    const calcDate = (days: number) => {
+    const calcDate = (days) => {
       setSleepDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
@@ -146,7 +146,7 @@ export const SleepUpdate = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={sleepDay}
-          onChange={(date: Date) => {
+          onChange={(date) => {
             setSleepDay(date);
           }}
         />
@@ -185,16 +185,16 @@ export const SleepUpdate = () => {
             <div className="input-group">
               <span className="input-group-text">취침시간</span>
               <TimePicker
-                id="sleep_night"
-                name="sleep_night"
+                id="sleep_start"
+                name="sleep_start"
                 className="form-control"
-                value={SLEEP.sleep_night}
+                value={SLEEP.sleep_start}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e:any) => {
-                  setSLEEP({ ...SLEEP, sleep_night: e });
+                  setSLEEP({ ...SLEEP, sleep_start: e });
                 }}
               />
             </div>
@@ -205,16 +205,16 @@ export const SleepUpdate = () => {
             <div className="input-group">
               <span className="input-group-text">기상시간</span>
               <TimePicker
-                id="sleep_morning"
-                name="sleep_morning"
+                id="sleep_end"
+                name="sleep_end"
                 className="form-control"
-                value={SLEEP.sleep_morning}
+                value={SLEEP.sleep_end}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e:any) => {
-                  setSLEEP({ ...SLEEP, sleep_morning: e });
+                  setSLEEP({ ...SLEEP, sleep_end: e });
                 }}
               />
             </div>

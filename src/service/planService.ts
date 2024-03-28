@@ -6,11 +6,11 @@ import {planPartAll, planTitleAll} from "../assets/ts/planArray";
 
 // 1-1. planList --------------------------------------------------------------------------------->
 export const planList = async (
-  user_id_param: any,
-  plan_dur_param: any,
-  filter_param: any,
-  plan_part_val_param: any,
-  plan_title_val_param: any
+  user_id_param,
+  plan_dur_param,
+  filter_param,
+  plan_part_val_param,
+  plan_title_val_param
 ) => {
   const startDay = plan_dur_param.split(` ~ `)[0];
   const endDay = plan_dur_param.split(` ~ `)[1];
@@ -68,10 +68,10 @@ export const planList = async (
 
 // 1-2. planAvg ---------------------------------------------------------------------------------->
 export const planAvg = async (
-  user_id_param: any,
-  plan_dur_param: any,
-  plan_part_val_param: any,
-  plan_title_val_param: any
+  user_id_param,
+  plan_dur_param,
+  plan_part_val_param,
+  plan_title_val_param
 ) => {
 
   let findQuery;
@@ -118,8 +118,8 @@ export const planAvg = async (
 
 // 2. planDetail --------------------------------------------------------------------------------->
 export const planDetail = async (
-  _id_param : any,
-  planSection_id_param : any
+  _id_param ,
+  planSection_id_param
 ) => {
 
   let findQuery;
@@ -142,7 +142,7 @@ export const planDetail = async (
     planSchema = findResult;
 
     if (planSchema) {
-      const matchedSection = planSchema.planSection?.find((section: any) => {
+      const matchedSection = planSchema.planSection?.find((section) => {
         return section._id.toString() === planSection_id_param.toString();
       });
       finalResult = {
@@ -156,8 +156,8 @@ export const planDetail = async (
 
 // 3. planInsert --------------------------------------------------------------------------------->
 export const planInsert = async (
-  user_id_param : any,
-  PLAN_param : any
+  user_id_param ,
+  PLAN_param
 ) => {
 
   let createQuery;
@@ -180,8 +180,8 @@ export const planInsert = async (
 
 // 4. planUpdate --------------------------------------------------------------------------------->
 export const planUpdate = async (
-  _id_param : any,
-  PLAN_param : any
+  _id_param ,
+  PLAN_param
 ) => {
 
   let updateQuery;
@@ -203,8 +203,8 @@ export const planUpdate = async (
 
 // 5. planDelete --------------------------------------------------------------------------------->
 export const planDelete = async (
-  _id_param : any,
-  planSection_id_param : any
+  _id_param ,
+  planSection_id_param
 ) => {
 
   let deleteQuery;

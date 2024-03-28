@@ -47,8 +47,8 @@ export const WorkListMonth = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [workType, setWorkType] = useState<string>("list");
-  const [workNumber, setWorkNumber] = useState<number>(0);
+  const [workType, setWorkType] = useState("list");
+  const [workNumber, setWorkNumber] = useState(0);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -154,8 +154,8 @@ export const WorkListMonth = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((workItem : any) => {
-            return workItem.work_section.map((work_section: any) => (
+          {WORK_LIST.map((workItem ) => {
+            return workItem.work_section.map((work_section) => (
               <tr key={work_section._id}>
                 <td
                   className="pointer"
@@ -245,7 +245,7 @@ export const WorkListMonth = () => {
                 </tr>
               </thead>
               <tbody>
-                {WORK_AVERAGE?.map((workItem : any, index:number) => (
+                {WORK_AVERAGE?.map((workItem , index:number) => (
                   <tr key={index}>
                     <td>{workItem.work_part_val}</td>
                     <td>{workItem.work_title_val}</td>

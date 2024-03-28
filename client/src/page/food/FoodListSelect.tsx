@@ -46,8 +46,8 @@ export const FoodListSelect = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [foodType, setFoodType] = useState<string>("list");
-  const [foodCategory, setFoodCategory] = useState<string>("all");
+  const [foodType, setFoodType] = useState("list");
+  const [foodCategory, setFoodCategory] = useState("all");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -218,7 +218,7 @@ export const FoodListSelect = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_LIST.map((index:any, i: number) => (
+          {FOOD_LIST.map((index:any, i) => (
             <tr key={i}>
               <td>{index.food_category}</td>
               <td>{index.food_title}</td>
@@ -248,7 +248,7 @@ export const FoodListSelect = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_TOTAL.map((index:any, i: number) => (
+          {FOOD_TOTAL.map((index:any, i) => (
             <tr key={i}>
               <td>{index.totalCalories}</td>
               <td>{index.totalCarb}</td>
@@ -274,7 +274,7 @@ export const FoodListSelect = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_AVERAGE.map((index:any, i: number) => (
+          {FOOD_AVERAGE.map((index:any, i) => (
             <tr key={i}>
               <td>{index.food_calories}</td>
               <td>{index.food_carb}</td>

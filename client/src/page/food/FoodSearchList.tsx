@@ -22,7 +22,7 @@ export const FoodSearchList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD_SEARCH, setFOOD_SEARCH] = useState<any> ([]);
+  const [FOOD_SEARCH, setFOOD_SEARCH] = useState ([]);
   const [foodDay, setFoodDay] = useState(koreanDate);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
@@ -103,7 +103,7 @@ export const FoodSearchList = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_SEARCH.map((index: any) => (
+          {FOOD_SEARCH.map((index) => (
             <tr>
               <td>
                 {buttonFoodInsert (

@@ -22,14 +22,14 @@ export const FoodInsert = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:foodDay, setVal:setFoodDay} = useStorage<Date | undefined> (
+  const {val:foodDay, setVal:setFoodDay} = useStorage (
     "foodDay", new Date(koreanDate)
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [showGram, setShowGram] = useState(1);
   const [category, setCategory] = useState("morning");
-  const [FOOD, setFOOD] = useState<any>({});
+  const [FOOD, setFOOD] = useState({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -75,7 +75,7 @@ export const FoodInsert = () => {
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewFoodDay = () => {
-    const calcDate = (days: number) => {
+    const calcDate = (days) => {
       setFoodDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
@@ -91,7 +91,7 @@ export const FoodInsert = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={foodDay}
-          onChange={(date: Date) => {
+          onChange={(date) => {
             setFoodDay(date);
           }}
         />

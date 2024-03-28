@@ -7,10 +7,10 @@ import {workPartAll, workTitleAll} from "../assets/ts/workArray";
 
 // 1-1. workList ---------------------------------------------------------------------------------->
 export const workList = async (
-  user_id_param: any,
-  work_dur_param: any,
-  planYn_param: any,
-  filter_param: any,
+  user_id_param,
+  work_dur_param,
+  planYn_param,
+  filter_param,
 ) => {
 
   let totalCount;
@@ -35,6 +35,7 @@ export const workList = async (
   let filterPart = filter_param.part !== "전체"
     ? { $regex: filter_param.part }
     : { $exists: true };
+
   let filterTitle = filter_param.title !== "전체"
     ? { $regex: filter_param.title }
     : { $exists: true };
@@ -60,125 +61,85 @@ export const workList = async (
     sortCondition = { work_day: -1 };
   }
 
-  // totalCount
-  totalCount = await Work
-    .countDocuments(findQuery);
-
-  // .find()에 정렬, 페이징 처리 추가
+  // 정렬, 페이징 처리
   findResult = await Work
     .find(findQuery)
     .sort(sortCondition)
     .skip((page - 1) * limit)
     .limit(limit);
 
+  // totalCount
+  totalCount = await Work
+    .countDocuments(findQuery);
+
   finalResult = {
     totalCount: totalCount,
-    workList: findResult,
+    result: findResult,
   };
 
   return finalResult;
 };
 
-// 1-2. workAvg ----------------------------------------------------------------------------------->
-export const workAvg = async (
-  user_id_param: any,
-  work_dur_param: any,
-  work_part_val_param: any,
-  work_title_val_param: any
-) => {
-
-  let findQuery;
-  let findResult;
-
-  const startDay = work_dur_param.split(` ~ `)[0];
-  const endDay = work_dur_param.split(` ~ `)[1];
-
-  if (work_part_val_param === "전체") {
-    let work_part_before = workPartAll[0].toString();
-    work_part_val_param = work_part_before.replace(/,/g, "|");
-  }
-
-  if (work_title_val_param === "전체") {
-    let work_title_before = workTitleAll[0].work_title.toString();
-    work_title_val_param = work_title_before.replace(/,/g, "|");
-  }
-
-  findQuery = [
-    {$unwind: "$work_section"},
-    {$match: {
-      user_id: user_id_param,
-      "work_section.work_part_val": {$regex: work_part_val_param},
-      "work_section.work_title_val": {$regex: work_title_val_param},
-      work_day: {
-        $gte: startDay,
-        $lte: endDay,
-      },
-    }},
-    {$group: {
-      _id: "$work_section.work_title_val",
-      count: {$sum: 1},
-      work_part_val: {$first: "$work_section.work_part_val"},
-      work_title_val: {$first: "$work_section.work_title_val"},
-      work_count_avg: {$avg: "$work_section.work_count"},
-      work_set_avg: {$avg: "$work_section.work_set"},
-      work_kg_avg: {$avg: "$work_section.work_kg"},
-      work_rest_avg: {$avg: "$work_section.work_rest"},
-    }}
-  ];
-
-  findResult = await Work.aggregate(findQuery).sort({ _id: 1 });
-
-  return findResult;
-};
-
-
 // 2. workDetail ---------------------------------------------------------------------------------->
 export const workDetail = async (
-  _id_param : any,
-  work_section_id_param : any
+  user_id_param ,
+  work_day_param ,
+  planYn_param ,
+  _id_param
 ) => {
 
+  let sectionCount;
   let findQuery;
   let findResult;
   let finalResult;
-  let workSchema;
 
-  if (!work_section_id_param) {
-    findQuery = {
-      _id: _id_param
-    };
-    findResult = await Work.findOne(findQuery);
-    finalResult = findResult;
-  }
-  else {
-    findQuery = {
-      _id: _id_param
-    };
-    findResult = await Work.findOne(findQuery);
-    workSchema = findResult;
+  // 입력시 데이터조회
+  // 리스트에서 데이터조회
+  let idParam = _id_param !== ""
+    ? { $regex: _id_param }
+    : { $exists: true };
 
-    if (workSchema) {
-      const matchedSection = workSchema.work_section.find((section: any) => {
-        return section._id.toString() === work_section_id_param.toString();
-      });
-      finalResult = {
-        ...workSchema.toObject(),
-        work_section: [matchedSection]
-      };
-    }
-  }
+  findQuery = {
+    user_id: user_id_param,
+    work_day: work_day_param,
+    work_planYn: planYn_param,
+    _id: idParam,
+  };
+
+  findResult = await Work
+    .findOne(findQuery);
+
+  // sectionCount
+  sectionCount = findResult !== null
+    ? findResult.work_section.length
+    : 1;
+
+  finalResult = {
+    sectionCount: sectionCount,
+    result: findResult,
+  };
+
   return finalResult;
 };
 
 // 3. workInsert ---------------------------------------------------------------------------------->
 export const workInsert = async (
-  user_id_param : any,
-  WORK_param : any
+  user_id_param ,
+  WORK_param
 ) => {
 
   let createQuery;
   let createResult;
-  let finalResult;
+  let updateQuery;
+  let findQuery;
+  let findResult;
+
+  findQuery = {
+    user_id: user_id_param,
+    work_day: WORK_param.work_day,
+  };
+
+  findResult = await Work.findOne(findQuery);
 
   createQuery = {
     _id : new mongoose.Types.ObjectId(),
@@ -188,20 +149,39 @@ export const workInsert = async (
     work_end : WORK_param.work_end,
     work_time : WORK_param.work_time,
     work_planYn : WORK_param.work_planYn,
-    work_day : WORK_param.workDay,
+    work_day : WORK_param.work_day,
     work_regdate : WORK_param.work_regdate,
     work_update : WORK_param.work_update,
   };
 
-  createResult = await Work.create(createQuery);
+  updateQuery = {
+    work_section : WORK_param.work_section,
+    work_start : WORK_param.work_start,
+    work_end : WORK_param.work_end,
+    work_time : WORK_param.work_time,
+    work_planYn : WORK_param.work_planYn,
+    work_update : WORK_param.work_update,
+  };
+
+  if (!findResult) {
+    createResult = await Work.create(
+      createQuery
+    );
+  };
+  if (findResult) {
+    createResult = await Work.updateOne(
+      findQuery,
+      {$set: updateQuery}
+    );
+  };
 
   return createResult;
-};
+}
 
 // 4. workUpdate ---------------------------------------------------------------------------------->
 export const workUpdate = async (
-  _id_param : any,
-  WORK_param : any
+  _id_param ,
+  WORK_param
 ) => {
 
   let updateQuery;
@@ -223,8 +203,8 @@ export const workUpdate = async (
 
 // 5. workDelete ---------------------------------------------------------------------------------->
 export const workDelete = async (
-  _id_param : any,
-  work_section_id_param : any
+  _id_param ,
+  work_section_id_param
 ) => {
 
   let deleteQuery;

@@ -21,7 +21,7 @@ export const boardList = async (
 
 // 2. boardDetail --------------------------------------------------------------------------------->
 export const boardDetail = async (
-  _id_param: any
+  _id_param
 ) => {
 
   let findQuery;
@@ -39,8 +39,8 @@ export const boardDetail = async (
 
 // 3. boardInsert --------------------------------------------------------------------------------->
 export const boardInsert = async (
-  user_id_param: any,
-  BOARD_param: any
+  user_id_param,
+  BOARD_param
 ) => {
 
   let createQuery;
@@ -62,8 +62,8 @@ export const boardInsert = async (
 
 // 4. boardUpdate --------------------------------------------------------------------------------->
 export const boardUpdate = async (
-  _id_param: any,
-  BOARD_param: any
+  _id_param,
+  BOARD_param
 ) => {
 
   let updateQuery;
@@ -85,7 +85,7 @@ export const boardUpdate = async (
 
 // 5. boardDelete --------------------------------------------------------------------------------->
 export const boardDelete = async (
-  _id_param: any
+  _id_param
 ) => {
 
   let deleteQuery;

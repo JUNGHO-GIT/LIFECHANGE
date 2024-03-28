@@ -23,7 +23,7 @@ export const PlanDetail = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN, setPLAN] = useState<any> ({});
+  const [PLAN, setPLAN] = useState ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -88,7 +88,7 @@ export const PlanDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {PLAN?.planSection?.flatMap((planItem: any) => (
+          {PLAN?.planSection?.flatMap((planItem) => (
             <tr key={planItem._id}>
               <td>{planItem.plan_part_val}</td>
               <td>{planItem.plan_title_val}</td>

@@ -21,7 +21,7 @@ export const calendarList = async (
 
 // 2. calendarDetail ------------------------------------------------------------------------------>
 export const calendarDetail = async (
-  _id_param: any
+  _id_param
 ) => {
 
   let findQuery;
@@ -39,8 +39,8 @@ export const calendarDetail = async (
 
 // 3. calendarInsert ------------------------------------------------------------------------------>
 export const calendarInsert = async (
-  user_id_param: any,
-  CALENDAR_param: any
+  user_id_param,
+  CALENDAR_param
 ) => {
 
   let createQuery;
@@ -62,8 +62,8 @@ export const calendarInsert = async (
 
 // 4. calendarUpdate ------------------------------------------------------------------------------>
 export const calendarUpdate = async (
-  _id_param: any,
-  CALENDAR_param: any
+  _id_param,
+  CALENDAR_param
 ) => {
 
   let updateQuery;
@@ -85,7 +85,7 @@ export const calendarUpdate = async (
 
 // 5. calendarDelete ------------------------------------------------------------------------------>
 export const calendarDelete = async (
-  _id_param: any
+  _id_param
 ) => {
 
   let deleteQuery;

@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import Draggable from "react-draggable";
-import {Resizable} from "react-resizable";
 import {differenceInDays} from "date-fns";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
@@ -25,8 +24,8 @@ export const WorkList = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
-  const [workNumber, setWorkNumber] = useState<number>(0);
-  const [totalCount, setTotalCount] = useState<number>(0);
+  const [workNumber, setWorkNumber] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [type, setType] = useState("day");
   const [filter, setFilter] = useState({
     order: "asc",
@@ -77,24 +76,26 @@ export const WorkList = () => {
 
     // 3. merged
     let mergedData:any = [];
-    if (responseList.data.workList || responsePlan.data.workList) {
-      const allWorkDays = [...responseList.data.workList, ...responsePlan.data.workList]
-      .map(item => item.work_day)
-      .filter((value, index, self) => self.indexOf(value) === index);
+    const workList = responseList.data.workList || [];
+    const planList = responsePlan.data.workList || [];
 
-      mergedData = allWorkDays.map((day:any) => {
-        const listItem
-          = responseList.data.workList.find((item:any) => item.work_day === day) || {};
-        const planItem
-          = responsePlan.data.workList.find((item:any) => item.work_day === day) || {};
+    if (workList.length > 0 || planList.length > 0) {
+      const allWorkDays = [...workList, ...planList]
+        .map(item => item.work_day)
+        .filter((value, index, self) => self.indexOf(value) === index);
+
+      mergedData = allWorkDays.map(day => {
+        const listItem = workList.find((item:any) => item.work_day === day) || {};
+        const planItem = planList.find((item:any) => item.work_day === day) || {};
+
         return {
           val: {
-            _id: listItem._id,
+            _id: listItem._id || "",
             work_dur: workResDur,
             work_day: day,
-            work_start: listItem.work_start,
-            work_end: listItem.work_end,
-            work_time: listItem.work_time,
+            work_start: listItem.work_start || "",
+            work_end: listItem.work_end || "",
+            work_time: listItem.work_time || 0,
           },
           real: listItem.work_section?.map((section:any) => ({
             work_part_idx: section.work_part_idx,
@@ -105,7 +106,7 @@ export const WorkList = () => {
             work_set: section.work_set,
             work_count: section.work_count,
             work_rest: section.work_rest,
-          })),
+          })) || [],
           plan: planItem.work_section?.map((section:any) => ({
             work_part_idx: section.work_part_idx,
             work_part_val: section.work_part_val,
@@ -115,7 +116,7 @@ export const WorkList = () => {
             work_set: section.work_set,
             work_count: section.work_count,
             work_rest: section.work_rest,
-          })),
+          })) || [],
         };
       });
     };
@@ -458,15 +459,25 @@ export const WorkList = () => {
                 <td>{item.val.work_time}</td>
                 <td></td>
               </tr>
-              {item.plan.map((section1:any, index1:number) => (
-                item.real.map((section2:any, index2:number) => (
-                  <tr key={`${index1}-${index2}`}>
-                    <td></td>
-                    <td>{section1.work_part_val} {section1.work_title_val} {section1.work_kg} x {section1.work_set} x {section1.work_count}</td>
-                    <td>{section2.work_part_val} {section2.work_title_val} {section2.work_kg} x {section2.work_set} x {section2.work_count}</td>
-                    <td></td>
-                  </tr>
-                ))
+              {item.real?.map((section1:any, index1:number) => (
+                <tr key={index1}>
+                  <td></td>
+                  <td>
+                    {section1.work_part_val || ""} {section1.work_title_val || ""} {section1.work_kg || ""} x {section1.work_set || ""} x {section1.work_count || ""}
+                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              ))}
+              {item.plan?.map((section2:any, index2:number) => (
+                <tr key={index2}>
+                  <td></td>
+                  <td>
+                    {section2.work_part_val || ""} {section2.work_title_val || ""} {section2.work_kg || ""} x {section2.work_set || ""} x {section2.work_count || ""}
+                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
               ))}
             </React.Fragment>
           ))}
@@ -550,7 +561,7 @@ export const WorkList = () => {
   };
 
   // 6-2. select ---------------------------------------------------------------------------------->
-  const selectFilterSub = () => {
+  const selectFilterOrder = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="workListSortOrder" onChange={(e) => {
@@ -618,11 +629,6 @@ export const WorkList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row">
-          <div className="col-12 d-center">
-            {tableWorkList()}
-          </div>
-        </div>
         <div className="row mb-20">
           <div className="col-1">
             {viewWorkList()}
@@ -637,7 +643,7 @@ export const WorkList = () => {
             {selectWorkTitle()}
           </div>
           <div className="col-2">
-            {selectFilterSub()}
+            {selectFilterOrder()}
           </div>
           <div className="col-2">
             {selectFilterPage()}
@@ -645,10 +651,15 @@ export const WorkList = () => {
         </div>
         <div className="row mb-20">
           <div className="col-12 d-center">
+            {tableWorkList()}
+          </div>
+        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
             {filterBox()}
           </div>
         </div>
-        <div className="row mt-20 mb-20">
+        <div className="row mb-20">
           <div className="col-12 d-center">
             {buttonCalendar()}
             {buttonWorkToday()}

@@ -50,8 +50,8 @@ export const MoneyListSelect = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [moneyType, setMoneyType] = useState<string>("list");
-  const [moneyNumber, setMoneyNumber] = useState<number>(0);
+  const [moneyType, setMoneyType] = useState("list");
+  const [moneyNumber, setMoneyNumber] = useState(0);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -200,8 +200,8 @@ export const MoneyListSelect = () => {
                 </tr>
               </thead>
               <tbody>
-                {MONEY_LIST.map((moneyItem : any) => {
-                  return moneyItem.money_section.map((money_section: any) => (
+                {MONEY_LIST.map((moneyItem ) => {
+                  return moneyItem.money_section.map((money_section) => (
                     <tr key={money_section._id}>
                       <td
                         className="pointer"

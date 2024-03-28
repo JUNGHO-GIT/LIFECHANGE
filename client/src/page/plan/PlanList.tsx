@@ -22,8 +22,8 @@ export const PlanList = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [planNumber, setPlanNumber] = useState<number>(0);
-  const [totalCount, setTotalCount] = useState<number>(0);
+  const [planNumber, setPlanNumber] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [type, setType] = useState({
     typePre: "day",
     typeSub: "list",
@@ -341,8 +341,8 @@ export const PlanList = () => {
           </tr>
         </thead>
         <tbody>
-          {PLAN_LIST?.map((planItem : any) => {
-            return planItem.planSection?.map((planSection: any) => (
+          {PLAN_LIST?.map((planItem ) => {
+            return planItem.planSection?.map((planSection) => (
               <tr key={planSection._id}>
                 <td
                   className="pointer"

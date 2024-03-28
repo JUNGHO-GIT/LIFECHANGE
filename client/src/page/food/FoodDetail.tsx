@@ -25,7 +25,7 @@ export const FoodDetail = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [food_regdate, setFood_regdate] = useState(koreanDate);
-  const [FOOD, setFOOD] = useState<any> ({});
+  const [FOOD, setFOOD] = useState ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

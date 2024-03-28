@@ -23,7 +23,7 @@ export const WorkDetail = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK, setWORK] = useState<any> ({});
+  const [WORK, setWORK] = useState ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -92,7 +92,7 @@ export const WorkDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK?.work_section?.flatMap((workItem: any) => (
+          {WORK?.work_section?.flatMap((workItem) => (
             <tr key={workItem._id}>
               <td>{workItem.work_part_val}</td>
               <td>{workItem.work_title_val}</td>

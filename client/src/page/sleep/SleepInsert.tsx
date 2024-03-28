@@ -20,81 +20,121 @@ export const SleepInsert = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState<any>({
-    user_id: user_id,
-    sleep_day: koreanDate,
-    sleep_planYn: "N",
-    sleep_night: "00:00",
-    sleep_morning: "00:00",
-    sleep_time: "00:00",
-  });
-
-  // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:sleepDay, setVal:setSleepDay} = useStorage<Date | undefined> (
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:sleepDay, setVal:setSleepDay} = useStorage (
     "sleepDay", new Date(koreanDate)
   );
 
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [planYn, setPlanYn] = useState("N");
+  const [SLEEP_REAL, setSLEEP_REAL] = useState({
+    _id: "",
+    user_id: user_id,
+    sleep_day: koreanDate,
+    sleep_planYn: "N",
+    sleep_start: "00:00",
+    sleep_end: "00:00",
+    sleep_time: "00:00",
+  });
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState({
+    _id: "",
+    user_id: user_id,
+    sleep_day: koreanDate,
+    sleep_planYn: "Y",
+    sleep_start: "00:00",
+    sleep_end: "00:00",
+    sleep_time: "00:00",
+  });
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    // 1. real
+    const responseReal = await axios.get(`${URL_SLEEP}/sleepDetail`, {
+      params: {
+        _id: "",
+        user_id: user_id,
+        sleep_day: koreanDate,
+        planYn: "N",
+      },
+    });
+
+    // 2. plan
+    const responsePlan = await axios.get(`${URL_SLEEP}/sleepDetail`, {
+      params: {
+        _id: "",
+        user_id: user_id,
+        sleep_day: koreanDate,
+        planYn: "Y",
+      },
+    });
+
+    // 3. set
+    if (responseReal.data.result) {
+      setSLEEP_REAL(responseReal.data.result);
+    }
+    if (responsePlan.data.result) {
+      setSLEEP_PLAN(responsePlan.data.result);
+    }
+
+    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
+    log("SLEEP_PLAN : " + JSON.stringify(SLEEP_PLAN));
+
+  })()}, [planYn]);
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setSLEEP({
-      ...SLEEP,
-      sleepDay: moment(sleepDay).format("YYYY-MM-DD"),
-    });
+    if (planYn === "N") {
+      setSLEEP_REAL({
+        ...SLEEP_REAL,
+        sleep_day: moment(sleepDay).format("YYYY-MM-DD").toString(),
+      });
+    }
+    if (planYn === "Y") {
+      setSLEEP_PLAN({
+        ...SLEEP_PLAN,
+        sleep_day: moment(sleepDay).format("YYYY-MM-DD").toString(),
+      });
+    }
   }, [sleepDay]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const setSleepTime = () => {
-      if (!SLEEP.sleep_night || !SLEEP.sleep_morning) {
-        setSLEEP((prevSleep:any) => ({
-          ...prevSleep,
-          sleep_time: "00:00",
-        }));
-      }
-      else if (SLEEP.sleep_night === "00:00" && SLEEP.sleep_morning === "00:00") {
-        setSLEEP((prevSleep:any) => ({
-          ...prevSleep,
-          sleep_time: "00:00",
-        }));
-      }
-      else {
-        const nightDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_night}:00Z`);
-        const morningDate = new Date(`${SLEEP.sleep_day}T${SLEEP.sleep_morning}:00Z`);
+    let sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    if (sleep.sleep_start && sleep.sleep_end) {
+      const startDate = new Date(`${koreanDate}T${sleep.sleep_start}:00Z`);
+      const endDate = new Date(`${koreanDate}T${sleep.sleep_end}:00Z`);
 
-        if (morningDate < nightDate) {
-          morningDate.setDate(morningDate.getDate() + 1);
-        }
-
-        const diff = morningDate.getTime() - nightDate.getTime();
-        const hours = Math.floor(diff / 3600000);
-        const minutes = Math.floor((diff % 3600000) / 60000);
-
-        setSLEEP((prevSleep:any) => ({
-          ...prevSleep,
-          sleep_time: `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`,
-        }));
+      if (endDate < startDate) {
+        endDate.setDate(endDate.getDate() + 1);
       }
-    };
-    setSleepTime();
-  }, [SLEEP.sleep_night, SLEEP.sleep_morning, SLEEP.sleep_day]);
+
+      const diff = endDate.getTime() - startDate.getTime();
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+
+      const sleepTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+
+      if (planYn === "N") {
+        setSLEEP_REAL({ ...SLEEP_REAL, sleep_time: sleepTime });
+      }
+      if (planYn === "Y") {
+        setSLEEP_PLAN({ ...SLEEP_PLAN, sleep_time: sleepTime });
+      }
+    }
+  }, [SLEEP_REAL.sleep_start, SLEEP_REAL.sleep_end, SLEEP_PLAN.sleep_start, SLEEP_PLAN.sleep_end]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepInsert = async () => {
     try {
+      const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
       const response = await axios.post (`${URL_SLEEP}/sleepInsert`, {
         user_id : user_id,
-        SLEEP : SLEEP
+        SLEEP: sleep,
+        planYn : planYn,
       });
-      log("SLEEP : " + JSON.stringify(SLEEP));
-
       if (response.data === "success") {
         alert("Insert a sleep successfully");
         navParam("/sleepList");
-      }
-      else if (response.data === "duplicate") {
-        alert("해당 날짜의 수면 데이터가 이미 존재합니다.");
-        return;
       }
       else if (response.data === "fail") {
         alert("Insert a sleep failed");
@@ -103,6 +143,7 @@ export const SleepInsert = () => {
       else {
         alert(`${response.data}error`);
       }
+      log("SLEEP : " + JSON.stringify(sleep));
     }
     catch (error:any) {
       alert(`Error fetching sleep data: ${error.message}`);
@@ -111,7 +152,7 @@ export const SleepInsert = () => {
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewSleepDay = () => {
-    const calcDate = (days: number) => {
+    const calcDate = (days) => {
       setSleepDay((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
@@ -127,7 +168,7 @@ export const SleepInsert = () => {
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
           selected={sleepDay}
-          onChange={(date: Date) => {
+          onChange={(date) => {
             setSleepDay(date);
           }}
         />
@@ -140,6 +181,7 @@ export const SleepInsert = () => {
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepInsert = () => {
+    const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
     return (
       <div>
         <div className="row d-center">
@@ -150,9 +192,9 @@ export const SleepInsert = () => {
                 id="sleep_planYn"
                 name="sleep_planYn"
                 className="form-select"
-                value={SLEEP.sleep_planYn}
+                value={sleep.sleep_planYn}
                 onChange={(e) => {
-                  setSLEEP({ ...SLEEP, sleep_planYn: e.target.value });
+                  setPlanYn(e.target.value);
                 }}
               >
                 <option value="Y">계획</option>
@@ -166,16 +208,21 @@ export const SleepInsert = () => {
             <div className="input-group">
               <span className="input-group-text">취침시간</span>
               <TimePicker
-                id="sleep_night"
-                name="sleep_night"
+                id="sleep_start"
+                name="sleep_start"
                 className="form-control"
-                value={SLEEP.sleep_night}
+                value={planYn === "Y" ? SLEEP_PLAN.sleep_start : SLEEP_REAL.sleep_start}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e:any) => {
-                  setSLEEP({ ...SLEEP, sleep_night: e });
+                  if (planYn === "Y") {
+                    setSLEEP_PLAN({ ...SLEEP_PLAN, sleep_start: e });
+                  }
+                  if (planYn === "N") {
+                    setSLEEP_REAL({ ...SLEEP_REAL, sleep_start: e });
+                  }
                 }}
               />
             </div>
@@ -186,16 +233,21 @@ export const SleepInsert = () => {
             <div className="input-group">
               <span className="input-group-text">기상시간</span>
               <TimePicker
-                id="sleep_morning"
-                name="sleep_morning"
+                id="sleep_end"
+                name="sleep_end"
                 className="form-control"
-                value={SLEEP.sleep_morning}
+                value={planYn === "Y" ? SLEEP_PLAN.sleep_end : SLEEP_REAL.sleep_end}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e:any) => {
-                  setSLEEP({ ...SLEEP, sleep_morning: e });
+                  if (planYn === "Y") {
+                    setSLEEP_PLAN({ ...SLEEP_PLAN, sleep_end: e });
+                  }
+                  if (planYn === "N") {
+                    setSLEEP_REAL({ ...SLEEP_REAL, sleep_end: e });
+                  }
                 }}
               />
             </div>
@@ -209,7 +261,7 @@ export const SleepInsert = () => {
                 id="sleep_time"
                 name="sleep_time"
                 className="form-control"
-                value={SLEEP.sleep_time}
+                value={planYn === "Y" ? SLEEP_PLAN.sleep_time : SLEEP_REAL.sleep_time}
                 disableClock={true}
                 clockIcon={null}
                 format="HH:mm"

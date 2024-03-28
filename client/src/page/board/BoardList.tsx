@@ -23,7 +23,7 @@ export const BoardList = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [BOARD_LIST, setBOARD_LIST] = useState<any> ([]);
+  const [BOARD_LIST, setBOARD_LIST] = useState ([]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -56,7 +56,7 @@ export const BoardList = () => {
           </tr>
         </thead>
         <tbody>
-          {BOARD_LIST.map((index: any) => (
+          {BOARD_LIST.map((index) => (
             <tr key={index._id}>
               <td>{buttonBoardDetail(index._id, index.user_id)}</td>
               <td>{index.board_title}</td>

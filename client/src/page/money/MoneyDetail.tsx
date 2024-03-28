@@ -20,7 +20,7 @@ export const MoneyDetail = () => {
   // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY, setMONEY] = useState<any> ({});
+  const [MONEY, setMONEY] = useState ({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -86,7 +86,7 @@ export const MoneyDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY?.money_section?.flatMap((moneyItem: any) => (
+          {MONEY?.money_section?.flatMap((moneyItem) => (
             <tr key={moneyItem._id}>
               <td>{moneyItem.money_part_val}</td>
               <td>{moneyItem.money_title_val}</td>

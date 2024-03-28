@@ -21,11 +21,11 @@ const SleepSchema = new mongoose.Schema ({
   },
 
   // 2. components
-  sleep_night : {
+  sleep_start : {
     type : String,
     required : true
   },
-  sleep_morning : {
+  sleep_end : {
     type : String,
     required : true
   },

@@ -1,6 +1,6 @@
 import {ReportHandler} from "web-vitals";
 
-const logWebVital = (metric: any) => {
+const logWebVital = (metric) => {
   console.log(metric);
 };
 

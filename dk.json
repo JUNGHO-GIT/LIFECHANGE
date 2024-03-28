@@ -1,56 +1,58 @@
-WORK_LIST : [
+SLEEP_REAL : [
   {
-    "val": {
-      "_id": "6602143d275ab2f4e701366a",
-      "work_dur": "2024-03-26 ~ 2024-03-26",
-      "work_day": "2024-03-26",
-      "work_start": "11:01",
-      "work_end": "03:33",
-      "work_time": "07 : 28"
-    },
-    "real": [
-      {
-        "work_part_idx": 1,
-        "work_part_val": "등",
-        "work_title_idx": 0,
-        "work_title_val": "데드리프트",
-        "work_kg": 1,
-        "work_set": 1,
-        "work_count": 1,
-        "work_rest": 1
-      },
-      {
-        "work_part_idx": 1,
-        "work_part_val": "등",
-        "work_title_idx": 0,
-        "work_title_val": "데드리프트",
-        "work_kg": 2,
-        "work_set": 2,
-        "work_count": 2,
-        "work_rest": 2
-      }
-    ],
-    "plan": [
-      {
-        "work_part_idx": 1,
-        "work_part_val": "등",
-        "work_title_idx": 0,
-        "work_title_val": "데드리프트",
-        "work_kg": 1,
-        "work_set": 1,
-        "work_count": 1,
-        "work_rest": 1
-      },
-      {
-        "work_part_idx": 1,
-        "work_part_val": "등",
-        "work_title_idx": 0,
-        "work_title_val": "데드리프트",
-        "work_kg": 2,
-        "work_set": 2,
-        "work_count": 2,
-        "work_rest": 2
-      }
-    ]
+    "_id": "6603103578e319ce2b312d12",
+    "user_id": "123",
+    "sleep_start": "03:33",
+    "sleep_time": "01:11",
+    "sleep_end": "04:44",
+    "sleep_planYn": "N",
+    "sleep_day": "2024-03-27",
+    "sleep_regdate": "2024-03-27-03:13:09",
+    "sleep_update": "2024-03-27-03:13:09",
+    "sleep_number": 57,
+    "__v": 0
+  }
+]
+SLEEP_PLAN : [
+  {
+    "_id": "6602e6c1a3741c95278440d6",
+    "user_id": "123",
+    "sleep_night": "22:00",
+    "sleep_morning": "04:00",
+    "sleep_time": "15:52",
+    "sleep_planYn": "Y",
+    "sleep_day": "2024-03-27",
+    "sleep_regdate": "2024-03-27-00:16:17",
+    "sleep_update": "2024-03-27-00:16:17",
+    "sleep_number": 54,
+    "__v": 0,
+    "sleep_end": "03:03",
+    "sleep_start": "11:11"
+  },
+  {
+    "_id": "6603093c78e319ce2b312c5a",
+    "user_id": "123",
+    "sleep_start": "03:33",
+    "sleep_time": "00:00",
+    "sleep_end": "22:02",
+    "sleep_planYn": "Y",
+    "sleep_day": "2024-03-27",
+    "sleep_regdate": "2024-03-27-02:43:24",
+    "sleep_update": "2024-03-27-02:43:24",
+    "sleep_number": 55,
+    "__v": 0
+  },
+  {
+    "_id": "66030ed678e319ce2b312cbd",
+    "user_id": "123",
+    "sleep_start": "22:22",
+    "sleep_time": "00:00",
+    "sleep_end": "03:33",
+    "sleep_planYn": "Y",
+    "sleep_day": "2024-03-27",
+    "sleep_regdate": "2024-03-27-03:07:18",
+    "sleep_update": "2024-03-27-03:07:18",
+    "sleep_number": 56,
+    "__v": 0
   }
 ]
