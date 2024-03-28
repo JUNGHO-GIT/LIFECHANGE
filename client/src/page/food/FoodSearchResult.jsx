@@ -1,0 +1,158 @@
+// FoodSearchResult.jsx
+
+import React, {useState, useEffect} from "react";
+import {useNavigate, useLocation} from "react-router-dom";
+import DatePicker from "react-datepicker";
+import axios from "axios";
+import moment from "moment-timezone";
+import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+
+// ------------------------------------------------------------------------------------------------>
+export const FoodSearchResult = () => {
+
+  // 1. common ------------------------------------------------------------------------------------>
+  const TITLE = "Food SearchResult";
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const navParam = useNavigate();
+  const location = useLocation();
+  const user_id = window.sessionStorage.getItem("user_id");
+  const food_category = location.state.food_category;
+  const {log} = useDeveloperMode();
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [foodDay, setFoodDay] = useState(koreanDate);
+  const [FOOD, setFOOD] = useState ([]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const fetchFoodSearchResult = async () => {
+      try {
+        const response = await axios.get(`${URL_FOOD}/foodSearchResult`, {
+          params: {
+            user_id : user_id,
+            food_category : food_category,
+            foodDur : foodDay,
+          },
+        });
+        setFOOD(response.data);
+        log("FOOD : " + JSON.stringify(response.data));
+      }
+      catch (e) {
+        alert(`Error fetching food data: ${e.message}`);
+        setFOOD([]);
+      }
+    };
+    fetchFoodSearchResult();
+  }, [user_id, food_category, foodDay]);
+
+  // 4. view -------------------------------------------------------------------------------------->
+  const logicViewDate = () => {
+    return (
+      <DatePicker
+        dateFormat="yyyy-MM-dd"
+        selected={new Date(foodDay)}
+        popperPlacement="bottom"
+        onChange={(date) => {
+          const formatDate = date.toISOString().split("T")[0];
+          setFoodDay(formatDate);
+        }}
+      />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableFoodSearchResult = () => {
+    return (
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>음식명</th>
+            <th>브랜드</th>
+            <th>서빙</th>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
+          </tr>
+        </thead>
+        <tbody>
+          {FOOD.map((index, i) => (
+            <tr key={i}>
+              <td>
+                {buttonFoodDetail (
+                  index._id, index.food_title, index.foodDay, index.food_category
+                )}
+              </td>
+              <td>{index.food_brand}</td>
+              <td>{index.food_serving}</td>
+              <td>{index.food_calories}</td>
+              <td>{index.food_carb}</td>
+              <td>{index.food_protein}</td>
+              <td>{index.food_fat}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonFoodDetail = (_id, food_title, foodDay, food_category) => {
+    return (
+      <p onClick={(e) => {
+        e.preventDefault();
+        navParam(`/food/detail`, {
+          state: {
+            _id : _id,
+            foodDur : foodDay,
+            food_category : food_category,
+          },
+        });
+      }}>
+        {food_title}
+      </p>
+    );
+  };
+  const buttonRefreshPage = () => {
+    return (
+      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        navParam(0);
+      }}>
+        Refresh
+      </button>
+    );
+  };
+
+  // 10. return ----------------------------------------------------------------------------------->
+  return (
+    <div className="root-wrapper">
+      <div className="container-wrapper">
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-7">
+              {TITLE}
+              <span className="ms-4"> ({food_category})</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-5">
+              <span className="ms-4">{logicViewDate()}</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            {tableFoodSearchResult()}
+            <br/>
+            {buttonRefreshPage()}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

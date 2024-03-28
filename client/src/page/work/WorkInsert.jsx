@@ -1,4 +1,4 @@
-// WorkInsert.tsx
+// WorkInsert.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
@@ -7,8 +7,8 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {workPartArray, workTitleArray} from "./WorkArray";
-import {useStorage} from "../../assets/ts/useStorage";
-import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
+import {useStorage} from "../../assets/js/useStorage.jsx";
+import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -79,7 +79,7 @@ export const WorkInsert = () => {
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     // 1. real
-    const responseReal = await axios.get(`${URL_WORK}/workDetail`, {
+    const responseReal = await axios.get(`${URL_WORK}/work/detail`, {
       params: {
         _id: "",
         user_id: user_id,
@@ -89,7 +89,7 @@ export const WorkInsert = () => {
     });
 
     // 2. plan
-    const responsePlan = await axios.get(`${URL_WORK}/workDetail`, {
+    const responsePlan = await axios.get(`${URL_WORK}/work/detail`, {
       params: {
         _id: "",
         user_id: user_id,
@@ -156,7 +156,7 @@ export const WorkInsert = () => {
     });
     if (response.data === "success") {
       alert("Insert a work successfully");
-      navParam("/workList");
+      navParam("/work/list");
     }
     else if (response.data === "fail") {
       alert("Insert a work failed");
@@ -251,134 +251,150 @@ export const WorkInsert = () => {
     const setWork = planYn === "N" ? setWORK_REAL : setWORK_PLAN;
 
     return (
-      <div key={i} className="mb-20">
-        <div className="row d-center">
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">파트</span>
-              <select
-                className="form-control"
-                id={`work_part_idx-${i}`}
-                value={planYn === "Y" ? WORK_PLAN.sleep_start : WORK_REAL.sleep_start}
-                onChange={(e) => {
-                  const newIndex = parseInt(e.target.value);
-                  setSection((prev[]) => {
-                    let updatedSection = [...prev];
-                    updatedSection[i] = {
-                      ...updatedSection[i],
-                      work_part_idx: newIndex,
-                      work_part_val: workPartArray[newIndex].work_part[0],
-                      work_title_idx: 0,
-                      work_title_val: workTitleArray[newIndex].work_title[0],
-                    };
-                    return updatedSection;
-                  });
-                }}
-              >
-                {workPartArray.map((part, idx) => (
-                  <option key={idx} value={idx}>
-                    {part.work_part[0]}
-                  </option>
-                ))}
-              </select>
+      <React.Fragment>
+        <div key={i} className="mb-20">
+          <div className="row d-center">
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">파트</span>
+                <select
+                  className="form-control"
+                  id={`work_part_idx-${i}`}
+                  onChange={(e) => {
+                    const newIndex = parseInt(e.target.value);
+                    setSection((prev) => {
+                      let updatedSection = [...prev];
+                      updatedSection[i] = {
+                        ...updatedSection[i],
+                        work_part_idx: newIndex,
+                        work_part_val: workPartArray[newIndex].work_part[0],
+                        work_title_idx: 0,
+                        work_title_val: workTitleArray[newIndex].work_title[0],
+                      };
+                      return updatedSection;
+                    });
+                  }}
+                >
+                  {workPartArray.map((part, idx) => (
+                    <option key={idx} value={idx}>
+                      {part.work_part[0]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">타이틀</span>
+                <select
+                  className="form-control"
+                  id={`work_title_idx-${i}`}
+                  onChange={(e) => {
+                    let newTitle = e.target.value;
+                    setSection((prev) => {
+                      let updatedSection = [...prev];
+                      updatedSection[i].work_title_val = newTitle;
+                      return updatedSection;
+                    });
+                  }}
+                >
+                  {workTitleArray[work.work_section[i]?.work_part_idx]?.work_title.map((title, idx) => (
+                    <option key={idx} value={title}>
+                      {title}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">타이틀</span>
-              <select
-                className="form-control"
-                id={`work_title_idx-${i}`}
-                value={planYn === "Y" ? WORK_PLAN.sleep_end : WORK_REAL.sleep_end}
-                onChange={(e) => {
-                  let newTitle = e.target.value;
-                  setSection((prev[]) => {
-                    let updatedSection = [...prev];
-                    updatedSection[i].work_title_val = newTitle;
-                    return updatedSection;
-                  });
-                }}
-              >
-                {workTitleArray[work.work_section[i]?.work_part_idx]?.work_title.map((title, idx) => (
-                  <option key={idx} value={title}>
-                    {title}
-                  </option>
-                ))}
-              </select>
+          <div className="row d-center">
+            <div className="col-3">
+              <div className="input-group">
+                <span className="input-group-text">세트</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={
+                    planYn === "Y"
+                    ? WORK_PLAN.work_section[i].work_set
+                    : WORK_REAL.work_section[i].work_set
+                  }
+                  onChange={(e) => {
+                    setWork((prev) => {
+                      const updatedSection = [...prev.work_section];
+                      updatedSection[i].work_set = parseInt(e.target.value);
+                      return { ...prev, work_section: updatedSection };
+                    });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="input-group">
+                <span className="input-group-text">횟수</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={
+                    planYn === "Y"
+                    ? WORK_PLAN.work_section[i].work_count
+                    : WORK_REAL.work_section[i].work_count
+                  }
+                  onChange={(e) => {
+                    setWork((prev) => {
+                      const updatedSection = [...prev.work_section];
+                      updatedSection[i].work_count = parseInt(e.target.value);
+                      return { ...prev, work_section: updatedSection };
+                    });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="input-group">
+                <span className="input-group-text">무게</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={
+                    planYn === "Y"
+                    ? WORK_PLAN.work_section[i].work_kg
+                    : WORK_REAL.work_section[i].work_kg
+                  }
+                  onChange={(e) => {
+                    setWork((prev) => {
+                      const updatedSection = [...prev.work_section];
+                      updatedSection[i].work_kg = parseInt(e.target.value);
+                      return { ...prev, work_section: updatedSection };
+                    });
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="input-group">
+                <span className="input-group-text">휴식</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={
+                    planYn === "Y"
+                    ? WORK_PLAN.work_section[i].work_rest
+                    : WORK_REAL.work_section[i].work_rest
+                  }
+                  onChange={(e) => {
+                    setWork((prev) => {
+                      const updatedSection = [...prev.work_section];
+                      updatedSection[i].work_rest = parseInt(e.target.value);
+                      return { ...prev, work_section: updatedSection };
+                    });
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <div className="row d-center">
-          <div className="col-3">
-            <div className="input-group">
-              <span className="input-group-text">세트</span>
-              <input
-                type="number"
-                className="form-control"
-                value={planYn === "Y" ? WORK_PLAN.sleep_time : WORK_REAL.sleep_time}
-                onChange={(e) => {
-                  setWork((prev) => {
-                    const updatedSection = [...prev.work_section];
-                    updatedSection[i].work_set = parseInt(e.target.value);
-                    return { ...prev, work_section: updatedSection };
-                  });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="input-group">
-              <span className="input-group-text">횟수</span>
-              <input
-                type="number"
-                className="form-control"
-                value={planYn === "Y" ? WORK_PLAN.sleep_time : WORK_REAL.sleep_time}
-                onChange={(e) => {
-                  setWork((prev) => {
-                    const updatedSection = [...prev.work_section];
-                    updatedSection[i].work_count = parseInt(e.target.value);
-                    return { ...prev, work_section: updatedSection };
-                  });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="input-group">
-              <span className="input-group-text">무게</span>
-              <input
-                type="number"
-                className="form-control"
-                value={planYn === "Y" ? WORK_PLAN.sleep_time : WORK_REAL.sleep_time}
-                onChange={(e) => {
-                  setWork((prev) => {
-                    const updatedSection = [...prev.work_section];
-                    updatedSection[i].work_kg = parseInt(e.target.value);
-                    return { ...prev, work_section: updatedSection };
-                  });
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="input-group">
-              <span className="input-group-text">휴식</span>
-              <input
-                type="number"
-                className="form-control"
-                value={planYn === "Y" ? WORK_PLAN.sleep_time : WORK_REAL.sleep_time}
-                onChange={(e) => {
-                  setWork((prev) => {
-                    const updatedSection = [...prev.work_section];
-                    updatedSection[i].work_rest = parseInt(e.target.value);
-                    return { ...prev, work_section: updatedSection };
-                  });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      </React.Fragment>
     );
   };
 
@@ -395,10 +411,10 @@ export const WorkInsert = () => {
             <div className="input-group">
               <span className="input-group-text">계획여부</span>
               <select
-                id="sleep_planYn"
-                name="sleep_planYn"
+                id="work_planYn"
+                name="work_planYn"
                 className="form-select"
-                value={work.sleep_planYn}
+                value={work.work_planYn}
                 onChange={(e) => {
                   setPlanYn(e.target.value);
                 }}
@@ -417,12 +433,12 @@ export const WorkInsert = () => {
                 id="work_start"
                 name="work_start"
                 className="form-control"
-                value={planYn === "Y" ? WORK_PLAN.sleep_start : WORK_REAL.sleep_start}
+                value={planYn === "Y" ? WORK_PLAN.work_start : WORK_REAL.work_start}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                onChange={(e:any) => {
+                onChange={(e) => {
                   setWork({ ...work, work_start : e });
                 }}
               />
@@ -437,12 +453,12 @@ export const WorkInsert = () => {
                 id="work_end"
                 name="work_end"
                 className="form-control"
-                value={planYn === "Y" ? WORK_PLAN.sleep_end : WORK_REAL.sleep_end}
+                value={planYn === "Y" ? WORK_PLAN.work_end : WORK_REAL.work_end}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                onChange={(e:any) => {
+                onChange={(e) => {
                   setWork({ ...work, work_end : e });
                 }}
               />
@@ -457,7 +473,7 @@ export const WorkInsert = () => {
                 id="work_time"
                 name="work_time"
                 className="form-control"
-                value={planYn === "Y" ? WORK_PLAN.sleep_time : WORK_REAL.sleep_time}
+                value={planYn === "Y" ? WORK_PLAN.work_time : WORK_REAL.work_time}
                 disableClock={true}
                 clockIcon={null}
                 format="HH:mm"
@@ -470,8 +486,6 @@ export const WorkInsert = () => {
       </div>
     );
   };
-
-
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonWorkInsert = () => {
