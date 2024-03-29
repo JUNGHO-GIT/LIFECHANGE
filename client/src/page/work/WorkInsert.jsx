@@ -29,28 +29,10 @@ export const WorkInsert = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [workCount, setWorkCount] = useState(1);
   const [planYn, setPlanYn] = useState("N");
-  const [WORK_REAL, setWORK_REAL] = useState({
+  const [WORK_DEFAULT] = useState({
     user_id: user_id,
-    work_day: koreanDate,
+    work_day: "",
     work_planYn: "N",
-    work_start: "00:00",
-    work_end: "00:00",
-    work_time: "00:00",
-    work_section: [{
-      work_part_idx: 0,
-      work_part_val: "전체",
-      work_title_idx: 0,
-      work_title_val: "전체",
-      work_set: 0,
-      work_count: 0,
-      work_kg: 0,
-      work_rest: 0,
-    }],
-  });
-  const [WORK_PLAN, setWORK_PLAN] = useState({
-    user_id: user_id,
-    work_day: koreanDate,
-    work_planYn: "Y",
     work_start: "00:00",
     work_end: "00:00",
     work_time: "00:00",
@@ -75,6 +57,8 @@ export const WorkInsert = () => {
     work_kg: 0,
     work_rest: 0,
   });
+  const [WORK_REAL, setWORK_REAL] = useState(WORK_DEFAULT);
+  const [WORK_PLAN, setWORK_PLAN] = useState(WORK_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -99,15 +83,15 @@ export const WorkInsert = () => {
     });
 
     // 3. set
-    if (responseReal.data.result) {
-      setWORK_REAL(responseReal.data.result);
-    }
-    if (responsePlan.data.result) {
-      setWORK_PLAN(responsePlan.data.result);
-    }
-
-    log("WORK_REAL : " + JSON.stringify(WORK_REAL));
+    responsePlan.data.result.length > 0
+      ? setWORK_PLAN(responsePlan.data.result)
+      : setWORK_PLAN(WORK_DEFAULT);
     log("WORK_PLAN : " + JSON.stringify(WORK_PLAN));
+
+    responseReal.data.result.length > 0
+      ? setWORK_REAL(responseReal.data.result)
+      : setWORK_REAL(WORK_DEFAULT);
+    log("WORK_REAL : " + JSON.stringify(WORK_REAL));
 
   })()}, [planYn]);
 
@@ -140,9 +124,12 @@ export const WorkInsert = () => {
       const diff = endDate.getTime() - startDate.getTime();
       const hours = Math.floor(diff / 3600000);
       const minutes = Math.floor((diff % 3600000) / 60000);
-      const workTime = `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2, "0")}`;
+      const time = `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2, "0")}`;
 
-      setWork({ ...work, work_time: workTime });
+      setWork({
+        ...work,
+        work_time: time
+      });
     }
   }, [WORK_REAL.work_start, WORK_REAL.work_end, WORK_PLAN.work_start, WORK_PLAN.work_end]);
 
@@ -439,7 +426,10 @@ export const WorkInsert = () => {
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  setWork({ ...work, work_start : e });
+                  setWork({
+                    ...work,
+                    work_start: String(e)
+                  });
                 }}
               />
             </div>
@@ -459,7 +449,10 @@ export const WorkInsert = () => {
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  setWork({ ...work, work_end : e });
+                  setWork({
+                    ...work,
+                    work_end: String(e)
+                  });
                 }}
               />
             </div>

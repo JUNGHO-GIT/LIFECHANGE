@@ -47,20 +47,11 @@ import {FoodUpdate} from "../page/food/FoodUpdate.jsx";
 import {FoodSearchList} from "../page/food/FoodSearchList.jsx";
 import {FoodSearchResult} from "../page/food/FoodSearchResult.jsx";
 import {FoodListDay} from "../page/food/FoodListDay.jsx";
-import {FoodListWeek} from "../page/food/FoodListWeek.jsx";
-import {FoodListMonth} from "../page/food/FoodListMonth.jsx";
-import {FoodListYear} from "../page/food/FoodListYear.jsx";
-import {FoodListSelect} from "../page/food/FoodListSelect";
 
 import {WorkInsert} from "../page/work/WorkInsert.jsx";
 import {WorkDetail} from "../page/work/WorkDetail.jsx";
 import {WorkUpdate} from "../page/work/WorkUpdate.jsx";
 import {WorkList} from "../page/work/WorkList.jsx";
-import {WorkListDay} from "../page/work/WorkListDay.jsx";
-import {WorkListWeek} from "../page/work/WorkListWeek.jsx";
-import {WorkListMonth} from "../page/work/WorkListMonth.jsx";
-import {WorkListYear} from "../page/work/WorkListYear.jsx";
-import {WorkListSelect} from "../page/work/WorkListSelect";
 
 import {SleepInsert} from "../page/sleep/SleepInsert.jsx";
 import {SleepDetail} from "../page/sleep/SleepDetail.jsx";
@@ -85,65 +76,128 @@ import {PlanList} from "../page/plan/PlanList";
 import {Test} from "../page/test/Test";
 
 // ------------------------------------------------------------------------------------------------>
-export const App = () => {
+const Common = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<DashList />} />
+      <Route path="/test" element={<Test />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const User = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<UserLogin />} />
+      <Route path="/insert" element={<UserInsert />} />
+      <Route path="/detail" element={<UserDetail />} />
+      <Route path="/list" element={<UserList />} />
+      <Route path="/update" element={<UserUpdate />} />
+      <Route path="/delete" element={<UserDelete />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Board = () => {
+  return (
+    <Routes>
+      <Route path="/list" element={<BoardList />} />
+      <Route path="/insert" element={<BoardInsert />} />
+      <Route path="/detail" element={<BoardDetail />} />
+      <Route path="/update" element={<BoardUpdate />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Calendar = () => {
+  return (
+    <Routes>
+      <Route path="/list" element={<CalendarList />} />
+      <Route path="/detail" element={<CalendarDetail />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Food = () => {
+  return (
+    <Routes>
+      <Route path="/list" element={<FoodListDay />} />
+      <Route path="/insert" element={<FoodInsert />} />
+      <Route path="/detail" element={<FoodDetail />} />
+      <Route path="/update" element={<FoodUpdate />} />
+      <Route path="/search/list" element={<FoodSearchList />} />
+      <Route path="/search/result" element={<FoodSearchResult />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Work = () => {
+  return (
+    <Routes>
+      <Route path="/list" element={<WorkList />} />
+      <Route path="/insert" element={<WorkInsert />} />
+      <Route path="/detail" element={<WorkDetail />} />
+      <Route path="/update" element={<WorkUpdate />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Money = () => {
+  return (
+    <Routes>
+      <Route path="/insert" element={<MoneyInsert />} />
+      <Route path="/detail" element={<MoneyDetail />} />
+      <Route path="/update" element={<MoneyUpdate />} />
+      <Route path="/list/day" element={<MoneyListDay />} />
+      <Route path="/list/week" element={<MoneyListWeek />} />
+      <Route path="/list/month" element={<MoneyListMonth />} />
+      <Route path="/list/year" element={<MoneyListYear />} />
+      <Route path="/list/select" element={<MoneyListSelect />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Plan = () => {
+  return (
+    <Routes>
+      <Route path="/list" element={<PlanList />} />
+      <Route path="/insert" element={<PlanInsert />} />
+      <Route path="/detail" element={<PlanDetail />} />
+      <Route path="/update" element={<PlanUpdate />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Sleep = () => {
+  return (
+    <Routes>
+      <Route path="/dash" element={<SleepDash />} />
+      <Route path="/list" element={<SleepList />} />
+      <Route path="/insert" element={<SleepInsert />} />
+      <Route path="/detail" element={<SleepDetail />} />
+      <Route path="/update" element={<SleepUpdate />} />
+    </Routes>
+  );
+};
 
+// ------------------------------------------------------------------------------------------------>
+export const App = () => {
   return (
     <div className="App">
       <DeveloperModeProvider>
         <Loader />
         <Header />
-        <Routes>
-
-          <Route path="/" element={<DashList />} />
-          <Route path="/test" element={<Test />} />
-
-          <Route path="/calendar/list" element={<CalendarList />} />
-          <Route path="/calendar/detail" element={<CalendarDetail />} />
-
-          <Route path="/user/login" element={<UserLogin />} />
-          <Route path="/user/insert" element={<UserInsert />} />
-          <Route path="/user/detail" element={<UserDetail />} />
-          <Route path="/user/list" element={<UserList />} />
-          <Route path="/user/update" element={<UserUpdate />} />
-          <Route path="/user/delete" element={<UserDelete />} />
-
-          <Route path="/board/list" element={<BoardList />} />
-          <Route path="/board/insert" element={<BoardInsert />} />
-          <Route path="/board/detail" element={<BoardDetail />} />
-          <Route path="/board/update" element={<BoardUpdate />} />
-
-          <Route path="/food/list" element={<FoodListDay />} />
-          <Route path="/food/insert" element={<FoodInsert />} />
-          <Route path="/food/detail" element={<FoodDetail />} />
-          <Route path="/food/update" element={<FoodUpdate />} />
-          <Route path="/food/search/list" element={<FoodSearchList />} />
-          <Route path="/food/search/result" element={<FoodSearchResult />} />
-
-          <Route path="/work/insert" element={<WorkInsert />} />
-          <Route path="/work/detail" element={<WorkDetail />} />
-          <Route path="/work/update" element={<WorkUpdate />} />
-          <Route path="/work/list" element={<WorkList />} />
-
-          <Route path="/sleep/dash" element={<SleepDash />} />
-          <Route path="/sleep/list" element={<SleepList />} />
-          <Route path="/sleep/insert" element={<SleepInsert />} />
-          <Route path="/sleep/detail" element={<SleepDetail />} />
-          <Route path="/sleep/update" element={<SleepUpdate />} />
-
-          <Route path="/money/insert" element={<MoneyInsert />} />
-          <Route path="/money/detail" element={<MoneyDetail />} />
-          <Route path="/money/update" element={<MoneyUpdate />} />
-          <Route path="/moneyListDay" element={<MoneyListDay />} />
-          <Route path="/moneyListWeek" element={<MoneyListWeek />} />
-          <Route path="/moneyListMonth" element={<MoneyListMonth />} />
-          <Route path="/moneyListYear" element={<MoneyListYear />} />
-          <Route path="/moneyListSelect" element={<MoneyListSelect />} />
-
-          <Route path="/plan/insert" element={<PlanInsert />} />
-          <Route path="/plan/detail" element={<PlanDetail />} />
-          <Route path="/plan/update" element={<PlanUpdate />} />
-          <Route path="/plan/list" element={<PlanList />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Common />} />
+            <Route path="/user/*" element={<User />} />
+            <Route path="/board/*" element={<Board />} />
+            <Route path="/calendar/*" element={<Calendar />} />
+            <Route path="/food/*" element={<Food />} />
+            <Route path="/work/*" element={<Work />} />
+            <Route path="/sleep/*" element={<Sleep />} />
+            <Route path="/money/*" element={<Money />} />
+            <Route path="/plan/*" element={<Plan />} />
+          </Routes>
         <Footer />
       </DeveloperModeProvider>
     </div>

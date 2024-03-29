@@ -28,7 +28,7 @@ export const SleepList = () => {
     page: 1,
     limit: 5,
   });
-  const [SLEEP_REAL, setSLEEP_REAL] = useState([{
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
     _id: "",
     user_id: user_id,
     sleep_day: "",
@@ -37,15 +37,8 @@ export const SleepList = () => {
     sleep_end: "00:00",
     sleep_time: "00:00",
   }]);
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState([{
-    _id: "",
-    user_id: user_id,
-    sleep_day: "",
-    sleep_planYn: "N",
-    sleep_start: "00:00",
-    sleep_end: "00:00",
-    sleep_time: "00:00",
-  }]);
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_DEFAULT);
+  const [SLEEP_REAL, setSLEEP_REAL] = useState(SLEEP_DEFAULT);
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:sleepResDur, setVal:setSleepResDur} = useStorage(
@@ -86,15 +79,15 @@ export const SleepList = () => {
     // 3. set
     setTotalCount(responseReal.data.totalCount);
 
-    if (responseReal.data.result && responseReal.data.result.length > 0) {
-      setSLEEP_REAL(responseReal.data.result);
-    }
-    if (responsePlan.data.result && responsePlan.data.result.length > 0) {
-      setSLEEP_PLAN(responsePlan.data.result);
-    }
-
-    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
+    responsePlan.data.result.length > 0
+      ? setSLEEP_PLAN(responsePlan.data.result)
+      : setSLEEP_PLAN(SLEEP_DEFAULT);
     log("SLEEP_PLAN : " + JSON.stringify(SLEEP_PLAN));
+
+    responseReal.data.result.length > 0
+      ? setSLEEP_REAL(responseReal.data.result)
+      : setSLEEP_REAL(SLEEP_DEFAULT);
+    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
 
   })()}, [user_id, sleepResDur, filter]);
 

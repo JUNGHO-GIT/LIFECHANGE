@@ -27,24 +27,17 @@ export const SleepInsert = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
-  const [SLEEP_REAL, setSLEEP_REAL] = useState({
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
     _id: "",
     user_id: user_id,
-    sleep_day: koreanDate,
+    sleep_day: "",
     sleep_planYn: "N",
     sleep_start: "00:00",
     sleep_end: "00:00",
     sleep_time: "00:00",
   });
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState({
-    _id: "",
-    user_id: user_id,
-    sleep_day: koreanDate,
-    sleep_planYn: "Y",
-    sleep_start: "00:00",
-    sleep_end: "00:00",
-    sleep_time: "00:00",
-  });
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_DEFAULT);
+  const [SLEEP_REAL, setSLEEP_REAL] = useState(SLEEP_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -69,37 +62,37 @@ export const SleepInsert = () => {
     });
 
     // 3. set
-    if (responseReal.data.result) {
-      setSLEEP_REAL(responseReal.data.result);
-    }
-    if (responsePlan.data.result) {
-      setSLEEP_PLAN(responsePlan.data.result);
-    }
-
-    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
+    responsePlan.data.result.length > 0
+      ? setSLEEP_PLAN(responsePlan.data.result)
+      : setSLEEP_PLAN(SLEEP_DEFAULT);
     log("SLEEP_PLAN : " + JSON.stringify(SLEEP_PLAN));
+
+    responseReal.data.result.length > 0
+      ? setSLEEP_REAL(responseReal.data.result)
+      : setSLEEP_REAL(SLEEP_DEFAULT);
+    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
 
   })()}, [planYn]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (planYn === "N") {
-      setSLEEP_REAL({
-        ...SLEEP_REAL,
-        sleep_day: moment(sleepDay).format("YYYY-MM-DD").toString(),
-      });
-    }
-    if (planYn === "Y") {
-      setSLEEP_PLAN({
-        ...SLEEP_PLAN,
-        sleep_day: moment(sleepDay).format("YYYY-MM-DD").toString(),
-      });
-    }
+
+    const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const setSleep = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+
+    setSleep({
+      ...sleep,
+      sleep_day: moment(sleepDay).format("YYYY-MM-DD").toString(),
+    });
+
   }, [sleepDay]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    let sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+
+    const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const setSleep = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+
     if (sleep.sleep_start && sleep.sleep_end) {
       const startDate = new Date(`${koreanDate}T${sleep.sleep_start}:00Z`);
       const endDate = new Date(`${koreanDate}T${sleep.sleep_end}:00Z`);
@@ -111,43 +104,35 @@ export const SleepInsert = () => {
       const diff = endDate.getTime() - startDate.getTime();
       const hours = Math.floor(diff / 3600000);
       const minutes = Math.floor((diff % 3600000) / 60000);
+      const time = `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2, "0")}`;
 
-      const sleepTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-
-      if (planYn === "N") {
-        setSLEEP_REAL({ ...SLEEP_REAL, sleep_time: sleepTime });
-      }
-      if (planYn === "Y") {
-        setSLEEP_PLAN({ ...SLEEP_PLAN, sleep_time: sleepTime });
-      }
+      setSleep({
+        ...sleep,
+        sleep_time: time
+      });
     }
   }, [SLEEP_REAL.sleep_start, SLEEP_REAL.sleep_end, SLEEP_PLAN.sleep_start, SLEEP_PLAN.sleep_end]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepInsert = async () => {
-    try {
-      const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
-      const response = await axios.post (`${URL_SLEEP}/sleep/insert`, {
-        user_id : user_id,
-        SLEEP: sleep,
-        planYn : planYn,
-      });
-      if (response.data === "success") {
-        alert("Insert a sleep successfully");
-        navParam("/sleep/list");
-      }
-      else if (response.data === "fail") {
-        alert("Insert a sleep failed");
-        return;
-      }
-      else {
-        alert(`${response.data}error`);
-      }
-      log("SLEEP : " + JSON.stringify(sleep));
+    const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const response = await axios.post (`${URL_SLEEP}/insert`, {
+      user_id : user_id,
+      SLEEP: sleep,
+      planYn : planYn,
+    });
+    if (response.data === "success") {
+      alert("Insert a sleep successfully");
+      navParam("/sleep/list");
     }
-    catch (e) {
-      alert(`Error fetching sleep data: ${e.message}`);
+    else if (response.data === "fail") {
+      alert("Insert a sleep failed");
+      return;
     }
+    else {
+      alert(`${response.data}error`);
+    }
+    log("SLEEP : " + JSON.stringify(sleep));
   };
 
   // 4. view -------------------------------------------------------------------------------------->
@@ -181,7 +166,10 @@ export const SleepInsert = () => {
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepInsert = () => {
+
     const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const setSleep = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+
     return (
       <div>
         <div className="row d-center">
@@ -217,12 +205,10 @@ export const SleepInsert = () => {
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  if (planYn === "Y") {
-                    setSLEEP_PLAN({ ...SLEEP_PLAN, sleep_start: e });
-                  }
-                  if (planYn === "N") {
-                    setSLEEP_REAL({ ...SLEEP_REAL, sleep_start: e });
-                  }
+                  setSleep({
+                    ...sleep,
+                    sleep_start: e
+                  });
                 }}
               />
             </div>
@@ -242,12 +228,10 @@ export const SleepInsert = () => {
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  if (planYn === "Y") {
-                    setSLEEP_PLAN({ ...SLEEP_PLAN, sleep_end: e });
-                  }
-                  if (planYn === "N") {
-                    setSLEEP_REAL({ ...SLEEP_REAL, sleep_end: e });
-                  }
+                  setSleep({
+                    ...sleep,
+                    sleep_end: e
+                  });
                 }}
               />
             </div>

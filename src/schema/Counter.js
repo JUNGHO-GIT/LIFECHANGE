@@ -1,7 +1,4 @@
-// Counter.js
-
 import mongoose from "mongoose";
-import moment from "moment-timezone";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
@@ -14,6 +11,8 @@ const schema = new mongoose.Schema({
     default: 0
   },
 });
+
+const Counter = mongoose.model("Counter", schema);
 
 // 2. incrementSeq -------------------------------------------------------------------------------->
 export async function incrementSeq(sequenceName, modelName) {

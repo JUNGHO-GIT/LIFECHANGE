@@ -263,26 +263,15 @@ export const list = async (
   filter_param,
   planYn_param,
 ) => {
-
-  let totalCount;
-  let findQuery;
-  let findResult;
-  let finalResult;
-
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
 
-  // plan : Y, N
-  let filterPlan = planYn_param;
-
-  // asc, desc
-  let order = filter_param.order;
-
-  // paging
+  const filterPlan = planYn_param;
+  const filterOrder = filter_param.order;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
 
-  findQuery = {
+  let findQuery = {
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
@@ -291,33 +280,22 @@ export const list = async (
     sleep_planYn: filterPlan,
   };
 
-  // asc, desc 정렬
-  let sortCondition = {};
-  if (order === "asc") {
-    sortCondition = { sleep_day: 1 };
-  }
-  else {
-    sortCondition = { sleep_day: -1 };
+  let queryChain = Sleep.find(findQuery);
+
+  if (filterOrder === "asc" || filterOrder === "desc") {
+    const sortOrder = filterOrder === "asc" ? 1 : -1;
+    queryChain = queryChain.sort({ sleep_day: sortOrder });
   }
 
-  // totalCount
-  totalCount = await Sleep
-    .countDocuments(findQuery);
+  const totalCount = await Sleep.countDocuments(findQuery);
+  const findResult = await queryChain.skip((page - 1) * limit).limit(limit);
 
-  // 정렬, 페이징 처리
-  findResult = await Sleep
-    .find(findQuery)
-    .sort(sortCondition)
-    .skip((page - 1) * limit)
-    .limit(limit);
-
-  finalResult = {
+  return {
     totalCount: totalCount,
     result: findResult,
   };
-
-  return finalResult;
 };
+
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
