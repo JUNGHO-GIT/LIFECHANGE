@@ -112,6 +112,7 @@ export const App = () => {
           <Route path="/board/detail" element={<BoardDetail />} />
           <Route path="/board/update" element={<BoardUpdate />} />
 
+          <Route path="/food/list" element={<FoodListDay />} />
           <Route path="/food/insert" element={<FoodInsert />} />
           <Route path="/food/detail" element={<FoodDetail />} />
           <Route path="/food/update" element={<FoodUpdate />} />

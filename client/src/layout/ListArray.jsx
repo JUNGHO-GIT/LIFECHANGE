@@ -10,61 +10,56 @@ export const listArray = [
   {
     label: "Calendar",
     items: [
-      {to: "/calendarList", label: "CalendarList"},
+      {to: "/calendar/list", label: "CalendarList"},
     ]
   },
   {
     label: "User",
     items: [
-      {to: "/userList", label: "UserList"},
+      {to: "/user/list", label: "UserList"},
     ]
   },
   {
     label: "Board",
     items: [
-      {to: "/boardInsert", label: "BoardInsert"},
-      {to: "/boardList", label: "BoardList"},
+      {to: "/board/insert", label: "BoardInsert"},
+      {to: "/board/list", label: "BoardList"},
     ]
   },
   {
     label: "Food",
     items: [
-      {to: "/foodSearchList", label: "FoodSearchList"},
-      {to: "/foodList", label: "FoodList"}
+      {to: "/food/search/list", label: "FoodSearchList"},
+      {to: "/food/list", label: "FoodList"}
     ]
   },
   {
     label: "Work",
     items: [
-      {to: "/workInsert", label: "WorkInsert"},
-      {to: "/workList", label: "WorkList"},
-      {to: "/workListDay", label: "WorkListDay"},
-      {to: "/workListWeek", label: "WorkListWeek"},
-      {to: "/workListMonth", label: "WorkListMonth"},
-      {to: "/workListYear", label: "WorkListYear"},
-      {to: "/workListSelect", label: "WorkListSelect"}
+      {to: "/work/insert", label: "WorkInsert"},
+      {to: "/work/list", label: "WorkList"},
     ]
   },
   {
     label: "Sleep",
     items: [
-      {to: "/sleepDash", label: "SleepDash"},
-      {to: "/sleepInsert", label: "SleepInsert"},
-      {to: "/sleepList", label: "SleepList"}
+      {to: "/sleep/dash", label: "SleepDash"},
+      {to: "/sleep/insert", label: "SleepInsert"},
+      {to: "/sleep/list", label: "SleepList"}
     ]
   },
   {
     label: "Money",
     items: [
-      {to: "/moneyInsert", label: "MoneyInsert"},
-      {to: "/moneyList", label: "MoneyList"}
+      {to: "/money/insert", label: "MoneyInsert"},
+      {to: "/money/list", label: "MoneyList"}
     ]
   },
   {
     label: "Plan",
     items: [
-      {to: "/planInsert", label: "PlanInsert"},
-      {to: "/planList", label: "PlanList"}
+      {to: "/plan/insert", label: "PlanInsert"},
+      {to: "/plan/list", label: "PlanList"}
     ]
   }
 ];

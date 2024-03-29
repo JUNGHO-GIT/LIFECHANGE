@@ -55,7 +55,7 @@ export const WorkList = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     // 1. list
-    const responseList = await axios.get(`${URL_WORK}/workList`, {
+    const responseList = await axios.get(`${URL_WORK}/work/list`, {
       params: {
         user_id: user_id,
         work_dur: workResDur,
@@ -65,7 +65,7 @@ export const WorkList = () => {
     });
 
     // 2. plan
-    const responsePlan = await axios.get(`${URL_WORK}/workList`, {
+    const responsePlan = await axios.get(`${URL_WORK}/work/list`, {
       params: {
         user_id: user_id,
         work_dur: workResDur,

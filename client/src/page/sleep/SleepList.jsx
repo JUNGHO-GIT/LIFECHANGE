@@ -64,7 +64,7 @@ export const SleepList = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     // 1. list
-    const responseReal = await axios.get(`${URL_SLEEP}/sleepList`, {
+    const responseReal = await axios.get(`${URL_SLEEP}/sleep/list`, {
       params: {
         user_id: user_id,
         sleep_dur: sleepResDur,
@@ -74,7 +74,7 @@ export const SleepList = () => {
     });
 
     // 2. plan
-    const responsePlan = await axios.get(`${URL_SLEEP}/sleepList`, {
+    const responsePlan = await axios.get(`${URL_SLEEP}/sleep/list`, {
       params: {
         user_id: user_id,
         sleep_dur: sleepResDur,
