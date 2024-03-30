@@ -56,7 +56,7 @@ export const PlanInsert = () => {
         return;
       }
 
-      const response = await axios.post (`${URL_PLAN}/plan/insert`, {
+      const response = await axios.post (`${URL_PLAN}/insert`, {
         user_id : user_id,
         PLAN : PLAN,
       });

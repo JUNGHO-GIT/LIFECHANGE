@@ -56,7 +56,7 @@ export const WorkListMonth = () => {
     // 1. list
     const fetchWorkList = async () => {
       try {
-        const response = await axios.get (`${URL_WORK}/work/list`, {
+        const response = await axios.get (`${URL_WORK}/list`, {
           params: {
             user_id : user_id,
             work_dur : workResDur,

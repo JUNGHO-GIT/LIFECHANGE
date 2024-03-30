@@ -28,7 +28,7 @@ export const MoneyUpdate = () => {
   useEffect(() => {
     const fetchMoneyDetail = async () => {
       try {
-        const response = await axios.get(`${URL_MONEY}/money/detail`, {
+        const response = await axios.get(`${URL_MONEY}/detail`, {
           params: {
             _id : _id,
           },

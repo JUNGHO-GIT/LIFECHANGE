@@ -63,7 +63,7 @@ export const WorkInsert = () => {
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     // 1. real
-    const responseReal = await axios.get(`${URL_WORK}/work/detail`, {
+    const responseReal = await axios.get(`${URL_WORK}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
@@ -73,7 +73,7 @@ export const WorkInsert = () => {
     });
 
     // 2. plan
-    const responsePlan = await axios.get(`${URL_WORK}/work/detail`, {
+    const responsePlan = await axios.get(`${URL_WORK}/detail`, {
       params: {
         _id: "",
         user_id: user_id,

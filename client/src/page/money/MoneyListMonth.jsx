@@ -56,7 +56,7 @@ export const MoneyListMonth = () => {
     // 1. list
     const fetchMoneyList = async () => {
       try {
-        const response = await axios.get (`${URL_MONEY}/money/list`, {
+        const response = await axios.get (`${URL_MONEY}/list`, {
           params: {
             user_id : user_id,
             money_dur : moneyResDur,

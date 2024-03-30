@@ -48,7 +48,7 @@ export const Test = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseDetail = await axios.get(`${URL_WORK}/work/detail`, {
+    const responseDetail = await axios.get(`${URL_WORK}/detail`, {
       params: {
         user_id: user_id,
         work_day: koreanDate,
@@ -114,7 +114,7 @@ export const Test = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowTest = async () => {
     try {
-      const response = await axios.post (`${URL_WORK}/work/insert`, {
+      const response = await axios.post (`${URL_WORK}/insert`, {
         user_id : user_id,
         WORK : WORK,
       });

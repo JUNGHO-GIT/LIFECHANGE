@@ -5,7 +5,7 @@ import * as service from "../service/foodService.js";
 export const foodRouter = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-foodRouter.get ("/food/list", async (req, res) => {
+foodRouter.get ("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -26,7 +26,7 @@ foodRouter.get ("/food/list", async (req, res) => {
 });
 
 // 1-2. total ------------------------------------------------------------------------------------->
-foodRouter.get ("/food/total", async (req, res) => {
+foodRouter.get ("/total", async (req, res) => {
   try {
     const result = await service.total (
       req.query.user_id,
@@ -47,7 +47,7 @@ foodRouter.get ("/food/total", async (req, res) => {
 });
 
 // 1-3. avg --------------------------------------------------------------------------------------->
-foodRouter.get("/food/avg", async (req, res) => {
+foodRouter.get("/avg", async (req, res) => {
   try {
     const result = await service.avg (
       req.query.user_id,
@@ -68,7 +68,7 @@ foodRouter.get("/food/avg", async (req, res) => {
 });
 
 // 2-1. search ------------------------------------------------------------------------------------>
-foodRouter.get ("/food/search", async (req, res) => {
+foodRouter.get ("/search", async (req, res) => {
   try {
     const result = await service.search (
       req.query.user_id,
@@ -89,7 +89,7 @@ foodRouter.get ("/food/search", async (req, res) => {
 });
 
 // 2-1. detail ------------------------------------------------------------------------------------>
-/* foodRouter.get ("/food/detail", async (req, res) => {
+/* foodRouter.get ("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id
@@ -108,7 +108,7 @@ foodRouter.get ("/food/search", async (req, res) => {
 }); */
 
 // 3-1. insert ------------------------------------------------------------------------------------>
-foodRouter.post ("/food/insert", async (req, res) => {
+foodRouter.post ("/insert", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,
@@ -128,7 +128,7 @@ foodRouter.post ("/food/insert", async (req, res) => {
 });
 
 // 4. update -------------------------------------------------------------------------------------->
-foodRouter.put("/food/update", async (req, res) => {
+foodRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
       req.body._id,
@@ -148,7 +148,7 @@ foodRouter.put("/food/update", async (req, res) => {
 });
 
 // 5. deletes ------------------------------------------------------------------------------------->
-foodRouter.delete("/food/delete", async (req, res) => {
+foodRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
       req.query._id

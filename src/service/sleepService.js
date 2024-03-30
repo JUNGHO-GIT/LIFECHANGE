@@ -260,13 +260,12 @@ export const dash = async (
 export const list = async (
   user_id_param,
   sleep_dur_param,
-  filter_param,
-  planYn_param,
+  filter_param
 ) => {
+
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
 
-  const filterPlan = planYn_param;
   const filterOrder = filter_param.order;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
@@ -276,26 +275,21 @@ export const list = async (
     sleep_day: {
       $gte: startDay,
       $lte: endDay,
-    },
-    sleep_planYn: filterPlan,
+    }
   };
 
-  let queryChain = Sleep.find(findQuery);
-
-  if (filterOrder === "asc" || filterOrder === "desc") {
-    const sortOrder = filterOrder === "asc" ? 1 : -1;
-    queryChain = queryChain.sort({ sleep_day: sortOrder });
-  }
-
+  const sortOrder = filterOrder === "asc" ? 1 : -1;
   const totalCount = await Sleep.countDocuments(findQuery);
-  const findResult = await queryChain.skip((page - 1) * limit).limit(limit);
+  const findResult = await Sleep.find(findQuery).sort({ sleep_day: sortOrder }).skip((page - 1) * limit).limit(limit);
+  const realResult = findResult.filter((item) => item.sleep_planYn === "N");
+  const planResult = findResult.filter((item) => item.sleep_planYn === "Y");
 
   return {
     totalCount: totalCount,
-    result: findResult,
+    realResult: realResult,
+    planResult: planResult,
   };
 };
-
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
@@ -305,30 +299,29 @@ export const detail = async (
   planYn_param,
 ) => {
 
-  let findQuery;
-  let findResult;
-  let finalResult;
+  /* const startDay = sleep_dur_param.split(` ~ `)[0]; */
+  /* const endDay = sleep_dur_param.split(` ~ `)[1]; */
 
-  // 입력시 데이터조회
-  // 리스트에서 데이터조회
-  let idParam = _id_param !== ""
-    ? { $regex: _id_param }
-    : { $exists: true };
+  // 입력시 데이터조회 or 리스트에서 데이터조회
+  const idParam = _id_param !== "" ? { $regex: _id_param } : { $exists: true };
 
-  findQuery = {
+  let findQuery = {
     _id: idParam,
     user_id: user_id_param,
     sleep_day: sleep_day_param,
     sleep_planYn: planYn_param,
   };
 
-  findResult = await Sleep.findOne(findQuery);
+  const totalCount = await Sleep.countDocuments(findQuery);
+  const findResult = await Sleep.find(findQuery);
+  const realResult = findResult.filter((item) => item.sleep_planYn === "N");
+  const planResult = findResult.filter((item) => item.sleep_planYn === "Y");
 
-  finalResult = {
-    result: findResult,
+  return {
+    totalCount: totalCount,
+    realResult: realResult,
+    planResult: planResult,
   };
-
-  return finalResult;
 };
 
 // 3. insert -------------------------------------------------------------------------------------->

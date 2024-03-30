@@ -5,7 +5,7 @@ import * as service from "../service/moneyService.js";
 export const moneyRouter = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-moneyRouter.get("/money/list", async (req, res) => {
+moneyRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -25,7 +25,7 @@ moneyRouter.get("/money/list", async (req, res) => {
 });
 
 // 1-2. avg --------------------------------------------------------------------------------------->
-moneyRouter.get("/money/avg", async (req, res) => {
+moneyRouter.get("/avg", async (req, res) => {
   try {
     const result = await service.avg (
       req.query.user_id,
@@ -47,7 +47,7 @@ moneyRouter.get("/money/avg", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-moneyRouter.get("/money/detail", async (req, res) => {
+moneyRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
@@ -67,7 +67,7 @@ moneyRouter.get("/money/detail", async (req, res) => {
 });
 
 // 3. insert -------------------------------------------------------------------------------------->
-moneyRouter.post("/money/insert", async (req, res) => {
+moneyRouter.post("/insert", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,
@@ -87,7 +87,7 @@ moneyRouter.post("/money/insert", async (req, res) => {
 });
 
 // 4. update -------------------------------------------------------------------------------------->
-moneyRouter.put("/money/update", async (req, res) => {
+moneyRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
       req.body._id,
@@ -107,7 +107,7 @@ moneyRouter.put("/money/update", async (req, res) => {
 });
 
 // 5. deletes ------------------------------------------------------------------------------------->
-moneyRouter.delete("/money/delete", async (req, res) => {
+moneyRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
       req.query._id,

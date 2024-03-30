@@ -54,7 +54,7 @@ export const FoodInsert = () => {
         foodDay: moment(foodDay).format("YYYY-MM-DD"),
       };
 
-      const response = await axios.post(`${URL_FOOD}/food/insert`, {
+      const response = await axios.post(`${URL_FOOD}/insert`, {
         user_id : user_id,
         FOOD : FOOD,
       });

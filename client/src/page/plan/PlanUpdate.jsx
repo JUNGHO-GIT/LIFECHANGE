@@ -28,7 +28,7 @@ export const PlanUpdate = () => {
   useEffect(() => {
     const fetchPlanDetail = async () => {
       try {
-        const response = await axios.get(`${URL_PLAN}/plan/detail`, {
+        const response = await axios.get(`${URL_PLAN}/detail`, {
           params: {
             _id : _id,
           },

@@ -38,7 +38,7 @@ export const BoardInsert = () => {
       return;
     }
     else {
-      const response = await axios.post (`${URL_BOARD}/board/insert`, {
+      const response = await axios.post (`${URL_BOARD}/insert`, {
         user_id : user_id,
         BOARD : BOARD,
       });

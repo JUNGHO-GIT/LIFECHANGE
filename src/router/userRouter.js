@@ -5,7 +5,7 @@ import * as service from "../service/userService.js";
 export const userRouter = express.Router();
 
 // 1. list ---------------------------------------------------------------------------------------->
-userRouter.get("/user/list", async (req, res) => {
+userRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
     );
@@ -23,7 +23,7 @@ userRouter.get("/user/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-userRouter.post("/user/detail", async (req, res) => {
+userRouter.post("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.body.user_id
@@ -42,7 +42,7 @@ userRouter.post("/user/detail", async (req, res) => {
 });
 
 // 3-1. insert ------------------------------------------------------------------------------------>
-userRouter.post("/user/insert", async (req, res) => {
+userRouter.post("/insert", async (req, res) => {
   try {
     const resultSub = await service.checkId (
       req.body.user_id
@@ -70,7 +70,7 @@ userRouter.post("/user/insert", async (req, res) => {
 });
 
 // 3-2. login ------------------------------------------------------------------------------------->
-userRouter.post("/user/login", async (req, res) => {
+userRouter.post("/login", async (req, res) => {
   try {
     const result = await service.login (
       req.body.user_id,
@@ -90,7 +90,7 @@ userRouter.post("/user/login", async (req, res) => {
 });
 
 // 4-1. update ------------------------------------------------------------------------------------>
-userRouter.put("/user/update", async (req, res) => {
+userRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
       req.body._id,
@@ -110,7 +110,7 @@ userRouter.put("/user/update", async (req, res) => {
 });
 
 // 4-2. checkIdPw --------------------------------------------------------------------------------->
-userRouter.post("/user/checkIdPw", async (req, res) => {
+userRouter.post("/checkIdPw", async (req, res) => {
   try {
     const result = await service.checkIdPw (
       req.body.user_id,
@@ -130,7 +130,7 @@ userRouter.post("/user/checkIdPw", async (req, res) => {
 });
 
 // 5. deletes ------------------------------------------------------------------------------------->
-userRouter.delete("/user/delete", async (req, res) => {
+userRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
       req.query._id

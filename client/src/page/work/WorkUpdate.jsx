@@ -28,7 +28,7 @@ export const WorkUpdate = () => {
   useEffect(() => {
     const fetchWorkDetail = async () => {
       try {
-        const response = await axios.get(`${URL_WORK}/work/detail`, {
+        const response = await axios.get(`${URL_WORK}/detail`, {
           params: {
             _id : _id,
           },

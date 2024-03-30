@@ -25,7 +25,7 @@ export const UserDetail = () => {
     const fetchUserDetail = async () => {
       const user_id = window.sessionStorage.getItem("user_id");
       try {
-        const response = await axios.post (`${URL_USER}/user/detail`, {
+        const response = await axios.post (`${URL_USER}/detail`, {
           user_id: user_id,
         });
         if (response.status === 200) {

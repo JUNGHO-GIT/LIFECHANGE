@@ -64,7 +64,7 @@ export const PlanList = () => {
     // 1. list
     const fetchPlanList = async () => {
       try {
-        const response = await axios.get(`${URL_PLAN}/plan/list`, {
+        const response = await axios.get(`${URL_PLAN}/list`, {
           params: {
             user_id : user_id,
             plan_dur : planResDur,

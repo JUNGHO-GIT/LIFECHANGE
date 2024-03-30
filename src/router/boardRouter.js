@@ -5,7 +5,7 @@ import * as service from "../service/boardService.js";
 export const boardRouter = express.Router();
 
 // 1. list ---------------------------------------------------------------------------------------->
-boardRouter.get("/board/list", async (req, res) => {
+boardRouter.get("/list", async (req, res) => {
   try {
     const result= await service.list (
     );
@@ -23,7 +23,7 @@ boardRouter.get("/board/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-boardRouter.get("/board/detail", async (req, res) => {
+boardRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id
@@ -42,7 +42,7 @@ boardRouter.get("/board/detail", async (req, res) => {
 });
 
 // 3. insert -------------------------------------------------------------------------------------->
-boardRouter.post("/board/insert", async (req, res) => {
+boardRouter.post("/insert", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,
@@ -62,7 +62,7 @@ boardRouter.post("/board/insert", async (req, res) => {
 });
 
 // 4. update -------------------------------------------------------------------------------------->
-boardRouter.put("/board/update", async (req, res) => {
+boardRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
       req.body._id,
@@ -82,7 +82,7 @@ boardRouter.put("/board/update", async (req, res) => {
 });
 
 // 5. deletes ------------------------------------------------------------------------------------->
-boardRouter.delete("/board/delete", async (req, res) => {
+boardRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
       req.query._id

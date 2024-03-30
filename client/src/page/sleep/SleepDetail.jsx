@@ -27,7 +27,7 @@ export const SleepDetail = () => {
   useEffect(() => {
     const fetchSleepDetail = async () => {
       try {
-        const response = await axios.get(`${URL_SLEEP}/sleep/detail`, {
+        const response = await axios.get(`${URL_SLEEP}/detail`, {
           params: {
             _id: _id,
           },

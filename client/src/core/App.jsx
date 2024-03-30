@@ -171,11 +171,11 @@ const Plan = () => {
 const Sleep = () => {
   return (
     <Routes>
-      <Route path="/dash" element={<SleepDash />} />
-      <Route path="/list" element={<SleepList />} />
-      <Route path="/insert" element={<SleepInsert />} />
-      <Route path="/detail" element={<SleepDetail />} />
-      <Route path="/update" element={<SleepUpdate />} />
+      <Route path="dash" element={<SleepDash />} />
+      <Route path="list" element={<SleepList />} />
+      <Route path="insert" element={<SleepInsert />} />
+      <Route path="detail" element={<SleepDetail />} />
+      <Route path="update" element={<SleepUpdate />} />
     </Routes>
   );
 };

@@ -30,7 +30,7 @@ export const BoardUpdate = () => {
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get(`${URL_BOARD}/board/detail`, {
+        const response = await axios.get(`${URL_BOARD}/detail`, {
           params: {
             _id : _id,
           },
@@ -49,7 +49,7 @@ export const BoardUpdate = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowBoardUpdate = async () => {
     try {
-      const response = await axios.put(`${URL_BOARD}/board/update`, {
+      const response = await axios.put(`${URL_BOARD}/update`, {
         _id : BOARD._id,
         BOARD : BOARD,
       });

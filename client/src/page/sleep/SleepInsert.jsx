@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {useStorage} from "../../assets/js/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
@@ -20,78 +19,53 @@ export const SleepInsert = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:sleepDay, setVal:setSleepDay} = useStorage (
-    "sleepDay", new Date(koreanDate)
-  );
-
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
+  const [dateDate, setDateDate] = useState(new Date(koreanDate));
+  const [strDate, setStrDate] = useState(koreanDate);
+  const [strDur, setStrDur] = useState("0000-00-00 ~ 0000-00-00");
+  const [strStart, strStrStart] = useState("0000-00-00");
+  const [strEnd, strStrEnd] = useState("0000-00-00");
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const initState = (YN) => ({
     _id: "",
     user_id: user_id,
-    sleep_day: "",
-    sleep_planYn: "N",
-    sleep_start: "00:00",
-    sleep_end: "00:00",
-    sleep_time: "00:00",
+    sleep_day: koreanDate,
+    sleep_planYn: YN,
+    sleep_start: "",
+    sleep_end: "",
+    sleep_time: "",
   });
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_DEFAULT);
-  const [SLEEP_REAL, setSLEEP_REAL] = useState(SLEEP_DEFAULT);
+  const [SLEEP_DEF, setSLEEP_DEF] = useState(initState(""));
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(initState("Y"));
+  const [SLEEP_REAL, setSLEEP_REAL] = useState(initState("N"));
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    // 1. real
-    const responseReal = await axios.get(`${URL_SLEEP}/sleep/detail`, {
+
+    const SLEEP = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+
+    const response = await axios.get(`${URL_SLEEP}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        sleep_day: koreanDate,
-        planYn: "N",
+        sleep_day: strDate,
+        planYn: planYn,
       },
     });
 
-    // 2. plan
-    const responsePlan = await axios.get(`${URL_SLEEP}/sleep/detail`, {
-      params: {
-        _id: "",
-        user_id: user_id,
-        sleep_day: koreanDate,
-        planYn: "Y",
-      },
-    });
+    response.data.result !== null ? setSLEEP(response.data.result) : setSLEEP(SLEEP_DEF);
+    log("SLEEP : " + JSON.stringify(SLEEP));
 
-    // 3. set
-    responsePlan.data.result.length > 0
-      ? setSLEEP_PLAN(responsePlan.data.result)
-      : setSLEEP_PLAN(SLEEP_DEFAULT);
-    log("SLEEP_PLAN : " + JSON.stringify(SLEEP_PLAN));
-
-    responseReal.data.result.length > 0
-      ? setSLEEP_REAL(responseReal.data.result)
-      : setSLEEP_REAL(SLEEP_DEFAULT);
-    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
-
-  })()}, [planYn]);
+  })()}, [strDate, planYn]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
     const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
-    const setSleep = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
-
-    setSleep({
-      ...sleep,
-      sleep_day: moment(sleepDay).format("YYYY-MM-DD").toString(),
-    });
-
-  }, [sleepDay]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-
-    const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
-    const setSleep = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+    const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
 
     if (sleep.sleep_start && sleep.sleep_end) {
       const startDate = new Date(`${koreanDate}T${sleep.sleep_start}:00Z`);
@@ -106,20 +80,21 @@ export const SleepInsert = () => {
       const minutes = Math.floor((diff % 3600000) / 60000);
       const time = `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2, "0")}`;
 
-      setSleep({
-        ...sleep,
+      setSLEEP(prev => ({
+        ...prev,
         sleep_time: time
-      });
+      }));
     }
   }, [SLEEP_REAL.sleep_start, SLEEP_REAL.sleep_end, SLEEP_PLAN.sleep_start, SLEEP_PLAN.sleep_end]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepInsert = async () => {
-    const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
-    const response = await axios.post (`${URL_SLEEP}/insert`, {
+
+    const SLEEP = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+
+    const response = await axios.post(`${URL_SLEEP}/insert`, {
       user_id : user_id,
-      SLEEP: sleep,
-      planYn : planYn,
+      SLEEP: SLEEP,
     });
     if (response.data === "success") {
       alert("Insert a sleep successfully");
@@ -132,15 +107,17 @@ export const SleepInsert = () => {
     else {
       alert(`${response.data}error`);
     }
-    log("SLEEP : " + JSON.stringify(sleep));
+    log("SLEEP : " + JSON.stringify(SLEEP));
   };
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewSleepDay = () => {
     const calcDate = (days) => {
-      setSleepDay((prevDate) => {
+      setDateDate((prevDate) => {
         const newDate = prevDate ? new Date(prevDate) : new Date();
         newDate.setDate(newDate.getDate() + days);
+        setDateDate(newDate);
+        setStrDate(moment(newDate).format("YYYY-MM-DD"));
         return newDate;
       });
     };
@@ -152,9 +129,9 @@ export const SleepInsert = () => {
         <DatePicker
           dateFormat="yyyy-MM-dd"
           popperPlacement="bottom"
-          selected={sleepDay}
+          selected={dateDate}
           onChange={(date) => {
-            setSleepDay(date);
+            setStrDate(moment(date).format("YYYY-MM-DD").toString());
           }}
         />
         <div onClick={() => calcDate(1)}>
@@ -167,8 +144,8 @@ export const SleepInsert = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepInsert = () => {
 
-    const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
-    const setSleep = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+    const SLEEP = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
 
     return (
       <div>
@@ -180,13 +157,13 @@ export const SleepInsert = () => {
                 id="sleep_planYn"
                 name="sleep_planYn"
                 className="form-select"
-                value={sleep.sleep_planYn}
+                value={planYn}
                 onChange={(e) => {
                   setPlanYn(e.target.value);
                 }}
               >
-                <option value="Y">계획</option>
-                <option value="N" selected>미계획</option>
+                <option value="Y">목표</option>
+                <option value="N" selected>실제</option>
               </select>
             </div>
           </div>
@@ -199,16 +176,16 @@ export const SleepInsert = () => {
                 id="sleep_start"
                 name="sleep_start"
                 className="form-control"
-                value={planYn === "Y" ? SLEEP_PLAN.sleep_start : SLEEP_REAL.sleep_start}
+                value={SLEEP.sleep_start}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  setSleep({
-                    ...sleep,
-                    sleep_start: e
-                  });
+                  setSLEEP(prev => ({
+                    ...prev,
+                    sleep_start: e ? e : moment(new Date()).format("HH:mm")
+                  }));
                 }}
               />
             </div>
@@ -222,16 +199,16 @@ export const SleepInsert = () => {
                 id="sleep_end"
                 name="sleep_end"
                 className="form-control"
-                value={planYn === "Y" ? SLEEP_PLAN.sleep_end : SLEEP_REAL.sleep_end}
+                value={SLEEP.sleep_end}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  setSleep({
-                    ...sleep,
-                    sleep_end: e
-                  });
+                  setSLEEP(prev => ({
+                    ...prev,
+                    sleep_end: e ? e : moment(new Date()).format("HH:mm")
+                  }));
                 }}
               />
             </div>
@@ -245,7 +222,7 @@ export const SleepInsert = () => {
                 id="sleep_time"
                 name="sleep_time"
                 className="form-control"
-                value={planYn === "Y" ? SLEEP_PLAN.sleep_time : SLEEP_REAL.sleep_time}
+                value={SLEEP.sleep_time}
                 disableClock={true}
                 clockIcon={null}
                 format="HH:mm"

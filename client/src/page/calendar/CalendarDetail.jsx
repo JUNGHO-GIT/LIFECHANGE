@@ -67,7 +67,7 @@ export const CalendarDetail = () => {
     // 1) food
     const fetchFoodList = async () => {
       try {
-        const response = await axios.get(`${URL_FOOD}/food/list`, {
+        const response = await axios.get(`${URL_FOOD}/list`, {
           params: {
             user_id: user_id,
             food_dur: resDur,
@@ -87,7 +87,7 @@ export const CalendarDetail = () => {
     // 2) sleep
     const fetchSleepList = async () => {
       try {
-        const response = await axios.get(`${URL_SLEEP}/sleep/list`, {
+        const response = await axios.get(`${URL_SLEEP}/list`, {
           params: {
             user_id : user_id,
             sleep_dur : resDur,
@@ -106,7 +106,7 @@ export const CalendarDetail = () => {
     // 3) work
     const fetchWorkList = async () => {
       try {
-        const response = await axios.get(`${URL_WORK}/work/list`, {
+        const response = await axios.get(`${URL_WORK}/list`, {
           params: {
             user_id : user_id,
             work_dur : resDur,
@@ -125,7 +125,7 @@ export const CalendarDetail = () => {
     // 4) money
     const fetchMoneyList = async () => {
       try {
-        const response = await axios.get(`${URL_MONEY}/money/list`, {
+        const response = await axios.get(`${URL_MONEY}/list`, {
           params: {
             user_id : user_id,
             money_dur : resDur,

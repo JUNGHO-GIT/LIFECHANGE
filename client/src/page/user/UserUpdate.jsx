@@ -24,7 +24,7 @@ export const UserUpdate = () => {
   useEffect(() => {
     const fetchUserUpdate = async () => {
       try {
-        const response = await axios.post (`${URL_USER}/user/detail`, {
+        const response = await axios.post (`${URL_USER}/detail`, {
           user_id: user_id,
         });
         setUSER(response.data);

@@ -25,7 +25,7 @@ export const UserLogin = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserLogin = async () => {
     try {
-      const response = await axios.post (`${URL_USER}/user/login`, {
+      const response = await axios.post (`${URL_USER}/login`, {
         user_id: user_id,
         user_pw: user_pw,
       });

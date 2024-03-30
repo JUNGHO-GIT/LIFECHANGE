@@ -5,7 +5,7 @@ import * as service from "../service/workService.js";
 export const workRouter = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-workRouter.get("/work/list", async (req, res) => {
+workRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -27,7 +27,7 @@ workRouter.get("/work/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-workRouter.get("/work/detail", async (req, res) => {
+workRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query.user_id,
@@ -49,7 +49,7 @@ workRouter.get("/work/detail", async (req, res) => {
 });
 
 // 3. insert -------------------------------------------------------------------------------------->
-workRouter.post("/work/insert", async (req, res) => {
+workRouter.post("/insert", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,
@@ -69,7 +69,7 @@ workRouter.post("/work/insert", async (req, res) => {
 });
 
 // 4. update -------------------------------------------------------------------------------------->
-workRouter.put("/work/update", async (req, res) => {
+workRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
       req.body._id,
@@ -89,7 +89,7 @@ workRouter.put("/work/update", async (req, res) => {
 });
 
 // 5. deletes ------------------------------------------------------------------------------------->
-workRouter.delete("/work/delete", async (req, res) => {
+workRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
       req.query._id,

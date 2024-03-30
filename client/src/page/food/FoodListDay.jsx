@@ -52,7 +52,7 @@ export const FoodListDay = () => {
     // 1. list
     const fetchFoodList = async () => {
       try {
-        const response = await axios.get (`${URL_FOOD}/food/list`, {
+        const response = await axios.get (`${URL_FOOD}/list`, {
           params: {
             user_id : user_id,
             food_dur : foodResDur,

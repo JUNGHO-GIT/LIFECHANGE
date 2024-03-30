@@ -15,7 +15,7 @@ export const SleepList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
@@ -28,17 +28,20 @@ export const SleepList = () => {
     page: 1,
     limit: 5,
   });
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const initState = (YN) => ({
     _id: "",
     user_id: user_id,
-    sleep_day: "",
-    sleep_planYn: "N",
-    sleep_start: "00:00",
-    sleep_end: "00:00",
-    sleep_time: "00:00",
-  }]);
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_DEFAULT);
-  const [SLEEP_REAL, setSLEEP_REAL] = useState(SLEEP_DEFAULT);
+    sleep_day: koreanDate,
+    sleep_planYn: YN,
+    sleep_start: "",
+    sleep_end: "",
+    sleep_time: "",
+  });
+  const [SLEEP_DEF, setSLEEP_DEF] = useState([initState("")]);
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState([initState("Y")]);
+  const [SLEEP_REAL, setSLEEP_REAL] = useState([initState("N")]);
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
   const {val:sleepResDur, setVal:setSleepResDur} = useStorage(
@@ -56,68 +59,21 @@ export const SleepList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    // 1. list
-    const responseReal = await axios.get(`${URL_SLEEP}/sleep/list`, {
-      params: {
-        user_id: user_id,
-        sleep_dur: sleepResDur,
-        filter: filter,
-        planYn: "N",
-      },
-    });
 
-    // 2. plan
-    const responsePlan = await axios.get(`${URL_SLEEP}/sleep/list`, {
+    const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
         user_id: user_id,
         sleep_dur: sleepResDur,
-        filter: filter,
-        planYn: "Y",
+        filter: filter
       },
     });
 
     // 3. set
-    setTotalCount(responseReal.data.totalCount);
+    setTotalCount(response.data.totalCount);
+    setSLEEP_PLAN(response.data.planResult || SLEEP_DEF);
+    setSLEEP_REAL(response.data.realResult || SLEEP_DEF);
 
-    responsePlan.data.result.length > 0
-      ? setSLEEP_PLAN(responsePlan.data.result)
-      : setSLEEP_PLAN(SLEEP_DEFAULT);
-    log("SLEEP_PLAN : " + JSON.stringify(SLEEP_PLAN));
-
-    responseReal.data.result.length > 0
-      ? setSLEEP_REAL(responseReal.data.result)
-      : setSLEEP_REAL(SLEEP_DEFAULT);
-    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
-
-  })()}, [user_id, sleepResDur, filter]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    if (sleepDay) {
-      let result = "";
-      const year = sleepDay?.getFullYear();
-      const month = formatVal(sleepDay.getMonth() + 1);
-      switch (type) {
-        case "day":
-          const date = formatVal(sleepDay.getDate());
-          result = `${year}-${month}-${date} ~ ${year}-${month}-${date}`;
-          break;
-        case "week":
-          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
-          break;
-        case "select":
-          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
-          break;
-        case "month":
-          result = `${year}-${month}-01 ~ ${year}-${month}-31`;
-          break;
-        case "year":
-          result = `${year}-01-01 ~ ${year}-12-31`;
-          break;
-      }
-      setSleepResDur(result);
-    }
-  }, [type, sleepStartDay, sleepEndDay, sleepDay]);
+  })()}, [sleepResDur, filter]);
 
   // 3-1. logic ----------------------------------------------------------------------------------->
   const formatVal = (value) => {
@@ -156,58 +112,33 @@ export const SleepList = () => {
     return textColor;
   };
 
-  // 3-2. logic ----------------------------------------------------------------------------------->
-  const filterBox = () => {
-    const pageNumber = () => {
-      const pages = [];
-      const totalPages = Math.ceil(totalCount / filter.limit);
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(
-          <button
-            key={i}
-            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
-            onClick={() => setFilter({
-              ...filter, page: i
-            })}
-          >
-            {i}
-          </button>
-        );
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    if (sleepDay) {
+      let result = "";
+      const year = sleepDay?.getFullYear();
+      const month = formatVal(sleepDay.getMonth() + 1);
+      switch (type) {
+        case "day":
+          const date = formatVal(sleepDay.getDate());
+          result = `${year}-${month}-${date} ~ ${year}-${month}-${date}`;
+          break;
+        case "week":
+          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
+          break;
+        case "select":
+          result = getStartAndEndDate(sleepStartDay, sleepEndDay);
+          break;
+        case "month":
+          result = `${year}-${month}-01 ~ ${year}-${month}-31`;
+          break;
+        case "year":
+          result = `${year}-01-01 ~ ${year}-12-31`;
+          break;
       }
-      return pages;
-    };
-    const prevNumber = () => {
-      return (
-        <button
-          className="btn btn-sm btn-primary ms-10 me-10"
-          onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1) }
-          )}
-        >
-          이전
-        </button>
-      );
+      setSleepResDur(result);
     }
-    const nextNumber = () => {
-      return (
-        <button
-          className="btn btn-sm btn-primary ms-10 me-10"
-          onClick={() => setFilter({
-            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) }
-          )}
-        >
-          다음
-        </button>
-      );
-    }
-    return (
-      <div className="d-inline-flex">
-        {prevNumber()}
-        {pageNumber()}
-        {nextNumber()}
-      </div>
-    );
-  };
+  }, [type, sleepStartDay, sleepEndDay, sleepDay]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
   const viewSleepList = () => {
@@ -369,6 +300,59 @@ export const SleepList = () => {
     };
   };
 
+  // 3-2. logic ----------------------------------------------------------------------------------->
+  const filterBox = () => {
+    const pageNumber = () => {
+      const pages = [];
+      const totalPages = Math.ceil(totalCount / filter.limit);
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(
+          <button
+            key={i}
+            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
+            onClick={() => setFilter({
+              ...filter, page: i
+            })}
+          >
+            {i}
+          </button>
+        );
+      }
+      return pages;
+    };
+    const prevNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1) }
+          )}
+        >
+          이전
+        </button>
+      );
+    }
+    const nextNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({
+            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) }
+          )}
+        >
+          다음
+        </button>
+      );
+    }
+    return (
+      <div className="d-inline-flex">
+        {prevNumber()}
+        {pageNumber()}
+        {nextNumber()}
+      </div>
+    );
+  };
+
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
     return (
@@ -395,30 +379,30 @@ export const SleepList = () => {
                     {real.sleep_day}
                   </td>
                   <td>취침</td>
-                  <td>{real.sleep_start}</td>
                   <td>{plan.sleep_start}</td>
+                  <td>{real.sleep_start}</td>
                   <td>
-                    <span className={successOrNot(real.sleep_start, plan.sleep_start)}>
+                    <span className={successOrNot(plan.sleep_start, real.sleep_start)}>
                       ●
                     </span>
                   </td>
                 </tr>
                 <tr>
                   <td>기상</td>
-                  <td>{real.sleep_end}</td>
                   <td>{plan.sleep_end}</td>
+                  <td>{real.sleep_end}</td>
                   <td>
-                    <span className={successOrNot(real.sleep_end, plan.sleep_end)}>
+                    <span className={successOrNot(plan.sleep_end, real.sleep_end)}>
                       ●
                     </span>
                   </td>
                 </tr>
                 <tr>
                   <td>수면</td>
-                  <td>{real.sleep_time}</td>
                   <td>{plan.sleep_time}</td>
+                  <td>{real.sleep_time}</td>
                   <td>
-                    <span className={successOrNot(real.sleep_time, plan.sleep_time)}>
+                    <span className={successOrNot(plan.sleep_time, real.sleep_time)}>
                       ●
                     </span>
                   </td>

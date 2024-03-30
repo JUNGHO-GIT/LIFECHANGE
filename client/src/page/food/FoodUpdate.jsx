@@ -28,7 +28,7 @@ export const FoodUpdate = () => {
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
-        const response = await axios.get(`${URL_FOOD}/food/detail`, {
+        const response = await axios.get(`${URL_FOOD}/detail`, {
           params: {
             _id : _id,
           },

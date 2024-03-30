@@ -27,7 +27,7 @@ export const BoardList = () => {
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
-        const response = await axios.get(`${URL_BOARD}/board/list`, {
+        const response = await axios.get(`${URL_BOARD}/list`, {
           params: {
           },
         });

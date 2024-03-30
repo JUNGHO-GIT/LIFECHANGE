@@ -5,7 +5,7 @@ import * as service from "../service/sleepService.js";
 export const sleepRouter = express.Router();
 
 // 1-0. dash -------------------------------------------------------------------------------------->
-sleepRouter.get("/sleep/dash", async (req, res) => {
+sleepRouter.get("/dash", async (req, res) => {
   try {
     const result = await service.dash (
       req.query.user_id
@@ -24,13 +24,12 @@ sleepRouter.get("/sleep/dash", async (req, res) => {
 });
 
 // 1-1. list -------------------------------------------------------------------------------------->
-sleepRouter.get("/sleep/list", async (req, res) => {
+sleepRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
       req.query.sleep_dur,
-      req.query.filter,
-      req.query.planYn,
+      req.query.filter
     );
     if (result) {
       res.send(result);
@@ -46,7 +45,7 @@ sleepRouter.get("/sleep/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-sleepRouter.get("/sleep/detail", async (req, res) => {
+sleepRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
@@ -68,12 +67,11 @@ sleepRouter.get("/sleep/detail", async (req, res) => {
 });
 
 // 3-1. insert ------------------------------------------------------------------------------------>
-sleepRouter.post("/sleep/insert", async (req, res) => {
+sleepRouter.post("/insert", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,
       req.body.SLEEP,
-      req.body.planYn
     );
     if (result) {
       res.send("success");
@@ -89,7 +87,7 @@ sleepRouter.post("/sleep/insert", async (req, res) => {
 });
 
 // 4. update -------------------------------------------------------------------------------------->
-sleepRouter.put("/sleep/update", async (req, res) => {
+sleepRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
       req.body._id,
@@ -109,7 +107,7 @@ sleepRouter.put("/sleep/update", async (req, res) => {
 });
 
 // 5. deletes ------------------------------------------------------------------------------------->
-sleepRouter.delete("/sleep/delete", async (req, res) => {
+sleepRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
       req.query._id

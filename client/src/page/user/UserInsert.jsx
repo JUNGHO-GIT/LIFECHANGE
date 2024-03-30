@@ -29,7 +29,7 @@ export const UserInsert = () => {
         return;
       }
 
-      const response = await axios.post (`${URL_USER}/user/insert`, {
+      const response = await axios.post (`${URL_USER}/insert`, {
         user_id: user_id,
         user_pw: user_pw,
       });

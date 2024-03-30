@@ -5,7 +5,7 @@ import * as service from "../service/planService.js";
 export const planRouter = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-planRouter.get("/plan/list", async (req, res) => {
+planRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -28,7 +28,7 @@ planRouter.get("/plan/list", async (req, res) => {
 });
 
 // 1-2. avg --------------------------------------------------------------------------------------->
-planRouter.get("/plan/avg", async (req, res) => {
+planRouter.get("/avg", async (req, res) => {
   try {
     const result = await service.avg (
       req.query.user_id,
@@ -50,7 +50,7 @@ planRouter.get("/plan/avg", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-planRouter.get("/plan/detail", async (req, res) => {
+planRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
@@ -70,7 +70,7 @@ planRouter.get("/plan/detail", async (req, res) => {
 });
 
 // 3. insert -------------------------------------------------------------------------------------->
-planRouter.post("/plan/insert", async (req, res) => {
+planRouter.post("/insert", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,
@@ -90,7 +90,7 @@ planRouter.post("/plan/insert", async (req, res) => {
 });
 
 // 4. update -------------------------------------------------------------------------------------->
-planRouter.put("/plan/update", async (req, res) => {
+planRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
       req.body._id,
@@ -110,7 +110,7 @@ planRouter.put("/plan/update", async (req, res) => {
 });
 
 // 5. deletes ------------------------------------------------------------------------------------->
-planRouter.delete("/plan/delete", async (req, res) => {
+planRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
       req.query._id,

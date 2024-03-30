@@ -27,7 +27,7 @@ export const BoardDetail = () => {
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get(`${URL_BOARD}/board/detail`, {
+        const response = await axios.get(`${URL_BOARD}/detail`, {
           params: {
             _id: _id,
           },
