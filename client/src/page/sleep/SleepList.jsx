@@ -39,7 +39,6 @@ export const SleepList = () => {
     sleep_end: "",
     sleep_time: "",
   });
-  const [SLEEP_DEF, setSLEEP_DEF] = useState([initState("")]);
   const [SLEEP_PLAN, setSLEEP_PLAN] = useState([initState("Y")]);
   const [SLEEP_REAL, setSLEEP_REAL] = useState([initState("N")]);
 
@@ -70,8 +69,14 @@ export const SleepList = () => {
 
     // 3. set
     setTotalCount(response.data.totalCount);
-    setSLEEP_PLAN(response.data.planResult || SLEEP_DEF);
-    setSLEEP_REAL(response.data.realResult || SLEEP_DEF);
+
+    response.data.realResult.length > 0
+    ? setSLEEP_REAL(response.data.realResult)
+    : setSLEEP_REAL([initState("N")]);
+
+    response.data.planResult.length > 0
+    ? setSLEEP_PLAN(response.data.planResult)
+    : setSLEEP_PLAN([initState("Y")]);
 
   })()}, [sleepResDur, filter]);
 

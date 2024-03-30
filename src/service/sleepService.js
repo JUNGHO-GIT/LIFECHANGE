@@ -270,7 +270,7 @@ export const list = async (
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
 
-  let findQuery = {
+  const findQuery = {
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
@@ -280,7 +280,7 @@ export const list = async (
 
   const sortOrder = filterOrder === "asc" ? 1 : -1;
   const totalCount = await Sleep.countDocuments(findQuery);
-  const findResult = await Sleep.find(findQuery).sort({ sleep_day: sortOrder }).skip((page - 1) * limit).limit(limit);
+  const findResult = await Sleep.find(findQuery).sort({sleep_day: sortOrder}).skip((page - 1) * limit).limit(limit);
   const realResult = findResult.filter((item) => item.sleep_planYn === "N");
   const planResult = findResult.filter((item) => item.sleep_planYn === "Y");
 
@@ -299,36 +299,27 @@ export const detail = async (
   planYn_param,
 ) => {
 
-  /* const startDay = sleep_dur_param.split(` ~ `)[0]; */
-  /* const endDay = sleep_dur_param.split(` ~ `)[1]; */
-
   // 입력시 데이터조회 or 리스트에서 데이터조회
   const idParam = _id_param !== "" ? { $regex: _id_param } : { $exists: true };
 
-  let findQuery = {
+  const findQuery = {
     _id: idParam,
     user_id: user_id_param,
     sleep_day: sleep_day_param,
     sleep_planYn: planYn_param,
   };
 
-  const totalCount = await Sleep.countDocuments(findQuery);
-  const findResult = await Sleep.find(findQuery);
-  const realResult = findResult.filter((item) => item.sleep_planYn === "N");
-  const planResult = findResult.filter((item) => item.sleep_planYn === "Y");
+  const findResult = await Sleep.findOne(findQuery);
 
   return {
-    totalCount: totalCount,
-    realResult: realResult,
-    planResult: planResult,
+    result: findResult,
   };
 };
 
 // 3. insert -------------------------------------------------------------------------------------->
 export const insert = async (
   user_id_param,
-  SLEEP_param,
-  planYn_param
+  SLEEP_param
 ) => {
 
   let createQuery;
@@ -340,7 +331,7 @@ export const insert = async (
   findQuery = {
     user_id: user_id_param,
     sleep_day: SLEEP_param.sleep_day,
-    sleep_planYn: planYn_param,
+    sleep_planYn: SLEEP_param.sleep_planYn,
   };
 
   findResult = await Sleep.findOne(findQuery);

@@ -23,9 +23,6 @@ export const SleepInsert = () => {
   const [planYn, setPlanYn] = useState("N");
   const [dateDate, setDateDate] = useState(new Date(koreanDate));
   const [strDate, setStrDate] = useState(koreanDate);
-  const [strDur, setStrDur] = useState("0000-00-00 ~ 0000-00-00");
-  const [strStart, strStrStart] = useState("0000-00-00");
-  const [strEnd, strStrEnd] = useState("0000-00-00");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const initState = (YN) => ({
@@ -37,7 +34,6 @@ export const SleepInsert = () => {
     sleep_end: "",
     sleep_time: "",
   });
-  const [SLEEP_DEF, setSLEEP_DEF] = useState(initState(""));
   const [SLEEP_PLAN, setSLEEP_PLAN] = useState(initState("Y"));
   const [SLEEP_REAL, setSLEEP_REAL] = useState(initState("N"));
 
@@ -56,7 +52,7 @@ export const SleepInsert = () => {
       },
     });
 
-    response.data.result !== null ? setSLEEP(response.data.result) : setSLEEP(SLEEP_DEF);
+    response.data.result !== null ? setSLEEP(response.data.result) : setSLEEP(initState(planYn));
     log("SLEEP : " + JSON.stringify(SLEEP));
 
   })()}, [strDate, planYn]);
@@ -66,6 +62,20 @@ export const SleepInsert = () => {
 
     const sleep = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
     const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+
+    if (sleep.sleep_start === null) {
+      setSLEEP((prev) => ({
+        ...prev,
+        sleep_start: "00:00"
+      }));
+    }
+
+    if (sleep.sleep_end === null) {
+      setSLEEP((prev) => ({
+        ...prev,
+        sleep_end: "00:00"
+      }));
+    }
 
     if (sleep.sleep_start && sleep.sleep_end) {
       const startDate = new Date(`${koreanDate}T${sleep.sleep_start}:00Z`);
@@ -160,6 +170,10 @@ export const SleepInsert = () => {
                 value={planYn}
                 onChange={(e) => {
                   setPlanYn(e.target.value);
+                  setSLEEP((prev) => ({
+                    ...prev,
+                    sleep_planYn: e.target.value
+                  }));
                 }}
               >
                 <option value="Y">목표</option>
@@ -182,9 +196,9 @@ export const SleepInsert = () => {
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  setSLEEP(prev => ({
+                  setSLEEP((prev) => ({
                     ...prev,
-                    sleep_start: e ? e : moment(new Date()).format("HH:mm")
+                    sleep_start: e
                   }));
                 }}
               />
@@ -205,9 +219,9 @@ export const SleepInsert = () => {
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  setSLEEP(prev => ({
+                  setSLEEP((prev) => ({
                     ...prev,
-                    sleep_end: e ? e : moment(new Date()).format("HH:mm")
+                    sleep_end: e
                   }));
                 }}
               />
