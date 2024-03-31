@@ -1,7 +1,7 @@
 // SleepInsert.jsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -16,6 +16,8 @@ export const SleepInsert = () => {
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
+  const location = useLocation();
+  const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
@@ -52,7 +54,10 @@ export const SleepInsert = () => {
       },
     });
 
-    response.data.result !== null ? setSLEEP(response.data.result) : setSLEEP(initState(planYn));
+    response.data.result !== null
+    ? setSLEEP(response.data.result)
+    : setSLEEP(initState(planYn));
+
     log("SLEEP : " + JSON.stringify(SLEEP));
 
   })()}, [strDate, planYn]);
@@ -170,10 +175,6 @@ export const SleepInsert = () => {
                 value={planYn}
                 onChange={(e) => {
                   setPlanYn(e.target.value);
-                  setSLEEP((prev) => ({
-                    ...prev,
-                    sleep_planYn: e.target.value
-                  }));
                 }}
               >
                 <option value="Y">목표</option>

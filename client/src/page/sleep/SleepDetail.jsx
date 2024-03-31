@@ -11,37 +11,54 @@ import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 export const SleepDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Sleep Detail";
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
+  const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState ({});
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [planYn, setPlanYn] = useState("N");
+  const [dateDate, setDateDate] = useState(new Date(koreanDate));
+  const [strDate, setStrDate] = useState(koreanDate);
 
-  // 2-2. useStorage ------------------------------------------------------------------------------>
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const initState = (YN) => ({
+    _id: "",
+    user_id: user_id,
+    sleep_day: koreanDate,
+    sleep_planYn: YN,
+    sleep_start: "",
+    sleep_end: "",
+    sleep_time: "",
+  });
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(initState("Y"));
+  const [SLEEP_REAL, setSLEEP_REAL] = useState(initState("N"));
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const fetchSleepDetail = async () => {
-      try {
-        const response = await axios.get(`${URL_SLEEP}/detail`, {
-          params: {
-            _id: _id,
-          },
-        });
-        setSLEEP(response.data);
-        log("SLEEP : " + JSON.stringify(response.data));
-      }
-      catch (e) {
-        alert(`Error fetching sleep data: ${e.message}`);
-        setSLEEP([]);
-      }
-    };
-    fetchSleepDetail();
-  }, [_id]);
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+
+    const SLEEP = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+
+    const response = await axios.get(`${URL_SLEEP}/detail`, {
+      params: {
+        _id: "",
+        user_id: user_id,
+        sleep_day: strDate,
+        planYn: planYn,
+      },
+    });
+
+    response.data.result !== null
+    ? setSLEEP(response.data.result)
+    : setSLEEP(initState(planYn));
+
+    log("SLEEP : " + JSON.stringify(SLEEP));
+
+  })()}, [strDate, planYn]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepDelete = async () => {
@@ -74,24 +91,42 @@ export const SleepDetail = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableSleepInsert = () => {
+
+    const SLEEP = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
+    const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
+
     return (
-      <table className="table table-bordered table-hover">
-          <thead className="table-dark">
-            <tr>
-            <th>Day</th>
-            <th>Night</th>
-            <th>Morning</th>
-            <th>Time</th>
-            <th>regdate</th>
+      <table className="table bg-white table-hover">
+
+        <thead className="table-primary">
+          <tr>
+            <th>날짜</th>
+            <th>계획여부</th>
+            <th>취침시간</th>
+            <th>기상시간</th>
+            <th>수면시간</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{SLEEP.sleep_day}</td>
+            <td>
+              <select
+                id="sleep_planYn"
+                name="sleep_planYn"
+                className="form-select"
+                value={planYn}
+                onChange={(e) => {
+                  setPlanYn(e.target.value);
+                }}
+              >
+                <option value="Y">목표</option>
+                <option value="N" selected>실제</option>
+              </select>
+            </td>
             <td>{SLEEP.sleep_start}</td>
             <td>{SLEEP.sleep_end}</td>
             <td>{SLEEP.sleep_time}</td>
-            <td>{SLEEP.sleep_regdate}</td>
           </tr>
         </tbody>
       </table>
@@ -140,20 +175,15 @@ export const SleepDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
-        </div>
-      </div>
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          {tableSleepInsert()}
-          <br />
-          {buttonSleepDelete()}
-          {buttonSleepUpdate(SLEEP._id)}
-          {buttonRefreshPage()}
-          {buttonSleepList()}
-        </div>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            {tableSleepInsert()}
+            <br />
+            {buttonSleepDelete()}
+            {/* {buttonSleepUpdate(SLEEP._id)} */}
+            {buttonRefreshPage()}
+            {buttonSleepList()}
+          </div>
         </div>
       </div>
     </div>
