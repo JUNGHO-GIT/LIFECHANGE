@@ -3,11 +3,10 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
-import {differenceInDays} from "date-fns";
+import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useStorage} from "../../assets/js/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -21,10 +20,9 @@ export const SleepList = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [calendarOpen, setCalendarOpen] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [type, setType] = useState("day");
-  const [dateDate, setDateDate] = useState(new Date(koreanDate));
-  const [strDate, setStrDate] = useState(koreanDate);
   const [filter, setFilter] = useState({
     order: "asc",
     page: 1,
@@ -32,28 +30,26 @@ export const SleepList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const initState = (YN) => ({
-    _id: "",
-    user_id: user_id,
-    sleep_day: koreanDate,
-    sleep_planYn: YN,
-    sleep_start: "",
-    sleep_end: "",
-    sleep_time: "",
-  });
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState([initState("Y")]);
-  const [SLEEP_REAL, setSLEEP_REAL] = useState([initState("N")]);
+  const [strDate, setStrDate] = useState(koreanDate);
+  const [strDur, setStrDur] = useState(`${koreanDate} ~ ${koreanDate}`);
+  const [strStart, setStrStart] = useState(koreanDate);
+  const [strEnd, setStrEnd] = useState(koreanDate);
 
-  // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:sleepResDur, setVal:setSleepResDur} = useStorage(
-    `sleepResDur(${type})`, "0000-00-00 ~ 0000-00-00"
-  );
-  const {val:sleepStartDay, setVal:setSleepStartDay} = useStorage(
-    `sleepStartDay(${type})`, undefined
-  );
-  const {val:sleepEndDay, setVal:setSleepEndDay} = useStorage(
-    `sleepEndDay(${type})`, undefined
-  );
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [SLEEP, setSLEEP] = useState([{
+    user_id : user_id,
+    sleep_day: "",
+    sleep_real : [{
+      sleep_start: "",
+      sleep_end: "",
+      sleep_time: "",
+    }],
+    sleep_plan : [{
+      sleep_start: "",
+      sleep_end: "",
+      sleep_time: "",
+    }]
+  }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -61,224 +57,301 @@ export const SleepList = () => {
     const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: sleepResDur,
+        sleep_dur: strDur,
         filter: filter
       },
     });
 
-    // 3. set
     setTotalCount(response.data.totalCount);
+    setSLEEP(response.data.result);
 
-    response.data.realResult.length > 0
-    ? setSLEEP_REAL(response.data.realResult)
-    : setSLEEP_REAL([initState("N")]);
-
-    response.data.planResult.length > 0
-    ? setSLEEP_PLAN(response.data.planResult)
-    : setSLEEP_PLAN([initState("Y")]);
-
-    log("SLEEP_REAL : " + JSON.stringify(SLEEP_REAL));
-    log("SLEEP_PLAN : " + JSON.stringify(SLEEP_PLAN));
-
-  })()}, [sleepResDur, filter]);
+  })()}, [strDur, filter]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const formatVal = (value) => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-    const getFormattedDate = (date) => {
-      return `${date.getFullYear()}-${formatVal(date.getMonth() + 1)}-${formatVal(date.getDate())}`;
-    };
-    const getStartAndEndDate = (startDay, endDay) => {
-      return `${getFormattedDate(new Date(startDay))} ~ ${getFormattedDate(new Date(endDay))}`;
-    };
-    const day = getFormattedDate(dateDate);
-    const year = dateDate.getFullYear();
-    const month = formatVal(dateDate.getMonth() + 1);
-    if (!dateDate) {
-      return;
-    }
-    else if (type === "day") {
-      setSleepResDur(`${day} ~ ${day}`);
+    if (type === "day") {
+      setStrDur(`${strDate} ~ ${strDate}`);
     }
     else if (type === "week") {
-      setSleepResDur(getStartAndEndDate(sleepStartDay, sleepEndDay));
+      setStrDur(`${strStart} ~ ${strEnd}`);
     }
     else if (type === "month") {
-      setSleepResDur(`${year}-${month}-01 ~ ${year}-${month}-31`);
+      setStrDur(`${moment(strDate).startOf("month").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("month").format("YYYY-MM-DD")}`);
     }
     else if (type === "year") {
-      setSleepResDur(`${year}-01-01 ~ ${year}-12-31`);
+      setStrDur(`${moment(strDate).startOf("year").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("year").format("YYYY-MM-DD")}`);
     }
     else if (type === "select") {
-      setSleepResDur(getStartAndEndDate(sleepStartDay, sleepEndDay));
+      setStrDur(`${strStart} ~ ${strEnd}`);
     }
-  }, [type, sleepStartDay, sleepEndDay, dateDate]);
+  }, [type, strDate, strStart, strEnd]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
   const viewSleepList = () => {
-    const formatVal = (value) => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
+    let dayPicker;
     if (type === "day") {
-      return (
+      dayPicker = (
         <DayPicker
+          weekStartsOn={1}
           showOutsideDays={true}
           locale={ko}
-          weekStartsOn={1}
           modifiersClassNames={{
-            selected: "selected",
-            disabled: "disabled",
-            outside: "outside",
-            inside: "inside",
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="single"
-          selected={dateDate}
-          month={dateDate}
+          selected={new Date(strDate)}
           onDayClick={(day) => {
-            setDateDate(day);
+            setStrDate(moment(day).format("YYYY-MM-DD"));
           }}
           onMonthChange={(month) => {
-            setDateDate(month)
+            setStrDate(moment(month).format("YYYY-MM-DD"));
           }}
         />
       );
     };
     if (type === "week") {
-      return (
+      dayPicker = (
         <DayPicker
+          weekStartsOn={1}
           showOutsideDays={true}
           locale={ko}
-          weekStartsOn={1}
           modifiersClassNames={{
-            selected: "selected",
-            disabled: "disabled",
-            outside: "outside",
-            inside: "inside",
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="range"
-          selected={sleepStartDay && sleepEndDay && {from: sleepStartDay, to: sleepEndDay}}
-          month={sleepStartDay}
+          selected={strStart && strEnd && {from: new Date(strStart), to: new Date(strEnd)}}
+          month={strStart && strEnd && new Date(strStart)}
           onDayClick={(day) => {
-            const selectedDay = new Date(day);
-            const startOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() - selectedDay.getDay() + 1));
-            const endOfWeek = new Date(selectedDay.setDate(selectedDay.getDate() + (7 - selectedDay.getDay())));
-            setSleepStartDay(startOfWeek);
-            setSleepEndDay(endOfWeek);
+            const selectedDate = moment(day);
+            const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
+            const endOfWeek = startOfWeek.clone().add(6, "days");
+            setStrStart(moment(startOfWeek).format("YYYY-MM-DD"));
+            setStrEnd(moment(endOfWeek).format("YYYY-MM-DD"));
           }}
           onMonthChange={(month) => {
-            setSleepStartDay(month);
-            setSleepEndDay(undefined);
+            setStrStart(month);
+            setStrEnd(undefined);
           }}
         />
       );
-    };
+    }
     if (type === "month") {
-      return (
+      dayPicker = (
         <DayPicker
+          weekStartsOn={1}
           showOutsideDays={true}
           locale={ko}
-          weekStartsOn={1}
           modifiersClassNames={{
-            selected: "selected",
-            disabled: "disabled",
-            outside: "outside",
-            inside: "inside",
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="default"
-          month={new Date(sleepResDur.split(" ~ ")[0])}
+          month={new Date(strDur.split(" ~ ")[0])}
           onMonthChange={(month) => {
-            setSleepResDur(`${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-01 ~ ${month.getFullYear()}-${formatVal(month.getMonth() + 1)}-31`);
+            const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
+            const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
+            setStrDur(`${startOfMonth} ~ ${endOfMonth}`);
           }}
         />
       );
-    };
+    }
     if (type === "year") {
-      return (
+      dayPicker = (
         <DayPicker
+          weekStartsOn={1}
           showOutsideDays={true}
           locale={ko}
-          weekStartsOn={1}
           modifiersClassNames={{
-            selected: "selected",
-            disabled: "disabled",
-            outside: "outside",
-            inside: "inside",
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="default"
-          month={new Date(sleepResDur.split(" ~ ")[0])}
           onMonthChange={(month) => {
-            const yearDate = new Date(month.getFullYear(), 0, 1);
-            const monthDate = new Date(month.getFullYear(), month.getMonth(), 1);
-            const nextMonth = differenceInDays(new Date(month.getFullYear() + 1, 0, 1), monthDate) / 30;
-            const prevMonth = differenceInDays(monthDate, yearDate) / 30;
-            if (nextMonth > prevMonth) {
-              setSleepResDur(`${month.getFullYear() + 1}-01-01 ~ ${month.getFullYear() + 1}-12-31`);
-            }
-            else {
-              setSleepResDur(`${month.getFullYear()}-01-01 ~ ${month.getFullYear()}-12-31`);
-            }
+            const startOfYear = moment(month).startOf("year").format("YYYY-MM-DD");
+            const endOfYear = moment(month).endOf("year").format("YYYY-MM-DD");
+            setStrDur(`${startOfYear} ~ ${endOfYear}`);
           }}
         />
       );
     };
     if (type === "select") {
-      return (
+      dayPicker = (
         <DayPicker
+          weekStartsOn={1}
           showOutsideDays={true}
           locale={ko}
-          weekStartsOn={1}
           modifiersClassNames={{
-            selected: "selected",
-            disabled: "disabled",
-            outside: "outside",
-            inside: "inside",
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="range"
-          selected={sleepStartDay && sleepEndDay && {from: sleepStartDay, to: sleepEndDay}}
-          month={sleepStartDay}
-          onDayClick={(day) => {
+          selected={strStart && strEnd && {from:new Date(strStart), to:new Date(strEnd)}}
+          month={strStart && strEnd && new Date(strStart)}
+          onDayClick= {(day) => {
             const selectedDay = new Date(day);
-            if (sleepStartDay && sleepEndDay) {
-              if (selectedDay < sleepStartDay) {
-                setSleepStartDay(selectedDay);
-              }
-              else if (selectedDay > sleepEndDay) {
-                setSleepEndDay(selectedDay);
-              }
-              else {
-                setSleepStartDay(selectedDay);
-                setSleepEndDay(undefined);
-              }
+            const startDay = strStart ? new Date(strStart) : null;
+            const endDay = strEnd ? new Date(strEnd) : null;
+
+            if (startDay && endDay) {
+              setStrStart(moment(day).format("YYYY-MM-DD"));
+              setStrEnd(undefined);
             }
-            else if (sleepStartDay) {
-              if (selectedDay < sleepStartDay) {
-                setSleepEndDay(sleepStartDay);
-                setSleepStartDay(selectedDay);
+            else if (startDay) {
+              if (selectedDay < startDay) {
+                setStrEnd(moment(startDay).format("YYYY-MM-DD"));
+                setStrStart(moment(day).format("YYYY-MM-DD"));
               }
-              else if (selectedDay > sleepStartDay) {
-                setSleepEndDay(selectedDay);
+              else if (selectedDay > startDay) {
+                setStrEnd(moment(day).format("YYYY-MM-DD"));
               }
               else {
-                setSleepStartDay(undefined);
-                setSleepEndDay(undefined);
+                setStrStart(undefined);
+                setStrEnd(undefined);
               }
             }
             else {
-              setSleepStartDay(selectedDay);
+              setStrStart(moment(day).format("YYYY-MM-DD"));
             }
           }}
           onMonthChange={(month) => {
-            setSleepStartDay(month);
-            setSleepEndDay(undefined);
+            setStrStart(new Date(month.getFullYear(), month.getMonth(), 1));
+            setStrEnd(undefined);
           }}
         />
       );
     };
+    return (
+      <Draggable>
+        <div className={`dayPicker-container ${calendarOpen ? "" : "d-none"}`}>
+          <span
+            className="d-right fw-700 pointer"
+            onClick={() => setCalendarOpen(false)}
+            style={{position: "absolute", right: "15px", top: "10px"}}
+          >
+            X
+          </span>
+          <div className="h-2"></div>
+          {dayPicker}
+        </div>
+      </Draggable>
+    );
   };
 
-  // 3-2. logic ----------------------------------------------------------------------------------->
+  // 5-1. table ----------------------------------------------------------------------------------->
+  const tableSleepList = () => {
+    const successOrNot = (plan, real) => {
+      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
+      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
+
+      if (realDate < planDate) {
+        realDate.setHours(realDate.getHours() + 24);
+      }
+      const diff = Math.abs(realDate.getTime() - planDate.getTime());
+      const diffMinutes = Math.floor(diff / 60000);
+
+      let textColor = "text-muted";
+      if (0 <= diffMinutes && diffMinutes <= 10) {
+        textColor = "text-primary";
+      }
+      if (10 < diffMinutes && diffMinutes <= 20) {
+        textColor = "text-success";
+      }
+      if (20 < diffMinutes && diffMinutes <= 30) {
+        textColor = "text-warning";
+      }
+      if (30 < diffMinutes) {
+        textColor = "text-danger";
+      }
+      return textColor;
+    };
+    return (
+      <table className="table bg-white table-hover">
+        <thead className="table-primary">
+          <tr>
+            <th>날짜</th>
+            <th>분류</th>
+            <th>목표</th>
+            <th>실제</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {SLEEP.map((item) => (
+            <React.Fragment key={item._id}>
+              <tr>
+                <td rowSpan={3} className="pointer" onClick={() => {
+                  navParam("/sleep/detail", {
+                    state: {
+                      sleep_day: item.sleep_day,
+                    },
+                  });
+                }}>
+                  {item.sleep_day}
+                </td>
+                <td>취침</td>
+                <td>
+                  {Array.isArray(item.sleep_plan)
+                    ? item.sleep_plan.map((plan) => (`${plan.sleep_start}`)).join(", ")
+                    : `X`
+                  }
+                </td>
+                <td>
+                  {Array.isArray(item.sleep_real)
+                    ? item.sleep_real.map((real) => (`${real.sleep_start}`)).join(", ")
+                    : `X`
+                  }
+                </td>
+                <td>
+                  <span className={successOrNot(item.sleep_plan[0]?.sleep_start, item.sleep_real[0]?.sleep_start)}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>기상</td>
+                <td>
+                  {Array.isArray(item.sleep_plan)
+                    ? item.sleep_plan.map((plan) => (`${plan.sleep_end}`)).join(", ")
+                    : `X`
+                  }
+                </td>
+                <td>
+                  {Array.isArray(item.sleep_real)
+                    ? item.sleep_real.map((real) => (`${real.sleep_end}`)).join(", ")
+                    : `X`
+                  }
+                </td>
+                <td>
+                  <span className={successOrNot(item.sleep_plan[0]?.sleep_end, item.sleep_real[0]?.sleep_end)}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>수면</td>
+                <td>
+                  {Array.isArray(item.sleep_plan)
+                    ? item.sleep_plan.map((plan) => (`${plan.sleep_time}`)).join(", ")
+                    : `X`
+                  }
+                </td>
+                <td>
+                  {Array.isArray(item.sleep_real)
+                    ? item.sleep_real.map((real) => (`${real.sleep_time}`)).join(", ")
+                    : `X`
+                  }
+                </td>
+                <td>
+                  <span className={successOrNot(item.sleep_plan[0]?.sleep_time, item.sleep_real[0]?.sleep_time)}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // 5-2. filter ---------------------------------------------------------------------------------->
   const filterBox = () => {
     const pageNumber = () => {
       const pages = [];
@@ -331,102 +404,25 @@ export const SleepList = () => {
     );
   };
 
-  // 5-1. table ----------------------------------------------------------------------------------->
-  const tableSleepList = () => {
-    const successOrNot = (plan, real) => {
-      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
-      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
-
-      // 실제 시간이 계획된 시간보다 이전인 경우 다음 날로 처리
-      if (realDate < planDate) {
-        realDate.setHours(realDate.getHours() + 24);
-      }
-      const diff = Math.abs(realDate.getTime() - planDate.getTime());
-      const diffMinutes = Math.floor(diff / 60000);
-
-      let textColor = "text-muted";
-      if (0 <= diffMinutes && diffMinutes <= 10) {
-        textColor = "text-primary";
-      }
-      if (10 < diffMinutes && diffMinutes <= 20) {
-        textColor = "text-success";
-      }
-      if (20 < diffMinutes && diffMinutes <= 30) {
-        textColor = "text-warning";
-      }
-      if (30 < diffMinutes) {
-        textColor = "text-danger";
-      }
-      return textColor;
-    };
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonCalendar = () => {
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
-          <tr>
-            <th>날짜</th>
-            <th>분류</th>
-            <th>목표</th>
-            <th>실제</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {SLEEP_REAL.map((real) => (
-            SLEEP_PLAN.map((plan) => (
-              <React.Fragment key={real.sleep_day}>
-                <tr>
-                  <td rowSpan={3} className="pointer" onClick={() => {
-                    navParam("/sleep/insert", {
-                      state: {_id: real._id}
-                    });
-                  }}>
-                    {sleepResDur}
-                  </td>
-                  <td>취침</td>
-                  <td>{plan.sleep_start}</td>
-                  <td>{real.sleep_start}</td>
-                  <td>
-                    <span className={successOrNot(plan.sleep_start, real.sleep_start)}>
-                      ●
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>기상</td>
-                  <td>{plan.sleep_end}</td>
-                  <td>{real.sleep_end}</td>
-                  <td>
-                    <span className={successOrNot(plan.sleep_end, real.sleep_end)}>
-                      ●
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>수면</td>
-                  <td>{plan.sleep_time}</td>
-                  <td>{real.sleep_time}</td>
-                  <td>
-                    <span className={successOrNot(plan.sleep_time, real.sleep_time)}>
-                      ●
-                    </span>
-                  </td>
-                </tr>
-              </React.Fragment>
-            ))
-          ))}
-        </tbody>
-      </table>
+      <button
+        type="button"
+        className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
+        onClick={() => setCalendarOpen(!calendarOpen)}
+      >
+        {calendarOpen ? "x" : "o"}
+      </button>
     );
   };
-
-  // 9. button ------------------------------------------------------------------------------------>
   const buttonSleepToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setDateDate(new Date(koreanDate));
+        setStrDate(koreanDate);
         localStorage.removeItem(`sleepList(${type})`);
-        localStorage.removeItem(`sleepStartDay(${type})`);
-        localStorage.removeItem(`sleepEndDay(${type})`);
+        localStorage.removeItem(`strStart(${type})`);
+        localStorage.removeItem(`strEnd(${type})`);
       }}>
         Today
       </button>
@@ -435,10 +431,10 @@ export const SleepList = () => {
   const buttonSleepReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setDateDate(new Date(koreanDate));
+        setStrDate(koreanDate);
         localStorage.removeItem(`sleepList(${type})`);
-        localStorage.removeItem(`sleepStartDay(${type})`);
-        localStorage.removeItem(`sleepEndDay(${type})`);
+        localStorage.removeItem(`strStart(${type})`);
+        localStorage.removeItem(`strEnd(${type})`);
       }}>
         Reset
       </button>
@@ -506,36 +502,33 @@ export const SleepList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center mt-3">
-          <div className="col-4">
-            <div className="row d-center mb-20">
-              <div className="col-12">
-                {viewSleepList()}
-              </div>
-            </div>
+        <div className="row mb-20">
+          <div className="col-1">
+            {viewSleepList()}
           </div>
-          <div className="col-8">
-            <div className="row d-center mb-20">
-              <div className="col-3">
-                {selectSleepType()}
-              </div>
-              <div className="col-3">
-                {selectFilterSub()}
-              </div>
-              <div className="col-3">
-                {selectFilterPage()}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                {tableSleepList()}
-                {filterBox()}
-              </div>
-            </div>
+          <div className="col-2">
+            {selectSleepType()}
+          </div>
+          <div className="col-2">
+            {selectFilterSub()}
+          </div>
+          <div className="col-2">
+            {selectFilterPage()}
           </div>
         </div>
-        <div className="row mt-20 mb-20">
+        <div className="row mb-20">
           <div className="col-12 d-center">
+            {tableSleepList()}
+          </div>
+        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {filterBox()}
+          </div>
+        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {buttonCalendar()}
             {buttonSleepToday()}
             {buttonSleepReset()}
           </div>

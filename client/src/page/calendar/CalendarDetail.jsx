@@ -18,7 +18,7 @@ export const CalendarDetail = () => {
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");

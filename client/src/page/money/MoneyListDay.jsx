@@ -17,7 +17,7 @@ export const MoneyListDay = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Money List Day";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");

@@ -44,12 +44,12 @@ export const dash = async (
         const planItem = listPlanY.find((item) => item.sleep_day === sleep_day);
         return {
           sleep_day: sleep_day,
-          sleep_start_real: listItem?.sleep_start || "00:00",
-          sleep_time_real: listItem?.sleep_time || "00:00",
-          sleep_end_real: listItem?.sleep_end || "00:00",
-          sleep_start_plan: planItem?.sleep_start || "00:00",
-          sleep_time_plan: planItem?.sleep_time || "00:00",
-          sleep_end_plan: planItem?.sleep_end || "00:00",
+          sleep_start_real: listItem?.sleep_start,
+          sleep_time_real: listItem?.sleep_time,
+          sleep_end_real: listItem?.sleep_end,
+          sleep_start_plan: planItem?.sleep_start,
+          sleep_time_plan: planItem?.sleep_time,
+          sleep_end_plan: planItem?.sleep_end,
         };
       });
     }
@@ -279,34 +279,31 @@ export const list = async (
   };
 
   const sortOrder = filterOrder === "asc" ? 1 : -1;
+
   const totalCount = await Sleep.countDocuments(findQuery);
   const findResult = await Sleep.find(findQuery).sort({sleep_day: sortOrder}).skip((page - 1) * limit).limit(limit);
-  const realResult = findResult.filter((item) => item.sleep_planYn === "N");
-  const planResult = findResult.filter((item) => item.sleep_planYn === "Y");
 
   return {
     totalCount: totalCount,
-    realResult: realResult,
-    planResult: planResult,
+    result: findResult,
   };
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param,
   user_id_param,
-  sleep_day_param,
-  planYn_param,
+  sleep_dur_param
 ) => {
 
-  // 입력시 데이터조회 or 리스트에서 데이터조회
-  const idParam = _id_param !== "" ? { $regex: _id_param } : { $exists: true };
+  const startDay = sleep_dur_param.split(` ~ `)[0];
+  const endDay = sleep_dur_param.split(` ~ `)[1];
 
   const findQuery = {
-    _id: idParam,
     user_id: user_id_param,
-    sleep_day: sleep_day_param,
-    sleep_planYn: planYn_param,
+    sleep_day: {
+      $gte: startDay,
+      $lte: endDay,
+    }
   };
 
   const findResult = await Sleep.findOne(findQuery);
@@ -319,63 +316,72 @@ export const detail = async (
 // 3. insert -------------------------------------------------------------------------------------->
 export const insert = async (
   user_id_param,
-  SLEEP_param
+  SLEEP_param,
+  sleep_dur_param,
+  planYn_param
 ) => {
 
-  let createQuery;
-  let createResult;
-  let updateQuery;
-  let findQuery;
-  let findResult;
+  const startDay = sleep_dur_param.split(` ~ `)[0];
+  const endDay = sleep_dur_param.split(` ~ `)[1];
 
-  findQuery = {
+  let finalResult;
+
+  const findQuery = {
     user_id: user_id_param,
-    sleep_day: SLEEP_param.sleep_day,
-    sleep_planYn: SLEEP_param.sleep_planYn,
+    sleep_day: {
+      $gte: startDay,
+      $lte: endDay,
+    }
   };
-
-  findResult = await Sleep.findOne(findQuery);
-
-  createQuery = {
-    _id : new mongoose.Types.ObjectId(),
-    user_id : user_id_param,
-    sleep_start : SLEEP_param.sleep_start,
-    sleep_time : SLEEP_param.sleep_time,
-    sleep_end : SLEEP_param.sleep_end,
-    sleep_planYn : SLEEP_param.sleep_planYn,
-    sleep_day : SLEEP_param.sleep_day,
-    sleep_regdate : SLEEP_param.sleep_regdate,
-    sleep_update : SLEEP_param.sleep_update,
-  };
-
-  updateQuery = {
-    sleep_start : SLEEP_param.sleep_start,
-    sleep_time : SLEEP_param.sleep_time,
-    sleep_end : SLEEP_param.sleep_end,
-    sleep_planYn : SLEEP_param.sleep_planYn,
-    sleep_update : SLEEP_param.sleep_update,
-  };
+  const findResult = await Sleep.findOne(findQuery);
 
   if (!findResult) {
-    createResult = await Sleep.create(
-      createQuery
-    );
-  };
-  if (findResult) {
-    createResult = await Sleep.updateOne(
-      findQuery,
-      {$set: updateQuery}
-    );
-  };
+    const createQuery = {
+      _id: new mongoose.Types.ObjectId(),
+      user_id: SLEEP_param.user_id,
+      sleep_day: startDay,
+      sleep_real: SLEEP_param.sleep_real,
+      sleep_plan: SLEEP_param.sleep_plan
+    };
+    const createResult = await Sleep.create(createQuery);
+    finalResult = createResult;
+  }
+  else {
+    const updateQuery = {_id: findResult._id};
+    const updateAction = planYn_param === "N"
+    ? {$set: {sleep_real: SLEEP_param.sleep_real}}
+    : {$set: {sleep_plan: SLEEP_param.sleep_plan}}
 
-  return createResult;
+    const updateResult = await Sleep.updateOne(updateQuery, updateAction);
+    finalResult = updateResult;
+  }
+
+  return {
+    result: finalResult,
+  };
 };
 
 // 4. update -------------------------------------------------------------------------------------->
 export const update = async (
-  _id_param,
-  SLEEP_param
+  user_id_param,
+  SLEEP_param,
+  sleep_dur_param,
+  planYn_param
 ) => {
+
+  const startDay = sleep_dur_param.split(` ~ `)[0];
+  const endDay = sleep_dur_param.split(` ~ `)[1];
+
+  let finalResult;
+
+  const findQuery = {
+    user_id: user_id_param,
+    sleep_day: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
+  const findResult = await Sleep.findOne(findQuery);
 
   let updateQuery;
   let updateResult;
@@ -392,6 +398,7 @@ export const update = async (
 
 // 5. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
+  user_id_param,
   _id_param
 ) => {
 

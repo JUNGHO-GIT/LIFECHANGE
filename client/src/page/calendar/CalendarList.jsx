@@ -14,7 +14,7 @@ export const CalendarList = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Calendar List";
   const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");

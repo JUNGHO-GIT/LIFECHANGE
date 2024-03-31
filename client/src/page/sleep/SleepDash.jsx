@@ -7,7 +7,6 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {BarChart, Bar} from "recharts";
 import {LineChart, Line} from "recharts";
 import {ComposedChart} from 'recharts';
-import {useStorage} from "../../assets/js/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -15,7 +14,7 @@ export const SleepDash = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
@@ -26,45 +25,39 @@ export const SleepDash = () => {
   const [type, setType] = useState("day");
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:SLEEP_LIST_BAR, setVal:setSLEEP_LIST_BAR} = useStorage(
-    `sleepListBar(${type})`, [{
-      _id: "",
-      sleep_day: "0000-00-00",
-      sleep_start_real: "00:00",
-      sleep_end_real: "00:00",
-      sleep_time_real: "00:00",
-      sleep_start_plan: "00:00",
-      sleep_end_plan: "00:00",
-      sleep_time_plan: "00:00",
-    }]
-  );
-  const {val:SLEEP_LIST_LINE, setVal:setSLEEP_LIST_LINE} = useStorage(
-    `sleepListLine(${type})`, [{
-      _id: "",
-      sleep_day: "0000-00-00",
-      sleep_start_real: "00:00",
-      sleep_end_real: "00:00",
-      sleep_time_real: "00:00",
-      sleep_start_plan: "00:00",
-      sleep_end_plan: "00:00",
-      sleep_time_plan: "00:00",
-    }]
-  );
-  const {val:SLEEP_LIST_AVG, setVal:setSLEEP_LIST_AVG} = useStorage(
-    `sleepListAvg(${type})`, {
-      name: "",
-      avg_start_real: "00:00",
-      avg_end_real: "00:00",
-      avg_time_real: "00:00",
-      avg_start_plan: "00:00",
-      avg_end_plan: "00:00",
-      avg_time_plan: "00:00",
-    }
-  );
+  const [SLEEP_LIST_BAR, setSLEEP_LIST_BAR] = useState([{
+    _id: "",
+    sleep_day: "0000-00-00",
+    sleep_start_real: "00:00",
+    sleep_end_real: "00:00",
+    sleep_time_real: "00:00",
+    sleep_start_plan: "00:00",
+    sleep_end_plan: "00:00",
+    sleep_time_plan: "00:00",
+  }]);
+  const [SLEEP_LIST_LINE, setSLEEP_LIST_LINE] = useState([{
+    _id: "",
+    sleep_day: "0000-00-00",
+    sleep_start_real: "00:00",
+    sleep_end_real: "00:00",
+    sleep_time_real: "00:00",
+    sleep_start_plan: "00:00",
+    sleep_end_plan: "00:00",
+    sleep_time_plan: "00:00",
+  }]);
+  const [SLEEP_LIST_AVG, setSLEEP_LIST_AVG] = useState([{
+    name: "",
+    avg_start_real: "00:00",
+    avg_end_real: "00:00",
+    avg_time_real: "00:00",
+    avg_start_plan: "00:00",
+    avg_end_plan: "00:00",
+    avg_time_plan: "00:00",
+  }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/sleepDash`, {
+    const response = await axios.get(`${URL_SLEEP}/dash`, {
       params: {
         user_id: user_id,
       },
@@ -303,7 +296,7 @@ export const SleepDash = () => {
       "수면": parseFloat(item.avg_time_real),
     }));
 
-    const chartDataPlan = SLEEP_LIST_AVG.map((item) => ({
+    const chartDataPlan = SLEEP_LIST_AVG?.map((item) => ({
       name: item.name,
       "취침": parseFloat(item.avg_start_plan),
       "기상": parseFloat(item.avg_end_plan),

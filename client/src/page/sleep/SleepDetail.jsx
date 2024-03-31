@@ -2,7 +2,6 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
@@ -15,71 +14,70 @@ export const SleepDetail = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
-  const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
-  const [dateDate, setDateDate] = useState(new Date(koreanDate));
-  const [strDate, setStrDate] = useState(koreanDate);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const initState = (YN) => ({
-    _id: "",
-    user_id: user_id,
-    sleep_day: koreanDate,
-    sleep_planYn: YN,
-    sleep_start: "",
-    sleep_end: "",
-    sleep_time: "",
+  const [strDate, setStrDate] = useState(`${location.state.sleep_day}`);
+  const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [SLEEP, setSLEEP] = useState({
+    user_id : user_id,
+    sleep_day: "",
+    sleep_real : [{
+      sleep_start: "",
+      sleep_end: "",
+      sleep_time: "",
+    }],
+    sleep_plan : [{
+      sleep_start: "",
+      sleep_end: "",
+      sleep_time: "",
+    }]
   });
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(initState("Y"));
-  const [SLEEP_REAL, setSLEEP_REAL] = useState(initState("N"));
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setSLEEP((prev) => ({
+      ...prev,
+      sleep_day: strDur
+    }));
+  }, [strDate]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-
-    const SLEEP = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
-    const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
-
     const response = await axios.get(`${URL_SLEEP}/detail`, {
       params: {
-        _id: "",
         user_id: user_id,
-        sleep_day: strDate,
-        planYn: planYn,
+        sleep_dur: strDur,
       },
     });
 
-    response.data.result !== null
-    ? setSLEEP(response.data.result)
-    : setSLEEP(initState(planYn));
+    setSLEEP(response.data.result)
 
     log("SLEEP : " + JSON.stringify(SLEEP));
 
-  })()}, [strDate, planYn]);
+  })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepDelete = async () => {
     try {
-      const confirm = window.confirm("Are you sure you want to delete?");
-      if (!confirm) {
-        return;
+      const response = await axios.delete(`${URL_SLEEP}/delete`, {
+        params: {
+          user_id : user_id,
+          sleep_dur : strDur,
+        },
+      });
+      if (response.data === "success") {
+        alert("delete success");
+        navParam(`/sleep/list`);
       }
       else {
-        const response = await axios.delete(`${URL_SLEEP}/sleepDelete`, {
-          params: {
-            _id : _id,
-          },
-        });
-        if (response.data === "success") {
-          alert("Delete success");
-          navParam(`/sleep/ist`);
-        }
-        else {
-          alert("Delete failed");
-        }
+        alert("Delete failed");
       }
     }
     catch (e) {
@@ -87,17 +85,10 @@ export const SleepDetail = () => {
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
-
   // 5. table ------------------------------------------------------------------------------------->
-  const tableSleepInsert = () => {
-
-    const SLEEP = planYn === "N" ? SLEEP_REAL : SLEEP_PLAN;
-    const setSLEEP = planYn === "N" ? setSLEEP_REAL : setSLEEP_PLAN;
-
+  const tableSleepDetail = () => {
     return (
       <table className="table bg-white table-hover">
-
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
@@ -109,7 +100,9 @@ export const SleepDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{SLEEP.sleep_day}</td>
+            <td className="fs-20 pt-20">
+              {SLEEP.sleep_day}
+            </td>
             <td>
               <select
                 id="sleep_planYn"
@@ -124,9 +117,24 @@ export const SleepDetail = () => {
                 <option value="N" selected>실제</option>
               </select>
             </td>
-            <td>{SLEEP.sleep_start}</td>
-            <td>{SLEEP.sleep_end}</td>
-            <td>{SLEEP.sleep_time}</td>
+            <td className="fs-20 pt-20">
+              {planYn === "Y"
+                ? SLEEP.sleep_plan.map((item, index) => (`${item.sleep_start}`))
+                : SLEEP.sleep_real.map((item, index) => (`${item.sleep_start}`))
+              }
+            </td>
+            <td className="fs-20 pt-20">
+              {planYn === "Y"
+                ? SLEEP.sleep_plan.map((item, index) => (`${item.sleep_end}`))
+                : SLEEP.sleep_real.map((item, index) => (`${item.sleep_end}`))
+              }
+            </td>
+            <td className="fs-20 pt-20">
+              {planYn === "Y"
+                ? SLEEP.sleep_plan.map((item, index) => (`${item.sleep_time}`))
+                : SLEEP.sleep_real.map((item, index) => (`${item.sleep_time}`))
+              }
+            </td>
           </tr>
         </tbody>
       </table>
@@ -141,12 +149,10 @@ export const SleepDetail = () => {
       </button>
     );
   };
-  const buttonSleepUpdate = (_id) => {
+  const buttonSleepUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        navParam(`/sleep/update`, {
-          state: {_id},
-        });
+        navParam(`/sleep/insert`);
       }}>
         Update
       </button>
@@ -175,12 +181,15 @@ export const SleepDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center mt-5">
+        <div className="row d-center mb-20">
           <div className="col-12">
-            {tableSleepInsert()}
-            <br />
+            {tableSleepDetail()}
+          </div>
+        </div>
+        <div className="row d-center">
+          <div className="col-12">
             {buttonSleepDelete()}
-            {/* {buttonSleepUpdate(SLEEP._id)} */}
+            {buttonSleepUpdate()}
             {buttonRefreshPage()}
             {buttonSleepList()}
           </div>

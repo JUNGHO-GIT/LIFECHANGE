@@ -17,7 +17,7 @@ export const WorkList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
@@ -597,7 +597,7 @@ export const WorkList = () => {
         {calendarOpen ? "x" : "o"}
       </button>
     );
-  }
+  };
   const buttonWorkToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success m-5" onClick={() => {

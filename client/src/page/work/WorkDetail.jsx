@@ -12,7 +12,7 @@ export const WorkDetail = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Work Detail";
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;

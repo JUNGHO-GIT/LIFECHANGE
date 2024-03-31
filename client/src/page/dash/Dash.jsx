@@ -13,7 +13,7 @@ export const DashList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Dash List";
-  const koreanDate = new Date(moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString());
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();

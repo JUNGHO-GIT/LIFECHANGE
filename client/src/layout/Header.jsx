@@ -94,6 +94,11 @@ export const Header = () => {
             Dash
           </button>
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
+            navParam(`/${lowFix}/insert`);
+          }}>
+            Insert
+          </button>
+          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
             navParam(`/${lowFix}/list`);
           }}>
             List

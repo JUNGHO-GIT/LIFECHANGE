@@ -1,0 +1,27 @@
+{
+  "user_id": "123",
+  "SLEEP": {
+    "user_id": "123",
+    "sleep_day": "2024-04-01",
+    "sleep_section": {
+      "real": {
+        "_id": "",
+        "sleep_number": 0,
+        "sleep_planYn": "N",
+        "sleep_start": "22:02",
+        "sleep_end": "03:33",
+        "sleep_time": "00:00"
+      },
+      "plan": {
+        "_id": "",
+        "sleep_number": 0,
+        "sleep_planYn": "Y",
+        "sleep_start": "00:00",
+        "sleep_end": "00:00",
+        "sleep_time": "00:00"
+      }
+    }
+  },
+  "sleep_day": "2024-04-01",
+  "planYn": "N"
+}

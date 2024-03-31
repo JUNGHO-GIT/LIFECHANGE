@@ -48,10 +48,8 @@ sleepRouter.get("/list", async (req, res) => {
 sleepRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
-      req.query._id,
       req.query.user_id,
-      req.query.sleep_day,
-      req.query.planYn
+      req.query.sleep_dur,
     );
     if (result) {
       res.send(result);
@@ -72,6 +70,8 @@ sleepRouter.post("/insert", async (req, res) => {
     const result = await service.insert (
       req.body.user_id,
       req.body.SLEEP,
+      req.body.sleep_dur,
+      req.body.planYn
     );
     if (result) {
       res.send("success");
@@ -90,8 +90,10 @@ sleepRouter.post("/insert", async (req, res) => {
 sleepRouter.put("/update", async (req, res) => {
   try {
     const result = await service.update (
-      req.body._id,
-      req.body.SLEEP
+      req.body.user_id,
+      req.body.SLEEP,
+      req.query.sleep_dur,
+      req.body.planYn
     );
     if (result) {
       res.send("success");
@@ -110,6 +112,7 @@ sleepRouter.put("/update", async (req, res) => {
 sleepRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes (
+      req.body.user_id,
       req.query._id
     );
     if (result) {
