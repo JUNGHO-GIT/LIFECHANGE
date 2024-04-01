@@ -14,6 +14,7 @@ export const SleepDetail = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const location = useLocation();
+  const location_day = location?.state?.sleep_day;
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
@@ -21,7 +22,7 @@ export const SleepDetail = () => {
   const [planYn, setPlanYn] = useState("N");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(`${location.state.sleep_day}`);
+  const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
   const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -40,14 +41,6 @@ export const SleepDetail = () => {
     }]
   });
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setSLEEP((prev) => ({
-      ...prev,
-      sleep_day: strDur
-    }));
-  }, [strDate]);
-
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/detail`, {
@@ -63,13 +56,21 @@ export const SleepDetail = () => {
 
   })()}, []);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setSLEEP((prev) => ({
+      ...prev,
+      sleep_day: strDur
+    }));
+  }, [strDate]);
+
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepDelete = async () => {
     try {
       const response = await axios.delete(`${URL_SLEEP}/delete`, {
         params: {
-          user_id : user_id,
-          sleep_dur : strDur,
+          user_id: user_id,
+          sleep_dur: strDur,
         },
       });
       if (response.data === "success") {
@@ -152,7 +153,11 @@ export const SleepDetail = () => {
   const buttonSleepUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        navParam(`/sleep/insert`);
+        navParam(`/sleep/save`, {
+          state: {
+            sleep_day: strDate,
+          }
+        });
       }}>
         Update
       </button>

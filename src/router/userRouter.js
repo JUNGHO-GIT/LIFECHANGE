@@ -42,7 +42,7 @@ userRouter.post("/detail", async (req, res) => {
 });
 
 // 3-1. insert ------------------------------------------------------------------------------------>
-userRouter.post("/insert", async (req, res) => {
+userRouter.post("/save", async (req, res) => {
   try {
     const resultSub = await service.checkId (
       req.body.user_id

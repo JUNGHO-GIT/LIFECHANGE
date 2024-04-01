@@ -94,9 +94,9 @@ export const Header = () => {
             Dash
           </button>
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
-            navParam(`/${lowFix}/insert`);
+            navParam(`/${lowFix}/save`);
           }}>
-            Insert
+            Save
           </button>
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
             navParam(`/${lowFix}/list`);
@@ -122,7 +122,7 @@ export const Header = () => {
     const buttonSignup = () => {
       return (
         <button type="button" className="btn btn-sm ms-2" onClick={() => {
-          navParam("/user/insert");
+          navParam("/user/save");
         }}>
           Signup
         </button>

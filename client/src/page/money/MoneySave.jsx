@@ -1,4 +1,4 @@
-// MoneyInsert.jsx
+// MoneySave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
@@ -10,10 +10,10 @@ import {useStorage} from "../../assets/js/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyInsert = () => {
+export const MoneySave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Money Insert";
+  const TITLE = "Money Save";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
@@ -45,18 +45,18 @@ export const MoneyInsert = () => {
   }, [moneyDay, money_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowMoneyInsert = async () => {
-    const response = await axios.post (`${URL_MONEY}/moneyInsert`, {
+  const flowMoneySave = async () => {
+    const response = await axios.post (`${URL_MONEY}/moneySave`, {
       user_id : user_id,
       MONEY : MONEY,
     });
 
     if (response.data === "success") {
-      alert("Insert a money successfully");
+      alert("Save a money successfully");
       navParam("/money/list");
     }
     else {
-      alert("Insert a money failure");
+      alert("Save a money failure");
     }
 
     log("MONEY : " + JSON.stringify(MONEY));
@@ -157,7 +157,7 @@ export const MoneyInsert = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableMoneyInsert = () => {
+  const tableMoneySave = () => {
     return (
       <div className="row d-center">
         <div className="col-5">
@@ -286,10 +286,10 @@ export const MoneyInsert = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonMoneyInsert = () => {
+  const buttonMoneySave = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary" onClick={flowMoneyInsert}>
-        Insert
+      <button type="button" className="btn btn-sm btn-primary" onClick={flowMoneySave}>
+        Save
       </button>
     );
   };
@@ -326,9 +326,9 @@ export const MoneyInsert = () => {
       </div>
       <div className="row d-center mt-5 mb-20">
         <div className="col-12">
-          {tableMoneyInsert()}
+          {tableMoneySave()}
           <br />
-          {buttonMoneyInsert()}
+          {buttonMoneySave()}
           {buttonRefreshPage()}
         </div>
         </div>

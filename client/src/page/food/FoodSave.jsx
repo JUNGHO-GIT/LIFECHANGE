@@ -1,4 +1,4 @@
-// FoodInsert.jsx
+// FoodSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -9,10 +9,10 @@ import {useStorage} from "../../assets/js/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodInsert = () => {
+export const FoodSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Food Insert";
+  const TITLE = "Food Save";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
@@ -40,7 +40,7 @@ export const FoodInsert = () => {
   }, [foodDay]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowFoodInsert = async (params) => {
+  const flowFoodSave = async (params) => {
     try {
       const FOOD = {
         food_title: title,
@@ -54,14 +54,14 @@ export const FoodInsert = () => {
         foodDay: moment(foodDay).format("YYYY-MM-DD"),
       };
 
-      const response = await axios.post(`${URL_FOOD}/insert`, {
+      const response = await axios.post(`${URL_FOOD}/save`, {
         user_id : user_id,
         FOOD : FOOD,
       });
       log("FOOD : " + JSON.stringify(FOOD));
 
       if (response.data === "success") {
-        alert("Insert food successfully");
+        alert("Save food successfully");
         navParam("/food/list");
       }
       else {
@@ -129,7 +129,7 @@ export const FoodInsert = () => {
   };
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodInsert = (
+  const tableFoodSave = (
     servingAmount, title, nutrientVal
   ) => (
     <div className="card">
@@ -175,12 +175,12 @@ export const FoodInsert = () => {
       />
     );
   };
-  const buttonFoodInsert = () => {
+  const buttonFoodSave = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-        flowFoodInsert(showGram);
+        flowFoodSave(showGram);
       }}>
-        Insert
+        Save
       </button>
     );
   };
@@ -220,10 +220,10 @@ export const FoodInsert = () => {
       </div>
       <div className="row d-center mt-5">
         <div className="col-6">
-          {tableFoodInsert(0, serving ? serving : "0", calories)}
+          {tableFoodSave(0, serving ? serving : "0", calories)}
         </div>
         <div className="col-6">
-          {tableFoodInsert(showGram, showGram.toString(), calories)}
+          {tableFoodSave(showGram, showGram.toString(), calories)}
         </div>
         <div className="col-6">
           <div className="input-group">
@@ -234,7 +234,7 @@ export const FoodInsert = () => {
       </div>
       <div className="row d-center mb-20">
         <div className="col-12">
-          {buttonFoodInsert()}
+          {buttonFoodSave()}
           {buttonRefreshPage()}
         </div>
         </div>

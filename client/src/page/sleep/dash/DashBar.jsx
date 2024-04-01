@@ -1,4 +1,4 @@
-// Dash.jsx
+// DashBar.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,10 +8,9 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {BarChart, Bar} from "recharts";
 import {LineChart, Line} from "recharts";
 import {ComposedChart} from 'recharts';
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const Test = () => {
+export const DashBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
@@ -32,20 +31,6 @@ export const Test = () => {
   const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
-    user_id : user_id,
-    sleep_day: "",
-    sleep_real : [{
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
-    }],
-    sleep_plan : [{
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
-    }]
-  });
   const [SLEEP, setSLEEP] = useState([{
     user_id : user_id,
     sleep_day: "",
@@ -66,11 +51,37 @@ export const Test = () => {
     const response = await axios.get(`${URL_SLEEP}/dash`, {
       params: {
         user_id: user_id,
-        sleep_dur: strDur
+        sleep_dur: strDur,
       },
     });
     setSLEEP(response.data.result);
   })()}, [user_id]);
+
+  // 3. logic ------------------------------------------------------------------------------------->
+  const successOrNot = (plan, real) => {
+    const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
+    const realDate = new Date(`1970-01-01T${real}:00.000Z`);
+    if (realDate < planDate) {
+      realDate.setHours(realDate.getHours() + 24);
+    }
+    const diff = Math.abs(realDate.getTime() - planDate.getTime());
+    const diffMinutes = Math.floor(diff / 60000);
+
+    let textColor = "text-muted";
+    if (0 <= diffMinutes && diffMinutes <= 10) {
+      textColor = "text-primary";
+    }
+    if (10 < diffMinutes && diffMinutes <= 20) {
+      textColor = "text-success";
+    }
+    if (20 < diffMinutes && diffMinutes <= 30) {
+      textColor = "text-warning";
+    }
+    if (30 < diffMinutes) {
+      textColor = "text-danger";
+    }
+    return textColor;
+  };
 
   // 5-1. bar ------------------------------------------------------------------------------------->
   const chartSleepBar = () => {
@@ -198,18 +209,12 @@ export const Test = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
-      <div className="container">
-        <div className="container-wrapper mb-10">
-          <div className="row d-center">
-            <div className="col-8">
-              {chartSleepBar()}
-            </div>
-            <div className="col-4">
-              {tableSleepBar()}
-            </div>
-          </div>
-        </div>
+    <div className="row d-center">
+      <div className="col-8">
+        {chartSleepBar()}
+      </div>
+      <div className="col-4">
+        {tableSleepBar()}
       </div>
     </div>
   );

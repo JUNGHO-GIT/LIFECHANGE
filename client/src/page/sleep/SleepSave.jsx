@@ -1,4 +1,4 @@
-// SleepUpdate.jsx
+// SleepSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -10,23 +10,42 @@ import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepUpdate = () => {
+export const SleepSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
+  const location = useLocation();
+  const location_day = location?.state?.sleep_day;
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
-  const [strDate, setStrDate] = useState(koreanDate);
-  const [strDur, setStrDur] = useState(`${koreanDate} ~ ${koreanDate}`);
-  const [strStart, setStrStart] = useState(undefined)
-  const [strEnd, setStrEnd] = useState(undefined);
+  const [sleepStart, setSleepStart] = useState("");
+  const [sleepEnd, setSleepEnd] = useState("");
+  const [sleepTime, setSleepTime] = useState("");
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
+  const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
+    user_id : user_id,
+    sleep_day: "",
+    sleep_real : [{
+      sleep_start: "",
+      sleep_end: "",
+      sleep_time: "",
+    }],
+    sleep_plan : [{
+      sleep_start: "",
+      sleep_end: "",
+      sleep_time: "",
+    }]
+  });
   const [SLEEP, setSLEEP] = useState({
     user_id : user_id,
     sleep_day: "",
@@ -42,58 +61,69 @@ export const SleepUpdate = () => {
     }]
   });
 
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const response = await axios.get(`${URL_SLEEP}/detail`, {
+      params: {
+        user_id: user_id,
+        sleep_dur: strDur,
+      },
+    });
+
+    if (response.data.result) {
+      setSLEEP(response.data.result);
+    }
+    else {
+      setSLEEP(SLEEP_DEFAULT);
+    }
+    log("SLEEP : " + JSON.stringify(SLEEP));
+
+  })()}, [strDur, planYn]);
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setStrDur(`${strDate} ~ ${strDate}`);
-    setSLEEP({
-      ...SLEEP,
+    setSLEEP((prev) => ({
+      ...prev,
       sleep_day: strDur
-    });
+    }));
   }, [strDate]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
-    const SLEEPS = planYn === "N" ? SLEEP.sleep_real : SLEEP.sleep_plan;
+    const sleepType = planYn === "N" ? "sleep_real" : "sleep_plan";
 
-    if (SLEEPS.sleep_start && SLEEPS.sleep_end) {
-      const startDate = new Date(`${koreanDate}T${SLEEPS.sleep_start}:00Z`);
-      const endDate = new Date(`${koreanDate}T${SLEEPS.sleep_end}:00Z`);
+    if (sleepStart && sleepEnd) {
+      const startDate = new Date(`${koreanDate}T${sleepStart}:00Z`);
+      const endDate = new Date(`${koreanDate}T${sleepEnd}:00Z`);
 
+      // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
       if (endDate < startDate) {
         endDate.setDate(endDate.getDate() + 1);
       }
 
+      // 차이 계산
       const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const time = `${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2, "0")}`;
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
-      if (planYn === "N") {
-        setSLEEP({
-          ...SLEEP,
-          sleep_real: {
-            ...SLEEP.sleep_real,
-            sleep_time: time
-          }
-        });
-      }
-      else {
-        setSLEEP({
-          ...SLEEP,
-          sleep_plan: {
-            ...SLEEP.sleep_plan,
-            sleep_time: time
-          }
-        });
-      }
+      setSleepTime(time);
+      setSLEEP((prev) => ({
+        ...prev,
+        [sleepType]: [{
+          ...prev[sleepType][0],
+          sleep_time: time
+        }]
+      }));
     }
-  }, [SLEEP.sleep_real.sleep_start, SLEEP.sleep_real.sleep_end, SLEEP.sleep_plan.sleep_start, SLEEP.sleep_plan.sleep_end]);
+  }, [sleepStart, sleepEnd]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowSleepUpdate = async () => {
+  const flowSleepSave = async () => {
 
-    const response = await axios.post(`${URL_SLEEP}/update`, {
+    const response = await axios.post(`${URL_SLEEP}/save`, {
       user_id: user_id,
       SLEEP: SLEEP,
       sleep_dur: strDur,
@@ -104,11 +134,11 @@ export const SleepUpdate = () => {
       return;
     }
     else if (response.data === "success") {
-      alert("Update a sleep successfully");
+      alert("Save a sleep successfully");
       navParam("/sleep/list");
     }
     else if (response.data === "fail") {
-      alert("Update a sleep failed");
+      alert("Save a sleep failed");
       return;
     }
     else {
@@ -147,7 +177,10 @@ export const SleepUpdate = () => {
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
-  const tableSleepUpdate = () => {
+  const tableSleepSave = () => {
+
+    const sleepType = planYn === "N" ? "sleep_real" : "sleep_plan";
+
     return (
       <div>
         <div className="row d-center">
@@ -177,19 +210,20 @@ export const SleepUpdate = () => {
                 id="sleep_start"
                 name="sleep_start"
                 className="form-control"
-                value={planYn === "N" ? SLEEP.sleep_real.sleep_start : SLEEP.sleep_plan.sleep_start}
+                value={SLEEP[sleepType][0].sleep_start}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  if (planYn === "N") {
-                    SLEEP.sleep_real.sleep_start = e;
-                  }
-                  else {
-                    SLEEP.sleep_plan.sleep_start = e;
-                  }
-                  setSLEEP({...SLEEP});
+                  setSleepStart(e);
+                  setSLEEP((prev) => ({
+                    ...prev,
+                    [sleepType]: [{
+                      ...prev[sleepType][0],
+                      sleep_start: e
+                    }]
+                  }));
                 }}
               />
             </div>
@@ -203,19 +237,20 @@ export const SleepUpdate = () => {
                 id="sleep_end"
                 name="sleep_end"
                 className="form-control"
-                value={planYn === "N" ? SLEEP.sleep_real.sleep_end : SLEEP.sleep_plan.sleep_end}
+                value={SLEEP[sleepType][0].sleep_end}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
                 onChange={(e) => {
-                  if (planYn === "N") {
-                    SLEEP.sleep_real.sleep_end = e;
-                  }
-                  else {
-                    SLEEP.sleep_plan.sleep_end = e;
-                  }
-                  setSLEEP({...SLEEP});
+                  setSleepEnd(e);
+                  setSLEEP((prev) => ({
+                    ...prev,
+                    [sleepType]: [{
+                      ...prev[sleepType][0],
+                      sleep_end: e
+                    }]
+                  }));
                 }}
               />
             </div>
@@ -229,12 +264,12 @@ export const SleepUpdate = () => {
                 id="sleep_time"
                 name="sleep_time"
                 className="form-control"
-                value={planYn === "N" ? SLEEP.sleep_real.sleep_time : SLEEP.sleep_plan.sleep_time}
-                disableClock={true}
+                value={SLEEP[sleepType][0].sleep_time}
+                disableClock={false}
+                disabled={true}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                disabled
               />
             </div>
           </div>
@@ -244,10 +279,10 @@ export const SleepUpdate = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonSleepUpdate = () => {
+  const buttonSleepSave = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary" onClick={flowSleepUpdate}>
-        Update
+      <button type="button" className="btn btn-sm btn-primary" onClick={flowSleepSave}>
+        Save
       </button>
     );
   };
@@ -274,12 +309,12 @@ export const SleepUpdate = () => {
         </div>
         <div className="row d-center mt-5 mb-20">
           <div className="col-12">
-            {tableSleepUpdate()}
+            {tableSleepSave()}
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {buttonSleepUpdate()}
+            {buttonSleepSave()}
             {buttonRefreshPage()}
           </div>
         </div>

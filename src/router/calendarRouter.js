@@ -42,7 +42,7 @@ calendarRouter.get("/detail", async (req, res) => {
 });
 
 // 3. insert ------------------------------------------------------------------------------------>
-calendarRouter.post("/insert", async (req, res) => {
+calendarRouter.post("/save", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,

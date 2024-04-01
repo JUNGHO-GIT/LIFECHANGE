@@ -20,12 +20,6 @@ export const listArray = [
     ]
   },
   {
-    label: "Board",
-    items: [
-      {to: "/board/list", label: "BoardList"},
-    ]
-  },
-  {
     label: "Food",
     items: [
       {to: "/food/search/list", label: "FoodSearchList"},

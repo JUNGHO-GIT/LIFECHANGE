@@ -106,7 +106,7 @@ export const FoodSearchList = () => {
           {FOOD_SEARCH.map((index) => (
             <tr>
               <td>
-                {buttonFoodInsert (
+                {buttonFoodSave (
                   index.title ? index.title : "x", index.brand ? index.brand : "x",
                   index.calories ? index.calories : 0, index.fat ? index.fat : 0,
                   index.carb ? index.carb : 0, index.protein ? index.protein : 0,
@@ -127,13 +127,13 @@ export const FoodSearchList = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonFoodInsert = (
+  const buttonFoodSave = (
     title, brand, calories, fat,
     carb, protein, serving
   ) => {
     return (
       <p onClick={() => {
-        navParam(`/food/insert`, {
+        navParam(`/food/save`, {
           state: {
             title : title, brand : brand, calories : calories, fat : fat,
             carb : carb, protein : protein, serving : serving

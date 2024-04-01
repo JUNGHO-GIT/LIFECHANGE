@@ -49,7 +49,7 @@ workRouter.get("/detail", async (req, res) => {
 });
 
 // 3. insert -------------------------------------------------------------------------------------->
-workRouter.post("/insert", async (req, res) => {
+workRouter.post("/save", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,

@@ -67,7 +67,7 @@ moneyRouter.get("/detail", async (req, res) => {
 });
 
 // 3. insert -------------------------------------------------------------------------------------->
-moneyRouter.post("/insert", async (req, res) => {
+moneyRouter.post("/save", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,

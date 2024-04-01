@@ -1,4 +1,4 @@
-// UserInsert.jsx
+// UserSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
@@ -6,7 +6,7 @@ import axios from "axios";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserInsert = () => {
+export const UserSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_USER = process.env.REACT_APP_URL_USER;
@@ -22,14 +22,14 @@ export const UserInsert = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowUserInsert = async () => {
+  const flowUserSave = async () => {
     try {
       if (user_id === "" || user_pw === "") {
         alert("Please enter both Id and Pw");
         return;
       }
 
-      const response = await axios.post (`${URL_USER}/insert`, {
+      const response = await axios.post (`${URL_USER}/save`, {
         user_id: user_id,
         user_pw: user_pw,
       });
@@ -62,7 +62,7 @@ export const UserInsert = () => {
   // 4. view -------------------------------------------------------------------------------------->
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableUserInsert = () => {
+  const tableUserSave = () => {
     return (
       <div>
         <div className="form-floating">
@@ -101,9 +101,9 @@ export const UserInsert = () => {
       </button>
     );
   };
-  const buttonUserInsert = () => {
+  const buttonUserSave = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserInsert}>
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserSave}>
         Submit
       </button>
     );
@@ -125,9 +125,9 @@ export const UserInsert = () => {
         <div className="row d-center mt-5">
           <div className="col-12">
             <form className="form-inline">
-              {tableUserInsert()}
+              {tableUserSave()}
               <br/>
-              {buttonUserInsert()}
+              {buttonUserSave()}
               {buttonRefreshPage()}
               {buttonUserList()}
             </form>

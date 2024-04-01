@@ -1,4 +1,4 @@
-// WorkInsert.jsx
+// WorkSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
@@ -12,7 +12,7 @@ import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkInsert = () => {
+export const WorkSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -134,19 +134,19 @@ export const WorkInsert = () => {
   }, [WORK_REAL.work_start, WORK_REAL.work_end, WORK_PLAN.work_start, WORK_PLAN.work_end]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowWorkInsert = async () => {
+  const flowWorkSave = async () => {
     const work = planYn === "N" ? WORK_REAL : WORK_PLAN;
-    const response = await axios.post (`${URL_WORK}/workInsert`, {
+    const response = await axios.post (`${URL_WORK}/workSave`, {
       user_id : user_id,
       WORK: work,
       planYn : planYn,
     });
     if (response.data === "success") {
-      alert("Insert a work successfully");
+      alert("Save a work successfully");
       navParam("/work/list");
     }
     else if (response.data === "fail") {
-      alert("Insert a work failed");
+      alert("Save a work failed");
       return;
     }
     else {
@@ -386,7 +386,7 @@ export const WorkInsert = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkInsert = () => {
+  const tableWorkSave = () => {
 
     const work = planYn === "N" ? WORK_REAL : WORK_PLAN;
     const setWork = planYn === "N" ? setWORK_REAL : setWORK_PLAN;
@@ -481,10 +481,10 @@ export const WorkInsert = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonWorkInsert = () => {
+  const buttonWorkSave = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary" onClick={flowWorkInsert}>
-        Insert
+      <button type="button" className="btn btn-sm btn-primary" onClick={flowWorkSave}>
+        Save
       </button>
     );
   };
@@ -516,9 +516,9 @@ export const WorkInsert = () => {
         </div>
         <div className="row d-center mt-5 mb-20">
           <div className="col-12">
-            {tableWorkInsert()}
+            {tableWorkSave()}
             <br />
-            {buttonWorkInsert()}
+            {buttonWorkSave()}
             {buttonRefreshPage()}
           </div>
         </div>

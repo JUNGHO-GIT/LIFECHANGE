@@ -7,7 +7,6 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import {userRouter} from "./src/router/userRouter.js";
-import {boardRouter} from "./src/router/boardRouter.js";
 import {foodRouter} from "./src/router/foodRouter.js";
 import {calendarRouter} from "./src/router/calendarRouter.js";
 import {workRouter} from "./src/router/workRouter.js";
@@ -30,7 +29,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use("/user", userRouter);
-app.use("/board", boardRouter);
 app.use("/food", foodRouter);
 app.use("/calendar", calendarRouter);
 app.use("/work", workRouter);

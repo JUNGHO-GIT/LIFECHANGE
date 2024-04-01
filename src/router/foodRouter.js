@@ -108,7 +108,7 @@ foodRouter.get ("/search", async (req, res) => {
 }); */
 
 // 3-1. insert ------------------------------------------------------------------------------------>
-foodRouter.post ("/insert", async (req, res) => {
+foodRouter.post ("/save", async (req, res) => {
   try {
     const result = await service.insert (
       req.body.user_id,
