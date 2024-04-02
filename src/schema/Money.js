@@ -67,14 +67,14 @@ const schema = new mongoose.Schema({
   money_regdate : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
     },
     required : true
   },
   money_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
     },
     required : true
   }

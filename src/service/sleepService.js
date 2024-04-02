@@ -9,8 +9,7 @@ export const dashBar = async (
   user_id_param
 ) => {
 
-  let finalResult = [];
-  let dataFields = {
+  const dataFields = {
     "취침": { plan: "sleep_start", real: "sleep_start" },
     "기상": { plan: "sleep_end", real: "sleep_end" },
     "수면": { plan: "sleep_time", real: "sleep_time" }
@@ -26,19 +25,21 @@ export const dashBar = async (
     }
   };
 
+  let finalResult = [];
   for (let key in dataFields) {
-
-    const findParam = {
+    const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_day: moment().tz("Asia/Seoul").format("YYYY-MM-DD").toString(),
-    };
-
-    const findResult = await Sleep.findOne(findParam);
+    });
 
     finalResult.push({
       name: key,
-      목표: fmtData(findResult?.sleep_plan[dataFields[key].plan]),
-      실제: fmtData(findResult?.sleep_real[dataFields[key].real]),
+      목표: fmtData(
+        findResult?.sleep_plan?.sleep_section?.map((item) => item[dataFields[key].plan]).join(":")
+      ),
+      실제: fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item[dataFields[key].real]).join(":")
+      ),
     });
   }
 
@@ -52,8 +53,7 @@ export const dashLine = async (
   user_id_param
 ) => {
 
-  let finalResult = [];
-  let names = [
+  const names = [
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
@@ -67,20 +67,24 @@ export const dashLine = async (
     }
   };
 
+  let finalResult = [];
   for (let i = 0; i < 7; i++) {
-
-    const findParam = {
+    const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_day: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
-    };
-
-    const findResult = await Sleep.findOne(findParam);
+    });
 
     finalResult.push({
       name: names[i],
-      취침: fmtData(findResult?.sleep_real?.sleep_start),
-      기상: fmtData(findResult?.sleep_real?.sleep_end),
-      수면: fmtData(findResult?.sleep_real?.sleep_time),
+      취침: fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_start).join(":")
+      ),
+      기상: fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_end).join(":")
+      ),
+      수면: fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
+      ),
     });
   }
 
@@ -94,14 +98,14 @@ export const dashAvgWeek = async (
   user_id_param
 ) => {
 
-  let finalResult = [];
-  let names = [
-    "1주차", "2주차", "3주차", "4주차", "5주차"
-  ];
   let sumSleepStart = Array(5).fill(0);
   let sumSleepEnd = Array(5).fill(0);
   let sumSleepTime = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
+
+  const names = [
+    "1주차", "2주차", "3주차", "4주차", "5주차"
+  ];
 
   const fmtData = (data) => {
     if (!data) {
@@ -114,22 +118,27 @@ export const dashAvgWeek = async (
   };
 
   for (let i = 0; i < 7; i++) {
-    const findParam = {
+    const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_day: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
-    };
-
-    const findResult = await Sleep.findOne(findParam);
+    });
 
     if (findResult) {
-      const weekNum = Math.max(0, moment(findParam.sleep_day).week() - moment(findParam.sleep_day).startOf("month").week() + 1);
-      sumSleepStart[weekNum - 1] += fmtData(findResult.sleep_real.sleep_start);
-      sumSleepEnd[weekNum - 1] += fmtData(findResult.sleep_real.sleep_end);
-      sumSleepTime[weekNum - 1] += fmtData(findResult.sleep_real.sleep_time);
+      const weekNum = Math.max(moment(findResult.sleep_day).week() - moment(findResult.sleep_day).startOf("month").week() + 1);
+      sumSleepStart[weekNum - 1] += fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_start).join(":")
+      );
+      sumSleepEnd[weekNum - 1] += fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_end).join(":")
+      );
+      sumSleepTime[weekNum - 1] += fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
+      );
       countRecords[weekNum - 1]++;
     }
   };
 
+  let finalResult = [];
   for (let i = 0; i < 5; i++) {
     finalResult.push({
       name: names[i],
@@ -149,14 +158,14 @@ export const dashAvgMonth = async (
   user_id_param
 ) => {
 
-  let finalResult = [];
-  let names = [
-    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
-  ];
   let sumSleepStart = Array(12).fill(0);
   let sumSleepEnd = Array(12).fill(0);
   let sumSleepTime = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
+
+  const names = [
+    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+  ];
 
   const fmtData = (data) => {
     if (!data) {
@@ -173,22 +182,27 @@ export const dashAvgMonth = async (
     m.isBefore(moment().tz("Asia/Seoul").endOf("year"));
     m.add(1, "days")
   ) {
-    const findParam = {
+    const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_day: m.format("YYYY-MM-DD"),
-    };
-
-    const findResult = await Sleep.findOne(findParam);
+    });
 
     if (findResult) {
       const monthNum = m.month();
-      sumSleepStart[monthNum] += fmtData(findResult.sleep_real.sleep_start);
-      sumSleepEnd[monthNum] += fmtData(findResult.sleep_real.sleep_end);
-      sumSleepTime[monthNum] += fmtData(findResult.sleep_real.sleep_time);
+      sumSleepStart[monthNum] += fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_start).join(":")
+      );
+      sumSleepEnd[monthNum] += fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_end).join(":")
+      );
+      sumSleepTime[monthNum] += fmtData(
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
+      );
       countRecords[monthNum]++;
     }
   };
 
+  let finalResult = [];
   for (let i = 0; i < 12; i++) {
     finalResult.push({
       name: names[i],
@@ -210,27 +224,27 @@ export const list = async (
   filter_param
 ) => {
 
-  let totalCount;
-  let finalResult;
-  let startDay = sleep_dur_param.split(` ~ `)[0];
-  let endDay = sleep_dur_param.split(` ~ `)[1];
+  const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
-  const filterOrder = filter_param.order;
+  const filter = filter_param.order;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const sort = filter === "asc" ? 1 : -1;
 
-  const findQuery = {
+  const findResult = Sleep.find({
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
       $lte: endDay,
     }
-  };
+  })
 
-  const sortOrder = filterOrder === "asc" ? 1 : -1;
+  const finalResult = await findResult
+  .sort({sleep_day: sort})
+  .skip((page - 1) * limit)
+  .limit(limit);
 
-  totalCount = await Sleep.countDocuments(findQuery);
-  finalResult = await Sleep.find(findQuery).sort({sleep_day: sortOrder}).skip((page - 1) * limit).limit(limit);
+  const totalCount = await Sleep.countDocuments(findResult);
 
   return {
     totalCount: totalCount,
@@ -240,25 +254,29 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
+  _id_param,
   user_id_param,
-  sleep_dur_param
+  sleep_dur_param,
+  planYn_param
 ) => {
 
-  let finalResult;
-  let startDay = sleep_dur_param.split(` ~ `)[0];
-  let endDay = sleep_dur_param.split(` ~ `)[1];
+  const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
-  const findQuery = {
+  const finalResult = await Sleep.findOne({
+    _id: _id_param === "" ? {$exists: true} : _id_param,
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
       $lte: endDay,
-    }
-  };
+    },
+  });
 
-  finalResult = await Sleep.findOne(findQuery);
+  const realCount = finalResult?.sleep_real !== undefined ? 1 : 0;
+  const planCount = finalResult?.sleep_plan !== undefined ? 1 : 0;
 
   return {
+    realCount: realCount,
+    planCount: planCount,
     result: finalResult,
   };
 };
@@ -271,19 +289,17 @@ export const save = async (
   planYn_param
 ) => {
 
-  let finalResult;
-  let startDay = sleep_dur_param.split(` ~ `)[0];
-  let endDay = sleep_dur_param.split(` ~ `)[1];
+  const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
-  const findQuery = {
+  const findResult = await Sleep.findOne({
     user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
       $lte: endDay,
     },
-  };
-  const findResult = await Sleep.findOne(findQuery);
+  });
 
+  let finalResult;
   if (!findResult) {
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
@@ -291,7 +307,7 @@ export const save = async (
       sleep_day: startDay,
       sleep_real: SLEEP_param.sleep_real,
       sleep_plan: SLEEP_param.sleep_plan,
-      sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),
+      sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       sleep_update: "default",
     };
     finalResult = await Sleep.create(createQuery);
@@ -301,11 +317,11 @@ export const save = async (
     const updateAction = planYn_param === "Y"
     ? {$set: {
       sleep_plan: SLEEP_param.sleep_plan,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss")
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
     }}
     : {$set: {
       sleep_real: SLEEP_param.sleep_real,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss")
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
     }}
 
     finalResult = await Sleep.updateOne(updateQuery, updateAction);
@@ -318,23 +334,30 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
+  _id_param,
   user_id_param,
-  sleep_dur_param
+  sleep_dur_param,
+  planYn_param
 ) => {
 
-  let finalResult;
-  let startDay = sleep_dur_param.split(` ~ `)[0];
-  let endDay = sleep_dur_param.split(` ~ `)[1];
+  const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
-  const deleteQuery = {
-    user_id: user_id_param,
+  const finalResult = await Sleep.updateOne(
+    {user_id: user_id_param,
     sleep_day: {
       $gte: startDay,
       $lte: endDay,
+    }},
+    {$pull: {
+      [`sleep_${planYn_param === "Y" ? "plan" : "real"}.sleep_section`]: { _id: _id_param },
     },
-  };
-
-  finalResult = await Sleep.deleteMany(deleteQuery);
+    $set: {
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+    }},
+    {arrayFilters: [{
+      "elem._id": _id_param
+    }]}
+  );
 
   return {
     result: finalResult,

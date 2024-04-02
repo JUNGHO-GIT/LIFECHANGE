@@ -184,13 +184,12 @@ export const deletes = async (
     money_section_id_param !== undefined &&
     money_section_id_param !== ""
   ) {
-    deleteQuery = [
+    deleteResult = await Money.updateOne([
       {_id: _id_param},
       {$pull: {
         money_section: { _id: money_section_id_param }
       }}
-    ];
-    deleteResult = await Money.updateOne(deleteQuery);
+    ]);
   }
 
   // money_section_id_param이 제공되지 않으면 전체 작업을 삭제

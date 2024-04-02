@@ -1,23 +1,24 @@
 // Sleep.js
 
 import mongoose from "mongoose";
-import moment from "moment-timezone";
 import {incrementSeq} from "./Counter.js";
 
 // 1. section ------------------------------------------------------------------------------------->
 const sectionSchema = new mongoose.Schema({
-  sleep_start: {
-    type: String,
-    required: false
-  },
-  sleep_end: {
-    type: String,
-    required: false
-  },
-  sleep_time: {
-    type: String,
-    required: false
-  },
+  sleep_section: [{
+    sleep_start: {
+      type: String,
+      required: false
+    },
+    sleep_end: {
+      type: String,
+      required: false
+    },
+    sleep_time: {
+      type: String,
+      required: false
+    }
+  }]
 });
 
 // 2. main ---------------------------------------------------------------------------------------->

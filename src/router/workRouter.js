@@ -29,8 +29,10 @@ workRouter.get("/list", async (req, res) => {
 workRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
+      req.query._id,
       req.query.user_id,
       req.query.work_dur,
+      req.query.planYn
     );
     if (result) {
       res.send(result);
@@ -71,8 +73,10 @@ workRouter.post("/save", async (req, res) => {
 workRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
+      req.query._id,
       req.query.user_id,
-      req.query.work_dur
+      req.query.work_dur,
+      req.query.planYn
     );
     if (result) {
       res.send("success");

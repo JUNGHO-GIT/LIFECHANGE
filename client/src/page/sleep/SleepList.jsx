@@ -36,17 +36,40 @@ export const SleepList = () => {
   const [strEnd, setStrEnd] = useState(koreanDate);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState([{
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
+    _id: "",
     sleep_day: "",
     sleep_real : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     },
     sleep_plan : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
+    }
+  }]);
+  const [SLEEP, setSLEEP] = useState([{
+    _id: "",
+    sleep_day: "",
+    sleep_real : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
+    },
+    sleep_plan : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     }
   }]);
 
@@ -61,8 +84,8 @@ export const SleepList = () => {
       },
     });
 
-    setTotalCount(response.data.totalCount);
-    setSLEEP(response.data.result);
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -278,6 +301,7 @@ export const SleepList = () => {
                 <td rowSpan={3} className="pointer" onClick={() => {
                   navParam("/sleep/detail", {
                     state: {
+                      _id: item._id,
                       sleep_day: item.sleep_day,
                     },
                   });
@@ -286,13 +310,16 @@ export const SleepList = () => {
                 </td>
                 <td>취침</td>
                 <td>
-                  {item.sleep_plan?.sleep_start}
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_start)}
                 </td>
                 <td>
-                  {item.sleep_real?.sleep_start}
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_start)}
                 </td>
                 <td>
-                  <span className={successOrNot(item.sleep_plan?.sleep_start, item.sleep_real?.sleep_start)}>
+                  <span className={successOrNot(
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_start),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_start)
+                  )}>
                     ●
                   </span>
                 </td>
@@ -300,13 +327,16 @@ export const SleepList = () => {
               <tr>
                 <td>기상</td>
                 <td>
-                  {item.sleep_plan?.sleep_end}
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_end)}
                 </td>
                 <td>
-                  {item.sleep_real?.sleep_end}
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_end)}
                 </td>
                 <td>
-                  <span className={successOrNot(item.sleep_plan?.sleep_end, item.sleep_real?.sleep_end)}>
+                  <span className={successOrNot(
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_end),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_end)
+                  )}>
                     ●
                   </span>
                 </td>
@@ -314,13 +344,16 @@ export const SleepList = () => {
               <tr>
                 <td>수면</td>
                 <td>
-                  {item.sleep_plan?.sleep_time}
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_time)}
                 </td>
                 <td>
-                  {item.sleep_real?.sleep_time}
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_time)}
                 </td>
                 <td>
-                  <span className={successOrNot(item.sleep_plan?.sleep_time, item.sleep_real?.sleep_time)}>
+                  <span className={successOrNot(
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_time),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_time)
+                  )}>
                     ●
                   </span>
                 </td>

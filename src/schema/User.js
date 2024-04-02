@@ -29,14 +29,14 @@ const schema = new mongoose.Schema({
   user_regdate : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
     },
     required : true
   },
   user_update : {
     type : String,
     default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss");
+      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
     },
     required : true
   }

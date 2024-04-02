@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import axios from "axios";
 import moment from "moment-timezone";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
@@ -15,8 +14,8 @@ export const SleepDetail = () => {
   const navParam = useNavigate();
   const location = useLocation();
   const location_day = location?.state?.sleep_day;
+  const location_id = location?.state?._id;
   const user_id = window.sessionStorage.getItem("user_id");
-  const {log} = useDeveloperMode();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
@@ -26,17 +25,40 @@ export const SleepDetail = () => {
   const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP, setSLEEP] = useState({
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
+    _id: "",
     sleep_day: "",
     sleep_real : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     },
     sleep_plan : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
+    }
+  });
+  const [SLEEP, setSLEEP] = useState({
+    _id: location_id,
+    sleep_day: "",
+    sleep_real : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
+    },
+    sleep_plan : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     }
   });
 
@@ -44,14 +66,14 @@ export const SleepDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/detail`, {
       params: {
+        _id: location_id,
         user_id: user_id,
         sleep_dur: strDur,
+        planYn: planYn,
       },
     });
 
-    setSLEEP(response.data.result)
-
-    log("SLEEP : " + JSON.stringify(SLEEP));
+    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, []);
 
@@ -64,29 +86,29 @@ export const SleepDetail = () => {
   }, [strDate]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowSleepDelete = async () => {
-    try {
-      const response = await axios.delete(`${URL_SLEEP}/delete`, {
-        params: {
-          user_id: user_id,
-          sleep_dur: strDur,
-        },
-      });
-      if (response.data === "success") {
-        alert("delete success");
-        navParam(`/sleep/list`);
-      }
-      else {
-        alert("Delete failed");
-      }
+  const flowSleepDelete = async (id) => {
+    const response = await axios.delete(`${URL_SLEEP}/delete`, {
+      params: {
+        _id: id,
+        user_id: user_id,
+        sleep_dur: strDur,
+        planYn: planYn,
+      },
+    });
+    if (response.data === "success") {
+      alert("delete success");
+      navParam(`/sleep/list`);
     }
-    catch (e) {
-      alert(`Error fetching sleep data: ${e.message}`);
+    else {
+      alert("Delete failed");
     }
   };
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableSleepDetail = () => {
+
+    const sleepType = planYn === "Y" ? "sleep_plan" : "sleep_real";
+
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -96,6 +118,7 @@ export const SleepDetail = () => {
             <th>취침시간</th>
             <th>기상시간</th>
             <th>수면시간</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
@@ -117,14 +140,17 @@ export const SleepDetail = () => {
                 <option value="N" selected>실제</option>
               </select>
             </td>
-            <td className="fs-20 pt-20">
-              {planYn === "Y" ? SLEEP.sleep_plan.sleep_start : SLEEP.sleep_real.sleep_start}
-            </td>
-            <td className="fs-20 pt-20">
-              {planYn === "Y" ? SLEEP.sleep_plan.sleep_end : SLEEP.sleep_real.sleep_end}
-            </td>
-            <td className="fs-20 pt-20">
-              {planYn === "Y" ? SLEEP.sleep_plan.sleep_time : SLEEP.sleep_real.sleep_time}
+            <td colSpan={4}>
+              {SLEEP[sleepType].sleep_section.map((item, index) => (
+                <div key={index} className="d-flex justify-content-between">
+                  <span>{item.sleep_start}</span>
+                  <span>{item.sleep_end}</span>
+                  <span>{item.sleep_time}</span>
+                  <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => flowSleepDelete(item._id)}>
+                    X
+                  </button>
+                </div>
+              ))}
             </td>
           </tr>
         </tbody>
@@ -133,13 +159,6 @@ export const SleepDetail = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonSleepDelete = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowSleepDelete}>
-        Delete
-      </button>
-    );
-  };
   const buttonSleepUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
@@ -183,7 +202,6 @@ export const SleepDetail = () => {
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {buttonSleepDelete()}
             {buttonSleepUpdate()}
             {buttonRefreshPage()}
             {buttonSleepList()}

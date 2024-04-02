@@ -105,8 +105,10 @@ sleepRouter.get("/list", async (req, res) => {
 sleepRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
+      req.query._id,
       req.query.user_id,
       req.query.sleep_dur,
+      req.query.planYn
     );
     if (result) {
       res.send(result);
@@ -147,8 +149,10 @@ sleepRouter.post("/save", async (req, res) => {
 sleepRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
+      req.query._id,
       req.query.user_id,
-      req.query.sleep_dur
+      req.query.sleep_dur,
+      req.query.planYn
     );
     if (result) {
       res.send("success");

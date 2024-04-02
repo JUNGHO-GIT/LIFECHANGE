@@ -30,6 +30,7 @@ export const listArray = [
   {
     label: "Work",
     items: [
+      {to: "/work/dash", label: "WorkDash"},
       {to: "/work/list", label: "WorkList"},
     ]
   },

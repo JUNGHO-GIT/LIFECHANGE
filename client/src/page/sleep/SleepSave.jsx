@@ -23,6 +23,8 @@ export const SleepSave = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
+  const [realCount, setRealCount] = useState(0);
+  const [planCount, setPlanCount] = useState(0);
   const [sleepStart, setSleepStart] = useState("");
   const [sleepEnd, setSleepEnd] = useState("");
 
@@ -34,28 +36,36 @@ export const SleepSave = () => {
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
     sleep_day: "",
     sleep_real : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     },
     sleep_plan : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     }
   });
   const [SLEEP, setSLEEP] = useState({
     user_id : user_id,
     sleep_day: "",
     sleep_real : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     },
     sleep_plan : {
-      sleep_start: "",
-      sleep_end: "",
-      sleep_time: "",
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
+      }]
     }
   });
 
@@ -63,18 +73,16 @@ export const SleepSave = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/detail`, {
       params: {
+        _id: "",
         user_id: user_id,
         sleep_dur: strDur,
+        planYn: planYn,
       },
     });
 
-    if (response.data.result) {
-      setSLEEP(response.data.result);
-    }
-    else {
-      setSLEEP(SLEEP_DEFAULT);
-    }
-    log("SLEEP : " + JSON.stringify(SLEEP));
+    setPlanCount(response.data.planCount ? response.data.planCount : 0);
+    setRealCount(response.data.realCount ? response.data.realCount : 0);
+    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur, planYn]);
 
@@ -110,8 +118,11 @@ export const SleepSave = () => {
       setSLEEP((prev) => ({
         ...prev,
         [sleepType]: {
-          ...prev[sleepType],
-          sleep_time: time,
+          sleep_section: [{
+            sleep_start: sleepStart,
+            sleep_end: sleepEnd,
+            sleep_time: time,
+          }]
         },
       }));
     }
@@ -207,14 +218,16 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP[sleepType]?.sleep_start}
+                value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_start)}
                 onChange={(e) => {
                   setSleepStart(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     [sleepType]: {
-                      ...prev[sleepType],
-                      sleep_start: e,
+                      sleep_section: [{
+                        ...prev[sleepType].sleep_section[0],
+                        sleep_start: e,
+                      }]
                     },
                   }));
                 }}
@@ -234,14 +247,16 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP[sleepType]?.sleep_end}
+                value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_end)}
                 onChange={(e) => {
                   setSleepEnd(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     [sleepType]: {
-                      ...prev[sleepType],
-                      sleep_end: e,
+                      sleep_section: [{
+                        ...prev[sleepType].sleep_section[0],
+                        sleep_end: e,
+                      }]
                     },
                   }));
                 }}
@@ -262,7 +277,7 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP[sleepType]?.sleep_time}
+                value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_time)}
               />
             </div>
           </div>

@@ -24,8 +24,8 @@ export const WorkSave = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
-  const [realCount, setRealCount] = useState(0);
-  const [planCount, setPlanCount] = useState(0);
+  const [planCount, setPlanCount] = useState(1);
+  const [realCount, setRealCount] = useState(1);
   const [workStart, setWorkStart] = useState("");
   const [workEnd, setWorkEnd] = useState("");
 
@@ -107,15 +107,16 @@ export const WorkSave = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_WORK}/detail`, {
       params: {
+        _id: "",
         user_id: user_id,
         work_dur: strDur,
+        planYn: planYn,
       },
     });
 
-    setRealCount(response.data.realCount ? response.data.realCount : 0);
     setPlanCount(response.data.planCount ? response.data.planCount : 0);
+    setRealCount(response.data.realCount ? response.data.realCount : 0);
     setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
-    log("WORK : " + JSON.stringify(WORK));
 
   })()}, [strDur, planYn]);
 

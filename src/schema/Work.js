@@ -77,12 +77,12 @@ const schema = new mongoose.Schema({
   work_real: sectionSchema,
   work_regdate: {
     type: String,
-    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),
+    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     required: true,
   },
   work_update: {
     type: String,
-    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),
+    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     required: true,
   }
 });

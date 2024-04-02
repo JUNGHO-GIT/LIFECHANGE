@@ -38,6 +38,7 @@ export const WorkList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{
+    _id: "",
     work_number: 0,
     work_day: "",
     work_real : {
@@ -72,6 +73,7 @@ export const WorkList = () => {
     }
   }]);
   const [WORK, setWORK] = useState([{
+    _id: "",
     work_number: 0,
     work_day: "",
     work_real : {
@@ -117,8 +119,8 @@ export const WorkList = () => {
       },
     });
 
-    setTotalCount(response.data.totalCount);
-    setWORK(response.data.result || WORK_DEFAULT);
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -308,7 +310,10 @@ export const WorkList = () => {
               <tr>
                 <td rowSpan={6} className="pointer" onClick={() => {
                   navParam("/work/detail", {
-                    state: {_id: item._id}
+                    state: {
+                      _id: item._id,
+                      work_day: item.work_day,
+                    },
                   });
                 }}>
                   {item.work_day}
