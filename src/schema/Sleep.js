@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import moment from "moment-timezone";
+import {incrementSeq} from "./Counter.js";
 
 // 1. section ------------------------------------------------------------------------------------->
 const sectionSchema = new mongoose.Schema({
@@ -29,23 +30,35 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  sleep_number: {
+    type : Number,
+    unique : true
+  },
   sleep_day: {
     type: String,
     default: () => "default",
     required: true
   },
-  sleep_real: sectionSchema,
   sleep_plan: sectionSchema,
+  sleep_real: sectionSchema,
   sleep_regdate: {
     type: String,
-    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),
+    default: () => "default",
     required: true,
   },
   sleep_update: {
     type: String,
-    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),
+    default: () => "default",
     required: true,
   }
+});
+
+// 3. counter ------------------------------------------------------------------------------------->
+schema.pre("save", async function(next) {
+  if (this.isNew) {
+    this.sleep_number = await incrementSeq("sleep_number", "Sleep");
+  }
+  next();
 });
 
 // 5. model --------------------------------------------------------------------------------------->

@@ -287,22 +287,28 @@ export const save = async (
   if (!findResult) {
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
-      user_id: SLEEP_param.user_id,
+      user_id: user_id_param,
       sleep_day: startDay,
       sleep_real: SLEEP_param.sleep_real,
-      sleep_plan: SLEEP_param.sleep_plan
+      sleep_plan: SLEEP_param.sleep_plan,
+      sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),
+      sleep_update: "default",
     };
-    const createResult = await Sleep.create(createQuery);
-    finalResult = createResult;
+    finalResult = await Sleep.create(createQuery);
   }
   else {
     const updateQuery = {_id: findResult._id};
-    const updateAction = planYn_param === "N"
-    ? {$set: {sleep_real: SLEEP_param.sleep_real}}
-    : {$set: {sleep_plan: SLEEP_param.sleep_plan}}
+    const updateAction = planYn_param === "Y"
+    ? {$set: {
+      sleep_plan: SLEEP_param.sleep_plan,
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss")
+    }}
+    : {$set: {
+      sleep_real: SLEEP_param.sleep_real,
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss")
+    }}
 
-    const updateResult = await Sleep.updateOne(updateQuery, updateAction);
-    finalResult = updateResult;
+    finalResult = await Sleep.updateOne(updateQuery, updateAction);
   }
 
   return {

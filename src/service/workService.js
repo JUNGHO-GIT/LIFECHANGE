@@ -3,241 +3,147 @@
 import mongoose from "mongoose";
 import moment from "moment";
 import {Work} from "../schema/Work.js";
-import {workPartAll, workTitleAll} from "../assets/js/workArray.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
-  work_id_param,
+  user_id_param,
   work_dur_param,
-  planYn_param,
-  filter_param,
+  filter_param
 ) => {
 
   let totalCount;
-  let findQuery;
-  let findResult;
   let finalResult;
+  let startDay = work_dur_param.split(` ~ `)[0];
+  let endDay = work_dur_param.split(` ~ `)[1];
 
-  const startDay = work_dur_param.split(` ~ `)[0];
-  const endDay = work_dur_param.split(` ~ `)[1];
-
-  // plan : Y, N
-  let filterPlan = planYn_param;
-
-  // asc, desc
-  let order = filter_param.order;
-
-  // page
+  const filterOrder = filter_param.order;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
 
-  // part, title 전체 선택 시
-  let filterPart = filter_param.part !== "전체"
-    ? { $regex: filter_param.part }
-    : { $exists: true };
-
-  let filterTitle = filter_param.title !== "전체"
-    ? { $regex: filter_param.title }
-    : { $exists: true };
-
-  // findQuery 구성
-  findQuery = {
-    work_id: work_id_param,
+  const findQuery = {
+    user_id: user_id_param,
     work_day: {
       $gte: startDay,
       $lte: endDay,
-    },
-    work_planYn: filterPlan,
-    "work_section.work_part_val": filterPart,
-    "work_section.work_title_val": filterTitle,
+    }
   };
 
-  // asc, desc 정렬
-  let sortCondition = {};
-  if (order === "asc") {
-    sortCondition = { work_day: 1 };
-  }
-  else {
-    sortCondition = { work_day: -1 };
-  }
+  const sortOrder = filterOrder === "asc" ? 1 : -1;
 
-  // 정렬, 페이징 처리
-  findResult = await Work
-    .find(findQuery)
-    .sort(sortCondition)
-    .skip((page - 1) * limit)
-    .limit(limit);
+  totalCount = await Work.countDocuments(findQuery);
+  finalResult = await Work.find(findQuery).sort({work_day: sortOrder}).skip((page - 1) * limit).limit(limit);
 
-  // totalCount
-  totalCount = await Work
-    .countDocuments(findQuery);
-
-  finalResult = {
+  return {
     totalCount: totalCount,
-    result: findResult,
+    result: finalResult,
   };
-
-  return finalResult;
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  work_id_param,
-  work_day_param,
-  planYn_param,
-  _id_param
+  user_id_param,
+  work_dur_param
 ) => {
 
-  let sectionCount;
-  let findQuery;
-  let findResult;
+  let realCount;
+  let planCount;
   let finalResult;
+  let startDay = work_dur_param.split(` ~ `)[0];
+  let endDay = work_dur_param.split(` ~ `)[1];
 
-  // 입력시 데이터조회
-  // 리스트에서 데이터조회
-  let idParam = _id_param !== ""
-    ? { $regex: _id_param }
-    : { $exists: true };
-
-  findQuery = {
-    work_id: work_id_param,
-    work_day: work_day_param,
-    work_planYn: planYn_param,
-    _id: idParam,
+  const findQuery = {
+    user_id: user_id_param,
+    work_day: {
+      $gte: startDay,
+      $lte: endDay,
+    }
   };
 
-  findResult = await Work
-    .findOne(findQuery);
+  finalResult = await Work.findOne(findQuery);
+  realCount = finalResult.work_real?.work_section.length || 0;
+  planCount = finalResult.work_plan?.work_section.length || 0;
 
-  // sectionCount
-  sectionCount = findResult !== null
-    ? findResult.work_section.length
-    : 1;
-
-  finalResult = {
-    sectionCount: sectionCount,
-    result: findResult,
+  return {
+    realCount: realCount,
+    planCount: planCount,
+    result: finalResult,
   };
-
-  return finalResult;
 };
 
-// 3. insert -------------------------------------------------------------------------------------->
-export const insert = async (
-  work_id_param,
-  WORK_param
+// 3. save ---------------------------------------------------------------------------------------->
+export const save = async (
+  user_id_param,
+  WORK_param,
+  work_dur_param,
+  planYn_param
 ) => {
 
-  let createQuery;
-  let createResult;
-  let updateQuery;
-  let findQuery;
-  let findResult;
+  let finalResult;
+  let startDay = work_dur_param.split(` ~ `)[0];
+  let endDay = work_dur_param.split(` ~ `)[1];
 
-  findQuery = {
-    work_id: work_id_param,
-    work_day: WORK_param.work_day,
+  const findQuery = {
+    user_id: user_id_param,
+    work_day: {
+      $gte: startDay,
+      $lte: endDay,
+    },
   };
 
-  findResult = await Work.findOne(findQuery);
-
-  createQuery = {
-    _id : new mongoose.Types.ObjectId(),
-    work_id : work_id_param,
-    work_section : WORK_param.work_section,
-    work_start : WORK_param.work_start,
-    work_end : WORK_param.work_end,
-    work_time : WORK_param.work_time,
-    work_planYn : WORK_param.work_planYn,
-    work_day : WORK_param.work_day,
-    work_regdate : WORK_param.work_regdate,
-    work_update : WORK_param.work_update,
-  };
-
-  updateQuery = {
-    work_section : WORK_param.work_section,
-    work_start : WORK_param.work_start,
-    work_end : WORK_param.work_end,
-    work_time : WORK_param.work_time,
-    work_planYn : WORK_param.work_planYn,
-    work_update : WORK_param.work_update,
-  };
+  const findResult = await Work.findOne(findQuery);
 
   if (!findResult) {
-    createResult = await Work.create(
-      createQuery
-    );
+    const createQuery = {
+      _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
+      work_day: startDay,
+      work_plan: WORK_param.work_plan,
+      work_real: WORK_param.work_real,
+      work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),
+      work_update: "default",
+    };
+    finalResult = await Work.create(createQuery);
+  }
+  else {
+    const updateQuery = {_id: findResult._id};
+    const updateAction = planYn_param === "Y"
+    ? {$set: {
+      work_plan: WORK_param.work_plan,
+      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss")
+    }}
+    : {$set: {
+      work_real: WORK_param.work_real,
+      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss")
+    }}
+    finalResult = await Work.updateOne(updateQuery, updateAction);
+  }
+
+  return {
+    result: finalResult,
   };
-  if (findResult) {
-    createResult = await Work.updateOne(
-      findQuery,
-      {$set: updateQuery}
-    );
-  };
-
-  return createResult;
-}
-
-// 4. update -------------------------------------------------------------------------------------->
-export const update = async (
-  _id_param,
-  WORK_param
-) => {
-
-  let updateQuery;
-  let updateResult;
-  let finalResult;
-
-  updateQuery = {
-    filter_id : {_id : _id_param},
-    filter_set : {$set : WORK_param}
-  };
-
-  updateResult = await WORK_param.updateOne(
-    updateQuery.filter_id,
-    updateQuery.filter_set
-  );
-
-  return updateResult;
 };
 
-// 5. deletes ------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param,
-  work_section_id_param
+  user_id_param,
+  work_dur_param
 ) => {
 
-  let deleteQuery;
-  let deleteResult;
   let finalResult;
+  let startDay = work_dur_param.split(` ~ `)[0];
+  let endDay = work_dur_param.split(` ~ `)[1];
 
-  // work_section_id_param이 제공되면 해당 섹션만 삭제
-  // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제
-  // 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거
-  if (
-    work_section_id_param !== null &&
-    work_section_id_param !== undefined &&
-    work_section_id_param !== ""
-  ) {
-    deleteQuery = [
-      {_id: _id_param},
-      {$pull: {
-        work_section: { _id: work_section_id_param }
-      }}
-    ];
-    deleteResult = await Work.updateOne(deleteQuery);
-  }
+  const deleteQuery = {
+    user_id: user_id_param,
+    work_day: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  };
 
-  // work_section_id_param이 제공되지 않으면 전체 작업을 삭제
-  else if (
-    work_section_id_param === null ||
-    work_section_id_param === undefined ||
-    work_section_id_param === ""
-  ) {
-    deleteQuery = {
-      _id: _id_param
-    };
-    deleteResult = await Work.deleteOne(deleteQuery);
-  }
-  return deleteResult;
+  finalResult = await Work.deleteMany(deleteQuery);
+
+  return {
+    result: finalResult,
+  };
 };

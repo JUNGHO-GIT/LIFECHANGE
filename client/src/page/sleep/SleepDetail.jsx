@@ -27,7 +27,6 @@ export const SleepDetail = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP, setSLEEP] = useState({
-    user_id : user_id,
     sleep_day: "",
     sleep_real : {
       sleep_start: "",

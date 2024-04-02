@@ -25,7 +25,6 @@ export const SleepSave = () => {
   const [planYn, setPlanYn] = useState("N");
   const [sleepStart, setSleepStart] = useState("");
   const [sleepEnd, setSleepEnd] = useState("");
-  const [sleepTime, setSleepTime] = useState("");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
@@ -33,7 +32,6 @@ export const SleepSave = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
-    user_id : user_id,
     sleep_day: "",
     sleep_real : {
       sleep_start: "",
@@ -92,7 +90,7 @@ export const SleepSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
-    const sleepType = planYn === "N" ? "sleep_real" : "sleep_plan";
+    const sleepType = planYn === "Y" ? "sleep_plan" : "sleep_real";
 
     if (sleepStart && sleepEnd) {
       const startDate = new Date(`${koreanDate}T${sleepStart}:00Z`);
@@ -109,7 +107,6 @@ export const SleepSave = () => {
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
-      setSleepTime(time);
       setSLEEP((prev) => ({
         ...prev,
         [sleepType]: {
@@ -175,7 +172,7 @@ export const SleepSave = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableSleepSave = () => {
 
-    const sleepType = planYn === "N" ? "sleep_real" : "sleep_plan";
+    const sleepType = planYn === "Y" ? "sleep_plan" : "sleep_real";
 
     return (
       <div>

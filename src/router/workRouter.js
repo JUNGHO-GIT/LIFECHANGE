@@ -10,7 +10,6 @@ workRouter.get("/list", async (req, res) => {
     const result = await service.list (
       req.query.user_id,
       req.query.work_dur,
-      req.query.planYn,
       req.query.filter
     );
     if (result) {
@@ -31,9 +30,7 @@ workRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query.user_id,
-      req.query.work_day,
-      req.query.planYn,
-      req.query._id
+      req.query.work_dur,
     );
     if (result) {
       res.send(result);
@@ -48,12 +45,14 @@ workRouter.get("/detail", async (req, res) => {
   }
 });
 
-// 3. insert -------------------------------------------------------------------------------------->
+// 3. save ---------------------------------------------------------------------------------------->
 workRouter.post("/save", async (req, res) => {
   try {
-    const result = await service.insert (
+    const result = await service.save (
       req.body.user_id,
-      req.body.WORK
+      req.body.WORK,
+      req.body.work_dur,
+      req.body.planYn
     );
     if (result) {
       res.send("success");
@@ -68,32 +67,12 @@ workRouter.post("/save", async (req, res) => {
   }
 });
 
-// 4. update -------------------------------------------------------------------------------------->
-workRouter.put("/update", async (req, res) => {
-  try {
-    const result = await service.update (
-      req.body._id,
-      req.body.WORK
-    );
-    if (result) {
-      res.send("success");
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 5. deletes ------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 workRouter.delete("/delete", async (req, res) => {
   try {
-    const result = await service.deletes (
-      req.query._id,
-      req.query.work_section_id
+    const result = await service.deletes(
+      req.query.user_id,
+      req.query.work_dur
     );
     if (result) {
       res.send("success");

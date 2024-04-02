@@ -1,4 +1,4 @@
-// WorkSave.jsx
+// TestSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkSave = () => {
+export const TestSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -24,10 +24,10 @@ export const WorkSave = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [planYn, setPlanYn] = useState("N");
-  const [realCount, setRealCount] = useState(0);
-  const [planCount, setPlanCount] = useState(0);
+  const [workCount, setWorkCount] = useState(1);
   const [workStart, setWorkStart] = useState("");
   const [workEnd, setWorkEnd] = useState("");
+  const [workTime, setWorkTime] = useState("");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
@@ -112,9 +112,12 @@ export const WorkSave = () => {
       },
     });
 
-    setRealCount(response.data.realCount ? response.data.realCount : 0);
-    setPlanCount(response.data.planCount ? response.data.planCount : 0);
-    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+    if (response.data.result) {
+      setWORK(response.data.result);
+    }
+    else {
+      setWORK(WORK_DEFAULT);
+    }
     log("WORK : " + JSON.stringify(WORK));
 
   })()}, [strDur, planYn]);
@@ -148,6 +151,7 @@ export const WorkSave = () => {
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
+      setWorkTime(time);
       setWORK((prev) => ({
         ...prev,
         [workType]: {
@@ -182,11 +186,9 @@ export const WorkSave = () => {
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-  const handleTotalCountChange = () => {
+  const handleWorkCountChange = () => {
 
     const workType = planYn === "Y" ? "work_plan" : "work_real";
-    const countType = planYn === "Y" ? planCount : realCount;
-    const setCount = planYn === "Y" ? setPlanCount : setRealCount;
 
     return (
       <div>
@@ -194,50 +196,48 @@ export const WorkSave = () => {
           <div className="col-4">
             <input
               type="number"
-              value={countType}
+              value={workCount}
               min="1"
               className="form-control mb-30"
               onChange={(e) => {
-                let defaultSection = {
-                  work_part_idx: 0,
-                  work_part_val: "전체",
-                  work_title_idx: 0,
-                  work_title_val: "전체",
-                };
-                let newCount = parseInt(e.target.value);
-
-                // count 값이 증가했을 때 새로운 섹션들만 추가
-                if (newCount > countType) {
-                  let additionalSections = Array(newCount - countType).fill(defaultSection);
-                  let updatedSection = [...WORK[workType].work_section, ...additionalSections];
-                  setWORK((prev) => ({
+                const newCount = parseInt(e.target.value, 10);
+                setWorkCount(newCount);
+                setWORK((prev) => {
+                  let sections = [...prev[workType].work_section];
+                  // count 값이 증가했을 때 새로운 섹션들만 추가
+                  if (newCount > prev[workType].work_section.length) {
+                    (prev[workType].work_section).forEach((_, i) => {
+                      sections.push({
+                        work_part_idx: 0,
+                        work_part_val: "전체",
+                        work_title_idx: 0,
+                        work_title_val: "전체",
+                        work_set: 0,
+                        work_count: 0,
+                        work_kg: 0,
+                        work_rest: 0
+                      });
+                    });
+                  }
+                  // count 값이 감소했을 때 마지막 섹션부터 제거
+                  else if (newCount < prev[workType].work_section.length) {
+                    sections = sections.slice(0, newCount);
+                  }
+                  return {
                     ...prev,
                     [workType]: {
                       ...prev[workType],
-                      work_section: updatedSection,
+                      work_section: sections,
                     },
-                  }));
-                }
-                // count 값이 감소했을 때 마지막 섹션부터 제거
-                else if (newCount < countType) {
-                  let updatedSection = [...WORK[workType].work_section];
-                  updatedSection = updatedSection.slice(0, newCount);
-                  setWORK((prev) => ({
-                    ...prev,
-                    [workType]: {
-                      ...prev[workType],
-                      work_section: updatedSection,
-                    },
-                  }));
-                }
-                setCount(newCount);
+                  };
+                });
               }}
             />
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {Array.from({ length: countType }, (_, i) => tableWorkSection(i))}
+            {Array.from({ length: workCount }, (_, i) => tableWorkSection(i))}
           </div>
         </div>
       </div>
@@ -288,7 +288,6 @@ export const WorkSave = () => {
                 <select
                   className="form-control"
                   id={`work_part_idx-${i}`}
-                  value={WORK[workType].work_section[i]?.work_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setWORK((prevWORK) => {
@@ -320,7 +319,6 @@ export const WorkSave = () => {
                 <select
                   className="form-control"
                   id={`work_title_idx-${i}`}
-                  value={WORK[workType].work_section[i]?.work_title_val}
                   onChange={(e) => {
                     const newTitle = e.target.value;
                     setWORK((prevWORK) => {
@@ -348,7 +346,7 @@ export const WorkSave = () => {
                 <input
                   type="number"
                   className="form-control"
-                  value={WORK[workType]?.work_section[i]?.work_set}
+                  value={WORK[workType].work_section[i].work_set}
                   onChange={(e) => {
                     const newSet = parseInt(e.target.value);
                     setWORK((prev) => {
@@ -368,7 +366,7 @@ export const WorkSave = () => {
                 <input
                   type="number"
                   className="form-control"
-                  value={WORK[workType]?.work_section[i]?.work_count}
+                  value={WORK[workType].work_section[i].work_count}
                   onChange={(e) => {
                     const newCount = parseInt(e.target.value);
                     setWORK((prev) => {
@@ -388,7 +386,7 @@ export const WorkSave = () => {
                 <input
                   type="number"
                   className="form-control"
-                  value={WORK[workType]?.work_section[i]?.work_kg}
+                  value={WORK[workType].work_section[i].work_kg}
                   onChange={(e) => {
                     const newKg = parseInt(e.target.value);
                     setWORK((prev) => {
@@ -408,7 +406,7 @@ export const WorkSave = () => {
                 <input
                   type="number"
                   className="form-control"
-                  value={WORK[workType]?.work_section[i]?.work_rest}
+                  value={WORK[workType].work_section[i].work_rest}
                   onChange={(e) => {
                     const newRest = parseInt(e.target.value);
                     setWORK((prev) => {
@@ -561,7 +559,7 @@ export const WorkSave = () => {
         </div>
         <div className="row d-center mt-5">
           <div className="col-12">
-            {handleTotalCountChange()}
+            {handleWorkCountChange()}
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">
