@@ -1,17 +1,22 @@
-[
+findResults : [
   {
-    "name": "취침",
-    "목표": 23.6,
-    "실제": 22.4
-  },
-  {
-    "name": "기상",
-    "목표": 08.0,
-    "실제": 09.2
-  },
-  {
-    "name": "수면",
-    "목표": 7.5,
-    "실제": 6.8
+    "_id": "660c05aca9d82011b2fef87c",
+    "user_id": "123",
+    "sleep_day": "2024-04-01",
+    "sleep_real": {
+      "sleep_start": "22:22",
+      "sleep_end": "10:02",
+      "sleep_time": "11:40",
+      "_id": "660c05aca9d82011b2fef87d"
+    },
+    "sleep_plan": {
+      "sleep_start": "22:22",
+      "sleep_end": "06:00",
+      "sleep_time": "07:38",
+      "_id": "660c05aca9d82011b2fef87e"
+    },
+    "sleep_regdate": "2024-04-02-22:18:36",
+    "sleep_update": "2024-04-02-22:18:36",
+    "__v": 0
   }
 ]

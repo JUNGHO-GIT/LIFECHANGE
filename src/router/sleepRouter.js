@@ -42,10 +42,29 @@ sleepRouter.get("/dashLine", async (req, res) => {
   }
 });
 
-// 0-3. dash(avg) --------------------------------------------------------------------------------->
-sleepRouter.get("/dashAvg", async (req, res) => {
+// 0-3. dash(avg - week) -------------------------------------------------------------------------->
+sleepRouter.get("/dashAvgWeek", async (req, res) => {
   try {
-    const result = await service.dashAvg (
+    const result = await service.dashAvgWeek (
+      req.query.user_id
+    );
+    if (result) {
+      res.send(result);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 0-4. dash(avg - month) ------------------------------------------------------------------------->
+sleepRouter.get("/dashAvgMonth", async (req, res) => {
+  try {
+    const result = await service.dashAvgMonth (
       req.query.user_id
     );
     if (result) {

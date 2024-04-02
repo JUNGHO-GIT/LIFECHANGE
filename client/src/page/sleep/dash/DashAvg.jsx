@@ -16,20 +16,54 @@ export const DashAvg = () => {
   const [activeAvg, setActiveAvg] = useState(["취침", "수면", "기상"]);
   const [activeType, setActiveType] = useState("week");
 
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const [DASH_WEEK, setDASH_WEEK] = useState([
+    {name:"1주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"2주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"3주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"4주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"5주차", 취침: 0, 수면: 0, 기상: 0}
+  ]);
+  const [DASH_MONTH, setDASH_MONTH] = useState([
+    {name:"1월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"2월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"3월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"4월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"5월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"6월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"7월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"8월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"9월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"10월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"11월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"12월", 취침: 0, 수면: 0, 기상: 0}
+  ]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+
+    const responseWeek = await axios.get(`${URL_SLEEP}/dashAvgWeek`, {
+      params: {
+        user_id: user_id
+      },
+    });
+    setDASH_WEEK(responseWeek.data.result);
+
+    const responseMonth = await axios.get(`${URL_SLEEP}/dashAvgMonth`, {
+      params: {
+        user_id: user_id
+      },
+    });
+    setDASH_MONTH(responseMonth.data.result);
+
+  })()}, [user_id]);
+
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartSleepAvgWeek = () => {
-
-    const dataWeek = [
-      {name:"1주차", 취침: 20, 기상: 8, 수면: 12},
-      {name:"2주차", 취침: 22, 기상: 7, 수면: 11},
-      {name:"3주차", 취침: 21, 기상: 8, 수면: 11},
-      {name:"4주차", 취침: 22, 기상: 8, 수면: 10},
-    ];
-
     return (
       <React.Fragment>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dataWeek} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
@@ -59,26 +93,10 @@ export const DashAvg = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartSleepAvgMonth = () => {
-
-    const dataMonth = [
-      {name:"1월", 취침: 20, 기상: 8, 수면: 12},
-      {name:"2월", 취침: 22, 기상: 7, 수면: 11},
-      {name:"3월", 취침: 21, 기상: 8, 수면: 11},
-      {name:"4월", 취침: 22, 기상: 8, 수면: 10},
-      {name:"5월", 취침: 21, 기상: 8, 수면: 11},
-      {name:"6월", 취침: 22, 기상: 8, 수면: 10},
-      {name:"7월", 취침: 20, 기상: 8, 수면: 12},
-      {name:"8월", 취침: 22, 기상: 7, 수면: 11},
-      {name:"9월", 취침: 21, 기상: 8, 수면: 11},
-      {name:"10월", 취침: 22, 기상: 8, 수면: 10},
-      {name:"11월", 취침: 21, 기상: 8, 수면: 11},
-      {name:"12월", 취침: 22, 기상: 8, 수면: 10},
-    ];
-
     return (
       <React.Fragment>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dataMonth} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
