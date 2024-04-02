@@ -1,25 +1,17 @@
-today : 2024-04-01
-findResult : {
-  "_id": "6609d54ab95c9cf2a23b9fd0",
-  "user_id": "123",
-  "sleep_day": "2024-04-01",
-  "sleep_real": [
-    {
-      "sleep_start": "03:33",
-      "sleep_end": "04:55",
-      "sleep_time": "01:22",
-      "_id": "6609d54ab95c9cf2a23b9fd1"
-    }
-  ],
-  "sleep_plan": [
-    {
-      "sleep_start": "22:22",
-      "sleep_end": "03:03",
-      "sleep_time": "04:41",
-      "_id": "6609d566b95c9cf2a23b9fdf"
-    }
-  ],
-  "sleep_regdate": "2024-04-01-06:27:38",
-  "sleep_update": "2024-04-01-06:27:38",
-  "__v": 0
-}
+[
+  {
+    "name": "취침",
+    "목표": 23.6,
+    "실제": 22.4
+  },
+  {
+    "name": "기상",
+    "목표": 08.0,
+    "실제": 09.2
+  },
+  {
+    "name": "수면",
+    "목표": 7.5,
+    "실제": 6.8
+  }
+]

@@ -1,4 +1,4 @@
-// DashList.jsx
+// Dash.jsx
 
 import React from "react";
 import {useNavigate} from "react-router-dom";
@@ -9,10 +9,10 @@ import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const DashList = () => {
+export const Dash = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Dash List";
+  const TITLE = "Dash";
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");

@@ -2,8 +2,8 @@
 
 import React from "react";
 import {DashBar} from "./dash/DashBar.jsx";
-/* import {DashLine} from "./dash/DashLine.jsx";
-import {DashAvg} from "./dash/DashAvg.jsx"; */
+import {DashLine} from "./dash/DashLine.jsx";
+import {DashAvg} from "./dash/DashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDash = () => {
@@ -14,6 +14,12 @@ export const SleepDash = () => {
       <div className="container">
         <div className="container-wrapper mb-10">
           {DashBar()}
+        </div>
+        <div className="container-wrapper mb-10">
+          {DashLine()}
+        </div>
+        <div className="container-wrapper mb-10">
+          {DashAvg()}
         </div>
       </div>
     </div>

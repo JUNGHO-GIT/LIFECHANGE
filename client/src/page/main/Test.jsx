@@ -1,4 +1,4 @@
-// Dash.tsx
+// Dash.jsx
 
 import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
@@ -7,11 +7,11 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {BarChart, Bar} from "recharts";
 import {LineChart, Line} from "recharts";
 import {ComposedChart} from 'recharts';
-import {useStorage} from "../../assets/ts/useStorage";
-import {useDeveloperMode} from "../../assets/ts/useDeveloperMode";
+import {useStorage} from "../../assets/js/useStorage.jsx";
+import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDash = () => {
+export const Test = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
@@ -22,43 +22,43 @@ export const SleepDash = () => {
   // 2-1. useState -------------------------------------------------------------------------------->
   const [activeLine, setActiveLine] = useState(["취침", "수면", "기상"]);
   const [activeAvg, setActiveAvg] = useState(["취침", "수면", "기상"]);
-  const [avgChartData, setAvgChartData] = useState<any>("real");
+  const [avgChartData, setAvgChartData] = useState("real");
   const [type, setType] = useState("day");
 
   // 2-2. useStorage ------------------------------------------------------------------------------>
-  const {val:SLEEP_LIST_BAR, setVal:setSLEEP_LIST_BAR} = useStorage<any>(
+  const {val:SLEEP_LIST_BAR, setVal:setSLEEP_LIST_BAR} = useStorage(
     `sleepListBar(${type})`, [{
       _id: "",
       sleep_day: "0000-00-00",
-      sleep_night_real: "00:00",
+      sleep_start_real: "00:00",
+      sleep_end_real: "00:00",
       sleep_time_real: "00:00",
-      sleep_morning_real: "00:00",
-      sleep_night_plan: "00:00",
+      sleep_start_plan: "00:00",
+      sleep_end_plan: "00:00",
       sleep_time_plan: "00:00",
-      sleep_morning_plan: "00:00",
     }]
   );
-  const {val:SLEEP_LIST_LINE, setVal:setSLEEP_LIST_LINE} = useStorage<any>(
+  const {val:SLEEP_LIST_LINE, setVal:setSLEEP_LIST_LINE} = useStorage(
     `sleepListLine(${type})`, [{
       _id: "",
       sleep_day: "0000-00-00",
-      sleep_night_real: "00:00",
+      sleep_start_real: "00:00",
+      sleep_end_real: "00:00",
       sleep_time_real: "00:00",
-      sleep_morning_real: "00:00",
-      sleep_night_plan: "00:00",
+      sleep_start_plan: "00:00",
+      sleep_end_plan: "00:00",
       sleep_time_plan: "00:00",
-      sleep_morning_plan: "00:00",
     }]
   );
-  const {val:SLEEP_LIST_AVG, setVal:setSLEEP_LIST_AVG} = useStorage<any>(
+  const {val:SLEEP_LIST_AVG, setVal:setSLEEP_LIST_AVG} = useStorage(
     `sleepListAvg(${type})`, {
       name: "",
-      avg_night_real: "00:00",
+      avg_start_real: "00:00",
+      avg_end_real: "00:00",
       avg_time_real: "00:00",
-      avg_morning_real: "00:00",
-      avg_night_plan: "00:00",
+      avg_start_plan: "00:00",
+      avg_end_plan: "00:00",
       avg_time_plan: "00:00",
-      avg_morning_plan: "00:00",
     }
   );
 
@@ -78,7 +78,7 @@ export const SleepDash = () => {
   })()}, [user_id]);
 
   // 3. logic ------------------------------------------------------------------------------------->
-  const successOrNot = (plan: string, real: string) => {
+  const successOrNot = (plan, real) => {
     const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
     const realDate = new Date(`1970-01-01T${real}:00.000Z`);
     if (realDate < planDate) {
@@ -107,29 +107,29 @@ export const SleepDash = () => {
 
   // 5-1. bar ------------------------------------------------------------------------------------->
   const chartSleepBar = () => {
-    const fmtStrToInt = (str: string) => {
+    const fmtStrToInt = (str) => {
       const time = str.split(":");
       return parseFloat((parseInt(time[0], 10) + parseInt(time[1], 10) / 60).toFixed(1));
     };
-    const data = SLEEP_LIST_BAR?.map((item:any) => {
+    const data = SLEEP_LIST_BAR.map((item) => {
       return {
         name: "취침",
-        목표: fmtStrToInt(item.sleep_night_plan),
-        실제: fmtStrToInt(item.sleep_night_real),
+        목표: fmtStrToInt(item.sleep_start_plan),
+        실제: fmtStrToInt(item.sleep_start_real),
       };
     })
-    .concat(SLEEP_LIST_BAR.map((item:any) => {
+    .concat(SLEEP_LIST_BAR.map((item) => {
+      return {
+        name: "기상",
+        목표: fmtStrToInt(item.sleep_end_plan),
+        실제: fmtStrToInt(item.sleep_end_real),
+      };
+    }))
+    .concat(SLEEP_LIST_BAR.map((item) => {
       return {
         name: "수면",
         목표: fmtStrToInt(item.sleep_time_plan),
         실제: fmtStrToInt(item.sleep_time_real),
-      };
-    }))
-    .concat(SLEEP_LIST_BAR.map((item:any) => {
-      return {
-        name: "기상",
-        목표: fmtStrToInt(item.sleep_morning_plan),
-        실제: fmtStrToInt(item.sleep_morning_real),
       };
     }));
     return (
@@ -177,14 +177,24 @@ export const SleepDash = () => {
     return (
       <table className="table bg-white border">
         <tbody>
-          {SLEEP_LIST_BAR.map((item:any) => (
+          {SLEEP_LIST_BAR.map((item) => (
             <React.Fragment key={item.sleep_day}>
               <tr>
                 <td>취침</td>
-                <td>{item.sleep_night_plan}</td>
-                <td>{item.sleep_night_real}</td>
+                <td>{item.sleep_start_plan}</td>
+                <td>{item.sleep_start_real}</td>
                 <td>
-                  <span className={successOrNot(item.sleep_night_plan, item.sleep_night_real)}>
+                  <span className={successOrNot(item.sleep_start_plan, item.sleep_start_real)}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>기상</td>
+                <td>{item.sleep_end_plan}</td>
+                <td>{item.sleep_end_real}</td>
+                <td>
+                  <span className={successOrNot(item.sleep_end_plan, item.sleep_end_real)}>
                     ●
                   </span>
                 </td>
@@ -199,16 +209,6 @@ export const SleepDash = () => {
                   </span>
                 </td>
               </tr>
-              <tr>
-                <td>기상</td>
-                <td>{item.sleep_morning_plan}</td>
-                <td>{item.sleep_morning_real}</td>
-                <td>
-                  <span className={successOrNot(item.sleep_morning_plan, item.sleep_morning_real)}>
-                    ●
-                  </span>
-                </td>
-              </tr>
             </React.Fragment>
           ))}
         </tbody>
@@ -218,12 +218,12 @@ export const SleepDash = () => {
 
   // 5-2. line ------------------------------------------------------------------------------------>
   const chartSleepLine = () => {
-    const lineChartData = SLEEP_LIST_LINE.map((item:any) => {
+    const lineChartData = SLEEP_LIST_LINE.map((item) => {
       return {
         name: item.sleep_day.substring(5, 10),
-        취침: parseFloat(item.sleep_night_real),
+        취침: parseFloat(item.sleep_start_real),
+        기상: parseFloat(item.sleep_end_real),
         수면: parseFloat(item.sleep_time_real),
-        기상: parseFloat(item.sleep_morning_real),
       };
     });
     return (
@@ -256,11 +256,11 @@ export const SleepDash = () => {
           {activeLine.includes("취침")
             && <Line type="monotone" dataKey="취침" stroke="#8884d8" activeDot={{ r: 8 }} />
           }
-          {activeLine.includes("수면")
-            && <Line type="monotone" dataKey="수면" stroke="#82ca9d" />
-          }
           {activeLine.includes("기상")
             && <Line type="monotone" dataKey="기상" stroke="#ffc658" />
+          }
+          {activeLine.includes("수면")
+            && <Line type="monotone" dataKey="수면" stroke="#82ca9d" />
           }
           <Tooltip />
           <Legend />
@@ -272,7 +272,7 @@ export const SleepDash = () => {
     return (
       <table className="table bg-white border">
         <tbody>
-          {["취침", "수면", "기상"].map((key, index) => (
+          {["취침", "기상", "수면"].map((key, index) => (
             <div key={index}>
               <input
                 type="checkbox"
@@ -296,18 +296,18 @@ export const SleepDash = () => {
 
   // 5-3. average -------------------------------------------------------------------------------->
   const chartSleepAvg = () => {
-    const chartDataReal = SLEEP_LIST_AVG.map((item: any) => ({
+    const chartDataReal = SLEEP_LIST_AVG.map((item) => ({
       name: item.name,
-      "취침": parseFloat(item.avg_night_real),
+      "취침": parseFloat(item.avg_start_real),
+      "기상": parseFloat(item.avg_end_real),
       "수면": parseFloat(item.avg_time_real),
-      "기상": parseFloat(item.avg_morning_real),
     }));
 
-    const chartDataPlan = SLEEP_LIST_AVG.map((item: any) => ({
+    const chartDataPlan = SLEEP_LIST_AVG.map((item) => ({
       name: item.name,
-      "취침": parseFloat(item.avg_night_plan),
+      "취침": parseFloat(item.avg_start_plan),
+      "기상": parseFloat(item.avg_end_plan),
       "수면": parseFloat(item.avg_time_plan),
-      "기상": parseFloat(item.avg_morning_plan),
     }));
 
     let chartData = avgChartData === "real" ? chartDataReal : chartDataPlan;
@@ -358,11 +358,11 @@ export const SleepDash = () => {
             {activeAvg.includes("취침") && (
               <Bar type="monotone" dataKey="취침" barSize={20} fill="#413ea0" />
             )}
-            {activeAvg.includes("수면") && (
-              <Bar type="monotone" dataKey="수면" barSize={20} fill="#ff7300" />
-            )}
             {activeAvg.includes("기상") && (
               <Bar type="monotone" dataKey="기상" barSize={20} fill="#8884d8" />
+            )}
+            {activeAvg.includes("수면") && (
+              <Bar type="monotone" dataKey="수면" barSize={20} fill="#ff7300" />
             )}
           </BarChart>
         </ResponsiveContainer>
@@ -401,7 +401,7 @@ export const SleepDash = () => {
           </button>
         </div>
         <tbody>
-          {["취침", "수면", "기상"].map((key, index) => (
+          {["취침", "기상", "수면"].map((key, index) => (
             <div key={index}>
               <input
                 type="checkbox"

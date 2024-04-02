@@ -35,30 +35,30 @@ export const SleepSave = () => {
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
     user_id : user_id,
     sleep_day: "",
-    sleep_real : [{
+    sleep_real : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }],
-    sleep_plan : [{
+    },
+    sleep_plan : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }]
+    }
   });
   const [SLEEP, setSLEEP] = useState({
     user_id : user_id,
     sleep_day: "",
-    sleep_real : [{
+    sleep_real : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }],
-    sleep_plan : [{
+    },
+    sleep_plan : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }]
+    }
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -112,10 +112,10 @@ export const SleepSave = () => {
       setSleepTime(time);
       setSLEEP((prev) => ({
         ...prev,
-        [sleepType]: [{
-          ...prev[sleepType][0],
-          sleep_time: time
-        }]
+        [sleepType]: {
+          ...prev[sleepType],
+          sleep_time: time,
+        },
       }));
     }
   }, [sleepStart, sleepEnd]);
@@ -129,11 +129,7 @@ export const SleepSave = () => {
       sleep_dur: strDur,
       planYn: planYn
     });
-    if (response.data === "duplicated") {
-      alert("Duplicated a sleep");
-      return;
-    }
-    else if (response.data === "success") {
+    if (response.data === "success") {
       alert("Save a sleep successfully");
       navParam("/sleep/list");
     }
@@ -210,19 +206,19 @@ export const SleepSave = () => {
                 id="sleep_start"
                 name="sleep_start"
                 className="form-control"
-                value={SLEEP[sleepType][0].sleep_start}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
+                value={SLEEP[sleepType]?.sleep_start}
                 onChange={(e) => {
                   setSleepStart(e);
                   setSLEEP((prev) => ({
                     ...prev,
-                    [sleepType]: [{
-                      ...prev[sleepType][0],
-                      sleep_start: e
-                    }]
+                    [sleepType]: {
+                      ...prev[sleepType],
+                      sleep_start: e,
+                    },
                   }));
                 }}
               />
@@ -237,19 +233,19 @@ export const SleepSave = () => {
                 id="sleep_end"
                 name="sleep_end"
                 className="form-control"
-                value={SLEEP[sleepType][0].sleep_end}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
+                value={SLEEP[sleepType]?.sleep_end}
                 onChange={(e) => {
                   setSleepEnd(e);
                   setSLEEP((prev) => ({
                     ...prev,
-                    [sleepType]: [{
-                      ...prev[sleepType][0],
-                      sleep_end: e
-                    }]
+                    [sleepType]: {
+                      ...prev[sleepType],
+                      sleep_end: e,
+                    },
                   }));
                 }}
               />
@@ -264,12 +260,12 @@ export const SleepSave = () => {
                 id="sleep_time"
                 name="sleep_time"
                 className="form-control"
-                value={SLEEP[sleepType][0].sleep_time}
                 disableClock={false}
                 disabled={true}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
+                value={SLEEP[sleepType]?.sleep_time}
               />
             </div>
           </div>

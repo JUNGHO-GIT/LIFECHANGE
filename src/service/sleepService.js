@@ -4,24 +4,97 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
 
-// 1. dash ---------------------------------------------------------------------------------------->
-export const dash = async (
+// 0-1. dash(bar) --------------------------------------------------------------------------------->
+export const dashBar = async (
+  user_id_param
+) => {
+
+  let finalResult = [];
+  let dataFields = {
+    "취침": { plan: "sleep_start", real: "sleep_start" },
+    "기상": { plan: "sleep_end", real: "sleep_end" },
+    "수면": { plan: "sleep_time", real: "sleep_time" }
+  };
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else {
+      const time = data.split(":");
+      return parseFloat((parseInt(time[0], 10) + parseInt(time[1], 10) / 60).toFixed(1));
+    }
+  };
+
+  const findParam = {
+    user_id: user_id_param,
+    sleep_day: moment().tz("Asia/Seoul").format("YYYY-MM-DD").toString(),
+  };
+
+  const findResult = await Sleep.findOne(findParam);
+
+  for (let key in dataFields) {
+    finalResult.push({
+      name: key,
+      목표: fmtData(findResult?.sleep_plan[dataFields[key].plan]),
+      실제: fmtData(findResult?.sleep_real[dataFields[key].real]),
+    });
+  }
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 0-2. dash(line) -------------------------------------------------------------------------------->
+export const dashLine = async (
+  user_id_param
+) => {
+
+  let finalResult = [];
+  let names = ["월", "화", "수", "목", "금", "토", "일"];
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else {
+      const time = data.split(":");
+      return parseFloat((parseInt(time[0], 10) + parseInt(time[1], 10) / 60).toFixed(1));
+    }
+  };
+
+  for (let i = 0; i < 7; i++) {
+    const findParam = {
+      user_id: user_id_param,
+      sleep_day: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
+    };
+
+    const findResult = await Sleep.findOne(findParam);
+
+    finalResult.push({
+      name: names[i],
+      취침: fmtData(findResult?.sleep_real?.sleep_start),
+      기상: fmtData(findResult?.sleep_real?.sleep_end),
+      수면: fmtData(findResult?.sleep_real?.sleep_time),
+    });
+  }
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 0-3. dash(avg) --------------------------------------------------------------------------------->
+export const dashAvg = async (
   user_id_param,
   sleep_dur_param
 ) => {
 
-  const startDay = sleep_dur_param.split(` ~ `)[0];
-  const endDay = sleep_dur_param.split(` ~ `)[1];
-
-  const findQuery = {
-    user_id: user_id_param,
-    sleep_day: startDay,
-  };
-
-  const findResult = await Sleep.find(findQuery);
+  let finalResult = [];
 
   return {
-    result: findResult,
+    result: finalResult,
   };
 };
 
@@ -90,10 +163,10 @@ export const save = async (
   planYn_param
 ) => {
 
+  let finalResult;
+
   const startDay = sleep_dur_param.split(` ~ `)[0];
   const endDay = sleep_dur_param.split(` ~ `)[1];
-
-  let finalResult;
 
   const findQuery = {
     user_id: user_id_param,

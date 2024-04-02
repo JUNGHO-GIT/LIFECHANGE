@@ -29,16 +29,16 @@ export const SleepDetail = () => {
   const [SLEEP, setSLEEP] = useState({
     user_id : user_id,
     sleep_day: "",
-    sleep_real : [{
+    sleep_real : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }],
-    sleep_plan : [{
+    },
+    sleep_plan : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }]
+    }
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -119,22 +119,13 @@ export const SleepDetail = () => {
               </select>
             </td>
             <td className="fs-20 pt-20">
-              {planYn === "Y"
-                ? SLEEP.sleep_plan.map((item, index) => (`${item.sleep_start}`))
-                : SLEEP.sleep_real.map((item, index) => (`${item.sleep_start}`))
-              }
+              {planYn === "Y" ? SLEEP.sleep_plan.sleep_start : SLEEP.sleep_real.sleep_start}
             </td>
             <td className="fs-20 pt-20">
-              {planYn === "Y"
-                ? SLEEP.sleep_plan.map((item, index) => (`${item.sleep_end}`))
-                : SLEEP.sleep_real.map((item, index) => (`${item.sleep_end}`))
-              }
+              {planYn === "Y" ? SLEEP.sleep_plan.sleep_end : SLEEP.sleep_real.sleep_end}
             </td>
             <td className="fs-20 pt-20">
-              {planYn === "Y"
-                ? SLEEP.sleep_plan.map((item, index) => (`${item.sleep_time}`))
-                : SLEEP.sleep_real.map((item, index) => (`${item.sleep_time}`))
-              }
+              {planYn === "Y" ? SLEEP.sleep_plan.sleep_time : SLEEP.sleep_real.sleep_time}
             </td>
           </tr>
         </tbody>

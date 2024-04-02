@@ -24,8 +24,8 @@ import {Loader} from "../components/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
 import {Footer} from "../layout/Footer";
 
-import {DashList} from "../page/dash/Dash";
-import {Test} from "../page/test/Test";
+import {Dash} from "../page/main/Dash";
+import {Test} from "../page/main/Test.jsx";
 
 import {UserLogin} from "../page/user/UserLogin.jsx";
 import {UserSave} from "../page/user/UserSave.jsx";
@@ -67,7 +67,7 @@ import {MoneyListSelect} from "../page/money/MoneyListSelect";
 const Common = () => {
   return (
     <Routes>
-      <Route path="/" element={<DashList />} />
+      <Route path="/" element={<Dash />} />
       <Route path="/test" element={<Test />} />
     </Routes>
   );

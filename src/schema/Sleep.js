@@ -34,8 +34,8 @@ const schema = new mongoose.Schema({
     default: () => "default",
     required: true
   },
-  sleep_real: [sectionSchema],
-  sleep_plan: [sectionSchema],
+  sleep_real: sectionSchema,
+  sleep_plan: sectionSchema,
   sleep_regdate: {
     type: String,
     default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD-HH:mm:ss"),

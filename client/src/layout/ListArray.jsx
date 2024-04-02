@@ -5,6 +5,7 @@ export const listArray = [
     items: [
       {to: "/", label: "Home"},
       {to: "/test", label: "Test"},
+      {to: "/dash", label: "Dash"},
     ]
   },
   {

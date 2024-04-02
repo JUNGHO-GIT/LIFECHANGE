@@ -4,12 +4,49 @@ import express from "express";
 import * as service from "../service/sleepService.js";
 export const sleepRouter = express.Router();
 
-// 1-0. dash -------------------------------------------------------------------------------------->
-sleepRouter.get("/dash", async (req, res) => {
+// 0-1. dash(bar) --------------------------------------------------------------------------------->
+sleepRouter.get("/dashBar", async (req, res) => {
   try {
-    const result = await service.dash (
-      req.query.user_id,
-      req.query.sleep_dur
+    const result = await service.dashBar (
+      req.query.user_id
+    );
+    if (result) {
+      res.send(result);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 0-2. dash(line) -------------------------------------------------------------------------------->
+sleepRouter.get("/dashLine", async (req, res) => {
+  try {
+    const result = await service.dashLine (
+      req.query.user_id
+    );
+    if (result) {
+      res.send(result);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 0-3. dash(avg) --------------------------------------------------------------------------------->
+sleepRouter.get("/dashAvg", async (req, res) => {
+  try {
+    const result = await service.dashAvg (
+      req.query.user_id
     );
     if (result) {
       res.send(result);

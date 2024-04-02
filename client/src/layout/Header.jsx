@@ -1,6 +1,7 @@
 // Header.jsx
 
 import React from "react";
+import moment from "moment-timezone";
 import {useState, useEffect} from "react";
 import {Collapse} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -71,6 +72,9 @@ export const Header = () => {
 
   // 4-3. view ------------------------------------------------------------------------------------>
   const Navbar = () => {
+
+    const today = moment().locale("ko").tz("Asia/Seoul").format("YYYY-MM-DD (dddd)");
+
     let preFix;
     let subFix = isActive.split("/")[1];
     let lowFix;
@@ -86,6 +90,9 @@ export const Header = () => {
       <div className="d-flex justify-content-between align-items-center">
         <div className="text-start">
           <h1 className="fs-30 fw-500 ps-30">{preFix} / {subFix}</h1>
+        </div>
+        <div className="text-center">
+          <h1 className="fs-30 fw-500">{today}</h1>
         </div>
         <div className="text-end">
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {

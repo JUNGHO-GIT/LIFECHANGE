@@ -39,16 +39,16 @@ export const SleepList = () => {
   const [SLEEP, setSLEEP] = useState([{
     user_id : user_id,
     sleep_day: "",
-    sleep_real : [{
+    sleep_real : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }],
-    sleep_plan : [{
+    },
+    sleep_plan : {
       sleep_start: "",
       sleep_end: "",
       sleep_time: "",
-    }]
+    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -145,7 +145,7 @@ export const SleepList = () => {
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="default"
-          month={new Date(strDur.split(" ~ ")[0])}
+          month={new Date(strDur.split(" ~ "))}
           onMonthChange={(month) => {
             const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
             const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
@@ -287,19 +287,13 @@ export const SleepList = () => {
                 </td>
                 <td>취침</td>
                 <td>
-                  {Array.isArray(item.sleep_plan)
-                    ? item.sleep_plan.map((plan) => (`${plan.sleep_start}`)).join(", ")
-                    : `X`
-                  }
+                  {item.sleep_plan?.sleep_start}
                 </td>
                 <td>
-                  {Array.isArray(item.sleep_real)
-                    ? item.sleep_real.map((real) => (`${real.sleep_start}`)).join(", ")
-                    : `X`
-                  }
+                  {item.sleep_real?.sleep_start}
                 </td>
                 <td>
-                  <span className={successOrNot(item.sleep_plan[0]?.sleep_start, item.sleep_real[0]?.sleep_start)}>
+                  <span className={successOrNot(item.sleep_plan?.sleep_start, item.sleep_real?.sleep_start)}>
                     ●
                   </span>
                 </td>
@@ -307,19 +301,13 @@ export const SleepList = () => {
               <tr>
                 <td>기상</td>
                 <td>
-                  {Array.isArray(item.sleep_plan)
-                    ? item.sleep_plan.map((plan) => (`${plan.sleep_end}`)).join(", ")
-                    : `X`
-                  }
+                  {item.sleep_plan?.sleep_end}
                 </td>
                 <td>
-                  {Array.isArray(item.sleep_real)
-                    ? item.sleep_real.map((real) => (`${real.sleep_end}`)).join(", ")
-                    : `X`
-                  }
+                  {item.sleep_real?.sleep_end}
                 </td>
                 <td>
-                  <span className={successOrNot(item.sleep_plan[0]?.sleep_end, item.sleep_real[0]?.sleep_end)}>
+                  <span className={successOrNot(item.sleep_plan?.sleep_end, item.sleep_real?.sleep_end)}>
                     ●
                   </span>
                 </td>
@@ -327,19 +315,13 @@ export const SleepList = () => {
               <tr>
                 <td>수면</td>
                 <td>
-                  {Array.isArray(item.sleep_plan)
-                    ? item.sleep_plan.map((plan) => (`${plan.sleep_time}`)).join(", ")
-                    : `X`
-                  }
+                  {item.sleep_plan?.sleep_time}
                 </td>
                 <td>
-                  {Array.isArray(item.sleep_real)
-                    ? item.sleep_real.map((real) => (`${real.sleep_time}`)).join(", ")
-                    : `X`
-                  }
+                  {item.sleep_real?.sleep_time}
                 </td>
                 <td>
-                  <span className={successOrNot(item.sleep_plan[0]?.sleep_time, item.sleep_real[0]?.sleep_time)}>
+                  <span className={successOrNot(item.sleep_plan?.sleep_time, item.sleep_real?.sleep_time)}>
                     ●
                   </span>
                 </td>
