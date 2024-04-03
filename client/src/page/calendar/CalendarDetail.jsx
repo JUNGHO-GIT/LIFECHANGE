@@ -25,25 +25,25 @@ export const CalendarDetail = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage (
-    "foodListDay", []
+  const {val:FOOD_LIST, set:setFOOD_LIST} = useStorage (
+    "foodList", []
   );
-  const {val:SLEEP_LIST, setVal:setSLEEP_LIST} = useStorage (
+  const {val:SLEEP_LIST, set:setSLEEP_LIST} = useStorage (
     "sleepList", []
   );
-  const {val:WORK_LIST, setVal:setWORK_LIST} = useStorage (
-    "workListDay", []
+  const {val:WORK_LIST, set:setWORK_LIST} = useStorage (
+    "workList", []
   );
-  const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage (
-    "moneyListDay", []
+  const {val:MONEY_LIST, set:setMONEY_LIST} = useStorage (
+    "moneyList", []
   );
-  const {val:calendarDay, setVal:setCalendarDay} = useStorage (
+  const {val:calendarDay, set:setCalendarDay} = useStorage (
     "calendarDay", undefined
   );
-  const {val:resVal, setVal:setResVal} = useStorage (
+  const {val:resVal, set:setResVal} = useStorage (
     "resValDay", "0000-00-00"
   );
-  const {val:resDur, setVal:setResDur} = useStorage (
+  const {val:resDur, set:setResDur} = useStorage (
     "resDurDay", "0000-00-00 ~ 0000-00-00"
   );
 

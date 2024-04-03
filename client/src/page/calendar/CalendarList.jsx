@@ -21,7 +21,7 @@ export const CalendarList = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:calendarDay, setVal:setCalendarDay} = useStorage(
+  const {val:calendarDay, set:setCalendarDay} = useStorage(
     "calendarDay(DAY)", undefined
   );
 

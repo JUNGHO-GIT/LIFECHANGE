@@ -1,9 +1,9 @@
 // Dash.jsx
 
 import React from "react";
-import {DashBar} from "./dash/DashBar.jsx";
-import {DashLine} from "./dash/DashLine.jsx";
-import {DashAvg} from "./dash/DashAvg.jsx";
+import {DashBar} from "./SleepDashBar.jsx";
+import {DashLine} from "./SleepDashLine.jsx";
+import {DashAvg} from "./SleepDashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDash = () => {

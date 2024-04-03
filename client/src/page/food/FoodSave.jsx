@@ -22,7 +22,7 @@ export const FoodSave = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:foodDay, setVal:setFoodDay} = useStorage (
+  const {val:foodDay, set:setFoodDay} = useStorage (
     "foodDay", new Date(koreanDate)
   );
 

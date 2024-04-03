@@ -1,12 +1,12 @@
 // SleepSave.jsx
 
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -19,21 +19,36 @@ export const SleepSave = () => {
   const location = useLocation();
   const location_day = location?.state?.sleep_day;
   const user_id = window.sessionStorage.getItem("user_id");
-  const {log} = useDeveloperMode();
+  const PATH = location.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [planYn, setPlanYn] = useState("N");
-  const [realCount, setRealCount] = useState(0);
-  const [planCount, setPlanCount] = useState(0);
-  const [sleepStart, setSleepStart] = useState("");
-  const [sleepEnd, setSleepEnd] = useState("");
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:planYn, set:setPlanYn} = useStorage(
+    `planYn(${PATH})`, "N"
+  );
+  const {val:planCount, set:setPlanCount} = useStorage(
+    `planCount(${PATH})`, 0
+  );
+  const {val:realCount, set:setRealCount} = useStorage(
+    `realCount(${PATH})`, 0
+  );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
-  const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStart, set:setStrStart} = useStorage(
+    `strStart(${PATH})`, ""
+  );
+  const {val:strEnd, set:setStrEnd} = useStorage(
+    `strEnd(${PATH})`, ""
+  );
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, location_day ? location_day : koreanDate
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
+    _id: "",
     sleep_day: "",
     sleep_real : {
       sleep_section: [{
@@ -51,7 +66,7 @@ export const SleepSave = () => {
     }
   });
   const [SLEEP, setSLEEP] = useState({
-    user_id : user_id,
+    _id: "",
     sleep_day: "",
     sleep_real : {
       sleep_section: [{
@@ -100,9 +115,9 @@ export const SleepSave = () => {
 
     const sleepType = planYn === "Y" ? "sleep_plan" : "sleep_real";
 
-    if (sleepStart && sleepEnd) {
-      const startDate = new Date(`${koreanDate}T${sleepStart}:00Z`);
-      const endDate = new Date(`${koreanDate}T${sleepEnd}:00Z`);
+    if (strStart && strEnd) {
+      const startDate = new Date(`${koreanDate}T${strStart}:00Z`);
+      const endDate = new Date(`${koreanDate}T${strEnd}:00Z`);
 
       // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
       if (endDate < startDate) {
@@ -119,14 +134,14 @@ export const SleepSave = () => {
         ...prev,
         [sleepType]: {
           sleep_section: [{
-            sleep_start: sleepStart,
-            sleep_end: sleepEnd,
+            sleep_start: strStart,
+            sleep_end: strEnd,
             sleep_time: time,
           }]
         },
       }));
     }
-  }, [sleepStart, sleepEnd]);
+  }, [strStart, strEnd]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepSave = async () => {
@@ -148,7 +163,6 @@ export const SleepSave = () => {
     else {
       alert(`${response.data}error`);
     }
-    log("SLEEP : " + JSON.stringify(SLEEP));
   };
 
   // 4. view -------------------------------------------------------------------------------------->
@@ -220,7 +234,7 @@ export const SleepSave = () => {
                 locale="ko"
                 value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_start)}
                 onChange={(e) => {
-                  setSleepStart(e);
+                  setStrStart(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     [sleepType]: {
@@ -249,7 +263,7 @@ export const SleepSave = () => {
                 locale="ko"
                 value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_end)}
                 onChange={(e) => {
-                  setSleepEnd(e);
+                  setStrEnd(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     [sleepType]: {

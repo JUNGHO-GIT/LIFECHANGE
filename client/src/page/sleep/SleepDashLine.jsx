@@ -1,6 +1,8 @@
 // DashLine.jsx
 
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Line, LineChart} from "recharts";
@@ -10,12 +12,16 @@ export const DashLine = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [activeLine, setActiveLine] = useState(["취침", "수면", "기상"]);
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine(${PATH})`, ["취침", "수면", "기상"]
+  );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [DASH, setDASH] = useState([
     {name:"월", 취침: 0, 수면: 0, 기상: 0},
     {name:"화", 취침: 0, 수면: 0, 기상: 0},

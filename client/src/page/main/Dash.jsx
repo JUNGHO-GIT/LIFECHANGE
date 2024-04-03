@@ -19,7 +19,7 @@ export const Dash = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:dashboardDay, setVal:setDashDay} = useStorage(
+  const {val:dashboardDay, set:setDashDay} = useStorage(
     "dashboardDay(DAY)", undefined
   );
 

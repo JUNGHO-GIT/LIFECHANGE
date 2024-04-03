@@ -1,5 +1,6 @@
 // useStorage.jsx
 
+import React from "react";
 import { useState, useEffect } from "react";
 import { parseISO, formatISO } from "date-fns";
 
@@ -13,22 +14,27 @@ export const useStorage = (key, initialVal) => {
     try {
       if (item === null) {
         return initialVal;
-      } else if (datePattern.test(item.trim())) {
+      }
+      else if (datePattern.test(item.trim())) {
         const parsedDate = parseISO(item);
         if (isNaN(parsedDate.getTime())) {
           throw new Error("Invalid date format");
         }
         return parsedDate;
-      } else if (typeof item === "string") {
+      }
+      else if (typeof item === "string") {
         try {
           return JSON.parse(item);
-        } catch {
+        }
+        catch {
           return initialVal;
         }
-      } else {
+      }
+      else {
         return item;
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
       return initialVal;
     }
@@ -39,10 +45,12 @@ export const useStorage = (key, initialVal) => {
     try {
       if (storedVal instanceof Date && !isNaN(storedVal.getTime())) {
         localStorage.setItem(key, formatISO(storedVal));
-      } else {
+      }
+      else {
         localStorage.setItem(key, JSON.stringify(storedVal));
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
   }, [key, storedVal]);
@@ -50,6 +58,6 @@ export const useStorage = (key, initialVal) => {
   // ---------------------------------------------------------------------------------------------->
   return {
     val: storedVal,
-    setVal: setStoredVal,
+    set: setStoredVal,
   };
 };

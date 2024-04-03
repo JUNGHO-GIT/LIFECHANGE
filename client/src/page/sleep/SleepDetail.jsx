@@ -1,7 +1,8 @@
 // SleepDetail.jsx
 
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import axios from "axios";
 import moment from "moment-timezone";
 
@@ -16,13 +17,20 @@ export const SleepDetail = () => {
   const location_day = location?.state?.sleep_day;
   const location_id = location?.state?._id;
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [planYn, setPlanYn] = useState("N");
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:planYn, set:setPlanYn} = useStorage(
+    `planYn(${PATH})`, "N"
+  );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
-  const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, location_day ? location_day : koreanDate
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
@@ -44,7 +52,7 @@ export const SleepDetail = () => {
     }
   });
   const [SLEEP, setSLEEP] = useState({
-    _id: location_id,
+    _id: "",
     sleep_day: "",
     sleep_real : {
       sleep_section: [{
@@ -140,18 +148,24 @@ export const SleepDetail = () => {
                 <option value="N" selected>실제</option>
               </select>
             </td>
-            <td colSpan={4}>
-              {SLEEP[sleepType].sleep_section.map((item, index) => (
-                <div key={index} className="d-flex justify-content-between">
-                  <span>{item.sleep_start}</span>
-                  <span>{item.sleep_end}</span>
-                  <span>{item.sleep_time}</span>
-                  <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => flowSleepDelete(item._id)}>
+            {SLEEP[sleepType].sleep_section.map((item, index) => (
+              <React.Fragment key={index}>
+                <td className="fs-20 pt-20">
+                  {item.sleep_start}
+                </td>
+                <td className="fs-20 pt-20">
+                  {item.sleep_end}
+                </td>
+                <td className="fs-20 pt-20">
+                  {item.sleep_time}
+                </td>
+                <td className="fs-20 pt-20">
+                  <button type="button" className="btn btn-sm btn-danger" onClick={() => flowSleepDelete(item._id)}>
                     X
                   </button>
-                </div>
-              ))}
-            </td>
+                </td>
+              </React.Fragment>
+            ))}
           </tr>
         </tbody>
       </table>

@@ -1,21 +1,21 @@
-// MoneyListSelect.jsx
+// MoneyList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayPicker} from "react-day-picker";
+import {DayClickEventHandler, DayPicker} from "react-day-picker";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import {ko} from "date-fns/locale";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useStorage} from "../../assets/js/useStorage.jsx";
+import {moneyPartArray, moneyTitleArray} from "./MoneyArray.jsx";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
-import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyListSelect = () => {
+export const MoneyList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Money List Select";
+  const TITLE = "Money List Day";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
@@ -24,29 +24,26 @@ export const MoneyListSelect = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:MONEY_LIST, setVal:setMONEY_LIST} = useStorage(
-    "moneyList(SELECT)", []
+  const {val:MONEY_LIST, set:setMONEY_LIST} = useStorage(
+    "moneyList(DAY)", []
   );
-  const {val:MONEY_AVERAGE, setVal:setMONEY_AVERAGE} = useStorage(
-    "moneyAvg(SELECT)", []
+  const {val:MONEY_AVERAGE, set:setMONEY_AVERAGE} = useStorage(
+    "moneyAvg(DAY)", []
   );
-  const {val:moneyStartDay, setVal:setMoneyStartDay} = useStorage(
-    "moneyStartDay(SELECT)", undefined
+  const {val:moneyDay, set:setMoneyDay} = useStorage(
+    "moneyDay(DAY)", undefined
   );
-  const {val:moneyEndDay, setVal:setMoneyEndDay} = useStorage(
-    "moneyEndDay(SELECT)", undefined
+  const {val:moneyResVal, set:setMoneyResVal} = useStorage(
+    "moneyResVal(DAY)", undefined
   );
-  const {val:moneyResVal, setVal:setMoneyResVal} = useStorage(
-    "moneyResVal(SELECT)", undefined
+  const {val:moneyResDur, set:setMoneyResDur} = useStorage(
+    "moneyResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
-  const {val:moneyResDur, setVal:setMoneyResDur} = useStorage(
-    "moneyResDur(SELECT)", "0000-00-00 ~ 0000-00-00"
+  const {val:moneyPart, set:setMoneyPart} = useStorage(
+    "moneyPart(DAY)", "전체"
   );
-  const {val:moneyPart, setVal:setMoneyPart} = useStorage(
-    "moneyPart(SELECT)", "전체"
-  );
-  const {val:moneyTitle, setVal:setMoneyTitle} = useStorage(
-    "moneyTitle(SELECT)", "전체"
+  const {val:moneyTitle, set:setMoneyTitle} = useStorage(
+    "moneyTitle(DAY)", "전체"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -73,10 +70,12 @@ export const MoneyListSelect = () => {
         alert(`Error fetching money data: ${e.message}`);
       }
     };
+    fetchMoneyList();
+
     // 2. average
     const fetchMoneyAvg = async () => {
       try {
-        const response = await axios.get(`${URL_MONEY}/moneyAvg`, {
+        const response = await axios.get (`${URL_MONEY}/moneyAvg`, {
           params: {
             user_id: user_id,
             money_dur: moneyResDur,
@@ -92,7 +91,6 @@ export const MoneyListSelect = () => {
         alert(`Error fetching money data: ${e.message}`);
       }
     };
-    fetchMoneyList();
     fetchMoneyAvg();
   }, [user_id, moneyResDur, moneyPart, moneyTitle]);
 
@@ -101,78 +99,31 @@ export const MoneyListSelect = () => {
     const formatVal = (value) => {
       return value < 10 ? `0${value}` : `${value}`;
     };
-    if (moneyStartDay && moneyEndDay) {
-      const fromDate = new Date(moneyStartDay);
-      const toDate = new Date(moneyEndDay);
-
-      setMoneyResVal (
-        parseISO (
-          `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
-        )
-      );
-      setMoneyResDur (
-        `${fromDate.getFullYear()}-${formatVal(fromDate.getMonth() + 1)}-${formatVal(fromDate.getDate())} ~ ${toDate.getFullYear()}-${formatVal(toDate.getMonth() + 1)}-${formatVal(toDate.getDate())}`
-      );
+    if (moneyDay) {
+      const year = formatVal(moneyDay.getFullYear());
+      const month = formatVal(moneyDay.getMonth() + 1);
+      const date = formatVal(moneyDay.getDate());
+      setMoneyResVal(parseISO(`${year}-${month}-${date}`));
+      setMoneyResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
     }
-    else {
-      setMoneyResVal(undefined);
-      setMoneyResDur("0000-00-00 ~ 0000-00-00");
-    }
-  }, [moneyStartDay, moneyEndDay]);
-
-  // 3-1. flow ------------------------------------------------------------------------------------>
-  const flowDayClick = (day) => {
-    if (day) {
-      const selectedDay = new Date(day);
-
-      if (moneyStartDay && moneyEndDay) {
-        if (selectedDay < moneyStartDay) {
-          setMoneyStartDay(selectedDay);
-        }
-        else if (selectedDay > moneyEndDay) {
-          setMoneyEndDay(selectedDay);
-        }
-        else {
-          setMoneyStartDay(selectedDay);
-          setMoneyEndDay(undefined);
-        }
-      }
-      else if (moneyStartDay) {
-        if (selectedDay < moneyStartDay) {
-          setMoneyEndDay(moneyStartDay);
-          setMoneyStartDay(selectedDay);
-        }
-        else if (selectedDay > moneyStartDay) {
-          setMoneyEndDay(selectedDay);
-        }
-        else {
-          setMoneyStartDay(undefined);
-          setMoneyEndDay(undefined);
-        }
-      }
-      else {
-        setMoneyStartDay(selectedDay);
-      }
-    }
-  };
+  }, [moneyDay]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
-  const viewMoneySelect = () => {
+  const viewMoneyDay = () => {
+    const flowDayClick: DayClickEventHandler = (day) => {
+      setMoneyDay(day);
+    };
     return (
       <DayPicker
-        mode="range"
+        mode="single"
+        showOutsideDays
+        selected={moneyDay}
+        month={moneyDay}
         locale={ko}
         weekStartsOn={1}
-        showOutsideDays
-        selected={moneyStartDay && moneyEndDay && {
-          from: moneyStartDay,
-          to: moneyEndDay,
-        }}
-        month={moneyStartDay}
         onDayClick={flowDayClick}
         onMonthChange={(month) => {
-          setMoneyStartDay(month);
-          setMoneyEndDay(undefined);
+          setMoneyDay(month);
         }}
         modifiersClassNames={{
           selected: "selected",
@@ -187,45 +138,39 @@ export const MoneyListSelect = () => {
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableMoneyList = () => {
     return (
-      <div>
-        <div className="row d-center">
-          <div className="col-12">
-            <table className="table table-bordered table-hover">
-              <thead className="table-dark">
-                <tr>
-                  <th>Part</th>
-                  <th>Title</th>
-                  <th>Amount</th>
-                  <th>Content</th>
-                </tr>
-              </thead>
-              <tbody>
-                {MONEY_LIST.map((moneyItem) => {
-                  return moneyItem.money_section.map((money_section) => (
-                    <tr key={money_section._id}>
-                      <td
-                        className="pointer"
-                        onClick={() => {
-                          navParam("/money/detail", {
-                            state: {
-                              _id : moneyItem._id,
-                              money_section_id : money_section._id
-                            },
-                          });
-                        }}>
-                        {money_section.money_part_val}
-                      </td>
-                      <td>{money_section.money_title_val}</td>
-                      <td>{money_section.money_amount}</td>
-                      <td>{money_section.money_content}</td>
-                    </tr>
-                  ));
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <table className="table table-bordered table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th>Part</th>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Content</th>
+          </tr>
+        </thead>
+        <tbody>
+          {MONEY_LIST.map((moneyItem ) => {
+            return moneyItem.money_section.map((money_section) => (
+              <tr key={money_section._id}>
+                <td
+                  className="pointer"
+                  onClick={() => {
+                    navParam("/money/detail", {
+                      state: {
+                        _id : moneyItem._id,
+                        money_section_id : money_section._id
+                      },
+                    });
+                  }}>
+                  {money_section.money_part_val}
+                </td>
+                <td>{money_section.money_title_val}</td>
+                <td>{money_section.money_amount}</td>
+                <td>{money_section.money_content}</td>
+              </tr>
+            ));
+          })}
+        </tbody>
+      </table>
     );
   };
 
@@ -236,7 +181,7 @@ export const MoneyListSelect = () => {
         <div className="row d-center">
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">파트</span>
+              <span className="input-group-text">대분류</span>
               <select
                 className="form-control"
                 id={`money_part_val`}
@@ -259,7 +204,7 @@ export const MoneyListSelect = () => {
           </div>
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">종목</span>
+              <span className="input-group-text">소분류</span>
               <select
                 className="form-control"
                 id={`money_title_val`}
@@ -306,16 +251,14 @@ export const MoneyListSelect = () => {
   const buttonMoneyToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setMoneyStartDay(koreanDate);
-        setMoneyEndDay(koreanDate);
+        setMoneyDay(koreanDate);
         setMoneyPart("전체");
         setMoneyTitle("전체");
-        localStorage.removeItem("moneyList(SELECT)");
-        localStorage.removeItem("moneyAvg(SELECT)");
-        localStorage.removeItem("moneyStartDay(SELECT)");
-        localStorage.removeItem("moneyEndDay(SELECT)");
-        localStorage.removeItem("moneyPart(SELECT)");
-        localStorage.removeItem("moneyTitle(SELECT)");
+        localStorage.removeItem("moneyList(DAY)");
+        localStorage.removeItem("moneyAvg(DAY)");
+        localStorage.removeItem("moneyDay(DAY)");
+        localStorage.removeItem("moneyPart(DAY)");
+        localStorage.removeItem("moneyTitle(DAY)");
       }}>
         Today
       </button>
@@ -324,16 +267,14 @@ export const MoneyListSelect = () => {
   const buttonMoneyReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setMoneyStartDay(undefined);
-        setMoneyEndDay(undefined);
+        setMoneyDay(koreanDate);
         setMoneyPart("전체");
         setMoneyTitle("전체");
-        localStorage.removeItem("moneyList(SELECT)");
-        localStorage.removeItem("moneyAvg(SELECT)");
-        localStorage.removeItem("moneyStartDay(SELECT)");
-        localStorage.removeItem("moneyEndDay(SELECT)");
-        localStorage.removeItem("moneyPart(SELECT)");
-        localStorage.removeItem("moneyTitle(SELECT)");
+        localStorage.removeItem("moneyList(DAY)");
+        localStorage.removeItem("moneyAvg(DAY)");
+        localStorage.removeItem("moneyDay(DAY)");
+        localStorage.removeItem("moneyPart(DAY)");
+        localStorage.removeItem("moneyTitle(DAY)");
       }}>
         Reset
       </button>
@@ -345,10 +286,10 @@ export const MoneyListSelect = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="moneyListSelect" value={currentPath} onChange={(e) => {
+        <select className="form-select" id="moneyList" value={currentPath} onChange={(e) => {
           navParam(e.target.value);
         }}>
-          <option value="/moneyListDay">Day</option>
+          <option value="/moneyList">Day</option>
           <option value="/moneyListWeek">Week</option>
           <option value="/moneyListMonth">Month</option>
           <option value="/moneyListYear">Year</option>
@@ -379,30 +320,34 @@ export const MoneyListSelect = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
-          <h2 className="mb-3 fw-7">선택별 조회</h2>
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3 fw-7">{TITLE}</h1>
+            <h2 className="mb-3 fw-7">일별로 조회</h2>
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-3">{selectMoneyList()}</div>
-        <div className="col-3">{selectMoneyType()}</div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-md-6 col-12 d-center">
-          {viewMoneySelect()}
+        <div className="row d-center mt-3">
+          <div className="col-3">
+            {selectMoneyList()}
+          </div>
+          <div className="col-3">
+            {selectMoneyType()}
+          </div>
         </div>
-        <div className="col-md-6 col-12">
-          {moneyType === "list" && tableMoneyList()}
-          {moneyType === "avg" && tableMoneyAvg()}
+        <div className="row d-center mt-3">
+          <div className="col-md-6 col-12 d-center">
+            {viewMoneyDay()}
+          </div>
+          <div className="col-md-6 col-12">
+            {moneyType === "list" && tableMoneyList()}
+            {moneyType === "avg" && tableMoneyAvg()}
+          </div>
         </div>
-      </div>
-      <div className="row mb-20">
-        <div className="col-12 d-center">
-          {buttonMoneyToday()}
-          {buttonMoneyReset()}
-        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {buttonMoneyToday()}
+            {buttonMoneyReset()}
+          </div>
         </div>
       </div>
     </div>

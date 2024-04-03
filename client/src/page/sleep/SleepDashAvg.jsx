@@ -1,6 +1,8 @@
 // Dash.tsx
 
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {BarChart, Bar} from "recharts";
@@ -10,13 +12,19 @@ export const DashAvg = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [activeAvg, setActiveAvg] = useState(["취침", "수면", "기상"]);
-  const [activeType, setActiveType] = useState("week");
+  const {val:activeAvg, set:setActiveAvg} = useStorage(
+    `activeAvg(${PATH})`, ["취침", "수면", "기상"]
+  );
+  const {val:activeType, set:setActiveType} = useStorage(
+    `activeType(${PATH})`, "week"
+  );
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [DASH_WEEK, setDASH_WEEK] = useState([
     {name:"1주차", 취침: 0, 수면: 0, 기상: 0},
     {name:"2주차", 취침: 0, 수면: 0, 기상: 0},

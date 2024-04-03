@@ -21,7 +21,7 @@ export const MoneySave = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:moneyDay, setVal:setMoneyDay} = useStorage (
+  const {val:moneyDay, set:setMoneyDay} = useStorage (
     "moneyDay", new Date(koreanDate)
   );
 

@@ -1,4 +1,4 @@
-// FoodListDay.jsx
+// FoodList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import {useStorage} from "../../assets/js/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodListDay = () => {
+export const FoodList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Food List Day";
@@ -23,22 +23,22 @@ export const FoodListDay = () => {
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:FOOD_LIST, setVal:setFOOD_LIST} = useStorage(
+  const {val:FOOD_LIST, set:setFOOD_LIST} = useStorage(
     "foodList(DAY)", []
   );
-  const {val:FOOD_TOTAL, setVal:setFOOD_TOTAL} = useStorage(
+  const {val:FOOD_TOTAL, set:setFOOD_TOTAL} = useStorage(
     "foodTotal(DAY)", []
   );
-  const {val:FOOD_AVERAGE, setVal:setFOOD_AVERAGE} = useStorage(
+  const {val:FOOD_AVERAGE, set:setFOOD_AVERAGE} = useStorage(
     "foodAvg(DAY)", []
   );
-  const {val:foodDay, setVal:setFoodDay} = useStorage(
+  const {val:foodDay, set:setFoodDay} = useStorage(
     "foodDay(DAY)", koreanDate
   );
-  const {val:foodResVal, setVal:setFoodResVal} = useStorage(
+  const {val:foodResVal, set:setFoodResVal} = useStorage(
     "foodResVal(DAY)", undefined
   );
-  const {val:foodResDur, setVal:setFoodResDur} = useStorage(
+  const {val:foodResDur, set:setFoodResDur} = useStorage(
     "foodResDur(DAY)", "0000-00-00 ~ 0000-00-00"
   );
 
@@ -270,11 +270,11 @@ export const FoodListDay = () => {
     const currentPath = location.pathname || "";
     return (
       <div className="mb-3">
-        <select className="form-select" id="foodListDay" value={currentPath}
+        <select className="form-select" id="foodList" value={currentPath}
         onChange={(e) => {
           navParam(e.target.value);
         }}>
-          <option value="/foodListDay">Day</option>
+          <option value="/foodList">Day</option>
           <option value="/foodListWeek">Week</option>
           <option value="/foodListMonth">Month</option>
           <option value="/foodListYear">Year</option>

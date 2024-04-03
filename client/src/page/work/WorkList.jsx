@@ -1,15 +1,13 @@
 // WorkList.jsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import {DayPicker} from "react-day-picker";
 import Draggable from "react-draggable";
-import {differenceInDays} from "date-fns";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {workPartArray, workTitleArray} from "./WorkArray.jsx";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkList = () => {
@@ -18,23 +16,37 @@ export const WorkList = () => {
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [calendarOpen, setCalendarOpen] = useState(false);
-  const [totalCount, setTotalCount] = useState(0);
-  const [type, setType] = useState("day");
-  const [filter, setFilter] = useState({
-    order: "asc",
-    page: 1,
-    limit: 5,
-  });
+  const {val:calendarOpen, set:setCalendarOpen} = useStorage(
+    `calendarOpen(${PATH})`, false
+  );
+  const {val:totalCount, set:setTotalCount} = useStorage(
+    `totalCount(${PATH})`, 0
+  );
+  const {val:type, set:setType} = useStorage(
+    `type(${PATH})`, "day"
+  );
+  const {val:filter, set:setFilter} = useStorage(
+    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
+  );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(koreanDate);
-  const [strDur, setStrDur] = useState(`${koreanDate} ~ ${koreanDate}`);
-  const [strStart, setStrStart] = useState(koreanDate);
-  const [strEnd, setStrEnd] = useState(koreanDate);
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStart, set:setStrStart} = useStorage(
+    `strStart(${PATH})`, koreanDate
+  );
+  const {val:strEnd, set:setStrEnd} = useStorage(
+    `strEnd(${PATH})`, koreanDate
+  );
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, koreanDate
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${koreanDate} ~ ${koreanDate}`
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{

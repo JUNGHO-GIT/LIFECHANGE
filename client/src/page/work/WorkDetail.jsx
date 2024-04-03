@@ -2,9 +2,9 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import axios from "axios";
 import moment from "moment-timezone";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkDetail = () => {
@@ -17,13 +17,20 @@ export const WorkDetail = () => {
   const location_day = location?.state?.work_day;
   const location_id = location?.state?._id;
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [planYn, setPlanYn] = useState("N");
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:planYn, set:setPlanYn} = useStorage(
+    `planYn(${PATH})`, "N"
+  );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
-  const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, location_day ? location_day : koreanDate
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState({

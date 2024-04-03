@@ -31,7 +31,6 @@ import {TestSave} from "../page/main/TestSave";
 import {UserLogin} from "../page/user/UserLogin.jsx";
 import {UserSave} from "../page/user/UserSave.jsx";
 import {UserDetail} from "../page/user/UserDetail.jsx";
-import {UserUpdate} from "../page/user/UserUpdate.jsx";
 import {UserDelete} from "../page/user/UserDelete.jsx";
 import {UserList} from "../page/user/UserList";
 
@@ -40,14 +39,12 @@ import {CalendarDetail} from "../page/calendar/CalendarDetail";
 
 import {FoodSave} from "../page/food/FoodSave.jsx";
 import {FoodDetail} from "../page/food/FoodDetail.jsx";
-import {FoodUpdate} from "../page/food/FoodUpdate.jsx";
 import {FoodSearchList} from "../page/food/FoodSearchList.jsx";
 import {FoodSearchResult} from "../page/food/FoodSearchResult.jsx";
-import {FoodListDay} from "../page/food/FoodListDay.jsx";
+import {FoodList} from "../page/food/FoodList.jsx";
 
 import {WorkSave} from "../page/work/WorkSave.jsx";
 import {WorkDetail} from "../page/work/WorkDetail.jsx";
-import {WorkUpdate} from "../page/work/WorkUpdate.jsx";
 import {WorkList} from "../page/work/WorkList.jsx";
 
 import {SleepSave} from "../page/sleep/SleepSave.jsx";
@@ -57,12 +54,7 @@ import {SleepList} from "../page/sleep/SleepList";
 
 import {MoneySave} from "../page/money/MoneySave.jsx";
 import {MoneyDetail} from "../page/money/MoneyDetail.jsx";
-import {MoneyUpdate} from "../page/money/MoneyUpdate.jsx";
-import {MoneyListDay} from "../page/money/MoneyListDay.jsx";
-import {MoneyListWeek} from "../page/money/MoneyListWeek.jsx";
-import {MoneyListMonth} from "../page/money/MoneyListMonth.jsx";
-import {MoneyListYear} from "../page/money/MoneyListYear.jsx";
-import {MoneyListSelect} from "../page/money/MoneyListSelect";
+import {MoneyList} from "../page/money/MoneyList.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 const Common = () => {
@@ -82,7 +74,6 @@ const User = () => {
       <Route path="/save" element={<UserSave />} />
       <Route path="/detail" element={<UserDetail />} />
       <Route path="/list" element={<UserList />} />
-      <Route path="/update" element={<UserUpdate />} />
       <Route path="/delete" element={<UserDelete />} />
     </Routes>
   );
@@ -100,10 +91,9 @@ const Calendar = () => {
 const Food = () => {
   return (
     <Routes>
-      <Route path="/list" element={<FoodListDay />} />
+      <Route path="/list" element={<FoodList />} />
       <Route path="/save" element={<FoodSave />} />
       <Route path="/detail" element={<FoodDetail />} />
-      <Route path="/update" element={<FoodUpdate />} />
       <Route path="/search/list" element={<FoodSearchList />} />
       <Route path="/search/result" element={<FoodSearchResult />} />
     </Routes>
@@ -116,7 +106,6 @@ const Work = () => {
       <Route path="/list" element={<WorkList />} />
       <Route path="/save" element={<WorkSave />} />
       <Route path="/detail" element={<WorkDetail />} />
-      <Route path="/update" element={<WorkUpdate />} />
     </Routes>
   );
 };
@@ -126,12 +115,7 @@ const Money = () => {
     <Routes>
       <Route path="/save" element={<MoneySave />} />
       <Route path="/detail" element={<MoneyDetail />} />
-      <Route path="/update" element={<MoneyUpdate />} />
-      <Route path="/list/day" element={<MoneyListDay />} />
-      <Route path="/list/week" element={<MoneyListWeek />} />
-      <Route path="/list/month" element={<MoneyListMonth />} />
-      <Route path="/list/year" element={<MoneyListYear />} />
-      <Route path="/list/select" element={<MoneyListSelect />} />
+      <Route path="/list/day" element={<MoneyList />} />
     </Routes>
   );
 };

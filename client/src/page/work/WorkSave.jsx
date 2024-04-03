@@ -2,12 +2,12 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {workPartArray, workTitleArray} from "./WorkArray";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -20,18 +20,32 @@ export const WorkSave = () => {
   const location = useLocation();
   const location_day = location?.state?.work_day;
   const user_id = window.sessionStorage.getItem("user_id");
-  const {log} = useDeveloperMode();
+  const PATH = location.pathname;
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [planYn, setPlanYn] = useState("N");
-  const [planCount, setPlanCount] = useState(1);
-  const [realCount, setRealCount] = useState(1);
-  const [workStart, setWorkStart] = useState("");
-  const [workEnd, setWorkEnd] = useState("");
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:planYn, set:setPlanYn} = useStorage(
+    `planYn(${PATH})`, "N"
+  );
+  const {val:planCount, set:setPlanCount} = useStorage(
+    `planCount(${PATH})`, 0
+  );
+  const {val:realCount, set:setRealCount} = useStorage(
+    `realCount(${PATH})`, 0
+  );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
-  const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStart, set:setStrStart} = useStorage(
+    `strStart(${PATH})`, ""
+  );
+  const {val:strEnd, set:setStrEnd} = useStorage(
+    `strEnd(${PATH})`, ""
+  );
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, location_day ? location_day : koreanDate
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
@@ -134,9 +148,9 @@ export const WorkSave = () => {
 
     const workType = planYn === "Y" ? "work_plan" : "work_real";
 
-    if (workStart && workEnd) {
-      const startDate = new Date(`${koreanDate}T${workStart}:00Z`);
-      const endDate = new Date(`${koreanDate}T${workEnd}:00Z`);
+    if (strStart && strEnd) {
+      const startDate = new Date(`${koreanDate}T${strStart}:00Z`);
+      const endDate = new Date(`${koreanDate}T${strEnd}:00Z`);
 
       // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
       if (endDate < startDate) {
@@ -157,7 +171,7 @@ export const WorkSave = () => {
         },
       }));
     }
-  }, [workStart, workEnd]);
+  }, [strStart, strEnd]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkSave = async () => {
@@ -179,7 +193,6 @@ export const WorkSave = () => {
     else {
       alert(`${response.data}error`);
     }
-    log("WORK : " + JSON.stringify(WORK));
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
@@ -469,7 +482,7 @@ export const WorkSave = () => {
                 locale="ko"
                 value={WORK[workType]?.work_start}
                 onChange={(e) => {
-                  setWorkStart(e);
+                  setStrStart(e);
                   setWORK((prev) => ({
                     ...prev,
                     [workType]: {
@@ -496,7 +509,7 @@ export const WorkSave = () => {
                 locale="ko"
                 value={WORK[workType]?.work_end}
                 onChange={(e) => {
-                  setWorkEnd(e);
+                  setStrEnd(e);
                   setWORK((prev) => ({
                     ...prev,
                     [workType]: {
