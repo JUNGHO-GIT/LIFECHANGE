@@ -1,22 +1,17 @@
-findResults : [
-  {
-    "_id": "660c05aca9d82011b2fef87c",
-    "user_id": "123",
-    "sleep_day": "2024-04-01",
-    "sleep_real": {
-      "sleep_start": "22:22",
-      "sleep_end": "10:02",
-      "sleep_time": "11:40",
-      "_id": "660c05aca9d82011b2fef87d"
-    },
-    "sleep_plan": {
-      "sleep_start": "22:22",
-      "sleep_end": "06:00",
-      "sleep_time": "07:38",
-      "_id": "660c05aca9d82011b2fef87e"
-    },
-    "sleep_regdate": "2024-04-02-22:18:36",
-    "sleep_update": "2024-04-02-22:18:36",
-    "__v": 0
+if (SLEEP.sleep_night && SLEEP.sleep_morning) {
+  const nightDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_night}:00Z`);
+  const morningDate = new Date(`${SLEEP.sleepDay}T${SLEEP.sleep_morning}:00Z`);
+
+  if (morningDate < nightDate) {
+    morningDate.setDate(morningDate.getDate() + 1);
   }
-]
+
+  const diff = morningDate.getTime() - nightDate.getTime();
+  const hours = Math.floor(diff / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+
+  setSLEEP((prevSleep:any) => ({
+    ...prevSleep,
+    sleep_time: `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`,
+  }));
+}

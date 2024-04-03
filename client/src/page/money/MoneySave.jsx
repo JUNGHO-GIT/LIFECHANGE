@@ -15,7 +15,7 @@ export const MoneySave = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Money Save";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();

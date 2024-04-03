@@ -64,7 +64,7 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  work_day: {
+  work_date: {
     type: String,
     required: false
   },

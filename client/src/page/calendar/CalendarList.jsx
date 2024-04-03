@@ -14,7 +14,7 @@ export const CalendarList = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Calendar List";
   const URL_CALENDAR = process.env.REACT_APP_URL_CALENDAR;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
@@ -31,7 +31,7 @@ export const CalendarList = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick = (day) => {
-    const clickDate = moment(day).format("YYYY-MM-DD").toString();
+    const clickDate = moment(day).format("YYYY-MM-DD");
     setCalendarDay(day);
     navParam(`/calendar/detail`, {
       state: {

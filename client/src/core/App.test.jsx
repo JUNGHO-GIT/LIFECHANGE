@@ -11,7 +11,6 @@ const expect = (value) => {
         throw new Error(`Expected ${value} to be ${expected}`);
       }
     },
-    // Add more assertion methods as needed
   };
 };
 

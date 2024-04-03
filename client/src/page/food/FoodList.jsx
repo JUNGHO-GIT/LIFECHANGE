@@ -16,7 +16,7 @@ export const FoodList = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Food List Day";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");

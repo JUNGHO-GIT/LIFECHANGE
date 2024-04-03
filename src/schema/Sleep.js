@@ -31,7 +31,7 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  sleep_day: {
+  sleep_date: {
     type: String,
     required: false
   },

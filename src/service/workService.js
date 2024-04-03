@@ -23,14 +23,14 @@ export const list = async (
 
   const findResult = Work.find({
     user_id: user_id_param,
-    work_day: {
+    work_date: {
       $gte: startDay,
       $lte: endDay,
     }
   })
 
   const finalResult = await findResult
-  .sort({work_day: sort})
+  .sort({work_date: sort})
   .skip((page - 1) * limit)
   .limit(limit);
 
@@ -53,9 +53,9 @@ export const detail = async (
   const [startDay, endDay] = work_dur_param.split(` ~ `);
 
   const finalResult = await Work.findOne({
-    _id: _id_param === "" ? { $exists: true } : _id_param,
+    _id: _id_param === "" ? {$exists: true} : _id_param,
     user_id: user_id_param,
-    work_day: {
+    work_date: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -83,7 +83,7 @@ export const save = async (
 
   const findResult = await Work.findOne({
     user_id: user_id_param,
-    work_day: {
+    work_date: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -94,7 +94,7 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      work_day: startDay,
+      work_date: startDay,
       work_real: WORK_param.work_real,
       work_plan: WORK_param.work_plan,
       work_regdate: today,
@@ -137,7 +137,7 @@ export const deletes = async (
   const updateResult = await Work.updateOne(
     {
       user_id: user_id_param,
-      work_day: {
+      work_date: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -163,7 +163,7 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await Work.findOne({
       user_id: user_id_param,
-      work_day: {
+      work_date: {
         $gte: startDay,
         $lte: endDay,
       },

@@ -1,6 +1,6 @@
 // SleepSave.jsx
 
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/js/useStorage.jsx";
 import DatePicker from "react-datepicker";
@@ -14,10 +14,10 @@ export const SleepSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_day = location?.state?.sleep_day;
+  const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
 
@@ -33,24 +33,24 @@ export const SleepSave = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStart, set:setStrStart} = useStorage(
-    `strStart(${PATH})`, ""
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
   );
-  const {val:strEnd, set:setStrEnd} = useStorage(
-    `strEnd(${PATH})`, ""
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
   );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_day
+    `strDate(${PATH})`, location_date
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
     _id: "",
     sleep_number: 0,
-    sleep_day: "",
+    sleep_date: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -69,7 +69,7 @@ export const SleepSave = () => {
   const [SLEEP, setSLEEP] = useState({
     _id: "",
     sleep_number: 0,
-    sleep_day: "",
+    sleep_date: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -85,6 +85,20 @@ export const SleepSave = () => {
       }],
     },
   });
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setStrDate(location_date);
+    setStrDur(`${location_date} ~ ${location_date}`);
+  }, [location_date]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setSLEEP((prev) => ({
+      ...prev,
+      sleep_date: strDur
+    }));
+  }, [strDur]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -105,21 +119,15 @@ export const SleepSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
-    setSLEEP((prev) => ({
-      ...prev,
-      sleep_day: strDur
-    }));
-  }, [strDate]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
 
     const sleepType = planYn === "Y" ? "sleep_plan" : "sleep_real";
 
-    if (strStart && strEnd) {
-      const startDate = new Date(`${koreanDate}T${strStart}:00Z`);
-      const endDate = new Date(`${koreanDate}T${strEnd}:00Z`);
+    const startTime = SLEEP[sleepType]?.sleep_section.map((item) => item?.sleep_start)?.toString();
+    const endTime = SLEEP[sleepType]?.sleep_section.map((item) => item?.sleep_end)?.toString();
+
+    if (startTime && endTime) {
+      const startDate = new Date(`${strDate}T${startTime}`);
+      const endDate = new Date(`${strDate}T${endTime}`);
 
       // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
       if (endDate < startDate) {
@@ -128,22 +136,22 @@ export const SleepSave = () => {
 
       // 차이 계산
       const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 
       setSLEEP((prev) => ({
         ...prev,
         [sleepType]: {
+          ...prev[sleepType],
           sleep_section: [{
-            sleep_start: strStart,
-            sleep_end: strEnd,
+            ...prev[sleepType].sleep_section[0],
             sleep_time: time,
-          }]
+          }],
         },
       }));
     }
-  }, [strStart, strEnd]);
+  }, [strStartDate, strEndDate]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepSave = async () => {
@@ -173,7 +181,7 @@ export const SleepSave = () => {
     const calcDate = (days) => {
       const date = new Date(strDate);
       date.setDate(date.getDate() + days);
-      setStrDate(moment(date).format("YYYY-MM-DD").toString());
+      setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
     };
 
     return (
@@ -186,7 +194,7 @@ export const SleepSave = () => {
           popperPlacement="bottom"
           selected={new Date(strDate)}
           onChange={(date) => {
-            setStrDate(moment(date).format("YYYY-MM-DD").toString());
+            setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
           }}
         />
         <div onClick={() => calcDate(1)}>
@@ -234,9 +242,9 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_start)}
+                value={(SLEEP[sleepType].sleep_section)?.map((item) => item.sleep_start)}
                 onChange={(e) => {
-                  setStrStart(e);
+                  setStrStartDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     [sleepType]: {
@@ -263,9 +271,9 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_end)}
+                value={(SLEEP[sleepType].sleep_section)?.map((item) => item.sleep_end)}
                 onChange={(e) => {
-                  setStrEnd(e);
+                  setStrEndDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     [sleepType]: {
@@ -293,7 +301,7 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP[sleepType]?.sleep_section?.map((item) => item.sleep_time)}
+                value={(SLEEP[sleepType].sleep_section)?.map((item) => item.sleep_time)}
               />
             </div>
           </div>

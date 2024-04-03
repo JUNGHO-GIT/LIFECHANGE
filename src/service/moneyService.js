@@ -19,13 +19,13 @@ export const list = async (
 
   findQuery = {
     user_id: user_id_param,
-    money_day: {
+    money_date: {
       $gte: startDay,
       $lte: endDay,
     }
   };
 
-  findResult = await Money.find(findQuery).sort({ money_day: -1 });
+  findResult = await Money.find(findQuery).sort({ money_date: -1 });
 
   return findResult;
 };
@@ -61,7 +61,7 @@ export const avg = async (
       user_id: user_id_param,
       "money_section.money_part_val": {$regex: money_part_val_param},
       "money_section.money_title_val": {$regex: money_title_val_param},
-      money_day: {
+      money_date: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -133,7 +133,7 @@ export const insert = async (
     user_id : user_id_param,
     money_section : MONEY_param.money_section,
     money_planYn : MONEY_param.money_planYn,
-    money_day : MONEY_param.moneyDay,
+    money_date : MONEY_param.moneyDay,
     money_regdate : MONEY_param.money_regdate,
     money_update : MONEY_param.money_update,
   };

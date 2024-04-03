@@ -15,10 +15,10 @@ export const TestSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_day = location?.state?.work_day;
+  const location_date = location?.state?.work_date;
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
 
@@ -30,13 +30,13 @@ export const TestSave = () => {
   const [workTime, setWorkTime] = useState("");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(location_day);
+  const [strDate, setStrDate] = useState(location_date);
   const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -70,7 +70,7 @@ export const TestSave = () => {
   });
   const [WORK, setWORK] = useState({
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -127,7 +127,7 @@ export const TestSave = () => {
     setStrDur(`${strDate} ~ ${strDate}`);
     setWORK((prev) => ({
       ...prev,
-      work_day: strDur
+      work_date: strDur
     }));
   }, [strDate]);
 
@@ -250,7 +250,7 @@ export const TestSave = () => {
     const calcDate = (days) => {
       const date = new Date(strDate);
       date.setDate(date.getDate() + days);
-      setStrDate(moment(date).format("YYYY-MM-DD").toString());
+      setStrDate(moment(date).format("YYYY-MM-DD"));
     };
 
     return (
@@ -263,7 +263,7 @@ export const TestSave = () => {
           popperPlacement="bottom"
           selected={new Date(strDate)}
           onChange={(date) => {
-            setStrDate(moment(date).format("YYYY-MM-DD").toString());
+            setStrDate(moment(date).format("YYYY-MM-DD"));
           }}
         />
         <div onClick={() => calcDate(1)}>

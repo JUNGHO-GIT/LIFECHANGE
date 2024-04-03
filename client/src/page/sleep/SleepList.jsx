@@ -14,7 +14,7 @@ export const SleepList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
@@ -35,24 +35,24 @@ export const SleepList = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStart, set:setStrStart} = useStorage(
-    `strStart(${PATH})`, koreanDate
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
   );
-  const {val:strEnd, set:setStrEnd} = useStorage(
-    `strEnd(${PATH})`, koreanDate
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
   );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, ""
+    `strDate(${PATH})`, koreanDate
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, ""
+    `strDur(${PATH})`, `${koreanDate} ~ ${koreanDate}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
     _id: "",
     sleep_number: 0,
-    sleep_day: "",
+    sleep_date: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -71,7 +71,7 @@ export const SleepList = () => {
   const [SLEEP, setSLEEP] = useState([{
     _id: "",
     sleep_number: 0,
-    sleep_day: "",
+    sleep_date: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -110,7 +110,7 @@ export const SleepList = () => {
       setStrDur(`${strDate} ~ ${strDate}`);
     }
     else if (type === "week") {
-      setStrDur(`${strStart} ~ ${strEnd}`);
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
     }
     else if (type === "month") {
       setStrDur(`${moment(strDate).startOf("month").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("month").format("YYYY-MM-DD")}`);
@@ -119,9 +119,9 @@ export const SleepList = () => {
       setStrDur(`${moment(strDate).startOf("year").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("year").format("YYYY-MM-DD")}`);
     }
     else if (type === "select") {
-      setStrDur(`${strStart} ~ ${strEnd}`);
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
     }
-  }, [type, strDate, strStart, strEnd]);
+  }, [type, strDate, strStartDate, strEndDate]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
   const viewSleepList = () => {
@@ -156,18 +156,18 @@ export const SleepList = () => {
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="range"
-          selected={strStart && strEnd && {from: new Date(strStart), to: new Date(strEnd)}}
-          month={strStart && strEnd && new Date(strStart)}
+          selected={strStartDate && strEndDate && {from: new Date(strStartDate), to: new Date(strEndDate)}}
+          month={strStartDate && strEndDate && new Date(strStartDate)}
           onDayClick={(day) => {
             const selectedDate = moment(day);
             const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
             const endOfWeek = startOfWeek.clone().add(6, "days");
-            setStrStart(moment(startOfWeek).format("YYYY-MM-DD"));
-            setStrEnd(moment(endOfWeek).format("YYYY-MM-DD"));
+            setStrStartDate(moment(startOfWeek).format("YYYY-MM-DD"));
+            setStrEndDate(moment(endOfWeek).format("YYYY-MM-DD"));
           }}
           onMonthChange={(month) => {
-            setStrStart(month);
-            setStrEnd(undefined);
+            setStrStartDate(month);
+            setStrEndDate(undefined);
           }}
         />
       );
@@ -219,37 +219,37 @@ export const SleepList = () => {
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="range"
-          selected={strStart && strEnd && {from:new Date(strStart), to:new Date(strEnd)}}
-          month={strStart && strEnd && new Date(strStart)}
+          selected={strStartDate && strEndDate && {from:new Date(strStartDate), to:new Date(strEndDate)}}
+          month={strStartDate && strEndDate && new Date(strStartDate)}
           onDayClick= {(day) => {
             const selectedDay = new Date(day);
-            const startDay = strStart ? new Date(strStart) : null;
-            const endDay = strEnd ? new Date(strEnd) : null;
+            const startDay = strStartDate ? new Date(strStartDate) : null;
+            const endDay = strEndDate ? new Date(strEndDate) : null;
 
             if (startDay && endDay) {
-              setStrStart(moment(day).format("YYYY-MM-DD"));
-              setStrEnd(undefined);
+              setStrStartDate(moment(day).format("YYYY-MM-DD"));
+              setStrEndDate(undefined);
             }
             else if (startDay) {
               if (selectedDay < startDay) {
-                setStrEnd(moment(startDay).format("YYYY-MM-DD"));
-                setStrStart(moment(day).format("YYYY-MM-DD"));
+                setStrEndDate(moment(startDay).format("YYYY-MM-DD"));
+                setStrStartDate(moment(day).format("YYYY-MM-DD"));
               }
               else if (selectedDay > startDay) {
-                setStrEnd(moment(day).format("YYYY-MM-DD"));
+                setStrEndDate(moment(day).format("YYYY-MM-DD"));
               }
               else {
-                setStrStart(undefined);
-                setStrEnd(undefined);
+                setStrStartDate(undefined);
+                setStrEndDate(undefined);
               }
             }
             else {
-              setStrStart(moment(day).format("YYYY-MM-DD"));
+              setStrStartDate(moment(day).format("YYYY-MM-DD"));
             }
           }}
           onMonthChange={(month) => {
-            setStrStart(new Date(month.getFullYear(), month.getMonth(), 1));
-            setStrEnd(undefined);
+            setStrStartDate(new Date(month.getFullYear(), month.getMonth(), 1));
+            setStrEndDate(undefined);
           }}
         />
       );
@@ -317,11 +317,11 @@ export const SleepList = () => {
                   navParam("/sleep/detail", {
                     state: {
                       _id: item._id,
-                      sleep_day: item.sleep_day,
+                      sleep_date: item.sleep_date,
                     },
                   });
                 }}>
-                  {item.sleep_day}
+                  {item.sleep_date}
                 </td>
                 <td>취침</td>
                 <td>
@@ -449,8 +449,8 @@ export const SleepList = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`strStart(${PATH})`);
-        localStorage.removeItem(`strEnd(${PATH})`);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Today
       </button>
@@ -460,8 +460,8 @@ export const SleepList = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`strStart(${PATH})`);
-        localStorage.removeItem(`strEnd(${PATH})`);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Reset
       </button>

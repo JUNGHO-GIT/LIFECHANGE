@@ -13,7 +13,7 @@ export const FoodDetail = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Food Detail";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const _id = location.state._id;
@@ -87,7 +87,7 @@ export const FoodDetail = () => {
         selected={new Date(food_regdate)}
         popperPlacement="bottom"
         onChange={(date) => {
-          const formatDate = moment(date).format("YYYY-MM-DD").toString();
+          const formatDate = moment(date).format("YYYY-MM-DD");
           setFood_regdate(formatDate);
         }}
         readOnly

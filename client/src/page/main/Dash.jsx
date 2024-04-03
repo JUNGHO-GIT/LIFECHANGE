@@ -13,7 +13,7 @@ export const Dash = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Dash";
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const user_id = window.sessionStorage.getItem("user_id");
   const {log} = useDeveloperMode();
@@ -29,7 +29,7 @@ export const Dash = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick = (day) => {
-    const clickDate = moment(day).format("YYYY-MM-DD").toString();
+    const clickDate = moment(day).format("YYYY-MM-DD");
     setDashDay(day);
     navParam(`/calendar/detail`, {
       state: {

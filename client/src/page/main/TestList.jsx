@@ -13,7 +13,7 @@ export const TestList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
@@ -32,13 +32,13 @@ export const TestList = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [strDate, setStrDate] = useState(koreanDate);
   const [strDur, setStrDur] = useState(`${koreanDate} ~ ${koreanDate}`);
-  const [strStart, setStrStart] = useState(koreanDate);
-  const [strEnd, setStrEnd] = useState(koreanDate);
+  const [strStartDate, setStrStartDate] = useState(koreanDate);
+  const [strEndDate, setStrEndDate] = useState(koreanDate);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -72,7 +72,7 @@ export const TestList = () => {
   }]);
   const [WORK, setWORK] = useState([{
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -127,7 +127,7 @@ export const TestList = () => {
       setStrDur(`${strDate} ~ ${strDate}`);
     }
     else if (type === "week") {
-      setStrDur(`${strStart} ~ ${strEnd}`);
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
     }
     else if (type === "month") {
       setStrDur(`${moment(strDate).startOf("month").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("month").format("YYYY-MM-DD")}`);
@@ -136,9 +136,9 @@ export const TestList = () => {
       setStrDur(`${moment(strDate).startOf("year").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("year").format("YYYY-MM-DD")}`);
     }
     else if (type === "select") {
-      setStrDur(`${strStart} ~ ${strEnd}`);
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
     }
-  }, [type, strDate, strStart, strEnd]);
+  }, [type, strDate, strStartDate, strEndDate]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
   const viewWorkList = () => {
@@ -173,18 +173,18 @@ export const TestList = () => {
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="range"
-          selected={strStart && strEnd && {from: new Date(strStart), to: new Date(strEnd)}}
-          month={strStart && strEnd && new Date(strStart)}
+          selected={strStartDate && strEndDate && {from: new Date(strStartDate), to: new Date(strEndDate)}}
+          month={strStartDate && strEndDate && new Date(strStartDate)}
           onDayClick={(day) => {
             const selectedDate = moment(day);
             const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
             const endOfWeek = startOfWeek.clone().add(6, "days");
-            setStrStart(moment(startOfWeek).format("YYYY-MM-DD"));
-            setStrEnd(moment(endOfWeek).format("YYYY-MM-DD"));
+            setStrStartDate(moment(startOfWeek).format("YYYY-MM-DD"));
+            setStrEndDate(moment(endOfWeek).format("YYYY-MM-DD"));
           }}
           onMonthChange={(month) => {
-            setStrStart(month);
-            setStrEnd(undefined);
+            setStrStartDate(month);
+            setStrEndDate(undefined);
           }}
         />
       );
@@ -236,37 +236,37 @@ export const TestList = () => {
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="range"
-          selected={strStart && strEnd && {from:new Date(strStart), to:new Date(strEnd)}}
-          month={strStart && strEnd && new Date(strStart)}
+          selected={strStartDate && strEndDate && {from:new Date(strStartDate), to:new Date(strEndDate)}}
+          month={strStartDate && strEndDate && new Date(strStartDate)}
           onDayClick= {(day) => {
             const selectedDay = new Date(day);
-            const startDay = strStart ? new Date(strStart) : null;
-            const endDay = strEnd ? new Date(strEnd) : null;
+            const startDay = strStartDate ? new Date(strStartDate) : null;
+            const endDay = strEndDate ? new Date(strEndDate) : null;
 
             if (startDay && endDay) {
-              setStrStart(moment(day).format("YYYY-MM-DD"));
-              setStrEnd(undefined);
+              setStrStartDate(moment(day).format("YYYY-MM-DD"));
+              setStrEndDate(undefined);
             }
             else if (startDay) {
               if (selectedDay < startDay) {
-                setStrEnd(moment(startDay).format("YYYY-MM-DD"));
-                setStrStart(moment(day).format("YYYY-MM-DD"));
+                setStrEndDate(moment(startDay).format("YYYY-MM-DD"));
+                setStrStartDate(moment(day).format("YYYY-MM-DD"));
               }
               else if (selectedDay > startDay) {
-                setStrEnd(moment(day).format("YYYY-MM-DD"));
+                setStrEndDate(moment(day).format("YYYY-MM-DD"));
               }
               else {
-                setStrStart(undefined);
-                setStrEnd(undefined);
+                setStrStartDate(undefined);
+                setStrEndDate(undefined);
               }
             }
             else {
-              setStrStart(moment(day).format("YYYY-MM-DD"));
+              setStrStartDate(moment(day).format("YYYY-MM-DD"));
             }
           }}
           onMonthChange={(month) => {
-            setStrStart(new Date(month.getFullYear(), month.getMonth(), 1));
-            setStrEnd(undefined);
+            setStrStartDate(new Date(month.getFullYear(), month.getMonth(), 1));
+            setStrEndDate(undefined);
           }}
         />
       );
@@ -303,14 +303,14 @@ export const TestList = () => {
         </thead>
         <tbody>
           {WORK.map((item) => (
-            <React.Fragment key={item.work_day}>
+            <React.Fragment key={item.work_date}>
               <tr>
                 <td rowSpan={6} className="pointer" onClick={() => {
                   navParam("/work/detail", {
                     state: {_id: item._id}
                   });
                 }}>
-                  {item.work_day}
+                  {item.work_date}
                 </td>
                 <td>시작</td>
                 <td>{item.work_plan.work_start}</td>
@@ -426,8 +426,8 @@ export const TestList = () => {
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setStrDate(koreanDate);
         localStorage.removeItem(`workList(${PATH})`);
-        localStorage.removeItem(`strStart(${PATH})`);
-        localStorage.removeItem(`strEnd(${PATH})`);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Today
       </button>
@@ -438,8 +438,8 @@ export const TestList = () => {
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setStrDate(koreanDate);
         localStorage.removeItem(`workList(${PATH})`);
-        localStorage.removeItem(`strStart(${PATH})`);
-        localStorage.removeItem(`strEnd(${PATH})`);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Reset
       </button>

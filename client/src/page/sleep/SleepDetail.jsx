@@ -11,11 +11,11 @@ export const SleepDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_day = location?.state?.sleep_day;
-  const location_id = location?.state?._id;
+  const location_id = location?.state?._id.toString();
+  const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
 
@@ -25,17 +25,23 @@ export const SleepDetail = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
+  );
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
+  );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, ""
+    `strDate(${PATH})`, location_date
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, ""
+    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
     _id: "",
-    sleep_day: "",
+    sleep_date: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -53,7 +59,7 @@ export const SleepDetail = () => {
   });
   const [SLEEP, setSLEEP] = useState({
     _id: "",
-    sleep_day: "",
+    sleep_date: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -72,15 +78,15 @@ export const SleepDetail = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDate(location_day);
-    setStrDur(`${location_day} ~ ${location_day}`);
-  }, [location_day]);
+    setStrDate(location_date);
+    setStrDur(`${location_date} ~ ${location_date}`);
+  }, [location_date]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setSLEEP((prev) => ({
       ...prev,
-      sleep_day: strDur
+      sleep_date: strDur
     }));
   }, [strDur]);
 
@@ -90,7 +96,7 @@ export const SleepDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_dur: `${location_day} ~ ${location_day}`,
+        sleep_dur: `${location_date} ~ ${location_date}`,
         planYn: planYn,
       },
     });
@@ -138,7 +144,7 @@ export const SleepDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {SLEEP.sleep_day}
+              {SLEEP.sleep_date}
             </td>
             <td>
               <select
@@ -184,7 +190,7 @@ export const SleepDetail = () => {
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
         navParam(`/sleep/save`, {
           state: {
-            sleep_day: strDate,
+            sleep_date: strDate,
           }
         });
       }}>

@@ -18,7 +18,7 @@ export const CalendarDetail = () => {
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
@@ -50,7 +50,7 @@ export const CalendarDetail = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (calendarDay) {
-      const viewDate = moment(calendarDay).format("YYYY-MM-DD").toString();
+      const viewDate = moment(calendarDay).format("YYYY-MM-DD");
       setResVal(`${viewDate}`);
       setResDur(`${viewDate} ~ ${viewDate}`);
     }

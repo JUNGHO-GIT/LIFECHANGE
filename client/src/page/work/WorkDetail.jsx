@@ -11,11 +11,11 @@ export const WorkDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_day = location?.state?.work_day;
-  const location_id = location?.state?._id;
+  const location_id = location?.state?._id.toString();
+  const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
 
@@ -25,18 +25,24 @@ export const WorkDetail = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
+  );
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
+  );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_day
+    `strDate(${PATH})`, location_date
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
     _id: "",
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -71,7 +77,7 @@ export const WorkDetail = () => {
   const [WORK, setWORK] = useState({
     _id: location_id,
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -106,15 +112,15 @@ export const WorkDetail = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDate(location_day);
-    setStrDur(`${location_day} ~ ${location_day}`);
-  }, [location_day]);
+    setStrDate(location_date);
+    setStrDur(`${location_date} ~ ${location_date}`);
+  }, [location_date]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setWORK((prev) => ({
       ...prev,
-      work_day: strDur
+      work_date: strDur
     }));
   }, [strDur]);
 
@@ -124,7 +130,7 @@ export const WorkDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        work_dur: `${location_day} ~ ${location_day}`,
+        work_dur: `${location_date} ~ ${location_date}`,
         planYn: planYn,
       },
     });
@@ -176,7 +182,7 @@ export const WorkDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {WORK.work_day}
+              {WORK.work_date}
             </td>
             <td>
               <select
@@ -226,7 +232,7 @@ export const WorkDetail = () => {
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
         navParam(`/work/save`, {
           state: {
-            work_day: strDate,
+            work_date: strDate,
           }
         });
       }}>

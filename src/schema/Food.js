@@ -68,7 +68,7 @@ const schema = new mongoose.Schema({
   },
 
   // 4. date
-  food_day : {
+  food_date : {
     type : String,
     default : () => {
       return "";

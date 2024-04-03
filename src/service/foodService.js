@@ -20,7 +20,7 @@ export const list = async (
   if (food_category_param !== "all") {
     findQuery = {
       user_id: user_id_param,
-      food_day: {
+      food_date: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -30,14 +30,14 @@ export const list = async (
   else {
     findQuery = {
       user_id: user_id_param,
-      food_day: {
+      food_date: {
         $gte: startDay,
         $lte: endDay,
       }
     };
   }
 
-  findResult = await Food.find(findQuery).sort({ food_day: -1 });
+  findResult = await Food.find(findQuery).sort({ food_date: -1 });
 
   return findResult;
 };
@@ -59,7 +59,7 @@ export const total = async (
   if (food_category_param !== "all") {
     findQuery = {
       user_id: user_id_param,
-      food_day: {
+      food_date: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -69,14 +69,14 @@ export const total = async (
   else {
     findQuery = {
       user_id: user_id_param,
-      food_day: {
+      food_date: {
         $gte: startDay,
         $lte: endDay,
       }
     };
   }
 
-  findResult = await Food.find(findQuery).sort({ food_day: -1 });
+  findResult = await Food.find(findQuery).sort({ food_date: -1 });
 
   // 데이터가 없는 경우 빈 배열 반환
   if (findResult.length === 0) {
@@ -123,7 +123,7 @@ export const avg = async (
   if (food_category_param !== "all") {
     findQuery = {
       user_id: user_id_param,
-      food_day: {
+      food_date: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -133,14 +133,14 @@ export const avg = async (
   else {
     findQuery = {
       user_id: user_id_param,
-      food_day: {
+      food_date: {
         $gte: startDay,
         $lte: endDay,
       }
     };
   }
 
-  finalResult = await Food.find(findQuery).sort({ food_day: -1 });
+  finalResult = await Food.find(findQuery).sort({ food_date: -1 });
 
   // 데이터가 없는 경우 빈 배열 반환
   if (finalResult.length === 0) {
@@ -183,7 +183,7 @@ export const search = async (
 
   findQuery = {
     user_id: user_id_param,
-    food_day: food_dur_param,
+    food_date: food_dur_param,
     food_category: food_category_param,
   };
 
@@ -231,7 +231,7 @@ export const insert = async (
     food_carb: FOOD_pram.food_carb,
     food_protein: FOOD_pram.food_protein,
     food_fat: FOOD_pram.food_fat,
-    food_day: FOOD_pram.foodDay,
+    food_date: FOOD_pram.foodDay,
     food_planYn: FOOD_pram.food_planYn,
     food_regdate : FOOD_pram.food_regdate,
     food_update : FOOD_pram.food_update,

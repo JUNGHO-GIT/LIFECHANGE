@@ -1,8 +1,7 @@
 // Header.jsx
 
-import React from "react";
+import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
-import {useState, useEffect} from "react";
 import {Collapse} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDeveloperMode} from "../assets/js/useDeveloperMode";
@@ -73,7 +72,7 @@ export const Header = () => {
   // 4-3. view ------------------------------------------------------------------------------------>
   const Navbar = () => {
 
-    const today = moment().locale("ko").tz("Asia/Seoul").format("YYYY-MM-DD (dddd)");
+    const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
     let preFix;
     let subFix = isActive.split("/")[1];
@@ -101,7 +100,11 @@ export const Header = () => {
             Dash
           </button>
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
-            navParam(`/${lowFix}/save`);
+            navParam(`/${lowFix}/save`, {
+              state: {
+                date: today
+              }
+            });
           }}>
             Save
           </button>

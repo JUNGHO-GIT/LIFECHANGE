@@ -15,10 +15,10 @@ export const WorkSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_day = location?.state?.work_day;
+  const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
 
@@ -34,23 +34,24 @@ export const WorkSave = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStart, set:setStrStart} = useStorage(
-    `strStart(${PATH})`, ""
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
   );
-  const {val:strEnd, set:setStrEnd} = useStorage(
-    `strEnd(${PATH})`, ""
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
   );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_day
+    `strDate(${PATH})`, location_date
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
+    _id: "",
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -83,8 +84,9 @@ export const WorkSave = () => {
     }
   });
   const [WORK, setWORK] = useState({
+    _id: "",
     work_number: 0,
-    work_day: "",
+    work_date: "",
     work_real : {
       work_start: "",
       work_end: "",
@@ -117,6 +119,20 @@ export const WorkSave = () => {
     }
   });
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setStrDate(location_date);
+    setStrDur(`${location_date} ~ ${location_date}`);
+  }, [location_date]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setWORK((prev) => ({
+      ...prev,
+      work_date: strDur
+    }));
+  }, [strDur]);
+
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_WORK}/detail`, {
@@ -136,21 +152,15 @@ export const WorkSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
-    setWORK((prev) => ({
-      ...prev,
-      work_day: strDur
-    }));
-  }, [strDate]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
 
     const workType = planYn === "Y" ? "work_plan" : "work_real";
 
-    if (strStart && strEnd) {
-      const startDate = new Date(`${koreanDate}T${strStart}:00Z`);
-      const endDate = new Date(`${koreanDate}T${strEnd}:00Z`);
+    const startTime = WORK[workType]?.work_start?.toString();
+    const endTime = WORK[workType]?.work_end?.toString();
+
+    if (startTime && endTime) {
+      const startDate = new Date(`${strDate}T${startTime}`);
+      const endDate = new Date(`${strDate}T${endTime}`);
 
       // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
       if (endDate < startDate) {
@@ -159,9 +169,9 @@ export const WorkSave = () => {
 
       // 차이 계산
       const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 
       setWORK((prev) => ({
         ...prev,
@@ -171,7 +181,7 @@ export const WorkSave = () => {
         },
       }));
     }
-  }, [strStart, strEnd]);
+  }, [strStartDate, strEndDate]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkSave = async () => {
@@ -264,7 +274,7 @@ export const WorkSave = () => {
     const calcDate = (days) => {
       const date = new Date(strDate);
       date.setDate(date.getDate() + days);
-      setStrDate(moment(date).format("YYYY-MM-DD").toString());
+      setStrDate(moment(date).format("YYYY-MM-DD"));
     };
 
     return (
@@ -277,7 +287,7 @@ export const WorkSave = () => {
           popperPlacement="bottom"
           selected={new Date(strDate)}
           onChange={(date) => {
-            setStrDate(moment(date).format("YYYY-MM-DD").toString());
+            setStrDate(moment(date).format("YYYY-MM-DD"));
           }}
         />
         <div onClick={() => calcDate(1)}>
@@ -482,7 +492,7 @@ export const WorkSave = () => {
                 locale="ko"
                 value={WORK[workType]?.work_start}
                 onChange={(e) => {
-                  setStrStart(e);
+                  setStrStartDate(e);
                   setWORK((prev) => ({
                     ...prev,
                     [workType]: {
@@ -509,7 +519,7 @@ export const WorkSave = () => {
                 locale="ko"
                 value={WORK[workType]?.work_end}
                 onChange={(e) => {
-                  setStrEnd(e);
+                  setStrEndDate(e);
                   setWORK((prev) => ({
                     ...prev,
                     [workType]: {

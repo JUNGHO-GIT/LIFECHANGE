@@ -44,7 +44,7 @@ const schema = new mongoose.Schema({
   },
 
   // 3. date
-  calendar_day : {
+  calendar_date : {
     type : String,
     default : () => {
       return "";
