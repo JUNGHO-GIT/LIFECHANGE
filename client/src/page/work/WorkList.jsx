@@ -323,8 +323,8 @@ export const WorkList = () => {
                 <td rowSpan={6} className="pointer" onClick={() => {
                   navParam("/work/detail", {
                     state: {
-                      _id: item._id,
-                      work_date: item.work_date,
+                      id: item._id,
+                      date: item.work_date,
                     },
                   });
                 }}>

@@ -14,7 +14,7 @@ export const SleepDetail = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?._id.toString();
+  const location_id = location?.state?.id.toString();
   const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;

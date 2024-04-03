@@ -316,8 +316,8 @@ export const SleepList = () => {
                 <td rowSpan={3} className="pointer" onClick={() => {
                   navParam("/sleep/detail", {
                     state: {
-                      _id: item._id,
-                      sleep_date: item.sleep_date,
+                      id: item._id,
+                      date: item.sleep_date,
                     },
                   });
                 }}>
