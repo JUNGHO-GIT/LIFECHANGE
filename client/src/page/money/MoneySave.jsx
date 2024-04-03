@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/js/useStorage.jsx";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
@@ -393,9 +392,6 @@ export const MoneySave = () => {
 
   // 5-2. table ----------------------------------------------------------------------------------->
   const tableMoneySave = () => {
-
-    const moneyType = planYn === "Y" ? "money_plan" : "money_real";
-
     return (
       <div>
         <div className="row d-center">

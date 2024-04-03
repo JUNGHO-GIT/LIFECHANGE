@@ -149,58 +149,46 @@ export const MoneyDetail = () => {
           <tr>
             <th>날짜</th>
             <th>계획여부</th>
-            <th>시작</th>
-            <th>종료</th>
-            <th>시간</th>
-            <th>부위</th>
-            <th>종목</th>
-            <th>세트 x 횟수 x 무게</th>
-            <th>휴식</th>
+            <th>분류</th>
+            <th>항목</th>
+            <th>금액</th>
+            <th>내용</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="fs-20 pt-20">
-              {MONEY.money_date}
-            </td>
-            <td>
-              <select
-                id="money_planYn"
-                name="money_planYn"
-                className="form-select"
-                value={planYn}
-                onChange={(e) => {
-                  setPlanYn(e.target.value);
-                }}
-              >
-                <option value="Y">목표</option>
-                <option value="N" selected>실제</option>
-              </select>
-            </td>
-            <td className="fs-20 pt-20">
-              {MONEY[moneyType].money_start}
-            </td>
-            <td className="fs-20 pt-20">
-              {MONEY[moneyType].money_end}
-            </td>
-            <td className="fs-20 pt-20">
-              {MONEY[moneyType].money_time}
-            </td>
-            <td colSpan={4}>
-              {MONEY[moneyType].money_section.map((item, index) => (
-                <div key={index} className="d-flex justify-content-between">
-                  <span>{item.money_part_val}</span>
-                  <span>{item.money_title_val}</span>
-                  <span>{item.money_set} x {item.money_count} x {item.money_kg}</span>
-                  <span>{item.money_rest}</span>
-                  <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => flowMoneyDelete(item._id)}>
-                    X
-                  </button>
-                </div>
-              ))}
-            </td>
-          </tr>
+          {MONEY[moneyType].money_section.map((item, index) => (
+            <tr key={index}>
+              <td className="fs-20 pt-20">{MONEY.money_date}</td>
+              <td>
+                <select
+                  id="money_planYn"
+                  name="money_planYn"
+                  className="form-select"
+                  value={planYn}
+                  onChange={(e) => {
+                    setPlanYn(e.target.value);
+                  }}
+                >
+                  <option value="Y">목표</option>
+                  <option value="N">실제</option>
+                </select>
+              </td>
+              <td className="fs-20 pt-20">{item.money_part_val}</td>
+              <td className="fs-20 pt-20">{item.money_title_val}</td>
+              <td className="fs-20 pt-20">{item.money_amount}</td>
+              <td className="fs-20 pt-20">{item.money_content}</td>
+              <td className="fs-20 pt-20">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-danger"
+                  onClick={() => flowMoneyDelete(item._id)}
+                >
+                  X
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     );

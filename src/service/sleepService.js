@@ -4,9 +4,6 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
 
-// 0-0. today ------------------------------------------------------------------------------------->
-const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-
 // 0-1. dash(bar) --------------------------------------------------------------------------------->
 export const dashBar = async (
   user_id_param
@@ -310,7 +307,7 @@ export const save = async (
       sleep_date: startDay,
       sleep_real: SLEEP_param.sleep_real,
       sleep_plan: SLEEP_param.sleep_plan,
-      sleep_regdate: today,
+      sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       sleep_update: "",
     };
     finalResult = await Sleep.create(createQuery);
@@ -322,11 +319,11 @@ export const save = async (
     const updateAction = planYn_param === "Y"
     ? {$set: {
       sleep_plan: SLEEP_param.sleep_plan,
-      sleep_update: today,
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
     : {$set: {
       sleep_real: SLEEP_param.sleep_real,
-      sleep_update: today,
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
 
     finalResult = await Sleep.updateOne(updateQuery, updateAction);
@@ -362,7 +359,7 @@ export const deletes = async (
         },
       },
       $set: {
-        sleep_update: today,
+        sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     },
     {

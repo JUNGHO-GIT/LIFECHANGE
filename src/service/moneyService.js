@@ -4,9 +4,6 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Money} from "../schema/Money.js";
 
-// 0-0. today ------------------------------------------------------------------------------------->
-const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
@@ -61,8 +58,8 @@ export const detail = async (
     },
   });
 
-  const realCount = finalResult?.money_real !== undefined ? 1 : 0;
-  const planCount = finalResult?.money_plan !== undefined ? 1 : 0;
+  const realCount = finalResult?.money_real?.money_section.length || 0;
+  const planCount = finalResult?.money_plan?.money_section.length || 0;
 
   return {
     realCount: realCount,
@@ -97,7 +94,7 @@ export const save = async (
       money_date: startDay,
       money_real: MONEY_param.money_real,
       money_plan: MONEY_param.money_plan,
-      money_regdate: today,
+      money_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       money_update: "",
     };
     finalResult = await Money.create(createQuery);
@@ -109,11 +106,11 @@ export const save = async (
     const updateAction = planYn_param === "Y"
     ? {$set: {
       money_plan: MONEY_param.money_plan,
-      money_update: today,
+      money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
     : {$set: {
       money_real: MONEY_param.money_real,
-      money_update: today,
+      money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
 
     finalResult = await Money.updateOne(updateQuery, updateAction);
@@ -149,7 +146,7 @@ export const deletes = async (
         },
       },
       $set: {
-        money_update: today,
+        money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     },
     {

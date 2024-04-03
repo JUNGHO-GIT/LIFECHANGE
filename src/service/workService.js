@@ -4,9 +4,6 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Work} from "../schema/Work.js";
 
-// 0-0. today ------------------------------------------------------------------------------------->
-const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
@@ -97,7 +94,7 @@ export const save = async (
       work_date: startDay,
       work_real: WORK_param.work_real,
       work_plan: WORK_param.work_plan,
-      work_regdate: today,
+      work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_update: "",
     };
     finalResult = await Work.create(createQuery);
@@ -109,11 +106,11 @@ export const save = async (
     const updateAction = planYn_param === "Y"
     ? {$set: {
       work_plan: WORK_param.work_plan,
-      work_update: today,
+      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
     : {$set: {
       work_real: WORK_param.work_real,
-      work_update: today,
+      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
 
     finalResult = await Work.updateOne(updateQuery, updateAction);
@@ -149,7 +146,7 @@ export const deletes = async (
         },
       },
       $set: {
-        work_update: today,
+        work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     },
     {
