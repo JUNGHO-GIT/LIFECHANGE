@@ -482,28 +482,10 @@ export const WorkList = () => {
   const selectWorkType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="typePre" onChange={(e) => {
-          if (e.target.value === "day") {
-            setType("day");
-          }
-          else if (e.target.value === "week") {
-            setType("week");
-          }
-          else if (e.target.value === "month") {
-            setType("month");
-          }
-          else if (e.target.value === "year") {
-            setType("year");
-          }
-          else if (e.target.value === "select") {
-            setType("select");
-          }
-        }}>
-          <option value="day">Day</option>
-          <option value="week">Week</option>
-          <option value="month">Month</option>
-          <option value="year">Year</option>
-          <option value="select">Select</option>
+        <select className="form-select" id="type" onChange={(e) => setType(e.target.value)}>
+          {["day", "week", "month", "year", "select"].map((item) => (
+            <option key={item} value={item} selected={type === item}>{item}</option>
+          ))}
         </select>
       </div>
     );
