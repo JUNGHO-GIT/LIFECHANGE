@@ -30,7 +30,7 @@ export const TestSave = () => {
   const [workTime, setWorkTime] = useState("");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [strDate, setStrDate] = useState(location_day ? location_day : koreanDate);
+  const [strDate, setStrDate] = useState(location_day);
   const [strDur, setStrDur] = useState(`${strDate} ~ ${strDate}`);
 
   // 2-2. useState -------------------------------------------------------------------------------->

@@ -26,7 +26,7 @@ export const WorkDetail = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_day ? location_day : koreanDate
+    `strDate(${PATH})`, location_day
   );
   const {val:strDur, set:setStrDur} = useStorage(
     `strDur(${PATH})`, `${strDate} ~ ${strDate}`
@@ -104,20 +104,11 @@ export const WorkDetail = () => {
     }
   });
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/detail`, {
-      params: {
-        _id: location_id,
-        user_id: user_id,
-        work_dur: strDur,
-        planYn: planYn,
-      },
-    });
-
-    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
-
-  })()}, []);
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setStrDate(location_day);
+    setStrDur(`${location_day} ~ ${location_day}`);
+  }, [location_day]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -125,7 +116,22 @@ export const WorkDetail = () => {
       ...prev,
       work_day: strDur
     }));
-  }, [strDate]);
+  }, [strDur]);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const response = await axios.get(`${URL_WORK}/detail`, {
+      params: {
+        _id: location_id,
+        user_id: user_id,
+        work_dur: `${location_day} ~ ${location_day}`,
+        planYn: planYn,
+      },
+    });
+
+    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+
+  })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowWorkDelete = async (id) => {

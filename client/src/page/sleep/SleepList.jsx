@@ -1,6 +1,6 @@
 // SleepList.jsx
 
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/js/useStorage.jsx";
 import {DayPicker} from "react-day-picker";
@@ -42,48 +42,50 @@ export const SleepList = () => {
     `strEnd(${PATH})`, koreanDate
   );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, koreanDate
+    `strDate(${PATH})`, ""
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${koreanDate} ~ ${koreanDate}`
+    `strDur(${PATH})`, ""
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
     _id: "",
+    sleep_number: 0,
     sleep_day: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
+      }],
     },
     sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
-    }
+      }],
+    },
   }]);
   const [SLEEP, setSLEEP] = useState([{
     _id: "",
+    sleep_number: 0,
     sleep_day: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
+      }],
     },
     sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
-    }
+      }],
+    },
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -179,7 +181,7 @@ export const SleepList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode="default"
+          mode={undefined}
           month={new Date(strDur.split(" ~ "))}
           onMonthChange={(month) => {
             const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
@@ -198,7 +200,7 @@ export const SleepList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode="default"
+          mode={undefined}
           onMonthChange={(month) => {
             const startOfYear = moment(month).startOf("year").format("YYYY-MM-DD");
             const endOfYear = moment(month).endOf("year").format("YYYY-MM-DD");
@@ -447,9 +449,8 @@ export const SleepList = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`sleepList(${type})`);
-        localStorage.removeItem(`strStart(${type})`);
-        localStorage.removeItem(`strEnd(${type})`);
+        localStorage.removeItem(`strStart(${PATH})`);
+        localStorage.removeItem(`strEnd(${PATH})`);
       }}>
         Today
       </button>
@@ -459,9 +460,8 @@ export const SleepList = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`sleepList(${type})`);
-        localStorage.removeItem(`strStart(${type})`);
-        localStorage.removeItem(`strEnd(${type})`);
+        localStorage.removeItem(`strStart(${PATH})`);
+        localStorage.removeItem(`strEnd(${PATH})`);
       }}>
         Reset
       </button>

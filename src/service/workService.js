@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Work} from "../schema/Work.js";
 
+// 0-0. today ------------------------------------------------------------------------------------->
+const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
@@ -94,8 +97,8 @@ export const save = async (
       work_day: startDay,
       work_real: WORK_param.work_real,
       work_plan: WORK_param.work_plan,
-      work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      work_update: "default",
+      work_regdate: today,
+      work_update: "",
     };
     finalResult = await Work.create(createQuery);
   }
@@ -106,11 +109,11 @@ export const save = async (
     const updateAction = planYn_param === "Y"
     ? {$set: {
       work_plan: WORK_param.work_plan,
-      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      work_update: today,
     }}
     : {$set: {
       work_real: WORK_param.work_real,
-      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      work_update: today,
     }}
 
     finalResult = await Work.updateOne(updateQuery, updateAction);
@@ -131,24 +134,53 @@ export const deletes = async (
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
 
-  const finalResult = await Work.updateOne(
-    {user_id: user_id_param,
-    work_day: {
-      $gte: startDay,
-      $lte: endDay,
-    }},
-    {$pull: {
-      [`work_${planYn_param === "Y" ? "plan" : "real"}.work_section`]: { _id: _id_param },
+  const updateResult = await Work.updateOne(
+    {
+      user_id: user_id_param,
+      work_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
     },
-    $set: {
-      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }},
-    {arrayFilters: [{
-      "elem._id": _id_param
-    }]}
+    {
+      $pull: {
+        [`work_${planYn_param === "Y" ? "plan" : "real"}.work_section`]: {
+          _id: _id_param
+        },
+      },
+      $set: {
+        work_update: today,
+      },
+    },
+    {
+      arrayFilters: [{
+        "elem._id": _id_param
+      }],
+    }
   );
 
+  let finalResult;
+  if (updateResult.modifiedCount > 0) {
+    const doc = await Work.findOne({
+      user_id: user_id_param,
+      work_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+    });
+
+    if (
+      doc
+      && (!doc.work_plan?.work_section || doc.work_plan?.work_section.length === 0)
+      && (!doc.work_real?.work_section || doc.work_real?.work_section.length === 0)
+    ) {
+      finalResult = await Work.deleteOne({
+        _id: doc._id
+      });
+    }
+  }
+
   return {
-    result: finalResult,
+    result: finalResult
   };
 };

@@ -26,10 +26,10 @@ export const SleepDetail = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_day ? location_day : koreanDate
+    `strDate(${PATH})`, ""
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${strDate} ~ ${strDate}`
+    `strDur(${PATH})`, ""
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -41,15 +41,15 @@ export const SleepDetail = () => {
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
+      }],
     },
     sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
-    }
+      }],
+    },
   });
   const [SLEEP, setSLEEP] = useState({
     _id: "",
@@ -59,31 +59,22 @@ export const SleepDetail = () => {
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
+      }],
     },
     sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
-    }
+      }],
+    },
   });
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/detail`, {
-      params: {
-        _id: location_id,
-        user_id: user_id,
-        sleep_dur: strDur,
-        planYn: planYn,
-      },
-    });
-
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
-
-  })()}, []);
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setStrDate(location_day);
+    setStrDur(`${location_day} ~ ${location_day}`);
+  }, [location_day]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -91,7 +82,22 @@ export const SleepDetail = () => {
       ...prev,
       sleep_day: strDur
     }));
-  }, [strDate]);
+  }, [strDur]);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const response = await axios.get(`${URL_SLEEP}/detail`, {
+      params: {
+        _id: location_id,
+        user_id: user_id,
+        sleep_dur: `${location_day} ~ ${location_day}`,
+        planYn: planYn,
+      },
+    });
+
+    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+
+  })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSleepDelete = async (id) => {

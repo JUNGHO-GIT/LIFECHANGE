@@ -56,10 +56,6 @@ const sectionSchema = new mongoose.Schema({
 
 // 2. main ---------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-  _id: {
-    type : mongoose.Schema.Types.ObjectId,
-    required : true
-  },
   user_id: {
     type: String,
     required: true
@@ -70,20 +66,17 @@ const schema = new mongoose.Schema({
   },
   work_day: {
     type: String,
-    default: () => "default",
-    required: true
+    required: false
   },
   work_plan: sectionSchema,
   work_real: sectionSchema,
   work_regdate: {
     type: String,
-    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    required: true,
+    required: false
   },
   work_update: {
     type: String,
-    default: () => moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    required: true,
+    required: false
   }
 });
 

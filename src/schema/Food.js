@@ -71,7 +71,7 @@ const schema = new mongoose.Schema({
   food_day : {
     type : String,
     default : () => {
-      return "default";
+      return "";
     },
     required : true
   },

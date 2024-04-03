@@ -47,7 +47,7 @@ const schema = new mongoose.Schema({
   calendar_day : {
     type : String,
     default : () => {
-      return "default";
+      return "";
     },
     required : true
   },

@@ -41,7 +41,7 @@ export const WorkSave = () => {
     `strEnd(${PATH})`, ""
   );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_day ? location_day : koreanDate
+    `strDate(${PATH})`, location_day
   );
   const {val:strDur, set:setStrDur} = useStorage(
     `strDur(${PATH})`, `${strDate} ~ ${strDate}`

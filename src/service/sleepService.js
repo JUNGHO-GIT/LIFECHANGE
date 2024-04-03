@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
 
+// 0-0. today ------------------------------------------------------------------------------------->
+const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 0-1. dash(bar) --------------------------------------------------------------------------------->
 export const dashBar = async (
   user_id_param
@@ -307,21 +310,23 @@ export const save = async (
       sleep_day: startDay,
       sleep_real: SLEEP_param.sleep_real,
       sleep_plan: SLEEP_param.sleep_plan,
-      sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      sleep_update: "default",
+      sleep_regdate: today,
+      sleep_update: "",
     };
     finalResult = await Sleep.create(createQuery);
   }
   else {
-    const updateQuery = {_id: findResult._id};
+    const updateQuery = {
+      _id: findResult._id
+    };
     const updateAction = planYn_param === "Y"
     ? {$set: {
       sleep_plan: SLEEP_param.sleep_plan,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      sleep_update: today,
     }}
     : {$set: {
       sleep_real: SLEEP_param.sleep_real,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      sleep_update: today,
     }}
 
     finalResult = await Sleep.updateOne(updateQuery, updateAction);
@@ -342,24 +347,53 @@ export const deletes = async (
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
-  const finalResult = await Sleep.updateOne(
-    {user_id: user_id_param,
-    sleep_day: {
-      $gte: startDay,
-      $lte: endDay,
-    }},
-    {$pull: {
-      [`sleep_${planYn_param === "Y" ? "plan" : "real"}.sleep_section`]: { _id: _id_param },
+  const updateResult = await Sleep.updateOne(
+    {
+      user_id: user_id_param,
+      sleep_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
     },
-    $set: {
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }},
-    {arrayFilters: [{
-      "elem._id": _id_param
-    }]}
+    {
+      $pull: {
+        [`sleep_${planYn_param === "Y" ? "plan" : "real"}.sleep_section`]: {
+          _id: _id_param
+        },
+      },
+      $set: {
+        sleep_update: today,
+      },
+    },
+    {
+      arrayFilters: [{
+        "elem._id": _id_param
+      }],
+    }
   );
 
+  let finalResult;
+  if (updateResult.modifiedCount > 0) {
+    const doc = await Sleep.findOne({
+      user_id: user_id_param,
+      sleep_day: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+    });
+
+    if (
+      doc
+      && (!doc.sleep_plan?.sleep_section || doc.sleep_plan?.sleep_section.length === 0)
+      && (!doc.sleep_real?.sleep_section || doc.sleep_real?.sleep_section.length === 0)
+    ) {
+      finalResult = await Sleep.deleteOne({
+        _id: doc._id
+      });
+    }
+  }
+
   return {
-    result: finalResult,
+    result: finalResult
   };
 };

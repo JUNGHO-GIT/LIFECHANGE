@@ -60,7 +60,7 @@ const schema = new mongoose.Schema({
   money_day : {
     type : String,
     default : () => {
-      return "default";
+      return "";
     },
     required : true
   },

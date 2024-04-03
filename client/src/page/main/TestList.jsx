@@ -1,15 +1,12 @@
 // TestList.jsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import Draggable from "react-draggable";
-import {differenceInDays} from "date-fns";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {workPartArray, workTitleArray} from "./WorkArray.jsx";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const TestList = () => {
@@ -18,7 +15,9 @@ export const TestList = () => {
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD").toString();
   const navParam = useNavigate();
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -199,7 +198,7 @@ export const TestList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode="default"
+          mode=""
           month={new Date(strDur.split(" ~ "))}
           onMonthChange={(month) => {
             const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
@@ -218,7 +217,7 @@ export const TestList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode="default"
+          mode=""
           onMonthChange={(month) => {
             const startOfYear = moment(month).startOf("year").format("YYYY-MM-DD");
             const endOfYear = moment(month).endOf("year").format("YYYY-MM-DD");
@@ -426,9 +425,9 @@ export const TestList = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`workList(${type})`);
-        localStorage.removeItem(`strStart(${type})`);
-        localStorage.removeItem(`strEnd(${type})`);
+        localStorage.removeItem(`workList(${PATH})`);
+        localStorage.removeItem(`strStart(${PATH})`);
+        localStorage.removeItem(`strEnd(${PATH})`);
       }}>
         Today
       </button>
@@ -438,9 +437,9 @@ export const TestList = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`workList(${type})`);
-        localStorage.removeItem(`strStart(${type})`);
-        localStorage.removeItem(`strEnd(${type})`);
+        localStorage.removeItem(`workList(${PATH})`);
+        localStorage.removeItem(`strStart(${PATH})`);
+        localStorage.removeItem(`strEnd(${PATH})`);
       }}>
         Reset
       </button>

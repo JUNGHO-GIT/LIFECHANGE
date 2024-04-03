@@ -23,10 +23,6 @@ const sectionSchema = new mongoose.Schema({
 
 // 2. main ---------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-  _id: {
-    type : mongoose.Schema.Types.ObjectId,
-    required : true
-  },
   user_id: {
     type: String,
     required: true
@@ -37,20 +33,17 @@ const schema = new mongoose.Schema({
   },
   sleep_day: {
     type: String,
-    default: () => "default",
-    required: true
+    required: false
   },
   sleep_plan: sectionSchema,
   sleep_real: sectionSchema,
   sleep_regdate: {
     type: String,
-    default: () => "default",
-    required: true,
+    required: false
   },
   sleep_update: {
     type: String,
-    default: () => "default",
-    required: true,
+    required: false
   }
 });
 

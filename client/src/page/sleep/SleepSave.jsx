@@ -40,7 +40,7 @@ export const SleepSave = () => {
     `strEnd(${PATH})`, ""
   );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_day ? location_day : koreanDate
+    `strDate(${PATH})`, location_day
   );
   const {val:strDur, set:setStrDur} = useStorage(
     `strDur(${PATH})`, `${strDate} ~ ${strDate}`
@@ -49,39 +49,41 @@ export const SleepSave = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
     _id: "",
+    sleep_number: 0,
     sleep_day: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
+      }],
     },
     sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
-    }
+      }],
+    },
   });
   const [SLEEP, setSLEEP] = useState({
     _id: "",
+    sleep_number: 0,
     sleep_day: "",
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
+      }],
     },
     sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
         sleep_time: "",
-      }]
-    }
+      }],
+    },
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->

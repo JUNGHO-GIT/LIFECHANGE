@@ -213,7 +213,7 @@ export const WorkList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode="default"
+          mode=""
           month={new Date(strDur.split(" ~ "))}
           onMonthChange={(month) => {
             const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
@@ -232,7 +232,7 @@ export const WorkList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode="default"
+          mode=""
           onMonthChange={(month) => {
             const startOfYear = moment(month).startOf("year").format("YYYY-MM-DD");
             const endOfYear = moment(month).endOf("year").format("YYYY-MM-DD");
@@ -443,9 +443,8 @@ export const WorkList = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`workList(${type})`);
-        localStorage.removeItem(`strStart(${type})`);
-        localStorage.removeItem(`strEnd(${type})`);
+        localStorage.removeItem(`strStart(${PATH})`);
+        localStorage.removeItem(`strEnd(${PATH})`);
       }}>
         Today
       </button>
@@ -455,9 +454,8 @@ export const WorkList = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setStrDate(koreanDate);
-        localStorage.removeItem(`workList(${type})`);
-        localStorage.removeItem(`strStart(${type})`);
-        localStorage.removeItem(`strEnd(${type})`);
+        localStorage.removeItem(`strStart(${PATH})`);
+        localStorage.removeItem(`strEnd(${PATH})`);
       }}>
         Reset
       </button>
