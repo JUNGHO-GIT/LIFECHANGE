@@ -2,121 +2,220 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import axios from "axios";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Money Detail";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const _id = location.state._id;
-  const money_section_id = location.state.money_section_id;
-  const {log} = useDeveloperMode();
+  const location_id = location?.state?.id.toString();
+  const location_date = location?.state?.date?.toString();
+  const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname;
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:planYn, set:setPlanYn} = useStorage(
+    `planYn(${PATH})`, "N"
+  );
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
+  );
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
+  );
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, location_date
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY, setMONEY] = useState ({});
+  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState({
+    _id: "",
+    money_number: 0,
+    money_date: "",
+    money_real : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    },
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    }
+  });
+  const [MONEY, setMONEY] = useState({
+    _id: "",
+    money_number: 0,
+    money_date: "",
+    money_real : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    },
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    }
+  });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchMoneyDetail = async () => {
-      try {
-        const response = await axios.get(`${URL_MONEY}/detail`, {
-          params: {
-            _id : _id,
-            money_section_id : money_section_id
-          },
-        });
-        setMONEY(response.data);
-        log("MONEY : " + JSON.stringify(response.data));
-      }
-      catch (e) {
-        alert(`Error fetching money data: ${e.message}`);
-        setMONEY({});
-      }
-    };
-    fetchMoneyDetail();
-  }, [_id]);
+    setStrDate(location_date);
+    setStrDur(`${location_date} ~ ${location_date}`);
+  }, [location_date]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setMONEY((prev) => ({
+      ...prev,
+      money_date: strDur
+    }));
+  }, [strDur]);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const response = await axios.get(`${URL_MONEY}/detail`, {
+      params: {
+        _id: location_id,
+        user_id: user_id,
+        money_dur: `${location_date} ~ ${location_date}`,
+        planYn: planYn,
+      },
+    });
+
+    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
+
+  })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowMoneyDelete = async () => {
-    try {
-      const confirm = window.confirm("Are you sure you want to delete?");
-      if (!confirm) {
-        return;
-      }
-      else {
-        const response = await axios.delete(`${URL_MONEY}/moneyDelete`, {
-          params: {
-            _id : _id,
-            money_section_id : money_section_id
-          },
-        });
-        if (response.data === "success") {
-          alert("Delete Success");
-          navParam(`/money/list`);
-        }
-        else {
-          alert("Delete failed");
-        }
-      }
+  const flowMoneyDelete = async (id) => {
+    const response = await axios.delete(`${URL_MONEY}/delete`, {
+      params: {
+        _id: id,
+        user_id: user_id,
+        money_dur: strDur,
+        planYn: planYn,
+      },
+    });
+    if (response.data === "success") {
+      alert("delete success");
+      navParam(`/money/list`);
     }
-    catch (e) {
-      alert(`Error fetching money data: ${e.message}`);
+    else {
+      alert("Delete failed");
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableMoneyDetail = () => {
+
+    const moneyType = planYn === "Y" ? "money_plan" : "money_real";
+
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
+      <table className="table bg-white table-hover">
+        <thead className="table-primary">
           <tr>
-            <th>Part</th>
-            <th>Title</th>
-            <th>Amount</th>
-            <th>Content</th>
+            <th>날짜</th>
+            <th>계획여부</th>
+            <th>시작</th>
+            <th>종료</th>
+            <th>시간</th>
+            <th>부위</th>
+            <th>종목</th>
+            <th>세트 x 횟수 x 무게</th>
+            <th>휴식</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {MONEY?.money_section?.flatMap((moneyItem) => (
-            <tr key={moneyItem._id}>
-              <td>{moneyItem.money_part_val}</td>
-              <td>{moneyItem.money_title_val}</td>
-              <td>{moneyItem.money_amount}</td>
-              <td>{moneyItem.money_content}</td>
-            </tr>
-          ))}
+          <tr>
+            <td className="fs-20 pt-20">
+              {MONEY.money_date}
+            </td>
+            <td>
+              <select
+                id="money_planYn"
+                name="money_planYn"
+                className="form-select"
+                value={planYn}
+                onChange={(e) => {
+                  setPlanYn(e.target.value);
+                }}
+              >
+                <option value="Y">목표</option>
+                <option value="N" selected>실제</option>
+              </select>
+            </td>
+            <td className="fs-20 pt-20">
+              {MONEY[moneyType].money_start}
+            </td>
+            <td className="fs-20 pt-20">
+              {MONEY[moneyType].money_end}
+            </td>
+            <td className="fs-20 pt-20">
+              {MONEY[moneyType].money_time}
+            </td>
+            <td colSpan={4}>
+              {MONEY[moneyType].money_section.map((item, index) => (
+                <div key={index} className="d-flex justify-content-between">
+                  <span>{item.money_part_val}</span>
+                  <span>{item.money_title_val}</span>
+                  <span>{item.money_set} x {item.money_count} x {item.money_kg}</span>
+                  <span>{item.money_rest}</span>
+                  <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => flowMoneyDelete(item._id)}>
+                    X
+                  </button>
+                </div>
+              ))}
+            </td>
+          </tr>
         </tbody>
       </table>
     );
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonMoneyDelete = () => {
+  const buttonMoneyUpdate = () => {
     return (
-      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={flowMoneyDelete}>
-        Delete
-      </button>
-    );
-  };
-  const buttonMoneyUpdate = (_id) => {
-    return (
-      <button
-        type="button"
-        className="btn btn-sm btn-primary ms-2"
-        onClick={() => {
-          navParam(`/money/update`, {
-            state: {_id},
-          });
-        }}>
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
+        navParam(`/money/save`, {
+          state: {
+            money_date: strDate,
+          }
+        });
+      }}>
         Update
       </button>
     );
@@ -144,21 +243,15 @@ export const MoneyDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center mt-5">
+        <div className="row d-center mb-20">
           <div className="col-12">
-            <h1 className="mb-3 fw-7">{TITLE}</h1>
-          </div>
-        </div>
-        <div className="row d-center mt-5">
-          <div className="col-12 d-center">
             {tableMoneyDetail()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
+        <div className="row d-center">
+          <div className="col-12">
+            {buttonMoneyUpdate()}
             {buttonRefreshPage()}
-            {buttonMoneyUpdate(MONEY._id)}
-            {buttonMoneyDelete()}
             {buttonMoneyList()}
           </div>
         </div>

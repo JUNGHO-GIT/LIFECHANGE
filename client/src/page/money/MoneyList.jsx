@@ -2,263 +2,425 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayClickEventHandler, DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/js/useStorage.jsx";
+import {DayPicker} from "react-day-picker";
+import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
-import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {moneyPartArray, moneyTitleArray} from "./MoneyArray.jsx";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+import {differenceInDays} from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Money List Day";
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
-  const {log} = useDeveloperMode();
+  const PATH = location.pathname;
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:MONEY_LIST, set:setMONEY_LIST} = useStorage(
-    "moneyList(DAY)", []
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:calendarOpen, set:setCalendarOpen} = useStorage(
+    `calendarOpen(${PATH})`, false
   );
-  const {val:MONEY_AVERAGE, set:setMONEY_AVERAGE} = useStorage(
-    "moneyAvg(DAY)", []
+  const {val:totalCount, set:setTotalCount} = useStorage(
+    `totalCount(${PATH})`, 0
   );
-  const {val:moneyDay, set:setMoneyDay} = useStorage(
-    "moneyDay(DAY)", undefined
+  const {val:type, set:setType} = useStorage(
+    `type(${PATH})`, "day"
   );
-  const {val:moneyResVal, set:setMoneyResVal} = useStorage(
-    "moneyResVal(DAY)", undefined
+  const {val:filter, set:setFilter} = useStorage(
+    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
   );
-  const {val:moneyResDur, set:setMoneyResDur} = useStorage(
-    "moneyResDur(DAY)", "0000-00-00 ~ 0000-00-00"
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
   );
-  const {val:moneyPart, set:setMoneyPart} = useStorage(
-    "moneyPart(DAY)", "전체"
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
   );
-  const {val:moneyTitle, set:setMoneyTitle} = useStorage(
-    "moneyTitle(DAY)", "전체"
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, koreanDate
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${koreanDate} ~ ${koreanDate}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [moneyType, setMoneyType] = useState("list");
-  const [moneyNumber, setMoneyNumber] = useState(0);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-
-    // 1. list
-    const fetchMoneyList = async () => {
-      try {
-        const response = await axios.get(`${URL_MONEY}/list`, {
-          params: {
-            user_id : user_id,
-            money_dur : moneyResDur,
-          },
-        });
-        setMONEY_LIST(response.data);
-        log("MONEY_LIST " + JSON.stringify(response.data));
-      }
-      catch (e) {
-        setMONEY_LIST([]);
-        alert(`Error fetching money data: ${e.message}`);
-      }
-    };
-    fetchMoneyList();
-
-    // 2. average
-    const fetchMoneyAvg = async () => {
-      try {
-        const response = await axios.get (`${URL_MONEY}/moneyAvg`, {
-          params: {
-            user_id: user_id,
-            money_dur: moneyResDur,
-            money_part_val: moneyPart,
-            money_title_val: moneyTitle,
-          },
-        });
-        setMONEY_AVERAGE(response.data);
-        log("MONEY_AVERAGE " + JSON.stringify(response.data));
-      }
-      catch (e) {
-        setMONEY_AVERAGE([]);
-        alert(`Error fetching money data: ${e.message}`);
-      }
-    };
-    fetchMoneyAvg();
-  }, [user_id, moneyResDur, moneyPart, moneyTitle]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const formatVal = (value) => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-    if (moneyDay) {
-      const year = formatVal(moneyDay.getFullYear());
-      const month = formatVal(moneyDay.getMonth() + 1);
-      const date = formatVal(moneyDay.getDate());
-      setMoneyResVal(parseISO(`${year}-${month}-${date}`));
-      setMoneyResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
+    _id: "",
+    money_number: 0,
+    money_date: "",
+    money_real : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    },
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
     }
-  }, [moneyDay]);
+  }]);
+  const [MONEY, setMONEY] = useState([{
+    _id: "",
+    money_number: 0,
+    money_date: "",
+    money_real : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    },
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    }
+  }]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+
+    const response = await axios.get(`${URL_MONEY}/list`, {
+      params: {
+        user_id: user_id,
+        money_dur: strDur,
+        filter: filter
+      },
+    });
+
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
+
+  })()}, [strDur, filter]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    if (type === "day") {
+      setStrDur(`${strDate} ~ ${strDate}`);
+    }
+    else if (type === "week") {
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
+    }
+    else if (type === "month") {
+      setStrDur(`${moment(strDate).startOf("month").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("month").format("YYYY-MM-DD")}`);
+    }
+    else if (type === "year") {
+      setStrDur(`${moment(strDate).startOf("year").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("year").format("YYYY-MM-DD")}`);
+    }
+    else if (type === "select") {
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
+    }
+  }, [type, strDate, strStartDate, strEndDate]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
-  const viewMoneyDay = () => {
-    const flowDayClick: DayClickEventHandler = (day) => {
-      setMoneyDay(day);
+  const viewMoneyList = () => {
+    let dayPicker;
+    if (type === "day") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="single"
+          selected={new Date(strDate)}
+          onDayClick={(day) => {
+            setStrDate(moment(day).format("YYYY-MM-DD"));
+          }}
+          onMonthChange={(month) => {
+            setStrDate(moment(month).format("YYYY-MM-DD"));
+          }}
+        />
+      );
+    };
+    if (type === "week") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="range"
+          selected={strStartDate && strEndDate && {from: new Date(strStartDate), to: new Date(strEndDate)}}
+          month={strStartDate && strEndDate && new Date(strStartDate)}
+          onDayClick={(day) => {
+            const selectedDate = moment(day);
+            const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
+            const endOfWeek = startOfWeek.clone().add(6, "days");
+            setStrStartDate(moment(startOfWeek).format("YYYY-MM-DD"));
+            setStrEndDate(moment(endOfWeek).format("YYYY-MM-DD"));
+          }}
+          onMonthChange={(month) => {
+            setStrStartDate(month);
+            setStrEndDate(undefined);
+          }}
+        />
+      );
+    }
+    if (type === "month") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="default"
+          month={new Date(strDur.split(" ~ ")[0])}
+          onMonthChange={(month) => {
+            const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
+            const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
+            setStrDur(`${startOfMonth} ~ ${endOfMonth}`);
+          }}
+        />
+      );
+    }
+    if (type === "year") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="default"
+          month={new Date(strDur.split(" ~ ")[0])}
+          onMonthChange={(year) => {
+            const yearDate = new Date(year.getFullYear(), 0, 1);
+            const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
+            const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
+            const prevMonth = differenceInDays(monthDate, yearDate) / 30;
+            if (nextMonth > prevMonth) {
+              setStrDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
+            }
+            else {
+              setStrDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
+            }
+          }}
+        />
+      );
+    };
+    if (type === "select") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="range"
+          selected={strStartDate && strEndDate && {from: strStartDate, to: strEndDate}}
+          month={strStartDate}
+          onDayClick= {(day) => {
+            const selectedDay = new Date(day);
+            const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
+            if (strStartDate && strEndDate) {
+              if (selectedDay < new Date(strStartDate)) {
+                setStrStartDate(fmtDate);
+                setStrEndDate(fmtDate);
+              }
+              else if (selectedDay > new Date(strEndDate)) {
+                setStrEndDate(fmtDate);
+              }
+              else {
+                setStrStartDate(fmtDate);
+                setStrEndDate(fmtDate);
+              }
+            }
+            else if (strStartDate) {
+              if (selectedDay < new Date(strStartDate)) {
+                setStrEndDate(strStartDate);
+                setStrStartDate(fmtDate);
+              }
+              else if (selectedDay > new Date(strStartDate)) {
+                setStrEndDate(fmtDate);
+              }
+              else {
+                setStrStartDate(undefined);
+                setStrEndDate(undefined);
+              }
+            }
+            else {
+              setStrStartDate(fmtDate);
+            }
+          }}
+          onMonthChange={(month) => {
+            setStrStartDate(new Date(month.getFullYear(), month.getMonth(), 1));
+            setStrEndDate(undefined);
+          }}
+        />
+      );
     };
     return (
-      <DayPicker
-        mode="single"
-        showOutsideDays
-        selected={moneyDay}
-        month={moneyDay}
-        locale={ko}
-        weekStartsOn={1}
-        onDayClick={flowDayClick}
-        onMonthChange={(month) => {
-          setMoneyDay(month);
-        }}
-        modifiersClassNames={{
-          selected: "selected",
-          disabled: "disabled",
-          outside: "outside",
-          inside: "inside",
-        }}
-      />
+      <Draggable>
+        <div className={`dayPicker-container ${calendarOpen ? "" : "d-none"}`}>
+          <span
+            className="d-right fw-700 pointer"
+            onClick={() => setCalendarOpen(false)}
+            style={{position: "absolute", right: "15px", top: "10px"}}
+          >
+            X
+          </span>
+          <div className="h-2"></div>
+          {dayPicker}
+        </div>
+      </Draggable>
     );
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableMoneyList = () => {
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
+      <table className="table bg-white table-hover">
+        <thead className="table-primary">
           <tr>
-            <th>Part</th>
-            <th>Title</th>
-            <th>Amount</th>
-            <th>Content</th>
+            <th>날짜</th>
+            <th>분류</th>
+            <th>목표</th>
+            <th>실제</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {MONEY_LIST.map((moneyItem ) => {
-            return moneyItem.money_section.map((money_section) => (
-              <tr key={money_section._id}>
-                <td
-                  className="pointer"
-                  onClick={() => {
-                    navParam("/money/detail", {
-                      state: {
-                        _id : moneyItem._id,
-                        money_section_id : money_section._id
-                      },
-                    });
-                  }}>
-                  {money_section.money_part_val}
+          {MONEY.map((item) => (
+            <React.Fragment key={item.money_date}>
+              <tr>
+                <td rowSpan={6} className="pointer" onClick={() => {
+                  navParam("/money/detail", {
+                    state: {
+                      id: item._id,
+                      date: item.money_date,
+                    },
+                  });
+                }}>
+                  {item.money_date}
                 </td>
-                <td>{money_section.money_title_val}</td>
-                <td>{money_section.money_amount}</td>
-                <td>{money_section.money_content}</td>
               </tr>
-            ));
-          })}
+              {item.money_plan.money_section.map((section, index) => (
+                <tr key={index}>
+                  <td>{section.money_part_val} - {section.money_title_val}</td>
+                  <td>{section.money_amount}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              ))}
+              {item.money_real.money_section.map((section, index) => (
+                <tr key={index}>
+                  <td>{section.money_part_val} - {section.money_title_val}</td>
+                  <td></td>
+                  <td>{section.money_amount}</td>
+                  <td></td>
+                </tr>
+              ))}
+            </React.Fragment>
+          ))}
         </tbody>
       </table>
     );
   };
 
-  // 5-2. table ----------------------------------------------------------------------------------->
-  const tableMoneyAvg = () => {
+  // 5-2. filter ---------------------------------------------------------------------------------->
+  const filterBox = () => {
+    const pageNumber = () => {
+      const pages = [];
+      const totalPages = Math.ceil(totalCount / filter.limit);
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(
+          <button
+            key={i}
+            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
+            onClick={() => setFilter({
+              ...filter, page: i
+            })}
+          >
+            {i}
+          </button>
+        );
+      }
+      return pages;
+    };
+    const prevNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1) }
+          )}
+        >
+          이전
+        </button>
+      );
+    }
+    const nextNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({
+            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) }
+          )}
+        >
+          다음
+        </button>
+      );
+    }
     return (
-      <div>
-        <div className="row d-center">
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">대분류</span>
-              <select
-                className="form-control"
-                id={`money_part_val`}
-                value={moneyPart}
-                onChange={(e) => {
-                  setMoneyPart(e.target.value);
-                  const index = moneyPartArray.findIndex(
-                    (item) => item.money_part[0] === e.target.value
-                  );
-                  setMoneyTitle("전체");
-                  setMoneyNumber(index);
-                }}>
-                {moneyPartArray.map((value, key) => (
-                  <option key={key} value={value.money_part[0]}>
-                    {value.money_part[0]}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">소분류</span>
-              <select
-                className="form-control"
-                id={`money_title_val`}
-                value={moneyTitle}
-                onChange={(e) => {
-                  setMoneyTitle(e.target.value);
-                }}>
-                {moneyTitleArray[moneyNumber].money_title.map((value, key) => (
-                  <option key={key} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-12">
-            <table className="table table-bordered table-hover">
-              <thead className="table-dark">
-                <tr>
-                  <th>Part</th>
-                  <th>Title</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {MONEY_AVERAGE?.map((moneyItem, index) => (
-                  <tr key={index}>
-                    <td>{moneyItem.money_part_val}</td>
-                    <td>{moneyItem.money_title_val}</td>
-                    <td>{moneyItem.money_amount_avg}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div className="d-inline-flex">
+        {prevNumber()}
+        {pageNumber()}
+        {nextNumber()}
       </div>
     );
   };
 
-  // 6-1. button ---------------------------------------------------------------------------------->
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonCalendar = () => {
+    return (
+      <button
+        type="button"
+        className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
+        onClick={() => setCalendarOpen(!calendarOpen)}
+      >
+        {calendarOpen ? "x" : "o"}
+      </button>
+    );
+  };
   const buttonMoneyToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setMoneyDay(koreanDate);
-        setMoneyPart("전체");
-        setMoneyTitle("전체");
-        localStorage.removeItem("moneyList(DAY)");
-        localStorage.removeItem("moneyAvg(DAY)");
-        localStorage.removeItem("moneyDay(DAY)");
-        localStorage.removeItem("moneyPart(DAY)");
-        localStorage.removeItem("moneyTitle(DAY)");
+        setStrDate(koreanDate);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Today
       </button>
@@ -267,50 +429,67 @@ export const MoneyList = () => {
   const buttonMoneyReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setMoneyDay(koreanDate);
-        setMoneyPart("전체");
-        setMoneyTitle("전체");
-        localStorage.removeItem("moneyList(DAY)");
-        localStorage.removeItem("moneyAvg(DAY)");
-        localStorage.removeItem("moneyDay(DAY)");
-        localStorage.removeItem("moneyPart(DAY)");
-        localStorage.removeItem("moneyTitle(DAY)");
+        setStrDate(koreanDate);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Reset
       </button>
     );
   };
 
-  // 6-2. select  --------------------------------------------------------------------------------->
-  const selectMoneyList = () => {
-    const currentPath = location.pathname || "";
+  // 6-2. select ---------------------------------------------------------------------------------->
+  const selectMoneyType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="moneyList" value={currentPath} onChange={(e) => {
-          navParam(e.target.value);
+        <select className="form-select" id="typePre" onChange={(e) => {
+          if (e.target.value === "day") {
+            setType("day");
+          }
+          else if (e.target.value === "week") {
+            setType("week");
+          }
+          else if (e.target.value === "month") {
+            setType("month");
+          }
+          else if (e.target.value === "year") {
+            setType("year");
+          }
+          else if (e.target.value === "select") {
+            setType("select");
+          }
         }}>
-          <option value="/moneyList">Day</option>
-          <option value="/moneyListWeek">Week</option>
-          <option value="/moneyListMonth">Month</option>
-          <option value="/moneyListYear">Year</option>
-          <option value="/moneyListSelect">Select</option>
+          <option value="day">Day</option>
+          <option value="week">Week</option>
+          <option value="month">Month</option>
+          <option value="year">Year</option>
+          <option value="select">Select</option>
         </select>
       </div>
     );
   };
-  const selectMoneyType = () => {
+
+  // 6-3. select ---------------------------------------------------------------------------------->
+  const selectFilterSub = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="moneyType" onChange={(e) => {
-          if (e.target.value === "list") {
-            setMoneyType("list");
-          }
-          else if (e.target.value === "avg") {
-            setMoneyType("avg");
-          }
+        <select className="form-select" id="moneyListSortOrder" onChange={(e) => {
+          setFilter({...filter, order: e.target.value});
         }}>
-          <option value="list">List</option>
-          <option value="avg">Avg</option>
+          <option value="asc" selected>오름차순</option>
+          <option value="desc">내림차순</option>
+        </select>
+      </div>
+    );
+  };
+  const selectFilterPage = () => {
+    return (
+      <div className="mb-3">
+        <select className="form-select" id="moneyListLimit" onChange={(e) => {
+          setFilter({...filter, limit: Number(e.target.value)});
+        }}>
+          <option value="5" selected>5</option>
+          <option value="10">10</option>
         </select>
       </div>
     );
@@ -320,31 +499,33 @@ export const MoneyList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center mt-5">
-          <div className="col-12">
-            <h1 className="mb-3 fw-7">{TITLE}</h1>
-            <h2 className="mb-3 fw-7">일별로 조회</h2>
+        <div className="row mb-20">
+          <div className="col-1">
+            {viewMoneyList()}
           </div>
-        </div>
-        <div className="row d-center mt-3">
-          <div className="col-3">
-            {selectMoneyList()}
-          </div>
-          <div className="col-3">
+          <div className="col-2">
             {selectMoneyType()}
           </div>
-        </div>
-        <div className="row d-center mt-3">
-          <div className="col-md-6 col-12 d-center">
-            {viewMoneyDay()}
+          <div className="col-2">
+            {selectFilterSub()}
           </div>
-          <div className="col-md-6 col-12">
-            {moneyType === "list" && tableMoneyList()}
-            {moneyType === "avg" && tableMoneyAvg()}
+          <div className="col-2">
+            {selectFilterPage()}
           </div>
         </div>
         <div className="row mb-20">
           <div className="col-12 d-center">
+            {tableMoneyList()}
+          </div>
+        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {filterBox()}
+          </div>
+        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {buttonCalendar()}
             {buttonMoneyToday()}
             {buttonMoneyReset()}
           </div>

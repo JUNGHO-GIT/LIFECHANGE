@@ -115,7 +115,7 @@ const Money = () => {
     <Routes>
       <Route path="/save" element={<MoneySave />} />
       <Route path="/detail" element={<MoneyDetail />} />
-      <Route path="/list/day" element={<MoneyList />} />
+      <Route path="/list" element={<MoneyList />} />
     </Routes>
   );
 };

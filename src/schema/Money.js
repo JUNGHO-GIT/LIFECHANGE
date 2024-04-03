@@ -1,27 +1,10 @@
 // Money.js
 
 import mongoose from "mongoose";
-import moment from "moment-timezone";
 import {incrementSeq} from "./Counter.js";
 
-// 1. schema -------------------------------------------------------------------------------------->
-const schema = new mongoose.Schema({
-
-  // 1. id
-  _id : {
-    type : mongoose.Schema.Types.ObjectId,
-    required : true
-  },
-  money_number : {
-    type : Number,
-    unique : true
-  },
-  user_id : {
-    type :String,
-    required : true
-  },
-
-  // 2. section
+// 1. section ------------------------------------------------------------------------------------->
+const sectionSchema = new mongoose.Schema({
   money_section: [{
     money_part_idx : {
       type : Number,
@@ -41,46 +24,42 @@ const schema = new mongoose.Schema({
     },
     money_amount : {
       type : Number,
-      required : true
+      required : false
     },
     money_content :{
       type : String,
-      required : true
+      required : false
     },
   }],
+});
 
-  // 3. components
-  money_planYn : {
-    type : String,
-    default : "N",
-    required : true
+// 2. main ---------------------------------------------------------------------------------------->
+const schema = new mongoose.Schema({
+  user_id: {
+    type: String,
+    required: true
   },
-
-  // 4. date
-  money_date : {
-    type : String,
-    default : () => {
-      return "";
-    },
-    required : true
+  money_number: {
+    type : Number,
+    unique : true
   },
-  money_regdate : {
-    type : String,
-    default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-    },
-    required : true
+  money_date: {
+    type: String,
+    required: false
   },
-  money_update : {
-    type : String,
-    default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-    },
-    required : true
+  money_plan: sectionSchema,
+  money_real: sectionSchema,
+  money_regdate: {
+    type: String,
+    required: false
+  },
+  money_update: {
+    type: String,
+    required: false
   }
 });
 
-// 2. counter ------------------------------------------------------------------------------------->
+// 3. counter ------------------------------------------------------------------------------------->
 schema.pre("save", async function(next) {
   if (this.isNew) {
     this.money_number = await incrementSeq("money_number", "Money");
@@ -88,7 +67,7 @@ schema.pre("save", async function(next) {
   next();
 });
 
-// 3. model --------------------------------------------------------------------------------------->
+// 5. model --------------------------------------------------------------------------------------->
 export const Money = mongoose.model(
   "Money", schema
 );

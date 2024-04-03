@@ -1,207 +1,186 @@
 // moneyService.js
 
 import mongoose from "mongoose";
+import moment from "moment";
 import {Money} from "../schema/Money.js";
-import {moneyPartAll, moneyTitleAll} from "../assets/js/moneyArray.js";
+
+// 0-0. today ------------------------------------------------------------------------------------->
+const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
-  money_dur_param
+  money_dur_param,
+  filter_param
 ) => {
 
-  let findQuery;
-  let findResult;
-  let finalResult;
+  const [startDay, endDay] = money_dur_param.split(` ~ `);
 
-  const startDay = money_dur_param.split(` ~ `)[0];
-  const endDay = money_dur_param.split(` ~ `)[1];
+  const filter = filter_param.order;
+  const page = filter_param.page === 0 ? 1 : filter_param.page;
+  const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const sort = filter === "asc" ? 1 : -1;
 
-  findQuery = {
+  const findResult = Money.find({
     user_id: user_id_param,
     money_date: {
       $gte: startDay,
       $lte: endDay,
     }
+  })
+
+  const finalResult = await findResult
+  .sort({money_date: sort})
+  .skip((page - 1) * limit)
+  .limit(limit);
+
+  const totalCount = await Money.countDocuments(findResult);
+
+  return {
+    totalCount: totalCount,
+    result: finalResult,
   };
-
-  findResult = await Money.find(findQuery).sort({ money_date: -1 });
-
-  return findResult;
-};
-
-// 1-2. avg --------------------------------------------------------------------------------------->
-export const avg = async (
-  user_id_param,
-  money_dur_param,
-  money_part_val_param,
-  money_title_val_param
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  const startDay = money_dur_param.split(` ~ `)[0];
-  const endDay = money_dur_param.split(` ~ `)[1];
-
-  if (money_part_val_param === "전체") {
-    let money_part_before = moneyPartAll[0].toString();
-    money_part_val_param = money_part_before.replace(/,/g, "|");
-  }
-
-  if (money_title_val_param === "전체") {
-    let money_title_before = moneyTitleAll[0].money_title.toString();
-    money_title_val_param = money_title_before.replace(/,/g, "|");
-  }
-
-  findQuery = [
-    {$unwind: "$money_section"},
-    {$match: {
-      user_id: user_id_param,
-      "money_section.money_part_val": {$regex: money_part_val_param},
-      "money_section.money_title_val": {$regex: money_title_val_param},
-      money_date: {
-        $gte: startDay,
-        $lte: endDay,
-      },
-    }},
-    {$group: {
-      _id: "$money_section.money_title_val",
-      count: {$sum: 1},
-      money_part_val: {$first: "$money_section.money_part_val"},
-      money_title_val: {$first: "$money_section.money_title_val"},
-      money_amount_avg: {$avg: "$money_section.money_amount"},
-    }}
-  ];
-
-  findResult = await Money.aggregate(findQuery).sort({ _id: 1 });
-
-  return findResult;
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
   _id_param,
-  money_section_id_param
+  user_id_param,
+  money_dur_param,
+  planYn_param
 ) => {
 
-  let findQuery;
-  let findResult;
-  let finalResult;
-  let moneySchema;
+  const [startDay, endDay] = money_dur_param.split(` ~ `);
 
-  if (!money_section_id_param) {
-    findQuery = {
-      _id: _id_param
+  const finalResult = await Money.findOne({
+    _id: _id_param === "" ? {$exists: true} : _id_param,
+    user_id: user_id_param,
+    money_date: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  });
+
+  const realCount = finalResult?.money_real !== undefined ? 1 : 0;
+  const planCount = finalResult?.money_plan !== undefined ? 1 : 0;
+
+  return {
+    realCount: realCount,
+    planCount: planCount,
+    result: finalResult,
+  };
+};
+
+// 3. save ---------------------------------------------------------------------------------------->
+export const save = async (
+  user_id_param,
+  MONEY_param,
+  money_dur_param,
+  planYn_param
+) => {
+
+  const [startDay, endDay] = money_dur_param.split(` ~ `);
+
+  const findResult = await Money.findOne({
+    user_id: user_id_param,
+    money_date: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  });
+
+  let finalResult;
+  if (!findResult) {
+    const createQuery = {
+      _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
+      money_date: startDay,
+      money_real: MONEY_param.money_real,
+      money_plan: MONEY_param.money_plan,
+      money_regdate: today,
+      money_update: "",
     };
-    findResult = await Money.findOne(findQuery);
-    finalResult = findResult;
+    finalResult = await Money.create(createQuery);
   }
   else {
-    findQuery = {
-      _id: _id_param
+    const updateQuery = {
+      _id: findResult._id
     };
-    findResult = await Money.findOne(findQuery);
-    moneySchema = findResult;
+    const updateAction = planYn_param === "Y"
+    ? {$set: {
+      money_plan: MONEY_param.money_plan,
+      money_update: today,
+    }}
+    : {$set: {
+      money_real: MONEY_param.money_real,
+      money_update: today,
+    }}
 
-    if (moneySchema) {
-      const matchedSection = moneySchema.money_section?.find((section) => {
-        return section._id.toString() === money_section_id_param.toString();
-      });
-      finalResult = {
-        ...moneySchema.toObject(),
-        money_section: [matchedSection]
-      };
-    }
+    finalResult = await Money.updateOne(updateQuery, updateAction);
   }
-  return finalResult;
-};
 
-// 3. insert -------------------------------------------------------------------------------------->
-export const insert = async (
-  user_id_param,
-  MONEY_param
-) => {
-
-  let createQuery;
-  let createResult;
-  let finalResult;
-
-  createQuery = {
-    _id : new mongoose.Types.ObjectId(),
-    user_id : user_id_param,
-    money_section : MONEY_param.money_section,
-    money_planYn : MONEY_param.money_planYn,
-    money_date : MONEY_param.moneyDay,
-    money_regdate : MONEY_param.money_regdate,
-    money_update : MONEY_param.money_update,
+  return {
+    result: finalResult,
   };
-
-  createResult = await Money.create(createQuery);
-
-  return createResult;
 };
 
-// 4. update -------------------------------------------------------------------------------------->
-export const update = async (
-  _id_param,
-  MONEY_param
-) => {
-
-  let updateQuery;
-  let updateResult;
-  let finalResult;
-
-  updateQuery = {
-    filter_id : {_id : _id_param},
-    filter_set : {$set : MONEY_param}
-  };
-
-  updateResult = await MONEY_param.updateOne(
-    updateQuery.filter_id,
-    updateQuery.filter_set
-  );
-
-  return updateResult;
-};
-
-// 5. deletes ------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
   _id_param,
-  money_section_id_param
+  user_id_param,
+  money_dur_param,
+  planYn_param
 ) => {
 
-  let deleteQuery;
-  let deleteResult;
+  const [startDay, endDay] = money_dur_param.split(` ~ `);
+
+  const updateResult = await Money.updateOne(
+    {
+      user_id: user_id_param,
+      money_date: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+    },
+    {
+      $pull: {
+        [`money_${planYn_param === "Y" ? "plan" : "real"}.money_section`]: {
+          _id: _id_param
+        },
+      },
+      $set: {
+        money_update: today,
+      },
+    },
+    {
+      arrayFilters: [{
+        "elem._id": _id_param
+      }],
+    }
+  );
+
   let finalResult;
+  if (updateResult.modifiedCount > 0) {
+    const doc = await Money.findOne({
+      user_id: user_id_param,
+      money_date: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+    });
 
-  // money_section_id_param이 제공되면 해당 섹션만 삭제
-  // 여기서는 $pull 연산자를 사용하여 배열에서 특정 항목을 삭제
-  // 이 연산자는 주어진 조건에 일치하는 항목을 배열에서 제거
-  if (
-    money_section_id_param !== null &&
-    money_section_id_param !== undefined &&
-    money_section_id_param !== ""
-  ) {
-    deleteResult = await Money.updateOne([
-      {_id: _id_param},
-      {$pull: {
-        money_section: { _id: money_section_id_param }
-      }}
-    ]);
+    if (
+      doc
+      && (!doc.money_plan?.money_section || doc.money_plan?.money_section.length === 0)
+      && (!doc.money_real?.money_section || doc.money_real?.money_section.length === 0)
+    ) {
+      finalResult = await Money.deleteOne({
+        _id: doc._id
+      });
+    }
   }
 
-  // money_section_id_param이 제공되지 않으면 전체 작업을 삭제
-  else if (
-    money_section_id_param === null ||
-    money_section_id_param === undefined ||
-    money_section_id_param === ""
-  ) {
-    deleteQuery = {
-      _id: _id_param
-    };
-    deleteResult = await Money.deleteOne(deleteQuery);
-  }
-  return deleteResult;
+  return {
+    result: finalResult
+  };
 };

@@ -9,29 +9,8 @@ moneyRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.money_dur
-    );
-    if (result) {
-      res.send(result);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 1-2. avg --------------------------------------------------------------------------------------->
-moneyRouter.get("/avg", async (req, res) => {
-  try {
-    const result = await service.avg (
-      req.query.user_id,
       req.query.money_dur,
-      req.query.money_part_val,
-      req.query.money_title_val,
+      req.query.filter
     );
     if (result) {
       res.send(result);
@@ -51,7 +30,9 @@ moneyRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
-      req.query.money_section_id
+      req.query.user_id,
+      req.query.money_dur,
+      req.query.planYn
     );
     if (result) {
       res.send(result);
@@ -66,12 +47,14 @@ moneyRouter.get("/detail", async (req, res) => {
   }
 });
 
-// 3. insert -------------------------------------------------------------------------------------->
+// 3. save ---------------------------------------------------------------------------------------->
 moneyRouter.post("/save", async (req, res) => {
   try {
-    const result = await service.insert (
+    const result = await service.save (
       req.body.user_id,
-      req.body.MONEY
+      req.body.MONEY,
+      req.body.money_dur,
+      req.body.planYn
     );
     if (result) {
       res.send("success");
@@ -86,32 +69,14 @@ moneyRouter.post("/save", async (req, res) => {
   }
 });
 
-// 4. update -------------------------------------------------------------------------------------->
-moneyRouter.put("/update", async (req, res) => {
-  try {
-    const result = await service.update (
-      req.body._id,
-      req.body.MONEY
-    );
-    if (result) {
-      res.send("success");
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 5. deletes ------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 moneyRouter.delete("/delete", async (req, res) => {
   try {
-    const result = await service.deletes (
+    const result = await service.deletes(
       req.query._id,
-      req.query.money_section_id
+      req.query.user_id,
+      req.query.money_dur,
+      req.query.planYn
     );
     if (result) {
       res.send("success");

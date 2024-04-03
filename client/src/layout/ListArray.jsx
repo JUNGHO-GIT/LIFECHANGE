@@ -28,6 +28,13 @@ export const listArray = [
     ]
   },
   {
+    label: "Money",
+    items: [
+      {to: "/money/dash", label: "MoneyDash"},
+      {to: "/money/list", label: "MoneyList"}
+    ]
+  },
+  {
     label: "Work",
     items: [
       {to: "/work/dash", label: "WorkDash"},
@@ -39,12 +46,6 @@ export const listArray = [
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
       {to: "/sleep/list", label: "SleepList"}
-    ]
-  },
-  {
-    label: "Money",
-    items: [
-      {to: "/money/list", label: "MoneyList"}
     ]
   }
 ];

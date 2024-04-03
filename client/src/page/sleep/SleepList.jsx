@@ -8,6 +8,7 @@ import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
+import { differenceInDays } from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
@@ -181,8 +182,8 @@ export const SleepList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode={undefined}
-          month={new Date(strDur.split(" ~ "))}
+          mode="default"
+          month={new Date(strDur.split(" ~ ")[0])}
           onMonthChange={(month) => {
             const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
             const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
@@ -200,11 +201,19 @@ export const SleepList = () => {
           modifiersClassNames={{
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
-          mode={undefined}
-          onMonthChange={(month) => {
-            const startOfYear = moment(month).startOf("year").format("YYYY-MM-DD");
-            const endOfYear = moment(month).endOf("year").format("YYYY-MM-DD");
-            setStrDur(`${startOfYear} ~ ${endOfYear}`);
+          mode="default"
+          month={new Date(strDur.split(" ~ ")[0])}
+          onMonthChange={(year) => {
+            const yearDate = new Date(year.getFullYear(), 0, 1);
+            const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
+            const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
+            const prevMonth = differenceInDays(monthDate, yearDate) / 30;
+            if (nextMonth > prevMonth) {
+              setStrDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
+            }
+            else {
+              setStrDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
+            }
           }}
         />
       );
@@ -219,24 +228,31 @@ export const SleepList = () => {
             selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
           }}
           mode="range"
-          selected={strStartDate && strEndDate && {from:new Date(strStartDate), to:new Date(strEndDate)}}
-          month={strStartDate && strEndDate && new Date(strStartDate)}
+          selected={strStartDate && strEndDate && {from: strStartDate, to: strEndDate}}
+          month={strStartDate}
           onDayClick= {(day) => {
             const selectedDay = new Date(day);
-            const startDay = strStartDate ? new Date(strStartDate) : null;
-            const endDay = strEndDate ? new Date(strEndDate) : null;
-
-            if (startDay && endDay) {
-              setStrStartDate(moment(day).format("YYYY-MM-DD"));
-              setStrEndDate(undefined);
-            }
-            else if (startDay) {
-              if (selectedDay < startDay) {
-                setStrEndDate(moment(startDay).format("YYYY-MM-DD"));
-                setStrStartDate(moment(day).format("YYYY-MM-DD"));
+            const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
+            if (strStartDate && strEndDate) {
+              if (selectedDay < new Date(strStartDate)) {
+                setStrStartDate(fmtDate);
+                setStrEndDate(fmtDate);
               }
-              else if (selectedDay > startDay) {
-                setStrEndDate(moment(day).format("YYYY-MM-DD"));
+              else if (selectedDay > new Date(strEndDate)) {
+                setStrEndDate(fmtDate);
+              }
+              else {
+                setStrStartDate(fmtDate);
+                setStrEndDate(fmtDate);
+              }
+            }
+            else if (strStartDate) {
+              if (selectedDay < new Date(strStartDate)) {
+                setStrEndDate(strStartDate);
+                setStrStartDate(fmtDate);
+              }
+              else if (selectedDay > new Date(strStartDate)) {
+                setStrEndDate(fmtDate);
               }
               else {
                 setStrStartDate(undefined);
@@ -244,7 +260,7 @@ export const SleepList = () => {
               }
             }
             else {
-              setStrStartDate(moment(day).format("YYYY-MM-DD"));
+              setStrStartDate(fmtDate);
             }
           }}
           onMonthChange={(month) => {
