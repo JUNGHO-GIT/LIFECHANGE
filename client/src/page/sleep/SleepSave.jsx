@@ -20,6 +20,12 @@ export const SleepSave = () => {
   const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoList:"/sleep/list",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
@@ -164,7 +170,7 @@ export const SleepSave = () => {
     });
     if (response.data === "success") {
       alert("Save a sleep successfully");
-      navParam("/sleep/list");
+      navParam(STATE.intoList);
     }
     else if (response.data === "fail") {
       alert("Save a sleep failed");
@@ -321,7 +327,7 @@ export const SleepSave = () => {
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(0);
+        navParam(STATE.refresh);
       }}>
         Refresh
       </button>

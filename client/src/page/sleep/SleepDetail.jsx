@@ -18,6 +18,13 @@ export const SleepDetail = () => {
   const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoList:"/sleep/list",
+    intoSave:"/sleep/save",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
@@ -117,7 +124,7 @@ export const SleepDetail = () => {
     });
     if (response.data === "success") {
       alert("delete success");
-      navParam(`/sleep/list`);
+      navParam(STATE.intoList);
     }
     else {
       alert("Delete failed");
@@ -188,10 +195,9 @@ export const SleepDetail = () => {
   const buttonSleepUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        navParam(`/sleep/save`, {
-          state: {
-            sleep_date: strDate,
-          }
+        STATE.date = strDate;
+        navParam(STATE.intoSave, {
+          state: STATE,
         });
       }}>
         Update
@@ -201,7 +207,7 @@ export const SleepDetail = () => {
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(0);
+        navParam(STATE.refresh);
       }}>
         Refresh
       </button>
@@ -210,7 +216,7 @@ export const SleepDetail = () => {
   const buttonSleepList = () => {
     return (
       <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(`/sleep/list`);
+        navParam(STATE.intoList);
       }}>
         List
       </button>

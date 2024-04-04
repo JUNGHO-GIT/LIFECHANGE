@@ -20,6 +20,12 @@ export const WorkList = () => {
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoDetail:"/work/detail",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:calendarOpen, set:setCalendarOpen} = useStorage(
@@ -337,11 +343,10 @@ export const WorkList = () => {
             <React.Fragment key={item.work_date}>
               <tr>
                 <td rowSpan={6} className="pointer" onClick={() => {
-                  navParam("/work/detail", {
-                    state: {
-                      id: item._id,
-                      date: item.work_date,
-                    },
+                  STATE.id = item._id;
+                  STATE.date = item.work_date;
+                  navParam(STATE.intoDetail, {
+                    state: STATE
                   });
                 }}>
                   {item.work_date}

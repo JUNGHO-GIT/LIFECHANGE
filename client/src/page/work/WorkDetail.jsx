@@ -18,6 +18,13 @@ export const WorkDetail = () => {
   const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoList:"/work/list",
+    intoSave:"/work/save",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
@@ -151,7 +158,7 @@ export const WorkDetail = () => {
     });
     if (response.data === "success") {
       alert("delete success");
-      navParam(`/work/list`);
+      navParam(STATE.intoList);
     }
     else {
       alert("Delete failed");
@@ -230,10 +237,9 @@ export const WorkDetail = () => {
   const buttonWorkUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        navParam(`/work/save`, {
-          state: {
-            work_date: strDate,
-          }
+        STATE.date = strDate;
+        navParam(STATE.intoSave, {
+          state: STATE,
         });
       }}>
         Update
@@ -243,7 +249,7 @@ export const WorkDetail = () => {
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(0);
+        navParam(STATE.refresh);
       }}>
         Refresh
       </button>
@@ -252,7 +258,7 @@ export const WorkDetail = () => {
   const buttonWorkList = () => {
     return (
       <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(`/work/list`);
+        navParam(STATE.intoList);
       }}>
         List
       </button>

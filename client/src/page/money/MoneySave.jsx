@@ -20,6 +20,12 @@ export const MoneySave = () => {
   const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoList:"/Money/list",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
@@ -173,7 +179,7 @@ export const MoneySave = () => {
     });
     if (response.data === "success") {
       alert("Save a money successfully");
-      navParam("/money/list");
+      navParam(STATE.intoList);
     }
     else if (response.data === "fail") {
       alert("Save a money failed");
@@ -428,7 +434,7 @@ export const MoneySave = () => {
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(0);
+        navParam(STATE.refresh);
       }}>
         Refresh
       </button>

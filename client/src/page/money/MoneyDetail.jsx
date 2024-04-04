@@ -18,6 +18,13 @@ export const MoneyDetail = () => {
   const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoList:"/work/list",
+    intoSave:"/work/save",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
@@ -131,7 +138,7 @@ export const MoneyDetail = () => {
     });
     if (response.data === "success") {
       alert("delete success");
-      navParam(`/money/list`);
+      navParam(STATE.intoList);
     }
     else {
       alert("Delete failed");
@@ -202,10 +209,9 @@ export const MoneyDetail = () => {
   const buttonMoneyUpdate = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        navParam(`/money/save`, {
-          state: {
-            money_date: strDate,
-          }
+        STATE.date = strDate;
+        navParam(STATE.intoSave, {
+          state: STATE,
         });
       }}>
         Update
@@ -215,7 +221,7 @@ export const MoneyDetail = () => {
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(0);
+        navParam(STATE.refresh);
       }}>
         Refresh
       </button>
@@ -224,7 +230,7 @@ export const MoneyDetail = () => {
   const buttonMoneyList = () => {
     return (
       <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(`/money/list`);
+        navParam(STATE.intoList);
       }}>
         List
       </button>

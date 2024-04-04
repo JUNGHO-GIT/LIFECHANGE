@@ -21,6 +21,12 @@ export const WorkSave = () => {
   const location_date = location?.state?.date?.toString();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoList:"/work/list",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
@@ -194,7 +200,7 @@ export const WorkSave = () => {
     });
     if (response.data === "success") {
       alert("Save a work successfully");
-      navParam("/work/list");
+      navParam(STATE.intoList);
     }
     else if (response.data === "fail") {
       alert("Save a work failed");
@@ -565,7 +571,7 @@ export const WorkSave = () => {
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(0);
+        navParam(STATE.refresh);
       }}>
         Refresh
       </button>

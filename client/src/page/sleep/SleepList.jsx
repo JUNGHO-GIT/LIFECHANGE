@@ -20,6 +20,12 @@ export const SleepList = () => {
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoDetail:"/sleep/detail",
+    id: "",
+    date: ""
+  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:calendarOpen, set:setCalendarOpen} = useStorage(
@@ -330,11 +336,10 @@ export const SleepList = () => {
             <React.Fragment key={item._id}>
               <tr>
                 <td rowSpan={3} className="pointer" onClick={() => {
-                  navParam("/sleep/detail", {
-                    state: {
-                      id: item._id,
-                      date: item.sleep_date,
-                    },
+                  STATE.id = item._id;
+                  STATE.date = item.sleep_date;
+                  navParam(STATE.intoDetail, {
+                    state: STATE
                   });
                 }}>
                   {item.sleep_date}
