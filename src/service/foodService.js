@@ -46,13 +46,13 @@ export const search = async (
   const tables = document.querySelectorAll(`table.generic.searchResult`);
 
   function calcServ(param) {
-    const regex = /(\s*)(\d+\s*.*)(\s*당\s*-\s*)(\s*칼\s*로\s*리\s*[:]\s*)(\s*\d+\s*.*)(\s*kcal\s*)(\s*[|]\s*)(\s*지\s*방\s*[:]\s*)(\s*\d+\s*.*)(\s*g\s*)(\s*[|]\s*)(\s*탄\s*수\s*화\s*물\s*[:]\s*)(\s*\d+\s*.*)(\s*g\s*)(\s*[|]\s*)(\s*단\s*백\s*질\s*[:]\s*)(\s*\d+\s*.*)(\s*g)/;
+    const regex = /(\s*)(\d+\s*.*\n*)(\s*당\s*-\s*)(\s*칼\s*로\s*리\s*[:]\s*)(\d+\s*.*\n*)(kcal)(\s*[|]\s*)(\s*지\s*방\s*[:]\s*)(\d+\s*.*\n*)(g)(\s*[|]\s*)(\s*탄\s*수\s*화\s*물\s*[:]\s*)(\d+\s*.*\n*)(g)(\s*[|]\s*)(\s*단\s*백\s*질\s*[:]\s*)(\d+\s*.*\n*)(g)/;
     const matches = param.match(regex);
 
     if (matches) {
       let found = false;
-      for (let i = 0; i < servArray.length && !found; i++) {
-        const el = servArray[i];
+      // 1. servArray에 포함된 단어가 있는 경우
+      servArray.forEach((el) => {
         if (matches[2].includes(el)) {
           const idx = matches[2].indexOf(el);
           const gramMatch = matches[2].slice(idx + el.length).trim().match(/(\d+)\s*g/);
@@ -60,56 +60,52 @@ export const search = async (
           gram  = gramMatch ? gramMatch[1] : "-";
           found = true;
         }
-      };
-    };
+      });
 
+      // 2. servArray에 포함된 단어가 없는 경우, gram 정보 직접 확인
+      if (!found) {
+        const gramDirectMatch = param.trim().match(/(\d+)\s*g/);
+        if (gramDirectMatch) {
+          serv = "1회";
+          gram = gramDirectMatch[1];
+        }
+        else {
+          const gramMatch = matches[2].trim().match(/(\d+)\s*g/);
+          serv = matches ? matches[2].replace(/(\d+)\s+(.+)/, "$1$2").trim() : "1회";
+          gram = gramMatch ? gramMatch[1] : "-";
+        }
+      }
+    }
     return {
-      serv: matches ? serv : "1회",
-      gram: matches ? gram : "-",
-      kcal: matches ? Math.round(parseFloat(matches[5].trim())) : "",
-      fat: matches ? Math.round(parseFloat(matches[9].trim())) : "",
-      carb: matches ? Math.round(parseFloat(matches[13].trim())) : "",
-      protein: matches ? Math.round(parseFloat(matches[17].trim())) : "",
+      serv: serv,
+      gram: gram,
+      kcal: matches ? matches[5] : "-",
+      fat: matches ? matches[9] : "-",
+      carb: matches ? matches[13] : "-",
+      protein: matches ? matches[17] : "-",
     };
-  };
-
-  function calcCount (param) {
-    const count = param.split("중")[0].trim();
-    return count;
-  };
-
-  function cleanText (param) {
-    if (typeof param !== "string") {
-      return "";
-    }
-    else {
-      const match = param.match(/.*단백질: \d+\.?\d*g/);
-      const fmtText = match ? match[0] : param;
-      return fmtText.replace(/[\n\t]+/gm, " ").replace(/\s\s+/gm, " ").trim();
-    }
   };
 
   tables.forEach((param) => {
     const rows = param.querySelectorAll("tr");
     Array.from(rows).forEach((prev) => {
-      const titleElement = cleanText(prev.querySelector("a.prominent")?.textContent);
-      const brandElement = cleanText(prev.querySelector("a.brand")?.textContent);
-      console.log("===================================");
-      console.log(JSON.stringify(prev.querySelector("div.smallText.greyText")?.textContent));
-      const nutritionElement = cleanText(prev.querySelector("div.smallText.greyText")?.textContent);
-      const nutritionData = calcServ(nutritionElement);
+      const titleElement = prev.querySelector("a.prominent")?.textContent?.trim();
+      const brandElement = prev.querySelector("a.brand")?.textContent?.trim();
+      const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
         title: titleElement,
         brand: brandElement,
-        serv: nutritionData.serv,
-        gram: nutritionData.gram,
-        kcal: nutritionData.kcal,
-        fat: nutritionData.fat,
-        carb: nutritionData.carb,
-        protein: nutritionData.protein,
+        serv: nutritionElement.serv,
+        gram: nutritionElement.gram,
+        kcal: nutritionElement.kcal,
+        fat: nutritionElement.fat,
+        carb: nutritionElement.carb,
+        protein: nutritionElement.protein,
       });
-      pageCount = Math.ceil(calcCount(document.querySelector(".searchResultSummary")?.textContent) / 10);
+
+      const count = document.querySelector(".searchResultSummary")?.textContent;
+      pageCount = count ? Math.ceil(parseInt(count.split("중")[0].trim(), 10) / 10) : 0;
     });
   });
 
