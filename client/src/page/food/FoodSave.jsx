@@ -14,17 +14,32 @@ export const FoodSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const user_id = window.sessionStorage.getItem("user_id");
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date?.toString();
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_date = location?.state?.date;
+  const location_food = location?.state?.food;
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    intoList:"/food/list",
     id: "",
     date: "",
+    refresh:0,
+    intoList:"/food/list",
+    intoSearchList:"/food/search/list",
+    food: {
+      planYn: "",
+      category: "",
+      food_title: "",
+      food_brand: "",
+      food_preServ: "",
+      food_subServ: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: ""
+    }
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -145,7 +160,7 @@ export const FoodSave = () => {
     setRealCount(response.data.realCount ? response.data.realCount : 0);
     setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
-  })()}, [strDur, planYn]);
+  })()}, [strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFoodSave = async () => {
@@ -200,9 +215,6 @@ export const FoodSave = () => {
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableFoodSave = () => {
-
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
-
     return (
       <div>
         <div className="row d-center">
@@ -232,7 +244,11 @@ export const FoodSave = () => {
           </div>
           <div className="col-1">
             <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
+              STATE.food.category = "아침";
+              STATE.food.planYn = planYn;
+              navParam(STATE.intoSearchList, {
+                state: STATE
+              });
             }}>
               Add
             </button>
@@ -246,7 +262,11 @@ export const FoodSave = () => {
           </div>
           <div className="col-1">
             <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
+              STATE.food.category = "점심";
+              STATE.food.planYn = planYn;
+              navParam(STATE.intoSearchList, {
+                state: STATE
+              });
             }}>
               Add
             </button>
@@ -260,7 +280,11 @@ export const FoodSave = () => {
           </div>
           <div className="col-1">
             <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
+              STATE.food.category = "저녁";
+              STATE.food.planYn = planYn;
+              navParam(STATE.intoSearchList, {
+                state: STATE
+              });
             }}>
               Add
             </button>

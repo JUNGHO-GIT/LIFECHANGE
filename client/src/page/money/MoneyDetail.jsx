@@ -15,7 +15,7 @@ export const MoneyDetail = () => {
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id.toString();
-  const location_date = location?.state?.date?.toString();
+  const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {

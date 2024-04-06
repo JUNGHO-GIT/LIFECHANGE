@@ -16,23 +16,26 @@ export const FoodSearchList = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date?.toString();
+  const location_food = location?.state?.food;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    intoSearchDetail:"/food/search/detail",
     id: "",
     date: "",
+    refresh: 0,
+    intoSearchDetail:"/food/search/detail",
     food: {
-      title: "",
-      brand: "",
-      serv: "",
-      gram: "",
-      kcal: "",
-      fat: "",
-      carb: "",
-      protein: ""
+      planYn: "",
+      category: "",
+      food_title: "",
+      food_brand: "",
+      food_preServ: "",
+      food_subServ: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: ""
     }
   };
 
@@ -53,7 +56,8 @@ export const FoodSearchList = () => {
     `FOOD_DEFAULT(${PATH})`, [{
       title: "",
       brand: "",
-      serv: "",
+      preServ: "",
+      subServ: "",
       gram: "",
       kcal: "",
       fat: "",
@@ -65,7 +69,8 @@ export const FoodSearchList = () => {
     `FOOD(${PATH})`, [{
       title: "",
       brand: "",
-      serv: "",
+      preServ: "",
+      subServ: "",
       gram: "",
       kcal: "",
       fat: "",
@@ -154,6 +159,8 @@ export const FoodSearchList = () => {
               <tr key={index}>
                 <td onClick={() => {
                   STATE.food = item;
+                  STATE.food.planYn = location_food.planYn;
+                  STATE.food.category = location_food.category;
                   navParam(STATE.intoSearchDetail, {
                     state: STATE
                   }
@@ -161,7 +168,7 @@ export const FoodSearchList = () => {
                   {item.title}
                 </td>
                 <td>{item.brand}</td>
-                <td>{item.serv}</td>
+                <td>{item.preServ} {item.subServ}</td>
                 <td>{item.gram}</td>
                 <td>{item.kcal}</td>
                 <td>{item.fat}</td>
@@ -179,6 +186,11 @@ export const FoodSearchList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            <h1>{location_food.category} ({location_food.planYn === "Y" ? "Plan" : "Real"})</h1>
+          </div>
+        </div>
         <div className="row mb-20">
           <div className="col-12 d-center">
             <div className="form-floating">

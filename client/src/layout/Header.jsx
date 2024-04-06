@@ -11,22 +11,28 @@ import {listArray} from "./ListArray";
 export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
-
+  const PATH = location.pathname;
+  const STATE = {
+    id: "",
+    date: koreanDate,
+    refresh: 0
+  }
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isSidebar, setIsSidebar] = useState(true);
-  const [isActive, setIsActive] = useState(location.pathname);
+  const [isActive, setIsActive] = useState(PATH);
   const [isExpended, setIsExpended] = useState({});
 
   // 3-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setIsActive(location.pathname);
-  }, [location]);
+  }, [location.pathname]);
 
   const toggleExpand = (menuLabel) => {
     setIsExpended(isExpended === menuLabel ? null : menuLabel);
@@ -54,8 +60,6 @@ export const Header = () => {
 
   // 4-2. view ------------------------------------------------------------------------------------>
   const Sidebar = () => {
-
-    const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
     let preFix;
     let subFix = isActive.split("/")[1];
@@ -90,8 +94,6 @@ export const Header = () => {
   // 4-3. view ------------------------------------------------------------------------------------>
   const Navbar = () => {
 
-    const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-
     let preFix;
     let subFix = isActive.split("/")[1];
     let lowFix;
@@ -109,7 +111,7 @@ export const Header = () => {
           <h1 className="fs-30 fw-500 ps-30">{preFix} / {subFix}</h1>
         </div>
         <div className="text-center">
-          <h1 className="fs-30 fw-500">{today}</h1>
+          <h1 className="fs-30 fw-500">{STATE.date}</h1>
         </div>
         <div className="text-end">
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
@@ -119,9 +121,7 @@ export const Header = () => {
           </button>
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
             navParam(`/${lowFix}/save`, {
-              state: {
-                date: today
-              }
+              state: STATE
             });
           }}>
             Save

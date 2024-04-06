@@ -21,10 +21,10 @@ export const WorkList = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
+    id: "",
+    date: "",
     refresh:0,
     intoDetail:"/work/detail",
-    id: "",
-    date: ""
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

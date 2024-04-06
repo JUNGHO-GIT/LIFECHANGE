@@ -14,16 +14,16 @@ export const WorkDetail = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id.toString();
-  const location_date = location?.state?.date?.toString();
+  const location_id = location?.state?.id;
+  const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
+    id: "",
+    date: "",
     refresh:0,
     intoList:"/work/list",
-    intoSave:"/work/save",
-    id: "",
-    date: ""
+    intoSave:"/work/save"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

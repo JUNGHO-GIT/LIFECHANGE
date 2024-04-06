@@ -17,11 +17,10 @@ export const search = async (
   const page = filter_param.page;
   let finalResult = [];
   let pageCount = 0;
-  let serv, gram;
+  let serv;
+  let gram;
   let servArray = [
-    "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장",
-    "마리", "인분", "봉지", "한컵", "대접", "접시",
-    "소접시", "테이블스푼"
+    "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장", "마리", "인분", "봉지", "한컵", "대접", "접시", "소접시", "테이블스푼"
   ];
 
   function getSearchResult () {
@@ -77,7 +76,8 @@ export const search = async (
       }
     }
     return {
-      serv: serv,
+      preServ: (serv.match(/(\d+\.\d+|\d+)/) || [""])[0],
+      subServ: (serv.match(/[^\d]+$/) || [""])[0],
       gram: gram,
       kcal: matches ? matches[5] : "-",
       fat: matches ? matches[9] : "-",
@@ -94,9 +94,10 @@ export const search = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        title: titleElement,
-        brand: brandElement,
-        serv: nutritionElement.serv,
+        title: titleElement || "-",
+        brand: brandElement || "-",
+        preServ: nutritionElement.preServ,
+        subServ: nutritionElement.subServ,
         gram: nutritionElement.gram,
         kcal: nutritionElement.kcal,
         fat: nutritionElement.fat,

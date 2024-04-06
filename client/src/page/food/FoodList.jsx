@@ -18,13 +18,27 @@ export const FoodList = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
+  const location_food = location?.state?.food;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    intoDetail:"/food/detail",
     id: "",
-    date: ""
+    date: "",
+    refresh: 0,
+    intoDetail:"/food/detail",
+    food: {
+      planYn: "",
+      category: "",
+      food_title: "",
+      food_brand: "",
+      food_preServ: "",
+      food_subServ: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: ""
+    }
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
