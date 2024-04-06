@@ -22,7 +22,7 @@ export const MoneyList = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoDetail:"/work/detail",
+    intoDetail:"/money/detail",
     id: "",
     date: ""
   };

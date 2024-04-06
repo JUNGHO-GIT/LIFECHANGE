@@ -10,7 +10,7 @@ import moment from "moment-timezone";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSave = () => {
+export const TestSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -24,7 +24,7 @@ export const FoodSave = () => {
     refresh:0,
     intoList:"/food/list",
     id: "",
-    date: "",
+    date: ""
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -147,6 +147,42 @@ export const FoodSave = () => {
 
   })()}, [strDur, planYn]);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+
+    const foodType = planYn === "Y" ? "food_plan" : "food_real";
+
+    const startTime = FOOD[foodType]?.food_section.map((item) => item?.food_start)?.toString();
+    const endTime = FOOD[foodType]?.food_section.map((item) => item?.food_end)?.toString();
+
+    if (startTime && endTime) {
+      const startDate = new Date(`${strDate}T${startTime}`);
+      const endDate = new Date(`${strDate}T${endTime}`);
+
+      // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
+      if (endDate < startDate) {
+        endDate.setDate(endDate.getDate() + 1);
+      }
+
+      // 차이 계산
+      const diff = endDate.getTime() - startDate.getTime();
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+
+      setFOOD((prev) => ({
+        ...prev,
+        [foodType]: {
+          ...prev[foodType],
+          food_section: [{
+            ...prev[foodType].food_section[0],
+            food_time: time,
+          }],
+        },
+      }));
+    }
+  }, [strStartDate, strEndDate]);
+
   // 3. flow -------------------------------------------------------------------------------------->
   const flowFoodSave = async () => {
 
@@ -225,45 +261,79 @@ export const FoodSave = () => {
           </div>
         </div>
         <div className="row d-center">
-          <div className="col-5">
+          <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">아침</span>
+              <span className="input-group-text">취침시간</span>
+              <TimePicker
+                id="food_start"
+                name="food_start"
+                className="form-control"
+                disableClock={false}
+                clockIcon={null}
+                format="HH:mm"
+                locale="ko"
+                value={(FOOD[foodType].food_section)?.map((item) => item.food_start)}
+                onChange={(e) => {
+                  setStrStartDate(e);
+                  setFOOD((prev) => ({
+                    ...prev,
+                    [foodType]: {
+                      food_section: [{
+                        ...prev[foodType].food_section[0],
+                        food_start: e,
+                      }]
+                    },
+                  }));
+                }}
+              />
             </div>
-          </div>
-          <div className="col-1">
-            <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
-            }}>
-              Add
-            </button>
           </div>
         </div>
-        <div className="row d-center">
-          <div className="col-5">
+        <div className="row d-center mt-3">
+          <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">점심</span>
+              <span className="input-group-text">기상시간</span>
+              <TimePicker
+                id="food_end"
+                name="food_end"
+                className="form-control"
+                disableClock={false}
+                clockIcon={null}
+                format="HH:mm"
+                locale="ko"
+                value={(FOOD[foodType].food_section)?.map((item) => item.food_end)}
+                onChange={(e) => {
+                  setStrEndDate(e);
+                  setFOOD((prev) => ({
+                    ...prev,
+                    [foodType]: {
+                      food_section: [{
+                        ...prev[foodType].food_section[0],
+                        food_end: e,
+                      }]
+                    },
+                  }));
+                }}
+              />
             </div>
-          </div>
-          <div className="col-1">
-            <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
-            }}>
-              Add
-            </button>
           </div>
         </div>
-        <div className="row d-center">
-          <div className="col-5">
+        <div className="row d-center mt-3">
+          <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">저녁</span>
+              <span className="input-group-text">수면시간</span>
+              <TimePicker
+                id="food_time"
+                name="food_time"
+                className="form-control"
+                disableClock={false}
+                disabled={true}
+                clockIcon={null}
+                format="HH:mm"
+                locale="ko"
+                value={(FOOD[foodType].food_section)?.map((item) => item.food_time)}
+              />
             </div>
-          </div>
-          <div className="col-1">
-            <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
-            }}>
-              Add
-            </button>
           </div>
         </div>
       </div>

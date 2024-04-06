@@ -1,284 +1,297 @@
 // foodService.js
 
 import mongoose from "mongoose";
+import moment from "moment";
+import {JSDOM} from "jsdom";
+import axios from "axios";
 import {Food} from "../schema/Food.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1-0. search ------------------------------------------------------------------------------------>
+export const search = async (
+  user_id_param,
+  filter_param
+) => {
+
+  const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
+  const query = filter_param.query;
+  const page = filter_param.page;
+  let finalResult = [];
+  let pageCount = 0;
+  let serv, gram;
+  let servArray = [
+    "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장",
+    "마리", "인분", "봉지", "한컵", "대접", "접시",
+    "소접시", "테이블스푼"
+  ];
+
+  function getSearchResult () {
+    return new Promise((resolve, reject) => {
+      axios.get(URL_SEARCH, {
+        params: {
+          q: query,
+          pg: page,
+        },
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  };
+
+  const searchResult = await getSearchResult();
+  const document = new JSDOM(searchResult).window.document;
+  const tables = document.querySelectorAll(`table.generic.searchResult`);
+
+  function calcServ(param) {
+    const regex = /(\s*)(\d+\s*.*)(당\s*-\s*)(칼\s*로\s*리\s*[:]\s*)(\d+\s*.*)(\s*kcal\s*)(\s*[|]\s*)(지\s*방\s*[:]\s*)(\d+\s*.*)(\s*g\s*)(\s*[|]\s*)(탄\s*수\s*화\s*물\s*[:]\s*)(\d+\s*.*)(\s*g\s*)(\s*[|]\s*)(단\s*백\s*질\s*[:]\s*)(\d+\s*.*)(\s*g\s*)/;
+    const matches = param.match(regex);
+
+    if (matches) {
+      let found = false;
+      for (let i = 0; i < servArray.length && !found; i++) {
+        const el = servArray[i];
+        if (matches[2].includes(el)) {
+          const idx = matches[2].indexOf(el);
+          const servMatch = matches[2].slice(0, idx + el.length).replace(/(\d+)\s+(.+)/, "$1$2").trim();
+          const gramMatch = matches[2].slice(idx + el.length).trim().match(/\((\d+)\s*g\)/);
+          serv = servMatch ? servMatch : "";
+          gram = gramMatch ? gramMatch[1] : "";
+          found = true;
+        }
+      };
+    };
+
+    return {
+      serv: serv || "",
+      gram: gram || "",
+      kcal: matches ? matches[5]?.trim() : "",
+      fat: matches ? matches[9]?.trim() : "",
+      carb: matches ? matches[13]?.trim() : "",
+      protein: matches ? matches[17]?.trim() : "",
+    };
+  };
+
+  function calcCount (param) {
+    const count = param.split("중")[0].trim();
+    return count;
+  };
+
+  function cleanText (text) {
+    if (typeof text !== "string") {
+      return "";
+    }
+    else {
+      const match = text.match(/.*단백질: \d+\.?\d*g/);
+      const fmtText = match ? match[0] : text;
+      return fmtText.replace(/[\n\t]+/gm, " ").replace(/\s\s+/gm, " ").trim();
+    }
+  };
+
+  tables.forEach((table) => {
+    const rows = table.querySelectorAll("tr");
+    Array.from(rows).forEach((prev) => {
+      const titleElement = cleanText(prev.querySelector("a.prominent")?.textContent);
+      const brandElement = cleanText(prev.querySelector("a.brand")?.textContent);
+      const nutritionElement = cleanText(prev.querySelector("div.smallText.greyText")?.textContent);
+      const nutritionData = calcServ(nutritionElement);
+
+      finalResult.push({
+        title: titleElement,
+        brand: brandElement,
+        serv: nutritionData.serv,
+        gram: nutritionData.gram,
+        kcal: nutritionData.kcal,
+        fat: nutritionData.fat,
+        carb: nutritionData.carb,
+        protein: nutritionData.protein,
+      });
+      pageCount = Math.ceil(calcCount(document.querySelector(".searchResultSummary")?.textContent) / 10);
+    });
+  });
+
+  return {
+    pageCount: pageCount,
+    result: finalResult,
+  };
+};
+
+// 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
   food_dur_param,
-  food_category_param,
+  filter_param
 ) => {
 
-  let findQuery;
-  let findResult;
-  let finalResult;
+  const [startDay, endDay] = food_dur_param.split(` ~ `);
 
-  const startDay = food_dur_param.split(` ~ `)[0];
-  const endDay = food_dur_param.split(` ~ `)[1];
+  const filter = filter_param.order;
+  const page = filter_param.page === 0 ? 1 : filter_param.page;
+  const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const sort = filter === "asc" ? 1 : -1;
 
-  if (food_category_param !== "all") {
-    findQuery = {
-      user_id: user_id_param,
-      food_date: {
-        $gte: startDay,
-        $lte: endDay,
-      },
-      food_category: food_category_param,
-    };
-  }
-  else {
-    findQuery = {
-      user_id: user_id_param,
-      food_date: {
-        $gte: startDay,
-        $lte: endDay,
-      }
-    };
-  }
-
-  findResult = await Food.find(findQuery).sort({ food_date: -1 });
-
-  return findResult;
-};
-
-// 1-2. total ------------------------------------------------------------------------------------->
-export const total = async (
-  user_id_param,
-  food_dur_param,
-  food_category_param,
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  const startDay = food_dur_param.split(` ~ `)[0];
-  const endDay = food_dur_param.split(` ~ `)[1];
-
-  if (food_category_param !== "all") {
-    findQuery = {
-      user_id: user_id_param,
-      food_date: {
-        $gte: startDay,
-        $lte: endDay,
-      },
-      food_category: food_category_param,
-    };
-  }
-  else {
-    findQuery = {
-      user_id: user_id_param,
-      food_date: {
-        $gte: startDay,
-        $lte: endDay,
-      }
-    };
-  }
-
-  findResult = await Food.find(findQuery).sort({ food_date: -1 });
-
-  // 데이터가 없는 경우 빈 배열 반환
-  if (findResult.length === 0) {
-    return [];
-  }
-
-  let totalFoodCalories = 0;
-  let totalFoodProtein = 0;
-  let totalFoodCarb = 0;
-  let totalFoodFat = 0;
-
-  findResult.forEach((food) => {
-    totalFoodCalories += food.food_calories;
-    totalFoodProtein += food.food_protein;
-    totalFoodCarb += food.food_carb;
-    totalFoodFat += food.food_fat;
-  });
-
-  finalResult = [{
-    totalCalories : totalFoodCalories.toFixed(2),
-    totalProtein : totalFoodProtein.toFixed(2),
-    totalCarb : totalFoodCarb.toFixed(2),
-    totalFat : totalFoodFat.toFixed(2),
-  }];
-
-  // 배열 리턴
-  return finalResult;
-};
-
-// 1-3. avg -------------------------------------------------------------------------------------->
-export const avg = async (
-  user_id_param,
-  food_dur_param,
-  food_category_param,
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  const startDay = food_dur_param.split(` ~ `)[0];
-  const endDay = food_dur_param.split(` ~ `)[1];
-
-  if (food_category_param !== "all") {
-    findQuery = {
-      user_id: user_id_param,
-      food_date: {
-        $gte: startDay,
-        $lte: endDay,
-      },
-      food_category: food_category_param,
-    };
-  }
-  else {
-    findQuery = {
-      user_id: user_id_param,
-      food_date: {
-        $gte: startDay,
-        $lte: endDay,
-      }
-    };
-  }
-
-  finalResult = await Food.find(findQuery).sort({ food_date: -1 });
-
-  // 데이터가 없는 경우 빈 배열 반환
-  if (finalResult.length === 0) {
-    return [];
-  }
-
-  let totalFoodCalories = 0;
-  let totalFoodProtein = 0;
-  let totalFoodCarb = 0;
-  let totalFoodFat = 0;
-
-  finalResult.forEach((food) => {
-    totalFoodCalories += food.food_calories;
-    totalFoodProtein += food.food_protein;
-    totalFoodCarb += food.food_carb;
-    totalFoodFat += food.food_fat;
-  });
-
-  finalResult = [{
-    food_calories : (totalFoodCalories / finalResult.length).toFixed(2),
-    food_protein : (totalFoodProtein / finalResult.length).toFixed(2),
-    food_carb : (totalFoodCarb / finalResult.length).toFixed(2),
-    food_fat : (totalFoodFat / finalResult.length).toFixed(2),
-  }];
-
-  // 배열 리턴
-  return finalResult;
-};
-
-// 1-2. search ------------------------------------------------------------------------------------>
-export const search = async (
-  user_id_param,
-  food_dur_param,
-  food_category_param,
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  findQuery = {
+  const findResult = Food.find({
     user_id: user_id_param,
-    food_date: food_dur_param,
-    food_category: food_category_param,
+    food_date: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  })
+
+  const finalResult = await findResult
+  .sort({food_date: sort})
+  .skip((page - 1) * limit)
+  .limit(limit);
+
+  const totalCount = await Food.countDocuments(findResult);
+
+  return {
+    totalCount: totalCount,
+    result: finalResult,
   };
-
-  findResult = await Food.find(findQuery);
-
-  return findResult;
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
-const detail = async (
+export const detail = async (
   _id_param,
+  user_id_param,
+  food_dur_param,
+  planYn_param
 ) => {
 
-  let findQuery;
-  let findResult;
-  let finalResult;
+  const [startDay, endDay] = food_dur_param.split(` ~ `);
 
-  findQuery = {
-    _id: _id_param,
+  const finalResult = await Food.findOne({
+    _id: _id_param === "" ? {$exists: true} : _id_param,
+    user_id: user_id_param,
+    food_date: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  });
+
+  const realCount = finalResult?.food_real?.food_section.length || 0;
+  const planCount = finalResult?.food_plan?.food_section.length || 0;
+
+  return {
+    realCount: realCount,
+    planCount: planCount,
+    result: finalResult,
   };
-
-  findResult = await Food.find(findQuery);
-
-  return findResult;
 };
 
-// 3. insert -------------------------------------------------------------------------------------->
-export const insert = async (
-  uer_id_param,
-  FOOD_pram,
-) => {
-
-  let createQuery;
-  let createResult;
-  let finalResult;
-
-  createQuery = {
-    _id: new mongoose.Types.ObjectId(),
-    user_id: uer_id_param,
-    food_title: FOOD_pram.food_title,
-    food_brand: FOOD_pram.food_brand,
-    food_category: FOOD_pram.food_category,
-    food_serving: FOOD_pram.food_serving,
-    food_calories: FOOD_pram.food_calories,
-    food_carb: FOOD_pram.food_carb,
-    food_protein: FOOD_pram.food_protein,
-    food_fat: FOOD_pram.food_fat,
-    food_date: FOOD_pram.foodDay,
-    food_planYn: FOOD_pram.food_planYn,
-    food_regdate : FOOD_pram.food_regdate,
-    food_update : FOOD_pram.food_update,
-  };
-
-  createResult = await Food.create(createQuery);
-
-  return createResult;
-};
-
-// 4. update -------------------------------------------------------------------------------------->
-export const update = async (
-  _id_param,
+// 3. save ---------------------------------------------------------------------------------------->
+export const save = async (
+  user_id_param,
   FOOD_param,
+  food_dur_param,
+  planYn_param
 ) => {
 
-  let updateQuery;
-  let updateResult;
+  const [startDay, endDay] = food_dur_param.split(` ~ `);
+
+  const findResult = await Food.findOne({
+    user_id: user_id_param,
+    food_date: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  });
+
   let finalResult;
+  if (!findResult) {
+    const createQuery = {
+      _id: new mongoose.Types.ObjectId(),
+      user_id: user_id_param,
+      food_date: startDay,
+      food_real: FOOD_param.food_real,
+      food_plan: FOOD_param.food_plan,
+      food_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+      food_update: "",
+    };
+    finalResult = await Food.create(createQuery);
+  }
+  else {
+    const updateQuery = {
+      _id: findResult._id
+    };
+    const updateAction = planYn_param === "Y"
+    ? {$set: {
+      food_plan: FOOD_param.food_plan,
+      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+    }}
+    : {$set: {
+      food_real: FOOD_param.food_real,
+      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+    }}
 
-  updateQuery = {
-    filter_id : {_id : _id_param},
-    filter_set : {$set : FOOD_param}
+    finalResult = await Food.updateOne(updateQuery, updateAction);
+  }
+
+  return {
+    result: finalResult,
   };
-
-  updateResult = await FOOD_param.updateOne(
-    updateQuery.filter_id,
-    updateQuery.filter_set
-  );
-
-  return updateResult;
 };
 
-// 5. deletes ------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
   _id_param,
+  user_id_param,
+  food_dur_param,
+  planYn_param
 ) => {
 
-  let deleteQuery;
-  let deleteResult;
+  const [startDay, endDay] = food_dur_param.split(` ~ `);
+
+  const updateResult = await Food.updateOne(
+    {
+      user_id: user_id_param,
+      food_date: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+    },
+    {
+      $pull: {
+        [`food_${planYn_param === "Y" ? "plan" : "real"}.food_section`]: {
+          _id: _id_param
+        },
+      },
+      $set: {
+        food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+      },
+    },
+    {
+      arrayFilters: [{
+        "elem._id": _id_param
+      }],
+    }
+  );
+
   let finalResult;
+  if (updateResult.modifiedCount > 0) {
+    const doc = await Food.findOne({
+      user_id: user_id_param,
+      food_date: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+    });
 
-  deleteQuery = {
-    _id: _id_param,
+    if (
+      doc
+      && (!doc.food_plan?.food_section || doc.food_plan?.food_section.length === 0)
+      && (!doc.food_real?.food_section || doc.food_real?.food_section.length === 0)
+    ) {
+      finalResult = await Food.deleteOne({
+        _id: doc._id
+      });
+    }
+  }
+
+  return {
+    result: finalResult
   };
-
-  deleteResult = await Food.deleteOne(deleteQuery);
-
-  return deleteResult;
 };

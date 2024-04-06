@@ -214,7 +214,7 @@ export const WorkDetail = () => {
             <td className="fs-20 pt-20">
               {WORK[workType].work_time}
             </td>
-            <td colSpan={4}>
+            <td colSpan={5}>
               {WORK[workType].work_section.map((item, index) => (
                 <div key={index} className="d-flex justify-content-between">
                   <span>{item.work_part_val}</span>

@@ -1,4 +1,4 @@
-// FoodSearchResult.jsx
+// FoodSearchDetail.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,7 +8,7 @@ import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSearchResult = () => {
+export const FoodSearchDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Food SearchResult";
@@ -28,7 +28,7 @@ export const FoodSearchResult = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchFoodSearchResult = async () => {
+    const fetchFoodSearchDetail = async () => {
       try {
         const response = await axios.get(`${URL_FOOD}/foodSearchResult`, {
           params: {
@@ -45,7 +45,7 @@ export const FoodSearchResult = () => {
         setFOOD([]);
       }
     };
-    fetchFoodSearchResult();
+    fetchFoodSearchDetail();
   }, [user_id, food_category, foodDay]);
 
   // 4. view -------------------------------------------------------------------------------------->
@@ -64,7 +64,7 @@ export const FoodSearchResult = () => {
   };
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodSearchResult = () => {
+  const tableFoodSearchDetail = () => {
     return (
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
@@ -87,7 +87,7 @@ export const FoodSearchResult = () => {
                 )}
               </td>
               <td>{index.food_brand}</td>
-              <td>{index.food_serving}</td>
+              <td>{index.food_serv}</td>
               <td>{index.food_calories}</td>
               <td>{index.food_carb}</td>
               <td>{index.food_protein}</td>
@@ -147,7 +147,7 @@ export const FoodSearchResult = () => {
         </div>
         <div className="row d-center mt-5">
           <div className="col-12">
-            {tableFoodSearchResult()}
+            {tableFoodSearchDetail()}
             <br/>
             {buttonRefreshPage()}
           </div>

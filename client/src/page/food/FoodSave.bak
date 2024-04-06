@@ -2,11 +2,10 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/js/useStorage.jsx";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
+import {useStorage} from "../../assets/js/useStorage.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -22,10 +21,11 @@ export const FoodSave = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoList:"/food/list",
+    intoList:"/Food/list",
     id: "",
-    date: "",
+    date: ""
   };
+  const {title, brand, serv, calories, fat, carb, protein} = location.state;
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
@@ -53,6 +53,8 @@ export const FoodSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [showGram, setShowGram] = useState(1);
+  const [category, setCategory] = useState("morning");
   const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState({
     _id: "",
     food_number: 0,
@@ -148,21 +150,27 @@ export const FoodSave = () => {
   })()}, [strDur, planYn]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowFoodSave = async () => {
+  const flowFoodSave = async (params) => {
+    const FOOD = {
+      food_title: title,
+      food_brand: brand,
+      food_category: category,
+      food_serv: params,
+      food_calories: logicPerServing(params, calories),
+      food_carb: logicPerServing(params, carb),
+      food_protein: logicPerServing(params, protein),
+      food_fat: logicPerServing(params, fat),
+      /* foodDay: moment(foodDay).format("YYYY-MM-DD"), */
+    };
 
     const response = await axios.post(`${URL_FOOD}/save`, {
-      user_id: user_id,
-      FOOD: FOOD,
-      food_dur: strDur,
-      planYn: planYn
+      user_id : user_id,
+      FOOD : FOOD,
     });
+
     if (response.data === "success") {
-      alert("Save a food successfully");
-      navParam(STATE.intoList);
-    }
-    else if (response.data === "fail") {
-      alert("Save a food failed");
-      return;
+      alert("Save food successfully");
+      navParam("/food/list");
     }
     else {
       alert(`${response.data}error`);
@@ -175,7 +183,7 @@ export const FoodSave = () => {
     const calcDate = (days) => {
       const date = new Date(strDate);
       date.setDate(date.getDate() + days);
-      setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
+      setStrDate(moment(date).format("YYYY-MM-DD"));
     };
 
     return (
@@ -188,7 +196,7 @@ export const FoodSave = () => {
           popperPlacement="bottom"
           selected={new Date(strDate)}
           onChange={(date) => {
-            setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
+            setStrDate(moment(date).format("YYYY-MM-DD"));
           }}
         />
         <div onClick={() => calcDate(1)}>
@@ -198,82 +206,84 @@ export const FoodSave = () => {
     );
   };
 
-  // 5-1. table ----------------------------------------------------------------------------------->
-  const tableFoodSave = () => {
-
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
-
-    return (
-      <div>
-        <div className="row d-center">
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">계획여부</span>
-              <select
-                id="food_planYn"
-                name="food_planYn"
-                className="form-select"
-                value={planYn}
-                onChange={(e) => {
-                  setPlanYn(e.target.value);
-                }}
-              >
-                <option value="Y">목표</option>
-                <option value="N" selected>실제</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">아침</span>
-            </div>
-          </div>
-          <div className="col-1">
-            <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
-            }}>
-              Add
-            </button>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">점심</span>
-            </div>
-          </div>
-          <div className="col-1">
-            <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
-            }}>
-              Add
-            </button>
-          </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-5">
-            <div className="input-group">
-              <span className="input-group-text">저녁</span>
-            </div>
-          </div>
-          <div className="col-1">
-            <button type="button" className="btn btn-sm btn-primary" onClick={() => {
-              navParam("/food/search/list");
-            }}>
-              Add
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+  // 4-1. view ----------------------------------------------------------------------------------->
+  const logicPerServing = (param, nutrientVal) => {
+    return ((nutrientVal / logicOneServing()) * param).toFixed(1);
   };
 
+  // 4-2. logic ----------------------------------------------------------------------------------->
+  const logicOneServing = () => {
+
+    const units = [
+      {regex: /(g|ml)/gm, replace: ["g", "ml"], factor: 1},
+      {regex: /(컵)/gm, replace: ["컵"], factor: 200},
+      {regex: /(큰술|테이블스푼)/gm, replace: ["큰술", "테이블스푼"], factor: 15},
+      {regex: /(작은술|스푼|티스푼)/gm, replace: ["작은술", "스푼", "티스푼"], factor: 5},
+    ];
+
+    for (const unit of units) {
+      const match = serv.match(new RegExp(`(\\d+)(\\s*)(${unit.regex.source})`, "gm"));
+      if (match) {
+        let regexVal = match[0];
+        unit.replace.forEach((index) => (regexVal = regexVal.replace(index, "")));
+        return Number(regexVal) * unit.factor;
+      }
+    }
+    return 1;
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableFoodSave = (
+    servAmount, title, nutrientVal
+  ) => (
+    <div className="card">
+      <div className="card-body">
+        <h4 className="card-title">{title}</h4>
+        <p className="card-text">
+          <span>칼로리 : </span>
+          {servAmount ? logicPerServing(servAmount, nutrientVal) : 0}
+        </p>
+        <p className="card-text">
+          <span>지방 : </span>
+          {fat ? fat : 0}
+        </p>
+        <p className="card-text">
+          <span>탄수화물 : </span>
+          {carb ? carb : 0}
+        </p>
+        <p className="card-text">
+          <span>단백질 : </span>
+          {protein ? protein : 0}
+        </p>
+      </div>
+    </div>
+  );
+
   // 9. button ------------------------------------------------------------------------------------>
+  const buttonFoodCategory = () => {
+    return (
+      <select className="form-select"onChange={e => {setCategory(e.target.value);}}>
+        <option value="morning">아침</option>
+        <option value="lunch">점심</option>
+        <option value="dinner">저녁</option>
+        <option value="snack">간식</option>
+      </select>
+    );
+  };
+  const buttonFoodAmount = () => {
+    return (
+      <input type="number" className="form-control" defaultValue={1} min="1" onChange={e => {
+          const value = Math.max(1, Number(e.target.value));
+          setShowGram(value);
+        }}
+      />
+    );
+  };
   const buttonFoodSave = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary" onClick={flowFoodSave}>
+      <button type="button" className="btn btn-sm btn-primary" onClick={() => {
+        flowFoodSave(showGram);
+      }}>
         Save
       </button>
     );
@@ -292,19 +302,36 @@ export const FoodSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center mb-20">
+        <div className="row d-center mt-5">
+          <div className="col-12">
+            <h1 className="mb-3">
+              <p>{title}</p>
+              <p>{brand}</p>
+            </h1>
+          </div>
+        </div>
+        <div className="row d-center mt-5">
           <div className="col-12">
             <h1 className="mb-3 fw-5">
               <span>{viewFoodDay()}</span>
             </h1>
           </div>
         </div>
-        <div className="row d-center mt-5 mb-20">
-          <div className="col-12">
-            {tableFoodSave()}
+        <div className="row d-center mt-5">
+          <div className="col-6">
+            {tableFoodSave(0, serv ? serv : "0", calories)}
+          </div>
+          <div className="col-6">
+            {tableFoodSave(showGram, showGram.toString(), calories)}
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              {buttonFoodCategory()}
+              {buttonFoodAmount()}
+            </div>
           </div>
         </div>
-        <div className="row d-center">
+        <div className="row d-center mb-20">
           <div className="col-12">
             {buttonFoodSave()}
             {buttonRefreshPage()}

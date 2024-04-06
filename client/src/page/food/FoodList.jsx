@@ -2,250 +2,476 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {DayPicker, DayClickEventHandler} from "react-day-picker";
+import {useStorage} from "../../assets/js/useStorage.jsx";
+import {DayPicker} from "react-day-picker";
+import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
-import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useStorage} from "../../assets/js/useStorage.jsx";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+import { differenceInDays } from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "Food List Day";
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
-  const {log} = useDeveloperMode();
+  const PATH = location.pathname;
+  const STATE = {
+    refresh:0,
+    intoDetail:"/food/detail",
+    id: "",
+    date: ""
+  };
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:FOOD_LIST, set:setFOOD_LIST} = useStorage(
-    "foodList(DAY)", []
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:calendarOpen, set:setCalendarOpen} = useStorage(
+    `calendarOpen(${PATH})`, false
   );
-  const {val:FOOD_TOTAL, set:setFOOD_TOTAL} = useStorage(
-    "foodTotal(DAY)", []
+  const {val:totalCount, set:setTotalCount} = useStorage(
+    `totalCount(${PATH})`, 0
   );
-  const {val:FOOD_AVERAGE, set:setFOOD_AVERAGE} = useStorage(
-    "foodAvg(DAY)", []
+  const {val:type, set:setType} = useStorage(
+    `type(${PATH})`, "day"
   );
-  const {val:foodDay, set:setFoodDay} = useStorage(
-    "foodDay(DAY)", koreanDate
+  const {val:filter, set:setFilter} = useStorage(
+    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
   );
-  const {val:foodResVal, set:setFoodResVal} = useStorage(
-    "foodResVal(DAY)", undefined
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:strStartDate, set:setStrStartDate} = useStorage(
+    `strStartDate(${PATH})`, koreanDate
   );
-  const {val:foodResDur, set:setFoodResDur} = useStorage(
-    "foodResDur(DAY)", "0000-00-00 ~ 0000-00-00"
+  const {val:strEndDate, set:setStrEndDate} = useStorage(
+    `strEndDate(${PATH})`, koreanDate
+  );
+  const {val:strDate, set:setStrDate} = useStorage(
+    `strDate(${PATH})`, koreanDate
+  );
+  const {val:strDur, set:setStrDur} = useStorage(
+    `strDur(${PATH})`, `${koreanDate} ~ ${koreanDate}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [foodType, setFoodType] = useState("list");
-  const [foodCategory, setFoodCategory] = useState("all");
+  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
+    _id: "",
+    food_number: 0,
+    food_date: "",
+    food_real : {
+      food_section: [{
+        food_start: "",
+        food_end: "",
+        food_time: "",
+      }],
+    },
+    food_plan : {
+      food_section: [{
+        food_start: "",
+        food_end: "",
+        food_time: "",
+      }],
+    },
+  }]);
+  const [FOOD, setFOOD] = useState([{
+    _id: "",
+    food_number: 0,
+    food_date: "",
+    food_real : {
+      food_section: [{
+        food_start: "",
+        food_end: "",
+        food_time: "",
+      }],
+    },
+    food_plan : {
+      food_section: [{
+        food_start: "",
+        food_end: "",
+        food_time: "",
+      }],
+    },
+  }]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+
+    const response = await axios.get(`${URL_FOOD}/list`, {
+      params: {
+        user_id: user_id,
+        food_dur: strDur,
+        filter: filter
+      },
+    });
+
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
+
+  })()}, [strDur, filter]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-
-    // 1. list
-    const fetchFoodList = async () => {
-      try {
-        const response = await axios.get (`${URL_FOOD}/list`, {
-          params: {
-            user_id : user_id,
-            food_dur : foodResDur,
-            food_category : foodCategory
-          },
-        });
-        setFOOD_LIST(response.data);
-        log("FOOD_LIST : " + JSON.stringify(response.data));
-      }
-      catch (e) {
-        setFOOD_LIST([]);
-        alert(`Error fetching food data: ${e.message}`);
-      }
-    };
-    fetchFoodList();
-
-    // 2. total
-    const fetchFoodTotal = async () => {
-      try {
-        const response = await axios.get (`${URL_FOOD}/foodTotal`, {
-          params: {
-            user_id : user_id,
-            food_dur : foodResDur,
-            food_category : foodCategory
-          },
-        });
-        setFOOD_TOTAL(response.data);
-        log("FOOD_TOTAL : " + JSON.stringify(response.data));
-      }
-      catch (e) {
-        setFOOD_TOTAL([]);
-        alert(`Error fetching food data: ${e.message}`);
-      }
-    };
-    fetchFoodTotal();
-
-    // 3. average
-    const fetchFoodAvg = async () => {
-      try {
-        const response = await axios.get (`${URL_FOOD}/foodAvg`, {
-          params: {
-            user_id : user_id,
-            food_dur : foodResDur,
-            food_category : foodCategory
-          },
-        });
-        setFOOD_AVERAGE(response.data);
-        log("FOOD_AVERAGE : " + JSON.stringify(response.data));
-      }
-      catch (e) {
-        setFOOD_AVERAGE([]);
-        alert(`Error fetching food data: ${e.message}`);
-      }
-    };
-    fetchFoodAvg();
-  }, [user_id, foodResDur, foodCategory]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const formatVal = (value) => {
-      return value < 10 ? `0${value}` : `${value}`;
-    };
-    if (foodDay) {
-      const year = foodDay.getFullYear();
-      const month = formatVal(foodDay.getMonth() + 1);
-      const date = formatVal(foodDay.getDate());
-      setFoodResVal(parseISO(`${year}-${month}-${date}`));
-      setFoodResDur(`${year}-${month}-${date} ~ ${year}-${month}-${date}`);
+    if (type === "day") {
+      setStrDur(`${strDate} ~ ${strDate}`);
     }
-  }, [foodDay]);
+    else if (type === "week") {
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
+    }
+    else if (type === "month") {
+      setStrDur(`${moment(strDate).startOf("month").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("month").format("YYYY-MM-DD")}`);
+    }
+    else if (type === "year") {
+      setStrDur(`${moment(strDate).startOf("year").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("year").format("YYYY-MM-DD")}`);
+    }
+    else if (type === "select") {
+      setStrDur(`${strStartDate} ~ ${strEndDate}`);
+    }
+  }, [type, strDate, strStartDate, strEndDate]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
-  const viewFoodDay = () => {
-    const flowDayClick: DayClickEventHandler = (day) => {
-      setFoodDay(day);
+  const viewFoodList = () => {
+    let dayPicker;
+    if (type === "day") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="single"
+          selected={new Date(strDate)}
+          onDayClick={(day) => {
+            setStrDate(moment(day).format("YYYY-MM-DD"));
+          }}
+          onMonthChange={(month) => {
+            setStrDate(moment(month).format("YYYY-MM-DD"));
+          }}
+        />
+      );
+    };
+    if (type === "week") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="range"
+          selected={strStartDate && strEndDate && {from: new Date(strStartDate), to: new Date(strEndDate)}}
+          month={strStartDate && strEndDate && new Date(strStartDate)}
+          onDayClick={(day) => {
+            const selectedDate = moment(day);
+            const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
+            const endOfWeek = startOfWeek.clone().add(6, "days");
+            setStrStartDate(moment(startOfWeek).format("YYYY-MM-DD"));
+            setStrEndDate(moment(endOfWeek).format("YYYY-MM-DD"));
+          }}
+          onMonthChange={(month) => {
+            setStrStartDate(month);
+            setStrEndDate(undefined);
+          }}
+        />
+      );
+    }
+    if (type === "month") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="default"
+          month={new Date(strDur.split(" ~ ")[0])}
+          onMonthChange={(month) => {
+            const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
+            const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
+            setStrDur(`${startOfMonth} ~ ${endOfMonth}`);
+          }}
+        />
+      );
+    }
+    if (type === "year") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="default"
+          month={new Date(strDur.split(" ~ ")[0])}
+          onMonthChange={(year) => {
+            const yearDate = new Date(year.getFullYear(), 0, 1);
+            const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
+            const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
+            const prevMonth = differenceInDays(monthDate, yearDate) / 30;
+            if (nextMonth > prevMonth) {
+              setStrDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
+            }
+            else {
+              setStrDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
+            }
+          }}
+        />
+      );
+    };
+    if (type === "select") {
+      dayPicker = (
+        <DayPicker
+          weekStartsOn={1}
+          showOutsideDays={true}
+          locale={ko}
+          modifiersClassNames={{
+            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+          }}
+          mode="range"
+          selected={strStartDate && strEndDate && {from: strStartDate, to: strEndDate}}
+          month={strStartDate}
+          onDayClick= {(day) => {
+            const selectedDay = new Date(day);
+            const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
+            if (strStartDate && strEndDate) {
+              if (selectedDay < new Date(strStartDate)) {
+                setStrStartDate(fmtDate);
+                setStrEndDate(fmtDate);
+              }
+              else if (selectedDay > new Date(strEndDate)) {
+                setStrEndDate(fmtDate);
+              }
+              else {
+                setStrStartDate(fmtDate);
+                setStrEndDate(fmtDate);
+              }
+            }
+            else if (strStartDate) {
+              if (selectedDay < new Date(strStartDate)) {
+                setStrEndDate(strStartDate);
+                setStrStartDate(fmtDate);
+              }
+              else if (selectedDay > new Date(strStartDate)) {
+                setStrEndDate(fmtDate);
+              }
+              else {
+                setStrStartDate(undefined);
+                setStrEndDate(undefined);
+              }
+            }
+            else {
+              setStrStartDate(fmtDate);
+            }
+          }}
+          onMonthChange={(month) => {
+            setStrStartDate(new Date(month.getFullYear(), month.getMonth(), 1));
+            setStrEndDate(undefined);
+          }}
+        />
+      );
     };
     return (
-      <DayPicker
-        mode="single"
-        showOutsideDays
-        selected={foodDay}
-        month={foodDay}
-        locale={ko}
-        weekStartsOn={1}
-        onDayClick={flowDayClick}
-        onMonthChange={(month) => {
-          setFoodDay(month);
-        }}
-        modifiersClassNames={{
-          selected: "selected",
-          disabled: "disabled",
-          outside: "outside",
-          inside: "inside",
-        }}
-      />
+      <Draggable>
+        <div className={`dayPicker-container ${calendarOpen ? "" : "d-none"}`}>
+          <span
+            className="d-right fw-700 pointer"
+            onClick={() => setCalendarOpen(false)}
+            style={{position: "absolute", right: "15px", top: "10px"}}
+          >
+            X
+          </span>
+          <div className="h-2"></div>
+          {dayPicker}
+        </div>
+      </Draggable>
     );
   };
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableFoodList = () => {
+    const successOrNot = (plan, real) => {
+      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
+      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
+
+      if (realDate < planDate) {
+        realDate.setHours(realDate.getHours() + 24);
+      }
+      const diff = Math.abs(realDate.getTime() - planDate.getTime());
+      const diffMinutes = Math.floor(diff / 60000);
+
+      let textColor = "text-muted";
+      if (0 <= diffMinutes && diffMinutes <= 10) {
+        textColor = "text-primary";
+      }
+      if (10 < diffMinutes && diffMinutes <= 20) {
+        textColor = "text-success";
+      }
+      if (20 < diffMinutes && diffMinutes <= 30) {
+        textColor = "text-warning";
+      }
+      if (30 < diffMinutes) {
+        textColor = "text-danger";
+      }
+      return textColor;
+    };
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
+      <table className="table bg-white table-hover">
+        <thead className="table-primary">
           <tr>
+            <th>날짜</th>
             <th>분류</th>
-            <th>음식명</th>
-            <th>브랜드</th>
-            <th>서빙</th>
-            <th>칼로리</th>
-            <th>탄수화물</th>
-            <th>단백질</th>
-            <th>지방</th>
+            <th>목표</th>
+            <th>실제</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {FOOD_LIST.map((index, i) => (
-            <tr key={i}>
-              <td>{index.food_category}</td>
-              <td>{index.food_title}</td>
-              <td>{index.food_brand}</td>
-              <td>{index.food_serving}</td>
-              <td>{index.food_calories}</td>
-              <td>{index.food_carb}</td>
-              <td>{index.food_protein}</td>
-              <td>{index.food_fat}</td>
-            </tr>
+          {FOOD.map((item) => (
+            <React.Fragment key={item._id}>
+              <tr>
+                <td rowSpan={3} className="pointer" onClick={() => {
+                  STATE.id = item._id;
+                  STATE.date = item.food_date;
+                  navParam(STATE.intoDetail, {
+                    state: STATE
+                  });
+                }}>
+                  {item.food_date}
+                </td>
+                <td>취침</td>
+                <td>
+                  {item.food_plan?.food_section?.map((item) => item.food_start)}
+                </td>
+                <td>
+                  {item.food_real?.food_section?.map((item) => item.food_start)}
+                </td>
+                <td>
+                  <span className={successOrNot(
+                    item.food_plan?.food_section?.map((item) => item.food_start),
+                    item.food_real?.food_section?.map((item) => item.food_start)
+                  )}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>기상</td>
+                <td>
+                  {item.food_plan?.food_section?.map((item) => item.food_end)}
+                </td>
+                <td>
+                  {item.food_real?.food_section?.map((item) => item.food_end)}
+                </td>
+                <td>
+                  <span className={successOrNot(
+                    item.food_plan?.food_section?.map((item) => item.food_end),
+                    item.food_real?.food_section?.map((item) => item.food_end)
+                  )}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>수면</td>
+                <td>
+                  {item.food_plan?.food_section?.map((item) => item.food_time)}
+                </td>
+                <td>
+                  {item.food_real?.food_section?.map((item) => item.food_time)}
+                </td>
+                <td>
+                  <span className={successOrNot(
+                    item.food_plan?.food_section?.map((item) => item.food_time),
+                    item.food_real?.food_section?.map((item) => item.food_time)
+                  )}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+            </React.Fragment>
           ))}
         </tbody>
       </table>
     );
   };
 
-  // 5-2. table ----------------------------------------------------------------------------------->
-  const tableFoodTotal = () => {
+  // 5-2. filter ---------------------------------------------------------------------------------->
+  const filterBox = () => {
+    const pageNumber = () => {
+      const pages = [];
+      const totalPages = Math.ceil(totalCount / filter.limit);
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(
+          <button
+            key={i}
+            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
+            onClick={() => setFilter({
+              ...filter, page: i
+            })}
+          >
+            {i}
+          </button>
+        );
+      }
+      return pages;
+    };
+    const prevNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1) }
+          )}
+        >
+          이전
+        </button>
+      );
+    }
+    const nextNumber = () => {
+      return (
+        <button
+          className="btn btn-sm btn-primary ms-10 me-10"
+          onClick={() => setFilter({
+            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) }
+          )}
+        >
+          다음
+        </button>
+      );
+    }
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
-          <tr>
-            <th>칼로리</th>
-            <th>탄수화물</th>
-            <th>단백질</th>
-            <th>지방</th>
-          </tr>
-        </thead>
-        <tbody>
-          {FOOD_TOTAL.map((index, i) => (
-            <tr key={i}>
-              <td>{index.totalCalories}</td>
-              <td>{index.totalCarb}</td>
-              <td>{index.totalProtein}</td>
-              <td>{index.totalFat}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="d-inline-flex">
+        {prevNumber()}
+        {pageNumber()}
+        {nextNumber()}
+      </div>
     );
   };
 
-  // 5-3. table ----------------------------------------------------------------------------------->
-  const tableFoodAvg = () => {
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonCalendar = () => {
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
-          <tr>
-            <th>칼로리</th>
-            <th>탄수화물</th>
-            <th>단백질</th>
-            <th>지방</th>
-          </tr>
-        </thead>
-        <tbody>
-          {FOOD_AVERAGE.map((index, i) => (
-            <tr key={i}>
-              <td>{index.food_calories}</td>
-              <td>{index.food_carb}</td>
-              <td>{index.food_protein}</td>
-              <td>{index.food_fat}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <button
+        type="button"
+        className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
+        onClick={() => setCalendarOpen(!calendarOpen)}
+      >
+        {calendarOpen ? "x" : "o"}
+      </button>
     );
   };
-
-  // 6-1. button ---------------------------------------------------------------------------------->
   const buttonFoodToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setFoodDay(koreanDate);
-        localStorage.removeItem("foodList(DAY)");
-        localStorage.removeItem("foodTotal(DAY)");
-        localStorage.removeItem("foodAvg(DAY)");
-        localStorage.removeItem("foodDay(DAY)");
+        setStrDate(koreanDate);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Today
       </button>
@@ -254,11 +480,9 @@ export const FoodList = () => {
   const buttonFoodReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setFoodDay(undefined);
-        localStorage.removeItem("foodList(DAY)");
-        localStorage.removeItem("foodTotal(DAY)");
-        localStorage.removeItem("foodAvg(DAY)");
-        localStorage.removeItem("foodDay(DAY)");
+        setStrDate(koreanDate);
+        localStorage.removeItem(`strStartDate(${PATH})`);
+        localStorage.removeItem(`strEndDate(${PATH})`);
       }}>
         Reset
       </button>
@@ -266,69 +490,39 @@ export const FoodList = () => {
   };
 
   // 6-2. select ---------------------------------------------------------------------------------->
-  const selectFoodList = () => {
-    const currentPath = location.pathname || "";
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="foodList" value={currentPath}
-        onChange={(e) => {
-          navParam(e.target.value);
-        }}>
-          <option value="/foodList">Day</option>
-          <option value="/foodListWeek">Week</option>
-          <option value="/foodListMonth">Month</option>
-          <option value="/foodListYear">Year</option>
-          <option value="/foodListSelect">Select</option>
-        </select>
-      </div>
-    );
-  };
   const selectFoodType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="foodType" onChange={(e) => {
-          if (e.target.value === "list") {
-            setFoodType("list");
-          }
-          else if (e.target.value === "total") {
-            setFoodType("total");
-          }
-          else if (e.target.value === "avg") {
-            setFoodType("avg");
-          }
-        }}>
-          <option value="list">List</option>
-          <option value="total">Total</option>
-          <option value="avg">Avg</option>
+        <select className="form-select" id="type" onChange={(e) => setType(e.target.value)}>
+          {["day", "week", "month", "year", "select"].map((item) => (
+            <option key={item} value={item} selected={type === item}>{item}</option>
+          ))}
         </select>
       </div>
     );
   };
-  const selectFoodCategory = () => {
+
+  // 6-3. select ---------------------------------------------------------------------------------->
+  const selectFilterSub = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="foodCategory" onChange={(e) => {
-          if (e.target.value === "all") {
-            setFoodCategory("all");
-          }
-          else if (e.target.value === "morning") {
-            setFoodCategory("morning");
-          }
-          else if (e.target.value === "lunch") {
-            setFoodCategory("lunch");
-          }
-          else if (e.target.value === "dinner") {
-            setFoodCategory("dinner");
-          }
-          else if (e.target.value === "snack") {
-            setFoodCategory("snack");
-          }
+        <select className="form-select" id="foodListSortOrder" onChange={(e) => {
+          setFilter({...filter, order: e.target.value});
         }}>
-          <option value="all">All</option>
-          <option value="morning">Morning</option>
-          <option value="lunch">Lunch</option>
-          <option value="dinner">Dinner</option>
-          <option value="snack">Snack</option>
+          <option value="asc" selected>오름차순</option>
+          <option value="desc">내림차순</option>
+        </select>
+      </div>
+    );
+  };
+  const selectFilterPage = () => {
+    return (
+      <div className="mb-3">
+        <select className="form-select" id="foodListLimit" onChange={(e) => {
+          setFilter({...filter, limit: Number(e.target.value)});
+        }}>
+          <option value="5" selected>5</option>
+          <option value="10">10</option>
         </select>
       </div>
     );
@@ -338,38 +532,36 @@ export const FoodList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-      <div className="row d-center mt-5">
-        <div className="col-12">
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
-          <h2 className="mb-3 fw-7">일별로 조회</h2>
+        <div className="row mb-20">
+          <div className="col-1">
+            {viewFoodList()}
+          </div>
+          <div className="col-2">
+            {selectFoodType()}
+          </div>
+          <div className="col-2">
+            {selectFilterSub()}
+          </div>
+          <div className="col-2">
+            {selectFilterPage()}
+          </div>
         </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-3">
-          {selectFoodList()}
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {tableFoodList()}
+          </div>
         </div>
-        <div className="col-3">
-          {selectFoodType()}
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {filterBox()}
+          </div>
         </div>
-        <div className="col-3">
-          {selectFoodCategory()}
-        </div>
-      </div>
-      <div className="row d-center mt-3">
-        <div className="col-md-6 col-12 d-center">
-          {viewFoodDay()}
-        </div>
-        <div className="col-md-6 col-12">
-          {foodType === "list" && tableFoodList()}
-          {foodType === "total" && tableFoodTotal()}
-          {foodType === "avg" && tableFoodAvg()}
-        </div>
-      </div>
-      <div className="row mb-20">
-        <div className="col-12 d-center">
-          {buttonFoodToday()}
-          {buttonFoodReset()}
-        </div>
+        <div className="row mb-20">
+          <div className="col-12 d-center">
+            {buttonCalendar()}
+            {buttonFoodToday()}
+            {buttonFoodReset()}
+          </div>
         </div>
       </div>
     </div>

@@ -25,8 +25,10 @@ import {Header} from "../layout/Header.jsx";
 import {Footer} from "../layout/Footer";
 
 import {Dash} from "../page/main/Dash";
-import {TestList} from "../page/main/TestList";
-import {TestSave} from "../page/main/TestSave";
+
+import {TestList} from "../page/test/TestList";
+import {TestSave} from "../page/test/TestSave";
+import {TestSearch} from "../page/test/TestSearch";
 
 import {UserLogin} from "../page/user/UserLogin.jsx";
 import {UserSave} from "../page/user/UserSave.jsx";
@@ -40,7 +42,7 @@ import {CalendarDetail} from "../page/calendar/CalendarDetail";
 import {FoodSave} from "../page/food/FoodSave.jsx";
 import {FoodDetail} from "../page/food/FoodDetail.jsx";
 import {FoodSearchList} from "../page/food/FoodSearchList.jsx";
-import {FoodSearchResult} from "../page/food/FoodSearchResult.jsx";
+import {FoodSearchDetail} from "../page/food/FoodSearchDetail.jsx";
 import {FoodList} from "../page/food/FoodList.jsx";
 
 import {WorkSave} from "../page/work/WorkSave.jsx";
@@ -61,8 +63,16 @@ const Common = () => {
   return (
     <Routes>
       <Route path="/" element={<Dash />} />
-      <Route path="/test/list" element={<TestList />} />
-      <Route path="/test/save" element={<TestSave />} />
+    </Routes>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Test = () => {
+  return (
+    <Routes>
+      <Route path="/list" element={<TestList />} />
+      <Route path="/save" element={<TestSave />} />
+      <Route path="/search" element={<TestSearch />} />
     </Routes>
   );
 };
@@ -95,7 +105,7 @@ const Food = () => {
       <Route path="/save" element={<FoodSave />} />
       <Route path="/detail" element={<FoodDetail />} />
       <Route path="/search/list" element={<FoodSearchList />} />
-      <Route path="/search/result" element={<FoodSearchResult />} />
+      <Route path="/search/detail" element={<FoodSearchDetail />} />
     </Routes>
   );
 };
@@ -140,6 +150,7 @@ export const App = () => {
         <Header />
           <Routes>
             <Route path="/*" element={<Common />} />
+            <Route path="/test/*" element={<Test />} />
             <Route path="/user/*" element={<User />} />
             <Route path="/calendar/*" element={<Calendar />} />
             <Route path="/food/*" element={<Food />} />

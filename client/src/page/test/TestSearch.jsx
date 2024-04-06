@@ -1,40 +1,13 @@
-// FoodSearchList.jsx
+// TestSearch.jsx
 
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/js/useStorage.jsx";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
-import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSearchList = () => {
+export const TestSearch = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
-  const navParam = useNavigate();
-  const location = useLocation();
-  const location_date = location?.state?.date?.toString();
-  const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
-  const STATE = {
-    refresh:0,
-    intoSearchDetail:"/food/search/detail",
-    id: "",
-    date: "",
-    food: {
-      title: "",
-      brand: "",
-      serv: "",
-      gram: "",
-      kcal: "",
-      fat: "",
-      carb: "",
-      protein: ""
-    }
-  };
+  const URL_TEST = process.env.REACT_APP_URL_TEST;
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [pageCount, setPageCount] = useState(0);
@@ -49,7 +22,6 @@ export const FoodSearchList = () => {
     title: "",
     brand: "",
     serv: "",
-    gram: "",
     kcal: "",
     fat: "",
     carb: "",
@@ -59,7 +31,6 @@ export const FoodSearchList = () => {
     title: "",
     brand: "",
     serv: "",
-    gram: "",
     kcal: "",
     fat: "",
     carb: "",
@@ -76,13 +47,11 @@ export const FoodSearchList = () => {
     }
   }, [filter.page]);
 
-  // 3. flow -------------------------------------------------------------------------------------->
+  // ---------------------------------------------------------------------------------------------->
   const flowTestSearch = async () => {
-    const response = await axios.get(`${URL_FOOD}/search`, {
-      params: {
-        user_id: user_id,
-        filter: filter
-      }
+    const response = await axios.post(`${URL_TEST}/search`, {
+      query: filter.query,
+      page: filter.page,
     });
     setPageCount(response.data.pageCount);
     setFOOD(response.data.result || FOOD_DEFAULT);
@@ -127,43 +96,36 @@ export const FoodSearchList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableTestSearch = () => {
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
-          <tr>
-            <th>Title</th>
-            <th>Brand</th>
-            <th>Serving</th>
-            <th>Gram</th>
-            <th>Kcal</th>
-            <th>Fat</th>
-            <th>Carbohydrate</th>
-            <th>Protein</th>
-          </tr>
-        </thead>
-        <tbody>
-          {FOOD.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td onClick={() => {
-                  STATE.food = item;
-                  navParam(STATE.intoSearchDetail, {
-                    state: STATE
-                  }
-                )}}>
-                  {item.title}
-                </td>
-                <td>{item.brand}</td>
-                <td>{item.serv}</td>
-                <td>{item.gram}</td>
-                <td>{item.kcal}</td>
-                <td>{item.fat}</td>
-                <td>{item.carb}</td>
-                <td>{item.protein}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <table className="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Brand</th>
+              <th>Serving</th>
+              <th>Kcal</th>
+              <th>Fat</th>
+              <th>Carbohydrate</th>
+              <th>Protein</th>
+            </tr>
+          </thead>
+          <tbody>
+            {FOOD.map((item, index) => {
+              return (
+                <tr key={index}>
+                  <td>{item.title}</td>
+                  <td>{item.brand}</td>
+                  <td>{item.serv}</td>
+                  <td>{item.kcal}</td>
+                  <td>{item.fat}</td>
+                  <td>{item.carb}</td>
+                  <td>{item.protein}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     );
   };
 

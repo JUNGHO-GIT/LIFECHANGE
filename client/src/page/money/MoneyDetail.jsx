@@ -20,8 +20,8 @@ export const MoneyDetail = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoList:"/work/list",
-    intoSave:"/work/save",
+    intoList:"/money/list",
+    intoSave:"/money/save",
     id: "",
     date: ""
   };

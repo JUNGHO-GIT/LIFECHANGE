@@ -54,6 +54,20 @@ export const Header = () => {
 
   // 4-2. view ------------------------------------------------------------------------------------>
   const Sidebar = () => {
+
+    const today = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+
+    let preFix;
+    let subFix = isActive.split("/")[1];
+    let lowFix;
+
+    listArray.forEach((menu) => {
+      if (isActive.includes(menu.label.toLowerCase())) {
+        preFix = menu.label;
+        lowFix = preFix.toLowerCase()
+      }
+    });
+
     return (
       <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
         <div className="d-flex justify-content-between align-items-center text-dark pointer p-10">
@@ -62,7 +76,11 @@ export const Header = () => {
         </div>
         <div className="d-flex flex-column p-3">
           <ul className="nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark">
-            {listArray.map(menu => <SidebarItem key={menu.label} {...menu} />)}
+            {listArray.map((menu) => (
+              <SidebarItem key={menu.label}
+                {...menu}
+              />
+            ))}
           </ul>
         </div>
       </div>

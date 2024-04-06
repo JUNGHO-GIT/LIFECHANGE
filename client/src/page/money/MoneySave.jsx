@@ -135,39 +135,6 @@ export const MoneySave = () => {
 
   })()}, [strDur, planYn]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-
-    const moneyType = planYn === "Y" ? "money_plan" : "money_real";
-
-    const startTime = MONEY[moneyType]?.money_start?.toString();
-    const endTime = MONEY[moneyType]?.money_end?.toString();
-
-    if (startTime && endTime) {
-      const startDate = new Date(`${strDate}T${startTime}`);
-      const endDate = new Date(`${strDate}T${endTime}`);
-
-      // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
-      if (endDate < startDate) {
-        endDate.setDate(endDate.getDate() + 1);
-      }
-
-      // 차이 계산
-      const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-
-      setMONEY((prev) => ({
-        ...prev,
-        [moneyType]: {
-          ...prev[moneyType],
-          money_time: time,
-        },
-      }));
-    }
-  }, [strStartDate, strEndDate]);
-
   // 3. flow -------------------------------------------------------------------------------------->
   const flowMoneySave = async () => {
 

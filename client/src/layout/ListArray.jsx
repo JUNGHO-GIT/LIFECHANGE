@@ -4,8 +4,14 @@ export const listArray = [
     label: "Main",
     items: [
       {to: "/", label: "Home"},
+    ]
+  },
+  {
+    label: "Test",
+    items: [
       {to: "/test/list", label: "TestList"},
-      {to: "/test/save", label: "TestSave"}
+      {to: "/test/save", label: "TestSave"},
+      {to: "/test/search/list", label: "TestSearch"},
     ]
   },
   {

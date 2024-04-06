@@ -1,11 +1,12 @@
 // index.js
 
 import path from "path";
-import { fileURLToPath } from "url";
+import {fileURLToPath} from "url";
 import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import {testRouter} from "./src/router/testRouter.js";
 import {userRouter} from "./src/router/userRouter.js";
 import {foodRouter} from "./src/router/foodRouter.js";
 import {calendarRouter} from "./src/router/calendarRouter.js";
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use("/test", testRouter);
 app.use("/user", userRouter);
 app.use("/food", foodRouter);
 app.use("/calendar", calendarRouter);
