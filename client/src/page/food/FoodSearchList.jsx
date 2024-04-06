@@ -37,34 +37,42 @@ export const FoodSearchList = () => {
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [pageCount, setPageCount] = useState(0);
-  const [filter, setFilter] = useState({
-    query: "",
-    page: 0,
-    limit: 10
-  });
+  const {val:pageCount, set:setPageCount} = useStorage(
+    `pageCount(${PATH})`, 0
+  );
+  const {val:filter, set:setFilter} = useStorage(
+    `filter(${PATH})`, {
+      query: "",
+      page: 0,
+      limit: 10
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
-    title: "",
-    brand: "",
-    serv: "",
-    gram: "",
-    kcal: "",
-    fat: "",
-    carb: "",
-    protein: ""
-  }]);
-  const [FOOD, setFOOD] = useState([{
-    title: "",
-    brand: "",
-    serv: "",
-    gram: "",
-    kcal: "",
-    fat: "",
-    carb: "",
-    protein: ""
-  }]);
+  const {val:FOOD_DEFAULT, set:setFOOD_DEFAULT} = useStorage(
+    `FOOD_DEFAULT(${PATH})`, [{
+      title: "",
+      brand: "",
+      serv: "",
+      gram: "",
+      kcal: "",
+      fat: "",
+      carb: "",
+      protein: ""
+    }]
+  );
+  const {val:FOOD, set:setFOOD} = useStorage(
+    `FOOD(${PATH})`, [{
+      title: "",
+      brand: "",
+      serv: "",
+      gram: "",
+      kcal: "",
+      fat: "",
+      carb: "",
+      protein: ""
+    }]
+  );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

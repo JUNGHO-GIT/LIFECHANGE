@@ -27,18 +27,10 @@ export const FoodSearchDetail = () => {
   };
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD, setFOOD] = useState({
-    title: "",
-    brand: "",
-    def: {
-      serv: "",
-      gram: "",
-      kcal: "",
-      fat: "",
-      carb: "",
-      protein: ""
-    },
-    gram: {
+  const {val:FOOD, set:setFOOD} = useStorage(
+    `FOOD(${PATH})`, {
+      title: "",
+      brand: "",
       serv: "",
       gram: "",
       kcal: "",
@@ -46,7 +38,7 @@ export const FoodSearchDetail = () => {
       carb: "",
       protein: ""
     }
-  });
+  );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -56,12 +48,13 @@ export const FoodSearchDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodDetail = () => {
     return (
-      {/* <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>title</th>
             <th>brand</th>
             <th>serv</th>
+            <th>gram</th>
             <th>kcal</th>
             <th>fat</th>
             <th>carb</th>
@@ -73,13 +66,14 @@ export const FoodSearchDetail = () => {
             <td>{FOOD.title}</td>
             <td>{FOOD.brand}</td>
             <td>{FOOD.serv}</td>
+            <td>{FOOD.gram}</td>
             <td>{FOOD.kcal}</td>
             <td>{FOOD.fat}</td>
             <td>{FOOD.carb}</td>
             <td>{FOOD.protein}</td>
           </tr>
         </tbody>
-      </table> */}
+      </table>
     );
   };
 
@@ -89,7 +83,7 @@ export const FoodSearchDetail = () => {
       <div className="container-wrapper">
         <div className="row d-center mt-5 mb-20">
           <div className="col-12">
-            {/* {tableFoodDetail()} */}
+            {tableFoodDetail()}
           </div>
         </div>
       </div>
