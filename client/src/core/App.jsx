@@ -37,8 +37,7 @@ import {CalendarDetail} from "../page/calendar/CalendarDetail";
 
 import {FoodSave} from "../page/food/FoodSave.jsx";
 import {FoodDetail} from "../page/food/FoodDetail.jsx";
-import {FoodSearchList} from "../page/food/FoodSearchList.jsx";
-import {FoodSearchDetail} from "../page/food/FoodSearchDetail.jsx";
+import {FoodSearch} from "../page/food/FoodSearch.jsx";
 import {FoodList} from "../page/food/FoodList.jsx";
 
 import {WorkSave} from "../page/work/WorkSave.jsx";
@@ -90,8 +89,7 @@ const Food = () => {
       <Route path="/list" element={<FoodList />} />
       <Route path="/save" element={<FoodSave />} />
       <Route path="/detail" element={<FoodDetail />} />
-      <Route path="/search/list" element={<FoodSearchList />} />
-      <Route path="/search/detail" element={<FoodSearchDetail />} />
+      <Route path="/search" element={<FoodSearch />} />
     </Routes>
   );
 };

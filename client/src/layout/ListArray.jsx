@@ -21,8 +21,9 @@ export const listArray = [
   {
     label: "Food",
     items: [
-      {to: "/food/search/list", label: "FoodSearchList"},
-      {to: "/food/list", label: "FoodList"}
+      {to: "/food/detail", label: "FoodDetail"},
+      {to: "/food/list", label: "FoodList"},
+      {to: "/food/search", label: "FoodSearch"},
     ]
   },
   {

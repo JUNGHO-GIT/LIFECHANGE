@@ -1,4 +1,4 @@
-// FoodSearchList.jsx
+// FoodSearch.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -7,7 +7,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSearchList = () => {
+export const FoodSearch = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -20,7 +20,7 @@ export const FoodSearchList = () => {
     id: "",
     date: koreanDate,
     refresh: 0,
-    intoDetail:"/food/search/detail",
+    intoSave:"/food/save",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -116,7 +116,10 @@ export const FoodSearchList = () => {
 
     function handleStorage (param) {
       localStorage.setItem("food_section", JSON.stringify(param));
-      navParam(STATE.intoDetail);
+      STATE.date = koreanDate;
+      navParam(STATE.intoSave, {
+        state: STATE
+      });
     };
 
     return (
@@ -185,7 +188,7 @@ export const FoodSearchList = () => {
         </button>
       </div>
     );
-  }
+  };
 
   // 5-2. filter ---------------------------------------------------------------------------------->
   const filterBox = () => {

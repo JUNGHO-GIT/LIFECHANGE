@@ -44,7 +44,7 @@ app.use(expressWinston.logger({
   ],
   format: winston.format.combine(
     winston.format.colorize(),
-    winston.format.printf(info => `${info.level}: ${info.message} ${info.meta.res.statusCode} ${info.meta.responseTime}ms`)
+    winston.format.printf(info => `${info.level}: ${info.message} ${info.meta.res.statusCode} ${info.meta.responseTime}ms\n`)
   ),
   msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms",
   expressFormat: false,

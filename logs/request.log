@@ -1,3 +1,201 @@
 [32minfo[39m: HTTP OPTIONS /user/login [32m204[39m 1ms 204 1ms
 [32minfo[39m: HTTP POST /user/login [32m200[39m 22ms 200 22ms
 [32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 566ms 304 566ms
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 0ms 204 0ms
+[32minfo[39m: HTTP POST /food/save [32m200[39m 23ms 200 23ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 7ms 200 7ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 5ms 200 5ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%90%EC%8B%AC [32m200[39m 5ms 200 5ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [32m200[39m 5ms 200 5ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EA%B0%84%EC%8B%9D [32m200[39m 4ms 200 4ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [36m304[39m 4ms 304 4ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 5ms 304 5ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-14&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=desc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [32m200[39m 570ms 200 570ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 331ms 304 331ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 407ms 304 407ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 14ms 304 14ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 365ms 304 365ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 312ms 304 312ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [32m200[39m 318ms 200 318ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 365ms 304 365ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 402ms 304 402ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=6&filter[limit]=10 [32m200[39m 354ms 200 354ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=8&filter[limit]=10 [32m200[39m 353ms 200 353ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=6&filter[limit]=10 [36m304[39m 335ms 304 335ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [32m200[39m 388ms 200 388ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 384ms 304 384ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 370ms 304 370ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 321ms 304 321ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [32m200[39m 318ms 200 318ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=4&filter[limit]=10 [32m200[39m 323ms 200 323ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=3&filter[limit]=10 [32m200[39m 317ms 200 317ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=1&filter[limit]=10 [32m200[39m 307ms 200 307ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 313ms 304 313ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 362ms 304 362ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 360ms 304 360ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 354ms 304 354ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 325ms 304 325ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 300ms 304 300ms
+
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 1ms 204 1ms
+
+[32minfo[39m: HTTP POST /food/save [32m200[39m 47ms 200 47ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 311ms 304 311ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 4177ms 304 4177ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 4203ms 304 4203ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=5&filter[limit]=10 [36m304[39m 1750ms 304 1750ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 1148ms 304 1148ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 397ms 304 397ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 314ms 304 314ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 363ms 304 363ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 340ms 304 340ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 305ms 304 305ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 371ms 304 371ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 896ms 304 896ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 317ms 304 317ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 891ms 304 891ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 305ms 304 305ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [32m200[39m 955ms 200 955ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 347ms 304 347ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 334ms 304 334ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 317ms 304 317ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 955ms 304 955ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 352ms 304 352ms
+
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 1ms 204 1ms
+
+[32minfo[39m: HTTP POST /food/save [32m200[39m 27ms 200 27ms
+
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 0ms 204 0ms
+
+[32minfo[39m: HTTP POST /food/save [32m200[39m 36ms 200 36ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 6ms 200 6ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 0ms 204 0ms
+
+[32minfo[39m: HTTP POST /food/save [32m200[39m 7ms 200 7ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [32m200[39m 321ms 200 321ms
+
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 0ms 204 0ms
+
+[32minfo[39m: HTTP POST /food/save [32m200[39m 7ms 200 7ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 313ms 304 313ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 314ms 304 314ms
+
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 0ms 204 0ms
+
+[32minfo[39m: HTTP POST /food/save [32m200[39m 8ms 200 8ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 6ms 200 6ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%90%EC%8B%AC [32m200[39m 5ms 200 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 5ms 200 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 413ms 304 413ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 312ms 304 312ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 302ms 304 302ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+

@@ -13,7 +13,7 @@ export const FoodSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -23,7 +23,6 @@ export const FoodSave = () => {
     id: "",
     date: "",
     refresh:0,
-    intoList:"/food/list",
     intoSave:"/food/save",
     intoSearch:"/food/search",
   };
@@ -50,9 +49,6 @@ export const FoodSave = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const {val:FOOD_DEFAULT, set:setFOOD_DEFAULT} = useStorage(
     `FOOD_DEFAULT(${PATH})`, {
-      _id: "",
-      food_number: 0,
-      food_date: "",
       food_plan : {
         food_total_kcal: "",
         food_total_fat: "",
@@ -89,47 +85,45 @@ export const FoodSave = () => {
       },
     }
   );
-  const {val:FOOD, set:setFOOD} = useStorage(
-    `FOOD(${PATH})`, {
-      _id: "",
-      food_number: 0,
-      food_date: "",
-      food_plan : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
-      },
-      food_real : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
-      },
-    }
-  );
+  const [FOOD, setFOOD] = useState({
+    _id: "",
+    food_number: 0,
+    food_date: "",
+    food_plan : {
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
+      }],
+    },
+    food_real : {
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
+      }],
+    },
+  });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -149,12 +143,12 @@ export const FoodSave = () => {
   useEffect(() => {
 
     const foodType = planYn === "Y" ? "food_plan" : "food_real";
-    const getItem = localStorage.getItem("food_section");
+    const getItem = localStorage.getItem("FOOD(/food/search/detail)");
     let storageSection = [];
 
     if (getItem) {
       const storedData = JSON.parse(getItem);
-      storageSection = storedData;
+      storageSection = storedData[foodType].food_section;
     }
 
     setFOOD((prev) => {
@@ -180,22 +174,8 @@ export const FoodSave = () => {
           food_section: newFoodSection,
         },
       };
-    })
+    });
   }, []);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
-
-    // 초기 영양소 값 설정
-    setFOOD_DEFAULT((prev) => ({
-      ...prev,
-      [foodType]: {
-        ...prev[foodType],
-        food_section: [...FOOD[foodType].food_section],
-      },
-    }));
-  }, [FOOD]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -244,39 +224,6 @@ export const FoodSave = () => {
     }
   };
 
-  // 4. handle ------------------------------------------------------------------------------------>
-  const handleCountChange = (index, newValue) => {
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
-    const newCountValue = Number(newValue);
-
-    setFOOD((prev) => {
-      const newFoodSection = [...prev[foodType].food_section];
-      const section = newFoodSection[index];
-      const defaultSection = FOOD_DEFAULT[foodType].food_section[index];
-      const ratio = newCountValue / (defaultSection.food_count || 1);
-
-      if (defaultSection) {
-        newFoodSection[index] = {
-          ...section,
-          food_count: newCountValue,
-          food_gram: (Number(defaultSection?.food_gram) * ratio).toFixed(1),
-          food_kcal: (Number(defaultSection?.food_kcal) * ratio).toFixed(1),
-          food_fat: (Number(defaultSection?.food_fat) * ratio).toFixed(1),
-          food_carb: (Number(defaultSection?.food_carb) * ratio).toFixed(1),
-          food_protein: (Number(defaultSection?.food_protein) * ratio).toFixed(1),
-        };
-      }
-
-      return {
-        ...prev,
-        [foodType]: {
-          ...prev[foodType],
-          food_section: newFoodSection,
-        },
-      };
-    });
-  };
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableFoodSave = () => {
 
@@ -297,84 +244,55 @@ export const FoodSave = () => {
     };
 
     return (
-      <table className="table bg-white table-hover">
+      <table className="table table-hover shadow-sm rounded">
         <thead className="table-primary">
           <tr>
-            <th>part</th>
-            <th>title</th>
-            <th>brand</th>
-            <th>serving</th>
-            <th>gram</th>
-            <th>kcal</th>
-            <th>fat</th>
-            <th>carb</th>
-            <th>protein</th>
-            <th>x</th>
+            <th>계획여부</th>
+            <th>파트</th>
+            <th>타이틀</th>
+            <th>횟수</th>
+            <th>그램</th>
+            <th>칼로리</th>
+            <th>지방</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD[foodType].food_section.map((item, index) => (
-            <React.Fragment key={index}>
-              <tr>
-                <td>
-                  <select
-                    id="food_part"
-                    name="food_part"
-                    className="form-select"
-                    value={item.food_part}
-                    onChange={(e) => {
-                      const newPart = e.target.value;
-                      setFOOD((prev) => {
-                        const newFoodSection = [...prev[foodType].food_section];
-                        newFoodSection[index] = {
-                          ...item,
-                          food_part: newPart,
-                        };
-                        return {
-                          ...prev,
-                          [foodType]: {
-                            ...prev[foodType],
-                            food_section: newFoodSection,
-                          },
-                        };
-                      });
-                    }}
-                  >
-                    <option value="">선택</option>
-                    <option value="아침">아침</option>
-                    <option value="점심">점심</option>
-                    <option value="저녁">저녁</option>
-                    <option value="간식">간식</option>
-                  </select>
-                </td>
-                <td>{item.food_title}</td>
-                <td>{item.food_brand}</td>
-                <td>
-                  <div className="d-flex">
-                    <input
-                      type="number"
-                      className="form-control"
-                      value={item.food_count}
-                      min="1"
-                      max="100"
-                      onChange={(e) => handleCountChange(index, e.target.value)}
-                    />
-                    <span>{item.food_serv}</span>
-                  </div>
-                </td>
-                <td>{item.food_gram}</td>
-                <td>{item.food_kcal}</td>
-                <td>{item.food_fat}</td>
-                <td>{item.food_carb}</td>
-                <td>{item.food_protein}</td>
-                <td>
+          <tr>
+            <td>
+              <select
+                id="food_planYn"
+                name="food_planYn"
+                className="form-select"
+                value={planYn}
+                onChange={(e) => {
+                  setPlanYn(e.target.value);
+                }}
+              >
+                <option value="Y">목표</option>
+                <option value="N" selected>실제</option>
+              </select>
+            </td>
+            <td colSpan={9}>
+              {FOOD[foodType].food_section.map((item, index) => (
+                <div key={index} className="d-flex justify-content-between">
+                  <span>{item?.food_part}</span>
+                  <span>{item?.food_title}</span>
+                  <span>{item?.food_count} {item?.food_serv}</span>
+                  <span>{item?.food_gram}</span>
+                  <span>{item?.food_kcal}</span>
+                  <span>{item?.food_fat}</span>
+                  <span>{item?.food_carb}</span>
+                  <span>{item?.food_protein}</span>
                   <span className="btn btn-sm btn-danger" onClick={() => (handlerFoodDelete(index))}>
                     x
                   </span>
-                </td>
-              </tr>
-            </React.Fragment>
-          ))}
+                </div>
+              ))}
+            </td>
+          </tr>
           <tr>
             <td>합계</td>
             <td></td>
@@ -393,11 +311,9 @@ export const FoodSave = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonSaveFood = () => {
+  const buttonFoodSave = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => (
-        flowFoodSave()
-      )}>
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowFoodSave}>
         Save
       </button>
     );
@@ -411,25 +327,30 @@ export const FoodSave = () => {
       </button>
     );
   };
+  const buttonFoodList = () => {
+    return (
+      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
+        navParam(STATE.intoSearch);
+      }}>
+        List
+      </button>
+    );
+  };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20">
-          <div className="col-12 d-center">
-            <h1>{planYn === "Y" ? "계획" : "실제"}</h1>
-          </div>
-        </div>
-        <div className="row d-center mt-5 mb-20">
+        <div className="row d-center mb-20">
           <div className="col-12">
             {tableFoodSave()}
           </div>
         </div>
-        <div className="row d-center mt-5">
+        <div className="row d-center">
           <div className="col-12">
-            {buttonSaveFood()}
+            {buttonFoodSave()}
             {buttonRefreshPage()}
+            {buttonFoodList()}
           </div>
         </div>
       </div>
