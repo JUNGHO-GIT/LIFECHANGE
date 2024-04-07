@@ -149,11 +149,15 @@ export const list = async (
     ...prev,
     food_real: {
       ...prev.food_real,
-      food_section: prev.food_real.food_section.filter((item) => item.food_part === part),
+      food_section: prev.food_real?.food_section.filter((item) => (
+        part === "전체" ? true : item.food_part === part
+      )),
     },
     food_plan: {
       ...prev.food_plan,
-      food_section: prev.food_plan.food_section.filter((item) => item.food_part === part),
+      food_section: prev.food_plan?.food_section.filter((item) => (
+        part === "전체" ? true : item.food_part === part
+      )),
     },
   }));
 

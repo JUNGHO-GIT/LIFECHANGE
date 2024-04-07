@@ -184,7 +184,6 @@ export const FoodSave = () => {
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
-            <th>날짜</th>
             <th>계획여부</th>
             <th>파트</th>
             <th>타이틀</th>
@@ -194,13 +193,11 @@ export const FoodSave = () => {
             <th>지방</th>
             <th>탄수화물</th>
             <th>단백질</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td className="fs-20 pt-20">
-              {FOOD.food_date}
-            </td>
             <td>
               <select
                 id="food_planYn"
@@ -215,7 +212,7 @@ export const FoodSave = () => {
                 <option value="N" selected>실제</option>
               </select>
             </td>
-            <td colSpan={8}>
+            <td colSpan={9}>
               {FOOD[foodType].food_section.map((item, index) => (
                 <div key={index} className="d-flex justify-content-between">
                   <span>{item?.food_part}</span>
@@ -226,9 +223,9 @@ export const FoodSave = () => {
                   <span>{item?.food_fat}</span>
                   <span>{item?.food_carb}</span>
                   <span>{item?.food_protein}</span>
-                  <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => handlerFoodDelete(index)}>
-                    X
-                  </button>
+                  <span className="btn btn-sm btn-danger" onClick={() => (handlerFoodDelete(index))}>
+                    x
+                  </span>
                 </div>
               ))}
             </td>

@@ -1,0 +1,3 @@
+[32minfo[39m: HTTP OPTIONS /user/login [32m204[39m 1ms 204 1ms
+[32minfo[39m: HTTP POST /user/login [32m200[39m 22ms 200 22ms
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 566ms 304 566ms
