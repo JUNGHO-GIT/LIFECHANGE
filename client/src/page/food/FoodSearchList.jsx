@@ -3,8 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/js/useStorage.jsx";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 
@@ -12,34 +10,27 @@ import moment from "moment-timezone";
 export const FoodSearchList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
+  const storagePart = localStorage.getItem("food_part");
+  const storagePlanYn = localStorage.getItem("food_planYn");
+
+  // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_food = location?.state?.food;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
     id: "",
-    date: "",
+    date: koreanDate,
     refresh: 0,
-    intoSearchDetail:"/food/search/detail",
-    food: {
-      planYn: "",
-      category: "",
-      food_title: "",
-      food_brand: "",
-      food_preServ: "",
-      food_subServ: "",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: ""
-    }
+    intoDetail:"/food/search/detail",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:planYn, set:setPlanYn} = useStorage(
+    `planYn(${PATH})`, storagePlanYn
+  );
   const {val:pageCount, set:setPageCount} = useStorage(
     `pageCount(${PATH})`, 0
   );
@@ -47,36 +38,53 @@ export const FoodSearchList = () => {
     `filter(${PATH})`, {
       query: "",
       page: 0,
-      limit: 10
+      limit: 10,
+      part: storagePart,
     }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:FOOD_DEFAULT, set:setFOOD_DEFAULT} = useStorage(
-    `FOOD_DEFAULT(${PATH})`, [{
-      title: "",
-      brand: "",
-      preServ: "",
-      subServ: "",
-      gram: "",
-      kcal: "",
-      fat: "",
-      carb: "",
-      protein: ""
-    }]
-  );
   const {val:FOOD, set:setFOOD} = useStorage(
-    `FOOD(${PATH})`, [{
-      title: "",
-      brand: "",
-      preServ: "",
-      subServ: "",
-      gram: "",
-      kcal: "",
-      fat: "",
-      carb: "",
-      protein: ""
-    }]
+    `FOOD(${PATH})`, {
+      food_plan : {
+        food_total_kcal: "",
+        food_total_fat: "",
+        food_total_carb: "",
+        food_total_protein: "",
+        food_section: [{
+          food_part_idx: 0,
+          food_part_val: "",
+          food_title_idx: 0,
+          food_title_val: "",
+          food_count: "",
+          food_serv: "",
+          food_gram: "",
+          food_kcal: "",
+          food_fat: "",
+          food_carb: "",
+          food_protein: "",
+        }],
+      },
+      food_real : {
+        food_total_kcal: "",
+        food_total_fat: "",
+        food_total_carb: "",
+        food_total_protein: "",
+        food_section: [{
+          food_part_idx: 0,
+          food_part_val: "",
+          food_title_idx: 0,
+          food_title_val: "",
+          food_count: "",
+          food_serv: "",
+          food_gram: "",
+          food_kcal: "",
+          food_fat: "",
+          food_carb: "",
+          food_protein: "",
+        }],
+      },
+    }
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -85,32 +93,134 @@ export const FoodSearchList = () => {
       return;
     }
     else {
-      flowTestSearch();
+      flowFoodSearch();
     }
   }, [filter.page]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowTestSearch = async () => {
+  const flowFoodSearch = async () => {
+
+    const foodType = planYn === "Y" ? "food_plan" : "food_real";
+
     const response = await axios.get(`${URL_FOOD}/search`, {
       params: {
         user_id: user_id,
         filter: filter
       }
     });
+    setFOOD((prev) => ({
+      ...prev,
+      [foodType]: {
+        ...prev[foodType],
+        food_section: response.data.result
+      }
+    }));
     setPageCount(response.data.pageCount);
-    setFOOD(response.data.result || FOOD_DEFAULT);
   };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableFoodSearch = () => {
+
+    const foodType = planYn === "Y" ? "food_plan" : "food_real";
+
+    function handleStorage (param) {
+      localStorage.setItem("food_section", JSON.stringify(param));
+      navParam(STATE.intoDetail);
+    }
+
+    return (
+      <table className="table bg-white table-hover">
+        <thead className="table-primary">
+          <tr>
+            <th>Title</th>
+            <th>Brand</th>
+            <th>Serving</th>
+            <th>Gram</th>
+            <th>Kcal</th>
+            <th>Fat</th>
+            <th>Carbohydrate</th>
+            <th>Protein</th>
+          </tr>
+        </thead>
+        <tbody>
+          {FOOD[foodType].food_section?.map((item, index) => (
+            <tr key={index}>
+              <td className="pointer" onClick={() => {
+                handleStorage(item);
+              }}>
+                {item.food_title_val}
+              </td>
+              <td>{item.food_brand}</td>
+              <td>{item.food_count} {item.food_serv}</td>
+              <td>{item.food_gram}</td>
+              <td>{item.food_kcal}</td>
+              <td>{item.food_fat}</td>
+              <td>{item.food_carb}</td>
+              <td>{item.food_protein}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  // 5-2. search ---------------------------------------------------------------------------------->
+  const searchFood = () => {
+    return (
+      <div className="d-flex">
+        <input
+          type="text"
+          className="form-control"
+          value={filter.query}
+          onChange={(e) => {
+            setFilter({
+              ...filter,
+              query: e.target.value
+            });
+          }}
+        />
+        <button
+          type="button"
+          className="btn btn-sm btn-secondary ms-2"
+          onClick={() => {
+            setFilter({
+              ...filter,
+              page: 0
+            });
+            flowFoodSearch();
+          }}
+        >
+          Search
+        </button>
+      </div>
+    );
+  }
 
   // 5-2. filter ---------------------------------------------------------------------------------->
   const filterBox = () => {
-    const pageNumber = () => (
-      <span className="ms-2 me-2">
-        {filter.page + 1} / {pageCount}
-      </span>
-    );
+    const pageNumber = () => {
+      const pages = [];
+      let startPage = Math.max(filter.page - 2, 1);
+      let endPage = Math.min(startPage + 4, pageCount);
+      startPage = Math.max(Math.min(startPage, pageCount - 4), 1);
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(
+          <button
+            key={i}
+            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
+            onClick={() => setFilter({
+              ...filter, page: i
+            })}
+          >
+            {i}
+          </button>
+        );
+      }
+      return pages;
+    };
     const prevNumber = () => (
       <button
-        className="btn btn-sm"
+        className="btn btn-sm btn-primary ms-10 me-10"
         onClick={() => setFilter({
           ...filter, page: filter.page > 0 ? filter.page - 1 : 0
         })}
@@ -120,7 +230,7 @@ export const FoodSearchList = () => {
     );
     const nextNumber = () => (
       <button
-        className="btn btn-sm"
+        className="btn btn-sm btn-primary ms-10 me-10"
         onClick={() => setFilter({
           ...filter, page: filter.page < pageCount - 1 ? filter.page + 1 : filter.page
         })}
@@ -137,48 +247,22 @@ export const FoodSearchList = () => {
     );
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableTestSearch = () => {
+  // 6-3. select ---------------------------------------------------------------------------------->
+  const selectFilterPart = () => {
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
-          <tr>
-            <th>Title</th>
-            <th>Brand</th>
-            <th>Serving</th>
-            <th>Gram</th>
-            <th>Kcal</th>
-            <th>Fat</th>
-            <th>Carbohydrate</th>
-            <th>Protein</th>
-          </tr>
-        </thead>
-        <tbody>
-          {FOOD.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td onClick={() => {
-                  STATE.food = item;
-                  STATE.food.planYn = location_food.planYn;
-                  STATE.food.category = location_food.category;
-                  navParam(STATE.intoSearchDetail, {
-                    state: STATE
-                  }
-                )}}>
-                  {item.title}
-                </td>
-                <td>{item.brand}</td>
-                <td>{item.preServ} {item.subServ}</td>
-                <td>{item.gram}</td>
-                <td>{item.kcal}</td>
-                <td>{item.fat}</td>
-                <td>{item.carb}</td>
-                <td>{item.protein}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <select className="form-select" id="foodPart" onChange={(e) => {
+          setFilter((prev) => ({
+            ...prev,
+            part: e.target.value
+          }));
+        }}>
+          <option value="아침">아침</option>
+          <option value="점심">점심</option>
+          <option value="저녁">저녁</option>
+          <option value="간식">간식</option>
+        </select>
+      </div>
     );
   };
 
@@ -188,50 +272,19 @@ export const FoodSearchList = () => {
       <div className="container-wrapper">
         <div className="row mb-20">
           <div className="col-12 d-center">
-            <h1>{location_food.category} ({location_food.planYn === "Y" ? "Plan" : "Real"})</h1>
+            {tableFoodSearch()}
           </div>
         </div>
         <div className="row mb-20">
           <div className="col-12 d-center">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search Food"
-                id="search"
-                name="search"
-                value={filter.query}
-                onChange={(e) => {
-                  setFilter({
-                    ...filter,
-                    query: e.target.value
-                  });
-                }}
-              />
-              <button
-                type="button"
-                className="btn btn-sm btn-primary ms-2"
-                onClick={() => {
-                  setFilter({
-                    ...filter,
-                    page: 0
-                  });
-                  flowTestSearch();
-                }}
-              >
-                Search
-              </button>
-            </div>
+            {selectFilterPart()}
+            &nbsp;
+            {searchFood()}
           </div>
         </div>
         <div className="row mb-20">
           <div className="col-12 d-center">
             {filterBox()}
-          </div>
-        </div>
-        <div className="row d-center mt-5 mb-20">
-          <div className="col-12">
-            {tableTestSearch()}
           </div>
         </div>
       </div>

@@ -1,23 +1,41 @@
 // 1-2. workPartArray ----------------------------------------------------------------------------->
 export const workPartArray = [
   // 0
-  {work_part: ["전체"]},
+  {work_part: [
+    "전체"
+  ]},
   // 1
-  {work_part: ["등"]},
+  {work_part: [
+    "등"
+  ]},
   // 2
-  {work_part: ["하체"]},
+  {work_part: [
+    "하체"
+  ]},
   // 3
-  {work_part: ["가슴"]},
+  {work_part: [
+    "가슴"
+  ]},
   // 4
-  {work_part: ["어깨"]},
+  {work_part: [
+    "어깨"
+  ]},
   // 5
-  {work_part: ["삼두"]},
+  {work_part: [
+    "삼두"
+  ]},
   // 6
-  {work_part: ["이두"]},
+  {work_part: [
+    "이두"
+  ]},
   // 7
-  {work_part: ["유산소"]},
+  {work_part: [
+    "유산소"
+  ]},
   // 8
-  {work_part: ["휴식"]},
+  {work_part: [
+    "휴식"
+  ]},
 ];
 
 // 2-2. workTitleArray ---------------------------------------------------------------------------->

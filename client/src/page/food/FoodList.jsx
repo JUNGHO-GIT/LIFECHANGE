@@ -18,7 +18,7 @@ export const FoodList = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_food = location?.state?.food;
+  const location_food = location?.state?.food_section;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
@@ -26,19 +26,6 @@ export const FoodList = () => {
     date: "",
     refresh: 0,
     intoDetail:"/food/detail",
-    food: {
-      planYn: "",
-      category: "",
-      food_title: "",
-      food_brand: "",
-      food_preServ: "",
-      food_subServ: "",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: ""
-    }
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -52,7 +39,12 @@ export const FoodList = () => {
     `type(${PATH})`, "day"
   );
   const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
+    `filter(${PATH})`, {
+      part: 0,
+      order: "asc",
+      page: 1,
+      limit: 5
+    }
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -70,41 +62,46 @@ export const FoodList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
-    _id: "",
-    food_number: 0,
-    food_date: "",
-    food_real : {
-      food_section: [{
-        food_start: "",
-        food_end: "",
-        food_time: "",
-      }],
-    },
-    food_plan : {
-      food_section: [{
-        food_start: "",
-        food_end: "",
-        food_time: "",
-      }],
-    },
-  }]);
   const [FOOD, setFOOD] = useState([{
     _id: "",
     food_number: 0,
     food_date: "",
-    food_real : {
+    food_plan : {
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
       food_section: [{
-        food_start: "",
-        food_end: "",
-        food_time: "",
+        food_part_idx: 0,
+        food_part_val: "",
+        food_title_idx: 0,
+        food_title_val: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
       }],
     },
-    food_plan : {
+    food_real : {
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
       food_section: [{
-        food_start: "",
-        food_end: "",
-        food_time: "",
+        food_part_idx: 0,
+        food_part_val: "",
+        food_title_idx: 0,
+        food_title_val: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
       }],
     },
   }]);
@@ -121,7 +118,7 @@ export const FoodList = () => {
     });
 
     setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
-    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
+    setFOOD(response.data.result);
 
   })()}, [strDur, filter]);
 
@@ -309,31 +306,6 @@ export const FoodList = () => {
 
   // 5-1. table ----------------------------------------------------------------------------------->
   const tableFoodList = () => {
-    const successOrNot = (plan, real) => {
-      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
-      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
-
-      if (realDate < planDate) {
-        realDate.setHours(realDate.getHours() + 24);
-      }
-      const diff = Math.abs(realDate.getTime() - planDate.getTime());
-      const diffMinutes = Math.floor(diff / 60000);
-
-      let textColor = "text-muted";
-      if (0 <= diffMinutes && diffMinutes <= 10) {
-        textColor = "text-primary";
-      }
-      if (10 < diffMinutes && diffMinutes <= 20) {
-        textColor = "text-success";
-      }
-      if (20 < diffMinutes && diffMinutes <= 30) {
-        textColor = "text-warning";
-      }
-      if (30 < diffMinutes) {
-        textColor = "text-danger";
-      }
-      return textColor;
-    };
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -347,67 +319,46 @@ export const FoodList = () => {
         </thead>
         <tbody>
           {FOOD.map((item) => (
-            <React.Fragment key={item._id}>
+            <React.Fragment key={item.food_date}>
               <tr>
-                <td rowSpan={3} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.food_date;
-                  navParam(STATE.intoDetail, {
-                    state: STATE
-                  });
-                }}>
+                <td rowSpan={item.food_plan.food_section.length + item.food_real.food_section.length + 1}>
                   {item.food_date}
                 </td>
-                <td>취침</td>
-                <td>
-                  {item.food_plan?.food_section?.map((item) => item.food_start)}
-                </td>
-                <td>
-                  {item.food_real?.food_section?.map((item) => item.food_start)}
-                </td>
-                <td>
-                  <span className={successOrNot(
-                    item.food_plan?.food_section?.map((item) => item.food_start),
-                    item.food_real?.food_section?.map((item) => item.food_start)
-                  )}>
-                    ●
-                  </span>
-                </td>
               </tr>
-              <tr>
-                <td>기상</td>
-                <td>
-                  {item.food_plan?.food_section?.map((item) => item.food_end)}
-                </td>
-                <td>
-                  {item.food_real?.food_section?.map((item) => item.food_end)}
-                </td>
-                <td>
-                  <span className={successOrNot(
-                    item.food_plan?.food_section?.map((item) => item.food_end),
-                    item.food_real?.food_section?.map((item) => item.food_end)
-                  )}>
-                    ●
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>수면</td>
-                <td>
-                  {item.food_plan?.food_section?.map((item) => item.food_time)}
-                </td>
-                <td>
-                  {item.food_real?.food_section?.map((item) => item.food_time)}
-                </td>
-                <td>
-                  <span className={successOrNot(
-                    item.food_plan?.food_section?.map((item) => item.food_time),
-                    item.food_real?.food_section?.map((item) => item.food_time)
-                  )}>
-                    ●
-                  </span>
-                </td>
-              </tr>
+              {item.food_plan.food_section?.map((section1, index1) => (
+                <tr key={index1}>
+                  <td></td>
+                  <td>
+                    <span>{section1.food_part_val || ""}</span>
+                    <span>{section1.food_title_val || ""}</span>
+                    <span>{section1.food_count || ""} {section1.food_serv || ""}</span>
+                    <span>{section1.food_gram || ""}g</span>
+                    <span>{section1.food_kcal || ""}kcal</span>
+                    <span>{section1.food_fat || ""}g</span>
+                    <span>{section1.food_carb || ""}g</span>
+                    <span>{section1.food_protein || ""}g</span>
+                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              ))}
+              {item.food_real.food_section?.map((section2, index2) => (
+                <tr key={index2}>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <span>{section2.food_part_val || ""}</span>
+                    <span>{section2.food_title_val || ""}</span>
+                    <span>{section2.food_count || ""} {section2.food_serv || ""}</span>
+                    <span>{section2.food_gram || ""}g</span>
+                    <span>{section2.food_kcal || ""}kcal</span>
+                    <span>{section2.food_fat || ""}g</span>
+                    <span>{section2.food_carb || ""}g</span>
+                    <span>{section2.food_protein || ""}g</span>
+                  </td>
+                  <td></td>
+                </tr>
+              ))}
             </React.Fragment>
           ))}
         </tbody>
@@ -419,8 +370,10 @@ export const FoodList = () => {
   const filterBox = () => {
     const pageNumber = () => {
       const pages = [];
-      const totalPages = Math.ceil(totalCount / filter.limit);
-      for (let i = 1; i <= totalPages; i++) {
+      let startPage = Math.max(filter.page - 2, 1);
+      let endPage = Math.min(startPage + 4, totalCount);
+      startPage = Math.max(Math.min(startPage, totalCount - 4), 1);
+      for (let i = startPage; i <= endPage; i++) {
         pages.push(
           <button
             key={i}
@@ -507,7 +460,9 @@ export const FoodList = () => {
   const selectFoodType = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="type" onChange={(e) => setType(e.target.value)}>
+        <select className="form-select" id="type" onChange={(e) => {
+          setType(e.target.value);
+        }}>
           {["day", "week", "month", "year", "select"].map((item) => (
             <option key={item} value={item} selected={type === item}>{item}</option>
           ))}
@@ -515,13 +470,14 @@ export const FoodList = () => {
       </div>
     );
   };
-
-  // 6-3. select ---------------------------------------------------------------------------------->
   const selectFilterSub = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="foodListSortOrder" onChange={(e) => {
-          setFilter({...filter, order: e.target.value});
+          setFilter({
+            ...filter,
+            order: e.target.value
+          });
         }}>
           <option value="asc" selected>오름차순</option>
           <option value="desc">내림차순</option>
@@ -533,10 +489,28 @@ export const FoodList = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="foodListLimit" onChange={(e) => {
-          setFilter({...filter, limit: Number(e.target.value)});
+          setFilter({
+            ...filter,
+            limit: Number(e.target.value)
+          });
         }}>
           <option value="5" selected>5</option>
           <option value="10">10</option>
+        </select>
+      </div>
+    );
+  };
+  const selectFilterPart = () => {
+    return (
+      <div>
+        <select className="form-select" id="foodPart" onChange={(e) => {
+          setFilter({...filter, part: e.target.value});
+        }}>
+          <option value="전체" selected>전체</option>
+          <option value="아침">아침</option>
+          <option value="점심">점심</option>
+          <option value="저녁">저녁</option>
+          <option value="간식">간식</option>
         </select>
       </div>
     );
@@ -558,6 +532,9 @@ export const FoodList = () => {
           </div>
           <div className="col-2">
             {selectFilterPage()}
+          </div>
+          <div className="col-2">
+            {selectFilterPart()}
           </div>
         </div>
         <div className="row mb-20">

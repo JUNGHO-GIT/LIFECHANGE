@@ -38,7 +38,11 @@ export const MoneyList = () => {
     `type(${PATH})`, "day"
   );
   const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
+    `filter(${PATH})`, {
+      order: "asc",
+      page: 1,
+      limit: 5
+    }
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -454,9 +458,7 @@ export const MoneyList = () => {
         </select>
       </div>
     );
-  };
-
-  // 6-3. select ---------------------------------------------------------------------------------->
+ };
   const selectFilterSub = () => {
     return (
       <div className="mb-3">

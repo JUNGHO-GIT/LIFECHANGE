@@ -15,6 +15,7 @@ export const search = async (
   const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
   const query = filter_param.query;
   const page = filter_param.page;
+  const part = filter_param.part;
   let finalResult = [];
   let pageCount = 0;
   let serv;
@@ -76,9 +77,9 @@ export const search = async (
       }
     }
     return {
-      preServ: (serv.match(/(\d+\.\d+|\d+)/) || [""])[0],
-      subServ: (serv.match(/[^\d]+$/) || [""])[0],
-      gram: gram,
+      count: (serv.match(/(\d+\.\d+|\d+)/) || [""])[0],
+      serv: (serv.match(/[^\d]+$/) || [""])[0],
+      gram: gram || "-",
       kcal: matches ? matches[5] : "-",
       fat: matches ? matches[9] : "-",
       carb: matches ? matches[13] : "-",
@@ -94,15 +95,16 @@ export const search = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        title: titleElement || "-",
-        brand: brandElement || "-",
-        preServ: nutritionElement.preServ,
-        subServ: nutritionElement.subServ,
-        gram: nutritionElement.gram,
-        kcal: nutritionElement.kcal,
-        fat: nutritionElement.fat,
-        carb: nutritionElement.carb,
-        protein: nutritionElement.protein,
+        food_part_val: part,
+        food_title_val: titleElement || "-",
+        food_brand: brandElement || "-",
+        food_count: nutritionElement.count,
+        food_serv: nutritionElement.serv,
+        food_gram: nutritionElement.gram,
+        food_kcal: nutritionElement.kcal,
+        food_fat: nutritionElement.fat,
+        food_carb: nutritionElement.carb,
+        food_protein: nutritionElement.protein,
       });
 
       const count = document.querySelector(".searchResultSummary")?.textContent;
@@ -125,17 +127,21 @@ export const list = async (
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
 
-  const filter = filter_param.order;
+  const part = filter_param.part || "";
+  const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
-  const sort = filter === "asc" ? 1 : -1;
 
   const findResult = Food.find({
     user_id: user_id_param,
     food_date: {
       $gte: startDay,
       $lte: endDay,
-    }
+    },
+    $or: [
+      {"food_plan.food_section.food_part_val": part === "전체" ? {$exists: true} : part},
+      {"food_real.food_section.food_part_val": part === "전체" ? {$exists: true} : part},
+    ]
   })
 
   const finalResult = await findResult

@@ -24,7 +24,7 @@ const sectionSchema = new mongoose.Schema({
     },
     work_part_val : {
       type: String,
-      required: true,
+      required: false,
     },
     work_title_idx : {
       type: Number,
@@ -32,7 +32,7 @@ const sectionSchema = new mongoose.Schema({
     },
     work_title_val : {
       type: String,
-      required: true,
+      required: false,
     },
     work_kg: {
       type: Number,

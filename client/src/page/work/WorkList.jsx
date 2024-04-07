@@ -38,7 +38,11 @@ export const WorkList = () => {
     `type(${PATH})`, "day"
   );
   const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
+    `filter(${PATH})`, {
+      order: "asc",
+      page: 1,
+      limit: 5
+    }
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -399,8 +403,10 @@ export const WorkList = () => {
   const filterBox = () => {
     const pageNumber = () => {
       const pages = [];
-      const totalPages = Math.ceil(totalCount / filter.limit);
-      for (let i = 1; i <= totalPages; i++) {
+      let startPage = Math.max(filter.page - 2, 1);
+      let endPage = Math.min(startPage + 4, totalCount);
+      startPage = Math.max(Math.min(startPage, totalCount - 4), 1);
+      for (let i = startPage; i <= endPage; i++) {
         pages.push(
           <button
             key={i}
@@ -494,9 +500,7 @@ export const WorkList = () => {
         </select>
       </div>
     );
-  };
-
-  // 6-3. select ---------------------------------------------------------------------------------->
+ };
   const selectFilterSub = () => {
     return (
       <div className="mb-3">

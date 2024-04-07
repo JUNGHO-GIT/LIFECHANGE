@@ -18,7 +18,7 @@ export const FoodDetail = () => {
   const location = useLocation();
   const _id = location.state._id;
   const user_id = window.sessionStorage.getItem("user_id");
-  const food_category = location.state.food_category;
+  const food_part = location.state.food_part;
   const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
@@ -62,7 +62,7 @@ export const FoodDetail = () => {
         navParam(`/food/search/result`, {
           state: {
             user_id : user_id,
-            food_category : food_category,
+            food_part : food_part,
             food_regdate : food_regdate,
           },
         });
@@ -115,7 +115,7 @@ export const FoodDetail = () => {
               <td>{FOOD.food_title}</td>
               <td>{FOOD.food_brand}</td>
               <td>{FOOD.food_serv}</td>
-              <td>{FOOD.food_calories}</td>
+              <td>{FOOD.food_kcal}</td>
               <td>{FOOD.food_carb}</td>
               <td>{FOOD.food_protein}</td>
               <td>{FOOD.food_fat}</td>
@@ -162,7 +162,7 @@ export const FoodDetail = () => {
         <div className="row d-center mt-5">
           <div className="col-12">
             <h1 className="mb-3 fw-7">{TITLE}</h1>
-            <span className="ms-4"> ({food_category})</span>
+            <span className="ms-4"> ({food_part})</span>
           </div>
         </div>
         <div className="row d-center mt-5">

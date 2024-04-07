@@ -13,10 +13,10 @@ export const list = async (
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
 
-  const filter = filter_param.order;
+  const part = filter_param.part || "";
+  const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
-  const sort = filter === "asc" ? 1 : -1;
 
   const findResult = Work.find({
     user_id: user_id_param,

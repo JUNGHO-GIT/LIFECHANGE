@@ -500,9 +500,7 @@ export const SleepList = () => {
         </select>
       </div>
     );
-  };
-
-  // 6-3. select ---------------------------------------------------------------------------------->
+ };
   const selectFilterSub = () => {
     return (
       <div className="mb-3">

@@ -5,21 +5,44 @@ import {incrementSeq} from "./Counter.js";
 
 // 1. section ------------------------------------------------------------------------------------->
 const sectionSchema = new mongoose.Schema({
-  food_select : {
-    type : String,
-    default : "daily",
-    required : false
+  food_total_kcal: {
+    type: String,
+    required: false
+  },
+  food_total_carb: {
+    type: String,
+    required: false
+  },
+  food_total_protein: {
+    type: String,
+    required: false
+  },
+  food_total_fat: {
+    type: String,
+    required: false
   },
   food_section: [{
-    food_title : {
-      type : String,
-      required : false
+    food_part_idx : {
+      type: Number,
+      required: false,
+    },
+    food_part_val : {
+      type: String,
+      required: false,
+    },
+    food_title_idx : {
+      type: Number,
+      required: false,
+    },
+    food_title_val : {
+      type: String,
+      required: false,
     },
     food_brand : {
       type : String,
       required : false
     },
-    food_category : {
+    food_count : {
       type : String,
       required : false
     },
@@ -27,20 +50,24 @@ const sectionSchema = new mongoose.Schema({
       type : String,
       required : false
     },
-    food_calories : {
-      type : Number,
+    food_gram : {
+      type : String,
+      required : false
+    },
+    food_kcal : {
+      type : String,
       required : false
     },
     food_carb : {
-      type : Number,
+      type : String,
       required : false
     },
     food_protein : {
-      type : Number,
+      type : String,
       required : false
     },
     food_fat : {
-      type : Number,
+      type : String,
       required : false
     },
   }],
@@ -53,7 +80,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   food_number: {
-    type : Number,
+    type : String,
     unique : true
   },
   food_date: {

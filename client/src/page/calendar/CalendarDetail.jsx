@@ -71,7 +71,7 @@ export const CalendarDetail = () => {
           params: {
             user_id: user_id,
             food_dur: resDur,
-            food_category: "all",
+            food_part: "all",
           },
         });
         setFOOD_LIST(response.data);
@@ -187,7 +187,7 @@ export const CalendarDetail = () => {
         <tbody>
           {FOOD_LIST.map((index) => (
             <tr key={index._id}>
-              <td>{index.food_calories}</td>
+              <td>{index.food_kcal}</td>
               <td>{index.food_carb}</td>
               <td>{index.food_protein}</td>
               <td>{index.food_fat}</td>
