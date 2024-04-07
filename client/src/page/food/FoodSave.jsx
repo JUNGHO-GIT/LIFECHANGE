@@ -20,19 +20,16 @@ export const FoodSave = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
+    id: "",
+    date: "",
     refresh:0,
     intoSave:"/food/save",
     intoList:"/food/list",
-    id: "",
-    date: ""
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
     `planYn(${PATH})`, "N"
-  );
-  const {val:foodCount, set:setFoodCount} = useStorage(
-    `foodCount(${PATH})`, 0
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -108,12 +105,12 @@ export const FoodSave = () => {
   useEffect(() => {
 
     const foodType = planYn === "Y" ? "food_plan" : "food_real";
-    const getItem = localStorage.getItem("initValues(/food/search/detail)");
+    const getItem = localStorage.getItem("FOOD(/food/search/detail)");
     let storageSection = [];
 
     if (getItem) {
       const storedData = JSON.parse(getItem);
-      storageSection = Object.keys(storedData).map((key) => storedData[key]);
+      storageSection = storedData[foodType].food_section;
     }
 
     setFOOD((prev) => {
@@ -221,14 +218,14 @@ export const FoodSave = () => {
             <td colSpan={8}>
               {FOOD[foodType].food_section.map((item, index) => (
                 <div key={index} className="d-flex justify-content-between">
-                  <span>{item.food_part}</span>
-                  <span>{item.food_title}</span>
-                  <span>{item.food_count} {item.food_serv}</span>
-                  <span>{item.food_gram}</span>
-                  <span>{item.food_kcal}</span>
-                  <span>{item.food_fat}</span>
-                  <span>{item.food_carb}</span>
-                  <span>{item.food_protein}</span>
+                  <span>{item?.food_part}</span>
+                  <span>{item?.food_title}</span>
+                  <span>{item?.food_count} {item?.food_serv}</span>
+                  <span>{item?.food_gram}</span>
+                  <span>{item?.food_kcal}</span>
+                  <span>{item?.food_fat}</span>
+                  <span>{item?.food_carb}</span>
+                  <span>{item?.food_protein}</span>
                   <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => handlerFoodDelete(index)}>
                     X
                   </button>

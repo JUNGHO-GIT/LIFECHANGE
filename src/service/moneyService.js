@@ -24,14 +24,15 @@ export const list = async (
       $gte: startDay,
       $lte: endDay,
     }
-  })
+  }).lean();
 
   const finalResult = await findResult
   .sort({money_date: sort})
   .skip((page - 1) * limit)
-  .limit(limit);
+  .limit(limit)
+  .lean();
 
-  const totalCount = await Money.countDocuments(findResult);
+  const totalCount = await Money.countDocuments(findResult).lean();
 
   return {
     totalCount: totalCount,
@@ -56,7 +57,7 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   const realCount = finalResult?.money_real?.money_section.length || 0;
   const planCount = finalResult?.money_plan?.money_section.length || 0;
@@ -84,7 +85,7 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   let finalResult;
   if (!findResult) {
@@ -113,7 +114,7 @@ export const save = async (
       money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
 
-    finalResult = await Money.updateOne(updateQuery, updateAction);
+    finalResult = await Money.updateOne(updateQuery, updateAction).lean();
   }
 
   return {
@@ -154,7 +155,7 @@ export const deletes = async (
         "elem._id": _id_param
       }],
     }
-  );
+  ).lean();
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
@@ -164,7 +165,7 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    });
+    }).lean();
 
     if (
       doc
@@ -173,7 +174,7 @@ export const deletes = async (
     ) {
       finalResult = await Money.deleteOne({
         _id: doc._id
-      });
+      }).lean();
     }
   }
 

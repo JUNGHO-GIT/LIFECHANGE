@@ -15,7 +15,7 @@ export const search = async (
   const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
   const query = filter_param.query;
   const page = filter_param.page;
-  const part = filter_param.part;
+
   let finalResult = [];
   let pageCount = 0;
   let serv;
@@ -95,7 +95,6 @@ export const search = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        food_part: part,
         food_title: titleElement || "-",
         food_brand: brandElement || "-",
         food_count: nutritionElement.count,
@@ -132,24 +131,31 @@ export const list = async (
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
 
-  const findResult = Food.find({
+  const findResult = await Food.find({
     user_id: user_id_param,
     food_date: {
       $gte: startDay,
       $lte: endDay,
     },
-    $or: [
-      {"food_plan.food_section.food_part": part === "전체" ? {$exists: true} : part},
-      {"food_real.food_section.food_part": part === "전체" ? {$exists: true} : part},
-    ]
   })
-
-  const finalResult = await findResult
   .sort({food_date: sort})
   .skip((page - 1) * limit)
-  .limit(limit);
+  .limit(limit)
+  .lean();
 
-  const totalCount = await Food.countDocuments(findResult);
+  const totalCount = await Food.countDocuments(findResult).lean();
+
+  const finalResult = findResult.map((prev) => ({
+    ...prev,
+    food_real: {
+      ...prev.food_real,
+      food_section: prev.food_real.food_section.filter((item) => item.food_part === part),
+    },
+    food_plan: {
+      ...prev.food_plan,
+      food_section: prev.food_plan.food_section.filter((item) => item.food_part === part),
+    },
+  }));
 
   return {
     totalCount: totalCount,
@@ -174,7 +180,7 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   const realCount = finalResult?.food_real?.food_section.length || 0;
   const planCount = finalResult?.food_plan?.food_section.length || 0;
@@ -202,7 +208,7 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   let finalResult;
   if (!findResult) {
@@ -231,7 +237,7 @@ export const save = async (
       food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
 
-    finalResult = await Food.updateOne(updateQuery, updateAction);
+    finalResult = await Food.updateOne(updateQuery, updateAction).lean();
   }
 
   return {
@@ -272,7 +278,7 @@ export const deletes = async (
         "elem._id": _id_param
       }],
     }
-  );
+  ).lean();
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
@@ -282,7 +288,7 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    });
+    }).lean();
 
     if (
       doc
@@ -291,7 +297,7 @@ export const deletes = async (
     ) {
       finalResult = await Food.deleteOne({
         _id: doc._id
-      });
+      }).lean();
     }
   }
 

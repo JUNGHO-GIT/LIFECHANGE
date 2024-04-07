@@ -10,10 +10,6 @@ import moment from "moment-timezone";
 export const FoodSearchList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const storagePart = localStorage.getItem("food_part");
-  const storagePlanYn = localStorage.getItem("food_planYn");
-
-  // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
@@ -29,7 +25,7 @@ export const FoodSearchList = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
-    `planYn(${PATH})`, storagePlanYn
+    `planYn(${PATH})`, "N"
   );
   const {val:pageCount, set:setPageCount} = useStorage(
     `pageCount(${PATH})`, 0
@@ -39,7 +35,6 @@ export const FoodSearchList = () => {
       query: "",
       page: 0,
       limit: 10,
-      part: storagePart,
     }
   );
 
@@ -122,7 +117,7 @@ export const FoodSearchList = () => {
     function handleStorage (param) {
       localStorage.setItem("food_section", JSON.stringify(param));
       navParam(STATE.intoDetail);
-    }
+    };
 
     return (
       <table className="table bg-white table-hover">
@@ -243,25 +238,6 @@ export const FoodSearchList = () => {
     );
   };
 
-  // 6-3. select ---------------------------------------------------------------------------------->
-  const selectFilterPart = () => {
-    return (
-      <div>
-        <select className="form-select" id="foodPart" onChange={(e) => {
-          setFilter((prev) => ({
-            ...prev,
-            part: e.target.value
-          }));
-        }}>
-          <option value="아침">아침</option>
-          <option value="점심">점심</option>
-          <option value="저녁">저녁</option>
-          <option value="간식">간식</option>
-        </select>
-      </div>
-    );
-  };
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className="root-wrapper">
@@ -273,8 +249,6 @@ export const FoodSearchList = () => {
         </div>
         <div className="row mb-20">
           <div className="col-12 d-center">
-            {selectFilterPart()}
-            &nbsp;
             {searchFood()}
           </div>
         </div>

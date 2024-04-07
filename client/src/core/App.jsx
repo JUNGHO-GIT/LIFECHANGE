@@ -26,10 +26,6 @@ import {Footer} from "../layout/Footer";
 
 import {Dash} from "../page/main/Dash";
 
-import {TestList} from "../page/test/TestList";
-import {TestSave} from "../page/test/TestSave";
-import {TestSearch} from "../page/test/TestSearch";
-
 import {UserLogin} from "../page/user/UserLogin.jsx";
 import {UserSave} from "../page/user/UserSave.jsx";
 import {UserDetail} from "../page/user/UserDetail.jsx";
@@ -63,16 +59,6 @@ const Common = () => {
   return (
     <Routes>
       <Route path="/" element={<Dash />} />
-    </Routes>
-  );
-};
-// ------------------------------------------------------------------------------------------------>
-const Test = () => {
-  return (
-    <Routes>
-      <Route path="/list" element={<TestList />} />
-      <Route path="/save" element={<TestSave />} />
-      <Route path="/search" element={<TestSearch />} />
     </Routes>
   );
 };
@@ -150,7 +136,6 @@ export const App = () => {
         <Header />
           <Routes>
             <Route path="/*" element={<Common />} />
-            <Route path="/test/*" element={<Test />} />
             <Route path="/user/*" element={<User />} />
             <Route path="/calendar/*" element={<Calendar />} />
             <Route path="/food/*" element={<Food />} />

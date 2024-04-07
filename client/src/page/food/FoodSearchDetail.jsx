@@ -23,7 +23,7 @@ export const FoodSearchDetail = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const {val:planYn, set:setPlanYn} = useStorage(
-    `planYn(${PATH})`, localStorage.getItem("planYn")
+    `planYn(${PATH})`, "N"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -147,29 +147,14 @@ export const FoodSearchDetail = () => {
     const foodType = planYn === "Y" ? "food_plan" : "food_real";
 
     // 초기 영양소 값 설정
-    setFOOD_DEFAULT((prev) => {
-      const newFoodSection = [...prev[foodType].food_section];
-      newFoodSection.forEach((item, index) => {
-        item.food_part = FOOD[foodType]?.food_section[index]?.food_part;
-        item.food_title = FOOD[foodType]?.food_section[index]?.food_title;
-        item.food_brand = FOOD[foodType]?.food_section[index]?.food_brand;
-        item.food_count = FOOD[foodType]?.food_section[index]?.food_count;
-        item.food_serv = FOOD[foodType]?.food_section[index]?.food_serv;
-        item.food_gram = FOOD[foodType]?.food_section[index]?.food_gram;
-        item.food_kcal = FOOD[foodType]?.food_section[index]?.food_kcal;
-        item.food_fat = FOOD[foodType]?.food_section[index]?.food_fat;
-        item.food_carb = FOOD[foodType]?.food_section[index]?.food_carb;
-        item.food_protein = FOOD[foodType]?.food_section[index]?.food_protein;
-      });
-      return {
-        ...prev,
-        [foodType]: {
-          ...prev[foodType],
-          food_section: newFoodSection,
-        },
-      };
-    });
-  }, [FOOD, planYn]);
+    setFOOD_DEFAULT((prev) => ({
+      ...prev,
+      [foodType]: {
+        ...prev[foodType],
+        food_section: [...FOOD[foodType].food_section],
+      },
+    }));
+  }, [FOOD]);
 
   // 4. handle ------------------------------------------------------------------------------------>
   const handleCountChange = (index, newValue) => {
@@ -180,7 +165,7 @@ export const FoodSearchDetail = () => {
       const newFoodSection = [...prev[foodType].food_section];
       const section = newFoodSection[index];
       const defaultSection = FOOD_DEFAULT[foodType].food_section[index];
-      const ratio = newCountValue / (section.food_count || 1);
+      const ratio = newCountValue / (defaultSection.food_count || 1);
 
       if (defaultSection) {
         newFoodSection[index] = {
@@ -205,7 +190,7 @@ export const FoodSearchDetail = () => {
   };
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodDetail = () => {
+  const tableFoodSave = () => {
 
     const foodType = planYn === "Y" ? "food_plan" : "food_real";
 
@@ -227,7 +212,37 @@ export const FoodSearchDetail = () => {
         <tbody>
           {FOOD[foodType].food_section.map((item, index) => (
             <tr key={index}>
-              <td>{item.food_part}</td>
+              <td>
+              <select
+                id="food_part"
+                name="food_part"
+                className="form-select"
+                value={item.food_part}
+                onChange={(e) => {
+                  const newPart = e.target.value;
+                  setFOOD((prev) => {
+                    const newFoodSection = [...prev[foodType].food_section];
+                    newFoodSection[index] = {
+                      ...item,
+                      food_part: newPart,
+                    };
+                    return {
+                      ...prev,
+                      [foodType]: {
+                        ...prev[foodType],
+                        food_section: newFoodSection,
+                      },
+                    };
+                  });
+                }}
+              >
+                <option value="">선택</option>
+                <option value="아침">아침</option>
+                <option value="점심">점심</option>
+                <option value="저녁">저녁</option>
+                <option value="간식">간식</option>
+              </select>
+              </td>
               <td>{item.food_title}</td>
               <td>{item.food_brand}</td>
               <td>
@@ -289,7 +304,7 @@ export const FoodSearchDetail = () => {
         </div>
         <div className="row d-center mt-5 mb-20">
           <div className="col-12">
-            {tableFoodDetail()}
+            {tableFoodSave()}
           </div>
         </div>
         <div className="row d-center mt-5">

@@ -7,14 +7,6 @@ export const listArray = [
     ]
   },
   {
-    label: "Test",
-    items: [
-      {to: "/test/list", label: "TestList"},
-      {to: "/test/save", label: "TestSave"},
-      {to: "/test/search/list", label: "TestSearch"},
-    ]
-  },
-  {
     label: "Calendar",
     items: [
       {to: "/calendar/list", label: "CalendarList"},

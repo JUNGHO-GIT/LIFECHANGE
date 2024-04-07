@@ -30,7 +30,7 @@ export const dashBar = async (
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_date: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    });
+    }).lean();
 
     finalResult.push({
       name: key,
@@ -72,7 +72,7 @@ export const dashLine = async (
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_date: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
-    });
+    }).lean();
 
     finalResult.push({
       name: names[i],
@@ -121,7 +121,7 @@ export const dashAvgWeek = async (
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_date: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
-    });
+    }).lean();
 
     if (findResult) {
       const weekNum = Math.max(moment(findResult.sleep_date).week() - moment(findResult.sleep_date).startOf("month").week() + 1);
@@ -185,7 +185,7 @@ export const dashAvgMonth = async (
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_date: m.format("YYYY-MM-DD"),
-    });
+    }).lean();
 
     if (findResult) {
       const monthNum = m.month();
@@ -237,14 +237,15 @@ export const list = async (
       $gte: startDay,
       $lte: endDay,
     }
-  })
+  }).lean();
 
   const finalResult = await findResult
   .sort({sleep_date: sort})
   .skip((page - 1) * limit)
-  .limit(limit);
+  .limit(limit)
+  .lean();
 
-  const totalCount = await Sleep.countDocuments(findResult);
+  const totalCount = await Sleep.countDocuments(findResult).lean();
 
   return {
     totalCount: totalCount,
@@ -269,7 +270,7 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   const realCount = finalResult?.sleep_real !== undefined ? 1 : 0;
   const planCount = finalResult?.sleep_plan !== undefined ? 1 : 0;
@@ -297,7 +298,7 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   let finalResult;
   if (!findResult) {
@@ -326,7 +327,7 @@ export const save = async (
       sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
 
-    finalResult = await Sleep.updateOne(updateQuery, updateAction);
+    finalResult = await Sleep.updateOne(updateQuery, updateAction).lean();
   }
 
   return {
@@ -367,7 +368,7 @@ export const deletes = async (
         "elem._id": _id_param
       }],
     }
-  );
+  ).lean();
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
@@ -377,7 +378,7 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    });
+    }).lean();
 
     if (
       doc
@@ -386,7 +387,7 @@ export const deletes = async (
     ) {
       finalResult = await Sleep.deleteOne({
         _id: doc._id
-      });
+      }).lean();
     }
   }
 

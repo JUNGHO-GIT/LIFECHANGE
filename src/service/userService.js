@@ -14,7 +14,7 @@ export const list = async (
   findQuery = {
   };
 
-  findResult = await User.find(findQuery).sort({ _id: -1 });
+  findResult = await User.find(findQuery).sort({ _id: -1 }).lean();
 
   return findResult;
 };
@@ -32,7 +32,7 @@ export const detail = async (
     user_id : user_id_param
   };
 
-  findResult = await User.findOne(findQuery);
+  findResult = await User.findOne(findQuery).lean();
 
   return findResult;
 };
@@ -50,7 +50,7 @@ export const checkId = async (
     user_id : user_id_param
   };
 
-  findResult = await User.findOne(findQuery);
+  findResult = await User.findOne(findQuery).lean();
 
   return findResult;
 };
@@ -91,7 +91,7 @@ export const checkIdPw = async (
     user_pw : user_pw_param
   };
 
-  findResult = await User.findOne(findQuery);
+  findResult = await User.findOne(findQuery).lean();
 
   return findResult;
 };
@@ -111,7 +111,7 @@ export const login = async (
     user_pw : user_pw_param
   };
 
-  findResult = await User.findOne(findQuery);
+  findResult = await User.findOne(findQuery).lean();
 
   return findResult;
 };
@@ -131,7 +131,7 @@ export const update = async (
     user_pw : update_pw_param
   };
 
-  updateResult = await User.findOneAndUpdate(updateQuery);
+  updateResult = await User.findOneAndUpdate(updateQuery).lean();
 
   return updateResult;
 };
@@ -149,7 +149,7 @@ export const deletes = async (
     _id : _id_param
   };
 
-  deleteResult = await User.deleteOne(deleteQuery);
+  deleteResult = await User.deleteOne(deleteQuery).lean();
 
   return deleteResult;
 };

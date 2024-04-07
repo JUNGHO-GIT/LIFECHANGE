@@ -14,7 +14,7 @@ export const list = async (
   findQuery = {
   };
 
-  findResult = await Calendar.find(findQuery).sort({ _id: -1 });
+  findResult = await Calendar.find(findQuery).sort({ _id: -1 }).lean();
 
   return findResult;
 };
@@ -32,7 +32,7 @@ export const detail = async (
     _id: _id_param
   };
 
-  findResult = await Calendar.findOne(findQuery);
+  findResult = await Calendar.findOne(findQuery).lean();
 
   return findResult;
 };
@@ -78,7 +78,7 @@ export const update = async (
   updateResult = await CALENDAR_param.updateOne(
     updateQuery.filter_id,
     updateQuery.filter_set
-  );
+  ).lean();
 
   return updateResult;
 };
@@ -96,7 +96,7 @@ export const deletes = async (
     _id : _id_param
   };
 
-  deleteResult = await Calendar.deleteOne(deleteQuery);
+  deleteResult = await Calendar.deleteOne(deleteQuery).lean();
 
   return deleteResult;
 };

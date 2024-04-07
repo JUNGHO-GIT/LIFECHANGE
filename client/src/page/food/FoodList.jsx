@@ -18,7 +18,6 @@ export const FoodList = () => {
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_food = location?.state?.food_section;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
@@ -40,10 +39,10 @@ export const FoodList = () => {
   );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
-      part: 0,
       order: "asc",
       page: 1,
-      limit: 5
+      limit: 5,
+      part: "아침"
     }
   );
 

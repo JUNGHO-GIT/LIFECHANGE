@@ -24,14 +24,15 @@ export const list = async (
       $gte: startDay,
       $lte: endDay,
     }
-  })
+  }).lean();
 
   const finalResult = await findResult
   .sort({work_date: sort})
   .skip((page - 1) * limit)
-  .limit(limit);
+  .limit(limit)
+  .lean();
 
-  const totalCount = await Work.countDocuments(findResult);
+  const totalCount = await Work.countDocuments(findResult).lean();
 
   return {
     totalCount: totalCount,
@@ -56,7 +57,7 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   const realCount = finalResult?.work_real?.work_section.length || 0;
   const planCount = finalResult?.work_plan?.work_section.length || 0;
@@ -84,7 +85,7 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  }).lean();
 
   let finalResult;
   if (!findResult) {
@@ -113,7 +114,7 @@ export const save = async (
       work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }}
 
-    finalResult = await Work.updateOne(updateQuery, updateAction);
+    finalResult = await Work.updateOne(updateQuery, updateAction).lean();
   }
 
   return {
@@ -154,7 +155,7 @@ export const deletes = async (
         "elem._id": _id_param
       }],
     }
-  );
+  ).lean();
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
@@ -164,7 +165,7 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    });
+    }).lean();
 
     if (
       doc
@@ -173,7 +174,7 @@ export const deletes = async (
     ) {
       finalResult = await Work.deleteOne({
         _id: doc._id
-      });
+      }).lean();
     }
   }
 
