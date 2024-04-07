@@ -22,19 +22,11 @@ const sectionSchema = new mongoose.Schema({
     required: false
   },
   food_section: [{
-    food_part_idx : {
-      type: Number,
-      required: false,
-    },
-    food_part_val : {
+    food_part: {
       type: String,
       required: false,
     },
-    food_title_idx : {
-      type: Number,
-      required: false,
-    },
-    food_title_val : {
+    food_title: {
       type: String,
       required: false,
     },

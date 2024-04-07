@@ -95,8 +95,8 @@ export const search = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        food_part_val: part,
-        food_title_val: titleElement || "-",
+        food_part: part,
+        food_title: titleElement || "-",
         food_brand: brandElement || "-",
         food_count: nutritionElement.count,
         food_serv: nutritionElement.serv,
@@ -139,8 +139,8 @@ export const list = async (
       $lte: endDay,
     },
     $or: [
-      {"food_plan.food_section.food_part_val": part === "전체" ? {$exists: true} : part},
-      {"food_real.food_section.food_part_val": part === "전체" ? {$exists: true} : part},
+      {"food_plan.food_section.food_part": part === "전체" ? {$exists: true} : part},
+      {"food_real.food_section.food_part": part === "전체" ? {$exists: true} : part},
     ]
   })
 

@@ -6,7 +6,6 @@ import {useStorage} from "../../assets/js/useStorage.jsx";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {foodPartArray, foodTitleArray} from "./FoodArray";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -61,10 +60,8 @@ export const FoodSave = () => {
       food_total_carb: "",
       food_total_protein: "",
       food_section: [{
-        food_part_idx: 0,
-        food_part_val: "",
-        food_title_idx: 0,
-        food_title_val: "",
+        food_part: "",
+        food_title: "",
         food_count: "",
         food_serv: "",
         food_gram: "",
@@ -80,10 +77,8 @@ export const FoodSave = () => {
       food_total_carb: "",
       food_total_protein: "",
       food_section: [{
-        food_part_idx: 0,
-        food_part_val: "",
-        food_title_idx: 0,
-        food_title_val: "",
+        food_part: "",
+        food_title: "",
         food_count: "",
         food_serv: "",
         food_gram: "",
@@ -127,7 +122,7 @@ export const FoodSave = () => {
       // 첫 번째 항목이 빈 값 객체인지 확인하고, 조건에 맞으면 제거
       if (
         newFoodSection.length > 0 &&
-        Object.values(newFoodSection[0]).every((value) => (value === 0 || value === ""))
+        Object.values(newFoodSection[0]).every((value) => (value === ""))
       ) {
         newFoodSection.shift();
       }
@@ -226,8 +221,8 @@ export const FoodSave = () => {
             <td colSpan={8}>
               {FOOD[foodType].food_section.map((item, index) => (
                 <div key={index} className="d-flex justify-content-between">
-                  <span>{item.food_part_val}</span>
-                  <span>{item.food_title_val}</span>
+                  <span>{item.food_part}</span>
+                  <span>{item.food_title}</span>
                   <span>{item.food_count} {item.food_serv}</span>
                   <span>{item.food_gram}</span>
                   <span>{item.food_kcal}</span>

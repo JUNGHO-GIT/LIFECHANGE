@@ -52,10 +52,8 @@ export const FoodSearchList = () => {
         food_total_carb: "",
         food_total_protein: "",
         food_section: [{
-          food_part_idx: 0,
-          food_part_val: "",
-          food_title_idx: 0,
-          food_title_val: "",
+          food_part: "",
+          food_title: "",
           food_count: "",
           food_serv: "",
           food_gram: "",
@@ -71,10 +69,8 @@ export const FoodSearchList = () => {
         food_total_carb: "",
         food_total_protein: "",
         food_section: [{
-          food_part_idx: 0,
-          food_part_val: "",
-          food_title_idx: 0,
-          food_title_val: "",
+          food_part: "",
+          food_title: "",
           food_count: "",
           food_serv: "",
           food_gram: "",
@@ -148,7 +144,7 @@ export const FoodSearchList = () => {
               <td className="pointer" onClick={() => {
                 handleStorage(item);
               }}>
-                {item.food_title_val}
+                {item.food_title}
               </td>
               <td>{item.food_brand}</td>
               <td>{item.food_count} {item.food_serv}</td>

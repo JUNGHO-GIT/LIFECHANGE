@@ -6,9 +6,9 @@ FOOD : {
     "food_section": [
       {
         "food_part_idx": 0,
-        "food_part_val": "",
+        "food_part": "",
         "food_title_idx": 0,
-        "food_title_val": "",
+        "food_title": "",
         "food_count": 0,
         "food_serv": "",
         "food_gram": 0,
@@ -22,8 +22,8 @@ FOOD : {
   "food_real": {
     "food_section": [
       {
-        "food_part_val": "점심",
-        "food_title_val": "총각김치",
+        "food_part": "점심",
+        "food_title": "총각김치",
         "food_brand": "-",
         "food_count": 6,
         "food_serv": "인분",
@@ -34,8 +34,8 @@ FOOD : {
         "food_protein": "2.9"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "열무김치",
+        "food_part": "점심",
+        "food_title": "열무김치",
         "food_brand": "-",
         "food_count": 4,
         "food_serv": "인분",
@@ -46,8 +46,8 @@ FOOD : {
         "food_protein": "2.3"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "백김치",
+        "food_part": "점심",
+        "food_title": "백김치",
         "food_brand": "-",
         "food_count": 6,
         "food_serv": "회",
@@ -58,8 +58,8 @@ FOOD : {
         "food_protein": "7.2"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "무김치",
+        "food_part": "점심",
+        "food_title": "무김치",
         "food_brand": "-",
         "food_count": "1",
         "food_serv": "소접시",
@@ -70,8 +70,8 @@ FOOD : {
         "food_protein": "0.78"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "파김치",
+        "food_part": "점심",
+        "food_title": "파김치",
         "food_brand": "-",
         "food_count": "1",
         "food_serv": "인분",
@@ -82,8 +82,8 @@ FOOD : {
         "food_protein": "0.76"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "열무김치",
+        "food_part": "점심",
+        "food_title": "열무김치",
         "food_brand": "-",
         "food_count": "1",
         "food_serv": "인분",
@@ -94,8 +94,8 @@ FOOD : {
         "food_protein": "0.56"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "열무김치",
+        "food_part": "점심",
+        "food_title": "열무김치",
         "food_brand": "-",
         "food_count": "1",
         "food_serv": "인분",
@@ -106,8 +106,8 @@ FOOD : {
         "food_protein": "0.56"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "열무김치",
+        "food_part": "점심",
+        "food_title": "열무김치",
         "food_brand": "-",
         "food_count": "1",
         "food_serv": "인분",
@@ -118,8 +118,8 @@ FOOD : {
         "food_protein": "0.56"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "백김치",
+        "food_part": "점심",
+        "food_title": "백김치",
         "food_brand": "-",
         "food_count": "1",
         "food_serv": "회",
@@ -130,8 +130,8 @@ FOOD : {
         "food_protein": "1.21"
       },
       {
-        "food_part_val": "점심",
-        "food_title_val": "백김치",
+        "food_part": "점심",
+        "food_title": "백김치",
         "food_brand": "-",
         "food_count": "1",
         "food_serv": "회",

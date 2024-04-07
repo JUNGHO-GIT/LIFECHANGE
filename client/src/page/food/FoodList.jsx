@@ -72,10 +72,8 @@ export const FoodList = () => {
       food_total_carb: "",
       food_total_protein: "",
       food_section: [{
-        food_part_idx: 0,
-        food_part_val: "",
-        food_title_idx: 0,
-        food_title_val: "",
+        food_part: "",
+        food_title: "",
         food_count: "",
         food_serv: "",
         food_gram: "",
@@ -91,10 +89,8 @@ export const FoodList = () => {
       food_total_carb: "",
       food_total_protein: "",
       food_section: [{
-        food_part_idx: 0,
-        food_part_val: "",
-        food_title_idx: 0,
-        food_title_val: "",
+        food_part: "",
+        food_title: "",
         food_count: "",
         food_serv: "",
         food_gram: "",
@@ -329,8 +325,8 @@ export const FoodList = () => {
                 <tr key={index1}>
                   <td></td>
                   <td>
-                    <span>{section1.food_part_val || ""}</span>
-                    <span>{section1.food_title_val || ""}</span>
+                    <span>{section1.food_part || ""}</span>
+                    <span>{section1.food_title || ""}</span>
                     <span>{section1.food_count || ""} {section1.food_serv || ""}</span>
                     <span>{section1.food_gram || ""}g</span>
                     <span>{section1.food_kcal || ""}kcal</span>
@@ -347,8 +343,8 @@ export const FoodList = () => {
                   <td></td>
                   <td></td>
                   <td>
-                    <span>{section2.food_part_val || ""}</span>
-                    <span>{section2.food_title_val || ""}</span>
+                    <span>{section2.food_part || ""}</span>
+                    <span>{section2.food_title || ""}</span>
                     <span>{section2.food_count || ""} {section2.food_serv || ""}</span>
                     <span>{section2.food_gram || ""}g</span>
                     <span>{section2.food_kcal || ""}kcal</span>
