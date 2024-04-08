@@ -192,7 +192,7 @@ export const FoodSearch = () => {
 
   // 5-2. filter ---------------------------------------------------------------------------------->
   const filterBox = () => {
-    const pageNumber = () => {
+    function pageNumber () {
       const pages = [];
       let startPage = Math.max(filter.page - 2, 1);
       let endPage = Math.min(startPage + 4, pageCount);

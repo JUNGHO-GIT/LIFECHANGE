@@ -31,6 +31,12 @@ export const FoodList = () => {
   const {val:calendarOpen, set:setCalendarOpen} = useStorage(
     `calendarOpen(${PATH})`, false
   );
+  const {val:planCount, set:setPlanCount} = useStorage(
+    `planCount(${PATH})`, 0
+  );
+  const {val:realCount, set:setRealCount} = useStorage(
+    `realCount(${PATH})`, 0
+  );
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
@@ -112,7 +118,9 @@ export const FoodList = () => {
       },
     });
 
-    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    /* setRealCount(response.data.realCount);
+    setPlanCount(response.data.planCount); */
+    setTotalCount(response.data.totalCount);
     setFOOD(response.data.result);
 
   })()}, [strDur, filter]);
@@ -307,53 +315,43 @@ export const FoodList = () => {
           <tr>
             <th>날짜</th>
             <th>분류</th>
-            <th>목표</th>
-            <th>실제</th>
-            <th></th>
+            <th>식품명</th>
+            <th>브랜드</th>
+            <th>수량</th>
+            <th>서빙 사이즈</th>
+            <th>그램(g)</th>
+            <th>칼로리(kcal)</th>
+            <th>탄수화물(g)</th>
+            <th>단백질(g)</th>
+            <th>지방(g)</th>
           </tr>
         </thead>
         <tbody>
           {FOOD.map((item) => (
-            <React.Fragment key={item.food_date}>
-              <tr>
-                <td rowSpan={item.food_plan.food_section.length + item.food_real.food_section.length + 1}>
-                  {item.food_date}
-                </td>
+            <React.Fragment key={item._id}>
+              {item.food_real.food_section.map((section, index) => (
+                <tr key={section._id}>
+                  <td>{item.food_date}</td>
+                  <td>{section.food_part}</td>
+                  <td>{section.food_title}</td>
+                  <td>{section.food_brand}</td>
+                  <td>{section.food_count}</td>
+                  <td>{section.food_serv}</td>
+                  <td>{section.food_gram}</td>
+                  <td>{section.food_kcal}</td>
+                  <td>{section.food_carb}</td>
+                  <td>{section.food_protein}</td>
+                  <td>{section.food_fat}</td>
+                </tr>
+              ))}
+              <tr className="table-secondary">
+                <td colSpan={6}>합계</td>
+                <td></td>
+                <td>{item.food_real.food_total_kcal}kcal</td>
+                <td>{item.food_real.food_total_carb}g</td>
+                <td>{item.food_real.food_total_protein}g</td>
+                <td>{item.food_real.food_total_fat}g</td>
               </tr>
-              {item.food_plan.food_section?.map((section1, index1) => (
-                <tr key={index1}>
-                  <td></td>
-                  <td>
-                    <span>{section1.food_part || ""}</span>
-                    <span>{section1.food_title || ""}</span>
-                    <span>{section1.food_count || ""} {section1.food_serv || ""}</span>
-                    <span>{section1.food_gram || ""}g</span>
-                    <span>{section1.food_kcal || ""}kcal</span>
-                    <span>{section1.food_fat || ""}g</span>
-                    <span>{section1.food_carb || ""}g</span>
-                    <span>{section1.food_protein || ""}g</span>
-                  </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              ))}
-              {item.food_real.food_section?.map((section2, index2) => (
-                <tr key={index2}>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <span>{section2.food_part || ""}</span>
-                    <span>{section2.food_title || ""}</span>
-                    <span>{section2.food_count || ""} {section2.food_serv || ""}</span>
-                    <span>{section2.food_gram || ""}g</span>
-                    <span>{section2.food_kcal || ""}kcal</span>
-                    <span>{section2.food_fat || ""}g</span>
-                    <span>{section2.food_carb || ""}g</span>
-                    <span>{section2.food_protein || ""}g</span>
-                  </td>
-                  <td></td>
-                </tr>
-              ))}
             </React.Fragment>
           ))}
         </tbody>
@@ -363,19 +361,25 @@ export const FoodList = () => {
 
   // 5-2. filter ---------------------------------------------------------------------------------->
   const filterBox = () => {
-    const pageNumber = () => {
+    function pageNumber() {
       const pages = [];
-      let startPage = Math.max(filter.page - 2, 1);
-      let endPage = Math.min(startPage + 4, totalCount);
-      startPage = Math.max(Math.min(startPage, totalCount - 4), 1);
+      const totalPages = Math.ceil(totalCount / filter.limit);
+      let startPage = Math.max(1, filter.page - 2);
+      let endPage = Math.min(startPage + 4, totalPages);
+      startPage = Math.max(endPage - 4, 1);
+
       for (let i = startPage; i <= endPage; i++) {
         pages.push(
           <button
             key={i}
-            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
-            onClick={() => setFilter({
-              ...filter, page: i
-            })}
+            className={`btn btn-sm btn-primary me-2`}
+            disabled={filter.page === i}
+            onClick={() => (
+              setFilter((prev) => ({
+                ...prev,
+                page: i
+              }))
+            )}
           >
             {i}
           </button>
@@ -383,35 +387,37 @@ export const FoodList = () => {
       }
       return pages;
     };
-    const prevNumber = () => {
+    function prevButton() {
       return (
         <button
-          className="btn btn-sm btn-primary ms-10 me-10"
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page <= 1}
           onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1) }
-          )}
+            ...filter, page: Math.max(1, filter.page - 1)
+          })}
         >
           이전
         </button>
       );
-    }
-    const nextNumber = () => {
+    };
+    function nextButton() {
       return (
         <button
-          className="btn btn-sm btn-primary ms-10 me-10"
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page >= Math.ceil(totalCount / filter.limit)}
           onClick={() => setFilter({
-            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) }
-          )}
+            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1)
+          })}
         >
           다음
         </button>
       );
-    }
+    };
     return (
       <div className="d-inline-flex">
-        {prevNumber()}
+        {prevButton()}
         {pageNumber()}
-        {nextNumber()}
+        {nextButton()}
       </div>
     );
   };

@@ -401,7 +401,7 @@ export const WorkList = () => {
 
   // 5-2. filter ---------------------------------------------------------------------------------->
   const filterBox = () => {
-    const pageNumber = () => {
+    function pageNumber () {
       const pages = [];
       let startPage = Math.max(filter.page - 2, 1);
       let endPage = Math.min(startPage + 4, totalCount);
@@ -421,7 +421,7 @@ export const WorkList = () => {
       }
       return pages;
     };
-    const prevNumber = () => {
+    function prevNumber () {
       return (
         <button
           className="btn btn-sm btn-primary ms-10 me-10"
@@ -433,7 +433,7 @@ export const WorkList = () => {
         </button>
       );
     }
-    const nextNumber = () => {
+    function nextNumber () {
       return (
         <button
           className="btn btn-sm btn-primary ms-10 me-10"

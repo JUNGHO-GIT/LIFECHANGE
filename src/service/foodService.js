@@ -118,13 +118,8 @@ export const search = async (
 };
 
 // 1-1. list -------------------------------------------------------------------------------------->
-export const list = async (
-  user_id_param,
-  food_dur_param,
-  filter_param
-) => {
-
-  const [startDay, endDay] = food_dur_param.split(` ~ `);
+export const list = async (user_id_param, food_dur_param, filter_param) => {
+  const [startDay, endDay] = food_dur_param.split(" ~ ");
 
   const part = filter_param.part || "";
   const sort = filter_param.order === "asc" ? 1 : -1;
@@ -138,28 +133,40 @@ export const list = async (
       $lte: endDay,
     },
   })
-  .sort({food_date: sort})
-  .skip((page - 1) * limit)
-  .limit(limit)
+  .sort({ food_date: sort })
   .lean();
 
-  const totalCount = await Food.countDocuments(findResult).lean();
+  const totalCount = findResult.reduce((acc, prev) => {
+    return acc + (prev.food_real?.food_section.length || 0) + (prev.food_plan?.food_section.length || 0);
+  }, 0);
 
-  const finalResult = findResult.map((prev) => ({
-    ...prev,
-    food_real: {
-      ...prev.food_real,
-      food_section: prev.food_real?.food_section.filter((item) => (
-        part === "전체" ? true : item.food_part === part
-      )),
-    },
-    food_plan: {
-      ...prev.food_plan,
-      food_section: prev.food_plan?.food_section.filter((item) => (
-        part === "전체" ? true : item.food_part === part
-      )),
-    },
-  }));
+  const finalResult = findResult.map((prev) => {
+    const food_real_filtered = prev.food_real?.food_section.filter((item) => (
+      part === "전체" ? true : item.food_part === part
+    ));
+    const food_plan_filtered = prev.food_plan?.food_section.filter((item) => (
+      part === "전체" ? true : item.food_part === part
+    ));
+
+    function sliceData (data, page, limit) {
+      const startIndex = (page - 1) * limit;
+      let endIndex = startIndex + limit;
+      endIndex = endIndex > data.length ? data.length : endIndex;
+      return data.slice(startIndex, endIndex);
+    }
+
+    return {
+      ...prev,
+      food_real: {
+        ...prev.food_real,
+        food_section: sliceData(food_real_filtered, page, limit),
+      },
+      food_plan: {
+        ...prev.food_plan,
+        food_section: sliceData(food_plan_filtered, page, limit),
+      },
+    };
+  });
 
   return {
     totalCount: totalCount,
@@ -188,10 +195,12 @@ export const detail = async (
 
   const realCount = finalResult?.food_real?.food_section.length || 0;
   const planCount = finalResult?.food_plan?.food_section.length || 0;
+  const totalCount = realCount + planCount;
 
   return {
     realCount: realCount,
     planCount: planCount,
+    totalCount: totalCount,
     result: finalResult,
   };
 };

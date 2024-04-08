@@ -403,7 +403,7 @@ export const SleepList = () => {
 
   // 5-2. filter ---------------------------------------------------------------------------------->
   const filterBox = () => {
-    const pageNumber = () => {
+    function pageNumber () {
       const pages = [];
       const totalPages = Math.ceil(totalCount / filter.limit);
       for (let i = 1; i <= totalPages; i++) {
@@ -421,7 +421,7 @@ export const SleepList = () => {
       }
       return pages;
     };
-    const prevNumber = () => {
+    function prevNumber () {
       return (
         <button
           className="btn btn-sm btn-primary ms-10 me-10"
@@ -433,7 +433,7 @@ export const SleepList = () => {
         </button>
       );
     }
-    const nextNumber = () => {
+    function nextNumber () {
       return (
         <button
           className="btn btn-sm btn-primary ms-10 me-10"

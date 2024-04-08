@@ -199,3 +199,1408 @@
 
 [32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
 
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 331ms 304 331ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 335ms 304 335ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 340ms 304 340ms
+
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [36m304[39m 896ms 304 896ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 18ms 200 18ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /sleep/list?user_id=123&sleep_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5 [32m200[39m 10ms 200 10ms
+
+[32minfo[39m: HTTP GET /sleep/list?user_id=123&sleep_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=0&filter[limit]=5 [31m500[39m 15ms 500 15ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 16ms 304 16ms
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+==================요청 로그==================
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 14ms 304 14ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====에러 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+====에러 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /money/list?user_id=123&money_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5 [32m200[39m 7ms 200 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /work/list?user_id=123&work_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5 [32m200[39m 6ms 200 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /work/list?user_id=123&work_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /work/list?user_id=123&work_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%90%EC%8B%AC [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 18ms 200 18ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 7ms 304 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 18ms 304 18ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 15ms 200 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%90%EC%8B%AC [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 1ms 204 1ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP POST /food/save [32m200[39m 60ms 200 60ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 2ms 200 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/search?user_id=123&filter[query]=%EA%B9%80%EC%B9%98&filter[page]=0&filter[limit]=10 [32m200[39m 682ms 200 682ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 1ms 204 1ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP POST /food/save [32m200[39m 10ms 200 10ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-05-01+~+2024-05-31&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 2ms 200 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 2ms 200 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP OPTIONS /food/save [32m204[39m 0ms 204 0ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP POST /food/save [32m200[39m 6ms 200 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=5&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [32m200[39m 2ms 200 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=4&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [32m200[39m 2ms 200 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=0&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [31m500[39m 11ms 500 11ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=0&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [31m500[39m 6ms 500 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=0&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [31m500[39m 7ms 500 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=0&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [31m500[39m 26ms 500 26ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=0&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [31m500[39m 11ms 500 11ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=0&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [31m500[39m 8ms 500 8ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=0&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [31m500[39m 7ms 500 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 20ms 304 20ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%90%EC%8B%AC [32m200[39m 6ms 200 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EA%B0%84%EC%8B%9D [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 21ms 200 21ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 21ms 304 21ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 21ms 304 21ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 9ms 200 9ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 6ms 200 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 17ms 200 17ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 18ms 200 18ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 19ms 200 19ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 15ms 304 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 18ms 304 18ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 37ms 200 37ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 16ms 304 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 14ms 200 14ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [31m500[39m 20ms 500 20ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 18ms 200 18ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 7ms 304 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 7ms 200 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%80%EB%85%81 [32m200[39m 6ms 200 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EA%B0%84%EC%8B%9D [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 19ms 200 19ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 6ms 304 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 22ms 200 22ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 16ms 304 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 7ms 200 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 21ms 304 21ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 7ms 200 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 7ms 304 7ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 15ms 200 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 3ms 200 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EA%B0%84%EC%8B%9D [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 2ms 304 2ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 22ms 200 22ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 15ms 200 15ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 59ms 200 59ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 6ms 200 6ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 16ms 200 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=10&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 16ms 304 16ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 5ms 304 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=2&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 3ms 304 3ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%95%84%EC%B9%A8 [32m200[39m 5ms 200 5ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-01+~+2024-04-30&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [36m304[39m 4ms 304 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-01-01+~+2024-12-31&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+
+====요청 로그====
+[32minfo[39m: HTTP GET /food/list?user_id=123&food_dur=2024-04-08+~+2024-04-08&filter[order]=asc&filter[page]=1&filter[limit]=5&filter[part]=%EC%A0%84%EC%B2%B4 [32m200[39m 4ms 200 4ms
+
+

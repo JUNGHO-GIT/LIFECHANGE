@@ -44,7 +44,7 @@ app.use(expressWinston.logger({
   ],
   format: winston.format.combine(
     winston.format.colorize(),
-    winston.format.printf(info => `${info.level}: ${info.message} ${info.meta.res.statusCode} ${info.meta.responseTime}ms\n`)
+    winston.format.printf(info => `====요청 로그====\n${info.level}: ${info.message} ${info.meta.res.statusCode} ${info.meta.responseTime}ms\n\n`)
   ),
   msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms",
   expressFormat: false,
@@ -68,6 +68,18 @@ app.use("/work", workRouter);
 app.use("/sleep", sleepRouter);
 app.use("/money", moneyRouter);
 
+// 응답 로그 미들웨어 ----------------------------------------------------------------------------->
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: "logs/response.log" }),
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.printf(info => `====응답 로그====\n${info.level}: ${info.message} ${info.meta.res.statusCode} ${info.meta.responseTime}ms\n\n`)
+  ),
+}));
+
 // 에러 로그 미들웨어 ----------------------------------------------------------------------------->
 app.use(expressWinston.errorLogger({
   transports: [
@@ -76,7 +88,7 @@ app.use(expressWinston.errorLogger({
   ],
   format: winston.format.combine(
     winston.format.colorize(),
-    winston.format.printf(error => `Error: ${error.message}`)
+    winston.format.printf(error => `====에러 로그====\n${error.level}: ${error.message} ${error.meta.res.statusCode} ${error.meta.responseTime}ms\n\n`)
   ),
 }));
 
