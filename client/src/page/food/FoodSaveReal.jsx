@@ -23,9 +23,9 @@ export const FoodSaveReal = () => {
     id: "",
     date: "",
     refresh:0,
-    intoList:"/food/list",
-    intoSave:"/food/save/real",
-    intoSearch:"/food/search",
+    toList:"/food/list",
+    toSave:"/food/save/real",
+    toSearch:"/food/search",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -191,7 +191,7 @@ export const FoodSaveReal = () => {
     });
     if (response.data === "success") {
       alert("Save a food successfully");
-      navParam(STATE.intoList);
+      navParam(STATE.toList);
     }
     else if (response.data === "fail") {
       alert("Save a food failed");
@@ -250,7 +250,7 @@ export const FoodSaveReal = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableSave = () => {
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -398,7 +398,7 @@ export const FoodSaveReal = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableSave()}
+            {tableNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

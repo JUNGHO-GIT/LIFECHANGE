@@ -1,4 +1,4 @@
-// FoodDetail.jsx
+// FoodDetailPlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,7 +8,7 @@ import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDetail = () => {
+export const FoodDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Food Detail";

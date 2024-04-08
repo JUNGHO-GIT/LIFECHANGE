@@ -22,7 +22,7 @@ export const SleepListReal = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoDetail:"/sleep/detail",
+    toDetail:"/sleep/detail",
     id: "",
     date: ""
   };

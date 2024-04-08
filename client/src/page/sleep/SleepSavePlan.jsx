@@ -22,7 +22,7 @@ export const SleepSavePlan = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoList:"/sleep/list",
+    toList:"/sleep/list",
     id: "",
     date: ""
   };
@@ -145,7 +145,7 @@ export const SleepSavePlan = () => {
     });
     if (response.data === "success") {
       alert("Save a sleep successfully");
-      navParam(STATE.intoList);
+      navParam(STATE.toList);
     }
     else if (response.data === "fail") {
       alert("Save a sleep failed");

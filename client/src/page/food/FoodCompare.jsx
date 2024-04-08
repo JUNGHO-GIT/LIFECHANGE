@@ -24,7 +24,7 @@ export const FoodCompare = () => {
     id: "",
     date: "",
     refresh: 0,
-    intoList: "/food/list",
+    toList: "/food/list",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -171,7 +171,7 @@ export const FoodCompare = () => {
           type="button"
           className="btn btn-sm btn-secondary me-2"
           onClick={() => {
-            navParam(STATE.intoList);
+            navParam(STATE.toList);
           }}
         >
           List

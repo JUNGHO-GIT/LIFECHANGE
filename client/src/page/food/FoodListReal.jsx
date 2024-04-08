@@ -1,4 +1,4 @@
-// WorkListPlan.jsx
+// FoodListReal.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,10 +11,10 @@ import axios from "axios";
 import { differenceInDays } from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkListPlan = () => {
+export const FoodListReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
@@ -23,8 +23,8 @@ export const WorkListPlan = () => {
   const STATE = {
     id: "",
     date: "",
-    refresh:0,
-    toDetail:"/work/detail",
+    refresh: 0,
+    toDetail:"/food/detail/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -41,7 +41,8 @@ export const WorkListPlan = () => {
     `filter(${PATH})`, {
       order: "asc",
       page: 1,
-      limit: 5
+      limit: 5,
+      part: "전체",
     }
   );
 
@@ -60,43 +61,25 @@ export const WorkListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{
+  const [FOOD, setFOOD] = useState([{
     _id: "",
-    work_number: 0,
-    work_date: "",
-    work_plan : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    },
-  }]);
-  const [WORK, setWORK] = useState([{
-    _id: "",
-    work_number: 0,
-    work_date: "",
-    work_plan : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
+    food_number: 0,
+    food_date: "",
+    food_real : {
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
       }],
     },
   }]);
@@ -104,16 +87,15 @@ export const WorkListPlan = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_WORK}/list`, {
+    const response = await axios.get(`${URL_FOOD}/list`, {
       params: {
         user_id: user_id,
-        work_dur: strDur,
+        food_dur: strDur,
         filter: filter
       },
     });
-
-    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
-    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+    setTotalCount(response.data.totalCount);
+    setFOOD(response.data.result);
 
   })()}, [strDur, filter]);
 
@@ -306,42 +288,49 @@ export const WorkListPlan = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>시작</th>
-            <th>종료</th>
-            <th>시간</th>
-            <th>부위</th>
-            <th>종목</th>
-            <th>세트 x 횟수 x 무게</th>
-            <th>휴식</th>
+            <th>분류</th>
+            <th>식품명</th>
+            <th>브랜드</th>
+            <th>수량</th>
+            <th>서빙 사이즈</th>
+            <th>그램(g)</th>
+            <th>칼로리(kcal)</th>
+            <th>탄수화물(g)</th>
+            <th>단백질(g)</th>
+            <th>지방(g)</th>
           </tr>
         </thead>
         <tbody>
-          {WORK.map((item) => (
-            <React.Fragment key={item.work_date}>
-              <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.work_date;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.work_date}
-                </td>
-                <td>시작</td>
-                <td>{item.work_plan.work_start}</td>
-                <td>{item.work_plan.work_end}</td>
-                <td>{item.work_plan.work_time}</td>
-                <td colSpan={5}>
-                  {item.work_plan.work_section.map((section, index) => (
-                    <div key={index} className="d-flex justify-content-between">
-                      <span>{section.work_part_val}</span>
-                      <span>{section.work_title_val}</span>
-                      <span>{section.work_set} x {section.work_count} x {section.work_kg}</span>
-                      <span>{section.work_rest}</span>
-                    </div>
-                  ))}
-                </td>
+          {FOOD.map((item) => (
+            <React.Fragment key={item._id}>
+              {item.food_real.food_section.map((section, index) => (
+                <tr key={section._id}>
+                  <td className="pointer" onClick={() => {
+                    STATE.id = item._id;
+                    STATE.date = item.food_date;
+                    navParam(STATE.toDetail);
+                  }}>
+                    {item.food_date}
+                  </td>
+                  <td>{section.food_part}</td>
+                  <td>{section.food_title}</td>
+                  <td>{section.food_brand}</td>
+                  <td>{section.food_count}</td>
+                  <td>{section.food_serv}</td>
+                  <td>{section.food_gram}</td>
+                  <td>{section.food_kcal}</td>
+                  <td>{section.food_carb}</td>
+                  <td>{section.food_protein}</td>
+                  <td>{section.food_fat}</td>
+                </tr>
+              ))}
+              <tr className="table-secondary">
+                <td colSpan={6}>합계</td>
+                <td></td>
+                <td>{item.food_real.food_total_kcal}kcal</td>
+                <td>{item.food_real.food_total_carb}g</td>
+                <td>{item.food_real.food_total_protein}g</td>
+                <td>{item.food_real.food_total_fat}g</td>
               </tr>
             </React.Fragment>
           ))}

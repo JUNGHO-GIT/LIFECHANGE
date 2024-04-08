@@ -22,8 +22,8 @@ export const WorkDetailReal = () => {
     id: "",
     date: "",
     refresh:0,
-    intoList:"/work/list",
-    intoSave:"/work/save"
+    toList:"/work/list",
+    toSave:"/work/save"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -123,7 +123,7 @@ export const WorkDetailReal = () => {
     });
     if (response.data === "success") {
       alert("delete success");
-      navParam(STATE.intoList);
+      navParam(STATE.toList);
     }
     else {
       alert(`${response.data}`);
@@ -195,7 +195,7 @@ export const WorkDetailReal = () => {
           className="btn btn-sm btn-primary ms-2"
           onClick={() => {
             STATE.date = strDate;
-            navParam(STATE.intoSave, {
+            navParam(STATE.toSave, {
               state: STATE,
             });
           }}
@@ -223,7 +223,7 @@ export const WorkDetailReal = () => {
           type="button"
           className="btn btn-sm btn-secondary ms-2"
           onClick={() => {
-            navParam(STATE.intoList);
+            navParam(STATE.toList);
           }}
         >
           List

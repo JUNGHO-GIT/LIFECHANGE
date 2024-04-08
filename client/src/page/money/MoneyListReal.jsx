@@ -1,4 +1,4 @@
-// WorkListPlan.jsx
+// MoneyListReal.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,23 +8,23 @@ import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import { differenceInDays } from "date-fns";
+import {differenceInDays} from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkListPlan = () => {
+export const MoneyListReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    id: "",
-    date: "",
     refresh:0,
-    toDetail:"/work/detail",
+    toDetail:"/money/detail",
+    id: "",
+    date: ""
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -60,60 +60,50 @@ export const WorkListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{
+  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
     _id: "",
-    work_number: 0,
-    work_date: "",
-    work_plan : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
+    money_number: 0,
+    money_date: "",
+    money_real : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
       }],
-    },
+    }
   }]);
-  const [WORK, setWORK] = useState([{
+  const [MONEY, setMONEY] = useState([{
     _id: "",
-    work_number: 0,
-    work_date: "",
-    work_plan : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
+    money_number: 0,
+    money_date: "",
+    money_real : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
       }],
-    },
+    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_WORK}/list`, {
+    const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
         user_id: user_id,
-        work_dur: strDur,
+        money_dur: strDur,
         filter: filter
       },
     });
 
     setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
-    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -306,43 +296,34 @@ export const WorkListPlan = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>시작</th>
-            <th>종료</th>
-            <th>시간</th>
-            <th>부위</th>
-            <th>종목</th>
-            <th>세트 x 횟수 x 무게</th>
-            <th>휴식</th>
+            <th>분류</th>
+            <th>항목</th>
+            <th>금액</th>
+            <th>내용</th>
           </tr>
         </thead>
         <tbody>
-          {WORK.map((item) => (
-            <React.Fragment key={item.work_date}>
+          {MONEY.map((item) => (
+            <React.Fragment key={item.money_date}>
               <tr>
                 <td rowSpan={6} className="pointer" onClick={() => {
                   STATE.id = item._id;
-                  STATE.date = item.work_date;
+                  STATE.date = item.money_date;
                   navParam(STATE.toDetail, {
                     state: STATE
                   });
                 }}>
-                  {item.work_date}
-                </td>
-                <td>시작</td>
-                <td>{item.work_plan.work_start}</td>
-                <td>{item.work_plan.work_end}</td>
-                <td>{item.work_plan.work_time}</td>
-                <td colSpan={5}>
-                  {item.work_plan.work_section.map((section, index) => (
-                    <div key={index} className="d-flex justify-content-between">
-                      <span>{section.work_part_val}</span>
-                      <span>{section.work_title_val}</span>
-                      <span>{section.work_set} x {section.work_count} x {section.work_kg}</span>
-                      <span>{section.work_rest}</span>
-                    </div>
-                  ))}
+                  {item.money_date}
                 </td>
               </tr>
+              {item.money_real.money_section.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.money_part_val}</td>
+                  <td>{item.money_title_val}</td>
+                  <td>{item.money_amount}</td>
+                  <td>{item.money_content}</td>
+                </tr>
+              ))}
             </React.Fragment>
           ))}
         </tbody>

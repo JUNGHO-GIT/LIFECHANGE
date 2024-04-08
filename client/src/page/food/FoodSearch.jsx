@@ -20,7 +20,7 @@ export const FoodSearch = () => {
     id: "",
     date: koreanDate,
     refresh: 0,
-    intoSave:"/food/save/real",
+    toSave:"/food/save/real",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -92,7 +92,7 @@ export const FoodSearch = () => {
     function handleStorage (param) {
       localStorage.setItem("food_section", JSON.stringify(param));
       STATE.date = koreanDate;
-      navParam(STATE.intoSave, {
+      navParam(STATE.toSave, {
         state: STATE
       });
     };

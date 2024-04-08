@@ -23,7 +23,7 @@ export const WorkSaveReal = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoList:"/work/list",
+    toList:"/work/list",
     id: "",
     date: ""
   };
@@ -159,7 +159,7 @@ export const WorkSaveReal = () => {
     });
     if (response.data === "success") {
       alert("Save a work successfully");
-      navParam(STATE.intoList);
+      navParam(STATE.toList);
     }
     else {
       alert(`${response.data}error`);
@@ -519,7 +519,7 @@ export const WorkSaveReal = () => {
           type="button"
           className="btn btn-sm btn-secondary me-2"
           onClick={() => {
-            navParam(STATE.intoList);
+            navParam(STATE.toList);
           }}
         >
           List

@@ -1,16 +1,16 @@
-// SleepDetailReal.jsx
+// MoneyDetailPlan.jsx
 
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/js/useStorage.jsx";
 import axios from "axios";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDetailReal = () => {
+export const MoneyDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
@@ -20,8 +20,8 @@ export const SleepDetailReal = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    toList:"/sleep/list",
-    toSave:"/sleep/save",
+    toList:"/money/list",
+    toSave:"/money/save",
     id: "",
     date: ""
   };
@@ -41,27 +41,35 @@ export const SleepDetailReal = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
+  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState({
     _id: "",
-    sleep_date: "",
-    sleep_real : {
-      sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
-        sleep_time: "",
+    money_number: 0,
+    money_date: "",
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
       }],
-    },
+    }
   });
-  const [SLEEP, setSLEEP] = useState({
+  const [MONEY, setMONEY] = useState({
     _id: "",
-    sleep_date: "",
-    sleep_real : {
-      sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
-        sleep_time: "",
+    money_number: 0,
+    money_date: "",
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
       }],
-    },
+    }
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -72,34 +80,34 @@ export const SleepDetailReal = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setSLEEP((prev) => ({
+    setMONEY((prev) => ({
       ...prev,
-      sleep_date: strDur
+      money_date: strDur
     }));
   }, [strDur]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/detail`, {
+    const response = await axios.get(`${URL_MONEY}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_dur: `${location_date} ~ ${location_date}`,
+        money_dur: `${location_date} ~ ${location_date}`,
         planYn: "N",
       },
     });
 
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
   })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_SLEEP}/delete`, {
+    const response = await axios.delete(`${URL_MONEY}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
-        sleep_dur: strDur,
+        money_dur: strDur,
         planYn: "N",
       },
     });
@@ -119,38 +127,36 @@ export const SleepDetailReal = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
+            <th>분류</th>
+            <th>항목</th>
+            <th>금액</th>
+            <th>내용</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="fs-20 pt-20">
-              {SLEEP.sleep_date}
-            </td>
-            {SLEEP.sleep_real.sleep_section.map((item, index) => (
-              <React.Fragment key={index}>
-                <td className="fs-20 pt-20">
-                  {item.sleep_start}
-                </td>
-                <td className="fs-20 pt-20">
-                  {item.sleep_end}
-                </td>
-                <td className="fs-20 pt-20">
-                  {item.sleep_time}
-                </td>
-                <td className="fs-20 pt-20">
-                  <button type="button" className="btn btn-sm btn-danger" onClick={() => (
-                    flowDelete(item._id)
-                  )}>
-                    X
-                  </button>
-                </td>
+        {MONEY.money_plan.money_section.map((item, index) => (
+          <tr key={index}>
+            {index === 0 && (
+              <React.Fragment>
+                <td className="fs-20 pt-20" rowSpan={MONEY.money_plan.money_section.length}>{MONEY.money_date}</td>
               </React.Fragment>
-            ))}
+            )}
+            <td className="fs-20 pt-20">{item.money_part_val}</td>
+            <td className="fs-20 pt-20">{item.money_title_val}</td>
+            <td className="fs-20 pt-20">{item.money_amount}</td>
+            <td className="fs-20 pt-20">{item.money_content}</td>
+            <td className="fs-20 pt-20">
+              <button
+                type="button"
+                className="btn btn-sm btn-danger"
+                onClick={() => flowDelete(item._id)}
+              >
+                X
+              </button>
+            </td>
           </tr>
+        ))}
         </tbody>
       </table>
     );

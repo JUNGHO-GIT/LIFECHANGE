@@ -16,23 +16,28 @@ export const listArray = [
     label: "Food",
     items: [
       {to: "/food/dash", label: "FoodDash"},
-      {to: "/food/list", label: "FoodList"},
       {to: "/food/compare", label: "FoodCompare"},
       {to: "/food/search", label: "FoodSearch"},
+      {to: "/food/list/real", label: "FoodListReal"},
+      {to: "/food/list/plan", label: "FoodListPlan"}
     ]
   },
   {
     label: "Money",
     items: [
       {to: "/money/dash", label: "MoneyDash"},
-      {to: "/money/list", label: "MoneyList"}
+      {to: "/money/compare", label: "MoneyCompare"},
+      {to: "/money/list/real", label: "MoneyListReal"},
+      {to: "/money/list/plan", label: "MoneyListPlan"}
     ]
   },
   {
     label: "Work",
     items: [
       {to: "/work/dash", label: "WorkDash"},
-      {to: "/work/list", label: "WorkList"},
+      {to: "/work/compare", label: "WorkCompare"},
+      {to: "/work/list/real", label: "WorkListReal"},
+      {to: "/work/list/plan", label: "WorkListPlan"}
     ]
   },
   {
@@ -40,9 +45,8 @@ export const listArray = [
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
       {to: "/sleep/compare", label: "SleepCompare"},
-      {to: "/sleep/detail", label: "SleepDetail"},
-      {to: "/sleep/list", label: "SleepList"},
-
+      {to: "/sleep/list/real", label: "SleepListReal"},
+      {to: "/sleep/list/plan", label: "SleepListPlan"}
     ]
   }
 ];

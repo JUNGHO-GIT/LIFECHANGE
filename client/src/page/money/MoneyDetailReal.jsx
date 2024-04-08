@@ -1,4 +1,4 @@
-// MoneyDetail.jsx
+// MoneyDetailReal.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -7,7 +7,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDetail = () => {
+export const MoneyDetailReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
@@ -20,16 +20,11 @@ export const MoneyDetail = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoList:"/money/list",
-    intoSave:"/money/save",
+    toList:"/money/list",
+    toSave:"/money/save",
     id: "",
     date: ""
   };
-
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:planYn, set:setPlanYn} = useStorage(
-    `planYn(${PATH})`, "N"
-  );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strStartDate, set:setStrStartDate} = useStorage(
@@ -59,16 +54,6 @@ export const MoneyDetail = () => {
         money_amount: 0,
         money_content: "",
       }],
-    },
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
     }
   });
   const [MONEY, setMONEY] = useState({
@@ -76,16 +61,6 @@ export const MoneyDetail = () => {
     money_number: 0,
     money_date: "",
     money_real : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    },
-    money_plan : {
       money_section: [{
         money_part_idx: 0,
         money_part_val: "전체",
@@ -118,7 +93,7 @@ export const MoneyDetail = () => {
         _id: location_id,
         user_id: user_id,
         money_dur: `${location_date} ~ ${location_date}`,
-        planYn: planYn,
+        planYn: "N",
       },
     });
 
@@ -127,18 +102,18 @@ export const MoneyDetail = () => {
   })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowMoneyDelete = async (id) => {
+  const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_MONEY}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
         money_dur: strDur,
-        planYn: planYn,
+        planYn: "N",
       },
     });
     if (response.data === "success") {
       alert("delete success");
-      navParam(STATE.intoList);
+      navParam(STATE.toList);
     }
     else {
       alert(`${response.data}`);
@@ -146,16 +121,12 @@ export const MoneyDetail = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableMoneyDetail = () => {
-
-    const moneyType = planYn === "Y" ? "money_plan" : "money_real";
-
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>계획여부</th>
             <th>분류</th>
             <th>항목</th>
             <th>금액</th>
@@ -164,25 +135,11 @@ export const MoneyDetail = () => {
           </tr>
         </thead>
         <tbody>
-        {MONEY[moneyType].money_section.map((item, index) => (
+        {MONEY.money_real.money_section.map((item, index) => (
           <tr key={index}>
             {index === 0 && (
               <React.Fragment>
-                <td className="fs-20 pt-20" rowSpan={MONEY[moneyType].money_section.length}>{MONEY.money_date}</td>
-                <td rowSpan={MONEY[moneyType].money_section.length}>
-                  <select
-                    id="money_planYn"
-                    name="money_planYn"
-                    className="form-select"
-                    value={planYn}
-                    onChange={(e) => {
-                      setPlanYn(e.target.value);
-                    }}
-                  >
-                    <option value="Y">목표</option>
-                    <option value="N">실제</option>
-                  </select>
-                </td>
+                <td className="fs-20 pt-20" rowSpan={MONEY.money_real.money_section.length}>{MONEY.money_date}</td>
               </React.Fragment>
             )}
             <td className="fs-20 pt-20">{item.money_part_val}</td>
@@ -193,7 +150,7 @@ export const MoneyDetail = () => {
               <button
                 type="button"
                 className="btn btn-sm btn-danger"
-                onClick={() => flowMoneyDelete(item._id)}
+                onClick={() => flowDelete(item._id)}
               >
                 X
               </button>
@@ -206,34 +163,43 @@ export const MoneyDetail = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonMoneyUpdate = () => {
+  const buttonNode = () => {
+    function buttonUpdate() {
+      return (
+        <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
+          STATE.date = strDate;
+          navParam(STATE.toSave, {
+            state: STATE,
+          });
+        }}>
+          Update
+        </button>
+      );
+    };
+    function buttonRefresh () {
+      return (
+        <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+          navParam(STATE.refresh);
+        }}>
+          Refresh
+        </button>
+      );
+    };
+    function buttonList() {
+      return (
+        <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
+          navParam(STATE.toList);
+        }}>
+          List
+        </button>
+      );
+    };
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        STATE.date = strDate;
-        navParam(STATE.intoSave, {
-          state: STATE,
-        });
-      }}>
-        Update
-      </button>
-    );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(STATE.refresh);
-      }}>
-        Refresh
-      </button>
-    );
-  };
-  const buttonMoneyList = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(STATE.intoList);
-      }}>
-        List
-      </button>
+      <div className="d-inline-flex">
+        {buttonUpdate()}
+        {buttonRefresh()}
+        {buttonList()}
+      </div>
     );
   };
 
@@ -241,16 +207,19 @@ export const MoneyDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            <h1>Detail</h1>
+          </div>
+        </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {tableMoneyDetail()}
+            {tableNode()}
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {buttonMoneyUpdate()}
-            {buttonRefreshPage()}
-            {buttonMoneyList()}
+            {buttonNode()}
           </div>
         </div>
       </div>

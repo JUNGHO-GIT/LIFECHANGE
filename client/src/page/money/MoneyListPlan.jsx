@@ -1,4 +1,4 @@
-// FoodList.jsx
+// MoneyListPlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,23 +8,23 @@ import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import { differenceInDays } from "date-fns";
+import {differenceInDays} from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodList = () => {
+export const MoneyListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
+    refresh:0,
+    toDetail:"/money/detail",
     id: "",
-    date: "",
-    refresh: 0,
-    intoDetail:"/food/detail",
+    date: ""
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -41,8 +41,7 @@ export const FoodList = () => {
     `filter(${PATH})`, {
       order: "asc",
       page: 1,
-      limit: 5,
-      part: "전체",
+      limit: 5
     }
   );
 
@@ -61,41 +60,50 @@ export const FoodList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD, setFOOD] = useState([{
+  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
     _id: "",
-    food_number: 0,
-    food_date: "",
-    food_real : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
+    money_number: 0,
+    money_date: "",
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
       }],
-    },
+    }
+  }]);
+  const [MONEY, setMONEY] = useState([{
+    _id: "",
+    money_number: 0,
+    money_date: "",
+    money_plan : {
+      money_section: [{
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: "",
+      }],
+    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_FOOD}/list`, {
+    const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
         user_id: user_id,
-        food_dur: strDur,
+        money_dur: strDur,
         filter: filter
       },
     });
-    setTotalCount(response.data.totalCount);
-    setFOOD(response.data.result);
+
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -289,43 +297,33 @@ export const FoodList = () => {
           <tr>
             <th>날짜</th>
             <th>분류</th>
-            <th>식품명</th>
-            <th>브랜드</th>
-            <th>수량</th>
-            <th>서빙 사이즈</th>
-            <th>그램(g)</th>
-            <th>칼로리(kcal)</th>
-            <th>탄수화물(g)</th>
-            <th>단백질(g)</th>
-            <th>지방(g)</th>
+            <th>항목</th>
+            <th>금액</th>
+            <th>내용</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD.map((item) => (
-            <React.Fragment key={item._id}>
-              {item.food_real.food_section.map((section, index) => (
-                <tr key={section._id}>
-                  <td>{item.food_date}</td>
-                  <td>{section.food_part}</td>
-                  <td>{section.food_title}</td>
-                  <td>{section.food_brand}</td>
-                  <td>{section.food_count}</td>
-                  <td>{section.food_serv}</td>
-                  <td>{section.food_gram}</td>
-                  <td>{section.food_kcal}</td>
-                  <td>{section.food_carb}</td>
-                  <td>{section.food_protein}</td>
-                  <td>{section.food_fat}</td>
+          {MONEY.map((item) => (
+            <React.Fragment key={item.money_date}>
+              <tr>
+                <td rowSpan={6} className="pointer" onClick={() => {
+                  STATE.id = item._id;
+                  STATE.date = item.money_date;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>
+                  {item.money_date}
+                </td>
+              </tr>
+              {item.money_plan.money_section.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.money_part_val}</td>
+                  <td>{item.money_title_val}</td>
+                  <td>{item.money_amount}</td>
+                  <td>{item.money_content}</td>
                 </tr>
               ))}
-              <tr className="table-secondary">
-                <td colSpan={6}>합계</td>
-                <td></td>
-                <td>{item.food_real.food_total_kcal}kcal</td>
-                <td>{item.food_real.food_total_carb}g</td>
-                <td>{item.food_real.food_total_protein}g</td>
-                <td>{item.food_real.food_total_fat}g</td>
-              </tr>
             </React.Fragment>
           ))}
         </tbody>

@@ -20,8 +20,8 @@ export const SleepDetailPlan = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoList:"/sleep/list",
-    intoSave:"/sleep/save",
+    toList:"/sleep/list",
+    toSave:"/sleep/save",
     id: "",
     date: ""
   };
@@ -105,7 +105,7 @@ export const SleepDetailPlan = () => {
     });
     if (response.data === "success") {
       alert("delete success");
-      navParam(STATE.intoList);
+      navParam(STATE.toList);
     }
     else {
       alert(`${response.data}`);
@@ -162,7 +162,7 @@ export const SleepDetailPlan = () => {
       return (
         <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
           STATE.date = strDate;
-          navParam(STATE.intoSave, {
+          navParam(STATE.toSave, {
             state: STATE,
           });
         }}>
@@ -182,7 +182,7 @@ export const SleepDetailPlan = () => {
     function buttonList() {
       return (
         <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-          navParam(STATE.intoList);
+          navParam(STATE.toList);
         }}>
           List
         </button>

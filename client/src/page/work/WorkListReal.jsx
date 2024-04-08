@@ -24,7 +24,7 @@ export const WorkListReal = () => {
     id: "",
     date: "",
     refresh:0,
-    intoDetail:"/work/detail",
+    toDetail:"/work/detail",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -322,7 +322,7 @@ export const WorkListReal = () => {
                 <td rowSpan={6} className="pointer" onClick={() => {
                   STATE.id = item._id;
                   STATE.date = item.work_date;
-                  navParam(STATE.intoDetail, {
+                  navParam(STATE.toDetail, {
                     state: STATE
                   });
                 }}>

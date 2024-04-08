@@ -22,7 +22,7 @@ export const SleepCompare = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoDetail:"/sleep/detail",
+    toDetail:"/sleep/detail",
     id: "",
     date: ""
   };
@@ -338,7 +338,7 @@ export const SleepCompare = () => {
                 <td rowSpan={3} className="pointer" onClick={() => {
                   STATE.id = item._id;
                   STATE.date = item.sleep_date;
-                  navParam(STATE.intoDetail, {
+                  navParam(STATE.toDetail, {
                     state: STATE
                   });
                 }}>

@@ -22,7 +22,7 @@ export const MoneySaveReal = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoList:"/Money/list",
+    toList:"/Money/list",
     id: "",
     date: ""
   };
@@ -146,7 +146,7 @@ export const MoneySaveReal = () => {
     });
     if (response.data === "success") {
       alert("Save a money successfully");
-      navParam(STATE.intoList);
+      navParam(STATE.toList);
     }
     else if (response.data === "fail") {
       alert("Save a money failed");
