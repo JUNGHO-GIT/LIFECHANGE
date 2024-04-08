@@ -34,7 +34,48 @@ const schema = new mongoose.Schema({
       type: String,
       required: false
     },
-    food_section: []
+    food_section: [{
+      food_part: {
+        type: String,
+        required: false,
+      },
+      food_title: {
+        type: String,
+        required: false,
+      },
+      food_brand : {
+        type : String,
+        required : false
+      },
+      food_count : {
+        type : String,
+        required : false
+      },
+      food_serv : {
+        type : String,
+        required : false
+      },
+      food_gram : {
+        type : String,
+        required : false
+      },
+      food_kcal : {
+        type : String,
+        required : false
+      },
+      food_carb : {
+        type : String,
+        required : false
+      },
+      food_protein : {
+        type : String,
+        required : false
+      },
+      food_fat : {
+        type : String,
+        required : false
+      },
+    }],
   },
   food_real: {
     food_total_kcal: {

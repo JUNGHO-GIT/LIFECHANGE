@@ -107,19 +107,19 @@ export const FoodSaveReal = () => {
   }, [strDur]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
+  /* useEffect(() => {(async () => {
     const response = await axios.get(`${URL_FOOD}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
         food_dur: strDur,
-        planYn: "N",
+        realYn: "N",
       },
     });
 
     setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
-  })()}, [strDur]);
+  })()}, [strDur]); */
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -202,7 +202,7 @@ export const FoodSaveReal = () => {
       user_id: user_id,
       FOOD: FOOD,
       food_dur: strDur,
-      planYn: "N"
+      realYn: "N"
     });
     if (response.data === "success") {
       alert("Save a food successfully");
@@ -368,7 +368,7 @@ export const FoodSaveReal = () => {
           type="button"
           className="btn btn-sm btn-primary"
           onClick={() => {
-            localStorage.removeItem(`FOOD(${PATH})`);
+            localStorage.clear();
             flowSave()
           }}
         >
@@ -382,7 +382,7 @@ export const FoodSaveReal = () => {
           type="button"
           className="btn btn-sm btn-success ms-2"
           onClick={() => {
-            localStorage.removeItem(`FOOD(${PATH})`);
+            localStorage.clear();
             navParam(STATE.refresh);
           }}
         >
@@ -390,10 +390,24 @@ export const FoodSaveReal = () => {
         </button>
       );
     };
+    function buttonSearch () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-secondary ms-2"
+          onClick={() => {
+            navParam(STATE.toSearch);
+          }}
+        >
+          Search
+        </button>
+      );
+    };
     return (
       <div className="d-inline-flex">
         {buttonSave()}
         {buttonRefresh()}
+        {buttonSearch()}
       </div>
     );
   };
@@ -404,7 +418,7 @@ export const FoodSaveReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Real</h1>
+            <h1>Save (Real)</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">

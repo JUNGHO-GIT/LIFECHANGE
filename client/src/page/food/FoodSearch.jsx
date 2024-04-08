@@ -38,6 +38,23 @@ export const FoodSearch = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const {val:FOOD, set:setFOOD} = useStorage(
     `FOOD(${PATH})`, {
+      food_plan : {
+        food_total_kcal: "",
+        food_total_fat: "",
+        food_total_carb: "",
+        food_total_protein: "",
+        food_section: [{
+          food_part: "",
+          food_title: "",
+          food_count: "",
+          food_serv: "",
+          food_gram: "",
+          food_kcal: "",
+          food_fat: "",
+          food_carb: "",
+          food_protein: "",
+        }],
+      },
       food_real : {
         food_total_kcal: "",
         food_total_fat: "",

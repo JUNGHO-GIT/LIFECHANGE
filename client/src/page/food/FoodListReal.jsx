@@ -61,6 +61,28 @@ export const FoodListReal = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
+    _id: "",
+    food_number: 0,
+    food_date: "",
+    food_plan : {
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
+      }],
+    },
+  }]);
   const [FOOD, setFOOD] = useState([{
     _id: "",
     food_number: 0,
@@ -95,8 +117,8 @@ export const FoodListReal = () => {
         planYn: "N",
       },
     });
-    setTotalCount(response.data.totalCount);
-    setFOOD(response.data.result);
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -118,6 +140,11 @@ export const FoodListReal = () => {
       setStrDur(`${strStartDate} ~ ${strEndDate}`);
     }
   }, [type, strDate, strStartDate, strEndDate]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    console.log("FOOD : ", JSON.stringify(FOOD));
+  }, [FOOD]);
 
   // 4. view -------------------------------------------------------------------------------------->
   const viewNode = () => {
@@ -534,7 +561,7 @@ export const FoodListReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List</h1>
+            <h1>List (Real)</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">

@@ -140,31 +140,21 @@ export const list = async (
     },
   })
   .sort({ food_date: sort })
+  .skip((page - 1) * limit)
+  .limit(limit)
   .lean();
 
-  const finalResult = findResult.map((prev) => {
-    const filtered = prev[planYn]?.food_section.filter((item) => (
-      part === "전체" ? true : item.food_part === part
-    ));
-
-    function sliceData (data, page, limit) {
-      const startIndex = (page - 1) * limit;
-      let endIndex = startIndex + limit;
-      endIndex = endIndex > data.length ? data.length : endIndex;
-      return data.slice(startIndex, endIndex);
+  const finalResult = findResult.map((food) => {
+    if (food[planYn] && food[planYn].food_section) {
+      food[planYn].food_section = food[planYn].food_section.filter((section) => (
+        part === "전체" ? true : section.food_part === part
+      ));
     }
-
-    return {
-      ...prev,
-      [planYn]: {
-        ...prev[planYn],
-        food_section: sliceData(filtered, page, limit),
-      },
-    };
+    return food;
   });
 
   const totalCount = finalResult.reduce((acc, cur) => (
-    acc + cur[planYn]?.food_section?.length || 0
+    acc + cur[planYn]?.food_section.length
   ), 0);
 
   return {

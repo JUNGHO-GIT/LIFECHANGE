@@ -1,456 +1,162 @@
-{
-  "totalCount": 1,
-  "result": [
-    {
-      "$__": {
-        "activePaths": {
-          "paths": {
-            "user_id": "init",
-            "_id": "init",
-            "food_date": "init",
-            "food_plan": "init",
-            "food_real": "init",
-            "food_regdate": "init",
-            "food_update": "init",
-            "food_number": "init",
-            "__v": "init"
-          },
-          "states": {
-            "require": {},
-            "init": {
-              "_id": true,
-              "user_id": true,
-              "food_date": true,
-              "food_plan": true,
-              "food_real": true,
-              "food_regdate": true,
-              "food_update": true,
-              "food_number": true,
-              "__v": true
-            }
-          }
-        },
-        "skipId": true
-      },
-      "$isNew": false,
-      "_doc": {
-        "_id": "6612dca147b5ab3ac9431f15",
-        "user_id": "123",
-        "food_date": "2024-04-08",
-        "food_plan": {
-          "food_section": [
-            {
-              "food_part_idx": 0,
-              "food_part_val": "",
-              "food_title_idx": 0,
-              "food_title_val": "",
-              "food_preServ": "",
-              "food_subServ": "",
-              "food_gram": "",
-              "food_kcal": "",
-              "food_carb": "",
-              "food_protein": "",
-              "food_fat": "",
-              "_id": "6612dca147b5ab3ac9431f18"
-            }
-          ],
-          "_id": "6612dca147b5ab3ac9431f17"
-        },
-        "food_real": {
-          "food_total_kcal": "",
-          "food_total_carb": "",
-          "food_total_protein": "",
-          "food_total_fat": "",
-          "food_section": [
-            {
-              "food_part": "아침",
-              "food_title": "보쌈김치",
-              "food_brand": "-",
-              "food_count": "5",
-              "food_serv": "소접시",
-              "food_gram": "NaN",
-              "food_kcal": "370.0",
-              "food_carb": "24.9",
-              "food_protein": "22.5",
-              "food_fat": "21.4",
-              "_id": "6612f69b9e59b63a1c5c408c"
-            },
-            {
-              "food_part": "아침",
-              "food_title": "총각김치",
-              "food_brand": "-",
-              "food_count": "5",
-              "food_serv": "인분",
-              "food_gram": "NaN",
-              "food_kcal": "55.0",
-              "food_carb": "11.9",
-              "food_protein": "2.4",
-              "food_fat": "0.5",
-              "_id": "6612f69b9e59b63a1c5c408d"
-            },
-            {
-              "food_part": "점심",
-              "food_title": "총각김치",
-              "food_brand": "-",
-              "food_count": "6",
-              "food_serv": "인분",
-              "food_gram": "NaN",
-              "food_kcal": "66.0",
-              "food_carb": "14.4",
-              "food_protein": "3.0",
-              "food_fat": "0.6",
-              "_id": "6612f69b9e59b63a1c5c408e"
-            },
-            {
-              "food_part": "점심",
-              "food_title": "총각김치",
-              "food_brand": "-",
-              "food_count": "6",
-              "food_serv": "인분",
-              "food_gram": "NaN",
-              "food_kcal": "66.0",
-              "food_carb": "14.3",
-              "food_protein": "2.9",
-              "food_fat": "0.6",
-              "_id": "6612f69b9e59b63a1c5c408f"
-            }
-          ],
-          "_id": "6612f69b9e59b63a1c5c408b"
-        },
-        "food_regdate": "2024-04-08 / 02:49:21",
-        "food_update": "2024-04-08 / 04:40:11",
-        "food_number": "5",
-        "__v": 0
-      },
-      "food_real": {
-        "$__parent": {
-          "_id": "6612dca147b5ab3ac9431f15",
-          "user_id": "123",
-          "food_date": "2024-04-08",
-          "food_plan": {
-            "food_section": [
-              {
-                "food_part_idx": 0,
-                "food_part_val": "",
-                "food_title_idx": 0,
-                "food_title_val": "",
-                "food_preServ": "",
-                "food_subServ": "",
-                "food_gram": "",
-                "food_kcal": "",
-                "food_carb": "",
-                "food_protein": "",
-                "food_fat": "",
-                "_id": "6612dca147b5ab3ac9431f18"
-              }
-            ],
-            "_id": "6612dca147b5ab3ac9431f17"
-          },
-          "food_real": {
-            "food_total_kcal": "",
-            "food_total_carb": "",
-            "food_total_protein": "",
-            "food_total_fat": "",
-            "food_section": [
-              {
-                "food_part": "아침",
-                "food_title": "보쌈김치",
-                "food_brand": "-",
-                "food_count": "5",
-                "food_serv": "소접시",
-                "food_gram": "NaN",
-                "food_kcal": "370.0",
-                "food_carb": "24.9",
-                "food_protein": "22.5",
-                "food_fat": "21.4",
-                "_id": "6612f69b9e59b63a1c5c408c"
-              },
-              {
-                "food_part": "아침",
-                "food_title": "총각김치",
-                "food_brand": "-",
-                "food_count": "5",
-                "food_serv": "인분",
-                "food_gram": "NaN",
-                "food_kcal": "55.0",
-                "food_carb": "11.9",
-                "food_protein": "2.4",
-                "food_fat": "0.5",
-                "_id": "6612f69b9e59b63a1c5c408d"
-              },
-              {
-                "food_part": "점심",
-                "food_title": "총각김치",
-                "food_brand": "-",
-                "food_count": "6",
-                "food_serv": "인분",
-                "food_gram": "NaN",
-                "food_kcal": "66.0",
-                "food_carb": "14.4",
-                "food_protein": "3.0",
-                "food_fat": "0.6",
-                "_id": "6612f69b9e59b63a1c5c408e"
-              },
-              {
-                "food_part": "점심",
-                "food_title": "총각김치",
-                "food_brand": "-",
-                "food_count": "6",
-                "food_serv": "인분",
-                "food_gram": "NaN",
-                "food_kcal": "66.0",
-                "food_carb": "14.3",
-                "food_protein": "2.9",
-                "food_fat": "0.6",
-                "_id": "6612f69b9e59b63a1c5c408f"
-              }
-            ],
-            "_id": "6612f69b9e59b63a1c5c408b"
-          },
-          "food_regdate": "2024-04-08 / 02:49:21",
-          "food_update": "2024-04-08 / 04:40:11",
-          "food_number": "5",
-          "__v": 0
-        },
-        "$__": {
-          "activePaths": {
-            "paths": {
-              "food_total_kcal": "init",
-              "food_total_carb": "init",
-              "food_total_protein": "init",
-              "food_total_fat": "init",
-              "food_section": "init",
-              "_id": "init"
-            },
-            "states": {
-              "init": {
-                "food_total_kcal": true,
-                "food_total_carb": true,
-                "food_total_protein": true,
-                "food_total_fat": true,
-                "food_section": true,
-                "_id": true
-              }
-            }
-          }
-        },
-        "$isNew": false,
-        "_doc": {
-          "food_total_kcal": "",
-          "food_total_carb": "",
-          "food_total_protein": "",
-          "food_total_fat": "",
-          "food_section": [
-            {
-              "food_part": "아침",
-              "food_title": "보쌈김치",
-              "food_brand": "-",
-              "food_count": "5",
-              "food_serv": "소접시",
-              "food_gram": "NaN",
-              "food_kcal": "370.0",
-              "food_carb": "24.9",
-              "food_protein": "22.5",
-              "food_fat": "21.4",
-              "_id": "6612f69b9e59b63a1c5c408c"
-            },
-            {
-              "food_part": "아침",
-              "food_title": "총각김치",
-              "food_brand": "-",
-              "food_count": "5",
-              "food_serv": "인분",
-              "food_gram": "NaN",
-              "food_kcal": "55.0",
-              "food_carb": "11.9",
-              "food_protein": "2.4",
-              "food_fat": "0.5",
-              "_id": "6612f69b9e59b63a1c5c408d"
-            },
-            {
-              "food_part": "점심",
-              "food_title": "총각김치",
-              "food_brand": "-",
-              "food_count": "6",
-              "food_serv": "인분",
-              "food_gram": "NaN",
-              "food_kcal": "66.0",
-              "food_carb": "14.4",
-              "food_protein": "3.0",
-              "food_fat": "0.6",
-              "_id": "6612f69b9e59b63a1c5c408e"
-            },
-            {
-              "food_part": "점심",
-              "food_title": "총각김치",
-              "food_brand": "-",
-              "food_count": "6",
-              "food_serv": "인분",
-              "food_gram": "NaN",
-              "food_kcal": "66.0",
-              "food_carb": "14.3",
-              "food_protein": "2.9",
-              "food_fat": "0.6",
-              "_id": "6612f69b9e59b63a1c5c408f"
-            }
-          ],
-          "_id": "6612f69b9e59b63a1c5c408b"
-        },
-        "food_section": [
-          {
-            "food_part": "점심",
-            "food_title": "총각김치",
-            "food_brand": "-",
-            "food_count": "6",
-            "food_serv": "인분",
-            "food_gram": "NaN",
-            "food_kcal": "66.0",
-            "food_carb": "14.4",
-            "food_protein": "3.0",
-            "food_fat": "0.6",
-            "_id": "6612f69b9e59b63a1c5c408e"
-          },
-          {
-            "food_part": "점심",
-            "food_title": "총각김치",
-            "food_brand": "-",
-            "food_count": "6",
-            "food_serv": "인분",
-            "food_gram": "NaN",
-            "food_kcal": "66.0",
-            "food_carb": "14.3",
-            "food_protein": "2.9",
-            "food_fat": "0.6",
-            "_id": "6612f69b9e59b63a1c5c408f"
-          }
-        ]
-      },
-      "food_plan": {
-        "$__parent": {
-          "_id": "6612dca147b5ab3ac9431f15",
-          "user_id": "123",
-          "food_date": "2024-04-08",
-          "food_plan": {
-            "food_section": [
-              {
-                "food_part_idx": 0,
-                "food_part_val": "",
-                "food_title_idx": 0,
-                "food_title_val": "",
-                "food_preServ": "",
-                "food_subServ": "",
-                "food_gram": "",
-                "food_kcal": "",
-                "food_carb": "",
-                "food_protein": "",
-                "food_fat": "",
-                "_id": "6612dca147b5ab3ac9431f18"
-              }
-            ],
-            "_id": "6612dca147b5ab3ac9431f17"
-          },
-          "food_real": {
-            "food_total_kcal": "",
-            "food_total_carb": "",
-            "food_total_protein": "",
-            "food_total_fat": "",
-            "food_section": [
-              {
-                "food_part": "아침",
-                "food_title": "보쌈김치",
-                "food_brand": "-",
-                "food_count": "5",
-                "food_serv": "소접시",
-                "food_gram": "NaN",
-                "food_kcal": "370.0",
-                "food_carb": "24.9",
-                "food_protein": "22.5",
-                "food_fat": "21.4",
-                "_id": "6612f69b9e59b63a1c5c408c"
-              },
-              {
-                "food_part": "아침",
-                "food_title": "총각김치",
-                "food_brand": "-",
-                "food_count": "5",
-                "food_serv": "인분",
-                "food_gram": "NaN",
-                "food_kcal": "55.0",
-                "food_carb": "11.9",
-                "food_protein": "2.4",
-                "food_fat": "0.5",
-                "_id": "6612f69b9e59b63a1c5c408d"
-              },
-              {
-                "food_part": "점심",
-                "food_title": "총각김치",
-                "food_brand": "-",
-                "food_count": "6",
-                "food_serv": "인분",
-                "food_gram": "NaN",
-                "food_kcal": "66.0",
-                "food_carb": "14.4",
-                "food_protein": "3.0",
-                "food_fat": "0.6",
-                "_id": "6612f69b9e59b63a1c5c408e"
-              },
-              {
-                "food_part": "점심",
-                "food_title": "총각김치",
-                "food_brand": "-",
-                "food_count": "6",
-                "food_serv": "인분",
-                "food_gram": "NaN",
-                "food_kcal": "66.0",
-                "food_carb": "14.3",
-                "food_protein": "2.9",
-                "food_fat": "0.6",
-                "_id": "6612f69b9e59b63a1c5c408f"
-              }
-            ],
-            "_id": "6612f69b9e59b63a1c5c408b"
-          },
-          "food_regdate": "2024-04-08 / 02:49:21",
-          "food_update": "2024-04-08 / 04:40:11",
-          "food_number": "5",
-          "__v": 0
-        },
-        "$__": {
-          "activePaths": {
-            "paths": {
-              "food_section": "init",
-              "_id": "init"
-            },
-            "states": {
-              "init": {
-                "food_section": true,
-                "_id": true
-              }
-            }
-          }
-        },
-        "$isNew": false,
-        "_doc": {
-          "food_section": [
-            {
-              "food_part_idx": 0,
-              "food_part_val": "",
-              "food_title_idx": 0,
-              "food_title_val": "",
-              "food_preServ": "",
-              "food_subServ": "",
-              "food_gram": "",
-              "food_kcal": "",
-              "food_carb": "",
-              "food_protein": "",
-              "food_fat": "",
-              "_id": "6612dca147b5ab3ac9431f18"
-            }
-          ],
-          "_id": "6612dca147b5ab3ac9431f17"
-        },
-        "food_section": []
-      }
-    }
-  ]
-}
+FOOD : [
+  {
+    "_id": "661419880561a6e123921e28",
+    "user_id": "123",
+    "food_date": "2024-04-09",
+    "food_plan": {
+      "food_section": []
+    },
+    "food_real": {
+      "food_total_kcal": "491.0",
+      "food_total_fat": "3.5",
+      "food_total_carb": "115.0",
+      "food_total_protein": "19.8",
+      "food_section": [
+        {
+          "food_title": "아스파라거스 (덩어리째 통조림)",
+          "food_brand": "-",
+          "food_count": "1",
+          "food_serv": "줄",
+          "food_gram": "-",
+          "food_kcal": "3",
+          "food_carb": "0.44",
+          "food_protein": "0.39",
+          "food_fat": "0.12",
+          "_id": "66141a0f0561a6e123921e37"
+        }
+      ]
+    },
+    "food_regdate": "2024-04-09 / 01:21:28",
+    "food_update": "2024-04-09 / 01:23:43",
+    "food_number": "8",
+    "__v": 0
+  },
+  {
+    "_id": "661419880561a6e123921e28",
+    "user_id": "123",
+    "food_date": "2024-04-09",
+    "food_plan": {
+      "food_section": []
+    },
+    "food_real": {
+      "food_total_kcal": "491.0",
+      "food_total_fat": "3.5",
+      "food_total_carb": "115.0",
+      "food_total_protein": "19.8",
+      "food_section": [
+        {
+          "food_title": "워터체스트넛 (물밤)",
+          "food_brand": "-",
+          "food_count": "1",
+          "food_serv": "컵",
+          "food_gram": "-",
+          "food_kcal": "60",
+          "food_carb": "14.84",
+          "food_protein": "0.87",
+          "food_fat": "0.06",
+          "_id": "66141a0f0561a6e123921e38"
+        }
+      ]
+    },
+    "food_regdate": "2024-04-09 / 01:21:28",
+    "food_update": "2024-04-09 / 01:23:43",
+    "food_number": "8",
+    "__v": 0
+  },
+  {
+    "_id": "661419880561a6e123921e28",
+    "user_id": "123",
+    "food_date": "2024-04-09",
+    "food_plan": {
+      "food_section": []
+    },
+    "food_real": {
+      "food_total_kcal": "491.0",
+      "food_total_fat": "3.5",
+      "food_total_carb": "115.0",
+      "food_total_protein": "19.8",
+      "food_section": [
+        {
+          "food_title": "빨간 토마토 (통조림)",
+          "food_brand": "-",
+          "food_count": "1",
+          "food_serv": "회",
+          "food_gram": "100",
+          "food_kcal": "17",
+          "food_carb": "3.91",
+          "food_protein": "0.8",
+          "food_fat": "0.13",
+          "_id": "66141a0f0561a6e123921e39"
+        }
+      ]
+    },
+    "food_regdate": "2024-04-09 / 01:21:28",
+    "food_update": "2024-04-09 / 01:23:43",
+    "food_number": "8",
+    "__v": 0
+  },
+  {
+    "_id": "661419880561a6e123921e28",
+    "user_id": "123",
+    "food_date": "2024-04-09",
+    "food_plan": {
+      "food_section": []
+    },
+    "food_real": {
+      "food_total_kcal": "491.0",
+      "food_total_fat": "3.5",
+      "food_total_carb": "115.0",
+      "food_total_protein": "19.8",
+      "food_section": [
+        {
+          "food_title": "빨간 토마토 (통조림)",
+          "food_brand": "-",
+          "food_count": "1",
+          "food_serv": "회",
+          "food_gram": "100",
+          "food_kcal": "17",
+          "food_carb": "3.91",
+          "food_protein": "0.8",
+          "food_fat": "0.13",
+          "_id": "66141a0f0561a6e123921e3a"
+        }
+      ]
+    },
+    "food_regdate": "2024-04-09 / 01:21:28",
+    "food_update": "2024-04-09 / 01:23:43",
+    "food_number": "8",
+    "__v": 0
+  },
+  {
+    "_id": "661419880561a6e123921e28",
+    "user_id": "123",
+    "food_date": "2024-04-09",
+    "food_plan": {
+      "food_section": []
+    },
+    "food_real": {
+      "food_total_kcal": "491.0",
+      "food_total_fat": "3.5",
+      "food_total_carb": "115.0",
+      "food_total_protein": "19.8",
+      "food_section": [
+        {
+          "food_title": "빨간 토마토 (통조림)",
+          "food_brand": "-",
+          "food_count": "1",
+          "food_serv": "회",
+          "food_gram": "100",
+          "food_kcal": "17",
+          "food_carb": "3.91",
+          "food_protein": "0.8",
+          "food_fat": "0.13",
+          "_id": "66141a0f0561a6e123921e3b"
+        }
+      ]
+    },
+    "food_regdate": "2024-04-09 / 01:21:28",
+    "food_update": "2024-04-09 / 01:23:43",
+    "food_number": "8",
+    "__v": 0
+  }
+]

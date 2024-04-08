@@ -61,6 +61,28 @@ export const FoodListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
+    _id: "",
+    food_number: 0,
+    food_date: "",
+    food_plan : {
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
+      }],
+    },
+  }]);
   const [FOOD, setFOOD] = useState([{
     _id: "",
     food_number: 0,
@@ -95,8 +117,8 @@ export const FoodListPlan = () => {
         planYn: "Y",
       },
     });
-    setTotalCount(response.data.totalCount);
-    setFOOD(response.data.result);
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -289,6 +311,12 @@ export const FoodListPlan = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
+            <th>분류</th>
+            <th>식품명</th>
+            <th>브랜드</th>
+            <th>수량</th>
+            <th>서빙 사이즈</th>
+            <th>그램(g)</th>
             <th>칼로리(kcal)</th>
             <th>탄수화물(g)</th>
             <th>단백질(g)</th>
@@ -298,8 +326,32 @@ export const FoodListPlan = () => {
         <tbody>
           {FOOD.map((item) => (
             <React.Fragment key={item._id}>
-              <tr>
-                <td>{item.food_date}</td>
+              {item.food_plan.food_section.map((section, index) => (
+                <tr key={section._id}>
+                  <td className="pointer" onClick={() => {
+                    STATE.id = item._id;
+                    STATE.date = item.food_date;
+                    navParam(STATE.toDetail, {
+                      state: STATE
+                    });
+                  }}>
+                    {item.food_date}
+                  </td>
+                  <td>{section.food_part}</td>
+                  <td>{section.food_title}</td>
+                  <td>{section.food_brand}</td>
+                  <td>{section.food_count}</td>
+                  <td>{section.food_serv}</td>
+                  <td>{section.food_gram}</td>
+                  <td>{section.food_kcal}</td>
+                  <td>{section.food_carb}</td>
+                  <td>{section.food_protein}</td>
+                  <td>{section.food_fat}</td>
+                </tr>
+              ))}
+              <tr className="table-secondary">
+                <td colSpan={6}>합계</td>
+                <td></td>
                 <td>{item.food_plan.food_total_kcal}kcal</td>
                 <td>{item.food_plan.food_total_carb}g</td>
                 <td>{item.food_plan.food_total_protein}g</td>
@@ -504,7 +556,7 @@ export const FoodListPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List</h1>
+            <h1>List (Plan)</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
