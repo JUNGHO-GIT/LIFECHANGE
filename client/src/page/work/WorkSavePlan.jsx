@@ -150,8 +150,7 @@ export const WorkSavePlan = () => {
   })()}, [strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowWorkSave = async () => {
-
+  const flowSave = async () => {
     const response = await axios.post(`${URL_WORK}/save`, {
       user_id: user_id,
       WORK: WORK,
@@ -162,19 +161,44 @@ export const WorkSavePlan = () => {
       alert("Save a work successfully");
       navParam(STATE.intoList);
     }
-    else if (response.data === "fail") {
-      alert("Save a work failed");
-      return;
-    }
     else {
-      alert(`${response.data}error`);
+      alert(`${response.data}`);
     }
   };
 
-  // 4-1. handler --------------------------------------------------------------------------------->
-  const handleTotalCountChange = () => {
+  // 4. view -------------------------------------------------------------------------------------->
+  const viewNode = () => {
+
+    const calcDate = (days) => {
+      const date = new Date(strDate);
+      date.setDate(date.getDate() + days);
+      setStrDate(moment(date).format("YYYY-MM-DD"));
+    };
+
     return (
-      <div>
+      <div className="d-inline-flex">
+        <div onClick={() => calcDate(-1)}>
+          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
+        </div>
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          popperPlacement="bottom"
+          selected={new Date(strDate)}
+          onChange={(date) => {
+            setStrDate(moment(date).format("YYYY-MM-DD"));
+          }}
+        />
+        <div onClick={() => calcDate(1)}>
+          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
+        </div>
+      </div>
+    );
+  };
+
+  // 5. handler ----------------------------------------------------------------------------------->
+  const handlerTotalCount = () => {
+    return (
+      <React.Fragment>
         <div className="row d-center">
           <div className="col-4">
             <input
@@ -222,44 +246,15 @@ export const WorkSavePlan = () => {
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {Array.from({ length: totalCount }, (_, i) => tableWorkSection(i))}
+            {Array.from({ length: totalCount }, (_, i) => tableSection(i))}
           </div>
         </div>
-      </div>
-    );
-  };
-
-  // 4. view -------------------------------------------------------------------------------------->
-  const viewWorkDay = () => {
-
-    const calcDate = (days) => {
-      const date = new Date(strDate);
-      date.setDate(date.getDate() + days);
-      setStrDate(moment(date).format("YYYY-MM-DD"));
-    };
-
-    return (
-      <div className="d-inline-flex">
-        <div onClick={() => calcDate(-1)}>
-          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
-        </div>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
-          selected={new Date(strDate)}
-          onChange={(date) => {
-            setStrDate(moment(date).format("YYYY-MM-DD"));
-          }}
-        />
-        <div onClick={() => calcDate(1)}>
-          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
-        </div>
-      </div>
+      </React.Fragment>
     );
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableWorkSection = (i) => {
+  const tableSection = (i) => {
     return (
       <React.Fragment>
         <div key={i} className="mb-20">
@@ -411,7 +406,7 @@ export const WorkSavePlan = () => {
   };
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableWorkSave = () => {
+  const tableSave = () => {
     return (
       <div>
         <div className="row d-center">
@@ -491,22 +486,54 @@ export const WorkSavePlan = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonWorkSave = () => {
+  const buttonNode = () => {
+    function buttonSave () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary me-2"
+          onClick={() => {
+            flowSave();
+          }}
+        >
+          Save
+        </button>
+      );
+    };
+    function buttonReset () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success me-2"
+          onClick={() => {
+            navParam(STATE.refresh);
+          }}
+        >
+          Refresh
+        </button>
+      );
+    };
+    function buttonList () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-secondary me-2"
+          onClick={() => {
+            navParam(STATE.intoList);
+          }}
+        >
+          List
+        </button>
+      );
+    };
     return (
-      <button type="button" className="btn btn-sm btn-primary" onClick={flowWorkSave}>
-        Save
-      </button>
+      <div className="d-inline-flex">
+        {buttonSave()}
+        {buttonReset()}
+        {buttonList()}
+      </div>
     );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(STATE.refresh);
-      }}>
-        Refresh
-      </button>
-    );
-  };
+  }
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
@@ -514,25 +541,22 @@ export const WorkSavePlan = () => {
       <div className="container-wrapper">
         <div className="row d-center mb-20">
           <div className="col-12">
-            <h1 className="mb-3 fw-5">
-              <span>{viewWorkDay()}</span>
-            </h1>
+            {viewNode()}
           </div>
         </div>
         <div className="row d-center mt-5">
           <div className="col-12">
-            {handleTotalCountChange()}
+            {handlerTotalCount()}
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">
           <div className="col-12">
-            {tableWorkSave()}
+            {tableSave()}
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {buttonWorkSave()}
-            {buttonRefreshPage()}
+            {buttonNode()}
           </div>
         </div>
       </div>

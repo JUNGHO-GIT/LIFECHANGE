@@ -95,7 +95,7 @@ export const FoodDetail = () => {
     );
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 6. table ------------------------------------------------------------------------------------->
   const tableFoodDetail = () => {
     return (
         <table className="table table-bordered table-hover">

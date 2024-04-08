@@ -39,8 +39,10 @@ export const listArray = [
     label: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
-      {to: "/sleep/list", label: "SleepList"},
       {to: "/sleep/compare", label: "SleepCompare"},
+      {to: "/sleep/detail", label: "SleepDetail"},
+      {to: "/sleep/list", label: "SleepList"},
+
     ]
   }
 ];

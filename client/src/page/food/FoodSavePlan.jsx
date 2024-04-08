@@ -24,7 +24,7 @@ export const FoodSavePlan = () => {
     date: "",
     refresh:0,
     intoList:"/food/list",
-    intoSave:"/food/save/real",
+    intoSave:"/food/save/plan",
     intoSearch:"/food/search",
   };
 
@@ -52,25 +52,7 @@ export const FoodSavePlan = () => {
         food_total_kcal: "",
         food_total_fat: "",
         food_total_carb: "",
-        food_total_protein: "",
-        food_section: [],
-      },
-      food_real : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
+        food_total_protein: ""
       },
     }
   );
@@ -83,25 +65,7 @@ export const FoodSavePlan = () => {
         food_total_kcal: "",
         food_total_fat: "",
         food_total_carb: "",
-        food_total_protein: "",
-        food_section: [],
-      },
-      food_real : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
+        food_total_protein: ""
       },
     }
   );
@@ -121,8 +85,7 @@ export const FoodSavePlan = () => {
   }, [strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowFoodSavePlan = async () => {
-
+  const flowSave = async () => {
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
       FOOD: FOOD,
@@ -142,8 +105,8 @@ export const FoodSavePlan = () => {
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodSavePlan = () => {
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableSave = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -227,24 +190,40 @@ export const FoodSavePlan = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonSaveFood = () => {
+  const buttonNode = () => {
+    function buttonSave () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary"
+          onClick={() => {
+            localStorage.removeItem(`FOOD(${PATH})`);
+            flowSave()
+          }}
+        >
+          Save
+        </button>
+      );
+    };
+    function buttonRefresh () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success ms-2"
+          onClick={() => {
+            localStorage.removeItem(`FOOD(${PATH})`);
+            navParam(STATE.refresh);
+          }}
+        >
+          Refresh
+        </button>
+      );
+    };
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        localStorage.removeItem(`FOOD(${PATH})`);
-        flowFoodSavePlan()
-      }}>
-        Save
-      </button>
-    );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        localStorage.removeItem(`FOOD(${PATH})`);
-        navParam(STATE.refresh);
-      }}>
-        Refresh
-      </button>
+      <div className="d-inline-flex">
+        {buttonSave()}
+        {buttonRefresh()}
+      </div>
     );
   };
 
@@ -254,18 +233,17 @@ export const FoodSavePlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1 className="fs-30 fw-500">Food Save Plan</h1>
+            <h1>Plan</h1>
           </div>
         </div>
-        <div className="row d-center mt-5 mb-20">
+        <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableFoodSavePlan()}
+            {tableSave()}
           </div>
         </div>
-        <div className="row d-center mt-5">
+        <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonSaveFood()}
-            {buttonRefreshPage()}
+            {buttonNode()}
           </div>
         </div>
       </div>

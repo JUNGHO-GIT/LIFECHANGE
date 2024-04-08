@@ -158,7 +158,7 @@ export const MoneySaveReal = () => {
   };
 
   // 4-1. handler --------------------------------------------------------------------------------->
-  const handleTotalCountChange = () => {
+  const handlerTotalCount = () => {
 
     const moneyType = planYn === "Y" ? "money_plan" : "money_real";
     const countType = planYn === "Y" ? planCount : realCount;
@@ -421,7 +421,7 @@ export const MoneySaveReal = () => {
         </div>
         <div className="row d-center mt-5">
           <div className="col-12">
-            {handleTotalCountChange()}
+            {handlerTotalCount()}
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">

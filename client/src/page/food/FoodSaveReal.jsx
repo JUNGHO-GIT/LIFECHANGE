@@ -29,11 +29,6 @@ export const FoodSaveReal = () => {
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:planYn, set:setPlanYn} = useStorage(
-    `planYn(${PATH})`, "N"
-  );
-
-  // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strStartDate, set:setStrStartDate} = useStorage(
     `strStartDate(${PATH})`, koreanDate
   );
@@ -53,13 +48,6 @@ export const FoodSaveReal = () => {
       _id: "",
       food_number: 0,
       food_date: "",
-      food_plan : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [],
-      },
       food_real : {
         food_total_kcal: "",
         food_total_fat: "",
@@ -84,13 +72,6 @@ export const FoodSaveReal = () => {
       _id: "",
       food_number: 0,
       food_date: "",
-      food_plan : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [],
-      },
       food_real : {
         food_total_kcal: "",
         food_total_fat: "",
@@ -197,16 +178,16 @@ export const FoodSaveReal = () => {
         food_total_protein: totals.totalProtein.toFixed(1),
       },
     }));
-  }, [FOOD.food_plan.food_section, FOOD.food_real.food_section, planYn]);
+  }, [FOOD.food_real.food_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowFoodSaveReal = async () => {
+  const flowSave = async () => {
 
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
       FOOD: FOOD,
       food_dur: strDur,
-      planYn: planYn
+      planYn: "N"
     });
     if (response.data === "success") {
       alert("Save a food successfully");
@@ -253,23 +234,23 @@ export const FoodSaveReal = () => {
     });
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodSaveReal = () => {
+  // 4. handler ----------------------------------------------------------------------------------->
+  const handlerFoodDelete = (index) => {
+    setFOOD((prev) => {
+      const newFoodSection = [...prev.food_real.food_section];
+      newFoodSection.splice(index, 1);
+      return {
+        ...prev,
+        food_real: {
+          ...prev.food_real,
+          food_section: newFoodSection,
+        },
+      };
+    });
+  };
 
-    function handlerFoodDelete (index) {
-      setFOOD((prev) => {
-        const newFoodSection = [...prev.food_real.food_section];
-        newFoodSection.splice(index, 1);
-        return {
-          ...prev,
-          food_real: {
-            ...prev.food_real,
-            food_section: newFoodSection,
-          },
-        };
-      });
-    };
-
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableSave = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -342,7 +323,9 @@ export const FoodSaveReal = () => {
                 <td>{item.food_carb}</td>
                 <td>{item.food_protein}</td>
                 <td>
-                  <span className="btn btn-sm btn-danger" onClick={() => (handlerFoodDelete(index))}>
+                  <span className="btn btn-sm btn-danger" onClick={() => (
+                    handlerFoodDelete(index)
+                  )}>
                     x
                   </span>
                 </td>
@@ -367,24 +350,40 @@ export const FoodSaveReal = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonSaveFood = () => {
+  const buttonNode = () => {
+    function buttonSave () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary"
+          onClick={() => {
+            localStorage.removeItem(`FOOD(${PATH})`);
+            flowSave()
+          }}
+        >
+          Save
+        </button>
+      );
+    };
+    function buttonRefresh () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success ms-2"
+          onClick={() => {
+            localStorage.removeItem(`FOOD(${PATH})`);
+            navParam(STATE.refresh);
+          }}
+        >
+          Refresh
+        </button>
+      );
+    };
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        localStorage.removeItem(`FOOD(${PATH})`);
-        flowFoodSaveReal()
-      }}>
-        Save
-      </button>
-    );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        localStorage.removeItem(`FOOD(${PATH})`);
-        navParam(STATE.refresh);
-      }}>
-        Refresh
-      </button>
+      <div className="d-inline-flex">
+        {buttonSave()}
+        {buttonRefresh()}
+      </div>
     );
   };
 
@@ -394,18 +393,17 @@ export const FoodSaveReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>{planYn === "Y" ? "계획" : "실제"}</h1>
+            <h1>Real</h1>
           </div>
         </div>
-        <div className="row d-center mt-5 mb-20">
+        <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableFoodSaveReal()}
+            {tableSave()}
           </div>
         </div>
-        <div className="row d-center mt-5">
+        <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonSaveFood()}
-            {buttonRefreshPage()}
+            {buttonNode()}
           </div>
         </div>
       </div>

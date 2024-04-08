@@ -130,7 +130,7 @@ export const SleepCompare = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4-1. view ----------------------------------------------------------------------------------->
+  // 4. view -------------------------------------------------------------------------------------->
   const viewSleepCompare = () => {
     let dayPicker;
     if (type === "day") {
@@ -402,7 +402,7 @@ export const SleepCompare = () => {
   };
 
   // 7. filter ------------------------------------------------------------------------------------>
-  const filterBlock = () => {
+  const filterNode = () => {
     function pageNumber() {
       const pages = [];
       const totalPages = Math.ceil(totalCount / filter.limit);
@@ -560,7 +560,7 @@ export const SleepCompare = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterBlock()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

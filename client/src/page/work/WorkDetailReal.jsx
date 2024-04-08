@@ -1,4 +1,4 @@
-// WorkDetail.jsx
+// WorkDetailReal.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -7,7 +7,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkDetail = () => {
+export const WorkDetailReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -25,11 +25,6 @@ export const WorkDetail = () => {
     intoList:"/work/list",
     intoSave:"/work/save"
   };
-
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:planYn, set:setPlanYn} = useStorage(
-    `planYn(${PATH})`, "N"
-  );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strStartDate, set:setStrStartDate} = useStorage(
@@ -64,21 +59,6 @@ export const WorkDetail = () => {
         work_kg: 0,
         work_rest: 0,
       }],
-    },
-    work_plan : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
     }
   });
   const [WORK, setWORK] = useState({
@@ -86,21 +66,6 @@ export const WorkDetail = () => {
     work_number: 0,
     work_date: "",
     work_real : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    },
-    work_plan : {
       work_start: "",
       work_end: "",
       work_time: "",
@@ -138,7 +103,7 @@ export const WorkDetail = () => {
         _id: location_id,
         user_id: user_id,
         work_dur: `${location_date} ~ ${location_date}`,
-        planYn: planYn,
+        planYn: "N",
       },
     });
 
@@ -147,13 +112,13 @@ export const WorkDetail = () => {
   })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowWorkDelete = async (id) => {
+  const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_WORK}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
         work_dur: strDur,
-        planYn: planYn,
+        planYn: "N",
       },
     });
     if (response.data === "success") {
@@ -161,21 +126,17 @@ export const WorkDetail = () => {
       navParam(STATE.intoList);
     }
     else {
-      alert("Delete failed");
+      alert(`${response.data}`);
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableWorkDetail = () => {
-
-    const workType = planYn === "Y" ? "work_plan" : "work_real";
-
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>계획여부</th>
             <th>시작</th>
             <th>종료</th>
             <th>시간</th>
@@ -191,37 +152,29 @@ export const WorkDetail = () => {
             <td className="fs-20 pt-20">
               {WORK.work_date}
             </td>
-            <td>
-              <select
-                id="work_planYn"
-                name="work_planYn"
-                className="form-select"
-                value={planYn}
-                onChange={(e) => {
-                  setPlanYn(e.target.value);
-                }}
-              >
-                <option value="Y">목표</option>
-                <option value="N" selected>실제</option>
-              </select>
+            <td className="fs-20 pt-20">
+              {WORK.work_real.work_start}
             </td>
             <td className="fs-20 pt-20">
-              {WORK[workType].work_start}
+              {WORK.work_real.work_end}
             </td>
             <td className="fs-20 pt-20">
-              {WORK[workType].work_end}
-            </td>
-            <td className="fs-20 pt-20">
-              {WORK[workType].work_time}
+              {WORK.work_real.work_time}
             </td>
             <td colSpan={5}>
-              {WORK[workType].work_section.map((item, index) => (
+              {WORK.work_real.work_section.map((item, index) => (
                 <div key={index} className="d-flex justify-content-between">
                   <span>{item.work_part_val}</span>
                   <span>{item.work_title_val}</span>
                   <span>{item.work_set} x {item.work_count} x {item.work_kg}</span>
                   <span>{item.work_rest}</span>
-                  <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => flowWorkDelete(item._id)}>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-danger ms-2"
+                    onClick={() => (
+                      flowDelete(item._id)
+                    )}
+                  >
                     X
                   </button>
                 </div>
@@ -234,34 +187,55 @@ export const WorkDetail = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonWorkUpdate = () => {
+  const buttonNode = () => {
+    function buttonUpdate () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary ms-2"
+          onClick={() => {
+            STATE.date = strDate;
+            navParam(STATE.intoSave, {
+              state: STATE,
+            });
+          }}
+        >
+          Update
+        </button>
+      );
+    };
+    function buttonRefresh () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success ms-2"
+          onClick={() => {
+            navParam(STATE.refresh);
+          }}
+        >
+          Refresh
+        </button>
+      );
+    };
+    function buttonList () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-secondary ms-2"
+          onClick={() => {
+            navParam(STATE.intoList);
+          }}
+        >
+          List
+        </button>
+      );
+    };
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        STATE.date = strDate;
-        navParam(STATE.intoSave, {
-          state: STATE,
-        });
-      }}>
-        Update
-      </button>
-    );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(STATE.refresh);
-      }}>
-        Refresh
-      </button>
-    );
-  };
-  const buttonWorkList = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(STATE.intoList);
-      }}>
-        List
-      </button>
+      <div className="d-inline-flex">
+        {buttonUpdate()}
+        {buttonRefresh()}
+        {buttonList()}
+      </div>
     );
   };
 
@@ -269,16 +243,19 @@ export const WorkDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            <h1>Detail</h1>
+          </div>
+        </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {tableWorkDetail()}
+            {tableNode()}
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {buttonWorkUpdate()}
-            {buttonRefreshPage()}
-            {buttonWorkList()}
+            {buttonNode()}
           </div>
         </div>
       </div>

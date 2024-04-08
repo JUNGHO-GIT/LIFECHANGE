@@ -1,4 +1,4 @@
-// WorkList.jsx
+// WorkListPlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import axios from "axios";
 import { differenceInDays } from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkList = () => {
+export const WorkListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -64,21 +64,6 @@ export const WorkList = () => {
     _id: "",
     work_number: 0,
     work_date: "",
-    work_real : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    },
     work_plan : {
       work_start: "",
       work_end: "",
@@ -93,27 +78,12 @@ export const WorkList = () => {
         work_kg: 0,
         work_rest: 0,
       }],
-    }
+    },
   }]);
   const [WORK, setWORK] = useState([{
     _id: "",
     work_number: 0,
     work_date: "",
-    work_real : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_count: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    },
     work_plan : {
       work_start: "",
       work_end: "",
@@ -128,7 +98,7 @@ export const WorkList = () => {
         work_kg: 0,
         work_rest: 0,
       }],
-    }
+    },
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -166,8 +136,8 @@ export const WorkList = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4-1. view ----------------------------------------------------------------------------------->
-  const viewWorkList = () => {
+  // 4. view -------------------------------------------------------------------------------------->
+  const viewNode = () => {
     let dayPicker;
     if (type === "day") {
       dayPicker = (
@@ -330,16 +300,19 @@ export const WorkList = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableWorkList = () => {
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>분류</th>
-            <th>목표</th>
-            <th>실제</th>
-            <th></th>
+            <th>시작</th>
+            <th>종료</th>
+            <th>시간</th>
+            <th>부위</th>
+            <th>종목</th>
+            <th>세트 x 횟수 x 무게</th>
+            <th>휴식</th>
           </tr>
         </thead>
         <tbody>
@@ -357,41 +330,19 @@ export const WorkList = () => {
                 </td>
                 <td>시작</td>
                 <td>{item.work_plan.work_start}</td>
-                <td>{item.work_real.work_start}</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>끝</td>
                 <td>{item.work_plan.work_end}</td>
-                <td>{item.work_real.work_end}</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>시간</td>
                 <td>{item.work_plan.work_time}</td>
-                <td>{item.work_real.work_time}</td>
-                <td></td>
+                <td colSpan={5}>
+                  {item.work_plan.work_section.map((section, index) => (
+                    <div key={index} className="d-flex justify-content-between">
+                      <span>{section.work_part_val}</span>
+                      <span>{section.work_title_val}</span>
+                      <span>{section.work_set} x {section.work_count} x {section.work_kg}</span>
+                      <span>{section.work_rest}</span>
+                    </div>
+                  ))}
+                </td>
               </tr>
-              {item.work_plan.work_section?.map((section2, index2) => (
-                <tr key={index2}>
-                  <td></td>
-                  <td>
-                    {section2.work_part_val || ""} {section2.work_title_val || ""} {section2.work_kg || ""} x {section2.work_set || ""} x {section2.work_count || ""}
-                  </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              ))}
-              {item.work_real.work_section?.map((section1, index1) => (
-                <tr key={index1}>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    {section1.work_part_val || ""} {section1.work_title_val || ""} {section1.work_kg || ""} x {section1.work_set || ""} x {section1.work_count || ""}
-                  </td>
-                  <td></td>
-                </tr>
-              ))}
             </React.Fragment>
           ))}
         </tbody>
@@ -400,7 +351,7 @@ export const WorkList = () => {
   };
 
   // 7. filter ------------------------------------------------------------------------------------>
-  const filterBlock = () => {
+  const filterNode = () => {
     function prevButton() {
       return (
         <button
@@ -462,7 +413,7 @@ export const WorkList = () => {
   };
 
   // 8. select ------------------------------------------------------------------------------------>
-  const selectBlock = () => {
+  const selectNode = () => {
     function selectType() {
       return (
         <div className="mb-3">
@@ -518,7 +469,7 @@ export const WorkList = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonBlock = () => {
+  const buttonNode = () => {
     function buttonCalendar () {
       return (
         <button
@@ -575,25 +526,28 @@ export const WorkList = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableWorkList()}
-          </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-1">
-            {viewWorkList()}
-          </div>
-          <div className="col-11">
-            {selectBlock()}
+            <h1>List</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterBlock()}
+            {viewNode()}
+            {tableNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonBlock()}
+            {selectNode()}
+          </div>
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {filterNode()}
+          </div>
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {buttonNode()}
           </div>
         </div>
       </div>

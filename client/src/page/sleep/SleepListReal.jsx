@@ -1,4 +1,4 @@
-// SleepList.jsx
+// SleepListReal.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import axios from "axios";
 import { differenceInDays } from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepList = () => {
+export const SleepListReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
@@ -64,7 +64,6 @@ export const SleepList = () => {
     _id: "",
     sleep_number: 0,
     sleep_date: "",
-    sleep_plan : {},
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -77,7 +76,6 @@ export const SleepList = () => {
     _id: "",
     sleep_number: 0,
     sleep_date: "",
-    sleep_plan : {},
     sleep_real : {
       sleep_section: [{
         sleep_start: "",
@@ -122,8 +120,8 @@ export const SleepList = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4-1. view ----------------------------------------------------------------------------------->
-  const viewSleepList = () => {
+  // 4. view -------------------------------------------------------------------------------------->
+  const viewNode = () => {
     let dayPicker;
     if (type === "day") {
       dayPicker = (
@@ -286,7 +284,7 @@ export const SleepList = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableSleepList = () => {
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -316,7 +314,7 @@ export const SleepList = () => {
   };
 
   // 7. filter ------------------------------------------------------------------------------------>
-  const filterBlock = () => {
+  const filterNode = () => {
     function prevButton() {
       return (
         <button
@@ -378,7 +376,7 @@ export const SleepList = () => {
   };
 
   // 8. select ------------------------------------------------------------------------------------>
-  const selectBlock = () => {
+  const selectNode = () => {
     function selectType() {
       return (
         <div className="mb-3">
@@ -434,7 +432,7 @@ export const SleepList = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonBlock = () => {
+  const buttonNode = () => {
     function buttonCalendar () {
       return (
         <button
@@ -490,26 +488,29 @@ export const SleepList = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
-          <div className="col-1">
-            {viewSleepList()}
-          </div>
-          <div className="col-11">
-            {selectBlock()}
+          <div className="col-12">
+            <h1>List</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableSleepList()}
+            {viewNode()}
+            {tableNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterBlock()}
+            {selectNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonBlock()}
+            {filterNode()}
+          </div>
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {buttonNode()}
           </div>
         </div>
       </div>

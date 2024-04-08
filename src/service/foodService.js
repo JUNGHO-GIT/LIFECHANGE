@@ -17,7 +17,7 @@ export const search = async (
   const page = filter_param.page;
 
   let finalResult = [];
-  let pageCount = 0;
+  let totalCount = 0;
   let serv;
   let gram;
   let servArray = [
@@ -107,12 +107,12 @@ export const search = async (
       });
 
       const count = document.querySelector(".searchResultSummary")?.textContent;
-      pageCount = count ? Math.ceil(parseInt(count.split("중")[0].trim(), 10) / 10) : 0;
+      totalCount = count ? Math.ceil(parseInt(count.split("중")[0].trim(), 10) / 10) : 0;
     });
   });
 
   return {
-    pageCount: pageCount,
+    totalCount: totalCount,
     result: finalResult,
   };
 };

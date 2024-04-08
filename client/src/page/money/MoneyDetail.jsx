@@ -141,11 +141,11 @@ export const MoneyDetail = () => {
       navParam(STATE.intoList);
     }
     else {
-      alert("Delete failed");
+      alert(`${response.data}`);
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 6. table ------------------------------------------------------------------------------------->
   const tableMoneyDetail = () => {
 
     const moneyType = planYn === "Y" ? "money_plan" : "money_real";

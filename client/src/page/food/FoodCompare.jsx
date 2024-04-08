@@ -107,7 +107,7 @@ export const FoodCompare = () => {
   })()}, [strDur, filter]);
 
   // 5-2. table ----------------------------------------------------------------------------------->
-  const tableFoodCompare = () => {
+  const tableCompare = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -164,22 +164,38 @@ export const FoodCompare = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonList = () => {
+  const buttonNode = () => {
+    function buttonList () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-secondary me-2"
+          onClick={() => {
+            navParam(STATE.intoList);
+          }}
+        >
+          List
+        </button>
+      );
+    };
+    function buttonReset () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary me-2"
+          onClick={() => {
+            navParam(STATE.refresh);
+          }}
+        >
+          Reset
+        </button>
+      );
+    }
     return (
-      <button type="button" className="btn btn-sm btn-secondary me-2" onClick={() => {
-        navParam(STATE.intoList);
-      }}>
-        List
-      </button>
-    );
-  };
-  const buttonReset = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        navParam(STATE.refresh);
-      }}>
-        Reset
-      </button>
+      <div className="d-inline-flex">
+        {buttonList()}
+        {buttonReset()}
+      </div>
     );
   };
 
@@ -189,13 +205,12 @@ export const FoodCompare = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableFoodCompare()}
+            {tableCompare()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonList()}
-            {buttonReset()}
+            {buttonNode()}
           </div>
         </div>
       </div>

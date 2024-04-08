@@ -24,11 +24,8 @@ export const FoodSearch = () => {
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:planYn, set:setPlanYn} = useStorage(
-    `planYn(${PATH})`, "N"
-  );
-  const {val:pageCount, set:setPageCount} = useStorage(
-    `pageCount(${PATH})`, 0
+  const {val:totalCount, set:setTotalCount} = useStorage(
+    `totalCount(${PATH})`, 0
   );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
@@ -41,12 +38,6 @@ export const FoodSearch = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const {val:FOOD, set:setFOOD} = useStorage(
     `FOOD(${PATH})`, {
-      food_plan : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-      },
       food_real : {
         food_total_kcal: "",
         food_total_fat: "",
@@ -73,15 +64,12 @@ export const FoodSearch = () => {
       return;
     }
     else {
-      flowFoodSearch();
+      flowSearch();
     }
   }, [filter.page]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowFoodSearch = async () => {
-
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
-
+  const flowSearch = async () => {
     const response = await axios.get(`${URL_FOOD}/search`, {
       params: {
         user_id: user_id,
@@ -90,18 +78,16 @@ export const FoodSearch = () => {
     });
     setFOOD((prev) => ({
       ...prev,
-      [foodType]: {
-        ...prev[foodType],
+      food_real: {
+        ...prev.food_real,
         food_section: response.data.result
       }
     }));
-    setPageCount(response.data.pageCount);
+    setTotalCount(response.data.totalCount);
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodSearch = () => {
-
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
 
     function handleStorage (param) {
       localStorage.setItem("food_section", JSON.stringify(param));
@@ -110,7 +96,6 @@ export const FoodSearch = () => {
         state: STATE
       });
     };
-
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -126,7 +111,7 @@ export const FoodSearch = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD[foodType].food_section?.map((item, index) => (
+          {FOOD.food_real.food_section?.map((item, index) => (
             <tr key={index}>
               <td className="pointer" onClick={() => {
                 handleStorage(item);
@@ -170,7 +155,7 @@ export const FoodSearch = () => {
               ...filter,
               page: 0
             });
-            flowFoodSearch();
+            flowSearch();
           }}
         >
           Search
@@ -180,20 +165,38 @@ export const FoodSearch = () => {
   };
 
   // 7. filter ------------------------------------------------------------------------------------>
-  const filterBlock = () => {
-    function pageNumber () {
+  const filterNode = () => {
+    function prevButton() {
+      return (
+        <button
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page <= 1}
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1)
+          })}
+        >
+          이전
+        </button>
+      );
+    };
+    function pageNumber() {
       const pages = [];
-      let startPage = Math.max(filter.page - 2, 1);
-      let endPage = Math.min(startPage + 4, pageCount);
-      startPage = Math.max(Math.min(startPage, pageCount - 4), 1);
+      const totalPages = Math.ceil(totalCount / filter.limit);
+      let startPage = Math.max(1, filter.page - 2);
+      let endPage = Math.min(startPage + 4, totalPages);
+      startPage = Math.max(endPage - 4, 1);
       for (let i = startPage; i <= endPage; i++) {
         pages.push(
           <button
             key={i}
-            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
-            onClick={() => setFilter({
-              ...filter, page: i
-            })}
+            className={`btn btn-sm btn-primary me-2`}
+            disabled={filter.page === i}
+            onClick={() => (
+              setFilter((prev) => ({
+                ...prev,
+                page: i
+              }))
+            )}
           >
             {i}
           </button>
@@ -201,31 +204,24 @@ export const FoodSearch = () => {
       }
       return pages;
     };
-    const prevNumber = () => (
-      <button
-        className="btn btn-sm btn-primary ms-10 me-10"
-        onClick={() => setFilter({
-          ...filter, page: filter.page > 0 ? filter.page - 1 : 0
-        })}
-      >
-        Prev
-      </button>
-    );
-    const nextNumber = () => (
-      <button
-        className="btn btn-sm btn-primary ms-10 me-10"
-        onClick={() => setFilter({
-          ...filter, page: filter.page < pageCount - 1 ? filter.page + 1 : filter.page
-        })}
-      >
-        Next
-      </button>
-    );
+    function nextButton() {
+      return (
+        <button
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page >= Math.ceil(totalCount / filter.limit)}
+          onClick={() => setFilter({
+            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1)
+          })}
+        >
+          다음
+        </button>
+      );
+    };
     return (
       <div className="d-inline-flex">
-        {prevNumber()}
+        {prevButton()}
         {pageNumber()}
-        {nextNumber()}
+        {nextButton()}
       </div>
     );
   };
@@ -236,7 +232,12 @@ export const FoodSearch = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableFoodSearch()}
+            <h1>Search</h1>
+          </div>
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {tableNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
@@ -246,7 +247,7 @@ export const FoodSearch = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterBlock()}
+            {filterNode()}
           </div>
         </div>
       </div>

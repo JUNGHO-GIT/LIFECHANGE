@@ -1,4 +1,4 @@
-// SleepDetail.jsx
+// SleepDetailReal.jsx
 
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -7,7 +7,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDetail = () => {
+export const SleepDetailReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
@@ -25,11 +25,6 @@ export const SleepDetail = () => {
     id: "",
     date: ""
   };
-
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:planYn, set:setPlanYn} = useStorage(
-    `planYn(${PATH})`, "N"
-  );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strStartDate, set:setStrStartDate} = useStorage(
@@ -56,25 +51,11 @@ export const SleepDetail = () => {
         sleep_time: "",
       }],
     },
-    sleep_plan : {
-      sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
-        sleep_time: "",
-      }],
-    },
   });
   const [SLEEP, setSLEEP] = useState({
     _id: "",
     sleep_date: "",
     sleep_real : {
-      sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
-        sleep_time: "",
-      }],
-    },
-    sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
@@ -104,7 +85,7 @@ export const SleepDetail = () => {
         _id: location_id,
         user_id: user_id,
         sleep_dur: `${location_date} ~ ${location_date}`,
-        planYn: planYn,
+        planYn: "N",
       },
     });
 
@@ -113,13 +94,13 @@ export const SleepDetail = () => {
   })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowSleepDelete = async (id) => {
+  const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_SLEEP}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
         sleep_dur: strDur,
-        planYn: planYn,
+        planYn: "N",
       },
     });
     if (response.data === "success") {
@@ -127,21 +108,17 @@ export const SleepDetail = () => {
       navParam(STATE.intoList);
     }
     else {
-      alert("Delete failed");
+      alert(`${response.data}`);
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableSleepDetail = () => {
-
-    const sleepType = planYn === "Y" ? "sleep_plan" : "sleep_real";
-
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>계획여부</th>
             <th>취침시간</th>
             <th>기상시간</th>
             <th>수면시간</th>
@@ -153,21 +130,7 @@ export const SleepDetail = () => {
             <td className="fs-20 pt-20">
               {SLEEP.sleep_date}
             </td>
-            <td>
-              <select
-                id="sleep_planYn"
-                name="sleep_planYn"
-                className="form-select"
-                value={planYn}
-                onChange={(e) => {
-                  setPlanYn(e.target.value);
-                }}
-              >
-                <option value="Y">목표</option>
-                <option value="N" selected>실제</option>
-              </select>
-            </td>
-            {SLEEP[sleepType].sleep_section.map((item, index) => (
+            {SLEEP.sleep_real.sleep_section.map((item, index) => (
               <React.Fragment key={index}>
                 <td className="fs-20 pt-20">
                   {item.sleep_start}
@@ -179,7 +142,9 @@ export const SleepDetail = () => {
                   {item.sleep_time}
                 </td>
                 <td className="fs-20 pt-20">
-                  <button type="button" className="btn btn-sm btn-danger" onClick={() => flowSleepDelete(item._id)}>
+                  <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+                    flowDelete(item._id)
+                  )}>
                     X
                   </button>
                 </td>
@@ -192,34 +157,43 @@ export const SleepDetail = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonSleepUpdate = () => {
+  const buttonNode = () => {
+    function buttonUpdate() {
+      return (
+        <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
+          STATE.date = strDate;
+          navParam(STATE.intoSave, {
+            state: STATE,
+          });
+        }}>
+          Update
+        </button>
+      );
+    };
+    function buttonRefresh () {
+      return (
+        <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+          navParam(STATE.refresh);
+        }}>
+          Refresh
+        </button>
+      );
+    };
+    function buttonList() {
+      return (
+        <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
+          navParam(STATE.intoList);
+        }}>
+          List
+        </button>
+      );
+    };
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        STATE.date = strDate;
-        navParam(STATE.intoSave, {
-          state: STATE,
-        });
-      }}>
-        Update
-      </button>
-    );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(STATE.refresh);
-      }}>
-        Refresh
-      </button>
-    );
-  };
-  const buttonSleepList = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-        navParam(STATE.intoList);
-      }}>
-        List
-      </button>
+      <div className="d-inline-flex">
+        {buttonUpdate()}
+        {buttonRefresh()}
+        {buttonList()}
+      </div>
     );
   };
 
@@ -227,16 +201,19 @@ export const SleepDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            <h1>Detail</h1>
+          </div>
+        </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {tableSleepDetail()}
+            {tableNode()}
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {buttonSleepUpdate()}
-            {buttonRefreshPage()}
-            {buttonSleepList()}
+            {buttonNode()}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-// MoneyList.jsx
+// SleepListPlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,13 +8,13 @@ import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {differenceInDays} from "date-fns";
+import { differenceInDays } from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyList = () => {
+export const SleepListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
@@ -22,7 +22,7 @@ export const MoneyList = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoDetail:"/money/detail",
+    intoDetail:"/sleep/detail",
     id: "",
     date: ""
   };
@@ -60,70 +60,44 @@ export const MoneyList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_real : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
+    sleep_number: 0,
+    sleep_date: "",
+    sleep_plan : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
       }],
     },
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
   }]);
-  const [MONEY, setMONEY] = useState([{
+  const [SLEEP, setSLEEP] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_real : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
+    sleep_number: 0,
+    sleep_date: "",
+    sleep_plan : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
       }],
     },
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_MONEY}/list`, {
+    const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
         user_id: user_id,
-        money_dur: strDur,
+        sleep_dur: strDur,
         filter: filter
       },
     });
 
     setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
-    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
+    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -147,7 +121,7 @@ export const MoneyList = () => {
   }, [type, strDate, strStartDate, strEndDate]);
 
   // 4. view -------------------------------------------------------------------------------------->
-  const viewMoneyList = () => {
+  const viewNode = () => {
     let dayPicker;
     if (type === "day") {
       dayPicker = (
@@ -310,50 +284,30 @@ export const MoneyList = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableMoneyList = () => {
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>분류</th>
-            <th>목표</th>
-            <th>실제</th>
-            <th></th>
+            <th>취침</th>
+            <th>기상</th>
+            <th>수면</th>
           </tr>
         </thead>
         <tbody>
-          {MONEY.map((item) => (
-            <React.Fragment key={item.money_date}>
-              <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.money_date;
-                  navParam(STATE.intoDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.money_date}
-                </td>
-              </tr>
-              {item.money_plan.money_section.map((section, index) => (
-                <tr key={index}>
-                  <td>{section.money_part_val} - {section.money_title_val}</td>
-                  <td>{section.money_amount}</td>
-                  <td></td>
-                  <td></td>
+          {SLEEP.map((item) => (
+            item.sleep_plan.sleep_section.map((section, index) => (
+              <React.Fragment key={item._id + index}>
+                <tr>
+                  <td>{item.sleep_date}</td>
+                  <td>{section.sleep_start}</td>
+                  <td>{section.sleep_end}</td>
+                  <td>{section.sleep_time}</td>
                 </tr>
-              ))}
-              {item.money_real.money_section.map((section, index) => (
-                <tr key={index}>
-                  <td>{section.money_part_val} - {section.money_title_val}</td>
-                  <td></td>
-                  <td>{section.money_amount}</td>
-                  <td></td>
-                </tr>
-              ))}
-            </React.Fragment>
-          ))}
+              </React.Fragment>
+            )))
+          )}
         </tbody>
       </table>
     );
@@ -361,6 +315,19 @@ export const MoneyList = () => {
 
   // 7. filter ------------------------------------------------------------------------------------>
   const filterNode = () => {
+    function prevButton() {
+      return (
+        <button
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page <= 1}
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1)
+          })}
+        >
+          이전
+        </button>
+      );
+    };
     function pageNumber() {
       const pages = [];
       const totalPages = Math.ceil(totalCount / filter.limit);
@@ -386,19 +353,6 @@ export const MoneyList = () => {
       }
       return pages;
     };
-    function prevButton() {
-      return (
-        <button
-          className={`btn btn-sm btn-primary ms-10 me-10`}
-          disabled={filter.page <= 1}
-          onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1)
-          })}
-        >
-          이전
-        </button>
-      );
-    };
     function nextButton() {
       return (
         <button
@@ -421,74 +375,110 @@ export const MoneyList = () => {
     );
   };
 
-  // 9. button ------------------------------------------------------------------------------------>
-  const buttonCalendar = () => {
+  // 8. select ------------------------------------------------------------------------------------>
+  const selectNode = () => {
+    function selectType() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="type" onChange={(e) => (
+            setType(e.target.value)
+          )}>
+            {["day", "week", "month", "year", "select"].map((item) => (
+              <option key={item} value={item} selected={type === item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+    };
+    function selectOrder() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="order" onChange={(e) => (
+            setFilter({
+              ...filter,
+              order: e.target.value
+            })
+          )}>
+            <option value="asc" selected>오름차순</option>
+            <option value="desc">내림차순</option>
+          </select>
+        </div>
+      );
+    };
+    function selectLimit() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="limit" onChange={(e) => (
+            setFilter({
+              ...filter,
+              limit: Number(e.target.value)
+            })
+          )}>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      );
+    };
     return (
-      <button
-        type="button"
-        className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
-        onClick={() => setCalendarOpen(!calendarOpen)}
-      >
-        {calendarOpen ? "x" : "o"}
-      </button>
-    );
-  };
-  const buttonMoneyToday = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Today
-      </button>
-    );
-  };
-  const buttonMoneyReset = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Reset
-      </button>
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
+      </div>
     );
   };
 
-  // 8. select ------------------------------------------------------------------------------------>
-  const selectMoneyType = () => {
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonNode = () => {
+    function buttonCalendar () {
+      return (
+        <button
+          type="button"
+          className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
+          onClick={() => setCalendarOpen(!calendarOpen)}
+        >
+          {calendarOpen ? "x" : "o"}
+        </button>
+      );
+    };
+    function buttonToday () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Today
+        </button>
+      );
+    };
+    function buttonReset () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Reset
+        </button>
+      );
+    };
     return (
-      <div className="mb-3">
-        <select className="form-select" id="type" onChange={(e) => setType(e.target.value)}>
-          {["day", "week", "month", "year", "select"].map((item) => (
-            <option key={item} value={item} selected={type === item}>{item}</option>
-          ))}
-        </select>
-      </div>
-    );
- };
-  const selectFilterSub = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="moneyListSortOrder" onChange={(e) => {
-          setFilter({...filter, order: e.target.value});
-        }}>
-          <option value="asc" selected>오름차순</option>
-          <option value="desc">내림차순</option>
-        </select>
-      </div>
-    );
-  };
-  const selectFilterPage = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="moneyListLimit" onChange={(e) => {
-          setFilter({...filter, limit: Number(e.target.value)});
-        }}>
-          <option value="5" selected>5</option>
-          <option value="10">10</option>
-        </select>
+      <div className="d-inline-flex">
+        {buttonCalendar()}
+        {buttonToday()}
+        {buttonReset()}
       </div>
     );
   };
@@ -497,23 +487,20 @@ export const MoneyList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20">
-          <div className="col-1">
-            {viewMoneyList()}
-          </div>
-          <div className="col-2">
-            {selectMoneyType()}
-          </div>
-          <div className="col-2">
-            {selectFilterSub()}
-          </div>
-          <div className="col-2">
-            {selectFilterPage()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            <h1>List</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableMoneyList()}
+            {viewNode()}
+            {tableNode()}
+          </div>
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {selectNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
@@ -523,9 +510,7 @@ export const MoneyList = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonCalendar()}
-            {buttonMoneyToday()}
-            {buttonMoneyReset()}
+            {buttonNode()}
           </div>
         </div>
       </div>

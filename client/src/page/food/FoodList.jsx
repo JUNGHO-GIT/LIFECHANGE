@@ -118,8 +118,8 @@ export const FoodList = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4-1. view ----------------------------------------------------------------------------------->
-  const viewBlock = () => {
+  // 4. view -------------------------------------------------------------------------------------->
+  const viewNode = () => {
     let dayPicker;
     if (type === "day") {
       dayPicker = (
@@ -282,7 +282,7 @@ export const FoodList = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableBlock = () => {
+  const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -334,7 +334,7 @@ export const FoodList = () => {
   };
 
   // 7. filter ------------------------------------------------------------------------------------>
-  const filterBlock = () => {
+  const filterNode = () => {
     function prevButton() {
       return (
         <button
@@ -396,7 +396,7 @@ export const FoodList = () => {
   };
 
   // 8. select ------------------------------------------------------------------------------------>
-  const selectBlock = () => {
+  const selectNode = () => {
     function selectType() {
       return (
         <div className="mb-3">
@@ -452,7 +452,7 @@ export const FoodList = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonBlock = () => {
+  const buttonNode = () => {
     function buttonCalendar () {
       return (
         <button
@@ -507,29 +507,30 @@ export const FoodList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20">
+        <div className="row mb-20 d-center">
           <div className="col-12">
-            {viewBlock()}
+            <h1>List</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableBlock()}
+            {viewNode()}
+            {tableNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {selectBlock()}
+            {selectNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterBlock()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonBlock()}
+            {buttonNode()}
           </div>
         </div>
       </div>
