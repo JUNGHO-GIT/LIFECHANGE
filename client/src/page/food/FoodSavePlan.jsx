@@ -23,7 +23,7 @@ export const FoodSavePlan = () => {
     id: "",
     date: "",
     refresh:0,
-    toList:"/food/list",
+    toList:"/food/list/plan",
     toSave:"/food/save/plan",
     toSearch:"/food/search",
   };
@@ -84,6 +84,21 @@ export const FoodSavePlan = () => {
     }));
   }, [strDur]);
 
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const response = await axios.get(`${URL_FOOD}/detail`, {
+      params: {
+        _id: "",
+        user_id: user_id,
+        food_dur: strDur,
+        planYn: "Y",
+      },
+    });
+
+    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
+
+  })()}, [strDur]);
+
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_FOOD}/save`, {
@@ -95,10 +110,6 @@ export const FoodSavePlan = () => {
     if (response.data === "success") {
       alert("Save a food successfully");
       navParam(STATE.toList);
-    }
-    else if (response.data === "fail") {
-      alert("Save a food failed");
-      return;
     }
     else {
       alert(`${response.data}error`);

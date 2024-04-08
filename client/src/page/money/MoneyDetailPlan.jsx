@@ -93,7 +93,7 @@ export const MoneyDetailPlan = () => {
         _id: location_id,
         user_id: user_id,
         money_dur: `${location_date} ~ ${location_date}`,
-        planYn: "N",
+        planYn: "Y",
       },
     });
 
@@ -108,7 +108,7 @@ export const MoneyDetailPlan = () => {
         _id: id,
         user_id: user_id,
         money_dur: strDur,
-        planYn: "N",
+        planYn: "Y",
       },
     });
     if (response.data === "success") {
@@ -139,7 +139,7 @@ export const MoneyDetailPlan = () => {
           <tr key={index}>
             {index === 0 && (
               <React.Fragment>
-                <td className="fs-20 pt-20" rowSpan={MONEY.money_plan.money_section.length}>{MONEY.money_date}</td>
+                <td className="fs-20 pt-20" rowSpan={MONEY.money_plan.money_section?.length}>{MONEY.money_date}</td>
               </React.Fragment>
             )}
             <td className="fs-20 pt-20">{item.money_part_val}</td>
@@ -209,7 +209,7 @@ export const MoneyDetailPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Detail</h1>
+            <h1>Detail (Plan)</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

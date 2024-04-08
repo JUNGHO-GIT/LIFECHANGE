@@ -86,7 +86,8 @@ sleepRouter.get("/list", async (req, res) => {
     const result = await service.list (
       req.query.user_id,
       req.query.sleep_dur,
-      req.query.filter
+      req.query.filter,
+      req.query.planYn,
     );
     if (result) {
       res.send(result);

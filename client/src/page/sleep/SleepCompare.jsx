@@ -106,7 +106,7 @@ export const SleepCompare = () => {
       },
     });
 
-    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur, filter]);

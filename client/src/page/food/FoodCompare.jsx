@@ -106,7 +106,7 @@ export const FoodCompare = () => {
 
   })()}, [strDur, filter]);
 
-  // 5-2. table ----------------------------------------------------------------------------------->
+  // 6. table ----------------------------------------------------------------------------------->
   const tableCompare = () => {
     return (
       <table className="table bg-white table-hover">

@@ -118,13 +118,19 @@ export const search = async (
 };
 
 // 1-1. list -------------------------------------------------------------------------------------->
-export const list = async (user_id_param, food_dur_param, filter_param) => {
-  const [startDay, endDay] = food_dur_param.split(" ~ ");
+export const list = async (
+  user_id_param,
+  food_dur_param,
+  filter_param,
+  planYn_param
+) => {
 
+  const [startDay, endDay] = food_dur_param.split(" ~ ");
   const part = filter_param.part || "";
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const findResult = await Food.find({
     user_id: user_id_param,
@@ -136,12 +142,8 @@ export const list = async (user_id_param, food_dur_param, filter_param) => {
   .sort({ food_date: sort })
   .lean();
 
-  const totalCount = findResult.reduce((acc, prev) => {
-    return acc + (prev.food_real?.food_section.length || 0)
-  }, 0);
-
   const finalResult = findResult.map((prev) => {
-    const food_real_filtered = prev.food_real?.food_section.filter((item) => (
+    const filtered = prev[planYn]?.food_section.filter((item) => (
       part === "전체" ? true : item.food_part === part
     ));
 
@@ -154,12 +156,16 @@ export const list = async (user_id_param, food_dur_param, filter_param) => {
 
     return {
       ...prev,
-      food_real: {
-        ...prev.food_real,
-        food_section: sliceData(food_real_filtered, page, limit),
+      [planYn]: {
+        ...prev[planYn],
+        food_section: sliceData(filtered, page, limit),
       },
     };
   });
+
+  const totalCount = finalResult.reduce((acc, cur) => (
+    acc + cur[planYn]?.food_section?.length || 0
+  ), 0);
 
   return {
     totalCount: totalCount,
@@ -176,6 +182,7 @@ export const detail = async (
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const finalResult = await Food.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
@@ -186,10 +193,10 @@ export const detail = async (
     },
   }).lean();
 
-  const totalCount = finalResult?.food_real?.food_section.length || 0;
+  const sectionCount = finalResult?.[planYn]?.food_section?.length || 0;
 
   return {
-    totalCount: totalCount,
+    sectionCount: sectionCount,
     result: finalResult,
   };
 };
@@ -203,6 +210,7 @@ export const save = async (
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const findResult = await Food.findOne({
     user_id: user_id_param,
@@ -218,8 +226,7 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       food_date: startDay,
-      food_real: FOOD_param.food_real,
-      food_plan: FOOD_param.food_plan,
+      [planYn]: FOOD_param[planYn],
       food_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       food_update: "",
     };
@@ -229,15 +236,12 @@ export const save = async (
     const updateQuery = {
       _id: findResult._id
     };
-    const updateAction = planYn_param === "Y"
-    ? {$set: {
-      food_plan: FOOD_param.food_plan,
-      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }}
-    : {$set: {
-      food_real: FOOD_param.food_real,
-      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }}
+    const updateAction = {
+      $set: {
+        [planYn]: FOOD_param[planYn],
+        food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+      }
+    };
 
     finalResult = await Food.updateOne(updateQuery, updateAction).lean();
   }
@@ -256,6 +260,7 @@ export const deletes = async (
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const updateResult = await Food.updateOne(
     {
@@ -267,7 +272,7 @@ export const deletes = async (
     },
     {
       $pull: {
-        [`food_${planYn_param === "Y" ? "plan" : "real"}.food_section`]: {
+        [`${planYn}.food_section`]: {
           _id: _id_param
         },
       },
@@ -293,9 +298,8 @@ export const deletes = async (
     }).lean();
 
     if (
-      doc
-      && (!doc.food_plan?.food_section || doc.food_plan?.food_section.length === 0)
-      && (!doc.food_real?.food_section || doc.food_real?.food_section.length === 0)
+      (doc) &&
+      (!doc[planYn]?.food_section || doc[planYn]?.food_section?.length === 0)
     ) {
       finalResult = await Food.deleteOne({
         _id: doc._id

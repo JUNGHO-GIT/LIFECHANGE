@@ -91,7 +91,8 @@ export const FoodListReal = () => {
       params: {
         user_id: user_id,
         food_dur: strDur,
-        filter: filter
+        filter: filter,
+        planYn: "N",
       },
     });
     setTotalCount(response.data.totalCount);

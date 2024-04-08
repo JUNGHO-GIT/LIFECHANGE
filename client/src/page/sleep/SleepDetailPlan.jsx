@@ -20,8 +20,8 @@ export const SleepDetailPlan = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    toList:"/sleep/list",
-    toSave:"/sleep/save",
+    toList:"/sleep/list/plan",
+    toSave:"/sleep/save/plan",
     id: "",
     date: ""
   };
@@ -85,7 +85,7 @@ export const SleepDetailPlan = () => {
         _id: location_id,
         user_id: user_id,
         sleep_dur: `${location_date} ~ ${location_date}`,
-        planYn: "N",
+        planYn: "Y",
       },
     });
 
@@ -100,7 +100,7 @@ export const SleepDetailPlan = () => {
         _id: id,
         user_id: user_id,
         sleep_dur: strDur,
-        planYn: "N",
+        planYn: "Y",
       },
     });
     if (response.data === "success") {
@@ -203,7 +203,7 @@ export const SleepDetailPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Detail</h1>
+            <h1>Detail (Plan)</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

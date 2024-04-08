@@ -139,7 +139,7 @@ export const MoneyDetailReal = () => {
           <tr key={index}>
             {index === 0 && (
               <React.Fragment>
-                <td className="fs-20 pt-20" rowSpan={MONEY.money_real.money_section.length}>{MONEY.money_date}</td>
+                <td className="fs-20 pt-20" rowSpan={MONEY.money_real.money_section?.length}>{MONEY.money_date}</td>
               </React.Fragment>
             )}
             <td className="fs-20 pt-20">{item.money_part_val}</td>
@@ -209,7 +209,7 @@ export const MoneyDetailReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Detail</h1>
+            <h1>Detail (Real)</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

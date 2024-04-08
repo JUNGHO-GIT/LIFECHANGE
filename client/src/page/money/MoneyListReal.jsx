@@ -21,10 +21,11 @@ export const MoneyListReal = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    toDetail:"/money/detail",
     id: "",
-    date: ""
+    date: "",
+    refresh:0,
+    toDetail:"/money/detail/real",
+    part: "전체",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -98,11 +99,12 @@ export const MoneyListReal = () => {
       params: {
         user_id: user_id,
         money_dur: strDur,
-        filter: filter
+        filter: filter,
+        planYn: "N",
       },
     });
 
-    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
   })()}, [strDur, filter]);
@@ -440,11 +442,28 @@ export const MoneyListReal = () => {
         </div>
       );
     };
+    function selectPart() {
+      return (
+        <div>
+          <select className="form-select" id="part" onChange={(e) => {
+            setFilter({
+              ...filter,
+              part: e.target.value
+            });
+          }}>
+            <option value="전체" selected>전체</option>
+            <option value="수입">수입</option>
+            <option value="지출">지출</option>
+          </select>
+        </div>
+      );
+    };
     return (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
+        {selectPart()}
       </div>
     );
   };
@@ -507,7 +526,7 @@ export const MoneyListReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List</h1>
+            <h1>List (Real)</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">

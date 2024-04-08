@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
   // 1. id
   _id : {
     type : mongoose.Schema.Types.ObjectId,
-    required : true
+    required : false
   },
   user_number : {
     type : Number,
@@ -18,11 +18,11 @@ const schema = new mongoose.Schema({
   },
   user_id : {
     type : String,
-    required : true
+    required : false
   },
   user_pw : {
     type : String,
-    required : true
+    required : false
   },
 
   // 3. date
@@ -31,14 +31,14 @@ const schema = new mongoose.Schema({
     default : () => {
       return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
     },
-    required : true
+    required : false
   },
   user_update : {
     type : String,
     default : () => {
       return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
     },
-    required : true
+    required : false
   }
 });
 

@@ -221,31 +221,51 @@ export const dashAvgMonth = async (
 export const list = async (
   user_id_param,
   sleep_dur_param,
-  filter_param
+  filter_param,
+  planYn_param
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
-
   const part = filter_param.part || "";
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
-  const findResult = Sleep.find({
+  const findResult = await Sleep.find({
     user_id: user_id_param,
     sleep_date: {
       $gte: startDay,
       $lte: endDay,
-    }
-  }).lean();
-
-  const finalResult = await findResult
-  .sort({sleep_date: sort})
-  .skip((page - 1) * limit)
-  .limit(limit)
+    },
+  })
+  .sort({ sleep_date: sort })
   .lean();
 
-  const totalCount = await Sleep.countDocuments(findResult).lean();
+  const finalResult = findResult.map((prev) => {
+    const filtered = prev[planYn]?.sleep_section.filter((item) => (
+      part === "전체" ? true : item.sleep_part === part
+    ));
+
+    function sliceData (data, page, limit) {
+      const startIndex = (page - 1) * limit;
+      let endIndex = startIndex + limit;
+      endIndex = endIndex > data.length ? data.length : endIndex;
+      return data.slice(startIndex, endIndex);
+    }
+
+    return {
+      ...prev,
+      [planYn]: {
+        ...prev[planYn],
+        sleep_section: sliceData(filtered, page, limit),
+      },
+    };
+  });
+
+  const totalCount = finalResult.reduce((acc, cur) => (
+    acc + cur[planYn]?.sleep_section?.length || 0
+  ), 0);
 
   return {
     totalCount: totalCount,
@@ -262,8 +282,7 @@ export const detail = async (
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
-
-  const projection = planYn_param === "Y" ? { sleep_plan: 1 } : { sleep_real: 1 };
+  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
   const finalResult = await Sleep.findOne({
     _id: _id_param === "" ? { $exists: true } : _id_param,
@@ -274,10 +293,10 @@ export const detail = async (
     },
   }).lean();
 
-  const totalCount = planYn_param === "Y" ? finalResult?.sleep_plan?.sleep_section.length : finalResult?.sleep_real?.sleep_section.length;
+  const sectionCount = finalResult?.[planYn]?.sleep_section?.length || 0;
 
   return {
-    totalCount: totalCount,
+    sectionCount: sectionCount,
     result: finalResult,
   };
 };
@@ -291,6 +310,7 @@ export const save = async (
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
   const findResult = await Sleep.findOne({
     user_id: user_id_param,
@@ -306,8 +326,7 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       sleep_date: startDay,
-      sleep_plan: SLEEP_param.sleep_plan,
-      sleep_real: SLEEP_param.sleep_real,
+      [planYn]: SLEEP_param[planYn],
       sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       sleep_update: "",
     };
@@ -317,16 +336,12 @@ export const save = async (
     const updateQuery = {
       _id: findResult._id
     };
-    const updateAction = planYn_param === "Y"
-    ? {$set: {
-      sleep_plan: SLEEP_param.sleep_plan,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }}
-    : {$set: {
-      sleep_real: SLEEP_param.sleep_real,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }}
-
+    const updateAction = {
+      $set: {
+        [planYn]: SLEEP_param[planYn],
+        sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+      }
+    };
     finalResult = await Sleep.updateOne(updateQuery, updateAction).lean();
   }
 
@@ -344,6 +359,7 @@ export const deletes = async (
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
   const updateResult = await Sleep.updateOne(
     {
@@ -355,7 +371,7 @@ export const deletes = async (
     },
     {
       $pull: {
-        [`sleep_${planYn_param === "Y" ? "plan" : "real"}.sleep_section`]: {
+        [`${planYn}.sleep_section`]: {
           _id: _id_param
         },
       },
@@ -381,9 +397,8 @@ export const deletes = async (
     }).lean();
 
     if (
-      doc
-      && (!doc.sleep_plan?.sleep_section || doc.sleep_plan?.sleep_section.length === 0)
-      && (!doc.sleep_real?.sleep_section || doc.sleep_real?.sleep_section.length === 0)
+      (doc) &&
+      (!doc[planYn]?.sleep_section || doc[planYn]?.sleep_section?.length === 0)
     ) {
       finalResult = await Sleep.deleteOne({
         _id: doc._id

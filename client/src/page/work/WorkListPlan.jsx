@@ -108,11 +108,12 @@ export const WorkListPlan = () => {
       params: {
         user_id: user_id,
         work_dur: strDur,
-        filter: filter
+        filter: filter,
+        planYn: "Y",
       },
     });
 
-    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
 
   })()}, [strDur, filter]);
@@ -526,7 +527,7 @@ export const WorkListPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List</h1>
+            <h1>List (Plan)</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">

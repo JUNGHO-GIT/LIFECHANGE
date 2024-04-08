@@ -4,11 +4,12 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Work} from "../schema/Work.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+/* // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
   work_dur_param,
-  filter_param
+  filter_param,
+  planYn_param
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
@@ -17,6 +18,7 @@ export const list = async (
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const findResult = Work.find({
     user_id: user_id_param,
@@ -38,6 +40,62 @@ export const list = async (
     totalCount: totalCount,
     result: finalResult,
   };
+}; */
+
+// 1. list ---------------------------------------------------------------------------------------->
+export const list = async (
+  user_id_param,
+  work_dur_param,
+  filter_param,
+  planYn_param
+) => {
+
+  const [startDay, endDay] = work_dur_param.split(` ~ `);
+  const part = filter_param.part || "";
+  const sort = filter_param.order === "asc" ? 1 : -1;
+  const page = filter_param.page === 0 ? 1 : filter_param.page;
+  const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
+
+  const findResult = await Work.find({
+    user_id: user_id_param,
+    work_date: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  })
+  .sort({ work_date: sort })
+  .lean();
+
+  const finalResult = findResult.map((prev) => {
+    const filtered = prev[planYn]?.work_section.filter((item) => (
+      part === "전체" ? true : item.work_part_val === part
+    ));
+
+    function sliceData (data, page, limit) {
+      const startIndex = (page - 1) * limit;
+      let endIndex = startIndex + limit;
+      endIndex = endIndex > data.length ? data.length : endIndex;
+      return data.slice(startIndex, endIndex);
+    }
+
+    return {
+      ...prev,
+      [planYn]: {
+        ...prev[planYn],
+        work_section: sliceData(filtered, page, limit),
+      },
+    };
+  });
+
+  const totalCount = finalResult.reduce((acc, cur) => (
+    acc + cur[planYn]?.work_section?.length || 0
+  ), 0);
+
+  return {
+    totalCount: totalCount,
+    result: finalResult,
+  };
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
@@ -49,6 +107,7 @@ export const detail = async (
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const finalResult = await Work.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
@@ -59,10 +118,10 @@ export const detail = async (
     },
   }).lean();
 
-  const totalCount = planYn_param === "Y" ? finalResult?.work_plan?.work_section.length : finalResult?.work_real?.work_section.length;
+  const sectionCount = finalResult?.[planYn]?.work_section?.length || 0;
 
   return {
-    totalCount: totalCount,
+    sectionCount: sectionCount,
     result: finalResult,
   };
 };
@@ -76,6 +135,7 @@ export const save = async (
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const findResult = await Work.findOne({
     user_id: user_id_param,
@@ -91,8 +151,7 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       work_date: startDay,
-      work_plan: WORK_param.work_plan,
-      work_real: WORK_param.work_real,
+      [planYn]: WORK_param[planYn],
       work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_update: "",
     };
@@ -102,16 +161,12 @@ export const save = async (
     const updateQuery = {
       _id: findResult._id
     };
-    const updateAction = planYn_param === "Y"
-    ? {$set: {
-      work_plan: WORK_param.work_plan,
-      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }}
-    : {$set: {
-      work_real: WORK_param.work_real,
-      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }}
-
+    const updateAction = {
+      $set: {
+        [planYn]: WORK_param[planYn],
+        work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+      }
+    };
     finalResult = await Work.updateOne(updateQuery, updateAction).lean();
   }
 
@@ -129,6 +184,7 @@ export const deletes = async (
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
+  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const updateResult = await Work.updateOne(
     {
@@ -140,7 +196,7 @@ export const deletes = async (
     },
     {
       $pull: {
-        [`work_${planYn_param === "Y" ? "plan" : "real"}.work_section`]: {
+        [`${planYn}.work_section`]: {
           _id: _id_param
         },
       },
@@ -166,9 +222,8 @@ export const deletes = async (
     }).lean();
 
     if (
-      doc
-      && (!doc.work_plan?.work_section || doc.work_plan?.work_section.length === 0)
-      && (!doc.work_real?.work_section || doc.work_real?.work_section.length === 0)
+      (doc) &&
+      (!doc[planYn]?.work_section || doc[planYn]?.work_section?.length === 0)
     ) {
       finalResult = await Work.deleteOne({
         _id: doc._id

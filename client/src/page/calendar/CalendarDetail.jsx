@@ -198,7 +198,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 5-2. table ----------------------------------------------------------------------------------->
+  // 6. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
     return (
       <table className="table table-bordered border-dark table-hover">

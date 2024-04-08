@@ -48,7 +48,7 @@ app.use(expressWinston.logger({
     new winston.transports.File({ filename: "logs/request.log" }),
     new winston.transports.MongoDB({
       db: "mongodb://127.0.0.1:27017/test",
-      collection: "requestLogs",
+      collection: "logs",
       level: "info",
       options: { useUnifiedTopology: true },
     }),
@@ -66,7 +66,7 @@ app.use(expressWinston.errorLogger({
     new winston.transports.File({ filename: "logs/error.log" }),
     new winston.transports.MongoDB({
       db: "mongodb://127.0.0.1:27017/test",
-      collection: "errorLogs",
+      collection: "logs",
       level: "error",
       options: { useUnifiedTopology: true },
     }),

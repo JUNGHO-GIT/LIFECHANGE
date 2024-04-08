@@ -22,14 +22,14 @@ export const SleepSavePlan = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    toList:"/sleep/list",
+    toList:"/sleep/list/plan",
     id: "",
     date: ""
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:totalCount, set:setTotalCount} = useStorage(
-    `totalCount(${PATH})`, 0
+  const {val:sectionCount, set:setSectionCount} = useStorage(
+    `sectionCount(${PATH})`, 0
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -80,11 +80,12 @@ export const SleepSavePlan = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    setStrDur(`${strDate} ~ ${strDate}`);
     setSLEEP((prev) => ({
       ...prev,
       sleep_date: strDur
     }));
-  }, [strDur]);
+  }, [strDate]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -93,11 +94,11 @@ export const SleepSavePlan = () => {
         _id: "",
         user_id: user_id,
         sleep_dur: strDur,
-        planYn: "N",
+        planYn: "Y",
       },
     });
 
-    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setSectionCount(response.data.sectionCount === 0 ? 1 : response.data.sectionCount);
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur]);
@@ -135,7 +136,7 @@ export const SleepSavePlan = () => {
   }, [strStartDate, strEndDate]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowSleepSave = async () => {
+  const flowSave = async () => {
 
     const response = await axios.post(`${URL_SLEEP}/save`, {
       user_id: user_id,
@@ -144,12 +145,8 @@ export const SleepSavePlan = () => {
       planYn: "Y",
     });
     if (response.data === "success") {
-      alert("Save a sleep successfully");
+      alert("Save a work successfully");
       navParam(STATE.toList);
-    }
-    else if (response.data === "fail") {
-      alert("Save a sleep failed");
-      return;
     }
     else {
       alert(`${response.data}error`);
@@ -157,7 +154,7 @@ export const SleepSavePlan = () => {
   };
 
   // 4. view -------------------------------------------------------------------------------------->
-  const viewSleepDay = () => {
+  const viewNode = () => {
 
     const calcDate = (days) => {
       const date = new Date(strDate);
@@ -186,7 +183,7 @@ export const SleepSavePlan = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableSleepSave = () => {
+  const tableNode = () => {
     return (
       <div>
         <div className="row d-center">
@@ -201,14 +198,14 @@ export const SleepSavePlan = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP?.sleep_plan?.sleep_section)?.map((item) => item?.sleep_start)}
+                value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_start)}
                 onChange={(e) => {
                   setStrStartDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_plan: {
                       sleep_section: [{
-                        ...prev?.sleep_plan?.sleep_section[0],
+                        ...prev.sleep_plan.sleep_section[0],
                         sleep_start: e ? e.toString() : "",
                       }]
                     },
@@ -230,14 +227,14 @@ export const SleepSavePlan = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP?.sleep_plan?.sleep_section)?.map((item) => item?.sleep_end)}
+                value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_end)}
                 onChange={(e) => {
                   setStrEndDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_plan: {
                       sleep_section: [{
-                        ...prev?.sleep_plan?.sleep_section[0],
+                        ...prev.sleep_plan.sleep_section[0],
                         sleep_end: e ? e.toString() : "",
                       }]
                     },
@@ -260,7 +257,7 @@ export const SleepSavePlan = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP?.sleep_plan?.sleep_section)?.map((item) => item?.sleep_time)}
+                value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_time)}
               />
             </div>
           </div>
@@ -270,20 +267,52 @@ export const SleepSavePlan = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonSleepSave = () => {
+  const buttonNode = () => {
+    function buttonSave () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary me-2"
+          onClick={() => {
+            flowSave();
+          }}
+        >
+          Save
+        </button>
+      );
+    };
+    function buttonReset () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success me-2"
+          onClick={() => {
+            navParam(STATE.refresh);
+          }}
+        >
+          Refresh
+        </button>
+      );
+    };
+    function buttonList () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-secondary me-2"
+          onClick={() => {
+            navParam(STATE.toList);
+          }}
+        >
+          List
+        </button>
+      );
+    };
     return (
-      <button type="button" className="btn btn-sm btn-primary" onClick={flowSleepSave}>
-        Save
-      </button>
-    );
-  };
-  const buttonRefreshPage = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-        navParam(STATE.refresh);
-      }}>
-        Refresh
-      </button>
+      <div className="d-inline-flex">
+        {buttonSave()}
+        {buttonReset()}
+        {buttonList()}
+      </div>
     );
   };
 
@@ -291,29 +320,24 @@ export const SleepSavePlan = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center mb-20">
+        <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1 className="mb-3 fw-5">
-              <span>Plan</span>
-            </h1>
+            <h1>Save (Plan)</h1>
           </div>
         </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            <h1 className="mb-3 fw-5">
-              <span>{viewSleepDay()}</span>
-            </h1>
+            {viewNode()}
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">
           <div className="col-12">
-            {tableSleepSave()}
+            {tableNode()}
           </div>
         </div>
         <div className="row d-center">
           <div className="col-12">
-            {buttonSleepSave()}
-            {buttonRefreshPage()}
+            {buttonNode()}
           </div>
         </div>
       </div>
