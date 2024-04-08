@@ -137,14 +137,11 @@ export const list = async (user_id_param, food_dur_param, filter_param) => {
   .lean();
 
   const totalCount = findResult.reduce((acc, prev) => {
-    return acc + (prev.food_real?.food_section.length || 0) + (prev.food_plan?.food_section.length || 0);
+    return acc + (prev.food_real?.food_section.length || 0)
   }, 0);
 
   const finalResult = findResult.map((prev) => {
     const food_real_filtered = prev.food_real?.food_section.filter((item) => (
-      part === "전체" ? true : item.food_part === part
-    ));
-    const food_plan_filtered = prev.food_plan?.food_section.filter((item) => (
       part === "전체" ? true : item.food_part === part
     ));
 
@@ -160,10 +157,6 @@ export const list = async (user_id_param, food_dur_param, filter_param) => {
       food_real: {
         ...prev.food_real,
         food_section: sliceData(food_real_filtered, page, limit),
-      },
-      food_plan: {
-        ...prev.food_plan,
-        food_section: sliceData(food_plan_filtered, page, limit),
       },
     };
   });
@@ -193,13 +186,9 @@ export const detail = async (
     },
   }).lean();
 
-  const realCount = finalResult?.food_real?.food_section.length || 0;
-  const planCount = finalResult?.food_plan?.food_section.length || 0;
-  const totalCount = realCount + planCount;
+  const totalCount = finalResult?.food_real?.food_section.length || 0;
 
   return {
-    realCount: realCount,
-    planCount: planCount,
     totalCount: totalCount,
     result: finalResult,
   };

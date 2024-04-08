@@ -263,8 +263,10 @@ export const detail = async (
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
+  const projection = planYn_param === "Y" ? { sleep_plan: 1 } : { sleep_real: 1 };
+
   const finalResult = await Sleep.findOne({
-    _id: _id_param === "" ? {$exists: true} : _id_param,
+    _id: _id_param === "" ? { $exists: true } : _id_param,
     user_id: user_id_param,
     sleep_date: {
       $gte: startDay,
@@ -272,12 +274,10 @@ export const detail = async (
     },
   }).lean();
 
-  const realCount = finalResult?.sleep_real !== undefined ? 1 : 0;
-  const planCount = finalResult?.sleep_plan !== undefined ? 1 : 0;
+  const totalCount = planYn_param === "Y" ? finalResult?.sleep_plan?.sleep_section.length : finalResult?.sleep_real?.sleep_section.length;
 
   return {
-    realCount: realCount,
-    planCount: planCount,
+    totalCount: totalCount,
     result: finalResult,
   };
 };
@@ -306,8 +306,8 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       sleep_date: startDay,
-      sleep_real: SLEEP_param.sleep_real,
       sleep_plan: SLEEP_param.sleep_plan,
+      sleep_real: SLEEP_param.sleep_real,
       sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       sleep_update: "",
     };

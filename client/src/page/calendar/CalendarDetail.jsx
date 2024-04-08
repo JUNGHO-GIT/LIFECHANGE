@@ -172,7 +172,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 5-1. table ----------------------------------------------------------------------------------->
+  // 6. table ------------------------------------------------------------------------------------->
   const tableFoodList = () => {
     return (
       <table className="table table-bordered border-dark table-hover">

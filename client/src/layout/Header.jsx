@@ -120,11 +120,18 @@ export const Header = () => {
             Dash
           </button>
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
-            navParam(`/${lowFix}/save`, {
+            navParam(`/${lowFix}/save/plan`, {
               state: STATE
             });
           }}>
-            Save
+            계획
+          </button>
+          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
+            navParam(`/${lowFix}/save/real`, {
+              state: STATE
+            });
+          }}>
+            실제
           </button>
           <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
             navParam(`/${lowFix}/list`);

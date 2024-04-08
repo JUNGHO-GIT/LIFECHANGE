@@ -59,12 +59,10 @@ export const detail = async (
     },
   }).lean();
 
-  const realCount = finalResult?.work_real?.work_section.length || 0;
-  const planCount = finalResult?.work_plan?.work_section.length || 0;
+  const totalCount = planYn_param === "Y" ? finalResult?.work_plan?.work_section.length : finalResult?.work_real?.work_section.length;
 
   return {
-    realCount: realCount,
-    planCount: planCount,
+    totalCount: totalCount,
     result: finalResult,
   };
 };
@@ -93,8 +91,8 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       work_date: startDay,
-      work_real: WORK_param.work_real,
       work_plan: WORK_param.work_plan,
+      work_real: WORK_param.work_real,
       work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_update: "",
     };

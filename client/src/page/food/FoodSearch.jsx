@@ -20,7 +20,7 @@ export const FoodSearch = () => {
     id: "",
     date: koreanDate,
     refresh: 0,
-    intoSave:"/food/save",
+    intoSave:"/food/save/real",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -46,17 +46,6 @@ export const FoodSearch = () => {
         food_total_fat: "",
         food_total_carb: "",
         food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
       },
       food_real : {
         food_total_kcal: "",
@@ -190,8 +179,8 @@ export const FoodSearch = () => {
     );
   };
 
-  // 5-2. filter ---------------------------------------------------------------------------------->
-  const filterBox = () => {
+  // 7. filter ------------------------------------------------------------------------------------>
+  const filterBlock = () => {
     function pageNumber () {
       const pages = [];
       let startPage = Math.max(filter.page - 2, 1);
@@ -245,19 +234,19 @@ export const FoodSearch = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20">
-          <div className="col-12 d-center">
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             {tableFoodSearch()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             {searchFood()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
-            {filterBox()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {filterBlock()}
           </div>
         </div>
       </div>

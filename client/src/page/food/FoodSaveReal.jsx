@@ -1,4 +1,4 @@
-// FoodSave.jsx
+// FoodSaveReal.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -9,7 +9,7 @@ import moment from "moment-timezone";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSave = () => {
+export const FoodSaveReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -24,7 +24,7 @@ export const FoodSave = () => {
     date: "",
     refresh:0,
     intoList:"/food/list",
-    intoSave:"/food/save",
+    intoSave:"/food/save/real",
     intoSearch:"/food/search",
   };
 
@@ -58,17 +58,7 @@ export const FoodSave = () => {
         food_total_fat: "",
         food_total_carb: "",
         food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
+        food_section: [],
       },
       food_real : {
         food_total_kcal: "",
@@ -99,17 +89,7 @@ export const FoodSave = () => {
         food_total_fat: "",
         food_total_carb: "",
         food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
+        food_section: [],
       },
       food_real : {
         food_total_kcal: "",
@@ -148,7 +128,6 @@ export const FoodSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
     const getItem = localStorage.getItem("food_section");
     let storageSection = [];
 
@@ -158,7 +137,7 @@ export const FoodSave = () => {
     }
 
     setFOOD((prev) => {
-      let newFoodSection = [...prev[foodType].food_section];
+      let newFoodSection = [...prev.food_real.food_section];
 
       // 첫 번째 항목이 빈 값 객체인지 확인하고, 조건에 맞으면 제거
       if (
@@ -175,8 +154,8 @@ export const FoodSave = () => {
 
       return {
         ...prev,
-        [foodType]: {
-          ...prev[foodType],
+        food_real: {
+          ...prev.food_real,
           food_section: newFoodSection,
         },
       };
@@ -185,23 +164,21 @@ export const FoodSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
 
     // 초기 영양소 값 설정
     setFOOD_DEFAULT((prev) => ({
       ...prev,
-      [foodType]: {
-        ...prev[foodType],
-        food_section: [...FOOD[foodType].food_section],
+      food_real: {
+        ...prev.food_real,
+        food_section: [...FOOD.food_real.food_section],
       },
     }));
   }, [FOOD]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
 
-    const totals = FOOD[foodType].food_section.reduce((acc, current) => {
+    const totals = FOOD.food_real?.food_section?.reduce((acc, current) => {
       return {
         totalKcal: acc.totalKcal + Number(current.food_kcal),
         totalFat: acc.totalFat + Number(current.food_fat),
@@ -212,8 +189,8 @@ export const FoodSave = () => {
 
     setFOOD(prev => ({
       ...prev,
-      [foodType]: {
-        ...prev[foodType],
+      food_real: {
+        ...prev.food_real,
         food_total_kcal: totals.totalKcal.toFixed(1),
         food_total_fat: totals.totalFat.toFixed(1),
         food_total_carb: totals.totalCarb.toFixed(1),
@@ -223,7 +200,7 @@ export const FoodSave = () => {
   }, [FOOD.food_plan.food_section, FOOD.food_real.food_section, planYn]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowFoodSave = async () => {
+  const flowFoodSaveReal = async () => {
 
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
@@ -246,13 +223,12 @@ export const FoodSave = () => {
 
   // 4. handle ------------------------------------------------------------------------------------>
   const handleCountChange = (index, newValue) => {
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
     const newCountValue = Number(newValue);
 
     setFOOD((prev) => {
-      const newFoodSection = [...prev[foodType].food_section];
+      const newFoodSection = [...prev.food_real.food_section];
       const section = newFoodSection[index];
-      const defaultSection = FOOD_DEFAULT[foodType].food_section[index];
+      const defaultSection = FOOD_DEFAULT.food_real.food_section[index];
       const ratio = newCountValue / (defaultSection.food_count || 1);
 
       if (defaultSection) {
@@ -269,8 +245,8 @@ export const FoodSave = () => {
 
       return {
         ...prev,
-        [foodType]: {
-          ...prev[foodType],
+        food_real: {
+          ...prev.food_real,
           food_section: newFoodSection,
         },
       };
@@ -278,18 +254,16 @@ export const FoodSave = () => {
   };
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableFoodSave = () => {
-
-    const foodType = planYn === "Y" ? "food_plan" : "food_real";
+  const tableFoodSaveReal = () => {
 
     function handlerFoodDelete (index) {
       setFOOD((prev) => {
-        const newFoodSection = [...prev[foodType].food_section];
+        const newFoodSection = [...prev.food_real.food_section];
         newFoodSection.splice(index, 1);
         return {
           ...prev,
-          [foodType]: {
-            ...prev[foodType],
+          food_real: {
+            ...prev.food_real,
             food_section: newFoodSection,
           },
         };
@@ -313,7 +287,7 @@ export const FoodSave = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD[foodType].food_section.map((item, index) => (
+          {FOOD.food_real?.food_section?.map((item, index) => (
             <React.Fragment key={index}>
               <tr>
                 <td>
@@ -325,15 +299,15 @@ export const FoodSave = () => {
                     onChange={(e) => {
                       const newPart = e.target.value;
                       setFOOD((prev) => {
-                        const newFoodSection = [...prev[foodType].food_section];
+                        const newFoodSection = [...prev.food_real.food_section];
                         newFoodSection[index] = {
                           ...item,
                           food_part: newPart,
                         };
                         return {
                           ...prev,
-                          [foodType]: {
-                            ...prev[foodType],
+                          food_real: {
+                            ...prev.food_real,
                             food_section: newFoodSection,
                           },
                         };
@@ -381,10 +355,10 @@ export const FoodSave = () => {
             <td></td>
             <td></td>
             <td></td>
-            <td>{FOOD[foodType].food_total_kcal}</td>
-            <td>{FOOD[foodType].food_total_fat}</td>
-            <td>{FOOD[foodType].food_total_carb}</td>
-            <td>{FOOD[foodType].food_total_protein}</td>
+            <td>{FOOD.food_real.food_total_kcal}</td>
+            <td>{FOOD.food_real.food_total_fat}</td>
+            <td>{FOOD.food_real.food_total_carb}</td>
+            <td>{FOOD.food_real.food_total_protein}</td>
             <td></td>
           </tr>
         </tbody>
@@ -395,9 +369,10 @@ export const FoodSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonSaveFood = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => (
-        flowFoodSave()
-      )}>
+      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
+        localStorage.removeItem(`FOOD(${PATH})`);
+        flowFoodSaveReal()
+      }}>
         Save
       </button>
     );
@@ -405,6 +380,7 @@ export const FoodSave = () => {
   const buttonRefreshPage = () => {
     return (
       <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+        localStorage.removeItem(`FOOD(${PATH})`);
         navParam(STATE.refresh);
       }}>
         Refresh
@@ -416,14 +392,14 @@ export const FoodSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20">
-          <div className="col-12 d-center">
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             <h1>{planYn === "Y" ? "계획" : "실제"}</h1>
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">
           <div className="col-12">
-            {tableFoodSave()}
+            {tableFoodSaveReal()}
           </div>
         </div>
         <div className="row d-center mt-5">

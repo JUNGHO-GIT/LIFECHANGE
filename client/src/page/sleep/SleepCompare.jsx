@@ -1,4 +1,4 @@
-// MoneyList.jsx
+// SleepCompare.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -8,13 +8,13 @@ import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import {differenceInDays} from "date-fns";
+import { differenceInDays } from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyList = () => {
+export const SleepCompare = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
@@ -22,7 +22,7 @@ export const MoneyList = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    intoDetail:"/money/detail",
+    intoDetail:"/sleep/detail",
     id: "",
     date: ""
   };
@@ -38,11 +38,7 @@ export const MoneyList = () => {
     `type(${PATH})`, "day"
   );
   const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {
-      order: "asc",
-      page: 1,
-      limit: 5
-    }
+    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -60,70 +56,58 @@ export const MoneyList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_real : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
+    sleep_number: 0,
+    sleep_date: "",
+    sleep_real : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
       }],
     },
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
+    sleep_plan : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
       }],
-    }
+    },
   }]);
-  const [MONEY, setMONEY] = useState([{
+  const [SLEEP, setSLEEP] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_real : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
+    sleep_number: 0,
+    sleep_date: "",
+    sleep_real : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
       }],
     },
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
+    sleep_plan : {
+      sleep_section: [{
+        sleep_start: "",
+        sleep_end: "",
+        sleep_time: "",
       }],
-    }
+    },
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_MONEY}/list`, {
+    const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
         user_id: user_id,
-        money_dur: strDur,
+        sleep_dur: strDur,
         filter: filter
       },
     });
 
     setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
-    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
+    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur, filter]);
 
@@ -147,7 +131,7 @@ export const MoneyList = () => {
   }, [type, strDate, strStartDate, strEndDate]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
-  const viewMoneyList = () => {
+  const viewSleepCompare = () => {
     let dayPicker;
     if (type === "day") {
       dayPicker = (
@@ -310,7 +294,32 @@ export const MoneyList = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableMoneyList = () => {
+  const tableSleepCompare = () => {
+    const successOrNot = (plan, real) => {
+      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
+      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
+
+      if (realDate < planDate) {
+        realDate.setHours(realDate.getHours() + 24);
+      }
+      const diff = Math.abs(realDate.getTime() - planDate.getTime());
+      const diffMinutes = Math.floor(diff / 60000);
+
+      let textColor = "text-muted";
+      if (0 <= diffMinutes && diffMinutes <= 10) {
+        textColor = "text-primary";
+      }
+      if (10 < diffMinutes && diffMinutes <= 20) {
+        textColor = "text-success";
+      }
+      if (20 < diffMinutes && diffMinutes <= 30) {
+        textColor = "text-warning";
+      }
+      if (30 < diffMinutes) {
+        textColor = "text-danger";
+      }
+      return textColor;
+    };
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -323,35 +332,68 @@ export const MoneyList = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY.map((item) => (
-            <React.Fragment key={item.money_date}>
+          {SLEEP.map((item) => (
+            <React.Fragment key={item._id}>
               <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
+                <td rowSpan={3} className="pointer" onClick={() => {
                   STATE.id = item._id;
-                  STATE.date = item.money_date;
+                  STATE.date = item.sleep_date;
                   navParam(STATE.intoDetail, {
                     state: STATE
                   });
                 }}>
-                  {item.money_date}
+                  {item.sleep_date}
+                </td>
+                <td>취침</td>
+                <td>
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_start)}
+                </td>
+                <td>
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_start)}
+                </td>
+                <td>
+                  <span className={successOrNot(
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_start),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_start)
+                  )}>
+                    ●
+                  </span>
                 </td>
               </tr>
-              {item.money_plan.money_section.map((section, index) => (
-                <tr key={index}>
-                  <td>{section.money_part_val} - {section.money_title_val}</td>
-                  <td>{section.money_amount}</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              ))}
-              {item.money_real.money_section.map((section, index) => (
-                <tr key={index}>
-                  <td>{section.money_part_val} - {section.money_title_val}</td>
-                  <td></td>
-                  <td>{section.money_amount}</td>
-                  <td></td>
-                </tr>
-              ))}
+              <tr>
+                <td>기상</td>
+                <td>
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_end)}
+                </td>
+                <td>
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_end)}
+                </td>
+                <td>
+                  <span className={successOrNot(
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_end),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_end)
+                  )}>
+                    ●
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>수면</td>
+                <td>
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_time)}
+                </td>
+                <td>
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_time)}
+                </td>
+                <td>
+                  <span className={successOrNot(
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_time),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_time)
+                  )}>
+                    ●
+                  </span>
+                </td>
+              </tr>
             </React.Fragment>
           ))}
         </tbody>
@@ -433,7 +475,7 @@ export const MoneyList = () => {
       </button>
     );
   };
-  const buttonMoneyToday = () => {
+  const buttonSleepToday = () => {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setStrDate(koreanDate);
@@ -444,7 +486,7 @@ export const MoneyList = () => {
       </button>
     );
   };
-  const buttonMoneyReset = () => {
+  const buttonSleepReset = () => {
     return (
       <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
         setStrDate(koreanDate);
@@ -457,7 +499,7 @@ export const MoneyList = () => {
   };
 
   // 8. select ------------------------------------------------------------------------------------>
-  const selectMoneyType = () => {
+  const selectSleepType = () => {
     return (
       <div className="mb-3">
         <select className="form-select" id="type" onChange={(e) => setType(e.target.value)}>
@@ -471,7 +513,7 @@ export const MoneyList = () => {
   const selectFilterSub = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="moneyListSortOrder" onChange={(e) => {
+        <select className="form-select" id="sleepCompareSortOrder" onChange={(e) => {
           setFilter({...filter, order: e.target.value});
         }}>
           <option value="asc" selected>오름차순</option>
@@ -483,7 +525,7 @@ export const MoneyList = () => {
   const selectFilterPage = () => {
     return (
       <div className="mb-3">
-        <select className="form-select" id="moneyListLimit" onChange={(e) => {
+        <select className="form-select" id="sleepCompareLimit" onChange={(e) => {
           setFilter({...filter, limit: Number(e.target.value)});
         }}>
           <option value="5" selected>5</option>
@@ -499,10 +541,10 @@ export const MoneyList = () => {
       <div className="container-wrapper">
         <div className="row mb-20">
           <div className="col-1">
-            {viewMoneyList()}
+            {viewSleepCompare()}
           </div>
           <div className="col-2">
-            {selectMoneyType()}
+            {selectSleepType()}
           </div>
           <div className="col-2">
             {selectFilterSub()}
@@ -513,7 +555,7 @@ export const MoneyList = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableMoneyList()}
+            {tableSleepCompare()}
           </div>
         </div>
         <div className="row mb-20 d-center">
@@ -524,8 +566,8 @@ export const MoneyList = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             {buttonCalendar()}
-            {buttonMoneyToday()}
-            {buttonMoneyReset()}
+            {buttonSleepToday()}
+            {buttonSleepReset()}
           </div>
         </div>
       </div>

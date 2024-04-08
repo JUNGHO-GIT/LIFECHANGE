@@ -31,12 +31,6 @@ export const FoodList = () => {
   const {val:calendarOpen, set:setCalendarOpen} = useStorage(
     `calendarOpen(${PATH})`, false
   );
-  const {val:planCount, set:setPlanCount} = useStorage(
-    `planCount(${PATH})`, 0
-  );
-  const {val:realCount, set:setRealCount} = useStorage(
-    `realCount(${PATH})`, 0
-  );
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
@@ -48,7 +42,7 @@ export const FoodList = () => {
       order: "asc",
       page: 1,
       limit: 5,
-      part: "아침"
+      part: "전체",
     }
   );
 
@@ -71,23 +65,6 @@ export const FoodList = () => {
     _id: "",
     food_number: 0,
     food_date: "",
-    food_plan : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    },
     food_real : {
       food_total_kcal: "",
       food_total_fat: "",
@@ -117,9 +94,6 @@ export const FoodList = () => {
         filter: filter
       },
     });
-
-    /* setRealCount(response.data.realCount);
-    setPlanCount(response.data.planCount); */
     setTotalCount(response.data.totalCount);
     setFOOD(response.data.result);
 
@@ -145,7 +119,7 @@ export const FoodList = () => {
   }, [type, strDate, strStartDate, strEndDate]);
 
   // 4-1. view ----------------------------------------------------------------------------------->
-  const viewFoodList = () => {
+  const viewBlock = () => {
     let dayPicker;
     if (type === "day") {
       dayPicker = (
@@ -307,8 +281,8 @@ export const FoodList = () => {
     );
   };
 
-  // 5-1. table ----------------------------------------------------------------------------------->
-  const tableFoodList = () => {
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableBlock = () => {
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
@@ -359,15 +333,27 @@ export const FoodList = () => {
     );
   };
 
-  // 5-2. filter ---------------------------------------------------------------------------------->
-  const filterBox = () => {
+  // 7. filter ------------------------------------------------------------------------------------>
+  const filterBlock = () => {
+    function prevButton() {
+      return (
+        <button
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page <= 1}
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1)
+          })}
+        >
+          이전
+        </button>
+      );
+    };
     function pageNumber() {
       const pages = [];
       const totalPages = Math.ceil(totalCount / filter.limit);
       let startPage = Math.max(1, filter.page - 2);
       let endPage = Math.min(startPage + 4, totalPages);
       startPage = Math.max(endPage - 4, 1);
-
       for (let i = startPage; i <= endPage; i++) {
         pages.push(
           <button
@@ -386,19 +372,6 @@ export const FoodList = () => {
         );
       }
       return pages;
-    };
-    function prevButton() {
-      return (
-        <button
-          className={`btn btn-sm btn-primary ms-10 me-10`}
-          disabled={filter.page <= 1}
-          onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1)
-          })}
-        >
-          이전
-        </button>
-      );
     };
     function nextButton() {
       return (
@@ -422,97 +395,110 @@ export const FoodList = () => {
     );
   };
 
-  // 9. button ------------------------------------------------------------------------------------>
-  const buttonCalendar = () => {
+  // 8. select ------------------------------------------------------------------------------------>
+  const selectBlock = () => {
+    function selectType() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="type" onChange={(e) => (
+            setType(e.target.value)
+          )}>
+            {["day", "week", "month", "year", "select"].map((item) => (
+              <option key={item} value={item} selected={type === item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+    };
+    function selectOrder() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="order" onChange={(e) => (
+            setFilter({
+              ...filter,
+              order: e.target.value
+            })
+          )}>
+            <option value="asc" selected>오름차순</option>
+            <option value="desc">내림차순</option>
+          </select>
+        </div>
+      );
+    };
+    function selectLimit() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="limit" onChange={(e) => (
+            setFilter({
+              ...filter,
+              limit: Number(e.target.value)
+            })
+          )}>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      );
+    };
     return (
-      <button
-        type="button"
-        className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
-        onClick={() => setCalendarOpen(!calendarOpen)}
-      >
-        {calendarOpen ? "x" : "o"}
-      </button>
-    );
-  };
-  const buttonFoodToday = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Today
-      </button>
-    );
-  };
-  const buttonFoodReset = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Reset
-      </button>
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
+      </div>
     );
   };
 
-  // 6-2. select ---------------------------------------------------------------------------------->
-  const selectFoodType = () => {
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonBlock = () => {
+    function buttonCalendar () {
+      return (
+        <button
+          type="button"
+          className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
+          onClick={() => setCalendarOpen(!calendarOpen)}
+        >
+          {calendarOpen ? "x" : "o"}
+        </button>
+      );
+    };
+    function buttonToday () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Today
+        </button>
+      );
+    };
+    function buttonReset () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Reset
+        </button>
+      );
+    };
     return (
-      <div className="mb-3">
-        <select className="form-select" id="type" onChange={(e) => {
-          setType(e.target.value);
-        }}>
-          {["day", "week", "month", "year", "select"].map((item) => (
-            <option key={item} value={item} selected={type === item}>{item}</option>
-          ))}
-        </select>
-      </div>
-    );
-  };
-  const selectFilterSub = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="foodListSortOrder" onChange={(e) => {
-          setFilter({
-            ...filter,
-            order: e.target.value
-          });
-        }}>
-          <option value="asc" selected>오름차순</option>
-          <option value="desc">내림차순</option>
-        </select>
-      </div>
-    );
-  };
-  const selectFilterPage = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="foodListLimit" onChange={(e) => {
-          setFilter({
-            ...filter,
-            limit: Number(e.target.value)
-          });
-        }}>
-          <option value="5" selected>5</option>
-          <option value="10">10</option>
-        </select>
-      </div>
-    );
-  };
-  const selectFilterPart = () => {
-    return (
-      <div>
-        <select className="form-select" id="foodPart" onChange={(e) => {
-          setFilter({...filter, part: e.target.value});
-        }}>
-          <option value="전체" selected>전체</option>
-          <option value="아침">아침</option>
-          <option value="점심">점심</option>
-          <option value="저녁">저녁</option>
-          <option value="간식">간식</option>
-        </select>
+      <div className="d-inline-flex">
+        {buttonCalendar()}
+        {buttonToday()}
+        {buttonReset()}
       </div>
     );
   };
@@ -522,37 +508,28 @@ export const FoodList = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20">
-          <div className="col-1">
-            {viewFoodList()}
-          </div>
-          <div className="col-2">
-            {selectFoodType()}
-          </div>
-          <div className="col-2">
-            {selectFilterSub()}
-          </div>
-          <div className="col-2">
-            {selectFilterPage()}
-          </div>
-          <div className="col-2">
-            {selectFilterPart()}
+          <div className="col-12">
+            {viewBlock()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
-            {tableFoodList()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {tableBlock()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
-            {filterBox()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {selectBlock()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
-            {buttonCalendar()}
-            {buttonFoodToday()}
-            {buttonFoodReset()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {filterBlock()}
+          </div>
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {buttonBlock()}
           </div>
         </div>
       </div>

@@ -7,12 +7,6 @@ export const listArray = [
     ]
   },
   {
-    label: "Calendar",
-    items: [
-      {to: "/calendar/list", label: "CalendarList"},
-    ]
-  },
-  {
     label: "User",
     items: [
       {to: "/user/list", label: "UserList"},
@@ -21,8 +15,9 @@ export const listArray = [
   {
     label: "Food",
     items: [
-      {to: "/food/detail", label: "FoodDetail"},
+      {to: "/food/dash", label: "FoodDash"},
       {to: "/food/list", label: "FoodList"},
+      {to: "/food/compare", label: "FoodCompare"},
       {to: "/food/search", label: "FoodSearch"},
     ]
   },
@@ -44,7 +39,8 @@ export const listArray = [
     label: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
-      {to: "/sleep/list", label: "SleepList"}
+      {to: "/sleep/list", label: "SleepList"},
+      {to: "/sleep/compare", label: "SleepCompare"},
     ]
   }
 ];

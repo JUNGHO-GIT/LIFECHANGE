@@ -38,7 +38,11 @@ export const SleepList = () => {
     `type(${PATH})`, "day"
   );
   const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
+    `filter(${PATH})`, {
+      order: "asc",
+      page: 1,
+      limit: 5
+    }
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -60,14 +64,8 @@ export const SleepList = () => {
     _id: "",
     sleep_number: 0,
     sleep_date: "",
+    sleep_plan : {},
     sleep_real : {
-      sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
-        sleep_time: "",
-      }],
-    },
-    sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
@@ -79,14 +77,8 @@ export const SleepList = () => {
     _id: "",
     sleep_number: 0,
     sleep_date: "",
+    sleep_plan : {},
     sleep_real : {
-      sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
-        sleep_time: "",
-      }],
-    },
-    sleep_plan : {
       sleep_section: [{
         sleep_start: "",
         sleep_end: "",
@@ -293,127 +285,69 @@ export const SleepList = () => {
     );
   };
 
-  // 5-1. table ----------------------------------------------------------------------------------->
+  // 6. table ------------------------------------------------------------------------------------->
   const tableSleepList = () => {
-    const successOrNot = (plan, real) => {
-      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
-      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
-
-      if (realDate < planDate) {
-        realDate.setHours(realDate.getHours() + 24);
-      }
-      const diff = Math.abs(realDate.getTime() - planDate.getTime());
-      const diffMinutes = Math.floor(diff / 60000);
-
-      let textColor = "text-muted";
-      if (0 <= diffMinutes && diffMinutes <= 10) {
-        textColor = "text-primary";
-      }
-      if (10 < diffMinutes && diffMinutes <= 20) {
-        textColor = "text-success";
-      }
-      if (20 < diffMinutes && diffMinutes <= 30) {
-        textColor = "text-warning";
-      }
-      if (30 < diffMinutes) {
-        textColor = "text-danger";
-      }
-      return textColor;
-    };
     return (
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>분류</th>
-            <th>목표</th>
-            <th>실제</th>
-            <th></th>
+            <th>취침</th>
+            <th>기상</th>
+            <th>수면</th>
           </tr>
         </thead>
         <tbody>
           {SLEEP.map((item) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td rowSpan={3} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.sleep_date;
-                  navParam(STATE.intoDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.sleep_date}
-                </td>
-                <td>취침</td>
-                <td>
-                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_start)}
-                </td>
-                <td>
-                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_start)}
-                </td>
-                <td>
-                  <span className={successOrNot(
-                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_start),
-                    item.sleep_real?.sleep_section?.map((item) => item.sleep_start)
-                  )}>
-                    ●
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>기상</td>
-                <td>
-                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_end)}
-                </td>
-                <td>
-                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_end)}
-                </td>
-                <td>
-                  <span className={successOrNot(
-                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_end),
-                    item.sleep_real?.sleep_section?.map((item) => item.sleep_end)
-                  )}>
-                    ●
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>수면</td>
-                <td>
-                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_time)}
-                </td>
-                <td>
-                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_time)}
-                </td>
-                <td>
-                  <span className={successOrNot(
-                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_time),
-                    item.sleep_real?.sleep_section?.map((item) => item.sleep_time)
-                  )}>
-                    ●
-                  </span>
-                </td>
-              </tr>
-            </React.Fragment>
-          ))}
+            item.sleep_real.sleep_section.map((section, index) => (
+              <React.Fragment key={item._id + index}>
+                <tr>
+                  <td>{item.sleep_date}</td>
+                  <td>{section.sleep_start}</td>
+                  <td>{section.sleep_end}</td>
+                  <td>{section.sleep_time}</td>
+                </tr>
+              </React.Fragment>
+            )))
+          )}
         </tbody>
       </table>
     );
   };
 
-  // 5-2. filter ---------------------------------------------------------------------------------->
-  const filterBox = () => {
-    function pageNumber () {
+  // 7. filter ------------------------------------------------------------------------------------>
+  const filterBlock = () => {
+    function prevButton() {
+      return (
+        <button
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page <= 1}
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1)
+          })}
+        >
+          이전
+        </button>
+      );
+    };
+    function pageNumber() {
       const pages = [];
       const totalPages = Math.ceil(totalCount / filter.limit);
-      for (let i = 1; i <= totalPages; i++) {
+      let startPage = Math.max(1, filter.page - 2);
+      let endPage = Math.min(startPage + 4, totalPages);
+      startPage = Math.max(endPage - 4, 1);
+      for (let i = startPage; i <= endPage; i++) {
         pages.push(
           <button
             key={i}
-            className={`btn btn-sm ${filter.page === i ? "btn-secondary" : "btn-primary"} me-2`}
-            onClick={() => setFilter({
-              ...filter, page: i
-            })}
+            className={`btn btn-sm btn-primary me-2`}
+            disabled={filter.page === i}
+            onClick={() => (
+              setFilter((prev) => ({
+                ...prev,
+                page: i
+              }))
+            )}
           >
             {i}
           </button>
@@ -421,107 +355,132 @@ export const SleepList = () => {
       }
       return pages;
     };
-    function prevNumber () {
+    function nextButton() {
       return (
         <button
-          className="btn btn-sm btn-primary ms-10 me-10"
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page >= Math.ceil(totalCount / filter.limit)}
           onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1) }
-          )}
-        >
-          이전
-        </button>
-      );
-    }
-    function nextNumber () {
-      return (
-        <button
-          className="btn btn-sm btn-primary ms-10 me-10"
-          onClick={() => setFilter({
-            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1) }
-          )}
+            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1)
+          })}
         >
           다음
         </button>
       );
-    }
+    };
     return (
       <div className="d-inline-flex">
-        {prevNumber()}
+        {prevButton()}
         {pageNumber()}
-        {nextNumber()}
+        {nextButton()}
+      </div>
+    );
+  };
+
+  // 8. select ------------------------------------------------------------------------------------>
+  const selectBlock = () => {
+    function selectType() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="type" onChange={(e) => (
+            setType(e.target.value)
+          )}>
+            {["day", "week", "month", "year", "select"].map((item) => (
+              <option key={item} value={item} selected={type === item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+    };
+    function selectOrder() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="order" onChange={(e) => (
+            setFilter({
+              ...filter,
+              order: e.target.value
+            })
+          )}>
+            <option value="asc" selected>오름차순</option>
+            <option value="desc">내림차순</option>
+          </select>
+        </div>
+      );
+    };
+    function selectLimit() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="limit" onChange={(e) => (
+            setFilter({
+              ...filter,
+              limit: Number(e.target.value)
+            })
+          )}>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      );
+    };
+    return (
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
       </div>
     );
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonCalendar = () => {
+  const buttonBlock = () => {
+    function buttonCalendar () {
+      return (
+        <button
+          type="button"
+          className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
+          onClick={() => setCalendarOpen(!calendarOpen)}
+        >
+          {calendarOpen ? "x" : "o"}
+        </button>
+      );
+    };
+    function buttonToday () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Today
+        </button>
+      );
+    };
+    function buttonReset () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Reset
+        </button>
+      );
+    };
     return (
-      <button
-        type="button"
-        className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
-        onClick={() => setCalendarOpen(!calendarOpen)}
-      >
-        {calendarOpen ? "x" : "o"}
-      </button>
-    );
-  };
-  const buttonSleepToday = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Today
-      </button>
-    );
-  };
-  const buttonSleepReset = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Reset
-      </button>
-    );
-  };
-
-  // 6-2. select ---------------------------------------------------------------------------------->
-  const selectSleepType = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="type" onChange={(e) => setType(e.target.value)}>
-          {["day", "week", "month", "year", "select"].map((item) => (
-            <option key={item} value={item} selected={type === item}>{item}</option>
-          ))}
-        </select>
-      </div>
-    );
- };
-  const selectFilterSub = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="sleepListSortOrder" onChange={(e) => {
-          setFilter({...filter, order: e.target.value});
-        }}>
-          <option value="asc" selected>오름차순</option>
-          <option value="desc">내림차순</option>
-        </select>
-      </div>
-    );
-  };
-  const selectFilterPage = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="sleepListLimit" onChange={(e) => {
-          setFilter({...filter, limit: Number(e.target.value)});
-        }}>
-          <option value="5" selected>5</option>
-          <option value="10">10</option>
-        </select>
+      <div className="d-inline-flex">
+        {buttonCalendar()}
+        {buttonToday()}
+        {buttonReset()}
       </div>
     );
   };
@@ -530,35 +489,27 @@ export const SleepList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20">
+        <div className="row mb-20 d-center">
           <div className="col-1">
             {viewSleepList()}
           </div>
-          <div className="col-2">
-            {selectSleepType()}
-          </div>
-          <div className="col-2">
-            {selectFilterSub()}
-          </div>
-          <div className="col-2">
-            {selectFilterPage()}
+          <div className="col-11">
+            {selectBlock()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             {tableSleepList()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
-            {filterBox()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {filterBlock()}
           </div>
         </div>
-        <div className="row mb-20">
-          <div className="col-12 d-center">
-            {buttonCalendar()}
-            {buttonSleepToday()}
-            {buttonSleepReset()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {buttonBlock()}
           </div>
         </div>
       </div>

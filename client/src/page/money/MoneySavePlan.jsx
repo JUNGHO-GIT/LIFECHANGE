@@ -1,4 +1,4 @@
-// MoneySave.jsx
+// MoneySavePlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -6,11 +6,11 @@ import {useStorage} from "../../assets/js/useStorage.jsx";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {moneyPartArray, moneyTitleArray} from "./MoneyArray";
+import {moneyPartArray, moneyTitleArray} from "./MoneyArray.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneySave = () => {
+export const MoneySavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
@@ -249,7 +249,7 @@ export const MoneySave = () => {
     );
   };
 
-  // 5-1. table ----------------------------------------------------------------------------------->
+  // 6. table ------------------------------------------------------------------------------------->
   const tableMoneySection = (i) => {
 
     const moneyType = planYn === "Y" ? "money_plan" : "money_real";

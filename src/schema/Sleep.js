@@ -3,25 +3,7 @@
 import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
 
-// 1. section ------------------------------------------------------------------------------------->
-const sectionSchema = new mongoose.Schema({
-  sleep_section: [{
-    sleep_start: {
-      type: String,
-      required: false
-    },
-    sleep_end: {
-      type: String,
-      required: false
-    },
-    sleep_time: {
-      type: String,
-      required: false
-    }
-  }]
-});
-
-// 2. main ---------------------------------------------------------------------------------------->
+// 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
@@ -35,8 +17,38 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  sleep_plan: sectionSchema,
-  sleep_real: sectionSchema,
+  sleep_plan: {
+    sleep_section: [{
+      sleep_start: {
+        type: String,
+        required: false
+      },
+      sleep_end: {
+        type: String,
+        required: false
+      },
+      sleep_time: {
+        type: String,
+        required: false
+      }
+    }]
+  },
+  sleep_real: {
+    sleep_section: [{
+      sleep_start: {
+        type: String,
+        required: false
+      },
+      sleep_end: {
+        type: String,
+        required: false
+      },
+      sleep_time: {
+        type: String,
+        required: false
+      }
+    }]
+  },
   sleep_regdate: {
     type: String,
     required: false

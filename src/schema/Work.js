@@ -3,57 +3,7 @@
 import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
 
-// 1. section ------------------------------------------------------------------------------------->
-const sectionSchema = new mongoose.Schema({
-  work_start: {
-    type: String,
-    required: false,
-  },
-  work_end: {
-    type: String,
-    required: false,
-  },
-  work_time: {
-    type: String,
-    required: false,
-  },
-  work_section: [{
-    work_part_idx : {
-      type: Number,
-      required: false,
-    },
-    work_part_val : {
-      type: String,
-      required: false,
-    },
-    work_title_idx : {
-      type: Number,
-      required: false,
-    },
-    work_title_val : {
-      type: String,
-      required: false,
-    },
-    work_kg: {
-      type: Number,
-      required: false,
-    },
-    work_set: {
-      type: Number,
-      required: false,
-    },
-    work_count: {
-      type: Number,
-      required: false,
-    },
-    work_rest: {
-      type: Number,
-      required: false,
-    },
-  }],
-});
-
-// 2. main ---------------------------------------------------------------------------------------->
+// 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
@@ -67,8 +17,102 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  work_plan: sectionSchema,
-  work_real: sectionSchema,
+  work_plan: {
+    work_start: {
+      type: String,
+      required: false,
+    },
+    work_end: {
+      type: String,
+      required: false,
+    },
+    work_time: {
+      type: String,
+      required: false,
+    },
+    work_section: [{
+      work_part_idx : {
+        type: Number,
+        required: false,
+      },
+      work_part_val : {
+        type: String,
+        required: false,
+      },
+      work_title_idx : {
+        type: Number,
+        required: false,
+      },
+      work_title_val : {
+        type: String,
+        required: false,
+      },
+      work_kg: {
+        type: Number,
+        required: false,
+      },
+      work_set: {
+        type: Number,
+        required: false,
+      },
+      work_count: {
+        type: Number,
+        required: false,
+      },
+      work_rest: {
+        type: Number,
+        required: false,
+      },
+    }],
+  },
+  work_real: {
+    work_start: {
+      type: String,
+      required: false,
+    },
+    work_end: {
+      type: String,
+      required: false,
+    },
+    work_time: {
+      type: String,
+      required: false,
+    },
+    work_section: [{
+      work_part_idx : {
+        type: Number,
+        required: false,
+      },
+      work_part_val : {
+        type: String,
+        required: false,
+      },
+      work_title_idx : {
+        type: Number,
+        required: false,
+      },
+      work_title_val : {
+        type: String,
+        required: false,
+      },
+      work_kg: {
+        type: Number,
+        required: false,
+      },
+      work_set: {
+        type: Number,
+        required: false,
+      },
+      work_count: {
+        type: Number,
+        required: false,
+      },
+      work_rest: {
+        type: Number,
+        required: false,
+      },
+    }],
+  },
   work_regdate: {
     type: String,
     required: false

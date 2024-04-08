@@ -3,37 +3,7 @@
 import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
 
-// 1. section ------------------------------------------------------------------------------------->
-const sectionSchema = new mongoose.Schema({
-  money_section: [{
-    money_part_idx : {
-      type : Number,
-      required : false
-    },
-    money_part_val : {
-      type : String,
-      required : true
-    },
-    money_title_idx : {
-      type : Number,
-      required : false
-    },
-    money_title_val : {
-      type : String,
-      required : true
-    },
-    money_amount : {
-      type : Number,
-      required : false
-    },
-    money_content :{
-      type : String,
-      required : false
-    },
-  }],
-});
-
-// 2. main ---------------------------------------------------------------------------------------->
+// 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
@@ -47,8 +17,45 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  money_plan: sectionSchema,
-  money_real: sectionSchema,
+  money_plan: {
+    money_out_amount: {
+      type: String,
+      required: false
+    },
+    money_section: [],
+  },
+  money_real: {
+    money_out_amount: {
+      type: String,
+      required: false
+    },
+    money_section: [{
+      money_part_idx : {
+        type : Number,
+        required : false
+      },
+      money_part_val : {
+        type : String,
+        required : true
+      },
+      money_title_idx : {
+        type : Number,
+        required : false
+      },
+      money_title_val : {
+        type : String,
+        required : true
+      },
+      money_amount : {
+        type : Number,
+        required : false
+      },
+      money_content :{
+        type : String,
+        required : false
+      },
+    }],
+  },
   money_regdate: {
     type: String,
     required: false
