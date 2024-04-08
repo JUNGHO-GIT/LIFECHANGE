@@ -114,30 +114,62 @@ export const Header = () => {
           <h1 className="fs-30 fw-500">{STATE.date}</h1>
         </div>
         <div className="text-end">
-          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
-            navParam(`/${lowFix}/dash`);
-          }}>
-            Dash
-          </button>
-          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
-            navParam(`/${lowFix}/save/plan`, {
-              state: STATE
-            });
-          }}>
-            계획
-          </button>
-          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
-            navParam(`/${lowFix}/save/real`, {
-              state: STATE
-            });
-          }}>
-            실제
-          </button>
-          <button type="button" className="btn btn-primary btn-sm me-5" onClick={() => {
-            navParam(`/${lowFix}/list`);
-          }}>
-            List
-          </button>
+          <div className="d-flex">
+            <div className="dropdown">
+              <div className="btn btn-primary btn-sm dropdown-toggle me-5" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                List
+              </div>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                  <p className="dropdown-item pointer" onClick={() => {
+                    STATE.date = koreanDate;
+                    navParam(`/${lowFix}/list/plan`, {
+                      state: STATE
+                    });
+                  }}>
+                    계획
+                  </p>
+                </li>
+                <li>
+                  <p className="dropdown-item pointer" onClick={() => {
+                    STATE.date = koreanDate;
+                    navParam(`/${lowFix}/list/real`, {
+                      state: STATE
+                    });
+                  }}>
+                    실제
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div className="dropdown">
+              <div className="btn btn-primary btn-sm dropdown-toggle me-5" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Save
+              </div>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                  <p className="dropdown-item pointer" onClick={() => {
+                    STATE.date = koreanDate;
+                    navParam(`/${lowFix}/save/plan`, {
+                      state: STATE
+                    });
+                  }}>
+                    계획
+                  </p>
+                </li>
+                <li>
+                  <p className="dropdown-item pointer" onClick={() => {
+                    STATE.date = koreanDate;
+                    navParam(`/${lowFix}/save/real`, {
+                      state: STATE
+                    });
+                  }}>
+                    실제
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     );

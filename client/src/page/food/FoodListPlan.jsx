@@ -24,7 +24,7 @@ export const FoodListPlan = () => {
     id: "",
     date: "",
     refresh: 0,
-    toDetail:"/food/detail",
+    toDetail:"/food/detail/plan"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -288,12 +288,6 @@ export const FoodListPlan = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>분류</th>
-            <th>식품명</th>
-            <th>브랜드</th>
-            <th>수량</th>
-            <th>서빙 사이즈</th>
-            <th>그램(g)</th>
             <th>칼로리(kcal)</th>
             <th>탄수화물(g)</th>
             <th>단백질(g)</th>
@@ -303,24 +297,8 @@ export const FoodListPlan = () => {
         <tbody>
           {FOOD.map((item) => (
             <React.Fragment key={item._id}>
-              {item.food_plan.food_section.map((section, index) => (
-                <tr key={section._id}>
-                  <td>{item.food_date}</td>
-                  <td>{section.food_part}</td>
-                  <td>{section.food_title}</td>
-                  <td>{section.food_brand}</td>
-                  <td>{section.food_count}</td>
-                  <td>{section.food_serv}</td>
-                  <td>{section.food_gram}</td>
-                  <td>{section.food_kcal}</td>
-                  <td>{section.food_carb}</td>
-                  <td>{section.food_protein}</td>
-                  <td>{section.food_fat}</td>
-                </tr>
-              ))}
-              <tr className="table-secondary">
-                <td colSpan={6}>합계</td>
-                <td></td>
+              <tr>
+                <td>{item.food_date}</td>
                 <td>{item.food_plan.food_total_kcal}kcal</td>
                 <td>{item.food_plan.food_total_carb}g</td>
                 <td>{item.food_plan.food_total_protein}g</td>
@@ -442,11 +420,27 @@ export const FoodListPlan = () => {
         </div>
       );
     };
+    function selectPart() {
+      return (
+        <div>
+          <select className="form-select" id="foodPart" onChange={(e) => {
+            setFilter({...filter, part: e.target.value});
+          }}>
+            <option value="전체" selected>전체</option>
+            <option value="아침">아침</option>
+            <option value="점심">점심</option>
+            <option value="저녁">저녁</option>
+            <option value="간식">간식</option>
+          </select>
+        </div>
+      );
+    };
     return (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
+        {selectPart()}
       </div>
     );
   };

@@ -131,7 +131,7 @@ export const SleepCompare = () => {
   }, [type, strDate, strStartDate, strEndDate]);
 
   // 4. view -------------------------------------------------------------------------------------->
-  const viewSleepCompare = () => {
+  const viewNode = () => {
     let dayPicker;
     if (type === "day") {
       dayPicker = (
@@ -294,8 +294,8 @@ export const SleepCompare = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableSleepCompare = () => {
-    const successOrNot = (plan, real) => {
+  const tableNode = () => {
+    function successOrNot (plan, real) {
       const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
       const realDate = new Date(`1970-01-01T${real}:00.000Z`);
 
@@ -403,6 +403,19 @@ export const SleepCompare = () => {
 
   // 7. filter ------------------------------------------------------------------------------------>
   const filterNode = () => {
+    function prevButton() {
+      return (
+        <button
+          className={`btn btn-sm btn-primary ms-10 me-10`}
+          disabled={filter.page <= 1}
+          onClick={() => setFilter({
+            ...filter, page: Math.max(1, filter.page - 1)
+          })}
+        >
+          이전
+        </button>
+      );
+    };
     function pageNumber() {
       const pages = [];
       const totalPages = Math.ceil(totalCount / filter.limit);
@@ -428,19 +441,6 @@ export const SleepCompare = () => {
       }
       return pages;
     };
-    function prevButton() {
-      return (
-        <button
-          className={`btn btn-sm btn-primary ms-10 me-10`}
-          disabled={filter.page <= 1}
-          onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1)
-          })}
-        >
-          이전
-        </button>
-      );
-    };
     function nextButton() {
       return (
         <button
@@ -463,74 +463,110 @@ export const SleepCompare = () => {
     );
   };
 
-  // 9. button ------------------------------------------------------------------------------------>
-  const buttonCalendar = () => {
+  // 8. select ------------------------------------------------------------------------------------>
+  const selectNode = () => {
+    function selectType() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="type" onChange={(e) => (
+            setType(e.target.value)
+          )}>
+            {["day", "week", "month", "year", "select"].map((item) => (
+              <option key={item} value={item} selected={type === item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+    };
+    function selectOrder() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="order" onChange={(e) => (
+            setFilter({
+              ...filter,
+              order: e.target.value
+            })
+          )}>
+            <option value="asc" selected>오름차순</option>
+            <option value="desc">내림차순</option>
+          </select>
+        </div>
+      );
+    };
+    function selectLimit() {
+      return (
+        <div className="mb-3">
+          <select className="form-select" id="limit" onChange={(e) => (
+            setFilter({
+              ...filter,
+              limit: Number(e.target.value)
+            })
+          )}>
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+      );
+    };
     return (
-      <button
-        type="button"
-        className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
-        onClick={() => setCalendarOpen(!calendarOpen)}
-      >
-        {calendarOpen ? "x" : "o"}
-      </button>
-    );
-  };
-  const buttonSleepToday = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Today
-      </button>
-    );
-  };
-  const buttonSleepReset = () => {
-    return (
-      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
-        setStrDate(koreanDate);
-        localStorage.removeItem(`strStartDate(${PATH})`);
-        localStorage.removeItem(`strEndDate(${PATH})`);
-      }}>
-        Reset
-      </button>
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
+      </div>
     );
   };
 
-  // 8. select ------------------------------------------------------------------------------------>
-  const selectSleepType = () => {
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonNode = () => {
+    function buttonCalendar () {
+      return (
+        <button
+          type="button"
+          className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
+          onClick={() => setCalendarOpen(!calendarOpen)}
+        >
+          {calendarOpen ? "x" : "o"}
+        </button>
+      );
+    };
+    function buttonToday () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-success me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Today
+        </button>
+      );
+    };
+    function buttonReset () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-primary me-2"
+          onClick={() => {
+            setStrDate(koreanDate);
+            localStorage.removeItem(`strStartDate(${PATH})`);
+            localStorage.removeItem(`strEndDate(${PATH})`);
+          }}
+        >
+          Reset
+        </button>
+      );
+    };
     return (
-      <div className="mb-3">
-        <select className="form-select" id="type" onChange={(e) => setType(e.target.value)}>
-          {["day", "week", "month", "year", "select"].map((item) => (
-            <option key={item} value={item} selected={type === item}>{item}</option>
-          ))}
-        </select>
-      </div>
-    );
- };
-  const selectFilterSub = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="sleepCompareSortOrder" onChange={(e) => {
-          setFilter({...filter, order: e.target.value});
-        }}>
-          <option value="asc" selected>오름차순</option>
-          <option value="desc">내림차순</option>
-        </select>
-      </div>
-    );
-  };
-  const selectFilterPage = () => {
-    return (
-      <div className="mb-3">
-        <select className="form-select" id="sleepCompareLimit" onChange={(e) => {
-          setFilter({...filter, limit: Number(e.target.value)});
-        }}>
-          <option value="5" selected>5</option>
-          <option value="10">10</option>
-        </select>
+      <div className="d-inline-flex">
+        {buttonCalendar()}
+        {buttonToday()}
+        {buttonReset()}
       </div>
     );
   };
@@ -539,23 +575,20 @@ export const SleepCompare = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20">
-          <div className="col-1">
-            {viewSleepCompare()}
-          </div>
-          <div className="col-2">
-            {selectSleepType()}
-          </div>
-          <div className="col-2">
-            {selectFilterSub()}
-          </div>
-          <div className="col-2">
-            {selectFilterPage()}
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            <h1>Compare</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {tableSleepCompare()}
+            {viewNode()}
+            {tableNode()}
+          </div>
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            {selectNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
@@ -565,9 +598,7 @@ export const SleepCompare = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {buttonCalendar()}
-            {buttonSleepToday()}
-            {buttonSleepReset()}
+            {buttonNode()}
           </div>
         </div>
       </div>

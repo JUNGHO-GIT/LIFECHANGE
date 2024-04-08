@@ -22,8 +22,8 @@ export const FoodDetailReal = () => {
     id: "",
     date: "",
     refresh:0,
-    toList:"/food/list",
-    toSave:"/food/save"
+    toList:"/food/list/real",
+    toSave:"/food/save/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -115,25 +115,6 @@ export const FoodDetailReal = () => {
 
   })()}, []);
 
-  // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_FOOD}/delete`, {
-      params: {
-        _id: id,
-        user_id: user_id,
-        food_dur: strDur,
-        planYn: "N",
-      },
-    });
-    if (response.data === "success") {
-      alert("delete success");
-      navParam(STATE.toList);
-    }
-    else {
-      alert(`${response.data}`);
-    }
-  };
-
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
@@ -148,7 +129,6 @@ export const FoodDetailReal = () => {
             <th>탄수화물</th>
             <th>단백질</th>
             <th>지방</th>
-            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
@@ -163,17 +143,6 @@ export const FoodDetailReal = () => {
                 <td>{item.food_carb}</td>
                 <td>{item.food_protein}</td>
                 <td>{item.food_fat}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-danger"
-                    onClick={() => {
-                      flowDelete(item._id);
-                    }}
-                  >
-                    x
-                  </button>
-                </td>
               </tr>
             );
           })}

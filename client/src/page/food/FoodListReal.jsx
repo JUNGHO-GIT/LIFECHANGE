@@ -308,7 +308,9 @@ export const FoodListReal = () => {
                   <td className="pointer" onClick={() => {
                     STATE.id = item._id;
                     STATE.date = item.food_date;
-                    navParam(STATE.toDetail);
+                    navParam(STATE.toDetail, {
+                      state: STATE
+                    });
                   }}>
                     {item.food_date}
                   </td>
@@ -448,11 +450,27 @@ export const FoodListReal = () => {
         </div>
       );
     };
+    function selectPart() {
+      return (
+        <div>
+          <select className="form-select" id="foodPart" onChange={(e) => {
+            setFilter({...filter, part: e.target.value});
+          }}>
+            <option value="전체" selected>전체</option>
+            <option value="아침">아침</option>
+            <option value="점심">점심</option>
+            <option value="저녁">저녁</option>
+            <option value="간식">간식</option>
+          </select>
+        </div>
+      );
+    };
     return (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
+        {selectPart()}
       </div>
     );
   };
