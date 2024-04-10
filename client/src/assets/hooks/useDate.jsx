@@ -56,6 +56,8 @@ export const useDate = (
 
         setOBJECT((prev) => ({
           ...prev,
+          work_start: startTime,
+          work_end: endTime,
           work_time: time,
         }));
       }

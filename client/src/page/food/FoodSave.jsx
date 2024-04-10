@@ -335,7 +335,7 @@ export const FoodSave = () => {
   const buttonNode = () => {
     return (
       <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={""} setStrDate={""}
+        strDate={strDate} setStrDate={setStrDate}
         STATE={STATE} flowSave={flowSave} navParam={navParam}
         type="save"
       />

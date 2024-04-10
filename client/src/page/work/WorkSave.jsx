@@ -189,24 +189,24 @@ export const WorkSave = () => {
                 value={WORK.work_section[i]?.work_part_idx}
                 onChange={(e) => {
                   const newIndex = parseInt(e.target.value);
-                  setWORK((prevWORK) => {
-                    let updatedWORK = { ...prevWORK };
-                    let updatedSection = [...updatedWORK.work_section];
+                  setWORK((prev) => {
+                    let updated = { ...prev };
+                    let updatedSection = [...updated.work_section];
                     updatedSection[i] = {
                       ...updatedSection[i],
                       work_part_idx: newIndex,
-                      work_part_val: workPartArray[newIndex].work_part[0],
+                      work_part_val: workPartArray[newIndex].work_part,
                       work_title_idx: 0,
-                      work_title_val: workTitleArray[newIndex].work_title[0],
+                      work_title_val: workTitleArray[newIndex].work_title,
                     };
-                    updatedWORK.work_section = updatedSection;
-                    return updatedWORK;
+                    updated.work_section = updatedSection;
+                    return updated;
                   });
                 }}
               >
                 {workPartArray.map((part, idx) => (
                   <option key={idx} value={idx}>
-                    {part.work_part[0]}
+                    {part.work_part}
                   </option>
                 ))}
               </select>
@@ -221,12 +221,12 @@ export const WorkSave = () => {
                 value={WORK.work_section[i]?.work_title_val}
                 onChange={(e) => {
                   const newTitle = e.target.value;
-                  setWORK((prevWORK) => {
-                    let updatedWORK = { ...prevWORK };
-                    let updatedSection = [...updatedWORK.work_section];
+                  setWORK((prev) => {
+                    let updated = { ...prev };
+                    let updatedSection = [...updated.work_section];
                     updatedSection[i].work_title_val = newTitle;
-                    updatedWORK.work_section = updatedSection;
-                    return updatedWORK;
+                    updated.work_section = updatedSection;
+                    return updated;
                   });
                 }}
               >
@@ -250,11 +250,11 @@ export const WorkSave = () => {
                 onChange={(e) => {
                   const newSet = parseInt(e.target.value);
                   setWORK((prev) => {
-                    let updatedWORK = { ...prev };
-                    let updatedSection = [...updatedWORK.work_section];
+                    let updated = { ...prev };
+                    let updatedSection = [...updated.work_section];
                     updatedSection[i].work_set = isNaN(newSet) ? 0 : newSet;
-                    updatedWORK.work_section = updatedSection;
-                    return updatedWORK;
+                    updated.work_section = updatedSection;
+                    return updated;
                   });
                 }}
               />
@@ -270,11 +270,11 @@ export const WorkSave = () => {
                 onChange={(e) => {
                   const newCount = parseInt(e.target.value);
                   setWORK((prev) => {
-                    let updatedWORK = { ...prev };
-                    let updatedSection = [...updatedWORK.work_section];
+                    let updated = { ...prev };
+                    let updatedSection = [...updated.work_section];
                     updatedSection[i].work_rep = isNaN(newCount) ? 0 : newCount;
-                    updatedWORK.work_section = updatedSection;
-                    return updatedWORK;
+                    updated.work_section = updatedSection;
+                    return updated;
                   });
                 }}
               />
@@ -290,11 +290,11 @@ export const WorkSave = () => {
                 onChange={(e) => {
                   const newKg = parseInt(e.target.value);
                   setWORK((prev) => {
-                    const updatedWORK = { ...prev };
-                    const updatedSection = [...updatedWORK.work_section];
+                    const updated = { ...prev };
+                    const updatedSection = [...updated.work_section];
                     updatedSection[i].work_kg = isNaN(newKg) ? 0 : newKg;
-                    updatedWORK.work_section = updatedSection;
-                    return updatedWORK;
+                    updated.work_section = updatedSection;
+                    return updated;
                   });
                 }}
               />
@@ -310,11 +310,11 @@ export const WorkSave = () => {
                 onChange={(e) => {
                   const newRest = parseInt(e.target.value);
                   setWORK((prev) => {
-                    const updatedWORK = { ...prev };
-                    const updatedSection = [...updatedWORK.work_section];
+                    const updated = { ...prev };
+                    const updatedSection = [...updated.work_section];
                     updatedSection[i].work_rest = isNaN(newRest) ? 0 : newRest;
-                    updatedWORK.work_section = updatedSection;
-                    return updatedWORK;
+                    updated.work_section = updatedSection;
+                    return updated;
                   });
                 }}
               />
@@ -368,7 +368,7 @@ export const WorkSave = () => {
                 onChange={(e) => {
                   setWORK((prev) => ({
                     ...prev,
-                    work_start: e ? e.toString() : "",
+                    work_end: e ? e.toString() : "",
                   }));
                 }}
               />
@@ -401,7 +401,7 @@ export const WorkSave = () => {
   const buttonNode = () => {
     return (
       <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={""} setStrDate={""}
+        strDate={strDate} setStrDate={setStrDate}
         STATE={STATE} flowSave={flowSave} navParam={navParam}
         type="save"
       />
