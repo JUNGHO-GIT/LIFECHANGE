@@ -51,7 +51,7 @@ export const WorkDetailPlan = () => {
         work_title_idx: 0,
         work_title_val: "전체",
         work_set: 0,
-        work_count: 0,
+        work_rep: 0,
         work_kg: 0,
         work_rest: 0,
       }],
@@ -71,7 +71,7 @@ export const WorkDetailPlan = () => {
         work_title_idx: 0,
         work_title_val: "전체",
         work_set: 0,
-        work_count: 0,
+        work_rep: 0,
         work_kg: 0,
         work_rest: 0,
       }],
@@ -156,7 +156,7 @@ export const WorkDetailPlan = () => {
                 <div key={index} className="d-flex justify-content-between">
                   <span>{item.work_part_val}</span>
                   <span>{item.work_title_val}</span>
-                  <span>{item.work_set} x {item.work_count} x {item.work_kg}</span>
+                  <span>{item.work_set} x {item.work_rep} x {item.work_kg}</span>
                   <span>{item.work_rest}</span>
                   <button
                     type="button"

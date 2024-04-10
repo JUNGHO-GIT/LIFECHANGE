@@ -58,7 +58,7 @@ export const WorkSavePlan = () => {
         work_title_idx: 0,
         work_title_val: "",
         work_set: 0,
-        work_count: 0,
+        work_rep: 0,
         work_kg: 0,
         work_rest: 0,
       }],
@@ -78,7 +78,7 @@ export const WorkSavePlan = () => {
         work_title_idx: 0,
         work_title_val: "",
         work_set: 0,
-        work_count: 0,
+        work_rep: 0,
         work_kg: 0,
         work_rest: 0,
       }],
@@ -278,13 +278,13 @@ export const WorkSavePlan = () => {
               <input
                 type="number"
                 className="form-control"
-                value={WORK.work_plan?.work_section[i]?.work_count}
+                value={WORK.work_plan?.work_section[i]?.work_rep}
                 onChange={(e) => {
                   const newCount = parseInt(e.target.value);
                   setWORK((prev) => {
                     let updatedWORK = { ...prev };
                     let updatedSection = [...updatedWORK.work_plan.work_section];
-                    updatedSection[i].work_count = isNaN(newCount) ? 0 : newCount;
+                    updatedSection[i].work_rep = isNaN(newCount) ? 0 : newCount;
                     updatedWORK.work_plan.work_section = updatedSection;
                     return updatedWORK;
                   });

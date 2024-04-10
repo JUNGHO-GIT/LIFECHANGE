@@ -79,7 +79,7 @@ export const WorkListReal = () => {
         work_title_idx: 0,
         work_title_val: "전체",
         work_set: 0,
-        work_count: 0,
+        work_rep: 0,
         work_kg: 0,
         work_rest: 0,
       }],
@@ -99,7 +99,7 @@ export const WorkListReal = () => {
         work_title_idx: 0,
         work_title_val: "전체",
         work_set: 0,
-        work_count: 0,
+        work_rep: 0,
         work_kg: 0,
         work_rest: 0,
       }],
@@ -169,7 +169,7 @@ export const WorkListReal = () => {
                     <div key={index} className="d-flex justify-content-between">
                       <span>{section.work_part_val}</span>
                       <span>{section.work_title_val}</span>
-                      <span>{section.work_set} x {section.work_count} x {section.work_kg}</span>
+                      <span>{section.work_set} x {section.work_rep} x {section.work_kg}</span>
                       <span>{section.work_rest}</span>
                     </div>
                   ))}

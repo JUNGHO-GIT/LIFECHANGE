@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import moment from "moment-timezone";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
@@ -16,7 +15,6 @@ export const SleepListReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -132,7 +130,13 @@ export const SleepListReal = () => {
             item.sleep_real.sleep_section.map((section, index) => (
               <React.Fragment key={item._id + index}>
                 <tr>
-                  <td>{item.sleep_date}</td>
+                  <td rowSpan={6} className="pointer" onClick={() => {
+                    STATE.id = item._id;
+                    STATE.date = item.sleep_date;
+                    navParam(STATE.toDetail, {
+                      state: STATE
+                    });
+                  }}>{item.sleep_date}</td>
                   <td>{section.sleep_night}</td>
                   <td>{section.sleep_morning}</td>
                   <td>{section.sleep_time}</td>
@@ -190,34 +194,24 @@ export const SleepListReal = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>List (Real)</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {dateNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {calendarNode()}
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {filterNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {pagingNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

@@ -3,15 +3,13 @@ import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import winston from "winston";
-import expressWinston from "express-winston";
-import { MongoDB } from "winston-mongodb";
 import { fileURLToPath } from "url";
-import { userRouter } from "./src/router/userRouter.js";
 import { foodRouter } from "./src/router/foodRouter.js";
-import { workRouter } from "./src/router/workRouter.js";
-import { sleepRouter } from "./src/router/sleepRouter.js";
 import { moneyRouter } from "./src/router/moneyRouter.js";
+import { planRouter } from "./src/router/planRouter.js";
+import { sleepRouter } from "./src/router/sleepRouter.js";
+import { userRouter } from "./src/router/userRouter.js";
+import { workRouter } from "./src/router/workRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://127.0.0.1:27017");
@@ -26,14 +24,16 @@ app.use(cors(), (req, res, next) => {
   next();
 });
 
+// ------------------------------------------------------------------------------------------------>
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "client/build")));
-app.use("/user", userRouter);
 app.use("/food", foodRouter);
-app.use("/work", workRouter);
-app.use("/sleep", sleepRouter);
 app.use("/money", moneyRouter);
+app.use("/plan", planRouter);
+app.use("/sleep", sleepRouter);
+app.use("/user", userRouter);
+app.use("/work", workRouter);
 
 // ------------------------------------------------------------------------------------------------>
 app.listen(app.get("port"), () => {

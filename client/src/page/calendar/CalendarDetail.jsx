@@ -262,7 +262,7 @@ export const CalendarDetail = () => {
                 <td>{work_section.work_title_val}</td>
                 <td>{work_section.work_kg}</td>
                 <td>{work_section.work_set}</td>
-                <td>{work_section.work_count}</td>
+                <td>{work_section.work_rep}</td>
                 <td>{work_section.work_rest}</td>
                 <td>{workItem.work_time}</td>
               </tr>
