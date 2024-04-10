@@ -3,25 +3,21 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {DayPicker} from "react-day-picker";
-import Draggable from "react-draggable";
-import {ko} from "date-fns/locale";
-import moment from "moment-timezone";
 import axios from "axios";
-import { differenceInDays } from "date-fns";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkListReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
+  const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
@@ -56,16 +52,16 @@ export const WorkListReal = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, koreanDate
+    `strStartDate(${PATH})`, location_date
   );
   const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, koreanDate
+    `strEndDate(${PATH})`, location_date
   );
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, koreanDate
+    `strDate(${PATH})`, location_date
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${koreanDate} ~ ${koreanDate}`
+    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -128,189 +124,14 @@ export const WorkListReal = () => {
 
   })()}, [strDur, filter, paging]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    if (type === "day") {
-      setStrDur(`${strDate} ~ ${strDate}`);
-    }
-    else if (type === "week") {
-      setStrDur(`${strStartDate} ~ ${strEndDate}`);
-    }
-    else if (type === "month") {
-      setStrDur(`${moment(strDate).startOf("month").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("month").format("YYYY-MM-DD")}`);
-    }
-    else if (type === "year") {
-      setStrDur(`${moment(strDate).startOf("year").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("year").format("YYYY-MM-DD")}`);
-    }
-    else if (type === "select") {
-      setStrDur(`${strStartDate} ~ ${strEndDate}`);
-    }
-  }, [type, strDate, strStartDate, strEndDate]);
-
   // 4. date -------------------------------------------------------------------------------------->
-  const viewNode = () => {
-    let dayPicker;
-    if (type === "day") {
-      dayPicker = (
-        <DayPicker
-          weekStartsOn={1}
-          showOutsideDays={true}
-          locale={ko}
-          modifiersClassNames={{
-            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
-          }}
-          mode="single"
-          selected={new Date(strDate)}
-          onDayClick={(day) => {
-            setStrDate(moment(day).format("YYYY-MM-DD"));
-          }}
-          onMonthChange={(month) => {
-            setStrDate(moment(month).format("YYYY-MM-DD"));
-          }}
-        />
-      );
-    };
-    if (type === "week") {
-      dayPicker = (
-        <DayPicker
-          weekStartsOn={1}
-          showOutsideDays={true}
-          locale={ko}
-          modifiersClassNames={{
-            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
-          }}
-          mode="range"
-          selected={strStartDate && strEndDate && {from: new Date(strStartDate), to: new Date(strEndDate)}}
-          month={strStartDate && strEndDate && new Date(strStartDate)}
-          onDayClick={(day) => {
-            const selectedDate = moment(day);
-            const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
-            const endOfWeek = startOfWeek.clone().add(6, "days");
-            setStrStartDate(moment(startOfWeek).format("YYYY-MM-DD"));
-            setStrEndDate(moment(endOfWeek).format("YYYY-MM-DD"));
-          }}
-          onMonthChange={(month) => {
-            setStrStartDate(month);
-            setStrEndDate(undefined);
-          }}
-        />
-      );
-    }
-    if (type === "month") {
-      dayPicker = (
-        <DayPicker
-          weekStartsOn={1}
-          showOutsideDays={true}
-          locale={ko}
-          modifiersClassNames={{
-            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
-          }}
-          mode="default"
-          month={new Date(strDur.split(" ~ ")[0])}
-          onMonthChange={(month) => {
-            const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
-            const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
-            setStrDur(`${startOfMonth} ~ ${endOfMonth}`);
-          }}
-        />
-      );
-    }
-    if (type === "year") {
-      dayPicker = (
-        <DayPicker
-          weekStartsOn={1}
-          showOutsideDays={true}
-          locale={ko}
-          modifiersClassNames={{
-            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
-          }}
-          mode="default"
-          month={new Date(strDur.split(" ~ ")[0])}
-          onMonthChange={(year) => {
-            const yearDate = new Date(year.getFullYear(), 0, 1);
-            const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
-            const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
-            const prevMonth = differenceInDays(monthDate, yearDate) / 30;
-            if (nextMonth > prevMonth) {
-              setStrDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
-            }
-            else {
-              setStrDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
-            }
-          }}
-        />
-      );
-    };
-    if (type === "select") {
-      dayPicker = (
-        <DayPicker
-          weekStartsOn={1}
-          showOutsideDays={true}
-          locale={ko}
-          modifiersClassNames={{
-            selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
-          }}
-          mode="range"
-          selected={strStartDate && strEndDate && {from: strStartDate, to: strEndDate}}
-          month={strStartDate}
-          onDayClick= {(day) => {
-            const selectedDay = new Date(day);
-            const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
-            if (strStartDate && strEndDate) {
-              if (selectedDay < new Date(strStartDate)) {
-                setStrStartDate(fmtDate);
-                setStrEndDate(fmtDate);
-              }
-              else if (selectedDay > new Date(strEndDate)) {
-                setStrEndDate(fmtDate);
-              }
-              else {
-                setStrStartDate(fmtDate);
-                setStrEndDate(fmtDate);
-              }
-            }
-            else if (strStartDate) {
-              if (selectedDay < new Date(strStartDate)) {
-                setStrEndDate(strStartDate);
-                setStrStartDate(fmtDate);
-              }
-              else if (selectedDay > new Date(strStartDate)) {
-                setStrEndDate(fmtDate);
-              }
-              else {
-                setStrStartDate(undefined);
-                setStrEndDate(undefined);
-              }
-            }
-            else {
-              setStrStartDate(fmtDate);
-            }
-          }}
-          onMonthChange={(month) => {
-            setStrStartDate(new Date(month.getFullYear(), month.getMonth(), 1));
-            setStrEndDate(undefined);
-          }}
-        />
-      );
-    };
+  const dateNode = () => {
     return (
-      <Draggable>
-        <div className={`dayPicker-container ${calendarOpen ? "" : "d-none"}`}>
-          <span
-            className="d-right fw-700 pointer"
-            onClick={() => setCalendarOpen(false)}
-            style={{position: "absolute", right: "15px", top: "10px"}}
-          >
-            X
-          </span>
-          <div className="h-2"></div>
-          {dayPicker}
-        </div>
-      </Draggable>
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="list" />
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
@@ -361,10 +182,23 @@ export const WorkListReal = () => {
     );
   };
 
+  // 6. calendar ---------------------------------------------------------------------------------->
+  const calendarNode = () => {
+    return (
+      <CalendarNode filter={filter} setFilter={setFilter}
+        strDate={strDate} setStrDate={setStrDate}
+        strStartDate={strStartDate} setStrStartDate={setStrStartDate}
+        strEndDate={strEndDate} setStrEndDate={setStrEndDate}
+        strDur={strDur} setStrDur={setStrDur}
+        calendarOpen={calendarOpen} setCalendarOpen={setCalendarOpen}
+      />
+    );
+  };
+
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
     return (
-      <PagingNode totalCount={totalCount} paging={paging} setPaging={setPaging}
+      <PagingNode paging={paging} setPaging={setPaging} totalCount={totalCount}
       />
     );
   };
@@ -398,9 +232,14 @@ export const WorkListReal = () => {
             <h1>List (Real)</h1>
           </div>
         </div>
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            {dateNode()}
+          </div>
+        </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {viewNode()}
+            {calendarNode()}
             {tableNode()}
           </div>
         </div>

@@ -8,9 +8,10 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import {workPartArray, workTitleArray} from "../../assets/data/WorkArray.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkSaveReal = () => {
@@ -113,6 +114,7 @@ export const WorkSaveReal = () => {
     });
     if (response.data === "success") {
       alert("Save a work successfully");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -121,9 +123,9 @@ export const WorkSaveReal = () => {
   };
 
   // 4. date -------------------------------------------------------------------------------------->
-  const viewNode = () => {
+  const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} />
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
     );
   };
 
@@ -185,7 +187,7 @@ export const WorkSaveReal = () => {
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableSection = (i) => {
     return (
       <div key={i} className="mb-20">
@@ -335,7 +337,7 @@ export const WorkSaveReal = () => {
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <div>
@@ -416,7 +418,11 @@ export const WorkSaveReal = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode flowSave={flowSave} navParam={navParam} STATE={STATE} />
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={flowSave} navParam={navParam}
+        type="save"
+      />
     );
   };
 
@@ -431,7 +437,7 @@ export const WorkSaveReal = () => {
         </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {viewNode()}
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mt-5">

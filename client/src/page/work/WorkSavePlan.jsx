@@ -3,19 +3,21 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import DatePicker from "react-datepicker";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import TimePicker from "react-time-picker";
 import axios from "axios";
-import moment from "moment-timezone";
 import {workPartArray, workTitleArray} from "../../assets/data/WorkArray.jsx";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkSavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -84,49 +86,7 @@ export const WorkSavePlan = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
-    setWORK((prev) => ({
-      ...prev,
-      work_date: strDur
-    }));
-  }, [strDate]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const startTime = WORK.work_plan?.work_start?.toString();
-    const endTime = WORK.work_plan?.work_end?.toString();
-
-    if (startTime && endTime) {
-      const startDate = new Date(`${strDate}T${startTime}`);
-      const endDate = new Date(`${strDate}T${endTime}`);
-
-      // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
-      if (endDate < startDate) {
-        endDate.setDate(endDate.getDate() + 1);
-      }
-
-      // 차이 계산
-      const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-
-      setWORK((prev) => ({
-        ...prev,
-        work_plan: {
-          ...prev.work_plan,
-          work_time: time,
-        },
-      }));
-    }
-  }, [WORK.work_plan.work_start, WORK.work_plan.work_end]);
+  useDate(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur, "N");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -135,7 +95,7 @@ export const WorkSavePlan = () => {
         _id: "",
         user_id: user_id,
         work_dur: strDur,
-        planYn: "Y",
+        planYn: "N",
       },
     });
 
@@ -150,10 +110,11 @@ export const WorkSavePlan = () => {
       user_id: user_id,
       WORK: WORK,
       work_dur: strDur,
-      planYn: "Y",
+      planYn: "N"
     });
     if (response.data === "success") {
       alert("Save a work successfully");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -162,31 +123,9 @@ export const WorkSavePlan = () => {
   };
 
   // 4. date -------------------------------------------------------------------------------------->
-  const viewNode = () => {
-
-    const calcDate = (days) => {
-      const date = new Date(strDate);
-      date.setDate(date.getDate() + days);
-      setStrDate(moment(date).format("YYYY-MM-DD"));
-    };
-
+  const dateNode = () => {
     return (
-      <div className="d-inline-flex">
-        <div onClick={() => calcDate(-1)}>
-          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
-        </div>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
-          selected={new Date(strDate)}
-          onChange={(date) => {
-            setStrDate(moment(date).format("YYYY-MM-DD"));
-          }}
-        />
-        <div onClick={() => calcDate(1)}>
-          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
-        </div>
-      </div>
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
     );
   };
 
@@ -248,7 +187,7 @@ export const WorkSavePlan = () => {
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableSection = (i) => {
     return (
       <div key={i} className="mb-20">
@@ -398,7 +337,7 @@ export const WorkSavePlan = () => {
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <div>
@@ -478,51 +417,12 @@ export const WorkSavePlan = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonSave () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary me-2"
-          onClick={() => {
-            flowSave();
-          }}
-        >
-          Save
-        </button>
-      );
-    };
-    function buttonReset () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success me-2"
-          onClick={() => {
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonList () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => {
-            navParam(STATE.toList);
-          }}
-        >
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonSave()}
-        {buttonReset()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={flowSave} navParam={navParam}
+        type="save"
+      />
     );
   };
 
@@ -537,7 +437,7 @@ export const WorkSavePlan = () => {
         </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {viewNode()}
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mt-5">

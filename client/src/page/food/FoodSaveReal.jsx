@@ -6,14 +6,17 @@ import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSaveReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -85,20 +88,6 @@ export const FoodSaveReal = () => {
       },
     }
   );
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setFOOD((prev) => ({
-      ...prev,
-      food_date: strDur
-    }));
-  }, [strDur]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   /* useEffect(() => {(async () => {
@@ -200,11 +189,19 @@ export const FoodSaveReal = () => {
     });
     if (response.data === "success") {
       alert("Save a food successfully");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
       alert(`${response.data}error`);
     }
+  };
+
+  // 4. date -------------------------------------------------------------------------------------->
+  const dateNode = () => {
+    return (
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
+    );
   };
 
   // 4. handle ------------------------------------------------------------------------------------>
@@ -254,7 +251,7 @@ export const FoodSaveReal = () => {
     });
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
@@ -356,53 +353,12 @@ export const FoodSaveReal = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonSave () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary"
-          onClick={() => {
-            localStorage.clear();
-            flowSave()
-          }}
-        >
-          Save
-        </button>
-      );
-    };
-    function buttonRefresh () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success ms-2"
-          onClick={() => {
-            localStorage.clear();
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonSearch () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary ms-2"
-          onClick={() => {
-            navParam(STATE.toSearch);
-          }}
-        >
-          Search
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonSave()}
-        {buttonRefresh()}
-        {buttonSearch()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={flowSave} navParam={navParam}
+        type="save"
+      />
     );
   };
 
@@ -413,6 +369,11 @@ export const FoodSaveReal = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Save (Real)</h1>
+          </div>
+        </div>
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            {dateNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

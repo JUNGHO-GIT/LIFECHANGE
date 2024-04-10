@@ -5,9 +5,12 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import TimePicker from "react-time-picker";
-import axios from "axios";
 import moment from "moment-timezone";
+import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -15,7 +18,6 @@ export const SleepSaveReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -97,6 +99,7 @@ export const SleepSaveReal = () => {
     });
     if (response.data === "success") {
       alert("Save a work successfully");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -105,13 +108,13 @@ export const SleepSaveReal = () => {
   };
 
   // 4. date -------------------------------------------------------------------------------------->
-  const viewNode = () => {
+  const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} />
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <div>
@@ -210,12 +213,12 @@ export const SleepSaveReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Save (List)</h1>
+            <h1>Save (Real)</h1>
           </div>
         </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {viewNode()}
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">

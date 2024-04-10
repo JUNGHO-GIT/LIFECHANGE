@@ -7,7 +7,7 @@ import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
-  strDate, setStrDate
+  strDate, setStrDate, type
 }) => {
 
   function calcDate (days) {
@@ -16,22 +16,30 @@ export const DateNode = ({
     setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
   };
 
-  return (
-    <div className="d-inline-flex">
-      <div onClick={() => calcDate(-1)}>
-        <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
-      </div>
-      <DatePicker
-        dateFormat="yyyy-MM-dd"
-        popperPlacement="bottom"
-        selected={new Date(strDate)}
-        onChange={(date) => {
+  function picker () {
+    return (
+      <div className="d-inline-flex">
+        {type === "save" ? (
+          <div onClick={() => (calcDate(-1))}>
+            <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
+          </div>
+        ) : null}
+        <DatePicker dateFormat="yyyy-MM-dd" popperPlacement="bottom" selected={new Date(strDate)}
+        disabled={type === "save" ? false : true} onChange={(date) => {
           setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
-        }}
-      />
-      <div onClick={() => calcDate(1)}>
-        <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
+        }}/>
+        {type === "save" ? (
+          <div onClick={() => (calcDate(1))}>
+            <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
+          </div>
+        ) : null}
       </div>
-    </div>
+    );
+  };
+
+  return (
+    <React.Fragment>
+      {picker()}
+    </React.Fragment>
   );
 };

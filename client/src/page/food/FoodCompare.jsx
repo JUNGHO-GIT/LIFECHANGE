@@ -24,7 +24,7 @@ export const FoodCompare = () => {
     id: "",
     date: "",
     refresh: 0,
-    toList: "/food/list",
+    toList: "/food/list/real",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -40,9 +40,14 @@ export const FoodCompare = () => {
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
-      page: 1,
       limit: 5,
       part: "전체",
+    }
+  );
+  const {val:paging, set:setPaging} = useStorage(
+    `paging(${PATH})`, {
+      page: 1,
+      limit: 5
     }
   );
 
@@ -98,7 +103,8 @@ export const FoodCompare = () => {
       params: {
         user_id: user_id,
         food_dur: strDur,
-        filter: filter
+        filter: filter,
+        paging: paging,
       },
     });
     setTotalCount(response.data.totalCount);
@@ -106,7 +112,7 @@ export const FoodCompare = () => {
 
   })()}, [strDur, filter, paging]);
 
-  // 6. table ----------------------------------------------------------------------------------->
+  // 5. table ----------------------------------------------------------------------------------->
   const tableCompare = () => {
     return (
       <table className="table bg-white table-hover">
@@ -171,9 +177,9 @@ export const FoodCompare = () => {
           type="button"
           className="btn btn-sm btn-secondary me-2"
           onClick={() => {
+            STATE.date = strDate;
             navParam(STATE.toList);
-          }}
-        >
+          }}>
           List
         </button>
       );

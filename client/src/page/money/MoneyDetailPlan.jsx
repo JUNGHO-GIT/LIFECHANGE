@@ -4,14 +4,17 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import moment from "moment-timezone";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id.toString();
@@ -20,8 +23,8 @@ export const MoneyDetailPlan = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    toList:"/money/list",
-    toSave:"/money/save",
+    toList:"/money/list/plan",
+    toSave:"/money/save/plan",
     id: "",
     date: ""
   };
@@ -66,20 +69,6 @@ export const MoneyDetailPlan = () => {
     }
   });
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setMONEY((prev) => ({
-      ...prev,
-      money_date: strDur
-    }));
-  }, [strDur]);
-
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_MONEY}/detail`, {
@@ -87,7 +76,7 @@ export const MoneyDetailPlan = () => {
         _id: location_id,
         user_id: user_id,
         money_dur: `${location_date} ~ ${location_date}`,
-        planYn: "Y",
+        planYn: "N",
       },
     });
 
@@ -102,11 +91,12 @@ export const MoneyDetailPlan = () => {
         _id: id,
         user_id: user_id,
         money_dur: strDur,
-        planYn: "Y",
+        planYn: "N",
       },
     });
     if (response.data === "success") {
       alert("delete success");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -114,7 +104,14 @@ export const MoneyDetailPlan = () => {
     }
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
+  const dateNode = () => {
+    return (
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="detail" />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
@@ -158,42 +155,12 @@ export const MoneyDetailPlan = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonUpdate() {
-      return (
-        <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-          STATE.date = strDate;
-          navParam(STATE.toSave, {
-            state: STATE,
-          });
-        }}>
-          Update
-        </button>
-      );
-    };
-    function buttonRefresh () {
-      return (
-        <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-          navParam(STATE.refresh);
-        }}>
-          Refresh
-        </button>
-      );
-    };
-    function buttonList() {
-      return (
-        <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-          navParam(STATE.toList);
-        }}>
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonUpdate()}
-        {buttonRefresh()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={""} navParam={navParam}
+        type="detail"
+      />
     );
   };
 
@@ -204,6 +171,11 @@ export const MoneyDetailPlan = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Detail (Plan)</h1>
+          </div>
+        </div>
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mb-20">

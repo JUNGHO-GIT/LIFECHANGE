@@ -3,12 +3,14 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySaveReal = () => {
@@ -73,21 +75,6 @@ export const MoneySaveReal = () => {
     }
   });
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
-    setMONEY((prev) => ({
-      ...prev,
-      work_date: strDur
-    }));
-  }, [strDate]);
-
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_MONEY}/detail`, {
@@ -114,6 +101,7 @@ export const MoneySaveReal = () => {
     });
     if (response.data === "success") {
       alert("Save a money successfully");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -122,29 +110,9 @@ export const MoneySaveReal = () => {
   };
 
   // 4. date -------------------------------------------------------------------------------------->
-  const viewNode = () => {
-    const calcDate = (days) => {
-      const date = new Date(strDate);
-      date.setDate(date.getDate() + days);
-      setStrDate(moment(date).format("YYYY-MM-DD"));
-    };
+  const dateNode = () => {
     return (
-      <div className="d-inline-flex">
-        <div onClick={() => calcDate(-1)}>
-          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
-        </div>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
-          selected={new Date(strDate)}
-          onChange={(date) => {
-            setStrDate(moment(date).format("YYYY-MM-DD"));
-          }}
-        />
-        <div onClick={() => calcDate(1)}>
-          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
-        </div>
-      </div>
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
     );
   };
 
@@ -209,7 +177,7 @@ export const MoneySaveReal = () => {
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function tableSection (i) {
       return (
@@ -346,51 +314,12 @@ export const MoneySaveReal = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonSave () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary me-2"
-          onClick={() => {
-            flowSave();
-          }}
-        >
-          Save
-        </button>
-      );
-    };
-    function buttonReset () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success me-2"
-          onClick={() => {
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonList () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => {
-            navParam(STATE.toList);
-          }}
-        >
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonSave()}
-        {buttonReset()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={flowSave} navParam={navParam}
+        type="save"
+      />
     );
   };
 
@@ -405,7 +334,7 @@ export const MoneySaveReal = () => {
         </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {viewNode()}
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center">

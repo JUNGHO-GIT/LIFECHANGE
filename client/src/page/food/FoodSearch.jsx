@@ -103,7 +103,7 @@ export const FoodSearch = () => {
     setTotalCount(response.data.totalCount);
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
 
     function handleStorage (param) {

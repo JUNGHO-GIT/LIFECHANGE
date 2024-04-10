@@ -172,7 +172,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableFoodList = () => {
     return (
       <table className="table table-bordered border-dark table-hover">
@@ -198,7 +198,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 6. table ----------------------------------------------------------------------------------->
+  // 5. table ----------------------------------------------------------------------------------->
   const tableSleepList = () => {
     return (
       <table className="table table-bordered border-dark table-hover">

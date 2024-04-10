@@ -4,18 +4,19 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
-import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
-import moment from "moment-timezone";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -34,12 +35,6 @@ export const SleepSavePlan = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, koreanDate
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, koreanDate
-  );
   const {val:strDate, set:setStrDate} = useStorage(
     `strDate(${PATH})`, location_date
   );
@@ -74,7 +69,7 @@ export const SleepSavePlan = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(SLEEP, setSLEEP, PATH, location_date);
+  useDate(SLEEP, setSLEEP, PATH, location_date, strDate, setStrDate, strDur, setStrDur, "N");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -83,7 +78,7 @@ export const SleepSavePlan = () => {
         _id: "",
         user_id: user_id,
         sleep_dur: strDur,
-        planYn: "Y",
+        planYn: "N",
       },
     });
 
@@ -99,10 +94,11 @@ export const SleepSavePlan = () => {
       user_id: user_id,
       SLEEP: SLEEP,
       sleep_dur: strDur,
-      planYn: "Y",
+      planYn: "N",
     });
     if (response.data === "success") {
       alert("Save a work successfully");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -111,35 +107,13 @@ export const SleepSavePlan = () => {
   };
 
   // 4. date -------------------------------------------------------------------------------------->
-  const viewNode = () => {
-
-    const calcDate = (days) => {
-      const date = new Date(strDate);
-      date.setDate(date.getDate() + days);
-      setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
-    };
-
+  const dateNode = () => {
     return (
-      <div className="d-inline-flex">
-        <div onClick={() => calcDate(-1)}>
-          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
-        </div>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
-          selected={new Date(strDate)}
-          onChange={(date) => {
-            setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
-          }}
-        />
-        <div onClick={() => calcDate(1)}>
-          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
-        </div>
-      </div>
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
     );
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <div>
@@ -157,7 +131,6 @@ export const SleepSavePlan = () => {
                 locale="ko"
                 value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_night)}
                 onChange={(e) => {
-                  setStrStartDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_plan: {
@@ -186,7 +159,6 @@ export const SleepSavePlan = () => {
                 locale="ko"
                 value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_morning)}
                 onChange={(e) => {
-                  setStrEndDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_plan: {
@@ -225,51 +197,12 @@ export const SleepSavePlan = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonSave () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary me-2"
-          onClick={() => {
-            flowSave();
-          }}
-        >
-          Save
-        </button>
-      );
-    };
-    function buttonReset () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success me-2"
-          onClick={() => {
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonList () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => {
-            navParam(STATE.toList);
-          }}
-        >
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonSave()}
-        {buttonReset()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={flowSave} navParam={navParam}
+        type="save"
+      />
     );
   };
 
@@ -284,7 +217,7 @@ export const SleepSavePlan = () => {
         </div>
         <div className="row d-center mb-20">
           <div className="col-12">
-            {viewNode()}
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">

@@ -4,8 +4,8 @@ import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
 import {Collapse} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useDeveloperMode} from "../assets/js/useDeveloperMode";
-import {listArray} from "./ListArray";
+import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
+import {linkArray} from "../assets/data/LinkArray.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -41,7 +41,9 @@ export const Header = () => {
   // 4-1. view ------------------------------------------------------------------------------------>
   const SidebarItem = ({label, items}) => (
     <li className="text-start pointer mt-30 ps-20">
-      <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => toggleExpand(label)}>
+      <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
+        toggleExpand(label)
+      )}>
         {label}
       </div>
       <Collapse in={isExpended === label}>
@@ -68,10 +70,9 @@ export const Header = () => {
   const Sidebar = () => {
 
     let preFix;
-    let subFix = isActive.split("/")[1];
     let lowFix;
 
-    listArray.forEach((menu) => {
+    linkArray.forEach((menu) => {
       if (isActive.includes(menu.label.toLowerCase())) {
         preFix = menu.label;
         lowFix = preFix.toLowerCase()
@@ -86,7 +87,7 @@ export const Header = () => {
         </div>
         <div className="d-flex flex-column p-3">
           <ul className="nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark">
-            {listArray.map((menu) => (
+            {linkArray.map((menu) => (
               <SidebarItem key={menu.label}
                 {...menu}
               />
@@ -104,7 +105,7 @@ export const Header = () => {
     let subFix = isActive.split("/")[1];
     let lowFix;
 
-    listArray.forEach((menu) => {
+    linkArray.forEach((menu) => {
       if (isActive.includes(menu.label.toLowerCase())) {
         preFix = menu.label;
         lowFix = preFix.toLowerCase()
@@ -121,81 +122,12 @@ export const Header = () => {
       );
     };
 
-    function buttonList () {
-      return (
-        <div className="dropdown">
-          <div className="btn btn-primary btn-sm dropdown-toggle me-5" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            List
-          </div>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li>
-              <p className="dropdown-item pointer" onClick={() => {
-                STATE.date = koreanDate;
-                navParam(`/${lowFix}/list/plan`, {
-                  state: STATE
-                });
-              }}>
-                계획
-              </p>
-            </li>
-            <li>
-              <p className="dropdown-item pointer" onClick={() => {
-                STATE.date = koreanDate;
-                navParam(`/${lowFix}/list/real`, {
-                  state: STATE
-                });
-              }}>
-                실제
-              </p>
-            </li>
-          </ul>
-        </div>
-      );
-    };
-
-    function buttonSave () {
-      return (
-        <div className="dropdown">
-          <div className="btn btn-primary btn-sm dropdown-toggle me-5" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Save
-          </div>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li>
-              <p className="dropdown-item pointer" onClick={() => {
-                STATE.date = koreanDate;
-                navParam(`/${lowFix}/save/plan`, {
-                  state: STATE
-                });
-              }}>
-                계획
-              </p>
-            </li>
-            <li>
-              <p className="dropdown-item pointer" onClick={() => {
-                STATE.date = koreanDate;
-                navParam(`/${lowFix}/save/real`, {
-                  state: STATE
-                });
-              }}>
-                실제
-              </p>
-            </li>
-          </ul>
-        </div>
-      );
-    };
-
     return (
       <div className="d-flex justify-content-between align-items-center">
         <div className="text-start">
           <h1 className="fs-30 fw-500 ps-30">{preFix} / {subFix}</h1>
         </div>
-        <div className="text-center">
-          <h1 className="fs-30 fw-500">{STATE.date}</h1>
-        </div>
         <div className="text-end d-flex">
-          {buttonList()}
-          {buttonSave()}
           {buttonClear()}
         </div>
       </div>
@@ -250,8 +182,7 @@ export const Header = () => {
 
   // 6-3. button ---------------------------------------------------------------------------------->
   const buttonDeveloperMode = () => {
-    const buttonClass
-    = isDeveloperMode ? "btn btn-sm btn-secondary ms-2" : "btn btn-sm ms-2";
+    const buttonClass = isDeveloperMode ? "btn btn-sm btn-secondary ms-2" : "btn btn-sm ms-2";
     return (
       <button type="button" className={buttonClass} onClick={() => {
         toggleDeveloperMode();

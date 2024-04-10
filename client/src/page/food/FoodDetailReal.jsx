@@ -5,13 +5,17 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import moment from "moment-timezone";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetailReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
@@ -80,20 +84,6 @@ export const FoodDetailReal = () => {
     },
   });
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setFOOD((prev) => ({
-      ...prev,
-      food_date: strDur
-    }));
-  }, [strDur]);
-
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_FOOD}/detail`, {
@@ -109,7 +99,14 @@ export const FoodDetailReal = () => {
 
   })()}, []);
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
+  const dateNode = () => {
+    return (
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="detail" />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
@@ -154,54 +151,12 @@ export const FoodDetailReal = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonUpdate () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary ms-2"
-          onClick={() => {
-            STATE.date = strDate;
-            navParam(STATE.toSave, {
-              state: STATE,
-            });
-          }}
-        >
-          Update
-        </button>
-      );
-    };
-    function buttonRefresh () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success ms-2"
-          onClick={() => {
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonList () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary ms-2"
-          onClick={() => {
-            navParam(STATE.toList);
-          }}
-        >
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonUpdate()}
-        {buttonRefresh()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={""} navParam={navParam}
+        type="detail"
+      />
     );
   };
 
@@ -212,6 +167,11 @@ export const FoodDetailReal = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Detail</h1>
+          </div>
+        </div>
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mb-20">

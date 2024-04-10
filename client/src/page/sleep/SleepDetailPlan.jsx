@@ -4,14 +4,17 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import moment from "moment-timezone";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id.toString();
@@ -27,12 +30,6 @@ export const SleepDetailPlan = () => {
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, koreanDate
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, koreanDate
-  );
   const {val:strDate, set:setStrDate} = useStorage(
     `strDate(${PATH})`, location_date
   );
@@ -64,20 +61,6 @@ export const SleepDetailPlan = () => {
     },
   });
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setSLEEP((prev) => ({
-      ...prev,
-      sleep_date: strDur
-    }));
-  }, [strDur]);
-
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/detail`, {
@@ -85,7 +68,7 @@ export const SleepDetailPlan = () => {
         _id: location_id,
         user_id: user_id,
         sleep_dur: `${location_date} ~ ${location_date}`,
-        planYn: "Y",
+        planYn: "N",
       },
     });
 
@@ -100,11 +83,12 @@ export const SleepDetailPlan = () => {
         _id: id,
         user_id: user_id,
         sleep_dur: strDur,
-        planYn: "Y",
+        planYn: "N",
       },
     });
     if (response.data === "success") {
       alert("delete success");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -112,7 +96,14 @@ export const SleepDetailPlan = () => {
     }
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
+  const dateNode = () => {
+    return (
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="detail" />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
@@ -158,42 +149,12 @@ export const SleepDetailPlan = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonUpdate() {
-      return (
-        <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-          STATE.date = strDate;
-          navParam(STATE.toSave, {
-            state: STATE,
-          });
-        }}>
-          Update
-        </button>
-      );
-    };
-    function buttonRefresh () {
-      return (
-        <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
-          navParam(STATE.refresh);
-        }}>
-          Refresh
-        </button>
-      );
-    };
-    function buttonList() {
-      return (
-        <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
-          navParam(STATE.toList);
-        }}>
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonUpdate()}
-        {buttonRefresh()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={""} navParam={navParam}
+        type="detail"
+      />
     );
   };
 
@@ -204,6 +165,11 @@ export const SleepDetailPlan = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Detail (Plan)</h1>
+          </div>
+        </div>
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mb-20">

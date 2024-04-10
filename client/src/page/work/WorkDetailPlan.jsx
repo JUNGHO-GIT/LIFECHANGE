@@ -4,14 +4,16 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import moment from "moment-timezone";
-
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 // ------------------------------------------------------------------------------------------------>
 export const WorkDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
@@ -22,8 +24,8 @@ export const WorkDetailPlan = () => {
     id: "",
     date: "",
     refresh:0,
-    toList:"/work/list",
-    toSave:"/work/save"
+    toList:"/work/list/plan",
+    toSave:"/work/save/plan",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -39,7 +41,7 @@ export const WorkDetailPlan = () => {
     _id: "",
     work_number: 0,
     work_date: "",
-    work_plan : {
+    work_real : {
       work_start: "",
       work_end: "",
       work_time: "",
@@ -59,7 +61,7 @@ export const WorkDetailPlan = () => {
     _id: location_id,
     work_number: 0,
     work_date: "",
-    work_plan : {
+    work_real : {
       work_start: "",
       work_end: "",
       work_time: "",
@@ -76,20 +78,6 @@ export const WorkDetailPlan = () => {
     }
   });
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setWORK((prev) => ({
-      ...prev,
-      work_date: strDur
-    }));
-  }, [strDur]);
-
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_WORK}/detail`, {
@@ -97,7 +85,7 @@ export const WorkDetailPlan = () => {
         _id: location_id,
         user_id: user_id,
         work_dur: `${location_date} ~ ${location_date}`,
-        planYn: "Y",
+        planYn: "N",
       },
     });
 
@@ -112,11 +100,12 @@ export const WorkDetailPlan = () => {
         _id: id,
         user_id: user_id,
         work_dur: strDur,
-        planYn: "Y",
+        planYn: "N",
       },
     });
     if (response.data === "success") {
       alert("delete success");
+      STATE.date = strDate;
       navParam(STATE.toList);
     }
     else {
@@ -124,7 +113,14 @@ export const WorkDetailPlan = () => {
     }
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
+  const dateNode = () => {
+    return (
+      <DateNode strDate={strDate} setStrDate={setStrDate} type="detail" />
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <table className="table bg-white table-hover">
@@ -147,16 +143,16 @@ export const WorkDetailPlan = () => {
               {WORK.work_date}
             </td>
             <td className="fs-20 pt-20">
-              {WORK.work_plan.work_start}
+              {WORK.work_real.work_start}
             </td>
             <td className="fs-20 pt-20">
-              {WORK.work_plan.work_end}
+              {WORK.work_real.work_end}
             </td>
             <td className="fs-20 pt-20">
-              {WORK.work_plan.work_time}
+              {WORK.work_real.work_time}
             </td>
             <td colSpan={5}>
-              {WORK.work_plan.work_section.map((item, index) => (
+              {WORK.work_real.work_section.map((item, index) => (
                 <div key={index} className="d-flex justify-content-between">
                   <span>{item.work_part_val}</span>
                   <span>{item.work_title_val}</span>
@@ -182,54 +178,12 @@ export const WorkDetailPlan = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonUpdate () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary ms-2"
-          onClick={() => {
-            STATE.date = strDate;
-            navParam(STATE.toSave, {
-              state: STATE,
-            });
-          }}
-        >
-          Update
-        </button>
-      );
-    };
-    function buttonRefresh () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success ms-2"
-          onClick={() => {
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonList () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary ms-2"
-          onClick={() => {
-            navParam(STATE.toList);
-          }}
-        >
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonUpdate()}
-        {buttonRefresh()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={""} navParam={navParam}
+        type="detail"
+      />
     );
   };
 
@@ -240,6 +194,11 @@ export const WorkDetailPlan = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Detail (Plan)</h1>
+          </div>
+        </div>
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            {dateNode()}
           </div>
         </div>
         <div className="row d-center mb-20">
