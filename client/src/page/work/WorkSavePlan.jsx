@@ -2,12 +2,12 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/js/useStorage.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {workPartArray, workTitleArray} from "./WorkArray.jsx";
+import {workPartArray, workTitleArray} from "./array/WorkArray.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -34,12 +34,6 @@ export const WorkSavePlan = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, koreanDate
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, koreanDate
-  );
   const {val:strDate, set:setStrDate} = useStorage(
     `strDate(${PATH})`, location_date
   );
@@ -132,7 +126,7 @@ export const WorkSavePlan = () => {
         },
       }));
     }
-  }, [strStartDate, strEndDate]);
+  }, [WORK.work_plan.work_start, WORK.work_plan.work_end]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -422,7 +416,6 @@ export const WorkSavePlan = () => {
                 locale="ko"
                 value={WORK.work_plan?.work_start}
                 onChange={(e) => {
-                  setStrStartDate(e);
                   setWORK((prev) => ({
                     ...prev,
                     work_plan: {
@@ -449,7 +442,6 @@ export const WorkSavePlan = () => {
                 locale="ko"
                 value={WORK.work_plan?.work_end}
                 onChange={(e) => {
-                  setStrEndDate(e);
                   setWORK((prev) => ({
                     ...prev,
                     work_plan: {

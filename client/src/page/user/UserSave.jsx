@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSave = () => {

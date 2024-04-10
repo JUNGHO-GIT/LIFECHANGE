@@ -46,8 +46,8 @@ export const SleepDetailPlan = () => {
     sleep_date: "",
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
@@ -57,8 +57,8 @@ export const SleepDetailPlan = () => {
     sleep_date: "",
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
@@ -133,10 +133,10 @@ export const SleepDetailPlan = () => {
             {SLEEP.sleep_plan.sleep_section.map((item, index) => (
               <React.Fragment key={index}>
                 <td className="fs-20 pt-20">
-                  {item.sleep_start}
+                  {item.sleep_night}
                 </td>
                 <td className="fs-20 pt-20">
-                  {item.sleep_end}
+                  {item.sleep_morning}
                 </td>
                 <td className="fs-20 pt-20">
                   {item.sleep_time}

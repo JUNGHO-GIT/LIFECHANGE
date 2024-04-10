@@ -2,12 +2,14 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/js/useStorage.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useDiffTime} from "../../assets/hooks/useDiffTime.jsx";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {workPartArray, workTitleArray} from "./WorkArray.jsx";
+import {workPartArray, workTitleArray} from "./array/WorkArray.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -34,12 +36,6 @@ export const WorkSaveReal = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, koreanDate
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, koreanDate
-  );
   const {val:strDate, set:setStrDate} = useStorage(
     `strDate(${PATH})`, location_date
   );
@@ -90,49 +86,8 @@ export const WorkSaveReal = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
-    setWORK((prev) => ({
-      ...prev,
-      work_date: strDur
-    }));
-  }, [strDate]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const startTime = WORK.work_real?.work_start?.toString();
-    const endTime = WORK.work_real?.work_end?.toString();
-
-    if (startTime && endTime) {
-      const startDate = new Date(`${strDate}T${startTime}`);
-      const endDate = new Date(`${strDate}T${endTime}`);
-
-      // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
-      if (endDate < startDate) {
-        endDate.setDate(endDate.getDate() + 1);
-      }
-
-      // 차이 계산
-      const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-
-      setWORK((prev) => ({
-        ...prev,
-        work_real: {
-          ...prev.work_real,
-          work_time: time,
-        },
-      }));
-    }
-  }, [strStartDate, strEndDate]);
+  useDate(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDiffTime(WORK, setWORK, PATH, strDate);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -422,7 +377,6 @@ export const WorkSaveReal = () => {
                 locale="ko"
                 value={WORK.work_real?.work_start}
                 onChange={(e) => {
-                  setStrStartDate(e);
                   setWORK((prev) => ({
                     ...prev,
                     work_real: {
@@ -449,7 +403,6 @@ export const WorkSaveReal = () => {
                 locale="ko"
                 value={WORK.work_real?.work_end}
                 onChange={(e) => {
-                  setStrEndDate(e);
                   setWORK((prev) => ({
                     ...prev,
                     work_real: {

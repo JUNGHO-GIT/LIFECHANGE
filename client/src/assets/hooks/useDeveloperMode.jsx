@@ -2,15 +2,15 @@
 
 import React, { createContext, useContext, useState } from "react";
 
+// ------------------------------------------------------------------------------------------------>
 const defaultDeveloperModeContext = {
   isDeveloperMode: false,
   toggleDeveloperMode: () => {},
   log: (message) => {}
 };
 
-const DeveloperModeContext = createContext(defaultDeveloperModeContext);
-
 // 1. useDeveloperMode ---------------------------------------------------------------------------->
+const DeveloperModeContext = createContext(defaultDeveloperModeContext);
 export const useDeveloperMode = () => useContext(DeveloperModeContext);
 
 // 2. DeveloperModeProvider ----------------------------------------------------------------------->

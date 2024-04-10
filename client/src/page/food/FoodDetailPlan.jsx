@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetailPlan = () => {

@@ -19,11 +19,11 @@ const schema = new mongoose.Schema({
   },
   sleep_plan: {
     sleep_section: [{
-      sleep_start: {
+      sleep_night: {
         type: String,
         required: false
       },
-      sleep_end: {
+      sleep_morning: {
         type: String,
         required: false
       },
@@ -35,11 +35,11 @@ const schema = new mongoose.Schema({
   },
   sleep_real: {
     sleep_section: [{
-      sleep_start: {
+      sleep_night: {
         type: String,
         required: false
       },
-      sleep_end: {
+      sleep_morning: {
         type: String,
         required: false
       },

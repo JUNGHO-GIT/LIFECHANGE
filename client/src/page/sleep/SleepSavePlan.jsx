@@ -53,8 +53,8 @@ export const SleepSavePlan = () => {
     sleep_date: "",
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     }
@@ -65,8 +65,8 @@ export const SleepSavePlan = () => {
     sleep_date: "",
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     }
@@ -105,8 +105,8 @@ export const SleepSavePlan = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const startTime = SLEEP.sleep_plan?.sleep_section.map((item) => item?.sleep_start)?.toString();
-    const endTime = SLEEP.sleep_plan?.sleep_section.map((item) => item?.sleep_end)?.toString();
+    const startTime = SLEEP.sleep_plan?.sleep_section.map((item) => item?.sleep_night)?.toString();
+    const endTime = SLEEP.sleep_plan?.sleep_section.map((item) => item?.sleep_morning)?.toString();
 
     if (startTime && endTime) {
       const startDate = new Date(`${strDate}T${startTime}`);
@@ -191,14 +191,14 @@ export const SleepSavePlan = () => {
             <div className="input-group">
               <span className="input-group-text">취침시간</span>
               <TimePicker
-                id="sleep_start"
-                name="sleep_start"
+                id="sleep_night"
+                name="sleep_night"
                 className="form-control"
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_start)}
+                value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_night)}
                 onChange={(e) => {
                   setStrStartDate(e);
                   setSLEEP((prev) => ({
@@ -206,7 +206,7 @@ export const SleepSavePlan = () => {
                     sleep_plan: {
                       sleep_section: [{
                         ...prev.sleep_plan.sleep_section[0],
-                        sleep_start: e ? e.toString() : "",
+                        sleep_night: e ? e.toString() : "",
                       }]
                     },
                   }));
@@ -220,14 +220,14 @@ export const SleepSavePlan = () => {
             <div className="input-group">
               <span className="input-group-text">기상시간</span>
               <TimePicker
-                id="sleep_end"
-                name="sleep_end"
+                id="sleep_morning"
+                name="sleep_morning"
                 className="form-control"
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_end)}
+                value={(SLEEP.sleep_plan.sleep_section)?.map((item) => item.sleep_morning)}
                 onChange={(e) => {
                   setStrEndDate(e);
                   setSLEEP((prev) => ({
@@ -235,7 +235,7 @@ export const SleepSavePlan = () => {
                     sleep_plan: {
                       sleep_section: [{
                         ...prev.sleep_plan.sleep_section[0],
-                        sleep_end: e ? e.toString() : "",
+                        sleep_morning: e ? e.toString() : "",
                       }]
                     },
                   }));

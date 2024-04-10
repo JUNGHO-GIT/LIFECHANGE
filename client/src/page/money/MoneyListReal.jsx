@@ -2,14 +2,14 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/js/useStorage.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DayPicker} from "react-day-picker";
 import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 import {differenceInDays} from "date-fns";
-import {moneyArray} from "./MoneyArray.jsx";
+import {moneyArray} from "./array/MoneyArray.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListReal = () => {
@@ -449,18 +449,21 @@ export const MoneyListReal = () => {
     };
     function selectPart () {
       return (
-        <select className="form-control" id="part" onChange={(e) => {
+        <select className="form-control" id="part"  value={moneyArray[partIndex].money_part} onChange={(e) => {
           const selectedOption = e.target.options[e.target.selectedIndex];
           const idxValue = selectedOption.getAttribute("data-idx");
-          setPartIndex(Number(idxValue));
+          const newPartIndex = Number(idxValue);
+          const newPartVal = String(e.target.value);
+          const newTitleVal = moneyArray[newPartIndex].money_title[0];
+          setPartIndex(newPartIndex);
           setFilter((prev) => ({
             ...prev,
-            part: e.target.value,
-            title: "전체"
+            part: newPartVal,
+            title: newTitleVal
           }));
         }}>
           {moneyArray.map((item, idx) => (
-            <option key={idx} value={item.money_part} data-idx={idx}>
+            <option key={idx} data-idx={idx}>
               {item.money_part}
             </option>
           ))}
@@ -469,14 +472,14 @@ export const MoneyListReal = () => {
     };
     function selectTitle () {
       return (
-        <select className="form-control" id="title" onChange={(e) => {
+        <select className="form-control" id="title" value={filter.title} onChange={(e) => {
           setFilter((prev) => ({
             ...prev,
             title: e.target.value
           }));
         }}>
           {moneyArray[partIndex].money_title.map((item, idx) => (
-            <option key={idx} value={item}>
+            <option key={idx}>
               {item}
             </option>
           ))}

@@ -3,10 +3,10 @@
 import React from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
-import {useStorage} from "../../assets/js/useStorage.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {

@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Routes, Route} from "react-router-dom";
-import {DeveloperModeProvider} from "../assets/js/useDeveloperMode";
+import {DeveloperModeProvider} from "../assets/hooks/useDeveloperMode";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,7 +20,7 @@ import "../assets/css/TimePicker.css";
 import "../assets/css/DayPicker.css";
 import "../assets/css/Header.css";
 
-import {Loader} from "../components/Loader.jsx";
+import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
 import {Footer} from "../layout/Footer";
 

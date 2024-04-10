@@ -66,8 +66,8 @@ export const SleepListPlan = () => {
     sleep_date: "",
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
@@ -78,8 +78,8 @@ export const SleepListPlan = () => {
     sleep_date: "",
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
@@ -302,8 +302,8 @@ export const SleepListPlan = () => {
               <React.Fragment key={item._id + index}>
                 <tr>
                   <td>{item.sleep_date}</td>
-                  <td>{section.sleep_start}</td>
-                  <td>{section.sleep_end}</td>
+                  <td>{section.sleep_night}</td>
+                  <td>{section.sleep_morning}</td>
                   <td>{section.sleep_time}</td>
                 </tr>
               </React.Fragment>
@@ -314,8 +314,8 @@ export const SleepListPlan = () => {
     );
   };
 
-  // 7. paging ------------------------------------------------------------------------------------>
-  const pagingNode = () => {
+  // 7. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => {
     function prevButton() {
       return (
         <button
@@ -506,7 +506,7 @@ export const SleepListPlan = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {pagingNode()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

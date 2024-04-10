@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/js/useStorage.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -29,12 +29,6 @@ export const FoodSaveReal = () => {
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, koreanDate
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, koreanDate
-  );
   const {val:strDate, set:setStrDate} = useStorage(
     `strDate(${PATH})`, location_date
   );

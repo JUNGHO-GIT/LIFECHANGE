@@ -6,8 +6,8 @@ import DatePicker from "react-datepicker";
 import {parseISO} from "date-fns";
 import moment from "moment-timezone";
 import axios from "axios";
-import {useStorage} from "../../assets/js/useStorage.jsx";
-import {useDeveloperMode} from "../../assets/js/useDeveloperMode.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
@@ -220,8 +220,8 @@ export const CalendarDetail = () => {
               )}}>
                 {resDur}
               </td>
-              <td>{index.sleep_start}</td>
-              <td>{index.sleep_end}</td>
+              <td>{index.sleep_night}</td>
+              <td>{index.sleep_morning}</td>
               <td>{index.sleep_time}</td>
             </tr>
           ))}

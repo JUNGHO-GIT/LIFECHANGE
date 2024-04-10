@@ -62,15 +62,15 @@ export const SleepCompare = () => {
     sleep_date: "",
     sleep_real : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
@@ -81,15 +81,15 @@ export const SleepCompare = () => {
     sleep_date: "",
     sleep_real : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
     sleep_plan : {
       sleep_section: [{
-        sleep_start: "",
-        sleep_end: "",
+        sleep_night: "",
+        sleep_morning: "",
         sleep_time: "",
       }],
     },
@@ -346,15 +346,15 @@ export const SleepCompare = () => {
                 </td>
                 <td>취침</td>
                 <td>
-                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_start)}
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_night)}
                 </td>
                 <td>
-                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_start)}
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_night)}
                 </td>
                 <td>
                   <span className={successOrNot(
-                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_start),
-                    item.sleep_real?.sleep_section?.map((item) => item.sleep_start)
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_night),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_night)
                   )}>
                     ●
                   </span>
@@ -363,15 +363,15 @@ export const SleepCompare = () => {
               <tr>
                 <td>기상</td>
                 <td>
-                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_end)}
+                  {item.sleep_plan?.sleep_section?.map((item) => item.sleep_morning)}
                 </td>
                 <td>
-                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_end)}
+                  {item.sleep_real?.sleep_section?.map((item) => item.sleep_morning)}
                 </td>
                 <td>
                   <span className={successOrNot(
-                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_end),
-                    item.sleep_real?.sleep_section?.map((item) => item.sleep_end)
+                    item.sleep_plan?.sleep_section?.map((item) => item.sleep_morning),
+                    item.sleep_real?.sleep_section?.map((item) => item.sleep_morning)
                   )}>
                     ●
                   </span>
@@ -401,8 +401,8 @@ export const SleepCompare = () => {
     );
   };
 
-  // 7. paging ------------------------------------------------------------------------------------>
-  const pagingNode = () => {
+  // 7. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => {
     function prevButton() {
       return (
         <button
@@ -593,7 +593,7 @@ export const SleepCompare = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {pagingNode()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

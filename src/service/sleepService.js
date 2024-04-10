@@ -10,8 +10,8 @@ export const dashBar = async (
 ) => {
 
   const dataFields = {
-    "취침": { plan: "sleep_start", real: "sleep_start" },
-    "기상": { plan: "sleep_end", real: "sleep_end" },
+    "취침": { plan: "sleep_night", real: "sleep_night" },
+    "기상": { plan: "sleep_morning", real: "sleep_morning" },
     "수면": { plan: "sleep_time", real: "sleep_time" }
   };
 
@@ -77,10 +77,10 @@ export const dashLine = async (
     finalResult.push({
       name: names[i],
       취침: fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_start).join(":")
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_night).join(":")
       ),
       기상: fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_end).join(":")
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_morning).join(":")
       ),
       수면: fmtData(
         findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
@@ -126,10 +126,10 @@ export const dashAvgWeek = async (
     if (findResult) {
       const weekNum = Math.max(moment(findResult.sleep_date).week() - moment(findResult.sleep_date).startOf("month").week() + 1);
       sumSleepStart[weekNum - 1] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_start).join(":")
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_night).join(":")
       );
       sumSleepEnd[weekNum - 1] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_end).join(":")
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_morning).join(":")
       );
       sumSleepTime[weekNum - 1] += fmtData(
         findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
@@ -190,10 +190,10 @@ export const dashAvgMonth = async (
     if (findResult) {
       const monthNum = m.month();
       sumSleepStart[monthNum] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_start).join(":")
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_night).join(":")
       );
       sumSleepEnd[monthNum] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_end).join(":")
+        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_morning).join(":")
       );
       sumSleepTime[monthNum] += fmtData(
         findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
