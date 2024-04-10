@@ -9,6 +9,7 @@ import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 import {differenceInDays} from "date-fns";
+import {moneyArray} from "./MoneyArray.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyListReal = () => {
@@ -24,11 +25,13 @@ export const MoneyListReal = () => {
     id: "",
     date: "",
     refresh:0,
-    toDetail:"/money/detail/real",
-    part: "전체",
+    toDetail:"/money/detail/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:partIndex, set:setPartIndex} = useStorage(
+    `partIndex(${PATH})`, 0
+  );
   const {val:calendarOpen, set:setCalendarOpen} = useStorage(
     `calendarOpen(${PATH})`, false
   );
@@ -42,7 +45,9 @@ export const MoneyListReal = () => {
     `filter(${PATH})`, {
       order: "asc",
       page: 1,
-      limit: 5
+      limit: 5,
+      part: "전체",
+      title: "전체"
     }
   );
 
@@ -333,8 +338,8 @@ export const MoneyListReal = () => {
     );
   };
 
-  // 7. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
+  // 7. paging ------------------------------------------------------------------------------------>
+  const pagingNode = () => {
     function prevButton() {
       return (
         <button
@@ -442,20 +447,40 @@ export const MoneyListReal = () => {
         </div>
       );
     };
-    function selectPart() {
+    function selectPart () {
       return (
-        <div>
-          <select className="form-select" id="part" onChange={(e) => {
-            setFilter({
-              ...filter,
-              part: e.target.value
-            });
-          }}>
-            <option value="전체" selected>전체</option>
-            <option value="수입">수입</option>
-            <option value="지출">지출</option>
-          </select>
-        </div>
+        <select className="form-control" id="part" onChange={(e) => {
+          const selectedOption = e.target.options[e.target.selectedIndex];
+          const idxValue = selectedOption.getAttribute("data-idx");
+          setPartIndex(Number(idxValue));
+          setFilter((prev) => ({
+            ...prev,
+            part: e.target.value,
+            title: "전체"
+          }));
+        }}>
+          {moneyArray.map((item, idx) => (
+            <option key={idx} value={item.money_part} data-idx={idx}>
+              {item.money_part}
+            </option>
+          ))}
+        </select>
+      );
+    };
+    function selectTitle () {
+      return (
+        <select className="form-control" id="title" onChange={(e) => {
+          setFilter((prev) => ({
+            ...prev,
+            title: e.target.value
+          }));
+        }}>
+          {moneyArray[partIndex].money_title.map((item, idx) => (
+            <option key={idx} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
       );
     };
     return (
@@ -464,6 +489,7 @@ export const MoneyListReal = () => {
         {selectOrder()}
         {selectLimit()}
         {selectPart()}
+        {selectTitle()}
       </div>
     );
   };
@@ -511,11 +537,25 @@ export const MoneyListReal = () => {
         </button>
       );
     };
+    function buttonClear () {
+      return (
+        <button
+          type="button"
+          className="btn btn-sm btn-danger me-2"
+          onClick={() => {
+            localStorage.clear();
+          }}
+        >
+          Clear
+        </button>
+      );
+    }
     return (
       <div className="d-inline-flex">
         {buttonCalendar()}
         {buttonToday()}
         {buttonReset()}
+        {buttonClear()}
       </div>
     );
   };
@@ -542,7 +582,7 @@ export const MoneyListReal = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterNode()}
+            {pagingNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

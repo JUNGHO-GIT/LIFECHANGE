@@ -13,10 +13,13 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
-  const part = filter_param.part || "";
+
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const part = filter_param.part || "";
+  const title = filter_param.title || "";
+
   const planYn = planYn_param === "Y" ? "money_plan" : "money_real";
 
   const findResult = await Money.find({
@@ -31,7 +34,8 @@ export const list = async (
 
   const finalResult = findResult.map((prev) => {
     const filtered = prev[planYn]?.money_section.filter((item) => (
-      part === "전체" ? true : item.money_part_val === part
+      part && part === ("전체" || "") ? true : item.money_part_val === part,
+      title && title === ("전체" || "") ? true : item.money_title_val === title
     ));
 
     function sliceData (data, page, limit) {

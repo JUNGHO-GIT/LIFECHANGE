@@ -48,7 +48,13 @@ export const Header = () => {
         <ul>
           {items.map(({ to, label }) => (
             <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
-              <div className="pointer" onClick={() => {navParam(to); setIsActive(to);}}>
+              <div className="pointer" onClick={() => {
+                STATE.date = koreanDate;
+                navParam(to, {
+                  state: STATE
+                });
+                setIsActive(to);
+              }}>
                 {label}
               </div>
             </li>

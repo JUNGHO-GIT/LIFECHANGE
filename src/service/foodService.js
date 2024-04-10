@@ -126,7 +126,7 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(" ~ ");
-  const part = filter_param.part || "";
+  const part = filter_param.part || "전체";
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
@@ -140,22 +140,27 @@ export const list = async (
     },
   })
   .sort({ food_date: sort })
-  .skip((page - 1) * limit)
-  .limit(limit)
   .lean();
 
+  let totalCount = 0;
   const finalResult = findResult.map((food) => {
     if (food[planYn] && food[planYn].food_section) {
-      food[planYn].food_section = food[planYn].food_section.filter((section) => (
+      let sections = food[planYn].food_section.filter((section) => (
         part === "전체" ? true : section.food_part === part
       ));
+
+      // 배열 갯수 누적 계산
+      totalCount += sections.length;
+
+      // section 배열에서 페이지에 맞는 항목만 선택합니다.
+      const startIdx = (limit * page - 1) - (limit - 1);
+      const endIdx = (limit * page);
+      sections = sections.slice(startIdx, endIdx);
+
+      food[planYn].food_section = sections;
     }
     return food;
   });
-
-  const totalCount = finalResult.reduce((acc, cur) => (
-    acc + cur[planYn]?.food_section.length
-  ), 0);
 
   return {
     totalCount: totalCount,

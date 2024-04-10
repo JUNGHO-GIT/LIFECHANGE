@@ -14,7 +14,7 @@ export const list = async (
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
 
-  const part = filter_param.part || "";
+  const part = filter_param.part || "전체";
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
@@ -51,7 +51,7 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
-  const part = filter_param.part || "";
+  const part = filter_param.part || "전체";
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
@@ -67,30 +67,25 @@ export const list = async (
   .sort({ work_date: sort })
   .lean();
 
-  const finalResult = findResult.map((prev) => {
-    const filtered = prev[planYn]?.work_section.filter((item) => (
-      part === "전체" ? true : item.work_part_val === part
-    ));
+  let totalCount = 0;
+  const finalResult = findResult.map((work) => {
+    if (work[planYn] && work[planYn].work_section) {
+      let sections = work[planYn].work_section.filter((section) => (
+        part === "전체" ? true : section.work_part_val === part
+      ));
 
-    function sliceData (data, page, limit) {
-      const startIndex = (page - 1) * limit;
-      let endIndex = startIndex + limit;
-      endIndex = endIndex > data.length ? data.length : endIndex;
-      return data.slice(startIndex, endIndex);
+      // 배열 갯수 누적 계산
+      totalCount += sections.length;
+
+      // section 배열에서 페이지에 맞는 항목만 선택합니다.
+      const startIdx = (limit * page - 1) - (limit - 1);
+      const endIdx = (limit * page);
+      sections = sections.slice(startIdx, endIdx);
+
+      work[planYn].work_section = sections;
     }
-
-    return {
-      ...prev,
-      [planYn]: {
-        ...prev[planYn],
-        work_section: sliceData(filtered, page, limit),
-      },
-    };
+    return work;
   });
-
-  const totalCount = finalResult.reduce((acc, cur) => (
-    acc + cur[planYn]?.work_section?.length || 0
-  ), 0);
 
   return {
     totalCount: totalCount,

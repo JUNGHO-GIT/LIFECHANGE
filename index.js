@@ -19,64 +19,6 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 로그 설정 -------------------------------------------------------------------------------------->
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.json(),
-  defaultMeta: { service: "user-service" },
-  transports: [
-    new winston.transports.File({ filename: "logs/error.log", level: "error" }),
-    new winston.transports.File({ filename: "logs/combined.log" }),
-    new MongoDB({
-      db: "mongodb://127.0.0.1:27017/test",
-      collection: "logs",
-      level: "info",
-      options: { useUnifiedTopology: true },
-    }),
-  ],
-});
-if (process.env.NODE_ENV !== "production") {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
-  }));
-}
-
-// 요청 로그 미들웨어 -----------------------------------------------------------------------------
-app.use(expressWinston.logger({
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: "logs/request.log" }),
-    new winston.transports.MongoDB({
-      db: "mongodb://127.0.0.1:27017/test",
-      collection: "logs",
-      level: "info",
-      options: { useUnifiedTopology: true },
-    }),
-  ],
-  format: winston.format.combine(
-    winston.format.colorize(),
-    winston.format.printf(info => `====요청 로그====\n${info.level}: ${info.message} ${info.meta.res.statusCode} ${info.meta.responseTime}ms\n\n`)
-  ),
-}));
-
-// 에러 로그 미들웨어 -----------------------------------------------------------------------------
-app.use(expressWinston.errorLogger({
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: "logs/error.log" }),
-    new winston.transports.MongoDB({
-      db: "mongodb://127.0.0.1:27017/test",
-      collection: "logs",
-      level: "error",
-      options: { useUnifiedTopology: true },
-    }),
-  ],
-  format: winston.format.combine(
-    winston.format.colorize(),
-    winston.format.printf(error => `====에러 로그====\n${error.level}: ${error.message} ${error.meta.res.statusCode} ${error.meta.responseTime}ms\n\n`)
-  ),
-}));
-
 // ------------------------------------------------------------------------------------------------>
 app.set("port", process.env.PORT || 4000);
 app.use(cors(), (req, res, next) => {

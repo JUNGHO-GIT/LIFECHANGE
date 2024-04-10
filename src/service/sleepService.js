@@ -226,7 +226,7 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
-  const part = filter_param.part || "";
+  const part = filter_param.part || "전체";
   const sort = filter_param.order === "asc" ? 1 : -1;
   const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
@@ -242,30 +242,25 @@ export const list = async (
   .sort({ sleep_date: sort })
   .lean();
 
-  const finalResult = findResult.map((prev) => {
-    const filtered = prev[planYn]?.sleep_section.filter((item) => (
-      part === "전체" ? true : item.sleep_part === part
-    ));
+  let totalCount = 0;
+  const finalResult = findResult.map((sleep) => {
+    if (sleep[planYn] && sleep[planYn].sleep_section) {
+      let sections = sleep[planYn].sleep_section.filter((section) => (
+        part === "전체" ? true : section.sleep_part === part
+      ));
 
-    function sliceData (data, page, limit) {
-      const startIndex = (page - 1) * limit;
-      let endIndex = startIndex + limit;
-      endIndex = endIndex > data.length ? data.length : endIndex;
-      return data.slice(startIndex, endIndex);
+      // 배열 갯수 누적 계산
+      totalCount += sections.length;
+
+      // section 배열에서 페이지에 맞는 항목만 선택합니다.
+      const startIdx = (limit * page - 1) - (limit - 1);
+      const endIdx = (limit * page);
+      sections = sections.slice(startIdx, endIdx);
+
+      sleep[planYn].sleep_section = sections;
     }
-
-    return {
-      ...prev,
-      [planYn]: {
-        ...prev[planYn],
-        sleep_section: sliceData(filtered, page, limit),
-      },
-    };
+    return sleep;
   });
-
-  const totalCount = finalResult.reduce((acc, cur) => (
-    acc + cur[planYn]?.sleep_section?.length || 0
-  ), 0);
 
   return {
     totalCount: totalCount,

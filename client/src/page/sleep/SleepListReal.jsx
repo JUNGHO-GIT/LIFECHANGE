@@ -314,8 +314,8 @@ export const SleepListReal = () => {
     );
   };
 
-  // 7. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
+  // 7. paging ------------------------------------------------------------------------------------>
+  const pagingNode = () => {
     function prevButton() {
       return (
         <button
@@ -506,7 +506,7 @@ export const SleepListReal = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterNode()}
+            {pagingNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

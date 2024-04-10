@@ -20,8 +20,8 @@ export const MoneyDetailReal = () => {
   const PATH = location.pathname;
   const STATE = {
     refresh:0,
-    toList:"/money/list",
-    toSave:"/money/save",
+    toList:"/money/list/real",
+    toSave:"/money/save/real",
     id: "",
     date: ""
   };
