@@ -122,8 +122,7 @@ export const list = async (
   user_id_param,
   food_dur_param,
   filter_param,
-  paging_param,
-  planYn_param
+  paging_param
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(" ~ ");
@@ -131,7 +130,6 @@ export const list = async (
   const sort = filter_param.order === "asc" ? 1 : -1;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
   const page = paging_param.page === 0 ? 1 : paging_param.page;
-  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const findResult = await Food.find({
     user_id: user_id_param,
@@ -145,8 +143,8 @@ export const list = async (
 
   let totalCount = 0;
   const finalResult = findResult.map((food) => {
-    if (food[planYn] && food[planYn].food_section) {
-      let sections = food[planYn].food_section.filter((section) => (
+    if (food && food.food_section) {
+      let sections = food.food_section.filter((section) => (
         part === "전체" ? true : section.food_part === part
       ));
 
@@ -158,7 +156,7 @@ export const list = async (
       const endIdx = (limit * page);
       sections = sections.slice(startIdx, endIdx);
 
-      food[planYn].food_section = sections;
+      food.food_section = sections;
     }
     return food;
   });
@@ -173,12 +171,10 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  food_dur_param,
-  planYn_param
+  food_dur_param
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const finalResult = await Food.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
@@ -189,7 +185,7 @@ export const detail = async (
     },
   }).lean();
 
-  const sectionCount = finalResult?.[planYn]?.food_section?.length || 0;
+  const sectionCount = finalResult?.food_section?.length || 0;
 
   return {
     sectionCount: sectionCount,
@@ -201,12 +197,10 @@ export const detail = async (
 export const save = async (
   user_id_param,
   FOOD_param,
-  food_dur_param,
-  planYn_param
+  food_dur_param
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const findResult = await Food.findOne({
     user_id: user_id_param,
@@ -222,7 +216,7 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       food_date: startDay,
-      [planYn]: FOOD_param[planYn],
+      food_section: FOOD_param.food_section,
       food_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       food_update: "",
     };
@@ -234,7 +228,7 @@ export const save = async (
     };
     const updateAction = {
       $set: {
-        [planYn]: FOOD_param[planYn],
+        food_section: FOOD_param.food_section,
         food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       }
     };
@@ -251,12 +245,10 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  food_dur_param,
-  planYn_param
+  food_dur_param
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "food_plan" : "food_real";
 
   const updateResult = await Food.updateOne(
     {
@@ -268,7 +260,7 @@ export const deletes = async (
     },
     {
       $pull: {
-        [`${planYn}.food_section`]: {
+        food_section: {
           _id: _id_param
         },
       },
@@ -295,7 +287,7 @@ export const deletes = async (
 
     if (
       (doc) &&
-      (!doc[planYn]?.food_section || doc[planYn]?.food_section?.length === 0)
+      (!doc?.food_section || doc?.food_section?.length === 0)
     ) {
       finalResult = await Food.deleteOne({
         _id: doc._id

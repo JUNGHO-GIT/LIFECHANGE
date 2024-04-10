@@ -12,13 +12,11 @@ export const useDate = (
   strDate,
   setStrDate,
   strDur,
-  setStrDur,
-  planYn
+  setStrDur
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const strLow = PATH.split("/")[1];
-  const plan = planYn === "Y" ? `${strLow}_plan` : `${strLow}_real`;
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -40,8 +38,8 @@ export const useDate = (
 
     // 1. work
     if (strLow === "work") {
-      const startTime = OBJECT[plan]?.work_start;
-      const endTime = OBJECT[plan]?.work_end;
+      const startTime = OBJECT?.work_start;
+      const endTime = OBJECT?.work_end;
 
       if (startTime && endTime) {
         const startDate = new Date(`${strDate}T${startTime}`);
@@ -58,18 +56,15 @@ export const useDate = (
 
         setOBJECT((prev) => ({
           ...prev,
-          [plan]: {
-            ...prev[plan],
-            work_time: time,
-          }
+          work_time: time,
         }));
       }
     }
 
     // 2. sleep
     if (strLow === "sleep") {
-      const nightTime = OBJECT[plan]?.sleep_section.map((item) => item?.sleep_night)?.toString();
-      const morningTime = OBJECT[plan]?.sleep_section.map((item) => item?.sleep_morning)?.toString();
+      const nightTime = OBJECT?.sleep_section.map((item) => item?.sleep_night)?.toString();
+      const morningTime = OBJECT?.sleep_section.map((item) => item?.sleep_morning)?.toString();
 
       if (nightTime && morningTime) {
         const startDate = new Date(`${strDate}T${nightTime}`);
@@ -86,22 +81,19 @@ export const useDate = (
 
         setOBJECT((prev) => ({
           ...prev,
-          [plan]: {
-            ...prev[plan],
-            sleep_section: [{
-              sleep_night: nightTime,
-              sleep_morning: morningTime,
-              sleep_time: time,
-            }]
-          }
+          sleep_section: [{
+            sleep_night: nightTime,
+            sleep_morning: morningTime,
+            sleep_time: time,
+          }]
         }));
       }
     }
   }, [
     strDate, strLow,
-    OBJECT[plan]?.work_start,
-    OBJECT[plan]?.work_end,
-    OBJECT[plan]?.sleep_section?.map((item) => (item?.sleep_night))?.toString(),
-    OBJECT[plan]?.sleep_section?.map((item) => (item?.sleep_morning))?.toString(),
+    OBJECT?.work_start,
+    OBJECT?.work_end,
+    OBJECT?.sleep_section?.map((item) => (item?.sleep_night))?.toString(),
+    OBJECT?.sleep_section?.map((item) => (item?.sleep_morning))?.toString(),
   ]);
 };

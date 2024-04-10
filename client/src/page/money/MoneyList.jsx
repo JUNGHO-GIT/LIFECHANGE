@@ -1,4 +1,4 @@
-// SleepListPlan.jsx
+// MoneyList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,10 +11,10 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepListPlan = () => {
+export const MoneyList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -23,8 +23,8 @@ export const SleepListPlan = () => {
   const STATE = {
     id: "",
     date: "",
-    refresh: 0,
-    toDetail:"/sleep/detail/plan"
+    refresh:0,
+    toDetail:"/money/detail"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -37,8 +37,11 @@ export const SleepListPlan = () => {
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
-      type: "day",
-      limit: 5
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -63,46 +66,47 @@ export const SleepListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
+  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
     _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_plan : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
-      }],
-    },
+    money_number: 0,
+    money_date: "",
+    money_section: [{
+      money_part_idx: 0,
+      money_part_val: "전체",
+      money_title_idx: 0,
+      money_title_val: "전체",
+      money_amount: 0,
+      money_content: "",
+    }],
   }]);
-  const [SLEEP, setSLEEP] = useState([{
+  const [MONEY, setMONEY] = useState([{
     _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_plan : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
-      }],
-    },
+    money_number: 0,
+    money_date: "",
+    money_section: [{
+      money_part_idx: 0,
+      money_part_val: "전체",
+      money_title_idx: 0,
+      money_title_val: "전체",
+      money_amount: 0,
+      money_content: "",
+    }],
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_SLEEP}/list`, {
+    const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: strDur,
+        money_dur: strDur,
         filter: filter,
-        paging: paging,
-        planYn: "N",
+        paging: paging
       },
     });
 
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
   })()}, [strDur, filter, paging]);
 
@@ -120,24 +124,36 @@ export const SleepListPlan = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>취침</th>
-            <th>기상</th>
-            <th>수면</th>
+            <th>분류</th>
+            <th>항목</th>
+            <th>금액</th>
+            <th>내용</th>
           </tr>
         </thead>
         <tbody>
-          {SLEEP.map((item) => (
-            item.sleep_plan.sleep_section.map((section, index) => (
-              <React.Fragment key={item._id + index}>
-                <tr>
-                  <td>{item.sleep_date}</td>
-                  <td>{section.sleep_night}</td>
-                  <td>{section.sleep_morning}</td>
-                  <td>{section.sleep_time}</td>
+          {MONEY.map((item) => (
+            <React.Fragment key={item.money_date}>
+              <tr>
+                <td rowSpan={6} className="pointer" onClick={() => {
+                  STATE.id = item._id;
+                  STATE.date = item.money_date;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>
+                  {item.money_date}
+                </td>
+              </tr>
+              {item.money_section.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.money_part_val}</td>
+                  <td>{item.money_title_val}</td>
+                  <td>{item.money_amount}</td>
+                  <td>{item.money_content}</td>
                 </tr>
-              </React.Fragment>
-            )))
-          )}
+              ))}
+            </React.Fragment>
+          ))}
         </tbody>
       </table>
     );
@@ -168,7 +184,7 @@ export const SleepListPlan = () => {
   const filterNode = () => {
     return (
       <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
-        type={"sleep"}
+        type={"money"}
       />
     );
   };
@@ -190,7 +206,7 @@ export const SleepListPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List (Plan)</h1>
+            <h1>List</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

@@ -1,4 +1,4 @@
-// PlanList.jsx
+// PlanListMoney.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanList = () => {
+export const PlanListMoney = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
@@ -24,7 +24,7 @@ export const PlanList = () => {
     id: "",
     date: "",
     refresh:0,
-    toDetail:"/plan/detail/real"
+    toDetail:"/plan/detail/money"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -34,17 +34,11 @@ export const PlanList = () => {
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
-  const {val:type, set:setType} = useStorage(
-    `type(${PATH})`, "day"
-  );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
       limit: 5,
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
+      schema: "money",
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -72,31 +66,21 @@ export const PlanList = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_date: "",
-    plan_real : {
-      plan_section: [{
-        plan_part_idx: 0,
-        plan_part_val: "전체",
-        plan_title_idx: 0,
-        plan_title_val: "전체",
-        plan_amount: 0,
-        plan_content: "",
-      }],
+    plan_dur: "",
+    plan_schema: "money",
+    plan_money: {
+      plan_in: "",
+      plan_out: ""
     }
   }]);
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_date: "",
-    plan_real : {
-      plan_section: [{
-        plan_part_idx: 0,
-        plan_part_val: "전체",
-        plan_title_idx: 0,
-        plan_title_val: "전체",
-        plan_amount: 0,
-        plan_content: "",
-      }],
+    plan_dur: "",
+    plan_schema: "money",
+    plan_money: {
+      plan_in: "",
+      plan_out: ""
     }
   }]);
 
@@ -106,14 +90,11 @@ export const PlanList = () => {
     const response = await axios.get(`${URL_PLAN}/list`, {
       params: {
         user_id: user_id,
-        plan_dur: strDur,
         filter: filter,
-        paging: paging,
-        planYn: "N",
+        paging: paging
       },
     });
 
-    setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
 
   })()}, [strDur, filter, paging]);
@@ -131,35 +112,19 @@ export const PlanList = () => {
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
-            <th>날짜</th>
-            <th>분류</th>
-            <th>항목</th>
-            <th>금액</th>
-            <th>내용</th>
+            <th>기간</th>
+            <th>수입</th>
+            <th>지출</th>
           </tr>
         </thead>
         <tbody>
           {PLAN.map((item) => (
-            <React.Fragment key={item.plan_date}>
+            <React.Fragment key={item._id}>
               <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.plan_date;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.plan_date}
-                </td>
+                <td>{item.plan_dur}</td>
+                <td>{item.plan_money.plan_in}</td>
+                <td>{item.plan_money.plan_out}</td>
               </tr>
-              {item.plan_real.plan_section.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.plan_part_val}</td>
-                  <td>{item.plan_title_val}</td>
-                  <td>{item.plan_amount}</td>
-                  <td>{item.plan_content}</td>
-                </tr>
-              ))}
             </React.Fragment>
           ))}
         </tbody>
@@ -214,7 +179,7 @@ export const PlanList = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List (Real)</h1>
+            <h1>List</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

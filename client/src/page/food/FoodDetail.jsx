@@ -1,4 +1,4 @@
-// FoodDetailPlan.jsx
+// FoodDetail.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -12,7 +12,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDetailPlan = () => {
+export const FoodDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -26,8 +26,8 @@ export const FoodDetailPlan = () => {
     id: "",
     date: "",
     refresh:0,
-    toList:"/food/list/plan",
-    toSave:"/food/save/plan"
+    toList:"/food/list",
+    toSave:"/food/save"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -43,45 +43,41 @@ export const FoodDetailPlan = () => {
     _id: "",
     food_number: 0,
     food_date: "",
-    food_plan : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    },
+    food_total_kcal: "",
+    food_total_fat: "",
+    food_total_carb: "",
+    food_total_protein: "",
+    food_section: [{
+      food_part: "",
+      food_title: "",
+      food_count: "",
+      food_serv: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: "",
+    }],
   });
   const [FOOD, setFOOD] = useState({
     _id: "",
     food_number: 0,
     food_date: "",
-    food_plan : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    },
+    food_total_kcal: "",
+    food_total_fat: "",
+    food_total_carb: "",
+    food_total_protein: "",
+    food_section: [{
+      food_part: "",
+      food_title: "",
+      food_count: "",
+      food_serv: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: "",
+    }],
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -90,14 +86,13 @@ export const FoodDetailPlan = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_dur: `${location_date} ~ ${location_date}`,
-        planYn: "N",
+        food_dur: strDur
       },
     });
 
     setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
-  })()}, []);
+  })()}, [strDur]);
 
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
@@ -123,7 +118,7 @@ export const FoodDetailPlan = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD.food_plan.food_section.map((item, index) => {
+          {FOOD?.food_section.map((item, index) => {
             return (
               <tr key={index}>
                 <td>{item.food_title}</td>
@@ -139,10 +134,10 @@ export const FoodDetailPlan = () => {
           })}
           <tr>
             <td colSpan={4} className="text-end">합계</td>
-            <td>{FOOD.food_plan.food_total_kcal}</td>
-            <td>{FOOD.food_plan.food_total_carb}</td>
-            <td>{FOOD.food_plan.food_total_protein}</td>
-            <td>{FOOD.food_plan.food_total_fat}</td>
+            <td>{FOOD.food_total_kcal}</td>
+            <td>{FOOD.food_total_carb}</td>
+            <td>{FOOD.food_total_protein}</td>
+            <td>{FOOD.food_total_fat}</td>
           </tr>
         </tbody>
       </table>

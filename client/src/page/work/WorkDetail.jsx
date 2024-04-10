@@ -1,21 +1,19 @@
-// FoodDetailReal.jsx
+// WorkDetail.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import moment from "moment-timezone";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-
 // ------------------------------------------------------------------------------------------------>
-export const FoodDetailReal = () => {
+export const WorkDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_WORK = process.env.REACT_APP_URL_WORK;
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
@@ -26,8 +24,8 @@ export const FoodDetailReal = () => {
     id: "",
     date: "",
     refresh:0,
-    toList:"/food/list/real",
-    toSave:"/food/save/real"
+    toList:"/work/list",
+    toSave:"/work/save",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -39,65 +37,75 @@ export const FoodDetailReal = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState({
+  const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
     _id: "",
-    food_number: 0,
-    food_date: "",
-    food_real : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    },
+    work_number: 0,
+    work_date: "",
+    work_start: "",
+    work_end: "",
+    work_time: "",
+    work_section: [{
+      work_part_idx: 0,
+      work_part_val: "전체",
+      work_title_idx: 0,
+      work_title_val: "전체",
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
+    }],
   });
-  const [FOOD, setFOOD] = useState({
-    _id: "",
-    food_number: 0,
-    food_date: "",
-    food_real : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    },
+  const [WORK, setWORK] = useState({
+    _id: location_id,
+    work_number: 0,
+    work_date: "",
+    work_start: "",
+    work_end: "",
+    work_time: "",
+    work_section: [{
+      work_part_idx: 0,
+      work_part_val: "전체",
+      work_title_idx: 0,
+      work_title_val: "전체",
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
+    }],
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/detail`, {
+    const response = await axios.get(`${URL_WORK}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_dur: `${location_date} ~ ${location_date}`,
-        planYn: "N",
+        work_dur: strDur
       },
     });
 
-    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
+    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
 
-  })()}, []);
+  })()}, [strDur]);
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowDelete = async (id) => {
+    const response = await axios.delete(`${URL_WORK}/delete`, {
+      params: {
+        _id: id,
+        user_id: user_id,
+        work_dur: strDur
+      },
+    });
+    if (response.data === "success") {
+      alert("delete success");
+      STATE.date = strDate;
+      navParam(STATE.toList);
+    }
+    else {
+      alert(`${response.data}`);
+    }
+  };
 
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
@@ -112,37 +120,50 @@ export const FoodDetailReal = () => {
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
-            <th>음식명</th>
-            <th>브랜드</th>
-            <th>횟수</th>
-            <th>서빙</th>
-            <th>칼로리</th>
-            <th>탄수화물</th>
-            <th>단백질</th>
-            <th>지방</th>
+            <th>날짜</th>
+            <th>시작</th>
+            <th>종료</th>
+            <th>시간</th>
+            <th>부위</th>
+            <th>종목</th>
+            <th>세트 x 횟수 x 무게</th>
+            <th>휴식</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD.food_real.food_section.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td>{item.food_title}</td>
-                <td>{item.food_part}</td>
-                <td>{item.food_count}</td>
-                <td>{item.food_serv}</td>
-                <td>{item.food_kcal}</td>
-                <td>{item.food_carb}</td>
-                <td>{item.food_protein}</td>
-                <td>{item.food_fat}</td>
-              </tr>
-            );
-          })}
           <tr>
-            <td colSpan={4} className="text-end">합계</td>
-            <td>{FOOD.food_real.food_total_kcal}</td>
-            <td>{FOOD.food_real.food_total_carb}</td>
-            <td>{FOOD.food_real.food_total_protein}</td>
-            <td>{FOOD.food_real.food_total_fat}</td>
+            <td className="fs-20 pt-20">
+              {WORK.work_date}
+            </td>
+            <td className="fs-20 pt-20">
+              {WORK.work_start}
+            </td>
+            <td className="fs-20 pt-20">
+              {WORK.work_end}
+            </td>
+            <td className="fs-20 pt-20">
+              {WORK.work_time}
+            </td>
+            <td colSpan={5}>
+              {WORK.work_section.map((item, index) => (
+                <div key={index} className="d-flex justify-content-between">
+                  <span>{item.work_part_val}</span>
+                  <span>{item.work_title_val}</span>
+                  <span>{item.work_set} x {item.work_rep} x {item.work_kg}</span>
+                  <span>{item.work_rest}</span>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-danger ms-2"
+                    onClick={() => (
+                      flowDelete(item._id)
+                    )}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </td>
           </tr>
         </tbody>
       </table>

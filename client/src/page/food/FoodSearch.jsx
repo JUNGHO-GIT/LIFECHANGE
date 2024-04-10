@@ -20,7 +20,7 @@ export const FoodSearch = () => {
     id: "",
     date: koreanDate,
     refresh: 0,
-    toSave:"/food/save/real",
+    toSave:"/food/save",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -38,41 +38,22 @@ export const FoodSearch = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const {val:FOOD, set:setFOOD} = useStorage(
     `FOOD(${PATH})`, {
-      food_plan : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
-      },
-      food_real : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
-      },
-    }
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
+      }],
+    },
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -95,10 +76,7 @@ export const FoodSearch = () => {
     });
     setFOOD((prev) => ({
       ...prev,
-      food_real: {
-        ...prev.food_real,
-        food_section: response.data.result
-      }
+      food_section: response.data.result
     }));
     setTotalCount(response.data.totalCount);
   };
@@ -128,7 +106,7 @@ export const FoodSearch = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD.food_real.food_section?.map((item, index) => (
+          {FOOD?.food_section?.map((item, index) => (
             <tr key={index}>
               <td className="pointer" onClick={() => {
                 handleStorage(item);

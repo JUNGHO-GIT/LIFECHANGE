@@ -9,10 +9,8 @@ planRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.plan_dur,
       req.query.filter,
-      req.query.paging,
-      req.query.planYn,
+      req.query.paging
     );
     if (result) {
       res.send(result);
@@ -33,8 +31,7 @@ planRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.plan_dur,
-      req.query.planYn
+      req.query.plan_dur
     );
     if (result) {
       res.send(result);
@@ -54,9 +51,8 @@ planRouter.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
-      req.body.SLEEP,
-      req.body.plan_dur,
-      req.body.planYn
+      req.body.PLAN,
+      req.body.plan_dur
     );
     if (result) {
       res.send("success");
@@ -77,8 +73,7 @@ planRouter.delete("/delete", async (req, res) => {
     const result = await service.deletes(
       req.query._id,
       req.query.user_id,
-      req.query.plan_dur,
-      req.query.planYn
+      req.query.plan_dur
     );
     if (result) {
       res.send("success");

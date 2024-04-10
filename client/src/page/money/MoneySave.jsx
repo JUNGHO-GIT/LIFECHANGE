@@ -1,8 +1,9 @@
-// MoneySavePlan.jsx
+// MoneySave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import moment from "moment-timezone";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
@@ -13,7 +14,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneySavePlan = () => {
+export const MoneySave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
@@ -26,7 +27,7 @@ export const MoneySavePlan = () => {
     id: "",
     date: "",
     refresh: 0,
-    toList:"/money/list/plan",
+    toList:"/money/list"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -47,32 +48,31 @@ export const MoneySavePlan = () => {
     _id: "",
     money_number: 0,
     money_date: "",
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "",
-        money_title_idx: 0,
-        money_title_val: "",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    money_section: [{
+      money_part_idx: 0,
+      money_part_val: "",
+      money_title_idx: 0,
+      money_title_val: "",
+      money_amount: 0,
+      money_content: "",
+    }]
   });
   const [MONEY, setMONEY] = useState({
     _id: "",
     money_number: 0,
     money_date: "",
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "",
-        money_title_idx: 0,
-        money_title_val: "",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    money_section: [{
+      money_part_idx: 0,
+      money_part_val: "",
+      money_title_idx: 0,
+      money_title_val: "",
+      money_amount: 0,
+      money_content: "",
+    }],
   });
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(MONEY, setMONEY, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -80,8 +80,7 @@ export const MoneySavePlan = () => {
       params: {
         _id: "",
         user_id: user_id,
-        money_dur: strDur,
-        planYn: "N",
+        money_dur: strDur
       },
     });
 
@@ -95,11 +94,10 @@ export const MoneySavePlan = () => {
     const response = await axios.post(`${URL_MONEY}/save`, {
       user_id: user_id,
       MONEY: MONEY,
-      money_dur: strDur,
-      planYn: "N"
+      money_dur: strDur
     });
     if (response.data === "success") {
-      alert("Save a money successfully");
+      alert("Save successfully");
       STATE.date = strDate;
       navParam(STATE.toList);
     }
@@ -130,24 +128,18 @@ export const MoneySavePlan = () => {
 
       if (newCount > sectionCount) {
         let additionalSections = Array(newCount - sectionCount).fill(defaultSection);
-        let updatedSection = [...MONEY.money_plan.money_section, ...additionalSections];
+        let updatedSection = [...MONEY.money_section, ...additionalSections];
         setMONEY((prev) => ({
           ...prev,
-          money_plan: {
-            ...prev.money_plan,
-            money_section: updatedSection,
-          },
+          money_section: updatedSection,
         }));
       }
       else if (newCount < sectionCount) {
-        let updatedSection = [...MONEY.money_plan.money_section];
+        let updatedSection = [...MONEY.money_section];
         updatedSection = updatedSection.slice(0, newCount);
         setMONEY((prev) => ({
           ...prev,
-          money_plan: {
-            ...prev.money_plan,
-            money_section: updatedSection,
-          },
+          money_section: updatedSection,
         }));
       }
       setSectionCount(newCount);
@@ -188,12 +180,12 @@ export const MoneySavePlan = () => {
                 <select
                   className="form-control"
                   id={`money_part_idx-${i}`}
-                  value={MONEY.money_plan?.money_section[i]?.money_part_idx}
+                  value={MONEY?.money_section[i]?.money_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setMONEY((prev) => {
                       let updatedObject = {...prev};
-                      let updatedSection = [...updatedObject.money_plan.money_section];
+                      let updatedSection = [...updatedObject.money_section];
                       updatedSection[i] = {
                         ...updatedSection[i],
                         money_part_idx: newIndex,
@@ -201,7 +193,7 @@ export const MoneySavePlan = () => {
                         money_title_idx: 0,
                         money_title_val: moneyArray[newIndex].money_title[0],
                       };
-                      updatedObject.money_plan.money_section = updatedSection;
+                      updatedObject.money_section = updatedSection;
                       return updatedObject;
                     });
                   }}
@@ -223,26 +215,26 @@ export const MoneySavePlan = () => {
                 <select
                   className="form-control"
                   id={`money_title_idx-${i}`}
-                  value={MONEY.money_plan?.money_section[i]?.money_title_idx}
+                  value={MONEY?.money_section[i]?.money_title_idx}
               onChange={(e) => {
                 const newTitleIdx = parseInt(e.target.value);
-                const newTitleVal = moneyArray[MONEY.money_plan?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                const newTitleVal = moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
                 if (newTitleIdx >= 0 && newTitleVal) {
                   setMONEY((prev) => {
                     let updatedObject = { ...prev };
-                    let updatedSection = [...updatedObject.money_plan.money_section];
+                    let updatedSection = [...updatedObject.money_section];
                     updatedSection[i] = {
                       ...updatedSection[i],
                       money_title_idx: newTitleIdx,
                       money_title_val: newTitleVal,
                     };
-                    updatedObject.money_plan.money_section = updatedSection;
+                    updatedObject.money_section = updatedSection;
                     return updatedObject;
                   });
                 }
               }}
             >
-              {moneyArray[MONEY.money_plan?.money_section[i]?.money_part_idx]?.money_title.map((title, idx) => (
+              {moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title.map((title, idx) => (
                 <option key={idx} value={idx}>
                   {title}
                 </option>
@@ -258,14 +250,14 @@ export const MoneySavePlan = () => {
                 <input
                   type="number"
                   className="form-control"
-                  value={MONEY.money_plan?.money_section[i]?.money_amount}
+                  value={MONEY?.money_section[i]?.money_amount}
                   onChange={(e) => {
                     const newAmount = parseInt(e.target.value, 10);
                     setMONEY((prev) => {
                       let updatedObject = {...prev};
-                      let updatedSection = [...updatedObject.money_plan.money_section];
+                      let updatedSection = [...updatedObject.money_section];
                       updatedSection[i].money_amount = isNaN(newAmount) ? 0 : newAmount;
-                      updatedObject.money_plan.money_section = updatedSection;
+                      updatedObject.money_section = updatedSection;
                       return updatedObject;
                     });
                   }}
@@ -278,12 +270,12 @@ export const MoneySavePlan = () => {
                 <input
                   type="text"
                   className="form-control"
-                  value={MONEY.money_plan?.money_section[i]?.money_content}
+                  value={MONEY?.money_section[i]?.money_content}
                   onChange={(e) => {
                     const newContent = e.target.value;
                     setMONEY((prev) => {
                       let updatedObject = {...prev};
-                      let updatedSection = [...updatedObject.money_plan.money_section];
+                      let updatedSection = [...updatedObject.money_section];
                       updatedSection[i].money_content = newContent;
                       return updatedObject;
                     });
@@ -328,7 +320,7 @@ export const MoneySavePlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Save (Plan)</h1>
+            <h1>Save</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

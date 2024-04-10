@@ -4,51 +4,12 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {Work} from "../schema/Work.js";
 
-/* // 1. list ---------------------------------------------------------------------------------------->
-export const list = async (
-  user_id_param,
-  work_dur_param,
-  filter_param,
-  planYn_param
-) => {
-
-  const [startDay, endDay] = work_dur_param.split(` ~ `);
-
-  const part = filter_param.part || "전체";
-  const sort = filter_param.order === "asc" ? 1 : -1;
-  const page = filter_param.page === 0 ? 1 : filter_param.page;
-  const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
-  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
-
-  const findResult = Work.find({
-    user_id: user_id_param,
-    work_date: {
-      $gte: startDay,
-      $lte: endDay,
-    }
-  }).lean();
-
-  const finalResult = await findResult
-  .sort({work_date: sort})
-  .skip((page - 1) * limit)
-  .limit(limit)
-  .lean();
-
-  const totalCount = await Work.countDocuments(findResult).lean();
-
-  return {
-    totalCount: totalCount,
-    result: finalResult,
-  };
-}; */
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
   work_dur_param,
   filter_param,
-  paging_param,
-  planYn_param
+  paging_param
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
@@ -56,7 +17,6 @@ export const list = async (
   const sort = filter_param.order === "asc" ? 1 : -1;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
   const page = paging_param.page === 0 ? 1 : paging_param.page;
-  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const findResult = await Work.find({
     user_id: user_id_param,
@@ -70,8 +30,8 @@ export const list = async (
 
   let totalCount = 0;
   const finalResult = findResult.map((work) => {
-    if (work[planYn] && work[planYn].work_section) {
-      let sections = work[planYn].work_section.filter((section) => (
+    if (work && work.work_section) {
+      let sections = work.work_section.filter((section) => (
         part === "전체" ? true : section.work_part_val === part
       ));
 
@@ -83,7 +43,7 @@ export const list = async (
       const endIdx = (limit * page);
       sections = sections.slice(startIdx, endIdx);
 
-      work[planYn].work_section = sections;
+      work.work_section = sections;
     }
     return work;
   });
@@ -98,12 +58,10 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  work_dur_param,
-  planYn_param
+  work_dur_param
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const finalResult = await Work.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
@@ -114,7 +72,7 @@ export const detail = async (
     },
   }).lean();
 
-  const sectionCount = finalResult?.[planYn]?.work_section?.length || 0;
+  const sectionCount = finalResult?.work_section?.length || 0;
 
   return {
     sectionCount: sectionCount,
@@ -126,12 +84,10 @@ export const detail = async (
 export const save = async (
   user_id_param,
   WORK_param,
-  work_dur_param,
-  planYn_param
+  work_dur_param
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const findResult = await Work.findOne({
     user_id: user_id_param,
@@ -147,7 +103,7 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       work_date: startDay,
-      [planYn]: WORK_param[planYn],
+      work_section: WORK_param.work_section,
       work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_update: "",
     };
@@ -159,7 +115,7 @@ export const save = async (
     };
     const updateAction = {
       $set: {
-        [planYn]: WORK_param[planYn],
+        work_section: WORK_param.work_section,
         work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       }
     };
@@ -175,12 +131,10 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  work_dur_param,
-  planYn_param
+  work_dur_param
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const updateResult = await Work.updateOne(
     {
@@ -192,7 +146,7 @@ export const deletes = async (
     },
     {
       $pull: {
-        [`${planYn}.work_section`]: {
+        work_section: {
           _id: _id_param
         },
       },
@@ -219,7 +173,7 @@ export const deletes = async (
 
     if (
       (doc) &&
-      (!doc[planYn]?.work_section || doc[planYn]?.work_section?.length === 0)
+      (!doc.work_section || doc.work_section.length === 0)
     ) {
       finalResult = await Work.deleteOne({
         _id: doc._id

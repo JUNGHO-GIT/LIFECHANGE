@@ -17,38 +17,20 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  sleep_plan: {
-    sleep_section: [{
-      sleep_night: {
-        type: String,
-        required: false
-      },
-      sleep_morning: {
-        type: String,
-        required: false
-      },
-      sleep_time: {
-        type: String,
-        required: false
-      }
-    }]
-  },
-  sleep_real: {
-    sleep_section: [{
-      sleep_night: {
-        type: String,
-        required: false
-      },
-      sleep_morning: {
-        type: String,
-        required: false
-      },
-      sleep_time: {
-        type: String,
-        required: false
-      }
-    }]
-  },
+  sleep_section: [{
+    sleep_night: {
+      type: String,
+      required: false
+    },
+    sleep_morning: {
+      type: String,
+      required: false
+    },
+    sleep_time: {
+      type: String,
+      required: false
+    }
+  }],
   sleep_regdate: {
     type: String,
     required: false

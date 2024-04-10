@@ -17,102 +17,52 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  work_plan: {
-    work_start: {
-      type: String,
-      required: false,
-    },
-    work_end: {
-      type: String,
-      required: false,
-    },
-    work_time: {
-      type: String,
-      required: false,
-    },
-    work_section: [{
-      work_part_idx : {
-        type: Number,
-        required: false,
-      },
-      work_part_val : {
-        type: String,
-        required: false,
-      },
-      work_title_idx : {
-        type: Number,
-        required: false,
-      },
-      work_title_val : {
-        type: String,
-        required: false,
-      },
-      work_kg: {
-        type: Number,
-        required: false,
-      },
-      work_set: {
-        type: Number,
-        required: false,
-      },
-      work_rep: {
-        type: Number,
-        required: false,
-      },
-      work_rest: {
-        type: Number,
-        required: false,
-      },
-    }],
+  work_start: {
+    type: String,
+    required: false,
   },
-  work_real: {
-    work_start: {
-      type: String,
-      required: false,
-    },
-    work_end: {
-      type: String,
-      required: false,
-    },
-    work_time: {
-      type: String,
-      required: false,
-    },
-    work_section: [{
-      work_part_idx : {
-        type: Number,
-        required: false,
-      },
-      work_part_val : {
-        type: String,
-        required: false,
-      },
-      work_title_idx : {
-        type: Number,
-        required: false,
-      },
-      work_title_val : {
-        type: String,
-        required: false,
-      },
-      work_kg: {
-        type: Number,
-        required: false,
-      },
-      work_set: {
-        type: Number,
-        required: false,
-      },
-      work_rep: {
-        type: Number,
-        required: false,
-      },
-      work_rest: {
-        type: Number,
-        required: false,
-      },
-    }],
+  work_end: {
+    type: String,
+    required: false,
   },
+  work_time: {
+    type: String,
+    required: false,
+  },
+  work_section: [{
+    work_part_idx : {
+      type: Number,
+      required: false,
+    },
+    work_part_val : {
+      type: String,
+      required: false,
+    },
+    work_title_idx : {
+      type: Number,
+      required: false,
+    },
+    work_title_val : {
+      type: String,
+      required: false,
+    },
+    work_kg: {
+      type: Number,
+      required: false,
+    },
+    work_set: {
+      type: Number,
+      required: false,
+    },
+    work_rep: {
+      type: Number,
+      required: false,
+    },
+    work_rest: {
+      type: Number,
+      required: false,
+    },
+  }],
   work_regdate: {
     type: String,
     required: false

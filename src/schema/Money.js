@@ -17,62 +17,32 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  money_plan: {
-    money_section: [{
-      money_part_idx : {
-        type : Number,
-        required : false
-      },
-      money_part_val : {
-        type : String,
-        required : false
-      },
-      money_title_idx : {
-        type : Number,
-        required : false
-      },
-      money_title_val : {
-        type : String,
-        required : false
-      },
-      money_amount : {
-        type : Number,
-        required : false
-      },
-      money_content :{
-        type : String,
-        required : false
-      },
-    }],
-  },
-  money_real: {
-    money_section: [{
-      money_part_idx : {
-        type : Number,
-        required : false
-      },
-      money_part_val : {
-        type : String,
-        required : false
-      },
-      money_title_idx : {
-        type : Number,
-        required : false
-      },
-      money_title_val : {
-        type : String,
-        required : false
-      },
-      money_amount : {
-        type : Number,
-        required : false
-      },
-      money_content :{
-        type : String,
-        required : false
-      },
-    }],
-  },
+  money_section: [{
+    money_part_idx : {
+      type : Number,
+      required : false
+    },
+    money_part_val : {
+      type : String,
+      required : false
+    },
+    money_title_idx : {
+      type : Number,
+      required : false
+    },
+    money_title_val : {
+      type : String,
+      required : false
+    },
+    money_amount : {
+      type : Number,
+      required : false
+    },
+    money_content :{
+      type : String,
+      required : false
+    },
+  }],
   money_regdate: {
     type: String,
     required: false

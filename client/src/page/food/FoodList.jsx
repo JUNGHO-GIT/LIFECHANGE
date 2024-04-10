@@ -1,8 +1,9 @@
-// SleepListReal.jsx
+// FoodList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import moment from "moment-timezone";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
@@ -11,10 +12,10 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepListReal = () => {
+export const FoodList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -24,7 +25,7 @@ export const SleepListReal = () => {
     id: "",
     date: "",
     refresh: 0,
-    toDetail:"/sleep/detail/real"
+    toDetail:"/food/detail"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -37,8 +38,8 @@ export const SleepListReal = () => {
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
-      type: "day",
-      limit: 5
+      limit: 5,
+      part: "전체",
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -63,46 +64,60 @@ export const SleepListReal = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
+  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
     _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_real : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
-      }],
-    },
+    food_number: 0,
+    food_date: "",
+    food_total_kcal: "",
+    food_total_fat: "",
+    food_total_carb: "",
+    food_total_protein: "",
+    food_section: [{
+      food_part: "",
+      food_title: "",
+      food_count: "",
+      food_serv: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: "",
+    }],
   }]);
-  const [SLEEP, setSLEEP] = useState([{
+  const [FOOD, setFOOD] = useState([{
     _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_real : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
-      }],
-    },
+    food_number: 0,
+    food_date: "",
+    food_total_kcal: "",
+    food_total_fat: "",
+    food_total_carb: "",
+    food_total_protein: "",
+    food_section: [{
+      food_part: "",
+      food_title: "",
+      food_count: "",
+      food_serv: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: "",
+    }],
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_SLEEP}/list`, {
+    const response = await axios.get(`${URL_FOOD}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: strDur,
+        food_dur: strDur,
         filter: filter,
-        paging: paging,
-        planYn: "N",
+        paging: paging
       },
     });
-
-    setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
+    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
   })()}, [strDur, filter, paging]);
 
@@ -120,30 +135,54 @@ export const SleepListReal = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>취침</th>
-            <th>기상</th>
-            <th>수면</th>
+            <th>분류</th>
+            <th>식품명</th>
+            <th>브랜드</th>
+            <th>수량</th>
+            <th>서빙 사이즈</th>
+            <th>그램(g)</th>
+            <th>칼로리(kcal)</th>
+            <th>탄수화물(g)</th>
+            <th>단백질(g)</th>
+            <th>지방(g)</th>
           </tr>
         </thead>
         <tbody>
-          {SLEEP.map((item) => (
-            item.sleep_real.sleep_section.map((section, index) => (
-              <React.Fragment key={item._id + index}>
-                <tr>
-                  <td rowSpan={6} className="pointer" onClick={() => {
+          {FOOD.map((item) => (
+            <React.Fragment key={item._id}>
+              {item?.food_section.map((section, index) => (
+                <tr key={section._id}>
+                  <td className="pointer" onClick={() => {
                     STATE.id = item._id;
-                    STATE.date = item.sleep_date;
+                    STATE.date = item.food_date;
                     navParam(STATE.toDetail, {
                       state: STATE
                     });
-                  }}>{item.sleep_date}</td>
-                  <td>{section.sleep_night}</td>
-                  <td>{section.sleep_morning}</td>
-                  <td>{section.sleep_time}</td>
+                  }}>
+                    {item.food_date}
+                  </td>
+                  <td>{section.food_part}</td>
+                  <td>{section.food_title}</td>
+                  <td>{section.food_brand}</td>
+                  <td>{section.food_count}</td>
+                  <td>{section.food_serv}</td>
+                  <td>{section.food_gram}</td>
+                  <td>{section.food_kcal}</td>
+                  <td>{section.food_carb}</td>
+                  <td>{section.food_protein}</td>
+                  <td>{section.food_fat}</td>
                 </tr>
-              </React.Fragment>
-            )))
-          )}
+              ))}
+              <tr className="table-secondary">
+                <td colSpan={6}>합계</td>
+                <td></td>
+                <td>{item.food_total_kcal}kcal</td>
+                <td>{item.food_total_carb}g</td>
+                <td>{item.food_total_protein}g</td>
+                <td>{item.food_total_fat}g</td>
+              </tr>
+            </React.Fragment>
+          ))}
         </tbody>
       </table>
     );
@@ -174,7 +213,7 @@ export const SleepListReal = () => {
   const filterNode = () => {
     return (
       <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
-        type={"sleep"}
+        type={"food"}
       />
     );
   };
@@ -194,24 +233,34 @@ export const SleepListReal = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
-          <div className="col-12 mb-20">
-            <h1>List (Real)</h1>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
+            <h1>List</h1>
           </div>
-          <div className="col-12 mb-20">
+        </div>
+        <div className="row d-center mb-20">
+          <div className="col-12">
             {dateNode()}
           </div>
-          <div className="col-12 mb-20">
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             {calendarNode()}
             {tableNode()}
           </div>
-          <div className="col-12 mb-20">
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             {filterNode()}
           </div>
-          <div className="col-12 mb-20">
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             {pagingNode()}
           </div>
-          <div className="col-12 mb-20">
+        </div>
+        <div className="row mb-20 d-center">
+          <div className="col-12">
             {buttonNode()}
           </div>
         </div>

@@ -1,4 +1,4 @@
-// SleepSaveReal.jsx
+// SleepSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -14,7 +14,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepSaveReal = () => {
+export const SleepSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
@@ -27,7 +27,7 @@ export const SleepSaveReal = () => {
     id: "",
     date: "",
     refresh: 0,
-    toList:"/sleep/list/real"
+    toList:"/sleep/list"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -48,29 +48,25 @@ export const SleepSaveReal = () => {
     _id: "",
     sleep_number: 0,
     sleep_date: "",
-    sleep_real : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
-      }],
-    }
+    sleep_section: [{
+      sleep_night: "",
+      sleep_morning: "",
+      sleep_time: "",
+    }],
   });
   const [SLEEP, setSLEEP] = useState({
     _id: "",
     sleep_number: 0,
     sleep_date: "",
-    sleep_real : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
-      }],
-    }
+    sleep_section: [{
+      sleep_night: "",
+      sleep_morning: "",
+      sleep_time: "",
+    }],
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(SLEEP, setSLEEP, PATH, location_date, strDate, setStrDate, strDur, setStrDur, "N");
+  useDate(SLEEP, setSLEEP, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -78,8 +74,7 @@ export const SleepSaveReal = () => {
       params: {
         _id: "",
         user_id: user_id,
-        sleep_dur: strDur,
-        planYn: "N",
+        sleep_dur: strDur
       },
     });
 
@@ -95,10 +90,9 @@ export const SleepSaveReal = () => {
       user_id: user_id,
       SLEEP: SLEEP,
       sleep_dur: strDur,
-      planYn: "N",
     });
     if (response.data === "success") {
-      alert("Save a work successfully");
+      alert("Save successfully");
       STATE.date = strDate;
       navParam(STATE.toList);
     }
@@ -130,16 +124,14 @@ export const SleepSaveReal = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP.sleep_real.sleep_section)?.map((item) => item.sleep_night)}
+                value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_night))}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
-                    sleep_real: {
-                      sleep_section: [{
-                        ...prev.sleep_real.sleep_section[0],
-                        sleep_night: e ? e.toString() : "",
-                      }]
-                    },
+                    sleep_section: [{
+                      ...prev?.sleep_section[0],
+                      sleep_night: e ? e.toString() : "",
+                    }]
                   }));
                 }}
               />
@@ -158,16 +150,14 @@ export const SleepSaveReal = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP.sleep_real.sleep_section)?.map((item) => item.sleep_morning)}
+                value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_morning))}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
-                    sleep_real: {
-                      sleep_section: [{
-                        ...prev.sleep_real.sleep_section[0],
-                        sleep_morning: e ? e.toString() : "",
-                      }]
-                    },
+                    sleep_section: [{
+                      ...prev?.sleep_section[0],
+                      sleep_morning: e ? e.toString() : "",
+                    }]
                   }));
                 }}
               />
@@ -187,7 +177,7 @@ export const SleepSaveReal = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP.sleep_real.sleep_section)?.map((item) => item.sleep_time)}
+                value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_time))}
               />
             </div>
           </div>
@@ -213,7 +203,7 @@ export const SleepSaveReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Save (Real)</h1>
+            <h1>Save</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

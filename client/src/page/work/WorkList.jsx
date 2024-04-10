@@ -1,4 +1,4 @@
-// MoneyListReal.jsx
+// WorkList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,10 +11,10 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyListReal = () => {
+export const WorkList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_WORK = process.env.REACT_APP_URL_WORK;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -24,7 +24,7 @@ export const MoneyListReal = () => {
     id: "",
     date: "",
     refresh:0,
-    toDetail:"/money/detail/real"
+    toDetail:"/work/detail",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -34,17 +34,10 @@ export const MoneyListReal = () => {
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
-  const {val:type, set:setType} = useStorage(
-    `type(${PATH})`, "day"
-  );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
-      limit: 5,
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
+      limit: 5
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -69,52 +62,57 @@ export const MoneyListReal = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
+  const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_real : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    work_number: 0,
+    work_date: "",
+    work_start: "",
+    work_end: "",
+    work_time: "",
+    work_section: [{
+      work_part_idx: 0,
+      work_part_val: "전체",
+      work_title_idx: 0,
+      work_title_val: "전체",
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
+    }],
   }]);
-  const [MONEY, setMONEY] = useState([{
+  const [WORK, setWORK] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_real : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    work_number: 0,
+    work_date: "",
+    work_start: "",
+    work_end: "",
+    work_time: "",
+    work_section: [{
+      work_part_idx: 0,
+      work_part_val: "전체",
+      work_title_idx: 0,
+      work_title_val: "전체",
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
+    }],
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_MONEY}/list`, {
+    const response = await axios.get(`${URL_WORK}/list`, {
       params: {
         user_id: user_id,
-        money_dur: strDur,
+        work_dur: strDur,
         filter: filter,
-        paging: paging,
-        planYn: "N",
+        paging: paging
       },
     });
 
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
-    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
+    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
 
   })()}, [strDur, filter, paging]);
 
@@ -132,34 +130,43 @@ export const MoneyListReal = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>분류</th>
-            <th>항목</th>
-            <th>금액</th>
-            <th>내용</th>
+            <th>시작</th>
+            <th>종료</th>
+            <th>시간</th>
+            <th>부위</th>
+            <th>종목</th>
+            <th>세트 x 횟수 x 무게</th>
+            <th>휴식</th>
           </tr>
         </thead>
         <tbody>
-          {MONEY.map((item) => (
-            <React.Fragment key={item.money_date}>
+          {WORK.map((item) => (
+            <React.Fragment key={item.work_date}>
               <tr>
                 <td rowSpan={6} className="pointer" onClick={() => {
                   STATE.id = item._id;
-                  STATE.date = item.money_date;
+                  STATE.date = item.work_date;
                   navParam(STATE.toDetail, {
                     state: STATE
                   });
                 }}>
-                  {item.money_date}
+                  {item.work_date}
+                </td>
+                <td>시작</td>
+                <td>{item.work_start}</td>
+                <td>{item.work_end}</td>
+                <td>{item.work_time}</td>
+                <td colSpan={5}>
+                  {item.work_section.map((section, index) => (
+                    <div key={index} className="d-flex justify-content-between">
+                      <span>{section.work_part_val}</span>
+                      <span>{section.work_title_val}</span>
+                      <span>{section.work_set} x {section.work_rep} x {section.work_kg}</span>
+                      <span>{section.work_rest}</span>
+                    </div>
+                  ))}
                 </td>
               </tr>
-              {item.money_real.money_section.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.money_part_val}</td>
-                  <td>{item.money_title_val}</td>
-                  <td>{item.money_amount}</td>
-                  <td>{item.money_content}</td>
-                </tr>
-              ))}
             </React.Fragment>
           ))}
         </tbody>
@@ -192,7 +199,7 @@ export const MoneyListReal = () => {
   const filterNode = () => {
     return (
       <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
-        type={"money"}
+        type={"work"}
       />
     );
   };
@@ -214,7 +221,7 @@ export const MoneyListReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List (Real)</h1>
+            <h1>List</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

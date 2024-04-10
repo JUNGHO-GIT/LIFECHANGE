@@ -222,8 +222,7 @@ export const list = async (
   user_id_param,
   sleep_dur_param,
   filter_param,
-  paging_param,
-  planYn_param
+  paging_param
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
@@ -231,7 +230,6 @@ export const list = async (
   const sort = filter_param.order === "asc" ? 1 : -1;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
   const page = paging_param.page === 0 ? 1 : paging_param.page;
-  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
   const findResult = await Sleep.find({
     user_id: user_id_param,
@@ -245,8 +243,8 @@ export const list = async (
 
   let totalCount = 0;
   const finalResult = findResult.map((sleep) => {
-    if (sleep[planYn] && sleep[planYn].sleep_section) {
-      let sections = sleep[planYn].sleep_section.filter((section) => (
+    if (sleep && sleep.sleep_section) {
+      let sections = sleep.sleep_section.filter((section) => (
         part === "전체" ? true : section.sleep_part === part
       ));
 
@@ -258,7 +256,7 @@ export const list = async (
       const endIdx = (limit * page);
       sections = sections.slice(startIdx, endIdx);
 
-      sleep[planYn].sleep_section = sections;
+      sleep.sleep_section = sections;
     }
     return sleep;
   });
@@ -273,12 +271,10 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  sleep_dur_param,
-  planYn_param
+  sleep_dur_param
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
   const finalResult = await Sleep.findOne({
     _id: _id_param === "" ? { $exists: true } : _id_param,
@@ -289,7 +285,7 @@ export const detail = async (
     },
   }).lean();
 
-  const sectionCount = finalResult?.[planYn]?.sleep_section?.length || 0;
+  const sectionCount = finalResult?.sleep_section?.length || 0;
 
   return {
     sectionCount: sectionCount,
@@ -301,12 +297,10 @@ export const detail = async (
 export const save = async (
   user_id_param,
   SLEEP_param,
-  sleep_dur_param,
-  planYn_param
+  sleep_dur_param
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
   const findResult = await Sleep.findOne({
     user_id: user_id_param,
@@ -322,7 +316,7 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       sleep_date: startDay,
-      [planYn]: SLEEP_param[planYn],
+      sleep_section: SLEEP_param.sleep_section,
       sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       sleep_update: "",
     };
@@ -334,7 +328,7 @@ export const save = async (
     };
     const updateAction = {
       $set: {
-        [planYn]: SLEEP_param[planYn],
+        sleep_section: SLEEP_param.sleep_section,
         sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       }
     };
@@ -350,12 +344,10 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  sleep_dur_param,
-  planYn_param
+  sleep_dur_param
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "sleep_plan" : "sleep_real";
 
   const updateResult = await Sleep.updateOne(
     {
@@ -367,7 +359,7 @@ export const deletes = async (
     },
     {
       $pull: {
-        [`${planYn}.sleep_section`]: {
+        sleep_section: {
           _id: _id_param
         },
       },
@@ -394,7 +386,7 @@ export const deletes = async (
 
     if (
       (doc) &&
-      (!doc[planYn]?.sleep_section || doc[planYn]?.sleep_section?.length === 0)
+      (!doc.sleep_section || doc.sleep_section.length === 0)
     ) {
       finalResult = await Sleep.deleteOne({
         _id: doc._id

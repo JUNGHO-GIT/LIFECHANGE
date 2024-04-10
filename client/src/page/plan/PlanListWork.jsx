@@ -1,4 +1,4 @@
-// MoneyListPlan.jsx
+// PlanListWork.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,10 +11,10 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyListPlan = () => {
+export const PlanListWork = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -24,7 +24,7 @@ export const MoneyListPlan = () => {
     id: "",
     date: "",
     refresh:0,
-    toDetail:"/money/detail/plan"
+    toDetail:"/plan/detail/work"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -34,17 +34,11 @@ export const MoneyListPlan = () => {
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
-  const {val:type, set:setType} = useStorage(
-    `type(${PATH})`, "day"
-  );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
       limit: 5,
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
+      schema: "work",
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -69,52 +63,45 @@ export const MoneyListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
+  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    plan_number: 0,
+    plan_dur: "",
+    plan_schema: "work",
+    plan_work: {
+      plan_count_total: "",
+      plan_cardio_time: "",
+      plan_score_name: "",
+      plan_score_kg: "",
+      plan_score_rep: "",
+    },
   }]);
-  const [MONEY, setMONEY] = useState([{
+  const [PLAN, setPLAN] = useState([{
     _id: "",
-    money_number: 0,
-    money_date: "",
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    plan_number: 0,
+    plan_dur: "",
+    plan_schema: "work",
+    plan_work: {
+      plan_count_total: "",
+      plan_cardio_time: "",
+      plan_score_name: "",
+      plan_score_kg: "",
+      plan_score_rep: "",
+    },
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_MONEY}/list`, {
+    const response = await axios.get(`${URL_PLAN}/list`, {
       params: {
         user_id: user_id,
-        money_dur: strDur,
         filter: filter,
-        paging: paging,
-        planYn: "N",
+        paging: paging
       },
     });
 
-    setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
-    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
+    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
 
   })()}, [strDur, filter, paging]);
 
@@ -131,35 +118,25 @@ export const MoneyListPlan = () => {
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
-            <th>날짜</th>
-            <th>분류</th>
-            <th>항목</th>
-            <th>금액</th>
-            <th>내용</th>
+            <th>기간</th>
+            <th>목표 운동 횟수</th>
+            <th>목표 유산소 시간</th>
+            <th>목표 운동 이름</th>
+            <th>목표 중량</th>
+            <th>목표 반복 횟수</th>
           </tr>
         </thead>
         <tbody>
-          {MONEY.map((item) => (
-            <React.Fragment key={item.money_date}>
+          {PLAN.map((item) => (
+            <React.Fragment key={item._id}>
               <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.money_date;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.money_date}
-                </td>
+                <td>{item.plan_dur}</td>
+                <td>{item.plan_work.plan_count_total}</td>
+                <td>{item.plan_work.plan_cardio_time}</td>
+                <td>{item.plan_work.plan_score_name}</td>
+                <td>{item.plan_work.plan_score_kg}</td>
+                <td>{item.plan_work.plan_score_rep}</td>
               </tr>
-              {item.money_plan.money_section.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.money_part_val}</td>
-                  <td>{item.money_title_val}</td>
-                  <td>{item.money_amount}</td>
-                  <td>{item.money_content}</td>
-                </tr>
-              ))}
             </React.Fragment>
           ))}
         </tbody>
@@ -192,7 +169,7 @@ export const MoneyListPlan = () => {
   const filterNode = () => {
     return (
       <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
-        type={"money"}
+        type={"plan"}
       />
     );
   };
@@ -214,7 +191,7 @@ export const MoneyListPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List (Plan)</h1>
+            <h1>List</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

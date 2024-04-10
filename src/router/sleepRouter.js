@@ -87,8 +87,7 @@ sleepRouter.get("/list", async (req, res) => {
       req.query.user_id,
       req.query.sleep_dur,
       req.query.filter,
-      req.query.paging,
-      req.query.planYn,
+      req.query.paging
     );
     if (result) {
       res.send(result);
@@ -109,8 +108,7 @@ sleepRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.sleep_dur,
-      req.query.planYn
+      req.query.sleep_dur
     );
     if (result) {
       res.send(result);
@@ -131,8 +129,7 @@ sleepRouter.post("/save", async (req, res) => {
     const result = await service.save (
       req.body.user_id,
       req.body.SLEEP,
-      req.body.sleep_dur,
-      req.body.planYn
+      req.body.sleep_dur
     );
     if (result) {
       res.send("success");
@@ -153,8 +150,7 @@ sleepRouter.delete("/delete", async (req, res) => {
     const result = await service.deletes(
       req.query._id,
       req.query.user_id,
-      req.query.sleep_dur,
-      req.query.planYn
+      req.query.sleep_dur
     );
     if (result) {
       res.send("success");

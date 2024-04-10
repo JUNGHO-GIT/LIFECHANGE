@@ -9,8 +9,7 @@ export const list = async (
   user_id_param,
   money_dur_param,
   filter_param,
-  paging_param,
-  planYn_param
+  paging_param
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
@@ -20,8 +19,6 @@ export const list = async (
   const page = paging_param.page === 0 ? 1 : paging_param.page;
   const part = filter_param.part || "";
   const title = filter_param.title || "";
-
-  const planYn = planYn_param === "Y" ? "money_plan" : "money_real";
 
   const findResult = await Money.find({
     user_id: user_id_param,
@@ -33,8 +30,8 @@ export const list = async (
   .sort({ money_date: sort })
   .lean();
 
-  const finalResult = findResult.map((prev) => {
-    const filtered = prev[planYn]?.money_section.filter((item) => (
+  const finalResult = findResult.map((money) => {
+    const filtered = money?.money_section.filter((item) => (
       (part === "전체" || part === "") ? true : item.money_part_val === part) &&
       (title === "전체" || title === "") ? true : item.money_title_val === title
     );
@@ -47,16 +44,13 @@ export const list = async (
     }
 
     return {
-      ...prev,
-      [planYn]: {
-        ...prev[planYn],
-        money_section: sliceData(filtered, page, limit),
-      },
+      ...money,
+      money_section: sliceData(filtered, page, limit),
     };
   });
 
   const totalCount = finalResult.reduce((acc, cur) => (
-    acc + cur[planYn]?.money_section?.length || 0
+    acc + cur?.money_section?.length || 0
   ), 0);
 
   return {
@@ -69,12 +63,10 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  money_dur_param,
-  planYn_param
+  money_dur_param
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "money_plan" : "money_real";
 
   const finalResult = await Money.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
@@ -85,7 +77,7 @@ export const detail = async (
     },
   }).lean();
 
-  const sectionCount = finalResult?.[planYn]?.money_section?.length || 0;
+  const sectionCount = finalResult?.money_section?.length || 0;
 
   return {
     sectionCount: sectionCount,
@@ -97,12 +89,10 @@ export const detail = async (
 export const save = async (
   user_id_param,
   MONEY_param,
-  money_dur_param,
-  planYn_param
+  money_dur_param
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "money_plan" : "money_real";
 
   const findResult = await Money.findOne({
     user_id: user_id_param,
@@ -118,7 +108,7 @@ export const save = async (
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       money_date: startDay,
-      [planYn]: MONEY_param[planYn],
+      money_section: MONEY_param.money_section,
       money_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       money_update: "",
     };
@@ -130,7 +120,7 @@ export const save = async (
     };
     const updateAction = {
       $set: {
-        [planYn]: MONEY_param[planYn],
+        money_section: MONEY_param.money_section,
         money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       }
     };
@@ -146,12 +136,10 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  money_dur_param,
-  planYn_param
+  money_dur_param
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
-  const planYn = planYn_param === "Y" ? "money_plan" : "money_real";
 
   const updateResult = await Money.updateOne(
     {
@@ -163,7 +151,7 @@ export const deletes = async (
     },
     {
       $pull: {
-        [`${planYn}.money_section`]: {
+        money_section: {
           _id: _id_param
         },
       },
@@ -190,7 +178,7 @@ export const deletes = async (
 
     if (
       (doc) &&
-      (!doc[planYn]?.money_section || doc[planYn]?.money_section?.length === 0)
+      (!doc.money_section || doc.money_section.length === 0)
     ) {
       finalResult = await Money.deleteOne({
         _id: doc._id

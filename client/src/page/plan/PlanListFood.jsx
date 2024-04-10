@@ -1,9 +1,8 @@
-// FoodListPlan.jsx
+// PlanListFood.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import moment from "moment-timezone";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
@@ -12,10 +11,10 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodListPlan = () => {
+export const PlanListFood = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -24,8 +23,8 @@ export const FoodListPlan = () => {
   const STATE = {
     id: "",
     date: "",
-    refresh: 0,
-    toDetail:"/food/detail/plan"
+    refresh:0,
+    toDetail:"/plan/detail/food"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -35,14 +34,11 @@ export const FoodListPlan = () => {
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
-  const {val:type, set:setType} = useStorage(
-    `type(${PATH})`, "day"
-  );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
       limit: 5,
-      part: "전체",
+      schema: "food",
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -67,65 +63,37 @@ export const FoodListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
+  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
-    food_number: 0,
-    food_date: "",
-    food_plan : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    },
+    plan_number: 0,
+    plan_dur: "",
+    plan_schema: "food",
+    plan_food: {
+      plan_kcal: "",
+    }
   }]);
-  const [FOOD, setFOOD] = useState([{
+  const [PLAN, setPLAN] = useState([{
     _id: "",
-    food_number: 0,
-    food_date: "",
-    food_plan : {
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    },
+    plan_number: 0,
+    plan_dur: "",
+    plan_schema: "food",
+    plan_food: {
+      plan_kcal: "",
+    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_FOOD}/list`, {
+    const response = await axios.get(`${URL_PLAN}/list`, {
       params: {
         user_id: user_id,
-        food_dur: strDur,
         filter: filter,
-        paging: paging,
-        planYn: "N",
+        paging: paging
       },
     });
-    setTotalCount(response.data.totalCount ? response.data.totalCount : 0);
-    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
+
+    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
 
   })()}, [strDur, filter, paging]);
 
@@ -142,52 +110,16 @@ export const FoodListPlan = () => {
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
-            <th>날짜</th>
-            <th>분류</th>
-            <th>식품명</th>
-            <th>브랜드</th>
-            <th>수량</th>
-            <th>서빙 사이즈</th>
-            <th>그램(g)</th>
-            <th>칼로리(kcal)</th>
-            <th>탄수화물(g)</th>
-            <th>단백질(g)</th>
-            <th>지방(g)</th>
+            <th>기간</th>
+            <th>칼로리</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD.map((item) => (
+          {PLAN.map((item) => (
             <React.Fragment key={item._id}>
-              {item.food_plan.food_section.map((section, index) => (
-                <tr key={section._id}>
-                  <td className="pointer" onClick={() => {
-                    STATE.id = item._id;
-                    STATE.date = item.food_date;
-                    navParam(STATE.toDetail, {
-                      state: STATE
-                    });
-                  }}>
-                    {item.food_date}
-                  </td>
-                  <td>{section.food_part}</td>
-                  <td>{section.food_title}</td>
-                  <td>{section.food_brand}</td>
-                  <td>{section.food_count}</td>
-                  <td>{section.food_serv}</td>
-                  <td>{section.food_gram}</td>
-                  <td>{section.food_kcal}</td>
-                  <td>{section.food_carb}</td>
-                  <td>{section.food_protein}</td>
-                  <td>{section.food_fat}</td>
-                </tr>
-              ))}
-              <tr className="table-secondary">
-                <td colSpan={6}>합계</td>
-                <td></td>
-                <td>{item.food_plan.food_total_kcal}kcal</td>
-                <td>{item.food_plan.food_total_carb}g</td>
-                <td>{item.food_plan.food_total_protein}g</td>
-                <td>{item.food_plan.food_total_fat}g</td>
+              <tr>
+                <td>{item.plan_dur}</td>
+                <td>{item.plan_food.plan_kcal}</td>
               </tr>
             </React.Fragment>
           ))}
@@ -221,7 +153,7 @@ export const FoodListPlan = () => {
   const filterNode = () => {
     return (
       <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
-        type={"food"}
+        type={"plan"}
       />
     );
   };
@@ -243,7 +175,7 @@ export const FoodListPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List (Plan)</h1>
+            <h1>List</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

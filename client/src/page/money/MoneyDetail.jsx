@@ -1,4 +1,4 @@
-// MoneyDetailPlan.jsx
+// MoneyDetail.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDetailPlan = () => {
+export const MoneyDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
@@ -24,9 +24,9 @@ export const MoneyDetailPlan = () => {
   const STATE = {
     id: "",
     date: "",
-    refresh:0,
-    toList:"/money/list/plan",
-    toSave:"/money/save/plan",
+    refresh: 0,
+    toList: "/money/list",
+    toSave: "/money/save"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -42,31 +42,27 @@ export const MoneyDetailPlan = () => {
     _id: "",
     money_number: 0,
     money_date: "",
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    money_section: [{
+      money_part_idx: 0,
+      money_part_val: "전체",
+      money_title_idx: 0,
+      money_title_val: "전체",
+      money_amount: 0,
+      money_content: "",
+    }],
   });
   const [MONEY, setMONEY] = useState({
     _id: "",
     money_number: 0,
     money_date: "",
-    money_plan : {
-      money_section: [{
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: "",
-      }],
-    }
+    money_section: [{
+      money_part_idx: 0,
+      money_part_val: "전체",
+      money_title_idx: 0,
+      money_title_val: "전체",
+      money_amount: 0,
+      money_content: "",
+    }],
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -75,14 +71,13 @@ export const MoneyDetailPlan = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        money_dur: `${location_date} ~ ${location_date}`,
-        planYn: "N",
+        money_dur: strDur
       },
     });
 
     setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
-  })()}, []);
+  })()}, [strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -90,8 +85,7 @@ export const MoneyDetailPlan = () => {
       params: {
         _id: id,
         user_id: user_id,
-        money_dur: strDur,
-        planYn: "N",
+        money_dur: strDur
       },
     });
     if (response.data === "success") {
@@ -126,11 +120,13 @@ export const MoneyDetailPlan = () => {
           </tr>
         </thead>
         <tbody>
-        {MONEY.money_plan.money_section.map((item, index) => (
+        {MONEY?.money_section.map((item, index) => (
           <tr key={index}>
             {index === 0 && (
               <React.Fragment>
-                <td className="fs-20 pt-20" rowSpan={MONEY.money_plan.money_section?.length}>{MONEY.money_date}</td>
+                <td className="fs-20 pt-20" rowSpan={MONEY?.money_section?.length}>
+                  {MONEY.money_date}
+                </td>
               </React.Fragment>
             )}
             <td className="fs-20 pt-20">{item.money_part_val}</td>
@@ -170,7 +166,7 @@ export const MoneyDetailPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Detail (Plan)</h1>
+            <h1>Detail</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

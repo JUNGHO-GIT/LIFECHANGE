@@ -1,4 +1,4 @@
-// WorkSaveReal.jsx
+// WorkSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -14,7 +14,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkSaveReal = () => {
+export const WorkSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -27,7 +27,7 @@ export const WorkSaveReal = () => {
     id: "",
     date: "",
     refresh: 0,
-    toList:"/work/list/real"
+    toList:"/work/list"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -48,45 +48,41 @@ export const WorkSaveReal = () => {
     _id: "",
     work_number: 0,
     work_date: "",
-    work_real : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "",
-        work_title_idx: 0,
-        work_title_val: "",
-        work_set: 0,
-        work_rep: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    }
+    work_start: "",
+    work_end: "",
+    work_time: "",
+    work_section: [{
+      work_part_idx: 0,
+      work_part_val: "",
+      work_title_idx: 0,
+      work_title_val: "",
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
+    }],
   });
   const [WORK, setWORK] = useState({
     _id: "",
     work_number: 0,
     work_date: "",
-    work_real : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "",
-        work_title_idx: 0,
-        work_title_val: "",
-        work_set: 0,
-        work_rep: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    }
+    work_start: "",
+    work_end: "",
+    work_time: "",
+    work_section: [{
+      work_part_idx: 0,
+      work_part_val: "",
+      work_title_idx: 0,
+      work_title_val: "",
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
+    }],
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur, "N");
+  useDate(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -94,8 +90,7 @@ export const WorkSaveReal = () => {
       params: {
         _id: "",
         user_id: user_id,
-        work_dur: strDur,
-        planYn: "N",
+        work_dur: strDur
       },
     });
 
@@ -109,11 +104,10 @@ export const WorkSaveReal = () => {
     const response = await axios.post(`${URL_WORK}/save`, {
       user_id: user_id,
       WORK: WORK,
-      work_dur: strDur,
-      planYn: "N"
+      work_dur: strDur
     });
     if (response.data === "success") {
-      alert("Save a work successfully");
+      alert("Save successfully");
       STATE.date = strDate;
       navParam(STATE.toList);
     }
@@ -152,25 +146,19 @@ export const WorkSaveReal = () => {
                 // count 값이 증가했을 때 새로운 섹션들만 추가
                 if (newCount > sectionCount) {
                   let additionalSections = Array(newCount - sectionCount).fill(defaultSection);
-                  let updatedSection = [...WORK.work_real.work_section, ...additionalSections];
+                  let updatedSection = [...WORK.work_section, ...additionalSections];
                   setWORK((prev) => ({
                     ...prev,
-                    work_real: {
-                      ...prev.work_real,
-                      work_section: updatedSection,
-                    },
+                    work_section: updatedSection,
                   }));
                 }
                 // count 값이 감소했을 때 마지막 섹션부터 제거
                 else if (newCount < sectionCount) {
-                  let updatedSection = [...WORK.work_real.work_section];
+                  let updatedSection = [...WORK.work_section];
                   updatedSection = updatedSection.slice(0, newCount);
                   setWORK((prev) => ({
                     ...prev,
-                    work_real: {
-                      ...prev.work_real,
-                      work_section: updatedSection,
-                    },
+                    work_section: updatedSection,
                   }));
                 }
                 setSectionCount(newCount);
@@ -198,12 +186,12 @@ export const WorkSaveReal = () => {
               <select
                 className="form-control"
                 id={`work_part_idx-${i}`}
-                value={WORK.work_real.work_section[i]?.work_part_idx}
+                value={WORK.work_section[i]?.work_part_idx}
                 onChange={(e) => {
                   const newIndex = parseInt(e.target.value);
                   setWORK((prevWORK) => {
                     let updatedWORK = { ...prevWORK };
-                    let updatedSection = [...updatedWORK.work_real.work_section];
+                    let updatedSection = [...updatedWORK.work_section];
                     updatedSection[i] = {
                       ...updatedSection[i],
                       work_part_idx: newIndex,
@@ -211,7 +199,7 @@ export const WorkSaveReal = () => {
                       work_title_idx: 0,
                       work_title_val: workTitleArray[newIndex].work_title[0],
                     };
-                    updatedWORK.work_real.work_section = updatedSection;
+                    updatedWORK.work_section = updatedSection;
                     return updatedWORK;
                   });
                 }}
@@ -230,19 +218,19 @@ export const WorkSaveReal = () => {
               <select
                 className="form-control"
                 id={`work_title_idx-${i}`}
-                value={WORK.work_real.work_section[i]?.work_title_val}
+                value={WORK.work_section[i]?.work_title_val}
                 onChange={(e) => {
                   const newTitle = e.target.value;
                   setWORK((prevWORK) => {
                     let updatedWORK = { ...prevWORK };
-                    let updatedSection = [...updatedWORK.work_real.work_section];
+                    let updatedSection = [...updatedWORK.work_section];
                     updatedSection[i].work_title_val = newTitle;
-                    updatedWORK.work_real.work_section = updatedSection;
+                    updatedWORK.work_section = updatedSection;
                     return updatedWORK;
                   });
                 }}
               >
-                {workTitleArray[WORK.work_real.work_section[i]?.work_part_idx]?.work_title.map((title, idx) => (
+                {workTitleArray[WORK.work_section[i]?.work_part_idx]?.work_title.map((title, idx) => (
                   <option key={idx} value={title}>
                     {title}
                   </option>
@@ -258,14 +246,14 @@ export const WorkSaveReal = () => {
               <input
                 type="number"
                 className="form-control"
-                value={WORK.work_real?.work_section[i]?.work_set}
+                value={WORK?.work_section[i]?.work_set}
                 onChange={(e) => {
                   const newSet = parseInt(e.target.value);
                   setWORK((prev) => {
                     let updatedWORK = { ...prev };
-                    let updatedSection = [...updatedWORK.work_real.work_section];
+                    let updatedSection = [...updatedWORK.work_section];
                     updatedSection[i].work_set = isNaN(newSet) ? 0 : newSet;
-                    updatedWORK.work_real.work_section = updatedSection;
+                    updatedWORK.work_section = updatedSection;
                     return updatedWORK;
                   });
                 }}
@@ -278,14 +266,14 @@ export const WorkSaveReal = () => {
               <input
                 type="number"
                 className="form-control"
-                value={WORK.work_real?.work_section[i]?.work_rep}
+                value={WORK?.work_section[i]?.work_rep}
                 onChange={(e) => {
                   const newCount = parseInt(e.target.value);
                   setWORK((prev) => {
                     let updatedWORK = { ...prev };
-                    let updatedSection = [...updatedWORK.work_real.work_section];
+                    let updatedSection = [...updatedWORK.work_section];
                     updatedSection[i].work_rep = isNaN(newCount) ? 0 : newCount;
-                    updatedWORK.work_real.work_section = updatedSection;
+                    updatedWORK.work_section = updatedSection;
                     return updatedWORK;
                   });
                 }}
@@ -298,14 +286,14 @@ export const WorkSaveReal = () => {
               <input
                 type="number"
                 className="form-control"
-                value={WORK.work_real?.work_section[i]?.work_kg}
+                value={WORK?.work_section[i]?.work_kg}
                 onChange={(e) => {
                   const newKg = parseInt(e.target.value);
                   setWORK((prev) => {
                     const updatedWORK = { ...prev };
-                    const updatedSection = [...updatedWORK.work_real.work_section];
+                    const updatedSection = [...updatedWORK.work_section];
                     updatedSection[i].work_kg = isNaN(newKg) ? 0 : newKg;
-                    updatedWORK.work_real.work_section = updatedSection;
+                    updatedWORK.work_section = updatedSection;
                     return updatedWORK;
                   });
                 }}
@@ -318,14 +306,14 @@ export const WorkSaveReal = () => {
               <input
                 type="number"
                 className="form-control"
-                value={WORK.work_real?.work_section[i]?.work_rest}
+                value={WORK?.work_section[i]?.work_rest}
                 onChange={(e) => {
                   const newRest = parseInt(e.target.value);
                   setWORK((prev) => {
                     const updatedWORK = { ...prev };
-                    const updatedSection = [...updatedWORK.work_real.work_section];
+                    const updatedSection = [...updatedWORK.work_section];
                     updatedSection[i].work_rest = isNaN(newRest) ? 0 : newRest;
-                    updatedWORK.work_real.work_section = updatedSection;
+                    updatedWORK.work_section = updatedSection;
                     return updatedWORK;
                   });
                 }}
@@ -353,14 +341,11 @@ export const WorkSaveReal = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={WORK.work_real?.work_start}
+                value={WORK?.work_start}
                 onChange={(e) => {
                   setWORK((prev) => ({
                     ...prev,
-                    work_real: {
-                      ...prev.work_real,
-                      work_start: e ? e.toString() : "",
-                    },
+                    work_start: e ? e.toString() : "",
                   }));
                 }}
               />
@@ -379,14 +364,11 @@ export const WorkSaveReal = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={WORK.work_real?.work_end}
+                value={WORK?.work_end}
                 onChange={(e) => {
                   setWORK((prev) => ({
                     ...prev,
-                    work_real: {
-                      ...prev.work_real,
-                      work_end: e ? e.toString() : "",
-                    },
+                    work_start: e ? e.toString() : "",
                   }));
                 }}
               />
@@ -406,7 +388,7 @@ export const WorkSaveReal = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={WORK.work_real?.work_time}
+                value={WORK?.work_time}
               />
             </div>
           </div>
@@ -432,7 +414,7 @@ export const WorkSaveReal = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Save (Real)</h1>
+            <h1>Save</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

@@ -31,8 +31,7 @@ foodRouter.get("/list", async (req, res) => {
       req.query.user_id,
       req.query.food_dur,
       req.query.filter,
-      req.query.paging,
-      req.query.planYn,
+      req.query.paging
     );
     if (result) {
       res.send(result);
@@ -53,8 +52,7 @@ foodRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.food_dur,
-      req.query.planYn
+      req.query.food_dur
     );
     if (result) {
       res.send(result);
@@ -75,8 +73,7 @@ foodRouter.post("/save", async (req, res) => {
     const result = await service.save (
       req.body.user_id,
       req.body.FOOD,
-      req.body.food_dur,
-      req.body.planYn
+      req.body.food_dur
     );
     if (result) {
       res.send("success");
@@ -97,8 +94,7 @@ foodRouter.delete("/delete", async (req, res) => {
     const result = await service.deletes(
       req.query._id,
       req.query.user_id,
-      req.query.food_dur,
-      req.query.planYn
+      req.query.food_dur
     );
     if (result) {
       res.send("success");

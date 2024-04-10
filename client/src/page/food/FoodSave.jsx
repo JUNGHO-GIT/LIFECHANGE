@@ -1,8 +1,9 @@
-// FoodSavePlan.jsx
+// FoodSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -13,7 +14,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSavePlan = () => {
+export const FoodSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -26,8 +27,8 @@ export const FoodSavePlan = () => {
     id: "",
     date: "",
     refresh:0,
-    toList:"/food/list/plan",
-    toSave:"/food/save/plan",
+    toList:"/food/list",
+    toSave:"/food/save",
     toSearch:"/food/search",
   };
 
@@ -45,23 +46,21 @@ export const FoodSavePlan = () => {
       _id: "",
       food_number: 0,
       food_date: "",
-      food_plan : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
-      },
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
+      }],
     }
   );
   const {val:FOOD, set:setFOOD} = useStorage(
@@ -69,25 +68,26 @@ export const FoodSavePlan = () => {
       _id: "",
       food_number: 0,
       food_date: "",
-      food_plan : {
-        food_total_kcal: "",
-        food_total_fat: "",
-        food_total_carb: "",
-        food_total_protein: "",
-        food_section: [{
-          food_part: "",
-          food_title: "",
-          food_count: "",
-          food_serv: "",
-          food_gram: "",
-          food_kcal: "",
-          food_fat: "",
-          food_carb: "",
-          food_protein: "",
-        }],
-      },
+      food_total_kcal: "",
+      food_total_fat: "",
+      food_total_carb: "",
+      food_total_protein: "",
+      food_section: [{
+        food_part: "",
+        food_title: "",
+        food_count: "",
+        food_serv: "",
+        food_gram: "",
+        food_kcal: "",
+        food_fat: "",
+        food_carb: "",
+        food_protein: "",
+      }],
     }
   );
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(FOOD, setFOOD, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   /* useEffect(() => {(async () => {
@@ -95,8 +95,7 @@ export const FoodSavePlan = () => {
       params: {
         _id: "",
         user_id: user_id,
-        food_dur: strDur,
-        planYn: "N",
+        food_dur: strDur
       },
     });
 
@@ -116,7 +115,7 @@ export const FoodSavePlan = () => {
     }
 
     setFOOD((prev) => {
-      let newFoodSection = [...prev.food_plan.food_section];
+      let newFoodSection = [...prev.food_section];
 
       // 첫 번째 항목이 빈 값 객체인지 확인하고, 조건에 맞으면 제거
       if (
@@ -133,10 +132,7 @@ export const FoodSavePlan = () => {
 
       return {
         ...prev,
-        food_plan: {
-          ...prev.food_plan,
-          food_section: newFoodSection,
-        },
+        food_section: newFoodSection,
       };
     })
   }, []);
@@ -147,17 +143,14 @@ export const FoodSavePlan = () => {
     // 초기 영양소 값 설정
     setFOOD_DEFAULT((prev) => ({
       ...prev,
-      food_plan: {
-        ...prev.food_plan,
-        food_section: [...FOOD.food_plan.food_section],
-      },
+      food_section: [...FOOD.food_section],
     }));
   }, [FOOD]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
-    const totals = FOOD.food_plan?.food_section?.reduce((acc, current) => {
+    const totals = FOOD?.food_section?.reduce((acc, current) => {
       return {
         totalKcal: acc.totalKcal + Number(current.food_kcal),
         totalFat: acc.totalFat + Number(current.food_fat),
@@ -168,15 +161,12 @@ export const FoodSavePlan = () => {
 
     setFOOD(prev => ({
       ...prev,
-      food_plan: {
-        ...prev.food_plan,
-        food_total_kcal: totals.totalKcal.toFixed(1),
-        food_total_fat: totals.totalFat.toFixed(1),
-        food_total_carb: totals.totalCarb.toFixed(1),
-        food_total_protein: totals.totalProtein.toFixed(1),
-      },
+      food_total_kcal: totals.totalKcal.toFixed(1),
+      food_total_fat: totals.totalFat.toFixed(1),
+      food_total_carb: totals.totalCarb.toFixed(1),
+      food_total_protein: totals.totalProtein.toFixed(1),
     }));
-  }, [FOOD.food_plan.food_section]);
+  }, [FOOD.food_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -184,11 +174,10 @@ export const FoodSavePlan = () => {
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
       FOOD: FOOD,
-      food_dur: strDur,
-      planYn: "N"
+      food_dur: strDur
     });
     if (response.data === "success") {
-      alert("Save a food successfully");
+      alert("Save successfully");
       STATE.date = strDate;
       navParam(STATE.toList);
     }
@@ -209,9 +198,9 @@ export const FoodSavePlan = () => {
     const newCountValue = Number(newValue);
 
     setFOOD((prev) => {
-      const newFoodSection = [...prev.food_plan.food_section];
+      const newFoodSection = [...prev.food_section];
       const section = newFoodSection[index];
-      const defaultSection = FOOD_DEFAULT.food_plan.food_section[index];
+      const defaultSection = FOOD_DEFAULT.food_section[index];
       const ratio = newCountValue / (defaultSection.food_count || 1);
 
       if (defaultSection) {
@@ -228,10 +217,7 @@ export const FoodSavePlan = () => {
 
       return {
         ...prev,
-        food_plan: {
-          ...prev.food_plan,
-          food_section: newFoodSection,
-        },
+        food_section: newFoodSection,
       };
     });
   };
@@ -239,14 +225,11 @@ export const FoodSavePlan = () => {
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerFoodDelete = (index) => {
     setFOOD((prev) => {
-      const newFoodSection = [...prev.food_plan.food_section];
+      const newFoodSection = [...prev.food_section];
       newFoodSection.splice(index, 1);
       return {
         ...prev,
-        food_plan: {
-          ...prev.food_plan,
-          food_section: newFoodSection,
-        },
+        food_section: newFoodSection,
       };
     });
   };
@@ -270,7 +253,7 @@ export const FoodSavePlan = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD.food_plan?.food_section?.map((item, index) => (
+          {FOOD?.food_section?.map((item, index) => (
             <React.Fragment key={index}>
               <tr>
                 <td>
@@ -282,17 +265,14 @@ export const FoodSavePlan = () => {
                     onChange={(e) => {
                       const newPart = e.target.value;
                       setFOOD((prev) => {
-                        const newFoodSection = [...prev.food_plan.food_section];
+                        const newFoodSection = [...prev.food_section];
                         newFoodSection[index] = {
                           ...item,
                           food_part: newPart,
                         };
                         return {
                           ...prev,
-                          food_plan: {
-                            ...prev.food_plan,
-                            food_section: newFoodSection,
-                          },
+                          food_section: newFoodSection,
                         };
                       });
                     }}
@@ -340,10 +320,10 @@ export const FoodSavePlan = () => {
             <td></td>
             <td></td>
             <td></td>
-            <td>{FOOD.food_plan.food_total_kcal}</td>
-            <td>{FOOD.food_plan.food_total_fat}</td>
-            <td>{FOOD.food_plan.food_total_carb}</td>
-            <td>{FOOD.food_plan.food_total_protein}</td>
+            <td>{FOOD.food_total_kcal}</td>
+            <td>{FOOD.food_total_fat}</td>
+            <td>{FOOD.food_total_carb}</td>
+            <td>{FOOD.food_total_protein}</td>
             <td></td>
           </tr>
         </tbody>
@@ -368,7 +348,7 @@ export const FoodSavePlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>Save (Plan)</h1>
+            <h1>Save</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

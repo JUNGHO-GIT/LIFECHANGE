@@ -1,4 +1,4 @@
-// WorkListReal.jsx
+// SleepList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,10 +11,10 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkListReal = () => {
+export const SleepList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -23,8 +23,8 @@ export const WorkListReal = () => {
   const STATE = {
     id: "",
     date: "",
-    refresh:0,
-    toDetail:"/work/detail",
+    refresh: 0,
+    toDetail:"/sleep/detail"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -34,12 +34,10 @@ export const WorkListReal = () => {
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
-  const {val:type, set:setType} = useStorage(
-    `type(${PATH})`, "day"
-  );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
+      type: "day",
       limit: 5
     }
   );
@@ -65,62 +63,41 @@ export const WorkListReal = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{
+  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
     _id: "",
-    work_number: 0,
-    work_date: "",
-    work_real : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_rep: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    },
+    sleep_number: 0,
+    sleep_date: "",
+    sleep_section: [{
+      sleep_night: "",
+      sleep_morning: "",
+      sleep_time: "",
+    }],
   }]);
-  const [WORK, setWORK] = useState([{
+  const [SLEEP, setSLEEP] = useState([{
     _id: "",
-    work_number: 0,
-    work_date: "",
-    work_real : {
-      work_start: "",
-      work_end: "",
-      work_time: "",
-      work_section: [{
-        work_part_idx: 0,
-        work_part_val: "전체",
-        work_title_idx: 0,
-        work_title_val: "전체",
-        work_set: 0,
-        work_rep: 0,
-        work_kg: 0,
-        work_rest: 0,
-      }],
-    },
+    sleep_number: 0,
+    sleep_date: "",
+    sleep_section: [{
+      sleep_night: "",
+      sleep_morning: "",
+      sleep_time: "",
+    }],
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_WORK}/list`, {
+    const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
         user_id: user_id,
-        work_dur: strDur,
+        sleep_dur: strDur,
         filter: filter,
-        paging: paging,
-        planYn: "N",
+        paging: paging
       },
     });
 
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
-    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur, filter, paging]);
 
@@ -138,45 +115,30 @@ export const WorkListReal = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>시작</th>
-            <th>종료</th>
-            <th>시간</th>
-            <th>부위</th>
-            <th>종목</th>
-            <th>세트 x 횟수 x 무게</th>
-            <th>휴식</th>
+            <th>취침</th>
+            <th>기상</th>
+            <th>수면</th>
           </tr>
         </thead>
         <tbody>
-          {WORK.map((item) => (
-            <React.Fragment key={item.work_date}>
-              <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.work_date;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.work_date}
-                </td>
-                <td>시작</td>
-                <td>{item.work_real.work_start}</td>
-                <td>{item.work_real.work_end}</td>
-                <td>{item.work_real.work_time}</td>
-                <td colSpan={5}>
-                  {item.work_real.work_section.map((section, index) => (
-                    <div key={index} className="d-flex justify-content-between">
-                      <span>{section.work_part_val}</span>
-                      <span>{section.work_title_val}</span>
-                      <span>{section.work_set} x {section.work_rep} x {section.work_kg}</span>
-                      <span>{section.work_rest}</span>
-                    </div>
-                  ))}
-                </td>
-              </tr>
-            </React.Fragment>
-          ))}
+          {SLEEP.map((item) => (
+            item?.sleep_section.map((section, index) => (
+              <React.Fragment key={item._id + index}>
+                <tr>
+                  <td rowSpan={6} className="pointer" onClick={() => {
+                    STATE.id = item._id;
+                    STATE.date = item.sleep_date;
+                    navParam(STATE.toDetail, {
+                      state: STATE
+                    });
+                  }}>{item.sleep_date}</td>
+                  <td>{section.sleep_night}</td>
+                  <td>{section.sleep_morning}</td>
+                  <td>{section.sleep_time}</td>
+                </tr>
+              </React.Fragment>
+            )))
+          )}
         </tbody>
       </table>
     );
@@ -207,7 +169,7 @@ export const WorkListReal = () => {
   const filterNode = () => {
     return (
       <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
-        type={"work"}
+        type={"sleep"}
       />
     );
   };
@@ -227,34 +189,24 @@ export const WorkListReal = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
-            <h1>List (Real)</h1>
+        <div className="row d-center">
+          <div className="col-12 mb-20">
+            <h1>List</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {dateNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {calendarNode()}
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {filterNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {pagingNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

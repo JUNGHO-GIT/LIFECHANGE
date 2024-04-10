@@ -13,26 +13,18 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
+  plan_schema: {
+    type: String,
+    required: false
+  },
   plan_dur: {
     type: String,
     required: false
   },
 
-  // 1. food (특정 기간별 칼로리, 탄수화물, 단백질, 지방)
+  // 1. food (특정 기간별 칼로리)
   plan_food: {
     plan_kcal: {
-      type: String,
-      required: false
-    },
-    plan_carb: {
-      type: String,
-      required: false
-    },
-    plan_protein: {
-      type: String,
-      required: false
-    },
-    plan_fat: {
       type: String,
       required: false
     },
@@ -40,11 +32,11 @@ const schema = new mongoose.Schema({
 
   // 2. money (특정 기간별 지출액, 저축액)
   plan_money: {
-    plan_out: {
+    plan_in: {
       type: String,
       required: false
     },
-    plan_in: {
+    plan_out: {
       type: String,
       required: false
     },
@@ -72,14 +64,6 @@ const schema = new mongoose.Schema({
       type: String,
       required: false
     },
-    plan_count_specific: {
-      type: String,
-      required: false
-    },
-    plan_cardio_name: {
-      type: String,
-      required: false
-    },
     plan_cardio_time: {
       type: String,
       required: false
@@ -93,10 +77,6 @@ const schema = new mongoose.Schema({
       required: false
     },
     plan_score_rep: {
-      type: String,
-      required: false
-    },
-    plan_score_set: {
       type: String,
       required: false
     },
