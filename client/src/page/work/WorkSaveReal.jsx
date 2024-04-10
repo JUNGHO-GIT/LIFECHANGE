@@ -24,10 +24,10 @@ export const WorkSaveReal = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    toList:"/work/list/real",
     id: "",
-    date: ""
+    date: "",
+    refresh: 0,
+    toList:"/work/list/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

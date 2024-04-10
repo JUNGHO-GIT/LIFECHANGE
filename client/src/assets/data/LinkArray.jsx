@@ -25,6 +25,13 @@ export const linkArray = [
     ]
   },
   {
+    label: "Plan",
+    items: [
+      {to: "/plan/list", label: "PlanList"},
+      {to: "/plan/save", label: "PlanSave"},
+    ]
+  },
+  {
     label: "Money",
     items: [
       {to: "/money/dash", label: "MoneyDash"},
@@ -36,17 +43,6 @@ export const linkArray = [
     ]
   },
   {
-    label: "Work",
-    items: [
-      {to: "/work/dash", label: "WorkDash"},
-      {to: "/work/compare", label: "WorkCompare"},
-      {to: "/work/list/plan", label: "WorkListPlan"},
-      {to: "/work/list/real", label: "WorkListReal"},
-      {to: "/work/save/plan", label: "WorkSavePlan"},
-      {to: "/work/save/real", label: "WorkSaveReal"},
-    ]
-  },
-  {
     label: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
@@ -55,6 +51,17 @@ export const linkArray = [
       {to: "/sleep/list/real", label: "SleepListReal"},
       {to: "/sleep/save/plan", label: "SleepSavePlan"},
       {to: "/sleep/save/real", label: "SleepSaveReal"},
+    ]
+  },
+  {
+    label: "Work",
+    items: [
+      {to: "/work/dash", label: "WorkDash"},
+      {to: "/work/compare", label: "WorkCompare"},
+      {to: "/work/list/plan", label: "WorkListPlan"},
+      {to: "/work/list/real", label: "WorkListReal"},
+      {to: "/work/save/plan", label: "WorkSavePlan"},
+      {to: "/work/save/real", label: "WorkSaveReal"},
     ]
   }
 ];

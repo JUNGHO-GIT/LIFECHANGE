@@ -1,4 +1,4 @@
-// SleepListPlan.jsx
+// PlanList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,10 +11,10 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepListPlan = () => {
+export const PlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -23,8 +23,8 @@ export const SleepListPlan = () => {
   const STATE = {
     id: "",
     date: "",
-    refresh: 0,
-    toDetail:"/sleep/detail/plan"
+    refresh:0,
+    toDetail:"/plan/detail/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -34,11 +34,17 @@ export const SleepListPlan = () => {
   const {val:totalCount, set:setTotalCount} = useStorage(
     `totalCount(${PATH})`, 0
   );
+  const {val:type, set:setType} = useStorage(
+    `type(${PATH})`, "day"
+  );
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
-      type: "day",
-      limit: 5
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -63,38 +69,44 @@ export const SleepListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
+  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_plan : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
+    plan_number: 0,
+    plan_date: "",
+    plan_real : {
+      plan_section: [{
+        plan_part_idx: 0,
+        plan_part_val: "전체",
+        plan_title_idx: 0,
+        plan_title_val: "전체",
+        plan_amount: 0,
+        plan_content: "",
       }],
-    },
+    }
   }]);
-  const [SLEEP, setSLEEP] = useState([{
+  const [PLAN, setPLAN] = useState([{
     _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_plan : {
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
+    plan_number: 0,
+    plan_date: "",
+    plan_real : {
+      plan_section: [{
+        plan_part_idx: 0,
+        plan_part_val: "전체",
+        plan_title_idx: 0,
+        plan_title_val: "전체",
+        plan_amount: 0,
+        plan_content: "",
       }],
-    },
+    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const response = await axios.get(`${URL_SLEEP}/list`, {
+    const response = await axios.get(`${URL_PLAN}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: strDur,
+        plan_dur: strDur,
         filter: filter,
         paging: paging,
         planYn: "N",
@@ -102,7 +114,7 @@ export const SleepListPlan = () => {
     });
 
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
 
   })()}, [strDur, filter, paging]);
 
@@ -120,24 +132,36 @@ export const SleepListPlan = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>취침</th>
-            <th>기상</th>
-            <th>수면</th>
+            <th>분류</th>
+            <th>항목</th>
+            <th>금액</th>
+            <th>내용</th>
           </tr>
         </thead>
         <tbody>
-          {SLEEP.map((item) => (
-            item.sleep_plan.sleep_section.map((section, index) => (
-              <React.Fragment key={item._id + index}>
-                <tr>
-                  <td>{item.sleep_date}</td>
-                  <td>{section.sleep_night}</td>
-                  <td>{section.sleep_morning}</td>
-                  <td>{section.sleep_time}</td>
+          {PLAN.map((item) => (
+            <React.Fragment key={item.plan_date}>
+              <tr>
+                <td rowSpan={6} className="pointer" onClick={() => {
+                  STATE.id = item._id;
+                  STATE.date = item.plan_date;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>
+                  {item.plan_date}
+                </td>
+              </tr>
+              {item.plan_real.plan_section.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.plan_part_val}</td>
+                  <td>{item.plan_title_val}</td>
+                  <td>{item.plan_amount}</td>
+                  <td>{item.plan_content}</td>
                 </tr>
-              </React.Fragment>
-            )))
-          )}
+              ))}
+            </React.Fragment>
+          ))}
         </tbody>
       </table>
     );
@@ -168,7 +192,7 @@ export const SleepListPlan = () => {
   const filterNode = () => {
     return (
       <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
-        type={"sleep"}
+        type={"plan"}
       />
     );
   };
@@ -190,7 +214,7 @@ export const SleepListPlan = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List (Plan)</h1>
+            <h1>List (Real)</h1>
           </div>
         </div>
         <div className="row d-center mb-20">

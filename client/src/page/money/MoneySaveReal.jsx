@@ -17,17 +17,16 @@ export const MoneySaveReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    toList:"/money/list/real",
     id: "",
-    date: ""
+    date: "",
+    refresh: 0,
+    toList:"/money/list/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

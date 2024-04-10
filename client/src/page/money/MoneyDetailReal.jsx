@@ -22,11 +22,11 @@ export const MoneyDetailReal = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    toList:"/money/list/real",
-    toSave:"/money/save/real",
     id: "",
-    date: ""
+    date: "",
+    refresh: 0,
+    toList: "/money/list/real",
+    toSave: "/money/save/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

@@ -23,10 +23,10 @@ export const MoneySavePlan = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    toList:"/money/list/plan",
     id: "",
-    date: ""
+    date: "",
+    refresh: 0,
+    toList:"/money/list/plan",
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

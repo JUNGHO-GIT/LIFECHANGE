@@ -22,11 +22,11 @@ export const SleepDetailReal = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
-    refresh:0,
-    toList:"/sleep/list/real",
-    toSave:"/sleep/save/real",
     id: "",
-    date: ""
+    date: "",
+    refresh: 0,
+    toList:"/sleep/list/real",
+    toSave:"/sleep/save/real"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
