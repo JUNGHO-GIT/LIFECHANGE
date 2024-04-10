@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {moneyPartArray, moneyTitleArray} from "./array/MoneyArray.jsx";
+import {moneyPartArray, moneyTitleArray} from "../../assets/data/MoneyArray.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -122,7 +122,7 @@ export const MoneySavePlan = () => {
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
 
     const calcDate = (days) => {

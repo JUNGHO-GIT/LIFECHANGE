@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {workPartArray, workTitleArray} from "./array/WorkArray.jsx";
+import {workPartArray, workTitleArray} from "../../assets/data/WorkArray.jsx";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // ------------------------------------------------------------------------------------------------>
@@ -161,7 +161,7 @@ export const WorkSavePlan = () => {
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
 
     const calcDate = (days) => {

@@ -104,7 +104,7 @@ export const FoodCompare = () => {
     setTotalCount(response.data.totalCount);
     setFOOD(response.data.result);
 
-  })()}, [strDur, filter]);
+  })()}, [strDur, filter, paging]);
 
   // 6. table ----------------------------------------------------------------------------------->
   const tableCompare = () => {

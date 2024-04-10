@@ -40,6 +40,11 @@ export const SleepListPlan = () => {
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
+      limit: 5
+    }
+  );
+  const {val:paging, set:setPaging} = useStorage(
+    `paging(${PATH})`, {
       page: 1,
       limit: 5
     }
@@ -93,6 +98,7 @@ export const SleepListPlan = () => {
         user_id: user_id,
         sleep_dur: strDur,
         filter: filter,
+        paging: paging,
         planYn: "Y",
       },
     });
@@ -100,7 +106,7 @@ export const SleepListPlan = () => {
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
-  })()}, [strDur, filter]);
+  })()}, [strDur, filter, paging]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -121,7 +127,7 @@ export const SleepListPlan = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
     let dayPicker;
     if (type === "day") {
@@ -314,8 +320,8 @@ export const SleepListPlan = () => {
     );
   };
 
-  // 7. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
+  // 7. paging ------------------------------------------------------------------------------------>
+  const pagingNode = () => {
     function prevButton() {
       return (
         <button
@@ -376,8 +382,8 @@ export const SleepListPlan = () => {
     );
   };
 
-  // 8. select ------------------------------------------------------------------------------------>
-  const selectNode = () => {
+  // 8. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => {
     function selectType() {
       return (
         <div className="mb-3">
@@ -501,12 +507,12 @@ export const SleepListPlan = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {selectNode()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterNode()}
+            {pagingNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

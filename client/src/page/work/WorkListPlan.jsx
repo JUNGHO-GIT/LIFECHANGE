@@ -40,6 +40,11 @@ export const WorkListPlan = () => {
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
+      limit: 5
+    }
+  );
+  const {val:paging, set:setPaging} = useStorage(
+    `paging(${PATH})`, {
       page: 1,
       limit: 5
     }
@@ -109,6 +114,7 @@ export const WorkListPlan = () => {
         user_id: user_id,
         work_dur: strDur,
         filter: filter,
+        paging: paging,
         planYn: "Y",
       },
     });
@@ -116,7 +122,7 @@ export const WorkListPlan = () => {
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
 
-  })()}, [strDur, filter]);
+  })()}, [strDur, filter, paging]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -137,7 +143,7 @@ export const WorkListPlan = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
     let dayPicker;
     if (type === "day") {
@@ -413,8 +419,8 @@ export const WorkListPlan = () => {
     );
   };
 
-  // 8. select ------------------------------------------------------------------------------------>
-  const selectNode = () => {
+  // 8. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => {
     function selectType() {
       return (
         <div className="mb-3">
@@ -538,7 +544,7 @@ export const WorkListPlan = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {selectNode()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

@@ -9,14 +9,15 @@ export const list = async (
   user_id_param,
   money_dur_param,
   filter_param,
+  paging_param,
   planYn_param
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
 
   const sort = filter_param.order === "asc" ? 1 : -1;
-  const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const page = paging_param.page === 0 ? 1 : paging_param.page;
   const part = filter_param.part || "";
   const title = filter_param.title || "";
 

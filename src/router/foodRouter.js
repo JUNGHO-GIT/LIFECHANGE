@@ -31,6 +31,7 @@ foodRouter.get("/list", async (req, res) => {
       req.query.user_id,
       req.query.food_dur,
       req.query.filter,
+      req.query.paging,
       req.query.planYn,
     );
     if (result) {

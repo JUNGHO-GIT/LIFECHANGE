@@ -8,7 +8,7 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
-import {moneyArray} from "./array/MoneyArray.jsx";
+import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySaveReal = () => {
@@ -121,7 +121,7 @@ export const MoneySaveReal = () => {
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
     const calcDate = (days) => {
       const date = new Date(strDate);

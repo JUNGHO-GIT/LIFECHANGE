@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -73,19 +74,7 @@ export const SleepSavePlan = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
-    setSLEEP((prev) => ({
-      ...prev,
-      sleep_date: strDur
-    }));
-  }, [strDate]);
+  useDate(SLEEP, setSLEEP, PATH, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -102,38 +91,6 @@ export const SleepSavePlan = () => {
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const startTime = SLEEP.sleep_plan?.sleep_section.map((item) => item?.sleep_night)?.toString();
-    const endTime = SLEEP.sleep_plan?.sleep_section.map((item) => item?.sleep_morning)?.toString();
-
-    if (startTime && endTime) {
-      const startDate = new Date(`${strDate}T${startTime}`);
-      const endDate = new Date(`${strDate}T${endTime}`);
-
-      // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
-      if (endDate < startDate) {
-        endDate.setDate(endDate.getDate() + 1);
-      }
-
-      // 차이 계산
-      const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-
-      setSLEEP((prev) => ({
-        ...prev,
-        sleep_plan: {
-          sleep_section: [{
-            ...prev?.sleep_plan?.sleep_section[0],
-            sleep_time: time,
-          }]
-        },
-      }));
-    }
-  }, [strStartDate, strEndDate]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -153,7 +110,7 @@ export const SleepSavePlan = () => {
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
 
     const calcDate = (days) => {

@@ -47,14 +47,15 @@ export const list = async (
   user_id_param,
   work_dur_param,
   filter_param,
+  paging_param,
   planYn_param
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
   const part = filter_param.part || "전체";
   const sort = filter_param.order === "asc" ? 1 : -1;
-  const page = filter_param.page === 0 ? 1 : filter_param.page;
   const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
+  const page = paging_param.page === 0 ? 1 : paging_param.page;
   const planYn = planYn_param === "Y" ? "work_plan" : "work_real";
 
   const findResult = await Work.find({

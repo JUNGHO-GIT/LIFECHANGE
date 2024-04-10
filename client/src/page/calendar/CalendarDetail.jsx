@@ -143,7 +143,7 @@ export const CalendarDetail = () => {
 
   }, [user_id, resDur]);
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewCalendarDay = () => {
     const calcDate = (days) => {
       setCalendarDay((prevDate) => {

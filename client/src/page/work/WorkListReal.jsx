@@ -9,6 +9,10 @@ import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
 import { differenceInDays } from "date-fns";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkListReal = () => {
@@ -40,6 +44,11 @@ export const WorkListReal = () => {
   const {val:filter, set:setFilter} = useStorage(
     `filter(${PATH})`, {
       order: "asc",
+      limit: 5
+    }
+  );
+  const {val:paging, set:setPaging} = useStorage(
+    `paging(${PATH})`, {
       page: 1,
       limit: 5
     }
@@ -109,6 +118,7 @@ export const WorkListReal = () => {
         user_id: user_id,
         work_dur: strDur,
         filter: filter,
+        paging: paging,
         planYn: "N",
       },
     });
@@ -116,7 +126,7 @@ export const WorkListReal = () => {
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
 
-  })()}, [strDur, filter]);
+  })()}, [strDur, filter, paging]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -137,7 +147,7 @@ export const WorkListReal = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
     let dayPicker;
     if (type === "day") {
@@ -353,171 +363,29 @@ export const WorkListReal = () => {
 
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
-    function prevButton() {
-      return (
-        <button
-          className={`btn btn-sm btn-primary ms-10 me-10`}
-          disabled={filter.page <= 1}
-          onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1)
-          })}
-        >
-          이전
-        </button>
-      );
-    };
-    function pageNumber() {
-      const pages = [];
-      const totalPages = Math.ceil(totalCount / filter.limit);
-      let startPage = Math.max(1, filter.page - 2);
-      let endPage = Math.min(startPage + 4, totalPages);
-      startPage = Math.max(endPage - 4, 1);
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(
-          <button
-            key={i}
-            className={`btn btn-sm btn-primary me-2`}
-            disabled={filter.page === i}
-            onClick={() => (
-              setFilter((prev) => ({
-                ...prev,
-                page: i
-              }))
-            )}
-          >
-            {i}
-          </button>
-        );
-      }
-      return pages;
-    };
-    function nextButton() {
-      return (
-        <button
-          className={`btn btn-sm btn-primary ms-10 me-10`}
-          disabled={filter.page >= Math.ceil(totalCount / filter.limit)}
-          onClick={() => setFilter({
-            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1)
-          })}
-        >
-          다음
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {prevButton()}
-        {pageNumber()}
-        {nextButton()}
-      </div>
+      <PagingNode totalCount={totalCount} paging={paging} setPaging={setPaging}
+      />
     );
   };
 
-  // 8. select ------------------------------------------------------------------------------------>
-  const selectNode = () => {
-    function selectType() {
-      return (
-        <div className="mb-3">
-          <select className="form-select" id="type" onChange={(e) => (
-            setType(e.target.value)
-          )}>
-            {["day", "week", "month", "year", "select"].map((item) => (
-              <option key={item} value={item} selected={type === item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
-      );
-    };
-    function selectOrder() {
-      return (
-        <div className="mb-3">
-          <select className="form-select" id="order" onChange={(e) => (
-            setFilter({
-              ...filter,
-              order: e.target.value
-            })
-          )}>
-            <option value="asc" selected>오름차순</option>
-            <option value="desc">내림차순</option>
-          </select>
-        </div>
-      );
-    };
-    function selectLimit() {
-      return (
-        <div className="mb-3">
-          <select className="form-select" id="limit" onChange={(e) => (
-            setFilter({
-              ...filter,
-              limit: Number(e.target.value)
-            })
-          )}>
-            <option value="5" selected>5</option>
-            <option value="10">10</option>
-          </select>
-        </div>
-      );
-    };
+  // 8. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => {
     return (
-      <div className="d-inline-flex">
-        {selectType()}
-        {selectOrder()}
-        {selectLimit()}
-      </div>
+      <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
+        type={"work"}
+      />
     );
   };
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonCalendar () {
-      return (
-        <button
-          type="button"
-          className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`}
-          onClick={() => setCalendarOpen(!calendarOpen)}
-        >
-          {calendarOpen ? "x" : "o"}
-        </button>
-      );
-    };
-    function buttonToday () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success me-2"
-          onClick={() => {
-            setStrDate(koreanDate);
-            localStorage.removeItem(`strStartDate(${PATH})`);
-            localStorage.removeItem(`strEndDate(${PATH})`);
-          }}
-        >
-          Today
-        </button>
-      );
-    };
-    function buttonReset () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary me-2"
-          onClick={() => {
-            setStrDate(koreanDate);
-            localStorage.removeItem(`strStartDate(${PATH})`);
-            localStorage.removeItem(`strEndDate(${PATH})`);
-          }}
-        >
-          Reset
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonCalendar()}
-        {buttonToday()}
-        {buttonReset()}
-      </div>
+      <ButtonNode calendarOpen={calendarOpen} setCalendarOpen={setCalendarOpen}
+        strDate={strDate} setStrDate={setStrDate}
+        STATE={STATE} flowSave={""} navParam={navParam}
+        type={"list"}
+      />
     );
   };
 
@@ -538,7 +406,7 @@ export const WorkListReal = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {selectNode()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

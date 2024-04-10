@@ -3,11 +3,12 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import DatePicker from "react-datepicker";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSaveReal = () => {
@@ -33,12 +34,6 @@ export const SleepSaveReal = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, koreanDate
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, koreanDate
-  );
   const {val:strDate, set:setStrDate} = useStorage(
     `strDate(${PATH})`, location_date
   );
@@ -73,19 +68,7 @@ export const SleepSaveReal = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
-    setSLEEP((prev) => ({
-      ...prev,
-      sleep_date: strDur
-    }));
-  }, [strDate]);
+  useDate(SLEEP, setSLEEP, PATH, location_date, strDate, setStrDate, strDur, setStrDur, "N");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -102,38 +85,6 @@ export const SleepSaveReal = () => {
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
   })()}, [strDur]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const startTime = SLEEP.sleep_real?.sleep_section.map((item) => item?.sleep_night)?.toString();
-    const endTime = SLEEP.sleep_real?.sleep_section.map((item) => item?.sleep_morning)?.toString();
-
-    if (startTime && endTime) {
-      const startDate = new Date(`${strDate}T${startTime}`);
-      const endDate = new Date(`${strDate}T${endTime}`);
-
-      // 종료 시간이 시작 시간보다 이전이면, 다음 날로 설정
-      if (endDate < startDate) {
-        endDate.setDate(endDate.getDate() + 1);
-      }
-
-      // 차이 계산
-      const diff = endDate.getTime() - startDate.getTime();
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-
-      setSLEEP((prev) => ({
-        ...prev,
-        sleep_real: {
-          sleep_section: [{
-            ...prev?.sleep_real?.sleep_section[0],
-            sleep_time: time,
-          }]
-        },
-      }));
-    }
-  }, [strStartDate, strEndDate]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -153,32 +104,10 @@ export const SleepSaveReal = () => {
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
-
-    const calcDate = (days) => {
-      const date = new Date(strDate);
-      date.setDate(date.getDate() + days);
-      setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
-    };
-
     return (
-      <div className="d-inline-flex">
-        <div onClick={() => calcDate(-1)}>
-          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
-        </div>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
-          selected={new Date(strDate)}
-          onChange={(date) => {
-            setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
-          }}
-        />
-        <div onClick={() => calcDate(1)}>
-          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
-        </div>
-      </div>
+      <DateNode strDate={strDate} setStrDate={setStrDate} />
     );
   };
 
@@ -200,7 +129,6 @@ export const SleepSaveReal = () => {
                 locale="ko"
                 value={(SLEEP.sleep_real.sleep_section)?.map((item) => item.sleep_night)}
                 onChange={(e) => {
-                  setStrStartDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_real: {
@@ -229,7 +157,6 @@ export const SleepSaveReal = () => {
                 locale="ko"
                 value={(SLEEP.sleep_real.sleep_section)?.map((item) => item.sleep_morning)}
                 onChange={(e) => {
-                  setStrEndDate(e);
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_real: {
@@ -268,51 +195,12 @@ export const SleepSaveReal = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonSave () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary me-2"
-          onClick={() => {
-            flowSave();
-          }}
-        >
-          Save
-        </button>
-      );
-    };
-    function buttonReset () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success me-2"
-          onClick={() => {
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonList () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => {
-            navParam(STATE.toList);
-          }}
-        >
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonSave()}
-        {buttonReset()}
-        {buttonList()}
-      </div>
+      <ButtonNode calendarOpen={""} setCalendarOpen={""}
+        strDate={""} setStrDate={""}
+        STATE={STATE} flowSave={flowSave} navParam={navParam}
+        type="save"
+      />
     );
   };
 

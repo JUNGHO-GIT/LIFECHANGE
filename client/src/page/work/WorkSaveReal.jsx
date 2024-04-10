@@ -4,20 +4,19 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
-import {useDiffTime} from "../../assets/hooks/useDiffTime.jsx";
-import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
-import moment from "moment-timezone";
-import {workPartArray, workTitleArray} from "./array/WorkArray.jsx";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
+import {workPartArray, workTitleArray} from "../../assets/data/WorkArray.jsx";
+import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkSaveReal = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -86,8 +85,7 @@ export const WorkSaveReal = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
-  useDiffTime(WORK, setWORK, PATH, strDate);
+  useDate(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur, "N");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -122,32 +120,10 @@ export const WorkSaveReal = () => {
     }
   };
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
-
-    const calcDate = (days) => {
-      const date = new Date(strDate);
-      date.setDate(date.getDate() + days);
-      setStrDate(moment(date).format("YYYY-MM-DD"));
-    };
-
     return (
-      <div className="d-inline-flex">
-        <div onClick={() => calcDate(-1)}>
-          <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
-        </div>
-        <DatePicker
-          dateFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
-          selected={new Date(strDate)}
-          onChange={(date) => {
-            setStrDate(moment(date).format("YYYY-MM-DD"));
-          }}
-        />
-        <div onClick={() => calcDate(1)}>
-          <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
-        </div>
-      </div>
+      <DateNode strDate={strDate} setStrDate={setStrDate} />
     );
   };
 
@@ -439,51 +415,8 @@ export const WorkSaveReal = () => {
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
-    function buttonSave () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-primary me-2"
-          onClick={() => {
-            flowSave();
-          }}
-        >
-          Save
-        </button>
-      );
-    };
-    function buttonReset () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-success me-2"
-          onClick={() => {
-            navParam(STATE.refresh);
-          }}
-        >
-          Refresh
-        </button>
-      );
-    };
-    function buttonList () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => {
-            navParam(STATE.toList);
-          }}
-        >
-          List
-        </button>
-      );
-    };
     return (
-      <div className="d-inline-flex">
-        {buttonSave()}
-        {buttonReset()}
-        {buttonList()}
-      </div>
+      <ButtonNode flowSave={flowSave} navParam={navParam} STATE={STATE} />
     );
   };
 

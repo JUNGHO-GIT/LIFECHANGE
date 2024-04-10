@@ -38,7 +38,17 @@ export const SleepCompare = () => {
     `type(${PATH})`, "day"
   );
   const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {order: "asc", page: 1, limit: 5}
+    `filter(${PATH})`, {
+      order: "asc",
+      type: "day",
+      limit: 5
+    }
+  );
+  const {val:paging, set:setPaging} = useStorage(
+    `paging(${PATH})`, {
+      page: 1,
+      limit: 5
+    }
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -109,7 +119,7 @@ export const SleepCompare = () => {
     setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
-  })()}, [strDur, filter]);
+  })()}, [strDur, filter, paging]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -130,7 +140,7 @@ export const SleepCompare = () => {
     }
   }, [type, strDate, strStartDate, strEndDate]);
 
-  // 4. view -------------------------------------------------------------------------------------->
+  // 4. date -------------------------------------------------------------------------------------->
   const viewNode = () => {
     let dayPicker;
     if (type === "day") {
@@ -401,8 +411,8 @@ export const SleepCompare = () => {
     );
   };
 
-  // 7. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
+  // 7. paging ------------------------------------------------------------------------------------>
+  const pagingNode = () => {
     function prevButton() {
       return (
         <button
@@ -463,8 +473,8 @@ export const SleepCompare = () => {
     );
   };
 
-  // 8. select ------------------------------------------------------------------------------------>
-  const selectNode = () => {
+  // 8. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => {
     function selectType() {
       return (
         <div className="mb-3">
@@ -588,12 +598,12 @@ export const SleepCompare = () => {
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {selectNode()}
+            {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
           <div className="col-12">
-            {filterNode()}
+            {pagingNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
