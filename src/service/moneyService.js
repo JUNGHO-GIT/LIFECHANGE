@@ -34,9 +34,9 @@ export const list = async (
 
   const finalResult = findResult.map((prev) => {
     const filtered = prev[planYn]?.money_section.filter((item) => (
-      part && part === ("전체" || "") ? true : item.money_part_val === part,
-      title && title === ("전체" || "") ? true : item.money_title_val === title
-    ));
+      (part === "전체" || part === "") ? true : item.money_part_val === part) &&
+      (title === "전체" || title === "") ? true : item.money_title_val === title
+    );
 
     function sliceData (data, page, limit) {
       const startIndex = (page - 1) * limit;

@@ -537,25 +537,11 @@ export const MoneyListReal = () => {
         </button>
       );
     };
-    function buttonClear () {
-      return (
-        <button
-          type="button"
-          className="btn btn-sm btn-danger me-2"
-          onClick={() => {
-            localStorage.clear();
-          }}
-        >
-          Clear
-        </button>
-      );
-    }
     return (
       <div className="d-inline-flex">
         {buttonCalendar()}
         {buttonToday()}
         {buttonReset()}
-        {buttonClear()}
       </div>
     );
   };
