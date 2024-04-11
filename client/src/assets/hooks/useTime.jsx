@@ -12,6 +12,7 @@ export const useTime = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+
     // 1. work
     if (type === "real" && strLow === "work") {
       const startTime = OBJECT?.work_start;
@@ -38,15 +39,7 @@ export const useTime = (
         }));
       }
     }
-  }, [
-    strLow,
-    DATE?.strDt,
-    OBJECT?.work_start,
-    OBJECT?.work_end,
-  ]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
     // 2. sleep
     if (type === "real" && strLow === "sleep") {
       const nightTime = OBJECT?.sleep_section[0]?.sleep_night;
@@ -74,14 +67,7 @@ export const useTime = (
         }));
       }
     }
-  }, [
-    strLow,
-    OBJECT?.sleep_section[0]?.sleep_night,
-    OBJECT?.sleep_section[0]?.sleep_morning,
-  ]);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
     // 3. sleep
     if (type === "plan" && strLow === "sleep") {
       const nightTime = OBJECT?.plan_sleep?.plan_night?.toString();
@@ -112,8 +98,12 @@ export const useTime = (
     }
   }, [
     strLow,
-    DATE.strDt,
-    OBJECT?.plan_sleep?.plan_night,
-    OBJECT?.plan_sleep?.plan_morning,
+    DATE?.strDt,
+    type === "real" && strLow === "work" ? OBJECT?.work_start : "",
+    type === "real" && strLow === "work" ? OBJECT?.work_end : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
+    type === "plan" && strLow === "sleep" ? OBJECT?.plan_sleep?.plan_night : "",
+    type === "plan" && strLow === "sleep" ? OBJECT?.plan_sleep?.plan_morning : "",
   ]);
 };

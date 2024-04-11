@@ -105,13 +105,6 @@ export const PlanFoodList = () => {
     }));
   })()}, [user_id, FILTER, PAGING]);
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"list"} />
-    );
-  };
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
@@ -166,7 +159,7 @@ export const PlanFoodList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"plan"}
+        type={"plan"} compare={""}
       />
     );
   };
@@ -188,11 +181,6 @@ export const PlanFoodList = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>List</h1>
-          </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
-            {dateNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

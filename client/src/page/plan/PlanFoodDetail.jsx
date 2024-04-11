@@ -124,13 +124,6 @@ export const PlanFoodDetail = () => {
     }
   };
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
-    );
-  };
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
@@ -178,11 +171,6 @@ export const PlanFoodDetail = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Detail</h1>
-          </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
-            {dateNode()}
           </div>
         </div>
         <div className="row d-center mb-20">

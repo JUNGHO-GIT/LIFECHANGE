@@ -92,7 +92,7 @@ export const WorkSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(WORK, setWORK, DATE, setDATE, PATH, location_date);
+  useDate(DATE, setDATE, location_date);
   useTime(WORK, setWORK, DATE, setDATE, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->

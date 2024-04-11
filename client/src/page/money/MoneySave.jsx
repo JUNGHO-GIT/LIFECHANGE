@@ -81,7 +81,7 @@ export const MoneySave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(MONEY, setMONEY, DATE, setDATE, PATH, location_date);
+  useDate(DATE, setDATE, location_date);
   useTime(MONEY, setMONEY, DATE, setDATE, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->

@@ -75,7 +75,7 @@ export const SleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
+  useDate(DATE, setDATE, location_date);
   useTime(SLEEP, setSLEEP, DATE, setDATE, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->

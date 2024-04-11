@@ -3,11 +3,9 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -88,6 +86,9 @@ export const PlanSleepDetail = () => {
     },
   });
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(DATE, setDATE, location_date);
+
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_PLAN}/detail`, {
@@ -103,7 +104,7 @@ export const PlanSleepDetail = () => {
       ...prev,
       totalCnt: response.data.totalCnt
     }));
-  })()}, [location_id, user_id, DATE.strDur]);
+  })()}, [location_id, user_id, DATE.strDur, FILTER]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -125,13 +126,6 @@ export const PlanSleepDetail = () => {
     else {
       alert(`${response.data}`);
     }
-  };
-
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
-    );
   };
 
   // 5. table ------------------------------------------------------------------------------------->
@@ -195,11 +189,6 @@ export const PlanSleepDetail = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Detail</h1>
-          </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
-            {dateNode()}
           </div>
         </div>
         <div className="row d-center mb-20">

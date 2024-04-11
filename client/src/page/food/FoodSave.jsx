@@ -100,7 +100,7 @@ export const FoodSave = () => {
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(FOOD, setFOOD, DATE, setDATE, PATH, location_date);
+  useDate(DATE, setDATE, location_date);
   useTime(FOOD, setFOOD, DATE, setDATE, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->

@@ -117,13 +117,6 @@ export const MoneyList = () => {
 
   })()}, [DATE.strDur, FILTER, PAGING]);
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"list"} />
-    );
-  };
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
@@ -187,7 +180,7 @@ export const MoneyList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"money"}
+        type={"money"} compare={""}
       />
     );
   };
@@ -208,11 +201,6 @@ export const MoneyList = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>List</h1>
-          </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
-            {dateNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">

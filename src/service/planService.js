@@ -14,25 +14,33 @@ export const list = async (
 
   const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
-  const schema = FILTER_param.schema;
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const findResult = await Plan.find({
+  const totalCnt = await Plan.countDocuments({
     user_id: user_id_param,
-    plan_schema: schema,
     plan_start: {
       $lte: endDay,
     },
     plan_end: {
       $gte: startDay,
-    }
-  })
-  .sort({ plan_date: sort })
-  .lean();
+    },
+  });
 
-  const totalCnt = findResult.length;
+  const findResult = await Plan.find({
+    user_id: user_id_param,
+    plan_start: {
+      $lte: endDay,
+    },
+    plan_end: {
+      $gte: startDay,
+    },
+  })
+  .sort({ sleep_date: sort })
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
 
   return {
     totalCnt: totalCnt,

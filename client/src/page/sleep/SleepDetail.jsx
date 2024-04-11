@@ -73,7 +73,7 @@ export const SleepDetail = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
+  useDate(DATE, setDATE, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

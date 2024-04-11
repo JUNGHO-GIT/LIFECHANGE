@@ -93,7 +93,7 @@ export const PlanSleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(PLAN, setPLAN, DATE, setDATE, PATH, location_date);
+  useDate(DATE, setDATE, location_date);
   useTime(PLAN, setPLAN, DATE, setDATE, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -111,7 +111,7 @@ export const PlanSleepSave = () => {
       ...prev,
       totalCnt: response.data.totalCnt
     }));
-  })()}, [user_id, DATE.strDur]);
+  })()}, [user_id, DATE.strDur, FILTER]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
