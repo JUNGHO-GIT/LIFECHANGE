@@ -50,7 +50,7 @@ export const PlanSleepSave = () => {
       calOpen: false,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0

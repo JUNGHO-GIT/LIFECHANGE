@@ -47,7 +47,7 @@ export const MoneyDetail = () => {
       calOpen: false,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -107,10 +107,7 @@ export const MoneyDetail = () => {
     });
     if (response.data === "success") {
       alert("delete success");
-      setSTATE((prev) => ({
-        ...prev,
-        date: DATE.strDt,
-      }));
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });

@@ -8,15 +8,15 @@ import {Work} from "../schema/Work.js";
 export const list = async (
   user_id_param,
   work_dur_param,
-  filter_param,
-  paging_param
+  FILTER_param,
+  PAGING_param
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
-  const part = filter_param.part || "전체";
-  const sort = filter_param.order === "asc" ? 1 : -1;
-  const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
-  const page = paging_param.page === 0 ? 1 : paging_param.page;
+  const part = FILTER_param.part || "전체";
+  const sort = FILTER_param.order === "asc" ? 1 : -1;
+  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const findResult = await Work.find({
     user_id: user_id_param,

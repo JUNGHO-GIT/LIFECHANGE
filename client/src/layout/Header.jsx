@@ -4,6 +4,7 @@ import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
 import {Collapse} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
 import {linkArray} from "../assets/data/LinkArray.jsx";
 
@@ -16,13 +17,16 @@ export const Header = () => {
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: koreanDate,
-    refresh: 0
-  }
+
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
+  const {val:STATE, set:setSTATE} = useStorage (
+    `STATE(${PATH})`, {
+      id: "",
+      date: koreanDate,
+      refresh: 0,
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isSidebar, setIsSidebar] = useState(true);
@@ -33,7 +37,6 @@ export const Header = () => {
   useEffect(() => {
     setIsActive(location.pathname);
   }, [location.pathname]);
-
   const toggleExpand = (menuLabel) => {
     setIsExpended(isExpended === menuLabel ? null : menuLabel);
   };

@@ -22,11 +22,13 @@ export const DateNode = ({
   function picker () {
     return (
       <div className="d-inline-flex">
+
         {type === "save" ? (
           <div onClick={() => (calcDate(-1))}>
             <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
           </div>
         ) : null}
+
         <DatePicker dateFormat="yyyy-MM-dd" popperPlacement="bottom"
           selected={new Date(DATE.strDt)} disabled={type === "save" ? false : true}
           onChange={(date) => {
@@ -36,11 +38,13 @@ export const DateNode = ({
             }));
           }}
         />
+
         {type === "save" ? (
           <div onClick={() => (calcDate(1))}>
             <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
           </div>
         ) : null}
+
       </div>
     );
   };

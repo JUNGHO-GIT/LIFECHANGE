@@ -33,7 +33,7 @@ export const FoodSearch = () => {
       limit: 10,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -85,7 +85,7 @@ export const FoodSearch = () => {
     }));
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt,
+      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
   };
 

@@ -7,9 +7,6 @@ import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -47,7 +44,7 @@ export const SleepSave = () => {
       calOpen: false,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -91,7 +88,7 @@ export const SleepSave = () => {
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: response.data.sectionCnt
+      sectionCnt: response.data.sectionCnt ? response.data.sectionCnt : 0
     }));
   })()}, [user_id, DATE.strDur]);
 
@@ -137,7 +134,7 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_night))}
+                /* value={SLEEP?.sleep_section?.map((item) => (item.sleep_night))} */
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
@@ -163,7 +160,7 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_morning))}
+                /* value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_morning))} */
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
@@ -190,7 +187,7 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_time))}
+                /* value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_time))} */
               />
             </div>
           </div>

@@ -47,7 +47,7 @@ export const MoneySave = () => {
       calOpen: false,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -97,7 +97,7 @@ export const MoneySave = () => {
     setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt,
+      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
   })()}, [DATE.strDur]);
 

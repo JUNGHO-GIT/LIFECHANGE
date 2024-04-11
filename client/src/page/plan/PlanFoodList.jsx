@@ -53,12 +53,12 @@ export const PlanFoodList = () => {
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
-    `paging(${PATH})`, {
+    `PAGING(${PATH})`, {
       page: 1,
       limit: 5
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -97,7 +97,7 @@ export const PlanFoodList = () => {
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt,
+      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
   })()}, [user_id, FILTER, PAGING]);
 

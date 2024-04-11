@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import moment from "moment-timezone";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
@@ -48,7 +47,7 @@ export const FoodDetail = () => {
       calOpen: false,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -106,10 +105,12 @@ export const FoodDetail = () => {
         food_dur: DATE.strDur
       },
     });
-
     setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
-
-  })()}, [DATE.strDur]);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+    }));
+  })()}, [location_id, user_id, DATE.strDur]);
 
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
@@ -164,9 +165,8 @@ export const FoodDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calOpen={""} setCalendarOpen={""}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        STATE={STATE} flowSave={""} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
         type={"detail"}
       />
     );

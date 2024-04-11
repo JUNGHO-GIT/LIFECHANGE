@@ -56,12 +56,12 @@ export const MoneyList = () => {
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
-    `paging(${PATH})`, {
+    `PAGING(${PATH})`, {
       page: 1,
       limit: 5
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -112,7 +112,7 @@ export const MoneyList = () => {
 
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt,
+      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
 
   })()}, [DATE.strDur, FILTER, PAGING]);

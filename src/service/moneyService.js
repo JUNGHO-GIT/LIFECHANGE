@@ -8,17 +8,17 @@ import {Money} from "../schema/Money.js";
 export const list = async (
   user_id_param,
   money_dur_param,
-  filter_param,
-  paging_param
+  FILTER_param,
+  PAGING_param
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
 
-  const sort = filter_param.order === "asc" ? 1 : -1;
-  const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
-  const page = paging_param.page === 0 ? 1 : paging_param.page;
-  const part = filter_param.part || "";
-  const title = filter_param.title || "";
+  const sort = FILTER_param.order === "asc" ? 1 : -1;
+  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  const part = FILTER_param.part || "";
+  const title = FILTER_param.title || "";
 
   const findResult = await Money.find({
     user_id: user_id_param,
@@ -31,7 +31,7 @@ export const list = async (
   .lean();
 
   const finalResult = findResult.map((money) => {
-    const filtered = money?.money_section.filter((item) => (
+    const FILTERed = money?.money_section.filter((item) => (
       (part === "전체" || part === "") ? true : item.money_part_val === part) &&
       (title === "전체" || title === "") ? true : item.money_title_val === title
     );
@@ -45,7 +45,7 @@ export const list = async (
 
     return {
       ...money,
-      money_section: sliceData(filtered, page, limit),
+      money_section: sliceData(FILTERed, page, limit),
     };
   });
 

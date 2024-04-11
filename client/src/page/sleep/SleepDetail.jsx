@@ -47,7 +47,7 @@ export const SleepDetail = () => {
       calOpen: false,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -86,7 +86,7 @@ export const SleepDetail = () => {
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: response.data.sectionCnt
+      sectionCnt: response.data.sectionCnt ? response.data.sectionCnt : 0
     }));
   })()}, [location_id, user_id, DATE.strDur]);
 

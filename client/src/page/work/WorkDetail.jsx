@@ -46,7 +46,7 @@ export const WorkDetail = () => {
       calOpen: false,
     }
   );
-  const {val:COUNT, set: setCOUNT} = useStorage(
+  const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
@@ -104,7 +104,7 @@ export const WorkDetail = () => {
     setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt,
+      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
 
   })()}, [location_id, user_id, DATE.strDur]);

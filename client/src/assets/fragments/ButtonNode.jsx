@@ -49,10 +49,7 @@ export const ButtonNode = ({
   function buttonUpdate () {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        setSTATE((prev) => ({
-          ...prev,
-          date: DATE.strDt,
-        }));
+        STATE.date = DATE.strDt;
         navParam(STATE.toSave, {
           state: STATE,
         });
@@ -73,10 +70,7 @@ export const ButtonNode = ({
   function buttonList () {
     return (
       <button type="button" className="btn btn-sm btn-secondary me-2" onClick={() => {
-        setSTATE((prev) => ({
-          ...prev,
-          date: DATE.strDt,
-        }));
+        STATE.date = DATE.strDt;
         navParam(STATE.toList, {
           state: STATE,
         });

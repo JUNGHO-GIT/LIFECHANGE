@@ -9,12 +9,12 @@ import {Food} from "../schema/Food.js";
 // 1-0. search ------------------------------------------------------------------------------------>
 export const search = async (
   user_id_param,
-  filter_param
+  FILTER_param
 ) => {
 
   const URL_SEARCH = encodeURI(`http://www.fatsecret.kr/칼로리-영양소/search`);
-  const query = filter_param.query;
-  const page = filter_param.page;
+  const query = FILTER_param.query;
+  const page = FILTER_param.page;
 
   let finalResult = [];
   let totalCnt = 0;
@@ -121,15 +121,15 @@ export const search = async (
 export const list = async (
   user_id_param,
   food_dur_param,
-  filter_param,
-  paging_param
+  FILTER_param,
+  PAGING_param
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(" ~ ");
-  const part = filter_param.part || "전체";
-  const sort = filter_param.order === "asc" ? 1 : -1;
-  const limit = filter_param.limit === 0 ? 5 : filter_param.limit;
-  const page = paging_param.page === 0 ? 1 : paging_param.page;
+  const part = FILTER_param.part || "전체";
+  const sort = FILTER_param.order === "asc" ? 1 : -1;
+  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const findResult = await Food.find({
     user_id: user_id_param,

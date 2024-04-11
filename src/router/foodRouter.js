@@ -9,7 +9,7 @@ foodRouter.get("/search", async (req, res) => {
   try {
     const result = await service.search (
       req.query.user_id,
-      req.query.filter
+      req.query.FILTER
     );
     if (result) {
       res.send(result);
@@ -30,8 +30,8 @@ foodRouter.get("/list", async (req, res) => {
     const result = await service.list (
       req.query.user_id,
       req.query.food_dur,
-      req.query.filter,
-      req.query.paging
+      req.query.FILTER,
+      req.query.PAGING
     );
     if (result) {
       res.send(result);
