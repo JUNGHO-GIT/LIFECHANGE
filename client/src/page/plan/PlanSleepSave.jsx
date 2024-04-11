@@ -3,7 +3,8 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDatePlan} from "../../assets/hooks/useDatePlan.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useTime} from "../../assets/hooks/useTime.jsx";
 import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
@@ -92,7 +93,8 @@ export const PlanSleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDatePlan(PLAN, setPLAN, DATE, setDATE, PATH, location_date);
+  useDate(PLAN, setPLAN, DATE, setDATE, PATH, location_date);
+  useTime(PLAN, setPLAN, DATE, setDATE, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

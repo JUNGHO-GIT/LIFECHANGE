@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";

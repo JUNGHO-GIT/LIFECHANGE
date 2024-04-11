@@ -181,7 +181,7 @@ export const deletes = async (
       finalResult = await Work.deleteOne({
         _id: doc._id
       })
-    .lean();
+      .lean();
     }
   }
 

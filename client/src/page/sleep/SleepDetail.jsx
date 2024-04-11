@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
@@ -73,7 +73,7 @@ export const SleepDetail = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDateReal(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
+  useDate(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -130,7 +130,7 @@ export const SleepDetail = () => {
             <td className="fs-20 pt-20">
               {SLEEP.sleep_date}
             </td>
-            {SLEEP?.sleep_section.map((item, index) => (
+            {SLEEP?.sleep_section?.map((item, index) => (
               <React.Fragment key={index}>
                 <td className="fs-20 pt-20">
                   {item.sleep_night}

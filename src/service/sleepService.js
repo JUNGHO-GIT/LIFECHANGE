@@ -361,7 +361,6 @@ export const deletes = async (
 
   const updateResult = await Sleep.updateOne(
     {
-      _id: _id_param,
       user_id: user_id_param,
       sleep_date: {
         $gte: startDay,
@@ -403,7 +402,7 @@ export const deletes = async (
       finalResult = await Sleep.deleteOne({
         _id: doc._id
       })
-    .lean();
+      .lean();
     }
   }
 

@@ -67,8 +67,6 @@ export const useDatePlan = (
   }, [
     strLow,
     DATE.strDt,
-    OBJECT?.work_start,
-    OBJECT?.work_end,
     OBJECT?.plan_sleep?.plan_night,
     OBJECT?.plan_sleep?.plan_morning,
   ]);

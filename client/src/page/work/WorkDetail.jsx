@@ -70,7 +70,7 @@ export const WorkDetail = () => {
     }],
   });
   const [WORK, setWORK] = useState({
-    _id: location_id,
+    _id: "",
     work_number: 0,
     work_date: "",
     work_start: "",

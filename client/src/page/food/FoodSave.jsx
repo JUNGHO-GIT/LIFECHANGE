@@ -3,7 +3,8 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
+import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useTime} from "../../assets/hooks/useTime.jsx";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
@@ -99,7 +100,8 @@ export const FoodSave = () => {
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDateReal(FOOD, setFOOD, DATE, setDATE, PATH, location_date);
+  useDate(FOOD, setFOOD, DATE, setDATE, PATH, location_date);
+  useTime(FOOD, setFOOD, DATE, setDATE, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   /* useEffect(() => {(async () => {
