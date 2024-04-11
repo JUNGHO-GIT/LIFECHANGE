@@ -4,7 +4,7 @@ import express from "express";
 import * as service from "../service/sleepService.js";
 export const sleepRouter = express.Router();
 
-// 0-1. dash(bar) --------------------------------------------------------------------------------->
+// 0-1. dash (bar) -------------------------------------------------------------------------------->
 sleepRouter.get("/dashBar", async (req, res) => {
   try {
     const result = await service.dashBar (
@@ -23,7 +23,7 @@ sleepRouter.get("/dashBar", async (req, res) => {
   }
 });
 
-// 0-2. dash(line) -------------------------------------------------------------------------------->
+// 0-2. dash (line) ------------------------------------------------------------------------------->
 sleepRouter.get("/dashLine", async (req, res) => {
   try {
     const result = await service.dashLine (
@@ -42,7 +42,7 @@ sleepRouter.get("/dashLine", async (req, res) => {
   }
 });
 
-// 0-3. dash(avg - week) -------------------------------------------------------------------------->
+// 0-3. dash (avg - week) ------------------------------------------------------------------------->
 sleepRouter.get("/dashAvgWeek", async (req, res) => {
   try {
     const result = await service.dashAvgWeek (
@@ -61,7 +61,7 @@ sleepRouter.get("/dashAvgWeek", async (req, res) => {
   }
 });
 
-// 0-4. dash(avg - month) ------------------------------------------------------------------------->
+// 0-4. dash (avg - month) ------------------------------------------------------------------------>
 sleepRouter.get("/dashAvgMonth", async (req, res) => {
   try {
     const result = await service.dashAvgMonth (

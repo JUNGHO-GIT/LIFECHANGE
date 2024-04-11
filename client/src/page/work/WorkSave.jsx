@@ -8,9 +8,6 @@ import TimePicker from "react-time-picker";
 import axios from "axios";
 import {workPartArray, workTitleArray} from "../../assets/data/WorkArray.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -220,7 +217,7 @@ export const WorkSave = () => {
                         work_part_idx: newIndex,
                         work_part_val: workPartArray[newIndex].work_part,
                         work_title_idx: 0,
-                        work_title_val: workTitleArray[newIndex].work_title
+                        work_title_val: workTitleArray[newIndex].work_title[0],
                       };
                       updated.work_section = updatedSection;
                       return updated;

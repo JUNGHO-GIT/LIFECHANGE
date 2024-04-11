@@ -7,9 +7,6 @@ import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import axios from "axios";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>

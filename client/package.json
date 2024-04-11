@@ -78,7 +78,6 @@
     "react-datetime-picker": "^5.5.1",
     "react-day-picker": "^8.8.1",
     "react-draggable": "^4.4.6",
-    "react-helmet": "^6.1.0",
     "react-resizable": "^3.0.5",
     "react-time-picker": "^6.5.0",
     "recharts": "^2.12.3"

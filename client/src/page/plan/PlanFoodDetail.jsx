@@ -48,6 +48,14 @@ export const PlanFoodDetail = () => {
       calOpen: false,
     }
   );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      limit: 5,
+      part: "전체",
+      schema: "food",
+    }
+  );
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
@@ -59,8 +67,9 @@ export const PlanFoodDetail = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "food",
+    plan_start: "",
+    plan_end: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -68,8 +77,9 @@ export const PlanFoodDetail = () => {
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "food",
+    plan_start: "",
+    plan_end: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -80,7 +90,9 @@ export const PlanFoodDetail = () => {
     const response = await axios.get(`${URL_PLAN}/detail`, {
       params: {
         _id: location_id,
-        user_id: user_id
+        user_id: user_id,
+        plan_dur: DATE.strDur,
+        FILTER: FILTER,
       },
     });
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
@@ -95,7 +107,9 @@ export const PlanFoodDetail = () => {
     const response = await axios.delete(`${URL_PLAN}/delete`, {
       params: {
         _id: id,
-        user_id: user_id
+        user_id: user_id,
+        plan_dur: DATE.strDur,
+        FILTER: FILTER,
       },
     });
     if (response.data === "success") {
@@ -120,17 +134,19 @@ export const PlanFoodDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
-            <th>기간</th>
+            <th>시작일</th>
+            <th>종료일</th>
             <th>칼로리</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{PLAN.plan_dur}</td>
+            <td>{PLAN.plan_start}</td>
+            <td>{PLAN.plan_end}</td>
             <td>{PLAN.plan_food.plan_kcal}</td>
             <td>
               <button className="btn btn-sm btn-danger" onClick={() => (

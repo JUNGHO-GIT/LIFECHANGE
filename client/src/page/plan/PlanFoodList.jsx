@@ -49,6 +49,7 @@ export const PlanFoodList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       limit: 5,
+      part: "전체",
       schema: "food",
     }
   );
@@ -69,8 +70,9 @@ export const PlanFoodList = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "food",
+    plan_start: "",
+    plan_end: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -78,8 +80,9 @@ export const PlanFoodList = () => {
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "food",
+    plan_start: "",
+    plan_end: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -111,10 +114,11 @@ export const PlanFoodList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
-            <th>기간</th>
+            <th>시작일</th>
+            <th>종료일</th>
             <th>칼로리</th>
           </tr>
         </thead>
@@ -127,7 +131,10 @@ export const PlanFoodList = () => {
                   navParam(STATE.toDetail, {
                     state: STATE
                   });
-                }}>{item.plan_dur}</td>
+                }}>
+                  {item.plan_start}
+                </td>
+                <td>{item.plan_end}</td>
                 <td>{item.plan_food.plan_kcal}</td>
               </tr>
             </React.Fragment>

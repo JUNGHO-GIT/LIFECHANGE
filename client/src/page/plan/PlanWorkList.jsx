@@ -49,6 +49,7 @@ export const PlanWorkList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       limit: 5,
+      part: "전체",
       schema: "work",
     }
   );
@@ -69,8 +70,9 @@ export const PlanWorkList = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "work",
+    plan_start: "",
+    plan_end: "",
     plan_work: {
       plan_count_total: "",
       plan_cardio_time: "",
@@ -82,8 +84,9 @@ export const PlanWorkList = () => {
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "work",
+    plan_start: "",
+    plan_end: "",
     plan_work: {
       plan_count_total: "",
       plan_cardio_time: "",
@@ -119,10 +122,11 @@ export const PlanWorkList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
-            <th>기간</th>
+            <th>시작일</th>
+            <th>종료일</th>
             <th>목표 운동 횟수</th>
             <th>목표 유산소 시간</th>
             <th>목표 운동 이름</th>
@@ -134,7 +138,8 @@ export const PlanWorkList = () => {
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.plan_dur}</td>
+                <td>{item.plan_start}</td>
+                <td>{item.plan_end}</td>
                 <td>{item.plan_work.plan_count_total}</td>
                 <td>{item.plan_work.plan_cardio_time}</td>
                 <td>{item.plan_work.plan_score_name}</td>
@@ -169,7 +174,7 @@ export const PlanWorkList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"plan"}
+        type={"plan"} compare={""}
       />
     );
   };

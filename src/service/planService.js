@@ -7,9 +7,12 @@ import {Plan} from "../schema/Plan.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
+  plan_dur_param,
   FILTER_param,
   PAGING_param
 ) => {
+
+  const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
   const schema = FILTER_param.schema || "전체";
   const part = FILTER_param.part || "전체";
@@ -20,6 +23,12 @@ export const list = async (
   const findResult = await Plan.find({
     user_id: user_id_param,
     plan_schema: schema,
+    plan_start: {
+      $lte: endDay,
+    },
+    plan_end: {
+      $gte: startDay,
+    }
   })
   .sort({ plan_date: sort })
   .lean();
@@ -34,14 +43,21 @@ export const detail = async (
   _id_param,
   user_id_param,
   plan_dur_param,
-  plan_schema_param
+  FILTER_param,
 ) => {
+
+  const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
   const finalResult = await Plan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    plan_dur: plan_dur_param,
-    plan_schema: plan_schema_param,
+    plan_schema: FILTER_param.schema,
+    plan_start: {
+      $lte: endDay,
+    },
+    plan_end: {
+      $gte: startDay,
+    }
   })
   .lean();
 
@@ -55,13 +71,15 @@ export const save = async (
   user_id_param,
   PLAN_param,
   plan_dur_param,
-  plan_schema_param
+  FILTER_param,
 ) => {
+
+  const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
   let finalResult;
   let schema;
 
-  if (plan_schema_param === "food") {
+  if (FILTER_param.schema === "food") {
     schema = {
       plan_food: {
         plan_kcal: PLAN_param.plan_food.plan_kcal
@@ -69,7 +87,7 @@ export const save = async (
     };
   }
 
-  if (plan_schema_param === "money") {
+  if (FILTER_param.schema === "money") {
     schema = {
       plan_money: {
         plan_in: PLAN_param.plan_money.plan_in,
@@ -78,7 +96,7 @@ export const save = async (
     };
   }
 
-  if (plan_schema_param === "sleep") {
+  if (FILTER_param.schema === "sleep") {
     schema = {
       plan_sleep: {
         plan_night: PLAN_param.plan_sleep.plan_night,
@@ -88,7 +106,7 @@ export const save = async (
     };
   }
 
-  if (plan_schema_param === "work") {
+  if (FILTER_param.schema === "work") {
     schema = {
       plan_work: {
         plan_count_total: PLAN_param.plan_work.plan_count_total,
@@ -103,16 +121,22 @@ export const save = async (
   const findResult = await Plan.findOne({
     user_id: user_id_param,
     plan_schema: PLAN_param.plan_schema,
-    plan_dur: plan_dur_param,
+    plan_start: {
+      $lte: endDay,
+    },
+    plan_end: {
+      $gte: startDay,
+    }
   })
-    .lean();
+  .lean();
 
   if (!findResult) {
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       plan_schema: PLAN_param.plan_schema,
-      plan_dur: plan_dur_param,
+      plan_start: startDay,
+      plan_end: endDay,
       ...schema,
       plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       plan_update: ""
@@ -142,15 +166,22 @@ export const deletes = async (
   _id_param,
   user_id_param,
   plan_dur_param,
-  plan_schema_param
+  FILTER_param,
 ) => {
+
+  const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
   const updateResult = await Plan.updateOne(
     {
       _id: _id_param,
       user_id: user_id_param,
-      plan_dur: plan_dur_param,
-      plan_schema: plan_schema_param,
+      plan_start: {
+        $lte: endDay,
+      },
+      plan_end: {
+        $gte: startDay,
+      },
+      plan_schema: FILTER_param.schema,
     },
     {
       $set: {

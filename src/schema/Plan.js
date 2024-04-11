@@ -17,7 +17,11 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  plan_dur: {
+  plan_start: {
+    type: String,
+    required: false
+  },
+  plan_end: {
     type: String,
     required: false
   },

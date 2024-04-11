@@ -37,6 +37,7 @@ export const Header = () => {
   useEffect(() => {
     setIsActive(location.pathname);
   }, [location.pathname]);
+
   const toggleExpand = (menuLabel) => {
     setIsExpended(isExpended === menuLabel ? null : menuLabel);
   };

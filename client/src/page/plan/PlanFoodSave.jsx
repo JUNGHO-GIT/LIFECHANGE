@@ -48,6 +48,14 @@ export const PlanFoodSave = () => {
       calOpen: false,
     }
   );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      limit: 5,
+      part: "전체",
+      schema: "food",
+    }
+  );
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
@@ -59,8 +67,9 @@ export const PlanFoodSave = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "food",
+    plan_start: "",
+    plan_end: "",
     plan_food: {
       plan_kcal: ""
     },
@@ -68,8 +77,9 @@ export const PlanFoodSave = () => {
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "food",
+    plan_start: "",
+    plan_end: "",
     plan_food: {
       plan_kcal: ""
     },
@@ -82,7 +92,7 @@ export const PlanFoodSave = () => {
         _id: "",
         user_id: user_id,
         plan_dur: DATE.strDur,
-        plan_schema: "food",
+        FILTER: FILTER,
       },
     });
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
@@ -98,7 +108,7 @@ export const PlanFoodSave = () => {
       user_id: user_id,
       PLAN: PLAN,
       plan_dur: DATE.strDur,
-      plan_schema: "food",
+      FILTER: FILTER,
     });
     if (response.data === "success") {
       alert("Save successfully");

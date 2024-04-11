@@ -6,7 +6,7 @@ import {workArray} from "../data/WorkArray.jsx";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
-  FILTER, setFILTER, PAGING, setPAGING, type
+  FILTER, setFILTER, PAGING, setPAGING, type, compare
 }) => {
   function selectType() {
     return (
@@ -56,24 +56,6 @@ export const FilterNode = ({
         )}>
           <option value="5" selected>5</option>
           <option value="10">10</option>
-        </select>
-      </div>
-    );
-  };
-  function selectPartFood () {
-    return (
-      <div>
-        <select className="form-select" id="foodPart" onChange={(e) => {
-          setFILTER((prev) => ({
-            ...prev,
-            part: e.target.value
-          }));
-        }}>
-          <option value="전체" selected>전체</option>
-          <option value="아침">아침</option>
-          <option value="점심">점심</option>
-          <option value="저녁">저녁</option>
-          <option value="간식">간식</option>
         </select>
       </div>
     );

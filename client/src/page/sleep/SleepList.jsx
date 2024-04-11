@@ -49,7 +49,8 @@ export const SleepList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
-      limit: 5
+      limit: 5,
+      schema: "sleep",
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -114,7 +115,7 @@ export const SleepList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>

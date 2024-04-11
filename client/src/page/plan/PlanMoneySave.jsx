@@ -48,6 +48,14 @@ export const PlanMoneySave = () => {
       calOpen: false,
     }
   );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      limit: 5,
+      part: "전체",
+      schema: "money",
+    }
+  );
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
@@ -59,8 +67,9 @@ export const PlanMoneySave = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "money",
+    plan_start: "",
+    plan_end: "",
     plan_money: {
       plan_in: "",
       plan_out: ""
@@ -69,8 +78,9 @@ export const PlanMoneySave = () => {
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "money",
+    plan_start: "",
+    plan_end: "",
     plan_money: {
       plan_in: "",
       plan_out: ""
@@ -84,7 +94,7 @@ export const PlanMoneySave = () => {
         _id: "",
         user_id: user_id,
         plan_dur: DATE.strDur,
-        plan_schema: "money",
+        FILTER: FILTER,
       },
     });
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
@@ -100,7 +110,7 @@ export const PlanMoneySave = () => {
       user_id: user_id,
       PLAN: PLAN,
       plan_dur: DATE.strDur,
-      plan_schema: "money",
+      FILTER: FILTER,
     });
     if (response.data === "success") {
       alert("Save successfully");

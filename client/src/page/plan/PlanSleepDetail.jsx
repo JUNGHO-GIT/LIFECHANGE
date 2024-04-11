@@ -40,6 +40,14 @@ export const PlanSleepDetail = () => {
       strDt: location_date
     }
   );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      limit: 5,
+      part: "전체",
+      schema: "sleep",
+    }
+  );
   const {val:CALENDAR, set:setCALENDAR} = useStorage(
     `CALENDAR(${PATH})`, {
       calStartOpen: false,
@@ -58,8 +66,9 @@ export const PlanSleepDetail = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "sleep",
+    plan_start: "",
+    plan_end: "",
     plan_sleep: {
       plan_night: "",
       plan_morning: "",
@@ -69,8 +78,9 @@ export const PlanSleepDetail = () => {
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "sleep",
+    plan_start: "",
+    plan_end: "",
     plan_sleep: {
       plan_night: "",
       plan_morning: "",
@@ -85,7 +95,7 @@ export const PlanSleepDetail = () => {
         _id: location_id,
         user_id: user_id,
         plan_dur: DATE.strDur,
-        plan_schema: "sleep",
+        FILTER: FILTER,
       },
     });
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
@@ -102,7 +112,7 @@ export const PlanSleepDetail = () => {
         _id: id,
         user_id: user_id,
         plan_dur: DATE.strDur,
-        plan_schema: "sleep",
+        FILTER: FILTER,
       },
     });
     if (response.data === "success") {
@@ -127,10 +137,11 @@ export const PlanSleepDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
-            <th>날짜</th>
+            <th>시작일</th>
+            <th>종료일</th>
             <th>취침시간</th>
             <th>기상시간</th>
             <th>수면시간</th>
@@ -140,7 +151,10 @@ export const PlanSleepDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {PLAN?.plan_dur}
+              {PLAN?.plan_start}
+            </td>
+            <td className="fs-20 pt-20">
+              {PLAN?.plan_end}
             </td>
             <td className="fs-20 pt-20">
               {PLAN?.plan_sleep.plan_night}

@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
-import TimePicker from "react-time-picker";
+import {TimePicker} from "react-time-picker";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
@@ -74,7 +74,7 @@ export const SleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDateReal(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
+  useDateReal(SLEEP, setSLEEP, DATE, setDATE, PATH);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -86,10 +86,6 @@ export const SleepSave = () => {
       },
     });
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
-    setCOUNT((prev) => ({
-      ...prev,
-      sectionCnt: response.data.sectionCnt ? response.data.sectionCnt : 0
-    }));
   })()}, [user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -123,9 +119,9 @@ export const SleepSave = () => {
     return (
       <div>
         <div className="row d-center">
-          <div className="col-6">
+          <div className="col-12">
             <div className="input-group">
-              <span className="input-group-text">취침시간</span>
+              <span className="input-group-text">취침</span>
               <TimePicker
                 id="sleep_night"
                 name="sleep_night"
@@ -134,24 +130,22 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                /* value={SLEEP?.sleep_section?.map((item) => (item.sleep_night))} */
+                value={SLEEP.sleep_section[0]?.sleep_night}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_section: [{
-                      ...prev?.sleep_section[0],
+                      ...prev.sleep_section[0],
                       sleep_night: e ? e.toString() : "",
-                    }]
+                    }],
                   }));
                 }}
-              />
+              ></TimePicker>
             </div>
           </div>
-        </div>
-        <div className="row d-center mt-3">
-          <div className="col-6">
+          <div className="col-12">
             <div className="input-group">
-              <span className="input-group-text">기상시간</span>
+              <span className="input-group-text">기상</span>
               <TimePicker
                 id="sleep_morning"
                 name="sleep_morning"
@@ -160,24 +154,22 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                /* value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_morning))} */
+                value={SLEEP.sleep_section[0]?.sleep_morning}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_section: [{
-                      ...prev?.sleep_section[0],
+                      ...prev.sleep_section[0],
                       sleep_morning: e ? e.toString() : "",
-                    }]
+                    }],
                   }));
                 }}
-              />
+              ></TimePicker>
             </div>
           </div>
-        </div>
-        <div className="row d-center mt-3">
-          <div className="col-6">
+          <div className="col-12">
             <div className="input-group">
-              <span className="input-group-text">수면시간</span>
+              <span className="input-group-text">수면</span>
               <TimePicker
                 id="sleep_time"
                 name="sleep_time"
@@ -187,8 +179,8 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                /* value={(SLEEP?.sleep_section)?.map((item) => (item.sleep_time))} */
-              />
+                value={SLEEP.sleep_section[0]?.sleep_time}
+              ></TimePicker>
             </div>
           </div>
         </div>

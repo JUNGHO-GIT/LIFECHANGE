@@ -99,7 +99,7 @@ export const FoodSearch = () => {
       });
     };
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
             <th>Title</th>

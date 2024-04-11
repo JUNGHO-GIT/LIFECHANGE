@@ -49,6 +49,7 @@ export const PlanSleepList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       limit: 5,
+      part: "전체",
       schema: "sleep",
     }
   );
@@ -69,8 +70,9 @@ export const PlanSleepList = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "sleep",
+    plan_start: "",
+    plan_end: "",
     plan_sleep: {
       plan_night: "",
       plan_morning: "",
@@ -80,8 +82,9 @@ export const PlanSleepList = () => {
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "sleep",
+    plan_start: "",
+    plan_end: "",
     plan_sleep: {
       plan_night: "",
       plan_morning: "",
@@ -115,10 +118,11 @@ export const PlanSleepList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
-            <th>날짜</th>
+            <th>시작일</th>
+            <th>종료일</th>
             <th>취침시간</th>
             <th>기상시간</th>
             <th>수면시간</th>
@@ -128,13 +132,16 @@ export const PlanSleepList = () => {
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td onClick={() => {
+                <td className="pointer" onClick={() => {
                   STATE.id = item._id;
                   STATE.date = DATE.strDt;
                   navParam(STATE.toDetail, {
                     state: STATE
                   });
-                }}>{item.plan_dur}</td>
+                }}>
+                  {item.plan_start}
+                </td>
+                <td>{item.plan_end}</td>
                 <td>{item.plan_sleep.plan_night}</td>
                 <td>{item.plan_sleep.plan_morning}</td>
                 <td>{item.plan_sleep.plan_time}</td>

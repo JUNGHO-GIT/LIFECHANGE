@@ -5,7 +5,7 @@ import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
 import {Plan} from "../schema/Plan.js"
 
-// 0-1. dash(bar) --------------------------------------------------------------------------------->
+// 0-1. dash (bar) -------------------------------------------------------------------------------->
 export const dashBar = async (
   user_id_param
 ) => {
@@ -33,7 +33,8 @@ export const dashBar = async (
     const findResultPlan = await Plan.findOne({
       user_id: user_id_param,
       plan_schema: "sleep",
-      plan_dur: `${koreanDate} ~ ${koreanDate}`
+      plan_start: { $lte: koreanDate },
+      plan_end: { $gte: koreanDate }
     })
     .lean();
     const findResultReal = await Sleep.findOne({
@@ -61,7 +62,7 @@ export const dashBar = async (
   };
 };
 
-// 0-2. dash(line) -------------------------------------------------------------------------------->
+// 0-2. dash (line) ------------------------------------------------------------------------------->
 export const dashLine = async (
   user_id_param
 ) => {
@@ -108,7 +109,7 @@ export const dashLine = async (
   };
 };
 
-// 0-3. dash(avg-week) ---------------------------------------------------------------------------->
+// 0-3. dash (avg-week) --------------------------------------------------------------------------->
 export const dashAvgWeek = async (
   user_id_param
 ) => {
@@ -169,7 +170,7 @@ export const dashAvgWeek = async (
   };
 };
 
-// 0-4. dash(avg-month) --------------------------------------------------------------------------->
+// 0-4. dash (avg-month) -------------------------------------------------------------------------->
 export const dashAvgMonth = async (
   user_id_param
 ) => {
@@ -294,7 +295,7 @@ export const detail = async (
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
   const finalResult = await Sleep.findOne({
-    _id: _id_param === "" ? { $exists: true } : _id_param,
+    _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
     sleep_date: {
       $gte: startDay,

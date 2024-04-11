@@ -5,9 +5,6 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -122,7 +119,7 @@ export const FoodDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
             <th>음식명</th>

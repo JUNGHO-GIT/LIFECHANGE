@@ -49,6 +49,7 @@ export const PlanMoneyList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       limit: 5,
+      part: "전체",
       schema: "money",
     }
   );
@@ -69,8 +70,9 @@ export const PlanMoneyList = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "money",
+    plan_start: "",
+    plan_end: "",
     plan_money: {
       plan_in: "",
       plan_out: ""
@@ -79,8 +81,9 @@ export const PlanMoneyList = () => {
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_dur: "",
     plan_schema: "money",
+    plan_start: "",
+    plan_end: "",
     plan_money: {
       plan_in: "",
       plan_out: ""
@@ -114,10 +117,11 @@ export const PlanMoneyList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
+      <table className="table bg-white table-hover table-responsive">
         <thead className="table-primary">
           <tr>
-            <th>기간</th>
+            <th>시작일</th>
+            <th>종료일</th>
             <th>수입</th>
             <th>지출</th>
           </tr>
@@ -126,7 +130,8 @@ export const PlanMoneyList = () => {
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.plan_dur}</td>
+                <td>{item.plan_start}</td>
+                <td>{item.plan_end}</td>
                 <td>{item.plan_money.plan_in}</td>
                 <td>{item.plan_money.plan_out}</td>
               </tr>
