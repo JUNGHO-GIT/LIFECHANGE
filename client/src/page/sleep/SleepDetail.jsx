@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
@@ -31,10 +32,10 @@ export const SleepDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:CALENDAR, set:setCALENDAR} = useStorage(
@@ -71,6 +72,9 @@ export const SleepDetail = () => {
     }],
   });
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDateReal(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
+
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/detail`, {
@@ -106,13 +110,6 @@ export const SleepDetail = () => {
     else {
       alert(`${response.data}`);
     }
-  };
-
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
-    );
   };
 
   // 5. table ------------------------------------------------------------------------------------->
@@ -176,11 +173,6 @@ export const SleepDetail = () => {
         <div className="row mb-20 d-center">
           <div className="col-12">
             <h1>Detail</h1>
-          </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
-            {dateNode()}
           </div>
         </div>
         <div className="row d-center mb-20">

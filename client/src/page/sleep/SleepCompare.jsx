@@ -151,69 +151,67 @@ export const SleepCompare = () => {
               <th>분류</th>
               <th>목표</th>
               <th>실제</th>
-              <th></th>
+              <th>비교</th>
             </tr>
           </thead>
           <tbody>
             {SLEEP_REAL.map((real) => (
-              SLEEP_PLAN.map((plan) => (
+              SLEEP_PLAN.filter((plan) => (plan.plan_start === real.sleep_date)).length > 0
+              ? (
+                SLEEP_PLAN.filter((plan) => (
+                  plan.plan_start === real.sleep_date
+                )).map((plan) => (
+                  <React.Fragment key={real._id}>
+                    <tr>
+                      <td rowSpan={3}>
+                        {real.sleep_date}
+                      </td>
+                      <td>취침</td>
+                      <td>
+                        {plan.plan_sleep.plan_night}
+                      </td>
+                      <td>
+                        {real.sleep_section.map((section) => section.sleep_night)}
+                      </td>
+                      <td className={successOrNot(plan.plan_sleep.plan_night, real.sleep_section.map((section) => section.sleep_night))}>
+                        ●
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>기상</td>
+                      <td>{plan.plan_sleep.plan_morning}</td>
+                      <td>
+                        {real.sleep_section.map((section) => section.sleep_morning)}
+                      </td>
+                      <td className={successOrNot(plan.plan_sleep.plan_morning, real.sleep_section.map((section) => section.sleep_morning))}>
+                        ●
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>수면</td>
+                      <td>{plan.plan_sleep.plan_time}</td>
+                      <td>
+                        {real.sleep_section.map((section) => section.sleep_time)}
+                      </td>
+                      <td className={successOrNot(plan.plan_sleep.plan_time, real.sleep_section.map((section) => section.sleep_time))}>
+                        ●
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))
+              )
+              : (
                 <React.Fragment key={real._id}>
                   <tr>
-                    <td rowSpan={3}>
+                    <td>
                       {real.sleep_date}
                     </td>
-                    <td>취침</td>
-                    <td>
-                      {plan.plan_sleep.plan_night}
-                    </td>
-                    <td>
-                      {real.sleep_section.map((item) => item.sleep_night)}
-                    </td>
-                    <td>
-                      <span className={successOrNot(
-                        plan.plan_sleep.plan_night,
-                        real.sleep_section.map((item) => item.sleep_night)
-                      )}>
-                        ●
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>기상</td>
-                    <td>
-                      {plan.plan_sleep.plan_morning}
-                    </td>
-                    <td>
-                      {real.sleep_section.map((item) => item.sleep_morning)}
-                    </td>
-                    <td>
-                      <span className={successOrNot(
-                        plan.plan_sleep.plan_morning,
-                        real.sleep_section.map((item) => item.sleep_morning)
-                      )}>
-                        ●
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>수면</td>
-                    <td>
-                      {plan.plan_sleep.plan_time}
-                    </td>
-                    <td>
-                      {real.sleep_section.map((item) => item.sleep_time)}
-                    </td>
-                    <td>
-                      <span className={successOrNot(
-                        plan.plan_sleep.plan_time,
-                        real.sleep_section.map((item) => item.sleep_time)
-                      )}>
-                        ●
-                      </span>
+                    <td colSpan={4} className="text-center">
+                      <span className="text-muted">계획 데이터 없음</span>
                     </td>
                   </tr>
                 </React.Fragment>
-              ))
+              )
             ))}
           </tbody>
         </table>

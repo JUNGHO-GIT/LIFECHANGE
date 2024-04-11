@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 
 // ------------------------------------------------------------------------------------------------>
 export const useDateReal = (
-  OBJECT, setOBJECT, DATE, setDATE, PATH
+  OBJECT, setOBJECT, DATE, setDATE, PATH, location_date
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -12,29 +12,24 @@ export const useDateReal = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (DATE.strStartDt && DATE.strEndDt && DATE.strDt) {
-      if (`${DATE.strStartDt} ~ ${DATE.strEndDt}` !== DATE.strDur) {
-        setDATE((prev) => ({
-          ...prev,
-          strDur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
-        }));
-        setOBJECT((prev) => ({
-          ...prev,
-          [`${strLow}_dur`]: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
-        }));
-      }
-      else {
-        setDATE((prev) => ({
-          ...prev,
-          strDur: `${DATE.strDt} ~ ${DATE.strDt}`,
-        }));
-        setOBJECT((prev) => ({
-          ...prev,
-          [`${strLow}_dur`]: `${DATE.strDt} ~ ${DATE.strDt}`,
-        }));
-      }
-    }
-  }, [DATE.strStartDt, DATE.strEndDt, DATE.strDt]);
+    setDATE((prev) => ({
+      ...prev,
+      strDt: location_date,
+      strDur: `${location_date} ~ ${location_date}`,
+    }));
+  }, [location_date]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    setDATE((prev) => ({
+      ...prev,
+      strDur: `${DATE.strDt} ~ ${DATE.strDt}`,
+    }));
+    setOBJECT((prev) => ({
+      ...prev,
+      [`${strLow}_dur`]: `${DATE.strDt} ~ ${DATE.strDt}`,
+    }));
+  }, [DATE.strDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -87,7 +82,8 @@ export const useDateReal = (
         setOBJECT((prev) => ({
           ...prev,
           sleep_section: [{
-            ...prev.sleep_section[0],
+            sleep_night: nightTime,
+            sleep_morning: morningTime,
             sleep_time: time,
           }],
         }));

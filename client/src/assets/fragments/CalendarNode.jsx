@@ -78,20 +78,21 @@ export const CalendarNode = ({
     if (FILTER.type === "week") {
       mode = "range";
       selected = DATE.strStartDt && DATE.strEndDt && {from: new Date(DATE.strStartDt), to: new Date(DATE.strEndDt)};
+      month = new Date(DATE.strStartDt)
       onDayClick= (day) => {
         const selectedDate = moment(day);
         const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
         const endOfWeek = startOfWeek.clone().add(6, "days");
         setDATE((prev) => ({
           ...prev,
-          strStartDt: startOfWeek.format("YYYY-MM-DD"),
-          strEndDt: endOfWeek.format("YYYY-MM-DD"),
+          strStartDt: moment(startOfWeek).format("YYYY-MM-DD"),
+          strEndDt: moment(endOfWeek).format("YYYY-MM-DD"),
         }));
       }
       onMonthChange= (month) => {
         setDATE((prev) => ({
           ...prev,
-          strStartDt: month,
+          strStartDt: moment(month).format("YYYY-MM-DD"),
           strEndDt: undefined,
         }));
       }

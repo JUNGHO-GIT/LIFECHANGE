@@ -93,6 +93,7 @@ export const PlanFoodList = () => {
     const response = await axios.get(`${URL_PLAN}/list`, {
       params: {
         user_id: user_id,
+        plan_dur: DATE.strDur,
         FILTER: FILTER,
         PAGING: PAGING
       },

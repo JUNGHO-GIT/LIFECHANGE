@@ -74,7 +74,7 @@ export const SleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDateReal(SLEEP, setSLEEP, DATE, setDATE, PATH);
+  useDateReal(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

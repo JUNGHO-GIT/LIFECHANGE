@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
@@ -38,19 +39,19 @@ export const SleepList = () => {
       strDt: location_date
     }
   );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
-    }
-  );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
       limit: 5,
       schema: "sleep",
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -105,13 +106,6 @@ export const SleepList = () => {
     }));
   })()}, [user_id, DATE.strDur, FILTER, PAGING]);
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"list"} />
-    );
-  };
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
@@ -129,13 +123,15 @@ export const SleepList = () => {
             item?.sleep_section.map((section, index) => (
               <React.Fragment key={item._id + index}>
                 <tr>
-                  <td rowSpan={6} className="pointer" onClick={() => {
+                  <td className={"pointer"} rowSpan={item.sleep_section.length} onClick={() => {
                     STATE.id = item._id;
                     STATE.date = item.sleep_date;
                     navParam(STATE.toDetail, {
                       state: STATE
                     });
-                  }}>{item.sleep_date}</td>
+                  }}>
+                    {item.sleep_date}
+                  </td>
                   <td>{section.sleep_night}</td>
                   <td>{section.sleep_morning}</td>
                   <td>{section.sleep_time}</td>
@@ -169,7 +165,7 @@ export const SleepList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"}
+        type={"sleep"} compare={""}
       />
     );
   };
@@ -191,9 +187,6 @@ export const SleepList = () => {
         <div className="row d-center">
           <div className="col-12 mb-20">
             <h1>List</h1>
-          </div>
-          <div className="col-12 mb-20">
-            {dateNode()}
           </div>
           <div className="col-12 mb-20">
             {calendarNode()}

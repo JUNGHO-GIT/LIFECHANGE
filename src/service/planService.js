@@ -14,8 +14,7 @@ export const list = async (
 
   const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
-  const schema = FILTER_param.schema || "전체";
-  const part = FILTER_param.part || "전체";
+  const schema = FILTER_param.schema;
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
@@ -33,7 +32,10 @@ export const list = async (
   .sort({ plan_date: sort })
   .lean();
 
+  const totalCnt = findResult.length;
+
   return {
+    totalCnt: totalCnt,
     result: findResult,
   };
 };

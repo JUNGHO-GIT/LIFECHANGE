@@ -244,10 +244,18 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
-  const part = FILTER_param.part || "전체";
+
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+
+  const totalCnt = await Sleep.countDocuments({
+    user_id: user_id_param,
+    sleep_date: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  });
 
   const findResult = await Sleep.find({
     user_id: user_id_param,
@@ -257,31 +265,13 @@ export const list = async (
     },
   })
   .sort({ sleep_date: sort })
+  .skip((page - 1) * limit)
+  .limit(limit)
   .lean();
-
-  let totalCnt = 0;
-  const finalResult = findResult.map((sleep) => {
-    if (sleep && sleep.sleep_section) {
-      let sections = sleep.sleep_section.filter((section) => (
-        part === "전체" ? true : section?.sleep_part === part
-      ));
-
-      // 배열 갯수 누적 계산
-      totalCnt += sections.length;
-
-      // section 배열에서 페이지에 맞는 항목만 선택합니다.
-      const startIdx = (limit * page - 1) - (limit - 1);
-      const endIdx = (limit * page);
-      sections = sections.slice(startIdx, endIdx);
-
-      sleep.sleep_section = sections;
-    }
-    return sleep;
-  });
 
   return {
     totalCnt: totalCnt,
-    result: finalResult,
+    result: findResult,
   };
 };
 
@@ -302,7 +292,7 @@ export const detail = async (
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   const sectionCnt = finalResult?.sleep_section?.length || 0;
 
@@ -371,6 +361,7 @@ export const deletes = async (
 
   const updateResult = await Sleep.updateOne(
     {
+      _id: _id_param,
       user_id: user_id_param,
       sleep_date: {
         $gte: startDay,
