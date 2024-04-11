@@ -128,7 +128,7 @@ export const PlanSleepList = () => {
               <tr>
                 <td className="pointer" onClick={() => {
                   STATE.id = item._id;
-                  STATE.date = DATE.strDt;
+                  STATE.date = item.plan_start;
                   navParam(STATE.toDetail, {
                     state: STATE
                   });

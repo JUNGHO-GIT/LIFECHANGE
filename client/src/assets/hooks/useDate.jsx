@@ -11,7 +11,7 @@ export const useDate  = (
   useEffect(() => {
     setDATE((prev) => ({
       ...prev,
-      strDt: location_date
+      strDt: location_date,
     }));
   }, [location_date]);
 

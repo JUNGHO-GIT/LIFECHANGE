@@ -5,7 +5,6 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -15,7 +14,7 @@ export const PlanSleepDetail = () => {
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id.toString();
+  const location_id = location?.state?.id;
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
@@ -32,10 +31,10 @@ export const PlanSleepDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
