@@ -109,15 +109,15 @@ const Money = () => {
 const Plan = () => {
   return (
     <Routes>
-      <Route path="/list/food" element={<PlanFoodList />} />
-      <Route path="/detail/food" element={<PlanFoodDetail />} />
-      <Route path="/save/food" element={<PlanFoodSave />} />
-      <Route path="/list/money" element={<PlanMoneyList />} />
-      <Route path="/save/money" element={<PlanMoneySave />} />
-      <Route path="/list/sleep" element={<PlanSleepList />} />
-      <Route path="/save/sleep" element={<PlanSleepSave />} />
-      <Route path="/list/work" element={<PlanWorkList />} />
-      <Route path="/save/work" element={<PlanWorkSave />} />
+      <Route path="/food/list" element={<PlanFoodList />} />
+      <Route path="/food/detail" element={<PlanFoodDetail />} />
+      <Route path="/food/save" element={<PlanFoodSave />} />
+      <Route path="/money/list" element={<PlanMoneyList />} />
+      <Route path="/money/save" element={<PlanMoneySave />} />
+      <Route path="/sleep/list" element={<PlanSleepList />} />
+      <Route path="/sleep/save" element={<PlanSleepSave />} />
+      <Route path="/work/list" element={<PlanWorkList />} />
+      <Route path="/work/save" element={<PlanWorkSave />} />
     </Routes>
   );
 };
