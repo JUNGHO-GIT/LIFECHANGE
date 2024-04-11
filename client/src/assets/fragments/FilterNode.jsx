@@ -45,7 +45,7 @@ export const FilterNode = ({
     return (
       <div className="mb-3">
         <select className="form-select" id="limit" onChange={(e) => (
-          setPaging((prev) => ({
+          setPAGING((prev) => ({
             ...prev,
             limit: parseInt(e.target.value)
           })),
@@ -64,7 +64,10 @@ export const FilterNode = ({
     return (
       <div>
         <select className="form-select" id="foodPart" onChange={(e) => {
-          setFILTER({...filter, part: e.target.value});
+          setFILTER((prev) => ({
+            ...prev,
+            part: e.target.value
+          }));
         }}>
           <option value="전체" selected>전체</option>
           <option value="아침">아침</option>
@@ -79,7 +82,10 @@ export const FilterNode = ({
     return (
       <div>
         <select className="form-select" id="foodPart" onChange={(e) => {
-          setFILTER({...filter, part: e.target.value});
+          setFILTER((prev) => ({
+            ...prev,
+            part: e.target.value
+          }));
         }}>
           <option value="전체" selected>전체</option>
           <option value="아침">아침</option>

@@ -208,7 +208,7 @@ export const FoodSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"save"} />
     );
   };
 
@@ -357,7 +357,7 @@ export const FoodSave = () => {
         DATE={DATE} setDATE={setDATE}
         STATE={STATE} setSTATE={setSTATE}
         flowSave={flowSave} navParam={navParam}
-        type="save"
+        type={"save"}
       />
     );
   };

@@ -120,7 +120,7 @@ export const MoneyList = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="list" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"list"} />
     );
   };
 
@@ -178,7 +178,7 @@ export const MoneyList = () => {
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
     return (
-      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT}
+      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       />
     );
   };

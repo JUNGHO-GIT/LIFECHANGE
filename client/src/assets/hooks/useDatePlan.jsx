@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 
 // ------------------------------------------------------------------------------------------------>
 export const useDatePlan = (
-  OBJECT, setOBJECT, PATH, location_date, DATE, setDATE
+  OBJECT, setOBJECT, DATE, setDATE, PATH, location_date,
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>

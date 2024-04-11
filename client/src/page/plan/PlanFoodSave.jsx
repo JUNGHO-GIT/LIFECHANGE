@@ -85,10 +85,12 @@ export const PlanFoodSave = () => {
         plan_schema: "food",
       },
     });
-
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
-
-  })()}, [DATE.strDur]);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt,
+    }));
+  })()}, [user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -113,13 +115,12 @@ export const PlanFoodSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"save"} />
     );
   };
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
     function dayPicker (isOpen, setOpen, selectedDate, setSelectedDate) {
       return (
         <div className={`dayPicker-container ${isOpen ? "" : "d-none"}`}>
@@ -150,11 +151,10 @@ export const PlanFoodSave = () => {
         </div>
       );
     };
-
     function foodNode () {
       return (
         <div>
-          <div className="row d-center mb-20">
+          {/* <div className="row d-center mb-20">
             <div className="col-3">
               {dayPicker(calStartOpen, setCalendarStartOpen, DATE.strStartDt, DATE.setStrStartDt)}
               <div className="input-group">
@@ -173,7 +173,7 @@ export const PlanFoodSave = () => {
                 <input type="text" className="form-control" value={DATE.strEndDt} readOnly />
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row d-center mb-20">
             <div className="col-6">
               <div className="input-group">
@@ -211,7 +211,6 @@ export const PlanFoodSave = () => {
         </div>
       );
     };
-
     return (
       <div>
         <div className="row d-center">
@@ -223,14 +222,12 @@ export const PlanFoodSave = () => {
     );
   };
 
-
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calOpen={""} setCalendarOpen={""}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        STATE={STATE} flowSave={flowSave} navParam={navParam}
-        type="save"
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
+        type={"save"}
       />
     );
   };

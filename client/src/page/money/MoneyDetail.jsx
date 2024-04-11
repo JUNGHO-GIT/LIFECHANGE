@@ -123,7 +123,7 @@ export const MoneyDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
     );
   };
 
@@ -180,9 +180,9 @@ export const MoneyDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-        DATE={DATE} setDATE={setDATE} STATE={STATE} setSTATE={setSTATE}
-        flowSave={""} navParam={navParam} type="detail"
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        type={"detail"}
       />
     );
   };

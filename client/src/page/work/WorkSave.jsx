@@ -136,7 +136,7 @@ export const WorkSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"save"} />
     );
   };
 
@@ -439,7 +439,7 @@ export const WorkSave = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
-        type="save"
+        type={"save"}
       />
     );
   };

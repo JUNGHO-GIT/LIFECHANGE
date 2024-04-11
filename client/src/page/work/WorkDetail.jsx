@@ -133,7 +133,7 @@ export const WorkDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
     );
   };
 
@@ -198,7 +198,7 @@ export const WorkDetail = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
-        type="detail"
+        type={"detail"}
       />
     );
   };

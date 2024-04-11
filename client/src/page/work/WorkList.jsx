@@ -122,7 +122,7 @@ export const WorkList = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="list" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"list"} />
     );
   };
 

@@ -83,10 +83,12 @@ export const SleepDetail = () => {
         sleep_dur: DATE.strDur
       },
     });
-
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
-
-  })()}, [DATE.strDur]);
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: response.data.sectionCnt
+    }));
+  })()}, [location_id, user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -112,7 +114,7 @@ export const SleepDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
     );
   };
 
@@ -163,10 +165,9 @@ export const SleepDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calOpen={""} setCalendarOpen={""}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        STATE={STATE} flowSave={""} navParam={navParam}
-        type="detail"
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        type={"detail"}
       />
     );
   };

@@ -82,7 +82,7 @@ export const PlanSleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDatePlan(PLAN, setPLAN, PATH, location_date, DATE.strDt, setDATE.DATE.strDt, DATE.strDur, setDATE.strDur);
+  useDatePlan(PLAN, setPLAN, DATE, setDATE, PATH, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -94,10 +94,12 @@ export const PlanSleepSave = () => {
         plan_schema: "sleep",
       },
     });
-
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
-
-  })()}, [DATE.strDur]);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt
+    }));
+  })()}, [user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -122,7 +124,7 @@ export const PlanSleepSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"save"} />
     );
   };
 
@@ -137,7 +139,10 @@ export const PlanSleepSave = () => {
             selected={new Date(DATE.strDt)}
             disabled={false}
             onChange={(date) => {
-              setDATE.DATE.strDt(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
+              setDATE((prev) => ({
+                ...prev,
+                strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+              }));
             }}
           />
         </div>
@@ -240,10 +245,9 @@ export const PlanSleepSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calOpen={""} setCalendarOpen={""}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        STATE={STATE} flowSave={flowSave} navParam={navParam}
-        type="save"
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
+        type={"save"}
       />
     );
   };

@@ -98,15 +98,17 @@ export const PlanSleepList = () => {
         PAGING: PAGING
       },
     });
-
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
-
-  })()}, [DATE.strDur, FILTER, PAGING]);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt,
+    }));
+  })()}, [user_id, FILTER, PAGING]);
 
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="list" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"list"} />
     );
   };
 
@@ -147,12 +149,8 @@ export const PlanSleepList = () => {
   // 6. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => {
     return (
-      <CalendarNode filter={filter} setFILTER={setFILTER}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        DATE.strStartDt={DATE.strStartDt} DATE.setStrStartDt={DATE.setStrStartDt}
-        DATE.strEndDt={DATE.strEndDt} DATE.setEndDate={DATE.setEndDate}
-        DATE.strDur={DATE.strDur} setDATE.strDur={setDATE.strDur}
-        calOpen={calOpen} setCalendarOpen={setCalendarOpen}
+      <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+        CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
       />
     );
   };
@@ -160,7 +158,7 @@ export const PlanSleepList = () => {
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
     return (
-      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT}
+      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       />
     );
   };
@@ -168,7 +166,7 @@ export const PlanSleepList = () => {
   // 8. filter ------------------------------------------------------------------------------------>
   const filterNode = () => {
     return (
-      <FilterNode filter={filter} setFILTER={setFILTER} paging={paging} setPaging={setPaging}
+      <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
         type={"plan"}
       />
     );
@@ -177,9 +175,8 @@ export const PlanSleepList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calOpen={calOpen} setCalendarOpen={setCalendarOpen}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        STATE={STATE} flowSave={""} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
         type={"list"}
       />
     );

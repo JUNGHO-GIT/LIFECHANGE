@@ -88,10 +88,12 @@ export const PlanSleepDetail = () => {
         plan_schema: "sleep",
       },
     });
-
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
-
-  })()}, [DATE.strDur]);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt
+    }));
+  })()}, [location_id, user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -118,7 +120,7 @@ export const PlanSleepDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
     );
   };
 
@@ -165,10 +167,9 @@ export const PlanSleepDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calOpen={""} setCalendarOpen={""}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        STATE={STATE} flowSave={""} navParam={navParam}
-        type="detail"
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        type={"detail"}
       />
     );
   };

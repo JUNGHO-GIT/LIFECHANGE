@@ -113,7 +113,7 @@ export const PlanFoodDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
     );
   };
 
@@ -133,9 +133,11 @@ export const PlanFoodDetail = () => {
             <td>{PLAN.plan_dur}</td>
             <td>{PLAN.plan_food.plan_kcal}</td>
             <td>
-              <button className="btn btn-sm btn-danger"
-                onClick={() => flowDelete(PLAN._id)}
-              >삭제</button>
+              <button className="btn btn-sm btn-danger" onClick={() => (
+                flowDelete(PLAN._id)
+              )}>
+                x
+              </button>
             </td>
           </tr>
         </tbody>
@@ -148,7 +150,7 @@ export const PlanFoodDetail = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
-        type="detail"
+        type={"detail"}
       />
     );
   };

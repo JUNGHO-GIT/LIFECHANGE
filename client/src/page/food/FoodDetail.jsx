@@ -114,7 +114,7 @@ export const FoodDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"detail"} />
     );
   };
 
@@ -167,7 +167,7 @@ export const FoodDetail = () => {
       <ButtonNode calOpen={""} setCalendarOpen={""}
         DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
         STATE={STATE} flowSave={""} navParam={navParam}
-        type="detail"
+        type={"detail"}
       />
     );
   };

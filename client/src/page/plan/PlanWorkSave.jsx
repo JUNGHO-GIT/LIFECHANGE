@@ -93,10 +93,12 @@ export const PlanWorkSave = () => {
         plan_schema: "work",
       },
     });
-
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
-
-  })()}, [DATE.strDur]);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt,
+    }));
+  })()}, [user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -121,7 +123,7 @@ export const PlanWorkSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDt={DATE.strDt} setStrDt={setDATE.strDt} />
+      <DateNode DATE={DATE} setDATE={setDATE} type={"save"} />
     );
   };
 
@@ -162,7 +164,7 @@ export const PlanWorkSave = () => {
     function workNode () {
       return (
         <div>
-          <div className="row d-center mb-20">
+          {/* <div className="row d-center mb-20">
             <div className="col-3">
               {dayPicker(calStartOpen, setCalendarStartOpen, DATE.strStartDt, DATE.setStrStartDt)}
               <div className="input-group">
@@ -181,7 +183,7 @@ export const PlanWorkSave = () => {
                 <input type="text" className="form-control" value={DATE.strEndDt} readOnly />
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row d-center mb-20">
             <div className="col-6">
               <div className="input-group">
@@ -250,10 +252,9 @@ export const PlanWorkSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calOpen={""} setCalendarOpen={""}
-        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
-        STATE={STATE} flowSave={flowSave} navParam={navParam}
-        type="save"
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
+        type={"save"}
       />
     );
   };
