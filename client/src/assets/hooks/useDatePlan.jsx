@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 
 // ------------------------------------------------------------------------------------------------>
 export const useDatePlan = (
-  OBJECT, setOBJECT, PATH, location_date, strDate, setStrDate, strDur, setStrDur
+  OBJECT, setOBJECT, PATH, location_date, DATE, setDATE
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -12,18 +12,24 @@ export const useDatePlan = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
+    setDATE((prev) => ({
+      ...prev,
+      strDt: location_date,
+      strDur: `${location_date} ~ ${location_date}`,
+    }));
   }, [location_date]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
+    setDATE((prev) => ({
+      ...prev,
+      strDur: `${DATE.strDt} ~ ${DATE.strDt}`,
+    }));
     setOBJECT((prev) => ({
       ...prev,
-      [`${strLow}_dur`]: `${strDate} ~ ${strDate}`,
+      [`${strLow}_dur`]: `${DATE.strDt} ~ ${DATE.strDt}`,
     }));
-  }, [strDate]);
+  }, [DATE.strDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -36,8 +42,8 @@ export const useDatePlan = (
       const morningTime = OBJECT?.plan_sleep?.plan_morning?.toString();
 
       if (nightTime && morningTime) {
-        const startDate = new Date(`${strDate}T${nightTime}`);
-        const endDate = new Date(`${strDate}T${morningTime}`);
+        const startDate = new Date(`${DATE.strDt}T${nightTime}`);
+        const endDate = new Date(`${DATE.strDt}T${morningTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -59,8 +65,8 @@ export const useDatePlan = (
       }
     }
   }, [
-    strDate,
     strLow,
+    DATE.strDt,
     OBJECT?.work_start,
     OBJECT?.work_end,
     OBJECT?.plan_sleep?.plan_night,

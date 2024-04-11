@@ -20,20 +20,37 @@ export const WorkDetail = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh:0,
-    toList:"/work/list",
-    toSave:"/work/save",
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh:0,
+      toList:"/work/list",
+      toSave:"/work/save",
+    }
   );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -80,13 +97,17 @@ export const WorkDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        work_dur: strDur
+        work_dur: DATE.strDur
       },
     });
 
     setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt,
+    }));
 
-  })()}, [strDur]);
+  })()}, [location_id, user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -94,12 +115,12 @@ export const WorkDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        work_dur: strDur
+        work_dur: DATE.strDur
       },
     });
     if (response.data === "success") {
       alert("delete success");
-      STATE.date = strDate;
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });
@@ -112,7 +133,7 @@ export const WorkDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
     );
   };
 
@@ -175,9 +196,8 @@ export const WorkDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={strDate} setStrDate={setStrDate}
-        STATE={STATE} flowSave={""} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
         type="detail"
       />
     );

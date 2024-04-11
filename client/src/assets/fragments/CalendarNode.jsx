@@ -9,27 +9,42 @@ import {differenceInDays} from "date-fns";
 
 // 4. calendar ------------------------------------------------------------------------------------>
 export const CalendarNode = ({
-  filter, setFilter, strDate, setStrDate, strStartDate, setStrStartDate, strEndDate, setStrEndDate, strDur, setStrDur, calendarOpen, setCalendarOpen
+  FILTER, setFILTER, DATE, setDATE, CALENDAR, setCALENDAR,
 }) => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (filter.type === "day") {
-      setStrDur(`${strDate} ~ ${strDate}`);
+    if (FILTER.type === "day") {
+      setDATE((prev) => ({
+        ...prev,
+        strDur: `${DATE.strDt} ~ ${DATE.strDt}`,
+      }));
     }
-    else if (filter.type === "week") {
-      setStrDur(`${strStartDate} ~ ${strEndDate}`);
+    else if (FILTER.type === "week") {
+      setDATE((prev) => ({
+        ...prev,
+        strDur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+      }));
     }
-    else if (filter.type === "month") {
-      setStrDur(`${moment(strDate).startOf("month").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("month").format("YYYY-MM-DD")}`);
+    else if (FILTER.type === "month") {
+      setDATE((prev) => ({
+        ...prev,
+        strDur: `${moment(DATE.strDt).startOf("month").format("YYYY-MM-DD")} ~ ${moment(DATE.strDt).endOf("month").format("YYYY-MM-DD")}`,
+      }));
     }
-    else if (filter.type === "year") {
-      setStrDur(`${moment(strDate).startOf("year").format("YYYY-MM-DD")} ~ ${moment(strDate).endOf("year").format("YYYY-MM-DD")}`);
+    else if (FILTER.type === "year") {
+      setDATE((prev) => ({
+        ...prev,
+        strDur: `${moment(DATE.strDt).startOf("year").format("YYYY-MM-DD")} ~ ${moment(DATE.strDt).endOf("year").format("YYYY-MM-DD")}`,
+      }));
     }
-    else if (filter.type === "select") {
-      setStrDur(`${strStartDate} ~ ${strEndDate}`);
+    else if (FILTER.type === "select") {
+      setDATE((prev) => ({
+        ...prev,
+        strDur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+      }));
     }
-  }, [filter.type, strDate, strStartDate, strEndDate]);
+  }, [FILTER.type, DATE.strDt, DATE.strStartDt, DATE.strEndDt]);
 
   // 4. calendarType ------------------------------------------------------------------------------>
   function calendarType () {
@@ -41,106 +56,150 @@ export const CalendarNode = ({
     let onMonthChange;
 
     // 1. day
-    if (filter.type === "day") {
+    if (FILTER.type === "day") {
       mode = "single";
-      selected = new Date(strDate);
-      month = new Date(strDate);
+      selected = new Date(DATE.strDt);
+      month = new Date(DATE.strDt);
       onDayClick = (day) => {
-        setStrDate(moment(day).format("YYYY-MM-DD"));
+        setDATE((prev) => ({
+          ...prev,
+          strDt: moment(day).format("YYYY-MM-DD"),
+        }));
       };
       onMonthChange = (month) => {
-        setStrDate(moment(month).format("YYYY-MM-DD"));
+        setDATE((prev) => ({
+          ...prev,
+          strDt: moment(month).format("YYYY-MM-DD"),
+        }));
       };
     }
 
     // 2. week
-    if (filter.type === "week") {
+    if (FILTER.type === "week") {
       mode = "range";
-      selected = strStartDate && strEndDate && {from: new Date(strStartDate), to: new Date(strEndDate)};
-      month = strStartDate && strEndDate && new Date(strStartDate)
+      selected = DATE.strStartDt && DATE.strEndDt && {from: new Date(DATE.strStartDt), to: new Date(DATE.strEndDt)};
       onDayClick= (day) => {
         const selectedDate = moment(day);
         const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
         const endOfWeek = startOfWeek.clone().add(6, "days");
-        setStrStartDate(moment(startOfWeek).format("YYYY-MM-DD"));
-        setStrEndDate(moment(endOfWeek).format("YYYY-MM-DD"));
+        setDATE((prev) => ({
+          ...prev,
+          strStartDt: startOfWeek.format("YYYY-MM-DD"),
+          strEndDt: endOfWeek.format("YYYY-MM-DD"),
+        }));
       }
       onMonthChange= (month) => {
-        setStrStartDate(month);
-        setStrEndDate(undefined);
+        setDATE((prev) => ({
+          ...prev,
+          strStartDt: month,
+          strEndDt: undefined,
+        }));
       }
     }
 
     // 3. month
-    if (filter.type === "month") {
+    if (FILTER.type === "month") {
       mode = "default";
-      month = new Date(strDur.split(" ~ ")[0])
+      month = new Date(DATE?.strDur?.split(" ~ ")[0])
       onMonthChange = (month) => {
         const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
         const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
-        setStrDur(`${startOfMonth} ~ ${endOfMonth}`);
+        setDATE((prev) => ({
+          ...prev,
+          strDur: `${startOfMonth} ~ ${endOfMonth}`,
+        }));
       }
     }
 
     // 4. year
-    if (filter.type === "year") {
+    if (FILTER.type === "year") {
       mode="default"
-      month= new Date(strDur.split(" ~ ")[0])
-      onMonthChange= (year) => {
+      month= new Date(DATE?.strDur?.split(" ~ ")[0])
+      onMonthChange = (year) => {
         const yearDate = new Date(year.getFullYear(), 0, 1);
         const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
         const nextMonth = differenceInDays(new Date(year.getFullYear() + 1, 0, 1), monthDate) / 30;
         const prevMonth = differenceInDays(monthDate, yearDate) / 30;
         if (nextMonth > prevMonth) {
-          setStrDur(`${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`);
+          setDATE((prev) => ({
+            ...prev,
+            strDur: `${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`,
+          }));
         }
         else {
-          setStrDur(`${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`);
+          setDATE((prev) => ({
+            ...prev,
+            strDur: `${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`,
+          }));
         }
       }
     }
 
     // 5. select
-    if (filter.type === "select") {
+    if (FILTER.type === "select") {
       mode = "range"
-      selected = strStartDate && strEndDate && {from: strStartDate, to: strEndDate}
-      month = strStartDate
-      onDayClick =  (day) => {
+      selected = DATE.strStartDt && DATE.strEndDt && {from: new Date(DATE.strStartDt), to: new Date(DATE.strEndDt)}
+      month = new Date(DATE.strStartDt)
+      onDayClick = (day) => {
         const selectedDay = new Date(day);
         const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
-        if (strStartDate && strEndDate) {
-          if (selectedDay < new Date(strStartDate)) {
-            setStrStartDate(fmtDate);
-            setStrEndDate(fmtDate);
+        if (DATE.strStartDt && DATE.strEndDt) {
+          if (selectedDay < new Date(DATE.strStartDt)) {
+            setDATE((prev) => ({
+              ...prev,
+              strStartDt: fmtDate,
+              strEndDt: fmtDate,
+            }));
           }
-          else if (selectedDay > new Date(strEndDate)) {
-            setStrEndDate(fmtDate);
+          else if (selectedDay > new Date(DATE.strEndDt)) {
+            setDATE((prev) => ({
+              ...prev,
+              strEndDt: fmtDate,
+            }));
           }
           else {
-            setStrStartDate(fmtDate);
-            setStrEndDate(fmtDate);
+            setDATE((prev) => ({
+              ...prev,
+              strStartDt: fmtDate,
+              strEndDt: fmtDate,
+            }));
           }
         }
-        else if (strStartDate) {
-          if (selectedDay < new Date(strStartDate)) {
-            setStrEndDate(strStartDate);
-            setStrStartDate(fmtDate);
+        else if (DATE.strStartDt) {
+          if (selectedDay < new Date(DATE.strStartDt)) {
+            setDATE((prev) => ({
+              ...prev,
+              strEndDt: DATE.strStartDt,
+              strStartDt: fmtDate,
+            }));
           }
-          else if (selectedDay > new Date(strStartDate)) {
-            setStrEndDate(fmtDate);
+          else if (selectedDay > new Date(DATE.strStartDt)) {
+            setDATE((prev) => ({
+              ...prev,
+              strEndDt: fmtDate,
+            }));
           }
           else {
-            setStrStartDate(undefined);
-            setStrEndDate(undefined);
+            setDATE((prev) => ({
+              ...prev,
+              strStartDt: undefined,
+              strEndDt: undefined,
+            }));
           }
         }
         else {
-          setStrStartDate(fmtDate);
+          setDATE((prev) => ({
+            ...prev,
+            strStartDt: fmtDate,
+          }));
         }
       }
       onMonthChange = (month) => {
-        setStrStartDate(new Date(month.getFullYear(), month.getMonth(), 1));
-        setStrEndDate(undefined);
+        setDATE((prev) => ({
+          ...prev,
+          strStartDt: new Date(month.getFullYear(), month.getMonth(), 1),
+          strEndDt: undefined,
+        }));
       }
     };
 
@@ -163,10 +222,16 @@ export const CalendarNode = ({
 
   return (
     <Draggable>
-      <div className={`dayPicker-container ${calendarOpen ? "" : "d-none"}`}>
-        <span className="d-right fw-700 pointer" style={{position: "absolute", right: "15px", top: "10px"}} onClick={() => (
-          setCalendarOpen(false)
-        )}>
+      <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
+        <span className="d-right fw-700 pointer"
+          style={{position: "absolute", right: "15px", top: "10px"}}
+          onClick={() => (
+            setCALENDAR((prev) => ({
+              ...prev,
+              calOpen: false
+            }))
+          )}
+        >
           X
         </span>
         <div className="h-2"></div>

@@ -23,31 +23,36 @@ export const PlanFoodSave = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh: 0,
-    toList:"/plan/food/list"
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, location_date
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh: 0,
+      toList:"/plan/food/list"
+    }
   );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, location_date
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
   );
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
   );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
-  );
-  const {val:calendarStartOpen, set:setCalendarStartOpen} = useStorage(
-    `calendarStartOpen(${PATH})`, false
-  );
-  const {val:calendarEndOpen, set:setCalendarEndOpen} = useStorage(
-    `calendarEndOpen(${PATH})`, false
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -76,24 +81,26 @@ export const PlanFoodSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        plan_dur: strDur,
+        plan_dur: DATE.strDur,
+        plan_schema: "food",
       },
     });
 
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
 
-  })()}, [strDur]);
+  })()}, [DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
-      plan_dur: `${strStartDate} ~ ${strEndDate}`,
+      plan_dur: DATE.strDur,
+      plan_schema: "food",
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = strDate;
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });
@@ -106,7 +113,7 @@ export const PlanFoodSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
     );
   };
 
@@ -149,21 +156,21 @@ export const PlanFoodSave = () => {
         <div>
           <div className="row d-center mb-20">
             <div className="col-3">
-              {dayPicker(calendarStartOpen, setCalendarStartOpen, strStartDate, setStrStartDate)}
+              {dayPicker(calStartOpen, setCalendarStartOpen, DATE.strStartDt, DATE.setStrStartDt)}
               <div className="input-group">
-                <p className={`btn btn-sm ${calendarStartOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarStartOpen(!calendarStartOpen)}>
+                <p className={`btn btn-sm ${calStartOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarStartOpen(!calStartOpen)}>
                   시작일
                 </p>
-                <input type="text" className="form-control" value={strStartDate} readOnly />
+                <input type="text" className="form-control" value={DATE.strStartDt} readOnly />
               </div>
             </div>
             <div className="col-3">
-              {dayPicker(calendarEndOpen, setCalendarEndOpen, strEndDate, setStrEndDate)}
+              {dayPicker(calEndOpen, setCalendarEndOpen, DATE.strEndDt, DATE.setEndDate)}
               <div className="input-group">
-                <p className={`btn btn-sm ${calendarEndOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarEndOpen(!calendarEndOpen)}>
+                <p className={`btn btn-sm ${calEndOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarEndOpen(!calEndOpen)}>
                   종료일
                 </p>
-                <input type="text" className="form-control" value={strEndDate} readOnly />
+                <input type="text" className="form-control" value={DATE.strEndDt} readOnly />
               </div>
             </div>
           </div>
@@ -220,8 +227,8 @@ export const PlanFoodSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={strDate} setStrDate={setStrDate}
+      <ButtonNode calOpen={""} setCalendarOpen={""}
+        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
         STATE={STATE} flowSave={flowSave} navParam={navParam}
         type="save"
       />

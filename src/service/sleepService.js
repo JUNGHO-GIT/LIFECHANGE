@@ -81,25 +81,27 @@ export const dashLine = async (
   };
 
   let finalResult = [];
-  for (let i = 0; i < 7; i++) {
+  for (let i in names) {
+    const date = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
-      sleep_date: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
-    }).lean();
+      sleep_date: date.format("YYYY-MM-DD"),
+    })
+    .lean();
 
     finalResult.push({
-      name: names[i],
+      name: `${names[i]} ${date.format("MM/DD")}`,
       취침: fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_night).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_night)).join(":")
       ),
       기상: fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_morning).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_morning)).join(":")
       ),
       수면: fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_time)).join(":")
       ),
     });
-  }
+  };
 
   return {
     result: finalResult,
@@ -130,22 +132,23 @@ export const dashAvgWeek = async (
     }
   };
 
-  for (let i = 0; i < 7; i++) {
+  for (let i in names) {
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_date: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
-    }).lean();
+    })
+    .lean();
 
     if (findResult) {
       const weekNum = Math.max(moment(findResult.sleep_date).week() - moment(findResult.sleep_date).startOf("month").week() + 1);
       sumSleepStart[weekNum - 1] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_night).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_night)).join(":")
       );
       sumSleepEnd[weekNum - 1] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_morning).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_morning)).join(":")
       );
       sumSleepTime[weekNum - 1] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_time)).join(":")
       );
       countRecords[weekNum - 1]++;
     }
@@ -155,9 +158,9 @@ export const dashAvgWeek = async (
   for (let i = 0; i < 5; i++) {
     finalResult.push({
       name: names[i],
-      취침: sumSleepStart[i] / countRecords[i] || 0,
-      기상: sumSleepEnd[i] / countRecords[i] || 0,
-      수면: sumSleepTime[i] / countRecords[i] || 0,
+      취침: countRecords[i] > 0 ? (sumSleepStart[i] / countRecords[i]).toFixed(1) : "0",
+      기상: countRecords[i] > 0 ? (sumSleepEnd[i] / countRecords[i]).toFixed(1) : "0",
+      수면: countRecords[i] > 0 ? (sumSleepTime[i] / countRecords[i]).toFixed(1) : "0",
     });
   };
 
@@ -198,18 +201,19 @@ export const dashAvgMonth = async (
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_date: m.format("YYYY-MM-DD"),
-    }).lean();
+    })
+    .lean();
 
     if (findResult) {
       const monthNum = m.month();
       sumSleepStart[monthNum] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_night).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_night)).join(":")
       );
       sumSleepEnd[monthNum] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_morning).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_morning)).join(":")
       );
       sumSleepTime[monthNum] += fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item.sleep_time).join(":")
+        findResult?.sleep_section?.map((item) => (item.sleep_time)).join(":")
       );
       countRecords[monthNum]++;
     }
@@ -219,9 +223,9 @@ export const dashAvgMonth = async (
   for (let i = 0; i < 12; i++) {
     finalResult.push({
       name: names[i],
-      취침: sumSleepStart[i] / countRecords[i] || 0,
-      기상: sumSleepEnd[i] / countRecords[i] || 0,
-      수면: sumSleepTime[i] / countRecords[i] || 0,
+      취침: countRecords[i] > 0 ? (sumSleepStart[i] / countRecords[i]).toFixed(1) : "0",
+      기상: countRecords[i] > 0 ? (sumSleepEnd[i] / countRecords[i]).toFixed(1) : "0",
+      수면: countRecords[i] > 0 ? (sumSleepTime[i] / countRecords[i]).toFixed(1) : "0",
     });
   };
 
@@ -254,15 +258,15 @@ export const list = async (
   .sort({ sleep_date: sort })
   .lean();
 
-  let totalCount = 0;
+  let totalCnt = 0;
   const finalResult = findResult.map((sleep) => {
     if (sleep && sleep.sleep_section) {
       let sections = sleep.sleep_section.filter((section) => (
-        part === "전체" ? true : section.sleep_part === part
+        part === "전체" ? true : section?.sleep_part === part
       ));
 
       // 배열 갯수 누적 계산
-      totalCount += sections.length;
+      totalCnt += sections.length;
 
       // section 배열에서 페이지에 맞는 항목만 선택합니다.
       const startIdx = (limit * page - 1) - (limit - 1);
@@ -275,7 +279,7 @@ export const list = async (
   });
 
   return {
-    totalCount: totalCount,
+    totalCnt: totalCnt,
     result: finalResult,
   };
 };
@@ -296,12 +300,13 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
-  const sectionCount = finalResult?.sleep_section?.length || 0;
+  const sectionCnt = finalResult?.sleep_section?.length || 0;
 
   return {
-    sectionCount: sectionCount,
+    sectionCnt: sectionCnt,
     result: finalResult,
   };
 };
@@ -321,7 +326,8 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
   let finalResult;
   if (!findResult) {
@@ -395,7 +401,8 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    }).lean();
+    })
+    .lean();
 
     if (
       (doc) &&
@@ -403,7 +410,8 @@ export const deletes = async (
     ) {
       finalResult = await Sleep.deleteOne({
         _id: doc._id
-      }).lean();
+      })
+    .lean();
     }
   }
 

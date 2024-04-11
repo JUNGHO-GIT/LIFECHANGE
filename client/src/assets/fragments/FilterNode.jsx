@@ -6,19 +6,19 @@ import {workArray} from "../data/WorkArray.jsx";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
-  filter, setFilter, paging, setPaging, type
+  FILTER, setFILTER, PAGING, setPAGING, type
 }) => {
   function selectType() {
     return (
       <div className="mb-3">
         <select className="form-select" id="type" onChange={(e) => (
-          setFilter((prev) => ({
+          setFILTER((prev) => ({
             ...prev,
             type: e.target.value
           }))
         )}>
           {["day", "week", "month", "year", "select"].map((item) => (
-            <option key={item} value={item} selected={filter.type === item}>
+            <option key={item} value={item} selected={FILTER.type === item}>
               {item}
             </option>
           ))}
@@ -30,7 +30,7 @@ export const FilterNode = ({
     return (
       <div className="mb-3">
         <select className="form-select" id="order" onChange={(e) => (
-          setFilter((prev) => ({
+          setFILTER((prev) => ({
             ...prev,
             order: e.target.value
           }))
@@ -49,7 +49,7 @@ export const FilterNode = ({
             ...prev,
             limit: parseInt(e.target.value)
           })),
-          setFilter((prev) => ({
+          setFILTER((prev) => ({
             ...prev,
             limit: parseInt(e.target.value)
           }))
@@ -64,7 +64,7 @@ export const FilterNode = ({
     return (
       <div>
         <select className="form-select" id="foodPart" onChange={(e) => {
-          setFilter({...filter, part: e.target.value});
+          setFILTER({...filter, part: e.target.value});
         }}>
           <option value="전체" selected>전체</option>
           <option value="아침">아침</option>
@@ -79,7 +79,7 @@ export const FilterNode = ({
     return (
       <div>
         <select className="form-select" id="foodPart" onChange={(e) => {
-          setFilter({...filter, part: e.target.value});
+          setFILTER({...filter, part: e.target.value});
         }}>
           <option value="전체" selected>전체</option>
           <option value="아침">아침</option>
@@ -92,13 +92,13 @@ export const FilterNode = ({
   };
   function selectPartMoney () {
     return (
-      <select className="form-control" id="part" value={moneyArray[filter.partIdx].money_part} onChange={(e) => {
+      <select className="form-control" id="part" value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
         const selectedOption = e.target.options[e.target.selectedIndex];
         const idxValue = selectedOption.getAttribute("data-idx");
         const newPartIndex = Number(idxValue);
         const newPartVal = String(e.target.value);
         const newTitleVal = moneyArray[newPartIndex].money_title[0];
-        setFilter((prev) => ({
+        setFILTER((prev) => ({
           ...prev,
           partIdx: newPartIndex,
           part: newPartVal,
@@ -115,13 +115,13 @@ export const FilterNode = ({
   };
   function selectTitleMoney () {
     return (
-      <select className="form-control" id="title" value={filter.title} onChange={(e) => {
-        setFilter((prev) => ({
+      <select className="form-control" id="title" value={FILTER.title} onChange={(e) => {
+        setFILTER((prev) => ({
           ...prev,
           title: e.target.value
         }));
       }}>
-        {moneyArray[filter.partIdx].money_title.map((item, idx) => (
+        {moneyArray[FILTER.partIdx].money_title.map((item, idx) => (
           <option key={idx}>
             {item}
           </option>

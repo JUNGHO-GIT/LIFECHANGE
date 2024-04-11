@@ -23,21 +23,38 @@ export const FoodSave = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh:0,
-    toList:"/food/list",
-    toSave:"/food/save",
-    toSearch:"/food/search",
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh:0,
+      toList:"/food/list",
+      toSave:"/food/save",
+      toSearch:"/food/search",
+    }
   );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -87,7 +104,7 @@ export const FoodSave = () => {
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDateReal(FOOD, setFOOD, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDateReal(FOOD, setFOOD, PATH, DATE, setDATE, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   /* useEffect(() => {(async () => {
@@ -95,13 +112,13 @@ export const FoodSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        food_dur: strDur
+        food_dur: DATE.strDur
       },
     });
 
     setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
-  })()}, [strDur]); */
+  })()}, [DATE.strDur]); */
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -174,11 +191,11 @@ export const FoodSave = () => {
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
       FOOD: FOOD,
-      food_dur: strDur
+      food_dur: DATE.strDur
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = strDate;
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });
@@ -191,7 +208,7 @@ export const FoodSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
     );
   };
 
@@ -336,9 +353,10 @@ export const FoodSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={strDate} setStrDate={setStrDate}
-        STATE={STATE} flowSave={flowSave} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
+        DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE}
+        flowSave={flowSave} navParam={navParam}
         type="save"
       />
     );

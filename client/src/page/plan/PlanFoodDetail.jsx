@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import moment from "moment-timezone";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
@@ -16,7 +15,6 @@ export const PlanFoodDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
@@ -24,20 +22,37 @@ export const PlanFoodDetail = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh:0,
-    toList:"/plan/food/list",
-    toSave:"/plan/food/save"
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date || koreanDate
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh:0,
+      toList:"/plan/food/list",
+      toSave:"/plan/food/save"
+    }
   );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, location_dur
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -61,11 +76,6 @@ export const PlanFoodDetail = () => {
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {
-    alert(JSON.stringify(location));
-  }, []);
-
-  // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_PLAN}/detail`, {
       params: {
@@ -73,10 +83,12 @@ export const PlanFoodDetail = () => {
         user_id: user_id
       },
     });
-
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
-
-  })()}, []);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt,
+    }));
+  })()}, [location_id, user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -88,7 +100,7 @@ export const PlanFoodDetail = () => {
     });
     if (response.data === "success") {
       alert("delete success");
-      STATE.date = strDate;
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });
@@ -101,7 +113,7 @@ export const PlanFoodDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
     );
   };
 
@@ -134,9 +146,8 @@ export const PlanFoodDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={strDate} setStrDate={setStrDate}
-        STATE={STATE} flowSave={""} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
         type="detail"
       />
     );

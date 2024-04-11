@@ -25,19 +25,36 @@ export const PlanSleepSave = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh: 0,
-    toList:"/plan/sleep/list"
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh: 0,
+      toList:"/plan/sleep/list"
+    }
   );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -65,7 +82,7 @@ export const PlanSleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDatePlan(PLAN, setPLAN, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDatePlan(PLAN, setPLAN, PATH, location_date, DATE.strDt, setDATE.DATE.strDt, DATE.strDur, setDATE.strDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -73,25 +90,26 @@ export const PlanSleepSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        plan_dur: strDur,
+        plan_dur: DATE.strDur,
         plan_schema: "sleep",
       },
     });
 
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
 
-  })()}, [strDur]);
+  })()}, [DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
-      plan_dur: strDur,
+      plan_dur: DATE.strDur,
+      plan_schema: "sleep",
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = strDate;
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });
@@ -104,7 +122,7 @@ export const PlanSleepSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
     );
   };
 
@@ -116,10 +134,10 @@ export const PlanSleepSave = () => {
           <DatePicker
             dateFormat="yyyy-MM-dd"
             popperPlacement="bottom"
-            selected={new Date(strDate)}
+            selected={new Date(DATE.strDt)}
             disabled={false}
             onChange={(date) => {
-              setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
+              setDATE.DATE.strDt(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
             }}
           />
         </div>
@@ -136,10 +154,10 @@ export const PlanSleepSave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center mb-20">
-            <div className="col-12">
+          <div className="row d-center">
+            <div className="col-6">
               <div className="input-group">
-                <p className="input-group-text">취침시간</p>
+                <span className="input-group-text">취침시간</span>
                 <TimePicker
                   id="plan_night"
                   name="plan_night"
@@ -161,9 +179,11 @@ export const PlanSleepSave = () => {
                 />
               </div>
             </div>
-            <div className="col-12">
+          </div>
+          <div className="row d-center">
+            <div className="col-6">
               <div className="input-group">
-                <p className="input-group-text">기상시간</p>
+                <span className="input-group-text">기상시간</span>
                 <TimePicker
                   id="plan_morning"
                   name="plan_morning"
@@ -185,9 +205,11 @@ export const PlanSleepSave = () => {
                 />
               </div>
             </div>
-            <div className="col-12">
+          </div>
+          <div className="row d-center">
+            <div className="col-6">
               <div className="input-group">
-                <p className="input-group-text">수면시간</p>
+                <span className="input-group-text">수면시간</span>
                 <TimePicker
                   id="plan_time"
                   name="plan_time"
@@ -206,11 +228,9 @@ export const PlanSleepSave = () => {
       );
     };
     return (
-      <div>
-        <div className="row d-center">
-          <div className="col-12">
-            {sleepNode()}
-          </div>
+      <div className="row d-center">
+        <div className="col-12">
+          {sleepNode()}
         </div>
       </div>
     );
@@ -220,8 +240,8 @@ export const PlanSleepSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={strDate} setStrDate={setStrDate}
+      <ButtonNode calOpen={""} setCalendarOpen={""}
+        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
         STATE={STATE} flowSave={flowSave} navParam={navParam}
         type="save"
       />

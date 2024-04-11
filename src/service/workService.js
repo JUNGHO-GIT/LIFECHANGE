@@ -28,7 +28,7 @@ export const list = async (
   .sort({ work_date: sort })
   .lean();
 
-  let totalCount = 0;
+  let totalCnt = 0;
   const finalResult = findResult.map((work) => {
     if (work && work.work_section) {
       let sections = work.work_section.filter((section) => (
@@ -36,7 +36,7 @@ export const list = async (
       ));
 
       // 배열 갯수 누적 계산
-      totalCount += sections.length;
+      totalCnt += sections.length;
 
       // section 배열에서 페이지에 맞는 항목만 선택합니다.
       const startIdx = (limit * page - 1) - (limit - 1);
@@ -49,7 +49,7 @@ export const list = async (
   });
 
   return {
-    totalCount: totalCount,
+    totalCnt: totalCnt,
     result: finalResult,
   };
 };
@@ -70,12 +70,13 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
-  const sectionCount = finalResult?.work_section?.length || 0;
+  const sectionCnt = finalResult?.work_section?.length || 0;
 
   return {
-    sectionCount: sectionCount,
+    sectionCnt: sectionCnt,
     result: finalResult,
   };
 };
@@ -95,7 +96,8 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
   let finalResult;
   if (!findResult) {
@@ -169,7 +171,8 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    }).lean();
+    })
+    .lean();
 
     if (
       (doc) &&
@@ -177,7 +180,8 @@ export const deletes = async (
     ) {
       finalResult = await Work.deleteOne({
         _id: doc._id
-      }).lean();
+      })
+    .lean();
     }
   }
 

@@ -16,22 +16,27 @@ export const FoodSearch = () => {
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: koreanDate,
-    refresh: 0,
-    toSave:"/food/save",
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:totalCount, set:setTotalCount} = useStorage(
-    `totalCount(${PATH})`, 0
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: koreanDate,
+      refresh: 0,
+      toSave:"/food/save",
+    }
   );
-  const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
       query: "",
       page: 0,
       limit: 10,
+    }
+  );
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
     }
   );
 
@@ -58,32 +63,34 @@ export const FoodSearch = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (filter.query === "") {
+    if (FILTER.query === "") {
       return;
     }
     else {
       flowSearch();
     }
-  }, [filter.page]);
+  }, [FILTER.page]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSearch = async () => {
     const response = await axios.get(`${URL_FOOD}/search`, {
       params: {
         user_id: user_id,
-        filter: filter
+        FILTER: FILTER
       }
     });
     setFOOD((prev) => ({
       ...prev,
       food_section: response.data.result
     }));
-    setTotalCount(response.data.totalCount);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt,
+    }));
   };
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
     function handleStorage (param) {
       localStorage.setItem("food_section", JSON.stringify(param));
       STATE.date = koreanDate;
@@ -131,28 +138,19 @@ export const FoodSearch = () => {
   const searchFood = () => {
     return (
       <div className="d-flex">
-        <input
-          type="text"
-          className="form-control"
-          value={filter.query}
-          onChange={(e) => {
-            setFilter({
-              ...filter,
-              query: e.target.value
-            });
-          }}
-        />
-        <button
-          type="button"
-          className="btn btn-sm btn-secondary ms-2"
-          onClick={() => {
-            setFilter({
-              ...filter,
-              page: 0
-            });
-            flowSearch();
-          }}
-        >
+        <input type="text" className="form-control" value={FILTER.query} onChange={(e) => {
+          setFILTER((prev) => ({
+            ...prev,
+            query: e.target.value
+          }));
+        }}/>
+        <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
+          setFILTER((prev) => ({
+            ...prev,
+            page: 0
+          }));
+          flowSearch();
+        }}>
           Search
         </button>
       </div>
@@ -163,36 +161,32 @@ export const FoodSearch = () => {
   const pagingNode = () => {
     function prevButton() {
       return (
-        <button
-          className={`btn btn-sm btn-primary ms-10 me-10`}
-          disabled={filter.page <= 1}
-          onClick={() => setFilter({
-            ...filter, page: Math.max(1, filter.page - 1)
-          })}
-        >
+        <button className={`btn btn-sm btn-primary ms-10 me-10`} disabled={FILTER.page <= 1}
+        onClick={() => (
+          setFILTER((prev) => ({
+            ...prev,
+            page: Math.max(1, FILTER.page - 1)
+          }))
+        )}>
           이전
         </button>
       );
     };
     function pageNumber() {
       const pages = [];
-      const totalPages = Math.ceil(totalCount / filter.limit);
-      let startPage = Math.max(1, filter.page - 2);
+      const totalPages = Math.ceil(COUNT.totalCnt / FILTER.limit);
+      let startPage = Math.max(1, FILTER.page - 2);
       let endPage = Math.min(startPage + 4, totalPages);
       startPage = Math.max(endPage - 4, 1);
       for (let i = startPage; i <= endPage; i++) {
         pages.push(
-          <button
-            key={i}
-            className={`btn btn-sm btn-primary me-2`}
-            disabled={filter.page === i}
-            onClick={() => (
-              setFilter((prev) => ({
-                ...prev,
-                page: i
-              }))
-            )}
-          >
+          <button key={i} className={`btn btn-sm btn-primary me-2`} disabled={FILTER.page === i}
+          onClick={() => (
+            setFILTER((prev) => ({
+              ...prev,
+              page: i
+            }))
+          )}>
             {i}
           </button>
         );
@@ -201,13 +195,14 @@ export const FoodSearch = () => {
     };
     function nextButton() {
       return (
-        <button
-          className={`btn btn-sm btn-primary ms-10 me-10`}
-          disabled={filter.page >= Math.ceil(totalCount / filter.limit)}
-          onClick={() => setFilter({
-            ...filter, page: Math.min(Math.ceil(totalCount / filter.limit), filter.page + 1)
-          })}
-        >
+        <button className={`btn btn-sm btn-primary ms-10 me-10`}
+        disabled={FILTER.page >= Math.ceil(COUNT.totalCnt / FILTER.limit)}
+        onClick={() => (
+          setFILTER((prev) => ({
+            ...prev,
+            page: Math.min(Math.ceil(COUNT.totalCnt / FILTER.limit), FILTER.page + 1)
+          }))
+        )}>
           다음
         </button>
       );

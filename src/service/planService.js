@@ -54,13 +54,14 @@ export const detail = async (
 export const save = async (
   user_id_param,
   PLAN_param,
-  plan_dur_param
+  plan_dur_param,
+  plan_schema_param
 ) => {
 
   let finalResult;
   let schema;
 
-  if (PLAN_param.plan_schema === "food") {
+  if (plan_schema_param === "food") {
     schema = {
       plan_food: {
         plan_kcal: PLAN_param.plan_food.plan_kcal
@@ -68,7 +69,7 @@ export const save = async (
     };
   }
 
-  if (PLAN_param.plan_schema === "money") {
+  if (plan_schema_param === "money") {
     schema = {
       plan_money: {
         plan_in: PLAN_param.plan_money.plan_in,
@@ -77,7 +78,7 @@ export const save = async (
     };
   }
 
-  if (PLAN_param.plan_schema === "sleep") {
+  if (plan_schema_param === "sleep") {
     schema = {
       plan_sleep: {
         plan_night: PLAN_param.plan_sleep.plan_night,
@@ -87,7 +88,7 @@ export const save = async (
     };
   }
 
-  if (PLAN_param.plan_schema === "work") {
+  if (plan_schema_param === "work") {
     schema = {
       plan_work: {
         plan_count_total: PLAN_param.plan_work.plan_count_total,
@@ -103,7 +104,8 @@ export const save = async (
     user_id: user_id_param,
     plan_schema: PLAN_param.plan_schema,
     plan_dur: plan_dur_param,
-  }).lean();
+  })
+    .lean();
 
   if (!findResult) {
     const createQuery = {
@@ -138,13 +140,17 @@ export const save = async (
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
   _id_param,
-  user_id_param
+  user_id_param,
+  plan_dur_param,
+  plan_schema_param
 ) => {
 
   const updateResult = await Plan.updateOne(
     {
       _id: _id_param,
       user_id: user_id_param,
+      plan_dur: plan_dur_param,
+      plan_schema: plan_schema_param,
     },
     {
       $set: {

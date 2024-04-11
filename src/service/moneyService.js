@@ -49,12 +49,12 @@ export const list = async (
     };
   });
 
-  const totalCount = finalResult.reduce((acc, cur) => (
+  const totalCnt = finalResult.reduce((acc, cur) => (
     acc + cur?.money_section?.length || 0
   ), 0);
 
   return {
-    totalCount: totalCount,
+    totalCnt: totalCnt,
     result: finalResult,
   };
 };
@@ -75,12 +75,13 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
-  const sectionCount = finalResult?.money_section?.length || 0;
+  const sectionCnt = finalResult?.money_section?.length || 0;
 
   return {
-    sectionCount: sectionCount,
+    sectionCnt: sectionCnt,
     result: finalResult,
   };
 };
@@ -100,7 +101,8 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
   let finalResult;
   if (!findResult) {
@@ -174,7 +176,8 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    }).lean();
+    })
+    .lean();
 
     if (
       (doc) &&
@@ -182,7 +185,8 @@ export const deletes = async (
     ) {
       finalResult = await Money.deleteOne({
         _id: doc._id
-      }).lean();
+      })
+    .lean();
     }
   }
 

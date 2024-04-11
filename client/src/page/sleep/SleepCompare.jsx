@@ -20,46 +20,49 @@ export const SleepCompare = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh: 0,
-    toDetail:"/sleep/detail"
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:calendarOpen, set:setCalendarOpen} = useStorage(
-    `calendarOpen(${PATH})`, false
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh: 0,
+      toDetail:"/sleep/detail"
+    }
   );
-  const {val:totalCount, set:setTotalCount} = useStorage(
-    `totalCount(${PATH})`, 0
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
   );
-  const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
       limit: 5
     }
   );
-  const {val:paging, set:setPaging} = useStorage(
+  const {val:PAGING, set:setPAGING} = useStorage(
     `paging(${PATH})`, {
       page: 1,
       limit: 5
     }
   );
-
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, location_date
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, location_date
-  );
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
-  );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 10. return ----------------------------------------------------------------------------------->

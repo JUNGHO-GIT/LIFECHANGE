@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 
 // ------------------------------------------------------------------------------------------------>
 export const useDateReal = (
-  OBJECT, setOBJECT, PATH, location_date, strDate, setStrDate, strDur, setStrDur
+  OBJECT, setOBJECT, DATE, setDATE, PATH, location_date
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -12,18 +12,24 @@ export const useDateReal = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDate(location_date);
-    setStrDur(`${location_date} ~ ${location_date}`);
+    setDATE((prev) => ({
+      ...prev,
+      strDt: location_date,
+      strDur: `${location_date} ~ ${location_date}`,
+    }));
   }, [location_date]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setStrDur(`${strDate} ~ ${strDate}`);
+    setDATE((prev) => ({
+      ...prev,
+      strDur: `${DATE.strDt} ~ ${DATE.strDt}`,
+    }));
     setOBJECT((prev) => ({
       ...prev,
-      [`${strLow}_date`]: strDate
+      [`${strLow}_dur`]: `${DATE.strDt} ~ ${DATE.strDt}`,
     }));
-  }, [strDate]);
+  }, [DATE.strDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -34,8 +40,8 @@ export const useDateReal = (
       const endTime = OBJECT?.work_end;
 
       if (startTime && endTime) {
-        const startDate = new Date(`${strDate}T${startTime}`);
-        const endDate = new Date(`${strDate}T${endTime}`);
+        const startDate = new Date(`${DATE.strDt}T${startTime}`);
+        const endDate = new Date(`${DATE.strDt}T${endTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -57,12 +63,12 @@ export const useDateReal = (
 
     // 2. sleep
     if (strLow === "sleep") {
-      const nightTime = OBJECT?.sleep_section.map((item) => item?.sleep_night)?.toString();
-      const morningTime = OBJECT?.sleep_section.map((item) => item?.sleep_morning)?.toString();
+      const nightTime = OBJECT?.sleep_section.map((item) => (item?.sleep_night));
+      const morningTime = OBJECT?.sleep_section.map((item) => (item?.sleep_morning));
 
       if (nightTime && morningTime) {
-        const startDate = new Date(`${strDate}T${nightTime}`);
-        const endDate = new Date(`${strDate}T${morningTime}`);
+        const startDate = new Date(`${DATE.strDt}T${nightTime}`);
+        const endDate = new Date(`${DATE.strDt}T${morningTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -84,7 +90,8 @@ export const useDateReal = (
       }
     }
   }, [
-    strDate, strLow,
+    strLow,
+    DATE.strDt,
     OBJECT?.work_start,
     OBJECT?.work_end,
     OBJECT?.sleep_section?.map((item) => (item?.sleep_night))?.toString(),

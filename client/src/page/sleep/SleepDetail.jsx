@@ -21,20 +21,37 @@ export const SleepDetail = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh: 0,
-    toList:"/sleep/list",
-    toSave:"/sleep/save"
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh: 0,
+      toList:"/sleep/list",
+      toSave:"/sleep/save"
+    }
   );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -63,13 +80,13 @@ export const SleepDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_dur: strDur
+        sleep_dur: DATE.strDur
       },
     });
 
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
 
-  })()}, [strDur]);
+  })()}, [DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -77,12 +94,12 @@ export const SleepDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        sleep_dur: strDur
+        sleep_dur: DATE.strDur
       },
     });
     if (response.data === "success") {
       alert("delete success");
-      STATE.date = strDate;
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });
@@ -95,7 +112,7 @@ export const SleepDetail = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="detail" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="detail" />
     );
   };
 
@@ -146,8 +163,8 @@ export const SleepDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={strDate} setStrDate={setStrDate}
+      <ButtonNode calOpen={""} setCalendarOpen={""}
+        DATE.strDt={DATE.strDt} setDATE.DATE.strDt={setDATE.DATE.strDt}
         STATE={STATE} flowSave={""} navParam={navParam}
         type="detail"
       />

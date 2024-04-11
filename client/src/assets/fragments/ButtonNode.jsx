@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  calendarOpen, setCalendarOpen, strDate, setStrDate, STATE, flowSave, navParam, type
+  CALENDAR, setCALENDAR, DATE, setDATE, STATE, setSTATE, flowSave, navParam, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -14,17 +14,23 @@ export const ButtonNode = ({
   // 9. button ------------------------------------------------------------------------------------>
   function buttonCalendar () {
     return (
-      <button type="button" className={`btn btn-sm ${calendarOpen ? "btn-danger" : "btn-primary"} m-5`} onClick={() => {
-        setCalendarOpen(!calendarOpen)
+      <button type="button" className={`btn btn-sm ${CALENDAR.calOpen ? "btn-danger" : "btn-primary"} m-5`} onClick={() => {
+        setCALENDAR((prev) => ({
+          ...prev,
+          calOpen: !prev.calOpen,
+        }));
       }}>
-        {calendarOpen ? "x" : "o"}
+        {CALENDAR.calOpen ? "x" : "o"}
       </button>
     );
   };
   function buttonToday () {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        setStrDate(koreanDate);
+        setDATE((prev) => ({
+          ...prev,
+          strDt: koreanDate,
+        }));
         localStorage.clear();
       }}>
         Today
@@ -43,7 +49,10 @@ export const ButtonNode = ({
   function buttonUpdate () {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        STATE.date = strDate;
+        setSTATE((prev) => ({
+          ...prev,
+          date: DATE.strDt,
+        }));
         navParam(STATE.toSave, {
           state: STATE,
         });
@@ -64,8 +73,13 @@ export const ButtonNode = ({
   function buttonList () {
     return (
       <button type="button" className="btn btn-sm btn-secondary me-2" onClick={() => {
-        STATE.date = strDate;
-        navParam(STATE.toList);
+        setSTATE((prev) => ({
+          ...prev,
+          date: DATE.strDt,
+        }));
+        navParam(STATE.toList, {
+          state: STATE,
+        });
       }}>
         List
       </button>

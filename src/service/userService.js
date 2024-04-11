@@ -14,7 +14,8 @@ export const list = async (
   findQuery = {
   };
 
-  findResult = await User.find(findQuery).sort({ _id: -1 }).lean();
+  findResult = await User.find(findQuery).sort({ _id: -1 })
+    .lean();
 
   return findResult;
 };

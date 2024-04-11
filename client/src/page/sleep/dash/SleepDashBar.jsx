@@ -16,11 +16,6 @@ export const DashBar = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine(${PATH})`, ["목표", "실제"]
-  );
-
   // 2-2. useState -------------------------------------------------------------------------------->
   const [DASH, setDASH] = useState([
     {name:"취침", 목표: 0, 실제: 0},
@@ -30,14 +25,12 @@ export const DashBar = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-
     const response = await axios.get(`${URL_SLEEP}/dashBar`, {
       params: {
         user_id: user_id
       },
     });
     setDASH(response.data.result);
-
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->

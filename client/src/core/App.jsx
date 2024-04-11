@@ -47,7 +47,7 @@ import {PlanMoneyList} from "../page/plan/PlanMoneyList.jsx";
 import {PlanMoneySave} from "../page/plan/PlanMoneySave.jsx";
 
 import {PlanSleepList} from "../page/plan/PlanSleepList.jsx";
-/* import {PlanSleepDetail} from "../page/plan/PlanSleepDetail.jsx"; */
+import {PlanSleepDetail} from "../page/plan/PlanSleepDetail.jsx";
 import {PlanSleepSave} from "../page/plan/PlanSleepSave.jsx";
 
 import {PlanWorkList} from "../page/plan/PlanWorkList.jsx";
@@ -112,10 +112,14 @@ const Plan = () => {
       <Route path="/food/list" element={<PlanFoodList />} />
       <Route path="/food/detail" element={<PlanFoodDetail />} />
       <Route path="/food/save" element={<PlanFoodSave />} />
+
       <Route path="/money/list" element={<PlanMoneyList />} />
       <Route path="/money/save" element={<PlanMoneySave />} />
+
       <Route path="/sleep/list" element={<PlanSleepList />} />
+      <Route path="/sleep/detail" element={<PlanSleepDetail />} />
       <Route path="/sleep/save" element={<PlanSleepSave />} />
+
       <Route path="/work/list" element={<PlanWorkList />} />
       <Route path="/work/save" element={<PlanWorkSave />} />
     </Routes>

@@ -7,13 +7,16 @@ import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
-  strDate, setStrDate, type
+  DATE, setDATE, type
 }) => {
 
   function calcDate (days) {
-    const date = new Date(strDate);
+    const date = new Date(DATE.strDt);
     date.setDate(date.getDate() + days);
-    setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
+    setDATE((prev) => ({
+      ...prev,
+      strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+    }));
   };
 
   function picker () {
@@ -24,10 +27,15 @@ export const DateNode = ({
             <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
           </div>
         ) : null}
-        <DatePicker dateFormat="yyyy-MM-dd" popperPlacement="bottom" selected={new Date(strDate)}
-        disabled={type === "save" ? false : true} onChange={(date) => {
-          setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
-        }}/>
+        <DatePicker dateFormat="yyyy-MM-dd" popperPlacement="bottom"
+          selected={new Date(DATE.strDt)} disabled={type === "save" ? false : true}
+          onChange={(date) => {
+            setDATE((prev) => ({
+              ...prev,
+              strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+            }));
+          }}
+        />
         {type === "save" ? (
           <div onClick={() => (calcDate(1))}>
             <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />

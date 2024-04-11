@@ -5,7 +5,6 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import TimePicker from "react-time-picker";
-import moment from "moment-timezone";
 import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
@@ -23,24 +22,36 @@ export const SleepSave = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh: 0,
-    toList:"/sleep/list"
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:sectionCount, set:setSectionCount} = useStorage(
-    `sectionCount(${PATH})`, 0
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh: 0,
+      toList:"/sleep/list"
+    }
   );
-
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
   );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -66,7 +77,7 @@ export const SleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDateReal(SLEEP, setSLEEP, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDateReal(SLEEP, setSLEEP, DATE, setDATE, PATH, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -74,26 +85,26 @@ export const SleepSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        sleep_dur: strDur
+        sleep_dur: DATE.strDur
       },
     });
-
-    setSectionCount(response.data.sectionCount === 0 ? 1 : response.data.sectionCount);
     setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
-
-  })()}, [strDur]);
+    setCOUNT((prev) => ({
+      ...prev,
+      sectionCnt: response.data.sectionCnt
+    }));
+  })()}, [user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-
     const response = await axios.post(`${URL_SLEEP}/save`, {
       user_id: user_id,
       SLEEP: SLEEP,
-      sleep_dur: strDur,
+      sleep_dur: DATE.strDur,
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = strDate;
+      STATE.date = DATE.strDt;
       navParam(STATE.toList, {
         state: STATE
       });
@@ -106,7 +117,7 @@ export const SleepSave = () => {
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="save" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="save" />
     );
   };
 
@@ -191,9 +202,8 @@ export const SleepSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={""} setCalendarOpen={""}
-        strDate={strDate} setStrDate={setStrDate}
-        STATE={STATE} flowSave={flowSave} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
         type="save"
       />
     );

@@ -17,7 +17,7 @@ export const search = async (
   const page = filter_param.page;
 
   let finalResult = [];
-  let totalCount = 0;
+  let totalCnt = 0;
   let serv;
   let gram;
   let servArray = [
@@ -107,12 +107,12 @@ export const search = async (
       });
 
       const count = document.querySelector(".searchResultSummary")?.textContent;
-      totalCount = count ? Math.ceil(parseInt(count.split("중")[0].trim(), 10) / 10) : 0;
+      totalCnt = count ? Math.ceil(parseInt(count.split("중")[0].trim(), 10) / 10) : 0;
     });
   });
 
   return {
-    totalCount: totalCount,
+    totalCnt: totalCnt,
     result: finalResult,
   };
 };
@@ -141,7 +141,7 @@ export const list = async (
   .sort({ food_date: sort })
   .lean();
 
-  let totalCount = 0;
+  let totalCnt = 0;
   const finalResult = findResult.map((food) => {
     if (food && food.food_section) {
       let sections = food.food_section.filter((section) => (
@@ -149,7 +149,7 @@ export const list = async (
       ));
 
       // 배열 갯수 누적 계산
-      totalCount += sections.length;
+      totalCnt += sections.length;
 
       // section 배열에서 페이지에 맞는 항목만 선택합니다.
       const startIdx = (limit * page - 1) - (limit - 1);
@@ -162,7 +162,7 @@ export const list = async (
   });
 
   return {
-    totalCount: totalCount,
+    totalCnt: totalCnt,
     result: finalResult,
   };
 };
@@ -183,12 +183,13 @@ export const detail = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
-  const sectionCount = finalResult?.food_section?.length || 0;
+  const sectionCnt = finalResult?.food_section?.length || 0;
 
   return {
-    sectionCount: sectionCount,
+    sectionCnt: sectionCnt,
     result: finalResult,
   };
 };
@@ -208,7 +209,8 @@ export const save = async (
       $gte: startDay,
       $lte: endDay,
     },
-  }).lean();
+  })
+    .lean();
 
   let finalResult;
   if (!findResult) {
@@ -283,7 +285,8 @@ export const deletes = async (
         $gte: startDay,
         $lte: endDay,
       },
-    }).lean();
+    })
+    .lean();
 
     if (
       (doc) &&
@@ -291,7 +294,8 @@ export const deletes = async (
     ) {
       finalResult = await Food.deleteOne({
         _id: doc._id
-      }).lean();
+      })
+    .lean();
     }
   }
 

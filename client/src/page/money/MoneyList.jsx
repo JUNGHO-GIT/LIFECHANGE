@@ -20,22 +20,33 @@ export const MoneyList = () => {
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
-  const STATE = {
-    id: "",
-    date: "",
-    refresh:0,
-    toDetail:"/money/detail"
-  };
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:calendarOpen, set:setCalendarOpen} = useStorage(
-    `calendarOpen(${PATH})`, false
+  const {val:STATE, set:setSTATE} = useStorage(
+    `STATE(${PATH})`, {
+      id: "",
+      date: "",
+      refresh:0,
+      toDetail:"/money/detail"
+    }
   );
-  const {val:totalCount, set:setTotalCount} = useStorage(
-    `totalCount(${PATH})`, 0
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
+    }
   );
-  const {val:filter, set:setFilter} = useStorage(
-    `filter(${PATH})`, {
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
       order: "asc",
       limit: 5,
       partIdx: 0,
@@ -44,25 +55,17 @@ export const MoneyList = () => {
       title: "전체"
     }
   );
-  const {val:paging, set:setPaging} = useStorage(
+  const {val:PAGING, set:setPAGING} = useStorage(
     `paging(${PATH})`, {
       page: 1,
       limit: 5
     }
   );
-
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:strStartDate, set:setStrStartDate} = useStorage(
-    `strStartDate(${PATH})`, location_date
-  );
-  const {val:strEndDate, set:setStrEndDate} = useStorage(
-    `strEndDate(${PATH})`, location_date
-  );
-  const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
-  );
-  const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+  const {val:COUNT, set: setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -99,21 +102,25 @@ export const MoneyList = () => {
     const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
         user_id: user_id,
-        money_dur: strDur,
-        filter: filter,
-        paging: paging
+        money_dur: DATE.strDur,
+        FILTER: FILTER,
+        PAGING: PAGING
       },
     });
 
-    setTotalCount(response.data.totalCount === 0 ? 1 : response.data.totalCount);
     setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
-  })()}, [strDur, filter, paging]);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt,
+    }));
+
+  })()}, [DATE.strDur, FILTER, PAGING]);
 
   // 4. date -------------------------------------------------------------------------------------->
   const dateNode = () => {
     return (
-      <DateNode strDate={strDate} setStrDate={setStrDate} type="list" />
+      <DateNode DATE={DATE} setDATE={setDATE} type="list" />
     );
   };
 
@@ -162,12 +169,8 @@ export const MoneyList = () => {
   // 6. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => {
     return (
-      <CalendarNode filter={filter} setFilter={setFilter}
-        strDate={strDate} setStrDate={setStrDate}
-        strStartDate={strStartDate} setStrStartDate={setStrStartDate}
-        strEndDate={strEndDate} setStrEndDate={setStrEndDate}
-        strDur={strDur} setStrDur={setStrDur}
-        calendarOpen={calendarOpen} setCalendarOpen={setCalendarOpen}
+      <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+        CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
       />
     );
   };
@@ -175,7 +178,7 @@ export const MoneyList = () => {
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
     return (
-      <PagingNode paging={paging} setPaging={setPaging} totalCount={totalCount}
+      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT}
       />
     );
   };
@@ -183,7 +186,7 @@ export const MoneyList = () => {
   // 8. filter ------------------------------------------------------------------------------------>
   const filterNode = () => {
     return (
-      <FilterNode filter={filter} setFilter={setFilter} paging={paging} setPaging={setPaging}
+      <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
         type={"money"}
       />
     );
@@ -192,10 +195,8 @@ export const MoneyList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode calendarOpen={calendarOpen} setCalendarOpen={setCalendarOpen}
-        strDate={strDate} setStrDate={setStrDate}
-        STATE={STATE} flowSave={""} navParam={navParam}
-        type={"list"}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam} type={"list"}
       />
     );
   };
