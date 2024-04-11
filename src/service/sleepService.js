@@ -3,16 +3,19 @@
 import mongoose from "mongoose";
 import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
+import {Plan} from "../schema/Plan.js"
 
 // 0-1. dash(bar) --------------------------------------------------------------------------------->
 export const dashBar = async (
   user_id_param
 ) => {
 
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+
   const dataFields = {
-    "취침": { plan: "sleep_night", real: "sleep_night" },
-    "기상": { plan: "sleep_morning", real: "sleep_morning" },
-    "수면": { plan: "sleep_time", real: "sleep_time" }
+    "취침": { plan: "plan_night", real: "sleep_night" },
+    "기상": { plan: "plan_morning", real: "sleep_morning" },
+    "수면": { plan: "plan_time", real: "sleep_time" }
   };
 
   const fmtData = (data) => {
@@ -27,21 +30,33 @@ export const dashBar = async (
 
   let finalResult = [];
   for (let key in dataFields) {
-    const findResult = await Sleep.findOne({
+    const findResultPlan = await Plan.findOne({
       user_id: user_id_param,
-      sleep_date: moment().tz("Asia/Seoul").format("YYYY-MM-DD"),
-    }).lean();
+      plan_schema: "food",
+      plan_dur: `${koreanDate} ~ ${koreanDate}`
+    })
+    .lean();
+    const findResultReal = await Sleep.findOne({
+      user_id: user_id_param,
+      sleep_date: koreanDate
+    })
+    .lean();
 
     finalResult.push({
       name: key,
       목표: fmtData(
-        findResult?.sleep_plan?.sleep_section?.map((item) => item[dataFields[key].plan]).join(":")
+        findResultPlan?.plan_sleep?.map((item) => (
+          item[dataFields[key].plan]
+        ))
       ),
       실제: fmtData(
-        findResult?.sleep_real?.sleep_section?.map((item) => item[dataFields[key].real]).join(":")
+        findResultReal?.sleep_section?.map((item) => (
+          item[dataFields[key].real]
+        ))
+        .join(":")
       ),
     });
-  }
+  };
 
   return {
     result: finalResult,

@@ -26,12 +26,19 @@ export const linkArray = [
     label: "Plan",
     items: [
       {to: "/plan/list/food", label: "PlanListFood"},
+      {to: "/plan/detail/food", label: "PlanDetailFood"},
       {to: "/plan/save/food", label: "PlanSaveFood"},
+
       {to: "/plan/list/money", label: "PlanListMoney"},
+      {to: "/plan/detail/money", label: "PlanDetailMoney"},
       {to: "/plan/save/money", label: "PlanSaveMoney"},
+
       {to: "/plan/list/sleep", label: "PlanListSleep"},
+      {to: "/plan/detail/sleep", label: "PlanDetailSleep"},
       {to: "/plan/save/sleep", label: "PlanSaveSleep"},
+
       {to: "/plan/list/work", label: "PlanListWork"},
+      {to: "/plan/detail/work", label: "PlanDetailWork"},
       {to: "/plan/save/work", label: "PlanSaveWork"},
     ]
   },

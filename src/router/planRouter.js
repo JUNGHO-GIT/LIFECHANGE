@@ -30,8 +30,7 @@ planRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
-      req.query.user_id,
-      req.query.plan_dur
+      req.query.user_id
     );
     if (result) {
       res.send(result);
@@ -72,8 +71,7 @@ planRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
       req.query._id,
-      req.query.user_id,
-      req.query.plan_dur
+      req.query.user_id
     );
     if (result) {
       res.send("success");

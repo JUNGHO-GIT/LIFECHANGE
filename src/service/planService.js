@@ -32,20 +32,14 @@ export const list = async (
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
   _id_param,
-  user_id_param,
-  plan_dur_param
+  user_id_param
 ) => {
-
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
   const finalResult = await Plan.findOne({
     _id: _id_param === "" ? { $exists: true } : _id_param,
-    user_id: user_id_param,
-    plan_date: {
-      $gte: startDay,
-      $lte: endDay,
-    },
-  }).lean();
+    user_id: user_id_param
+  })
+  .lean();
 
   return {
     result: finalResult,
@@ -138,28 +132,17 @@ export const save = async (
 };
 
 // 4. deletes ------------------------------------------------------------------------------------->
-/* export const deletes = async (
+export const deletes = async (
   _id_param,
-  user_id_param,
-  plan_dur_param
+  user_id_param
 ) => {
-
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
   const updateResult = await Plan.updateOne(
     {
+      _id: _id_param,
       user_id: user_id_param,
-      plan_date: {
-        $gte: startDay,
-        $lte: endDay,
-      },
     },
     {
-      $pull: {
-        plan_section: {
-          _id: _id_param
-        },
-      },
       $set: {
         plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
@@ -169,29 +152,26 @@ export const save = async (
         "elem._id": _id_param
       }],
     }
-  ).lean();
+  )
+  .lean();
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
     const doc = await Plan.findOne({
-      user_id: user_id_param,
-      plan_date: {
-        $gte: startDay,
-        $lte: endDay,
-      },
-    }).lean();
+      _id: _id_param,
+      user_id: user_id_param
+    })
+    .lean();
 
-    if (
-      (doc) &&
-      (!doc?.plan_section || doc?.plan_section?.length === 0)
-    ) {
+    if (doc) {
       finalResult = await Plan.deleteOne({
         _id: doc._id
-      }).lean();
+      })
+      .lean();
     }
   }
 
   return {
     result: finalResult
   };
-}; */
+};

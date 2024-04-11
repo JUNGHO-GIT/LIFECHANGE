@@ -94,7 +94,9 @@ export const SleepSave = () => {
     if (response.data === "success") {
       alert("Save successfully");
       STATE.date = strDate;
-      navParam(STATE.toList);
+      navParam(STATE.toList, {
+        state: STATE
+      });
     }
     else {
       alert(`${response.data}error`);

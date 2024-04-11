@@ -118,7 +118,12 @@ export const PlanListFood = () => {
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.plan_dur}</td>
+                <td onClick={() => {
+                  STATE.id = item._id;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>{item.plan_dur}</td>
                 <td>{item.plan_food.plan_kcal}</td>
               </tr>
             </React.Fragment>

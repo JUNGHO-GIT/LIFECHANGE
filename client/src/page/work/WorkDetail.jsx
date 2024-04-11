@@ -100,7 +100,9 @@ export const WorkDetail = () => {
     if (response.data === "success") {
       alert("delete success");
       STATE.date = strDate;
-      navParam(STATE.toList);
+      navParam(STATE.toList, {
+        state: STATE
+      });
     }
     else {
       alert(`${response.data}`);

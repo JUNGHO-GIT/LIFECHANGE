@@ -1,9 +1,10 @@
-// SleepDetail.jsx
+// PlanDetailFood.jsx
 
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
+import moment from "moment-timezone";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
@@ -11,73 +12,78 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDetail = () => {
+export const PlanDetailFood = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id.toString();
+  const location_id = location?.state?.id;
+  const location_dur = location?.state?.dur;
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
   const STATE = {
     id: "",
     date: "",
-    refresh: 0,
-    toList:"/sleep/list",
-    toSave:"/sleep/save"
+    refresh:0,
+    toList:"/plan/list/food",
+    toSave:"/plan/save/food"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strDate, set:setStrDate} = useStorage(
-    `strDate(${PATH})`, location_date
+    `strDate(${PATH})`, location_date || koreanDate
   );
   const {val:strDur, set:setStrDur} = useStorage(
-    `strDur(${PATH})`, `${location_date} ~ ${location_date}`
+    `strDur(${PATH})`, location_dur
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
+  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
-    sleep_date: "",
-    sleep_section: [{
-      sleep_night: "",
-      sleep_morning: "",
-      sleep_time: "",
-    }],
+    plan_number: 0,
+    plan_dur: "",
+    plan_schema: "food",
+    plan_food: {
+      plan_kcal: "",
+    }
   });
-  const [SLEEP, setSLEEP] = useState({
+  const [PLAN, setPLAN] = useState({
     _id: "",
-    sleep_date: "",
-    sleep_section: [{
-      sleep_night: "",
-      sleep_morning: "",
-      sleep_time: "",
-    }],
+    plan_number: 0,
+    plan_dur: "",
+    plan_schema: "food",
+    plan_food: {
+      plan_kcal: "",
+    }
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {
+    alert(JSON.stringify(location));
+  }, []);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/detail`, {
+    const response = await axios.get(`${URL_PLAN}/detail`, {
       params: {
         _id: location_id,
-        user_id: user_id,
-        sleep_dur: strDur
+        user_id: user_id
       },
     });
 
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
 
-  })()}, [strDur]);
+  })()}, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_SLEEP}/delete`, {
+    const response = await axios.delete(`${URL_PLAN}/delete`, {
       params: {
         _id: id,
-        user_id: user_id,
-        sleep_dur: strDur
+        user_id: user_id
       },
     });
     if (response.data === "success") {
@@ -105,38 +111,20 @@ export const SleepDetail = () => {
       <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
-            <th>날짜</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
+            <th>기간</th>
+            <th>칼로리</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td className="fs-20 pt-20">
-              {SLEEP.sleep_date}
+            <td>{PLAN.plan_dur}</td>
+            <td>{PLAN.plan_food.plan_kcal}</td>
+            <td>
+              <button className="btn btn-sm btn-danger"
+                onClick={() => flowDelete(PLAN._id)}
+              >삭제</button>
             </td>
-            {SLEEP?.sleep_section.map((item, index) => (
-              <React.Fragment key={index}>
-                <td className="fs-20 pt-20">
-                  {item.sleep_night}
-                </td>
-                <td className="fs-20 pt-20">
-                  {item.sleep_morning}
-                </td>
-                <td className="fs-20 pt-20">
-                  {item.sleep_time}
-                </td>
-                <td className="fs-20 pt-20">
-                  <button type="button" className="btn btn-sm btn-danger" onClick={() => (
-                    flowDelete(item._id)
-                  )}>
-                    X
-                  </button>
-                </td>
-              </React.Fragment>
-            ))}
           </tr>
         </tbody>
       </table>

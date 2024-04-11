@@ -6,43 +6,56 @@ import {incrementSeq} from "./Counter.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-
-  // 1. id
-  _id : {
-    type : mongoose.Schema.Types.ObjectId,
-    required : false
+  user_id: {
+    type: String,
+    required: true
   },
   user_number : {
     type : Number,
     unique : true
-  },
-  user_id : {
-    type : String,
-    required : false
   },
   user_pw : {
     type : String,
     required : false
   },
 
-  // 3. date
-  user_regdate : {
+  user_email: {
     type : String,
-    default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-    },
     required : false
   },
-  user_update : {
+  user_phone: {
     type : String,
-    default : () => {
-      return moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-    },
     required : false
+  },
+
+  user_sex: {
+    type : String,
+    required : false
+  },
+  user_age: {
+    type : String,
+    required : false
+  },
+  user_height: {
+    type : String,
+    required : false
+  },
+  user_weight: {
+    type : String,
+    required : false
+  },
+
+  user_regdate: {
+    type: String,
+    required: false
+  },
+  user_update: {
+    type: String,
+    required: false
   }
 });
 
-// 2. counter ------------------------------------------------------------------------------------->
+// 3. counter ------------------------------------------------------------------------------------->
 schema.pre("save", async function(next) {
   if (this.isNew) {
     this.user_number = await incrementSeq("user_number", "User");
@@ -50,7 +63,7 @@ schema.pre("save", async function(next) {
   next();
 });
 
-// 3. model --------------------------------------------------------------------------------------->
+// 5. model --------------------------------------------------------------------------------------->
 export const User = mongoose.model(
   "User", schema
 );
