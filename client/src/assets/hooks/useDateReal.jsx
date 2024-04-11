@@ -1,9 +1,9 @@
-// useDate.jsx
+// useDateReal.jsx
 
 import React, { useEffect } from "react";
 
 // ------------------------------------------------------------------------------------------------>
-export const useDate = (
+export const useDateReal = (
   OBJECT, setOBJECT, PATH, location_date, strDate, setStrDate, strDur, setStrDur
 ) => {
 

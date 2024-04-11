@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import axios from "axios";
 import moment from "moment-timezone";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
@@ -72,7 +72,7 @@ export const MoneySave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(MONEY, setMONEY, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDateReal(MONEY, setMONEY, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

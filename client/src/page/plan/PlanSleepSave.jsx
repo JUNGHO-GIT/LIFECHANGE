@@ -3,8 +3,8 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../assets/hooks/useDate.jsx";
-import {DayPicker} from "react-day-picker";
+import {useDatePlan} from "../../assets/hooks/useDatePlan.jsx";
+import DatePicker from "react-datepicker";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import {ko} from "date-fns/locale";
@@ -31,11 +31,6 @@ export const PlanSleepSave = () => {
     refresh: 0,
     toList:"/plan/sleep/list"
   };
-
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:calendarOpen, set:setCalendarOpen} = useStorage(
-    `calendarOpen(${PATH})`, false
-  );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:strDate, set:setStrDate} = useStorage(
@@ -70,7 +65,7 @@ export const PlanSleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(PLAN, setPLAN, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDatePlan(PLAN, setPLAN, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -115,31 +110,16 @@ export const PlanSleepSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function dayPicker (isOpen, setOpen, selectedDate, setSelectedDate) {
+    function datePicker () {
       return (
-        <div className={`dayPicker-container ${isOpen ? "" : "d-none"}`}>
-          <span className="d-right fw-700 pointer" style={{position: "absolute", right: "15px", top: "10px"}} onClick={() => setOpen(false)}>
-            X
-          </span>
-          <div className="h-2"></div>
-          <DayPicker
-            weekStartsOn={1}
-            showOutsideDays={true}
-            locale={ko}
-            modifiersClassNames={{
-              selected:"selected", disabled:"disabled", outside:"outside", inside:"inside",
-            }}
-            mode="single"
-            selected={selectedDate}
-            month={selectedDate}
-            onDayClick={(day) => {
-              const selectedDay = new Date(day);
-              const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
-              setSelectedDate(fmtDate);
-              setOpen(false);
-            }}
-            onMonthChange={(month) => {
-              setSelectedDate(new Date(month.getFullYear(), month.getMonth(), 1));
+        <div className="d-inline-flex">
+          <DatePicker
+            dateFormat="yyyy-MM-dd"
+            popperPlacement="bottom"
+            selected={new Date(strDate)}
+            disabled={false}
+            onChange={(date) => {
+              setStrDate(moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"));
             }}
           />
         </div>
@@ -150,12 +130,9 @@ export const PlanSleepSave = () => {
         <div>
           <div className="row d-center mb-20">
             <div className="col-12">
-              {dayPicker(calendarOpen, setCalendarOpen, strDate, setStrDate)}
               <div className="input-group">
-                <p className={`btn btn-sm ${calendarOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarOpen(!calendarOpen)}>
-                  날짜
-                </p>
-                <input type="text" className="form-control" value={strDate} readOnly />
+                <p className="input-group-text">날짜</p>
+                {datePicker()}
               </div>
             </div>
           </div>

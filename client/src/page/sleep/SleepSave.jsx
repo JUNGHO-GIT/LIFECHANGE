@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import TimePicker from "react-time-picker";
 import moment from "moment-timezone";
 import axios from "axios";
@@ -66,7 +66,7 @@ export const SleepSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(SLEEP, setSLEEP, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDateReal(SLEEP, setSLEEP, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

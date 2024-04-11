@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -87,7 +87,7 @@ export const FoodSave = () => {
   );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(FOOD, setFOOD, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDateReal(FOOD, setFOOD, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   /* useEffect(() => {(async () => {

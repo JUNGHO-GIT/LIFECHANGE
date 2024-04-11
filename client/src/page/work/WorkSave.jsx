@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useDateReal} from "../../assets/hooks/useDateReal.jsx";
 import TimePicker from "react-time-picker";
 import axios from "axios";
 import {workPartArray, workTitleArray} from "../../assets/data/WorkArray.jsx";
@@ -82,7 +82,7 @@ export const WorkSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
+  useDateReal(WORK, setWORK, PATH, location_date, strDate, setStrDate, strDur, setStrDur);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
