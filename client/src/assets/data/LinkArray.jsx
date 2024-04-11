@@ -25,21 +25,21 @@ export const linkArray = [
   {
     label: "Plan",
     items: [
-      {to: "/plan/list/food", label: "PlanListFood"},
-      {to: "/plan/detail/food", label: "PlanDetailFood"},
-      {to: "/plan/save/food", label: "PlanSaveFood"},
+      {to: "/plan/food/list", label: "PlanFoodList"},
+      {to: "/plan/food/detail", label: "PlanFoodDetail"},
+      {to: "/plan/food/save", label: "PlanFoodSave"},
 
-      {to: "/plan/list/money", label: "PlanListMoney"},
-      {to: "/plan/detail/money", label: "PlanDetailMoney"},
-      {to: "/plan/save/money", label: "PlanSaveMoney"},
+      {to: "/plan/money/list", label: "PlanMoneyList"},
+      {to: "/plan/money/detail", label: "PlanMoneyDetail"},
+      {to: "/plan/money/save", label: "PlanMoneySave"},
 
-      {to: "/plan/list/sleep", label: "PlanListSleep"},
-      {to: "/plan/detail/sleep", label: "PlanDetailSleep"},
-      {to: "/plan/save/sleep", label: "PlanSaveSleep"},
+      {to: "/plan/sleep/list", label: "PlanSleepList"},
+      {to: "/plan/sleep/detail", label: "PlanSleepDetail"},
+      {to: "/plan/sleep/save", label: "PlanSleepSave"},
 
-      {to: "/plan/list/work", label: "PlanListWork"},
-      {to: "/plan/detail/work", label: "PlanDetailWork"},
-      {to: "/plan/save/work", label: "PlanSaveWork"},
+      {to: "/plan/work/list", label: "PlanWorkList"},
+      {to: "/plan/work/detail", label: "PlanWorkDetail"},
+      {to: "/plan/work/save", label: "PlanWorkSave"},
     ]
   },
   {

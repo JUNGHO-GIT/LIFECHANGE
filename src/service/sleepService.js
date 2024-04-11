@@ -32,7 +32,7 @@ export const dashBar = async (
   for (let key in dataFields) {
     const findResultPlan = await Plan.findOne({
       user_id: user_id_param,
-      plan_schema: "food",
+      plan_schema: "sleep",
       plan_dur: `${koreanDate} ~ ${koreanDate}`
     })
     .lean();
@@ -45,9 +45,7 @@ export const dashBar = async (
     finalResult.push({
       name: key,
       목표: fmtData(
-        findResultPlan?.plan_sleep?.map((item) => (
-          item[dataFields[key].plan]
-        ))
+        findResultPlan?.plan_sleep?.[dataFields[key].plan]
       ),
       실제: fmtData(
         findResultReal?.sleep_section?.map((item) => (

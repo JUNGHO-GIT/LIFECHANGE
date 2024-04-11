@@ -1,18 +1,10 @@
 // useDate.jsx
 
 import React, { useEffect } from "react";
-import { useStorage } from "./useStorage.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const useDate = (
-  OBJECT,
-  setOBJECT,
-  PATH,
-  location_date,
-  strDate,
-  setStrDate,
-  strDur,
-  setStrDur
+  OBJECT, setOBJECT, PATH, location_date, strDate, setStrDate, strDur, setStrDur
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -20,6 +12,7 @@ export const useDate = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
+    alert(PATH);
     setStrDate(location_date);
     setStrDur(`${location_date} ~ ${location_date}`);
   }, [location_date]);

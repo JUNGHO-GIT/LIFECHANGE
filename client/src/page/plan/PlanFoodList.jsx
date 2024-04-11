@@ -1,4 +1,4 @@
-// PlanListWork.jsx
+// PlanFoodList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanListWork = () => {
+export const PlanFoodList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
@@ -24,7 +24,7 @@ export const PlanListWork = () => {
     id: "",
     date: "",
     refresh:0,
-    toDetail:"/plan/detail/work"
+    toDetail:"/plan/food/detail"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -38,7 +38,7 @@ export const PlanListWork = () => {
     `filter(${PATH})`, {
       order: "asc",
       limit: 5,
-      schema: "work",
+      schema: "food",
     }
   );
   const {val:paging, set:setPaging} = useStorage(
@@ -67,27 +67,19 @@ export const PlanListWork = () => {
     _id: "",
     plan_number: 0,
     plan_dur: "",
-    plan_schema: "work",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
+    plan_schema: "food",
+    plan_food: {
+      plan_kcal: "",
+    }
   }]);
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
     plan_dur: "",
-    plan_schema: "work",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
+    plan_schema: "food",
+    plan_food: {
+      plan_kcal: "",
+    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -119,23 +111,20 @@ export const PlanListWork = () => {
         <thead className="table-primary">
           <tr>
             <th>기간</th>
-            <th>목표 운동 횟수</th>
-            <th>목표 유산소 시간</th>
-            <th>목표 운동 이름</th>
-            <th>목표 중량</th>
-            <th>목표 반복 횟수</th>
+            <th>칼로리</th>
           </tr>
         </thead>
         <tbody>
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.plan_dur}</td>
-                <td>{item.plan_work.plan_count_total}</td>
-                <td>{item.plan_work.plan_cardio_time}</td>
-                <td>{item.plan_work.plan_score_name}</td>
-                <td>{item.plan_work.plan_score_kg}</td>
-                <td>{item.plan_work.plan_score_rep}</td>
+                <td onClick={() => {
+                  STATE.id = item._id;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>{item.plan_dur}</td>
+                <td>{item.plan_food.plan_kcal}</td>
               </tr>
             </React.Fragment>
           ))}

@@ -30,7 +30,9 @@ planRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
-      req.query.user_id
+      req.query.user_id,
+      req.query.plan_dur,
+      req.query.plan_schema
     );
     if (result) {
       res.send(result);

@@ -38,21 +38,21 @@ import {MoneyList} from "../page/money/MoneyList.jsx";
 import {MoneyDetail} from "../page/money/MoneyDetail.jsx";
 import {MoneySave} from "../page/money/MoneySave.jsx";
 
-import {PlanListFood} from "../page/plan/PlanListFood.jsx";
-import {PlanDetailFood} from "../page/plan/PlanDetailFood.jsx";
-import {PlanSaveFood} from "../page/plan/PlanSaveFood.jsx";
+import {PlanFoodList} from "../page/plan/PlanFoodList.jsx";
+import {PlanFoodDetail} from "../page/plan/PlanFoodDetail.jsx";
+import {PlanFoodSave} from "../page/plan/PlanFoodSave.jsx";
 
-import {PlanListMoney} from "../page/plan/PlanListMoney.jsx";
-/* import {PlanDetailMoney} from "../page/plan/PlanDetailMoney.jsx"; */
-import {PlanSaveMoney} from "../page/plan/PlanSaveMoney.jsx";
+import {PlanMoneyList} from "../page/plan/PlanMoneyList.jsx";
+/* import {PlanMoneyDetail} from "../page/plan/PlanMoneyDetail.jsx"; */
+import {PlanMoneySave} from "../page/plan/PlanMoneySave.jsx";
 
-import {PlanListSleep} from "../page/plan/PlanListSleep.jsx";
-/* import {PlanDetailSleep} from "../page/plan/PlanDetailSleep.jsx"; */
-import {PlanSaveSleep} from "../page/plan/PlanSaveSleep.jsx";
+import {PlanSleepList} from "../page/plan/PlanSleepList.jsx";
+/* import {PlanSleepDetail} from "../page/plan/PlanSleepDetail.jsx"; */
+import {PlanSleepSave} from "../page/plan/PlanSleepSave.jsx";
 
-import {PlanListWork} from "../page/plan/PlanListWork.jsx";
-/* import {PlanDetailWork} from "../page/plan/PlanDetailWork.jsx"; */
-import {PlanSaveWork} from "../page/plan/PlanSaveWork.jsx";
+import {PlanWorkList} from "../page/plan/PlanWorkList.jsx";
+/* import {PlanWorkDetail} from "../page/plan/PlanWorkDetail.jsx"; */
+import {PlanWorkSave} from "../page/plan/PlanWorkSave.jsx";
 
 import {SleepDash} from "../page/sleep/dash/SleepDash.jsx";
 import {SleepCompare} from "../page/sleep/SleepCompare.jsx";
@@ -109,15 +109,15 @@ const Money = () => {
 const Plan = () => {
   return (
     <Routes>
-      <Route path="/list/food" element={<PlanListFood />} />
-      <Route path="/detail/food" element={<PlanDetailFood />} />
-      <Route path="/save/food" element={<PlanSaveFood />} />
-      <Route path="/list/money" element={<PlanListMoney />} />
-      <Route path="/save/money" element={<PlanSaveMoney />} />
-      <Route path="/list/sleep" element={<PlanListSleep />} />
-      <Route path="/save/sleep" element={<PlanSaveSleep />} />
-      <Route path="/list/work" element={<PlanListWork />} />
-      <Route path="/save/work" element={<PlanSaveWork />} />
+      <Route path="/list/food" element={<PlanFoodList />} />
+      <Route path="/detail/food" element={<PlanFoodDetail />} />
+      <Route path="/save/food" element={<PlanFoodSave />} />
+      <Route path="/list/money" element={<PlanMoneyList />} />
+      <Route path="/save/money" element={<PlanMoneySave />} />
+      <Route path="/list/sleep" element={<PlanSleepList />} />
+      <Route path="/save/sleep" element={<PlanSleepSave />} />
+      <Route path="/list/work" element={<PlanWorkList />} />
+      <Route path="/save/work" element={<PlanWorkSave />} />
     </Routes>
   );
 };

@@ -1,4 +1,4 @@
-// PlanDetailFood.jsx
+// PlanFoodDetail.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -12,7 +12,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanDetailFood = () => {
+export const PlanFoodDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
@@ -28,8 +28,8 @@ export const PlanDetailFood = () => {
     id: "",
     date: "",
     refresh:0,
-    toList:"/plan/list/food",
-    toSave:"/plan/save/food"
+    toList:"/plan/food/list",
+    toSave:"/plan/food/save"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

@@ -1,4 +1,4 @@
-// PlanListMoney.jsx
+// PlanMoneyList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanListMoney = () => {
+export const PlanMoneyList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
@@ -24,7 +24,7 @@ export const PlanListMoney = () => {
     id: "",
     date: "",
     refresh:0,
-    toDetail:"/plan/detail/money"
+    toDetail:"/plan/money/detail"
   };
 
   // 2-1. useState -------------------------------------------------------------------------------->

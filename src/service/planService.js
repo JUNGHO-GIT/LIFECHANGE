@@ -32,12 +32,16 @@ export const list = async (
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
   _id_param,
-  user_id_param
+  user_id_param,
+  plan_dur_param,
+  plan_schema_param
 ) => {
 
   const finalResult = await Plan.findOne({
-    _id: _id_param === "" ? { $exists: true } : _id_param,
-    user_id: user_id_param
+    _id: _id_param === "" ? {$exists:true} : _id_param,
+    user_id: user_id_param,
+    plan_dur: plan_dur_param,
+    plan_schema: plan_schema_param,
   })
   .lean();
 
