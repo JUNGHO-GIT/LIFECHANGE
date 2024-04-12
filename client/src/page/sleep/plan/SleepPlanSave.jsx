@@ -34,10 +34,33 @@ export const SleepPlanSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day",
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
+  const {val:PAGING, set:setPAGING} = useStorage(
+    `PAGING(${PATH})`, {
+      page: 1,
+      limit: 5
+    }
+  );
+  const {val:COUNT, set:setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
     }
   );
   const {val:CALENDAR, set:setCALENDAR} = useStorage(
@@ -45,12 +68,6 @@ export const SleepPlanSave = () => {
       calStartOpen: false,
       calEndOpen: false,
       calOpen: false,
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
     }
   );
 
@@ -64,9 +81,7 @@ export const SleepPlanSave = () => {
     sleep_plan_morning: "",
     sleep_plan_time: "",
   };
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState({
-    ...SLEEP_PLAN_DEFAULT
-  });
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(DATE, setDATE, location_date);
@@ -118,69 +133,29 @@ export const SleepPlanSave = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
 
-    // 1. startNode
-    function startNode () {
-      return (
-        <div className="input-group">
-          <span className="input-group-text">시작일</span>
-          <DatePicker
-            dateFormat="yyyy-MM-dd"
-            popperPlacement="bottom"
-            selected={new Date(DATE.strStartDt)}
-            disabled={false}
-            onChange={(date) => {
-              setDATE((prev) => ({
-                ...prev,
-                strStartDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-              }));
-            }}
-          >
-          </DatePicker>
-        </div>
-      );
-    };
-
-    // 2. endNode
-    function endNode () {
-      return (
-        <div className="input-group">
-          <span className="input-group-text">종료일</span>
-          <DatePicker
-            dateFormat="yyyy-MM-dd"
-            popperPlacement="bottom"
-            selected={new Date(DATE.strEndDt)}
-            disabled={false}
-            onChange={(date) => {
-              setDATE((prev) => ({
-                ...prev,
-                strEndDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-              }));
-            }}
-          >
-          </DatePicker>
-        </div>
-      );
-    };
-
     // 3. nowNode
     function nowNode () {
       return (
-        <div className="input-group d-center">
-          <span className="input-group-text">날짜</span>
-          <DatePicker
-            dateFormat="yyyy-MM-dd"
-            popperPlacement="bottom"
-            className="form-control"
-            selected={new Date(DATE.strDt)}
-            disabled={false}
-            onChange={(date) => {
-              setDATE((prev) => ({
-                ...prev,
-                strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-              }));
-            }}
-          >
-          </DatePicker>
+        <div className="row d-center">
+          <div className="col-12">
+            <div className="input-group d-center">
+              <span className="input-group-text">날짜</span>
+              <DatePicker
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom"
+                className="form-control"
+                selected={new Date(DATE.strDt)}
+                disabled={false}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                  }));
+                }}
+              >
+              </DatePicker>
+            </div>
+          </div>
         </div>
       );
     };

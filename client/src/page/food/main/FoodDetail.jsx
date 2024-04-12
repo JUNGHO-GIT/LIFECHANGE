@@ -31,10 +31,33 @@ export const FoodDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day",
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
+  const {val:PAGING, set:setPAGING} = useStorage(
+    `PAGING(${PATH})`, {
+      page: 1,
+      limit: 5
+    }
+  );
+  const {val:COUNT, set:setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
     }
   );
   const {val:CALENDAR, set:setCALENDAR} = useStorage(
@@ -42,12 +65,6 @@ export const FoodDetail = () => {
       calStartOpen: false,
       calEndOpen: false,
       calOpen: false,
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
     }
   );
 

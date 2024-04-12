@@ -21,6 +21,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
   money_plan_in: {
     type: String,
     required: false
@@ -29,6 +30,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
   money_plan_regdate: {
     type: String,
     required: false

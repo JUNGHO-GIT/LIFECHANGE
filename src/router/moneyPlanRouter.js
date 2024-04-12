@@ -32,8 +32,7 @@ moneyPlanRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.money_plan_dur,
-      req.query.FILTER,
+      req.query.money_plan_dur
     );
     if (result) {
       res.send(result);
@@ -54,8 +53,7 @@ moneyPlanRouter.post("/save", async (req, res) => {
     const result = await service.save (
       req.body.user_id,
       req.body.MONEY_PLAN,
-      req.body.money_plan_dur,
-      req.body.FILTER,
+      req.body.money_plan_dur
     );
     if (result) {
       res.send("success");
@@ -76,8 +74,7 @@ moneyPlanRouter.delete("/delete", async (req, res) => {
     const result = await service.deletes(
       req.query._id,
       req.query.user_id,
-      req.query.money_plan_dur,
-      req.query.FILTER,
+      req.query.money_plan_dur
     );
     if (result) {
       res.send("success");

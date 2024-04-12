@@ -102,7 +102,7 @@ export const save = async (
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   let finalResult;
   if (!findResult) {

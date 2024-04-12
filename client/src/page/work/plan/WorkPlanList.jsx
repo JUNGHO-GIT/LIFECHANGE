@@ -32,25 +32,21 @@ export const WorkPlanList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
+      type: "day",
       limit: 5,
+      partIdx: 0,
       part: "전체",
-      schema: "work",
+      titleIdx: 0,
+      title: "전체"
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -63,6 +59,13 @@ export const WorkPlanList = () => {
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
     }
   );
 
@@ -168,7 +171,7 @@ export const WorkPlanList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"plan"}
+        type={"work"} plan={"plan"}
       />
     );
   };

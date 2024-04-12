@@ -52,8 +52,7 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  work_plan_dur_param,
-  FILTER_param,
+  work_plan_dur_param
 ) => {
 
   const [startDay, endDay] = work_plan_dur_param.split(` ~ `);
@@ -79,53 +78,12 @@ export const detail = async (
 export const save = async (
   user_id_param,
   WORK_PLAN_param,
-  work_plan_dur_param,
-  FILTER_param,
+  work_plan_dur_param
 ) => {
 
   const [startDay, endDay] = work_plan_dur_param.split(` ~ `);
 
   let finalResult;
-  let schema;
-
-  if (FILTER_param.schema === "food") {
-    schema = {
-      plan_food: {
-        plan_kcal: WORK_PLAN_param.plan_food.plan_kcal
-      },
-    };
-  }
-
-  if (FILTER_param.schema === "money") {
-    schema = {
-      plan_money: {
-        plan_in: WORK_PLAN_param.plan_money.plan_in,
-        plan_out: WORK_PLAN_param.plan_money.plan_out,
-      },
-    };
-  }
-
-  if (FILTER_param.schema === "sleep") {
-    schema = {
-      plan_sleep: {
-        plan_night: WORK_PLAN_param.plan_sleep.plan_night,
-        plan_morning: WORK_PLAN_param.plan_sleep.plan_morning,
-        plan_time: WORK_PLAN_param.plan_sleep.plan_time,
-      },
-    };
-  }
-
-  if (FILTER_param.schema === "work") {
-    schema = {
-      plan_work: {
-        plan_count_total: WORK_PLAN_param.plan_work.plan_count_total,
-        plan_cardio_time: WORK_PLAN_param.plan_work.plan_cardio_time,
-        plan_score_name: WORK_PLAN_param.plan_work.plan_score_name,
-        plan_score_kg: WORK_PLAN_param.plan_work.plan_score_kg,
-        plan_score_rep: WORK_PLAN_param.plan_work.plan_score_rep,
-      },
-    };
-  }
 
   const findResult = await WorkPlan.findOne({
     user_id: user_id_param,
@@ -144,9 +102,8 @@ export const save = async (
       user_id: user_id_param,
       work_plan_start: startDay,
       work_plan_end: endDay,
-      ...schema,
-      plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      plan_update: ""
+      work_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+      work_plan_update: ""
     };
     finalResult = await WorkPlan.create(createQuery);
   }
@@ -156,8 +113,7 @@ export const save = async (
     };
     const updateAction = {
       $set: {
-        ...schema,
-        plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        work_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     };
     finalResult = await WorkPlan.updateOne(updateQuery, updateAction).lean();
@@ -172,8 +128,7 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  work_plan_dur_param,
-  FILTER_param,
+  work_plan_dur_param
 ) => {
 
   const [startDay, endDay] = work_plan_dur_param.split(` ~ `);
@@ -191,7 +146,7 @@ export const deletes = async (
     },
     {
       $set: {
-        plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        work_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     },
     {

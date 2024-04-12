@@ -52,8 +52,7 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  user_plan_dur_param,
-  FILTER_param,
+  user_plan_dur_param
 ) => {
 
   const [startDay, endDay] = user_plan_dur_param.split(` ~ `);
@@ -79,53 +78,12 @@ export const detail = async (
 export const save = async (
   user_id_param,
   USER_PLAN_param,
-  user_plan_dur_param,
-  FILTER_param,
+  user_plan_dur_param
 ) => {
 
   const [startDay, endDay] = user_plan_dur_param.split(` ~ `);
 
   let finalResult;
-  let schema;
-
-  if (FILTER_param.schema === "food") {
-    schema = {
-      plan_food: {
-        plan_kcal: USER_PLAN_param.plan_food.plan_kcal
-      },
-    };
-  }
-
-  if (FILTER_param.schema === "money") {
-    schema = {
-      plan_money: {
-        plan_in: USER_PLAN_param.plan_money.plan_in,
-        plan_out: USER_PLAN_param.plan_money.plan_out,
-      },
-    };
-  }
-
-  if (FILTER_param.schema === "sleep") {
-    schema = {
-      plan_sleep: {
-        plan_night: USER_PLAN_param.plan_sleep.plan_night,
-        plan_morning: USER_PLAN_param.plan_sleep.plan_morning,
-        plan_time: USER_PLAN_param.plan_sleep.plan_time,
-      },
-    };
-  }
-
-  if (FILTER_param.schema === "work") {
-    schema = {
-      plan_work: {
-        plan_count_total: USER_PLAN_param.plan_work.plan_count_total,
-        plan_cardio_time: USER_PLAN_param.plan_work.plan_cardio_time,
-        plan_score_name: USER_PLAN_param.plan_work.plan_score_name,
-        plan_score_kg: USER_PLAN_param.plan_work.plan_score_kg,
-        plan_score_rep: USER_PLAN_param.plan_work.plan_score_rep,
-      },
-    };
-  }
 
   const findResult = await UserPlan.findOne({
     user_id: user_id_param,
@@ -144,9 +102,8 @@ export const save = async (
       user_id: user_id_param,
       user_plan_start: startDay,
       user_plan_end: endDay,
-      ...schema,
-      plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      plan_update: ""
+      user_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+      user_plan_update: ""
     };
     finalResult = await UserPlan.create(createQuery);
   }
@@ -156,8 +113,7 @@ export const save = async (
     };
     const updateAction = {
       $set: {
-        ...schema,
-        plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        user_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     };
     finalResult = await UserPlan.updateOne(updateQuery, updateAction).lean();
@@ -172,8 +128,7 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  user_plan_dur_param,
-  FILTER_param,
+  user_plan_dur_param
 ) => {
 
   const [startDay, endDay] = user_plan_dur_param.split(` ~ `);
@@ -191,7 +146,7 @@ export const deletes = async (
     },
     {
       $set: {
-        plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        user_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     },
     {

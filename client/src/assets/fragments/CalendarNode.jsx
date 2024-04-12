@@ -80,9 +80,11 @@ export const CalendarNode = ({
       selected = DATE.strStartDt && DATE.strEndDt && {from: new Date(DATE.strStartDt), to: new Date(DATE.strEndDt)};
       month = new Date(DATE.strStartDt)
       onDayClick= (day) => {
+
+        // 월 ~ 일
         const selectedDate = moment(day);
-        const startOfWeek = selectedDate.clone().startOf("week").add(1, "days");
-        const endOfWeek = startOfWeek.clone().add(6, "days");
+        const startOfWeek = selectedDate.startOf("week").add(1, "day").format("YYYY-MM-DD");
+        const endOfWeek = selectedDate.endOf("week").add(1, "day").format("YYYY-MM-DD");
         setDATE((prev) => ({
           ...prev,
           strStartDt: moment(startOfWeek).format("YYYY-MM-DD"),
@@ -114,8 +116,8 @@ export const CalendarNode = ({
 
     // 4. year
     if (FILTER.type === "year") {
-      mode="default"
-      month= new Date(DATE?.strDur?.split(" ~ ")[0])
+      mode = "default"
+      month = new Date(DATE?.strDur?.split(" ~ ")[0])
       onMonthChange = (year) => {
         const yearDate = new Date(year.getFullYear(), 0, 1);
         const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);

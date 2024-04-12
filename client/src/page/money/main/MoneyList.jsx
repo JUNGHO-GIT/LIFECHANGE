@@ -3,8 +3,8 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
@@ -26,28 +26,22 @@ export const MoneyList = () => {
     `STATE(${PATH})`, {
       id: "",
       date: "",
-      refresh:0,
+      refresh: 0,
       toDetail:"/money/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
+      type: "day",
       limit: 5,
       partIdx: 0,
       part: "전체",
@@ -67,9 +61,16 @@ export const MoneyList = () => {
       sectionCnt: 0
     }
   );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState([{
+  const MONEY_DEFAULT = [{
     _id: "",
     money_number: 0,
     money_date: "",
@@ -81,24 +82,14 @@ export const MoneyList = () => {
       money_amount: 0,
       money_content: "",
     }],
-  }]);
-  const [MONEY, setMONEY] = useState([{
-    _id: "",
-    money_number: 0,
-    money_date: "",
-    money_section: [{
-      money_part_idx: 0,
-      money_part_val: "전체",
-      money_title_idx: 0,
-      money_title_val: "전체",
-      money_amount: 0,
-      money_content: "",
-    }],
-  }]);
+  }];
+  const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(DATE, setDATE, location_date);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-
     const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
         user_id: user_id,
@@ -107,15 +98,12 @@ export const MoneyList = () => {
         PAGING: PAGING
       },
     });
-
-    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
-
+    setMONEY(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
-
-  })()}, [DATE.strDur, FILTER, PAGING]);
+  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -180,7 +168,7 @@ export const MoneyList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"money"}
+        type={"money"} plan={""}
       />
     );
   };
@@ -189,7 +177,8 @@ export const MoneyList = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam} type={"list"}
+        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        type={"list"}
       />
     );
   };
@@ -198,29 +187,21 @@ export const MoneyList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>List</h1>
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {calendarNode()}
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {filterNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {pagingNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

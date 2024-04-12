@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -31,25 +32,21 @@ export const MoneyPlanList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
       order: "asc",
+      type: "day",
       limit: 5,
+      partIdx: 0,
       part: "전체",
-      schema: "money",
+      titleIdx: 0,
+      title: "전체"
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -64,20 +61,27 @@ export const MoneyPlanList = () => {
       sectionCnt: 0
     }
   );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const PLAN_DEFAULT = [{
+  const MONEY_PLAN_DEFAULT = [{
     _id: "",
-    plan_number: 0,
-    plan_schema: "money",
-    plan_start: "",
-    plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
+    money_plan_number: 0,
+    money_plan_start: "",
+    money_plan_end: "",
+    money_plan_in: "",
+    money_plan_out: ""
   }];
-  const [PLAN, setPLAN] = useState(PLAN_DEFAULT);
+  const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(DATE, setDATE, location_date);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -89,14 +93,13 @@ export const MoneyPlanList = () => {
         PAGING: PAGING
       },
     });
-
-    setPLAN(response.data.result);
+    setMONEY_PLAN(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, FILTER, PAGING]);
+  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -111,13 +114,13 @@ export const MoneyPlanList = () => {
           </tr>
         </thead>
         <tbody>
-          {PLAN.map((item) => (
+          {MONEY_PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.food_plan_start}</td>
-                <td>{item.food_plan_end}</td>
-                <td>{item.food_plan_money.plan_in}</td>
-                <td>{item.food_plan_money.plan_out}</td>
+                <td>{item.money_plan_start}</td>
+                <td>{item.money_plan_end}</td>
+                <td>{item.money_plan_in}</td>
+                <td>{item.money_plan_out}</td>
               </tr>
             </React.Fragment>
           ))}
@@ -147,7 +150,7 @@ export const MoneyPlanList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"plan"}
+        type={"money"} plan={"plan"}
       />
     );
   };

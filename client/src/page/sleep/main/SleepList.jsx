@@ -5,7 +5,6 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
@@ -33,10 +32,10 @@ export const SleepList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -44,14 +43,10 @@ export const SleepList = () => {
       order: "asc",
       type: "day",
       limit: 5,
-      schema: "sleep",
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -64,6 +59,13 @@ export const SleepList = () => {
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
     }
   );
 
@@ -81,6 +83,9 @@ export const SleepList = () => {
   const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(DATE, setDATE, location_date);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
@@ -90,7 +95,7 @@ export const SleepList = () => {
         PAGING: PAGING
       },
     });
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+    setSLEEP(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
@@ -156,7 +161,7 @@ export const SleepList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"}
+        type={"sleep"} plan={""}
       />
     );
   };

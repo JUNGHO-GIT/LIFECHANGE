@@ -3,14 +3,13 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {DayPicker} from "react-day-picker";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
+import {useTime} from "../../../assets/hooks/useTime.jsx";
+import DatePicker from "react-datepicker";
+import {TimePicker} from "react-time-picker";
 import axios from "axios";
-import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -35,10 +34,33 @@ export const MoneyPlanSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day",
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
+  const {val:PAGING, set:setPAGING} = useStorage(
+    `PAGING(${PATH})`, {
+      page: 1,
+      limit: 5
+    }
+  );
+  const {val:COUNT, set:setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
     }
   );
   const {val:CALENDAR, set:setCALENDAR} = useStorage(
@@ -48,44 +70,21 @@ export const MoneyPlanSave = () => {
       calOpen: false,
     }
   );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      limit: 5,
-      part: "전체",
-      schema: "money",
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
+  const MONEY_PLAN_DEFAULT = {
     _id: "",
-    plan_number: 0,
-    plan_schema: "money",
-    plan_start: "",
-    plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
-  });
-  const [PLAN, setPLAN] = useState({
-    _id: "",
-    plan_number: 0,
-    plan_schema: "money",
-    plan_start: "",
-    plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
-  });
+    money_plan_number: 0,
+    money_plan_start: "",
+    money_plan_end: "",
+    money_plan_in: "",
+    money_plan_out: ""
+  };
+  const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(DATE, setDATE, location_date);
+  useTime(MONEY_PLAN, setMONEY_PLAN, DATE, setDATE, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -93,14 +92,14 @@ export const MoneyPlanSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        money_plan_dur: DATE.strDur,
-        FILTER: FILTER,
+        money_plan_dur: DATE.strDur
       },
     });
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+    setMONEY_PLAN(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [user_id, DATE.strDur]);
 
@@ -108,9 +107,8 @@ export const MoneyPlanSave = () => {
   const flowSave = async () => {
     const response = await axios.post(`${URL_MONEY_PLAN}/save`, {
       user_id: user_id,
-      PLAN: PLAN,
-      money_plan_dur: DATE.strDur,
-      FILTER: FILTER,
+      MONEY_PLAN: MONEY_PLAN,
+      money_plan_dur: DATE.strDur
     });
     if (response.data === "success") {
       alert("Save successfully");
@@ -133,86 +131,108 @@ export const MoneyPlanSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function dayPicker (isOpen, setOpen, selectedDate, setSelectedDate) {
+
+    // 1. startNode
+    function startNode () {
       return (
-        <div className={`dayPicker-container ${isOpen ? "" : "d-none"}`}>
-          <span className="d-right fw-700 pointer" style={{position: "absolute", right: "15px", top: "10px"}} onClick={() => setOpen(false)}>
-            X
-          </span>
-          <div className="h-2"></div>
-          <DayPicker
-            weekStartsOn={1}
-            showOutsideDays={true}
-            locale={ko}
-            modifiersClassNames={{
-              selected:"selected", disabled:"disabled", outside:"outside", inside:"inside",
-            }}
-            mode="single"
-            selected={selectedDate}
-            month={selectedDate}
-            onDayClick={(day) => {
-              const selectedDay = new Date(day);
-              const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
-              setSelectedDate(fmtDate);
-              setOpen(false);
-            }}
-            onMonthChange={(month) => {
-              setSelectedDate(new Date(month.getFullYear(), month.getMonth(), 1));
-            }}
-          />
-        </div>
-      );
-    };
-    function moneyNode () {
-      return (
-        <div>
-          {/* <div className="row d-center mb-20">
-            <div className="col-3">
-              {dayPicker(calStartOpen, setCalendarStartOpen, DATE.strStartDt, DATE.setStrStartDt)}
-              <div className="input-group">
-                <p className={`btn btn-sm ${calStartOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarStartOpen(!calStartOpen)}>
-                  시작일
-                </p>
-                <input type="text" className="form-control" value={DATE.strStartDt} readOnly />
-              </div>
-            </div>
-            <div className="col-3">
-              {dayPicker(calEndOpen, setCalendarEndOpen, DATE.strEndDt, DATE.setEndDate)}
-              <div className="input-group">
-                <p className={`btn btn-sm ${calEndOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarEndOpen(!calEndOpen)}>
-                  종료일
-                </p>
-                <input type="text" className="form-control" value={DATE.strEndDt} readOnly />
-              </div>
-            </div>
-          </div> */}
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">목표 수입</span>
-                <input type="text" className="form-control" value={PLAN.plan_money.plan_in}
-                  onChange={(e) => setPLAN({...PLAN, plan_money: {...PLAN.plan_money, plan_in: e.target.value}})}
-                />
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">목표 지출</span>
-                <input type="text" className="form-control" value={PLAN.plan_money.plan_out}
-                  onChange={(e) => setPLAN({...PLAN, plan_money: {...PLAN.plan_money, plan_out: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-    return (
-      <div>
         <div className="row d-center">
           <div className="col-12">
-            {moneyNode()}
+            <div className="input-group">
+              <span className="input-group-text">시작일</span>
+              <DatePicker
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom"
+                className="form-control"
+                selected={new Date(DATE.strStartDt)}
+                disabled={false}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    strStartDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                  }));
+                }}
+              >
+              </DatePicker>
+            </div>
           </div>
+        </div>
+      );
+    };
+
+    // 2. endNode
+    function endNode () {
+      return (
+        <div className="row d-center">
+          <div className="col-12">
+            <div className="input-group">
+              <span className="input-group-text">종료일</span>
+              <DatePicker
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom"
+                className="form-control"
+                selected={new Date(DATE.strEndDt)}
+                disabled={false}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    strEndDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                  }));
+                }}
+              >
+              </DatePicker>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // 3. moneyNode
+    function moneyNode () {
+      return (
+        <div className="row d-center mb-20">
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 수입</span>
+              <input type="text" className="form-control"
+                value={MONEY_PLAN?.money_plan_in}
+                onChange={(e) => {
+                  setMONEY_PLAN((prev) => ({
+                    ...prev,
+                    money_plan_in: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 지출</span>
+              <input type="text" className="form-control"
+                value={MONEY_PLAN?.money_plan_out}
+                onChange={(e) => {
+                  setMONEY_PLAN((prev) => ({
+                    ...prev,
+                    money_plan_out: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // 5. return
+    return (
+      <div className="row d-center">
+        <div className="col-4 mb-20">
+          {startNode()}
+        </div>
+        <div className="col-4 mb-20">
+          {endNode()}
+        </div>
+        <div className="col-8 mb-20">
+          {moneyNode()}
         </div>
       </div>
     );
@@ -240,10 +260,10 @@ export const MoneyPlanSave = () => {
             {dateNode()}
           </div>
           <div className="col-12 mb-20">
-            {buttonNode()}
-          </div>
-          <div className="col-12 mb-20 h-80">
             {tableNode()}
+          </div>
+          <div className="col-12 mb-20">
+            {buttonNode()}
           </div>
         </div>
       </div>

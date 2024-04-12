@@ -32,8 +32,7 @@ foodPlanRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.food_plan_dur,
-      req.query.FILTER,
+      req.query.food_plan_dur
     );
     if (result) {
       res.send(result);
@@ -54,8 +53,7 @@ foodPlanRouter.post("/save", async (req, res) => {
     const result = await service.save (
       req.body.user_id,
       req.body.FOOD_PLAN,
-      req.body.food_plan_dur,
-      req.body.FILTER,
+      req.body.food_plan_dur
     );
     if (result) {
       res.send("success");
@@ -76,8 +74,7 @@ foodPlanRouter.delete("/delete", async (req, res) => {
     const result = await service.deletes(
       req.query._id,
       req.query.user_id,
-      req.query.food_plan_dur,
-      req.query.FILTER,
+      req.query.food_plan_dur
     );
     if (result) {
       res.send("success");

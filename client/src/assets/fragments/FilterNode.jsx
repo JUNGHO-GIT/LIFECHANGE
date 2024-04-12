@@ -6,7 +6,7 @@ import {workArray} from "../data/WorkArray.jsx";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
-  FILTER, setFILTER, PAGING, setPAGING, type
+  FILTER, setFILTER, PAGING, setPAGING, type, plan
 }) => {
   function selectType() {
     return (
@@ -122,14 +122,21 @@ export const FilterNode = ({
     );
   };
   return (
-    type === "food" ? (
+    plan === "" && type === "food" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
         {selectPartFood()}
       </div>
-    ) : type === "money" ? (
+    ) : plan === "plan" && type === "food" ? (
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
+        {selectPartFood()}
+      </div>
+    ) : plan === "" && type === "money" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
@@ -137,13 +144,31 @@ export const FilterNode = ({
         {selectPartMoney()}
         {selectTitleMoney()}
       </div>
-    ) : type === "sleep" ? (
+    ) : plan === "plan" && type === "money" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
-    ) : type === "work" ? (
+    ) : plan === "" && type === "sleep" ? (
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
+      </div>
+    ) : plan === "plan" && type === "sleep" ? (
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
+      </div>
+    ) : plan === "" && type === "work" ? (
+      <div className="d-inline-flex">
+        {selectType()}
+        {selectOrder()}
+        {selectLimit()}
+      </div>
+    ) : plan === "plan" && type === "work" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}

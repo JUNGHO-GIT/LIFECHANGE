@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -31,17 +32,10 @@ export const SleepCompare = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -49,7 +43,10 @@ export const SleepCompare = () => {
       order: "asc",
       type: "day",
       limit: 5,
-      schema: "sleep",
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -62,6 +59,13 @@ export const SleepCompare = () => {
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
     }
   );
 
@@ -82,8 +86,10 @@ export const SleepCompare = () => {
   const [SLEEP_COMPARE, setSLEEP_COMPARE] = useState(SLEEP_COMPARE_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
+  useDate(DATE, setDATE, location_date);
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/compare`, {
       params: {
         user_id: user_id,
@@ -201,7 +207,7 @@ export const SleepCompare = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"}
+        type={"sleep"} plan={""}
       />
     );
   };
