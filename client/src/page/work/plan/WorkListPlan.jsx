@@ -1,4 +1,4 @@
-// PlanMoneyList.jsx
+// WorkListPlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,7 +11,7 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanMoneyList = () => {
+export const WorkListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
@@ -27,7 +27,7 @@ export const PlanMoneyList = () => {
       id: "",
       date: "",
       refresh:0,
-      toDetail:"/plan/money/detail"
+      toDetail:"/work/detail/plan"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -50,7 +50,7 @@ export const PlanMoneyList = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "money",
+      schema: "work",
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -70,24 +70,30 @@ export const PlanMoneyList = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_schema: "money",
+    plan_schema: "work",
     plan_start: "",
     plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
+    plan_work: {
+      plan_count_total: "",
+      plan_cardio_time: "",
+      plan_score_name: "",
+      plan_score_kg: "",
+      plan_score_rep: "",
+    },
   }]);
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_schema: "money",
+    plan_schema: "work",
     plan_start: "",
     plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
+    plan_work: {
+      plan_count_total: "",
+      plan_cardio_time: "",
+      plan_score_name: "",
+      plan_score_kg: "",
+      plan_score_rep: "",
+    },
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -100,7 +106,6 @@ export const PlanMoneyList = () => {
         PAGING: PAGING
       },
     });
-
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
@@ -116,8 +121,11 @@ export const PlanMoneyList = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>수입</th>
-            <th>지출</th>
+            <th>목표 운동 횟수</th>
+            <th>목표 유산소 시간</th>
+            <th>목표 운동 이름</th>
+            <th>목표 중량</th>
+            <th>목표 반복 횟수</th>
           </tr>
         </thead>
         <tbody>
@@ -126,8 +134,11 @@ export const PlanMoneyList = () => {
               <tr>
                 <td>{item.plan_start}</td>
                 <td>{item.plan_end}</td>
-                <td>{item.plan_money.plan_in}</td>
-                <td>{item.plan_money.plan_out}</td>
+                <td>{item.plan_work.plan_count_total}</td>
+                <td>{item.plan_work.plan_cardio_time}</td>
+                <td>{item.plan_work.plan_score_name}</td>
+                <td>{item.plan_work.plan_score_kg}</td>
+                <td>{item.plan_work.plan_score_rep}</td>
               </tr>
             </React.Fragment>
           ))}

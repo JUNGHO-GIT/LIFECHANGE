@@ -1,4 +1,4 @@
-// PlanSleepList.jsx
+// FoodDetailPlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,12 +11,14 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanSleepList = () => {
+export const FoodDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
+  const location_id = location?.state?.id;
+  const location_dur = location?.state?.dur;
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
@@ -27,7 +29,8 @@ export const PlanSleepList = () => {
       id: "",
       date: "",
       refresh:0,
-      toDetail:"/plan/sleep/detail"
+      toList:"/food/list/plan",
+      toSave:"/food/save/plan"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -50,13 +53,7 @@ export const PlanSleepList = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "sleep",
-    }
-  );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 5
+      schema: "food",
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -67,39 +64,35 @@ export const PlanSleepList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
+  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "sleep",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_sleep: {
-      plan_night: "",
-      plan_morning: "",
-      plan_time: "",
-    },
-  }]);
-  const [PLAN, setPLAN] = useState([{
+    plan_food: {
+      plan_kcal: "",
+    }
+  });
+  const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "sleep",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_sleep: {
-      plan_night: "",
-      plan_morning: "",
-      plan_time: "",
-    },
-  }]);
+    plan_food: {
+      plan_kcal: "",
+    }
+  });
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_PLAN}/list`, {
+    const response = await axios.get(`${URL_PLAN}/detail`, {
       params: {
+        _id: location_id,
         user_id: user_id,
         plan_dur: DATE.strDur,
         FILTER: FILTER,
-        PAGING: PAGING
       },
     });
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
@@ -107,7 +100,29 @@ export const PlanSleepList = () => {
       ...prev,
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
-  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
+  })()}, [location_id, user_id]);
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowDelete = async (id) => {
+    const response = await axios.delete(`${URL_PLAN}/delete`, {
+      params: {
+        _id: id,
+        user_id: user_id,
+        plan_dur: DATE.strDur,
+        FILTER: FILTER,
+      },
+    });
+    if (response.data === "success") {
+      alert("delete success");
+      STATE.date = DATE.strDt;
+      navParam(STATE.toList, {
+        state: STATE
+      });
+    }
+    else {
+      alert(`${response.data}`);
+    }
+  };
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -117,59 +132,25 @@ export const PlanSleepList = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
+            <th>칼로리</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {PLAN.map((item) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.plan_start;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.plan_start}
-                </td>
-                <td>{item.plan_end}</td>
-                <td>{item.plan_sleep.plan_night}</td>
-                <td>{item.plan_sleep.plan_morning}</td>
-                <td>{item.plan_sleep.plan_time}</td>
-              </tr>
-            </React.Fragment>
-          ))}
+          <tr>
+            <td>{PLAN.plan_start}</td>
+            <td>{PLAN.plan_end}</td>
+            <td>{PLAN.plan_food.plan_kcal}</td>
+            <td>
+              <button className="btn btn-sm btn-danger" onClick={() => (
+                flowDelete(PLAN._id)
+              )}>
+                x
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
-    );
-  };
-
-  // 6. calendar ---------------------------------------------------------------------------------->
-  const calendarNode = () => {
-    return (
-      <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
-        CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-      />
-    );
-  };
-
-  // 7. paging ------------------------------------------------------------------------------------>
-  const pagingNode = () => {
-    return (
-      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      />
-    );
-  };
-
-  // 8. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
-    return (
-      <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"} compare={""}
-      />
     );
   };
 
@@ -178,7 +159,7 @@ export const PlanSleepList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
-        type={"list"}
+        type={"detail"}
       />
     );
   };
@@ -189,26 +170,15 @@ export const PlanSleepList = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List</h1>
+            <h1>Detail</h1>
           </div>
         </div>
-        <div className="row mb-20 d-center">
+        <div className="row d-center mb-20">
           <div className="col-12">
-            {calendarNode()}
             {tableNode()}
           </div>
         </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
-            {filterNode()}
-          </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
-            {pagingNode()}
-          </div>
-        </div>
-        <div className="row mb-20 d-center">
+        <div className="row d-center">
           <div className="col-12">
             {buttonNode()}
           </div>

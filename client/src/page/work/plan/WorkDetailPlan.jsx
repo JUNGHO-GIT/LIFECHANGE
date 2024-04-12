@@ -1,4 +1,4 @@
-// PlanWorkDetail.jsx
+// WorkDetailPlan.jsx
 
 import React from "react";
 import {DashBar} from "../dash/WorkDashBar.jsx";
@@ -6,7 +6,7 @@ import {DashLine} from "../dash/WorkDashLine.jsx";
 import {DashAvg} from "../dash/WorkDashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanWorkDetail = () => {
+export const WorkDetailPlan = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (

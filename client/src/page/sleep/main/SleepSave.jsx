@@ -118,8 +118,8 @@ export const SleepSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    return (
-      <div>
+    function sleepNode () {
+      return (
         <div className="row d-center">
           <div className="col-12">
             <div className="input-group">
@@ -185,6 +185,13 @@ export const SleepSave = () => {
               ></TimePicker>
             </div>
           </div>
+        </div>
+      );
+    };
+    return (
+      <div className="row d-center">
+        <div className="col-8 mb-20">
+          {sleepNode()}
         </div>
       </div>
     );

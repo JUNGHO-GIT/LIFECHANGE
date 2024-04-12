@@ -1,4 +1,4 @@
-// PlanMoneySave.jsx
+// FoodSavePlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -14,7 +14,7 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanMoneySave = () => {
+export const FoodSavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
@@ -30,7 +30,7 @@ export const PlanMoneySave = () => {
       id: "",
       date: "",
       refresh: 0,
-      toList:"/plan/money/list"
+      toList:"/food/list/plan"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -53,7 +53,7 @@ export const PlanMoneySave = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "money",
+      schema: "food",
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -67,24 +67,22 @@ export const PlanMoneySave = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "money",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
+    plan_food: {
+      plan_kcal: ""
+    },
   });
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "money",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
+    plan_food: {
+      plan_kcal: ""
+    },
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -163,7 +161,7 @@ export const PlanMoneySave = () => {
         </div>
       );
     };
-    function moneyNode () {
+    function foodNode () {
       return (
         <div>
           {/* <div className="row d-center mb-20">
@@ -189,17 +187,33 @@ export const PlanMoneySave = () => {
           <div className="row d-center mb-20">
             <div className="col-6">
               <div className="input-group">
-                <span className="input-group-text">목표 수입</span>
-                <input type="text" className="form-control" value={PLAN.plan_money.plan_in}
-                  onChange={(e) => setPLAN({...PLAN, plan_money: {...PLAN.plan_money, plan_in: e.target.value}})}
+                <span className="input-group-text">칼로리</span>
+                <input type="text" className="form-control" value={PLAN.plan_food.plan_kcal}
+                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_kcal: e.target.value}})}
                 />
               </div>
             </div>
             <div className="col-6">
               <div className="input-group">
-                <span className="input-group-text">목표 지출</span>
-                <input type="text" className="form-control" value={PLAN.plan_money.plan_out}
-                  onChange={(e) => setPLAN({...PLAN, plan_money: {...PLAN.plan_money, plan_out: e.target.value}})}
+                <span className="input-group-text">탄수화물</span>
+                <input type="text" className="form-control" value={PLAN.plan_food.plan_carb}
+                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_carb: e.target.value}})}
+                />
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">단백질</span>
+                <input type="text" className="form-control" value={PLAN.plan_food.plan_protein}
+                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_protein: e.target.value}})}
+                />
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">지방</span>
+                <input type="text" className="form-control" value={PLAN.plan_food.plan_fat}
+                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_fat: e.target.value}})}
                 />
               </div>
             </div>
@@ -211,7 +225,7 @@ export const PlanMoneySave = () => {
       <div>
         <div className="row d-center">
           <div className="col-12">
-            {moneyNode()}
+            {foodNode()}
           </div>
         </div>
       </div>

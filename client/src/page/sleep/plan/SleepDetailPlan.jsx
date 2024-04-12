@@ -1,24 +1,20 @@
-// PlanFoodDetail.jsx
+// SleepDetailPlan.jsx
 
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanFoodDetail = () => {
+export const SleepDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
-  const location_dur = location?.state?.dur;
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
@@ -28,24 +24,17 @@ export const PlanFoodDetail = () => {
     `STATE(${PATH})`, {
       id: "",
       date: "",
-      refresh:0,
-      toList:"/plan/food/list",
-      toSave:"/plan/food/save"
+      refresh: 0,
+      toList:"/sleep/list/plan",
+      toSave:"/sleep/save/plan"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
+      strDur: "",
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -53,7 +42,14 @@ export const PlanFoodDetail = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "food",
+      schema: "sleep",
+    }
+  );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false,
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -67,23 +63,30 @@ export const PlanFoodDetail = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "food",
+    plan_schema: "sleep",
     plan_start: "",
     plan_end: "",
-    plan_food: {
-      plan_kcal: "",
-    }
+    plan_sleep: {
+      plan_night: "",
+      plan_morning: "",
+      plan_time: "",
+    },
   });
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "food",
+    plan_schema: "sleep",
     plan_start: "",
     plan_end: "",
-    plan_food: {
-      plan_kcal: "",
-    }
+    plan_sleep: {
+      plan_night: "",
+      plan_morning: "",
+      plan_time: "",
+    },
   });
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(DATE, setDATE, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -98,9 +101,9 @@ export const PlanFoodDetail = () => {
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt
     }));
-  })()}, [location_id, user_id]);
+  })()}, [location_id, user_id, DATE.strDur, FILTER]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -132,20 +135,34 @@ export const PlanFoodDetail = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>칼로리</th>
+            <th>취침시간</th>
+            <th>기상시간</th>
+            <th>수면시간</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{PLAN.plan_start}</td>
-            <td>{PLAN.plan_end}</td>
-            <td>{PLAN.plan_food.plan_kcal}</td>
-            <td>
-              <button className="btn btn-sm btn-danger" onClick={() => (
+            <td className="fs-20 pt-20">
+              {PLAN?.plan_start}
+            </td>
+            <td className="fs-20 pt-20">
+              {PLAN?.plan_end}
+            </td>
+            <td className="fs-20 pt-20">
+              {PLAN?.plan_sleep.plan_night}
+            </td>
+            <td className="fs-20 pt-20">
+              {PLAN?.plan_sleep.plan_morning}
+            </td>
+            <td className="fs-20 pt-20">
+              {PLAN?.plan_sleep.plan_time}
+            </td>
+            <td className="fs-20 pt-20">
+              <button type="button" className="btn btn-sm btn-danger" onClick={() => (
                 flowDelete(PLAN._id)
               )}>
-                x
+                X
               </button>
             </td>
           </tr>

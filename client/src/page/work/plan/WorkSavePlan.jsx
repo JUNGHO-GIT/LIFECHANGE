@@ -1,4 +1,4 @@
-// PlanWorkSave.jsx
+// WorkSavePlan.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -14,7 +14,7 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const PlanWorkSave = () => {
+export const WorkSavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_PLAN = process.env.REACT_APP_URL_PLAN;
@@ -30,7 +30,7 @@ export const PlanWorkSave = () => {
       id: "",
       date: "",
       refresh: 0,
-      toList:"/plan/work/list"
+      toList:"/work/list/plan"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
