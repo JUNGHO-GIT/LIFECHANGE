@@ -1,6 +1,6 @@
 // useTime.jsx
 
-import React, { useEffect} from "react";
+import {useEffect} from "react";
 
 // ------------------------------------------------------------------------------------------------>
 export const useTime = (
@@ -8,7 +8,7 @@ export const useTime = (
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const strLow = PATH.match(/\/([^\/]+)\/[^\/]+$/)[1];
+  const strLow = PATH.match(/\/([^\/]+)\//)[1];
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -70,8 +70,8 @@ export const useTime = (
 
     // 3. sleep
     if (type === "plan" && strLow === "sleep") {
-      const nightTime = OBJECT?.plan_sleep?.plan_night?.toString();
-      const morningTime = OBJECT?.plan_sleep?.plan_morning?.toString();
+      const nightTime = OBJECT?.sleep_plan_night;
+      const morningTime = OBJECT?.sleep_plan_morning;
 
       if (nightTime && morningTime) {
         const startDate = new Date(`${DATE.strDt}T${nightTime}`);
@@ -88,11 +88,7 @@ export const useTime = (
 
         setOBJECT((prev) => ({
           ...prev,
-          plan_sleep: {
-            plan_night: nightTime,
-            plan_morning: morningTime,
-            plan_time: time,
-          },
+          sleep_plan_time: time,
         }));
       }
     }
@@ -103,7 +99,7 @@ export const useTime = (
     type === "real" && strLow === "work" ? OBJECT?.work_end : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
-    type === "plan" && strLow === "sleep" ? OBJECT?.plan_sleep?.plan_night : "",
-    type === "plan" && strLow === "sleep" ? OBJECT?.plan_sleep?.plan_morning : "",
+    type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_night : "",
+    type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_morning : "",
   ]);
 };

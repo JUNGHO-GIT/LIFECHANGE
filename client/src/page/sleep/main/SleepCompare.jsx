@@ -66,21 +66,20 @@ export const SleepCompare = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_COMPARE, setSLEEP_COMPARE] = useState([{
+  const SLEEP_COMPARE_DEFAULT = [{
     sleep_date: "",
-    plan_start: "",
-    plan_end: "",
+    sleep_plan_start: "",
+    sleep_plan_end: "",
     sleep_section: [{
       sleep_night: "",
       sleep_morning: "",
       sleep_time: "",
     }],
-    plan_sleep: {
-      plan_night: "",
-      plan_morning: "",
-      plan_time: "",
-    },
-  }]);
+    sleep_plan_night: "",
+    sleep_plan_morning: "",
+    sleep_plan_time: "",
+  }];
+  const [SLEEP_COMPARE, setSLEEP_COMPARE] = useState(SLEEP_COMPARE_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -89,15 +88,16 @@ export const SleepCompare = () => {
       params: {
         user_id: user_id,
         sleep_dur: DATE.strDur,
-        plan_dur: DATE.strDur,
+        sleep_plan_dur: DATE.strDur,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setSLEEP_COMPARE(response.data.result || []);
+    setSLEEP_COMPARE(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [user_id, DATE.strDur, FILTER, PAGING]);
 
@@ -134,8 +134,8 @@ export const SleepCompare = () => {
             <tr>
               <th>날짜</th>
               <th>분류</th>
-              <th>목표</th>
               <th>실제</th>
+              <th>목표</th>
               <th>비교</th>
             </tr>
           </thead>
@@ -145,25 +145,25 @@ export const SleepCompare = () => {
                 <tr>
                   <td rowSpan={3}>{item.sleep_date}</td>
                   <td>취침</td>
-                  <td>{item.plan_sleep.plan_night}</td>
                   <td>{item.sleep_section[0].sleep_night}</td>
-                  <td className={successOrNot(item.plan_sleep.plan_night, item.sleep_section[0].sleep_night)}>
+                  <td>{item.sleep_plan_night}</td>
+                  <td className={successOrNot(item.sleep_section[0].sleep_night, item.sleep_plan_night)}>
                     ●
                   </td>
                 </tr>
                 <tr>
                   <td>기상</td>
-                  <td>{item.plan_sleep.plan_morning}</td>
                   <td>{item.sleep_section[0].sleep_morning}</td>
-                  <td className={successOrNot(item.plan_sleep.plan_morning, item.sleep_section[0].sleep_morning)}>
+                  <td>{item.sleep_plan_morning}</td>
+                  <td className={successOrNot(item.sleep_section[0].sleep_morning, item.sleep_plan_morning)}>
                     ●
                   </td>
                 </tr>
                 <tr>
                   <td>수면</td>
-                  <td>{item.plan_sleep.plan_time}</td>
                   <td>{item.sleep_section[0].sleep_time}</td>
-                  <td className={successOrNot(item.plan_sleep.plan_time, item.sleep_section[0].sleep_time)}>
+                  <td>{item.sleep_plan_time}</td>
+                  <td className={successOrNot(item.sleep_section[0].sleep_time, item.sleep_plan_time)}>
                     ●
                   </td>
                 </tr>

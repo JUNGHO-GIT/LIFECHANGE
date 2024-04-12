@@ -86,7 +86,7 @@ sleepRouter.get("/compare", async (req, res) => {
     const result = await service.compare (
       req.query.user_id,
       req.query.sleep_dur,
-      req.query.plan_dur,
+      req.query.sleep_plan_dur,
       req.query.FILTER,
       req.query.PAGING
     );

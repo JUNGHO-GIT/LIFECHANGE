@@ -10,7 +10,7 @@ workRouter.get("/compare", async (req, res) => {
     const result = await service.compare (
       req.query.user_id,
       req.query.work_dur,
-      req.query.plan_dur,
+      req.query.work_plan_dur,
       req.query.FILTER,
       req.query.PAGING
     );

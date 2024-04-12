@@ -7,12 +7,12 @@ import {FoodPlan} from "../schema/FoodPlan.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
-  plan_dur_param,
+  food_plan_dur_param,
   FILTER_param,
   PAGING_param
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = food_plan_dur_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
@@ -20,24 +20,24 @@ export const list = async (
 
   const totalCnt = await FoodPlan.countDocuments({
     user_id: user_id_param,
-    plan_start: {
+    food_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    food_plan_end: {
       $gte: startDay,
     },
   });
 
   const findResult = await FoodPlan.find({
     user_id: user_id_param,
-    plan_start: {
+    food_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    food_plan_end: {
       $gte: startDay,
     },
   })
-  .sort({plan_start: sort})
+  .sort({food_plan_start: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -52,20 +52,19 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  plan_dur_param,
+  food_plan_dur_param,
   FILTER_param,
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = food_plan_dur_param.split(` ~ `);
 
   const finalResult = await FoodPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    plan_schema: FILTER_param.schema,
-    plan_start: {
+    food_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    food_plan_end: {
       $gte: startDay,
     }
   })
@@ -79,12 +78,12 @@ export const detail = async (
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
   user_id_param,
-  PLAN_param,
-  plan_dur_param,
+  FOOD_PLAN_param,
+  food_plan_dur_param,
   FILTER_param,
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = food_plan_dur_param.split(` ~ `);
 
   let finalResult;
   let schema;
@@ -92,7 +91,7 @@ export const save = async (
   if (FILTER_param.schema === "food") {
     schema = {
       plan_food: {
-        plan_kcal: PLAN_param.plan_food.plan_kcal
+        plan_kcal: FOOD_PLAN_param.plan_food.plan_kcal
       },
     };
   }
@@ -100,8 +99,8 @@ export const save = async (
   if (FILTER_param.schema === "money") {
     schema = {
       plan_money: {
-        plan_in: PLAN_param.plan_money.plan_in,
-        plan_out: PLAN_param.plan_money.plan_out,
+        plan_in: FOOD_PLAN_param.plan_money.plan_in,
+        plan_out: FOOD_PLAN_param.plan_money.plan_out,
       },
     };
   }
@@ -109,9 +108,9 @@ export const save = async (
   if (FILTER_param.schema === "sleep") {
     schema = {
       plan_sleep: {
-        plan_night: PLAN_param.plan_sleep.plan_night,
-        plan_morning: PLAN_param.plan_sleep.plan_morning,
-        plan_time: PLAN_param.plan_sleep.plan_time,
+        plan_night: FOOD_PLAN_param.plan_sleep.plan_night,
+        plan_morning: FOOD_PLAN_param.plan_sleep.plan_morning,
+        plan_time: FOOD_PLAN_param.plan_sleep.plan_time,
       },
     };
   }
@@ -119,22 +118,21 @@ export const save = async (
   if (FILTER_param.schema === "work") {
     schema = {
       plan_work: {
-        plan_count_total: PLAN_param.plan_work.plan_count_total,
-        plan_cardio_time: PLAN_param.plan_work.plan_cardio_time,
-        plan_score_name: PLAN_param.plan_work.plan_score_name,
-        plan_score_kg: PLAN_param.plan_work.plan_score_kg,
-        plan_score_rep: PLAN_param.plan_work.plan_score_rep,
+        plan_count_total: FOOD_PLAN_param.plan_work.plan_count_total,
+        plan_cardio_time: FOOD_PLAN_param.plan_work.plan_cardio_time,
+        plan_score_name: FOOD_PLAN_param.plan_work.plan_score_name,
+        plan_score_kg: FOOD_PLAN_param.plan_work.plan_score_kg,
+        plan_score_rep: FOOD_PLAN_param.plan_work.plan_score_rep,
       },
     };
   }
 
   const findResult = await FoodPlan.findOne({
     user_id: user_id_param,
-    plan_schema: PLAN_param.plan_schema,
-    plan_start: {
+    food_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    food_plan_end: {
       $gte: startDay,
     }
   })
@@ -144,9 +142,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      plan_schema: PLAN_param.plan_schema,
-      plan_start: startDay,
-      plan_end: endDay,
+      food_plan_start: startDay,
+      food_plan_end: endDay,
       ...schema,
       plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       plan_update: ""
@@ -175,23 +172,22 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  plan_dur_param,
+  food_plan_dur_param,
   FILTER_param,
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = food_plan_dur_param.split(` ~ `);
 
   const updateResult = await FoodPlan.updateOne(
     {
       _id: _id_param,
       user_id: user_id_param,
-      plan_start: {
+      food_plan_start: {
         $lte: endDay,
       },
-      plan_end: {
+      food_plan_end: {
         $gte: startDay,
       },
-      plan_schema: FILTER_param.schema,
     },
     {
       $set: {

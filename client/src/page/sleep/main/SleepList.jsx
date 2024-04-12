@@ -68,7 +68,7 @@ export const SleepList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState([{
+  const SLEEP_DEFAULT = [{
     _id: "",
     sleep_number: 0,
     sleep_date: "",
@@ -77,17 +77,8 @@ export const SleepList = () => {
       sleep_morning: "",
       sleep_time: "",
     }],
-  }]);
-  const [SLEEP, setSLEEP] = useState([{
-    _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_section: [{
-      sleep_night: "",
-      sleep_morning: "",
-      sleep_time: "",
-    }],
-  }]);
+  }];
+  const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

@@ -1,4 +1,4 @@
-// FoodSavePlan.jsx
+// FoodPlanSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -14,7 +14,7 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodSavePlan = () => {
+export const FoodPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
@@ -30,7 +30,7 @@ export const FoodSavePlan = () => {
       id: "",
       date: "",
       refresh: 0,
-      toList:"/food/list/plan"
+      toList:"/food/plan/list"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -91,7 +91,7 @@ export const FoodSavePlan = () => {
       params: {
         _id: "",
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        food_plan_dur: DATE.strDur,
         FILTER: FILTER,
       },
     });
@@ -107,7 +107,7 @@ export const FoodSavePlan = () => {
     const response = await axios.post(`${URL_FOOD_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
-      plan_dur: DATE.strDur,
+      food_plan_dur: DATE.strDur,
       FILTER: FILTER,
     });
     if (response.data === "success") {

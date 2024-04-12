@@ -13,9 +13,9 @@ export const dashBar = async (
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
   const dataFields = {
-    "취침": { plan: "plan_night", real: "sleep_night" },
-    "기상": { plan: "plan_morning", real: "sleep_morning" },
-    "수면": { plan: "plan_time", real: "sleep_time" }
+    "취침": { plan: "sleep_plan_night", real: "sleep_night" },
+    "기상": { plan: "sleep_plan_morning", real: "sleep_morning" },
+    "수면": { plan: "sleep_plan_time", real: "sleep_time" }
   };
 
   const fmtData = (data) => {
@@ -30,11 +30,10 @@ export const dashBar = async (
 
   let finalResult = [];
   for (let key in dataFields) {
-    const findResultPlan = await Plan.findOne({
+    const findResultPlan = await SleepPlan.findOne({
       user_id: user_id_param,
-      plan_schema: "sleep",
-      plan_start: { $lte: koreanDate },
-      plan_end: { $gte: koreanDate }
+      sleep_plan_start: { $lte: koreanDate },
+      sleep_plan_end: { $gte: koreanDate }
     })
     .lean();
     const findResultReal = await Sleep.findOne({
@@ -45,14 +44,11 @@ export const dashBar = async (
 
     finalResult.push({
       name: key,
-      목표: fmtData(
-        findResultPlan?.plan_sleep?.[dataFields[key].plan]
-      ),
+      목표: fmtData(findResultPlan?.[dataFields[key].plan]),
       실제: fmtData(
-        findResultReal?.sleep_section?.map((item) => (
-          item[dataFields[key].real]
-        ))
-        .join(":")
+        findResultReal?.sleep_section
+          ?.map((item) => item[dataFields[key].real])
+          .join(":")
       ),
     });
   };
@@ -239,13 +235,13 @@ export const dashAvgMonth = async (
 export const compare = async (
   user_id_param,
   sleep_dur_param,
-  plan_dur_param,
+  sleep_plan_dur_param,
   FILTER_param,
   PAGING_param
 ) => {
 
   const [startDayReal, endDayReal] = sleep_dur_param.split(` ~ `);
-  const [startDayPlan, endDayPlan] = plan_dur_param.split(` ~ `);
+  const [startDayPlan, endDayPlan] = sleep_plan_dur_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
@@ -273,36 +269,36 @@ export const compare = async (
 
   const findResultPlan = await SleepPlan.find({
     user_id: user_id_param,
-    plan_start: {
+    sleep_plan_start: {
       $lte: endDayPlan,
     },
-    plan_end: {
+    sleep_plan_end: {
       $gte: startDayPlan,
     },
   })
-  .sort({plan_start: sort})
+  .sort({sleep_plan_start: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
 
   const finalResult = findResultReal.map((real) => {
     const match = findResultPlan.find((plan) => (
-      real.sleep_date >= plan.plan_start && real.sleep_date <= plan.plan_end
+      real.sleep_date >= plan.sleep_plan_start && real.sleep_date <= plan.sleep_plan_end
     ));
     return match ? {
       ...real,
-      plan_start: match.plan_start,
-      plan_end: match.plan_end,
-      plan_sleep: match.plan_sleep,
+      sleep_plan_start: match.sleep_plan_start,
+      sleep_plan_end: match.sleep_plan_end,
+      sleep_plan_night: match.sleep_plan_night,
+      sleep_plan_morning: match.sleep_plan_morning,
+      sleep_plan_time: match.sleep_plan_time,
     } : {
       ...real,
-      plan_start: "",
-      plan_end: "",
-      plan_sleep: {
-        plan_night: "",
-        plan_morning: "",
-        plan_time: "",
-      },
+      sleep_plan_start: "",
+      sleep_plan_end: "",
+      sleep_plan_night: "",
+      sleep_plan_morning: "",
+      sleep_plan_time: "",
     };
   });
 

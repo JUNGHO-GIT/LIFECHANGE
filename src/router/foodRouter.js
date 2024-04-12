@@ -30,7 +30,7 @@ foodRouter.get("/compare", async (req, res) => {
     const result = await service.compare (
       req.query.user_id,
       req.query.food_dur,
-      req.query.plan_dur,
+      req.query.food_plan_dur,
       req.query.FILTER,
       req.query.PAGING
     );

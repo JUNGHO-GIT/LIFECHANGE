@@ -63,5 +63,5 @@ schema.pre("save", async function(next) {
 
 // 5. model --------------------------------------------------------------------------------------->
 export const Money = mongoose.model(
-  "Money", schema
+  "Money", schema, "money"
 );

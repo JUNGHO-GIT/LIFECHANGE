@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {useTime} from "../../../assets/hooks/useTime.jsx";
-import TimePicker from "react-time-picker";
+import {TimePicker} from "react-time-picker";
 import axios from "axios";
 import {workPartArray, workTitleArray} from "../../../assets/data/WorkArray.jsx";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";

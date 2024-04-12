@@ -95,5 +95,5 @@ schema.pre("save", async function(next) {
 
 // 5. model --------------------------------------------------------------------------------------->
 export const Food = mongoose.model(
-  "Food", schema
+  "Food", schema, "food"
 );

@@ -7,12 +7,12 @@ import {MoneyPlan} from "../schema/MoneyPlan.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
-  plan_dur_param,
+  money_plan_dur_param,
   FILTER_param,
   PAGING_param
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = money_plan_dur_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
@@ -20,24 +20,24 @@ export const list = async (
 
   const totalCnt = await MoneyPlan.countDocuments({
     user_id: user_id_param,
-    plan_start: {
+    money_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    money_plan_end: {
       $gte: startDay,
     },
   });
 
   const findResult = await MoneyPlan.find({
     user_id: user_id_param,
-    plan_start: {
+    money_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    money_plan_end: {
       $gte: startDay,
     },
   })
-  .sort({plan_start: sort})
+  .sort({money_plan_start: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -52,20 +52,19 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  plan_dur_param,
+  money_plan_dur_param,
   FILTER_param,
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = money_plan_dur_param.split(` ~ `);
 
   const finalResult = await MoneyPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    plan_schema: FILTER_param.schema,
-    plan_start: {
+    money_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    money_plan_end: {
       $gte: startDay,
     }
   })
@@ -79,12 +78,12 @@ export const detail = async (
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
   user_id_param,
-  PLAN_param,
-  plan_dur_param,
+  MONEY_PLAN_param,
+  money_plan_dur_param,
   FILTER_param,
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = money_plan_dur_param.split(` ~ `);
 
   let finalResult;
   let schema;
@@ -92,7 +91,7 @@ export const save = async (
   if (FILTER_param.schema === "food") {
     schema = {
       plan_food: {
-        plan_kcal: PLAN_param.plan_food.plan_kcal
+        plan_kcal: MONEY_PLAN_param.plan_food.plan_kcal
       },
     };
   }
@@ -100,8 +99,8 @@ export const save = async (
   if (FILTER_param.schema === "money") {
     schema = {
       plan_money: {
-        plan_in: PLAN_param.plan_money.plan_in,
-        plan_out: PLAN_param.plan_money.plan_out,
+        plan_in: MONEY_PLAN_param.plan_money.plan_in,
+        plan_out: MONEY_PLAN_param.plan_money.plan_out,
       },
     };
   }
@@ -109,9 +108,9 @@ export const save = async (
   if (FILTER_param.schema === "sleep") {
     schema = {
       plan_sleep: {
-        plan_night: PLAN_param.plan_sleep.plan_night,
-        plan_morning: PLAN_param.plan_sleep.plan_morning,
-        plan_time: PLAN_param.plan_sleep.plan_time,
+        plan_night: MONEY_PLAN_param.plan_sleep.plan_night,
+        plan_morning: MONEY_PLAN_param.plan_sleep.plan_morning,
+        plan_time: MONEY_PLAN_param.plan_sleep.plan_time,
       },
     };
   }
@@ -119,22 +118,21 @@ export const save = async (
   if (FILTER_param.schema === "work") {
     schema = {
       plan_work: {
-        plan_count_total: PLAN_param.plan_work.plan_count_total,
-        plan_cardio_time: PLAN_param.plan_work.plan_cardio_time,
-        plan_score_name: PLAN_param.plan_work.plan_score_name,
-        plan_score_kg: PLAN_param.plan_work.plan_score_kg,
-        plan_score_rep: PLAN_param.plan_work.plan_score_rep,
+        plan_count_total: MONEY_PLAN_param.plan_work.plan_count_total,
+        plan_cardio_time: MONEY_PLAN_param.plan_work.plan_cardio_time,
+        plan_score_name: MONEY_PLAN_param.plan_work.plan_score_name,
+        plan_score_kg: MONEY_PLAN_param.plan_work.plan_score_kg,
+        plan_score_rep: MONEY_PLAN_param.plan_work.plan_score_rep,
       },
     };
   }
 
   const findResult = await MoneyPlan.findOne({
     user_id: user_id_param,
-    plan_schema: PLAN_param.plan_schema,
-    plan_start: {
+    money_plan_start: {
       $lte: endDay,
     },
-    plan_end: {
+    money_plan_end: {
       $gte: startDay,
     }
   })
@@ -144,9 +142,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      plan_schema: PLAN_param.plan_schema,
-      plan_start: startDay,
-      plan_end: endDay,
+      money_plan_start: startDay,
+      money_plan_end: endDay,
       ...schema,
       plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       plan_update: ""
@@ -175,23 +172,22 @@ export const save = async (
 export const deletes = async (
   _id_param,
   user_id_param,
-  plan_dur_param,
+  money_plan_dur_param,
   FILTER_param,
 ) => {
 
-  const [startDay, endDay] = plan_dur_param.split(` ~ `);
+  const [startDay, endDay] = money_plan_dur_param.split(` ~ `);
 
   const updateResult = await MoneyPlan.updateOne(
     {
       _id: _id_param,
       user_id: user_id_param,
-      plan_start: {
+      money_plan_start: {
         $lte: endDay,
       },
-      plan_end: {
+      money_plan_end: {
         $gte: startDay,
       },
-      plan_schema: FILTER_param.schema,
     },
     {
       $set: {

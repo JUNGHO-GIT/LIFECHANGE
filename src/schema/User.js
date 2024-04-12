@@ -65,5 +65,5 @@ schema.pre("save", async function(next) {
 
 // 5. model --------------------------------------------------------------------------------------->
 export const User = mongoose.model(
-  "User", schema
+  "User", schema, "user"
 );

@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
   },
 });
 
-const Counter = mongoose.model("Counter", schema);
+const Counter = mongoose.model("Counter", schema, "counter");
 
 // 2. incrementSeq -------------------------------------------------------------------------------->
 export async function incrementSeq(sequenceName, modelName) {

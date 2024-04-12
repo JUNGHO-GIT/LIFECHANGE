@@ -1,20 +1,24 @@
-// SleepDetailPlan.jsx
+// FoodPlanDetail.jsx
 
-import React, {useEffect, useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
+import {DateNode} from "../../../assets/fragments/DateNode.jsx";
+import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
+import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
+import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDetailPlan = () => {
+export const FoodPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
+  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
+  const location_dur = location?.state?.dur;
   const location_date = location?.state?.date;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
@@ -24,25 +28,17 @@ export const SleepDetailPlan = () => {
     `STATE(${PATH})`, {
       id: "",
       date: "",
-      refresh: 0,
-      toList:"/sleep/list/plan",
-      toSave:"/sleep/save/plan"
+      refresh:0,
+      toList:"/food/plan/list",
+      toSave:"/food/plan/save"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: "",
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
-    }
-  );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      limit: 5,
-      part: "전체",
-      schema: "sleep",
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date
     }
   );
   const {val:CALENDAR, set:setCALENDAR} = useStorage(
@@ -50,6 +46,14 @@ export const SleepDetailPlan = () => {
       calStartOpen: false,
       calEndOpen: false,
       calOpen: false,
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      limit: 5,
+      part: "전체",
+      schema: "food",
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -63,55 +67,48 @@ export const SleepDetailPlan = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "sleep",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_sleep: {
-      plan_night: "",
-      plan_morning: "",
-      plan_time: "",
-    },
+    plan_food: {
+      plan_kcal: "",
+    }
   });
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "sleep",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_sleep: {
-      plan_night: "",
-      plan_morning: "",
-      plan_time: "",
-    },
+    plan_food: {
+      plan_kcal: "",
+    }
   });
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
+    const response = await axios.get(`${URL_WORK_PLAN}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        food_plan_dur: DATE.strDur,
         FILTER: FILTER,
       },
     });
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt
+      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
-  })()}, [location_id, user_id, DATE.strDur, FILTER]);
+  })()}, [location_id, user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_SLEEP_PLAN}/delete`, {
+    const response = await axios.delete(`${URL_WORK_PLAN}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        food_plan_dur: DATE.strDur,
         FILTER: FILTER,
       },
     });
@@ -135,34 +132,20 @@ export const SleepDetailPlan = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
+            <th>칼로리</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td className="fs-20 pt-20">
-              {PLAN?.plan_start}
-            </td>
-            <td className="fs-20 pt-20">
-              {PLAN?.plan_end}
-            </td>
-            <td className="fs-20 pt-20">
-              {PLAN?.plan_sleep.plan_night}
-            </td>
-            <td className="fs-20 pt-20">
-              {PLAN?.plan_sleep.plan_morning}
-            </td>
-            <td className="fs-20 pt-20">
-              {PLAN?.plan_sleep.plan_time}
-            </td>
-            <td className="fs-20 pt-20">
-              <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+            <td>{PLAN.plan_start}</td>
+            <td>{PLAN.plan_end}</td>
+            <td>{PLAN.plan_food.plan_kcal}</td>
+            <td>
+              <button className="btn btn-sm btn-danger" onClick={() => (
                 flowDelete(PLAN._id)
               )}>
-                X
+                x
               </button>
             </td>
           </tr>

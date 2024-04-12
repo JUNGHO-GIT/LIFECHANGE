@@ -61,5 +61,5 @@ schema.pre("save", async function(next) {
 
 // 5. model --------------------------------------------------------------------------------------->
 export const WorkPlan = mongoose.model(
-  "WorkPlan", schema
+  "WorkPlan", schema, "workPlan"
 );

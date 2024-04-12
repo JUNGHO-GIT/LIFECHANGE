@@ -1,20 +1,19 @@
-// FoodListPlan.jsx
+// MoneyPlanList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodListPlan = () => {
+export const MoneyPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
+  const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -27,7 +26,7 @@ export const FoodListPlan = () => {
       id: "",
       date: "",
       refresh:0,
-      toDetail:"/food/detail/plan"
+      toDetail:"/money/plan/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -50,7 +49,7 @@ export const FoodListPlan = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "food",
+      schema: "money",
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -67,41 +66,35 @@ export const FoodListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
+  const PLAN_DEFAULT = [{
     _id: "",
     plan_number: 0,
-    plan_schema: "food",
+    plan_schema: "money",
     plan_start: "",
     plan_end: "",
-    plan_food: {
-      plan_kcal: "",
+    plan_money: {
+      plan_in: "",
+      plan_out: ""
     }
-  }]);
-  const [PLAN, setPLAN] = useState([{
-    _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_start: "",
-    plan_end: "",
-    plan_food: {
-      plan_kcal: "",
-    }
-  }]);
+  }];
+  const [PLAN, setPLAN] = useState(PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD_PLAN}/list`, {
+    const response = await axios.get(`${URL_MONEY_PLAN}/list`, {
       params: {
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        money_plan_dur: DATE.strDur,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+
+    setPLAN(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [user_id, FILTER, PAGING]);
 
@@ -113,23 +106,18 @@ export const FoodListPlan = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>칼로리</th>
+            <th>수입</th>
+            <th>지출</th>
           </tr>
         </thead>
         <tbody>
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td onClick={() => {
-                  STATE.id = item._id;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.plan_start}
-                </td>
-                <td>{item.plan_end}</td>
-                <td>{item.plan_food.plan_kcal}</td>
+                <td>{item.food_plan_start}</td>
+                <td>{item.food_plan_end}</td>
+                <td>{item.food_plan_money.plan_in}</td>
+                <td>{item.food_plan_money.plan_out}</td>
               </tr>
             </React.Fragment>
           ))}

@@ -1,9 +1,9 @@
-// MoneyDetailPlan.jsx
+// MoneyPlanDetail.jsx
 
 import React from "react";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDetailPlan = () => {
+export const MoneyPlanDetail = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (

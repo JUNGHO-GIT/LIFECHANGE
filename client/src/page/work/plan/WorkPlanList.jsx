@@ -1,19 +1,20 @@
-// SleepListPlan.jsx
+// WorkPlanList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
+import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepListPlan = () => {
+export const WorkPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
+  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -26,7 +27,7 @@ export const SleepListPlan = () => {
       id: "",
       date: "",
       refresh:0,
-      toDetail:"/sleep/detail/plan"
+      toDetail:"/work/plan/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -49,7 +50,7 @@ export const SleepListPlan = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "sleep",
+      schema: "work",
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -69,34 +70,38 @@ export const SleepListPlan = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_schema: "sleep",
+    plan_schema: "work",
     plan_start: "",
     plan_end: "",
-    plan_sleep: {
-      plan_night: "",
-      plan_morning: "",
-      plan_time: "",
+    plan_work: {
+      plan_count_total: "",
+      plan_cardio_time: "",
+      plan_score_name: "",
+      plan_score_kg: "",
+      plan_score_rep: "",
     },
   }]);
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_schema: "sleep",
+    plan_schema: "work",
     plan_start: "",
     plan_end: "",
-    plan_sleep: {
-      plan_night: "",
-      plan_morning: "",
-      plan_time: "",
+    plan_work: {
+      plan_count_total: "",
+      plan_cardio_time: "",
+      plan_score_name: "",
+      plan_score_kg: "",
+      plan_score_rep: "",
     },
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP_PLAN}/list`, {
+    const response = await axios.get(`${URL_WORK_PLAN}/list`, {
       params: {
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        work_plan_dur: DATE.strDur,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -106,7 +111,7 @@ export const SleepListPlan = () => {
       ...prev,
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
-  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
+  })()}, [user_id, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -116,28 +121,24 @@ export const SleepListPlan = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
+            <th>목표 운동 횟수</th>
+            <th>목표 유산소 시간</th>
+            <th>목표 운동 이름</th>
+            <th>목표 중량</th>
+            <th>목표 반복 횟수</th>
           </tr>
         </thead>
         <tbody>
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.plan_start;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.plan_start}
-                </td>
-                <td>{item.plan_end}</td>
-                <td>{item.plan_sleep.plan_night}</td>
-                <td>{item.plan_sleep.plan_morning}</td>
-                <td>{item.plan_sleep.plan_time}</td>
+                <td>{item.food_plan_start}</td>
+                <td>{item.food_plan_end}</td>
+                <td>{item.food_plan_work.plan_count_total}</td>
+                <td>{item.food_plan_work.plan_cardio_time}</td>
+                <td>{item.food_plan_work.plan_score_name}</td>
+                <td>{item.food_plan_work.plan_score_kg}</td>
+                <td>{item.food_plan_work.plan_score_rep}</td>
               </tr>
             </React.Fragment>
           ))}
@@ -167,7 +168,7 @@ export const SleepListPlan = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"}
+        type={"plan"}
       />
     );
   };

@@ -1,4 +1,4 @@
-// MoneyListPlan.jsx
+// SleepPlanList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -10,10 +10,10 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyListPlan = () => {
+export const SleepPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
+  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -26,7 +26,7 @@ export const MoneyListPlan = () => {
       id: "",
       date: "",
       refresh:0,
-      toDetail:"/money/detail/plan"
+      toDetail:"/sleep/plan/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -49,7 +49,7 @@ export const MoneyListPlan = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "money",
+      schema: "sleep",
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -66,37 +66,34 @@ export const MoneyListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const PLAN_DEFAULT = [{
+  const SLEEP_PLAN_DEFAULT = [{
     _id: "",
-    plan_number: 0,
-    plan_schema: "money",
-    plan_start: "",
-    plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
+    sleep_plan_number: 0,
+    sleep_plan_start: "",
+    sleep_plan_end: "",
+    sleep_plan_night: "",
+    sleep_plan_morning: "",
+    sleep_plan_time: "",
   }];
-  const [PLAN, setPLAN] = useState(PLAN_DEFAULT);
+  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY_PLAN}/list`, {
+    const response = await axios.get(`${URL_SLEEP_PLAN}/list`, {
       params: {
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        sleep_plan_dur: DATE.strDur,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-
-    setPLAN(response.data.result);
+    setSLEEP_PLAN(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, FILTER, PAGING]);
+  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -106,18 +103,28 @@ export const MoneyListPlan = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>수입</th>
-            <th>지출</th>
+            <th>취침시간</th>
+            <th>기상시간</th>
+            <th>수면시간</th>
           </tr>
         </thead>
         <tbody>
-          {PLAN.map((item) => (
+          {SLEEP_PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.plan_start}</td>
-                <td>{item.plan_end}</td>
-                <td>{item.plan_money.plan_in}</td>
-                <td>{item.plan_money.plan_out}</td>
+                <td className="pointer" onClick={() => {
+                  STATE.id = item._id;
+                  STATE.date = item.sleep_plan_start;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>
+                  {item.sleep_plan_start}
+                </td>
+                <td>{item.sleep_plan_end}</td>
+                <td>{item.sleep_plan_night}</td>
+                <td>{item.sleep_plan_morning}</td>
+                <td>{item.sleep_plan_time}</td>
               </tr>
             </React.Fragment>
           ))}
@@ -147,7 +154,7 @@ export const MoneyListPlan = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"plan"}
+        type={"sleep"}
       />
     );
   };

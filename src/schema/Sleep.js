@@ -51,5 +51,5 @@ schema.pre("save", async function(next) {
 
 // 5. model --------------------------------------------------------------------------------------->
 export const Sleep = mongoose.model(
-  "Sleep", schema
+  "Sleep", schema, "sleep"
 );

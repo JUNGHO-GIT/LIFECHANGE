@@ -13,10 +13,6 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  money_plan_schema: {
-    type: String,
-    required: false
-  },
   money_plan_start: {
     type: String,
     required: false
@@ -53,5 +49,5 @@ schema.pre("save", async function(next) {
 
 // 5. model --------------------------------------------------------------------------------------->
 export const MoneyPlan = mongoose.model(
-  "MoneyPlan", schema
+  "MoneyPlan", schema, "moneyPlan"
 );

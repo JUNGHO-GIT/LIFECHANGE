@@ -1,4 +1,4 @@
-// WorkListPlan.jsx
+// FoodPlanList.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -11,10 +11,10 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkListPlan = () => {
+export const FoodPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
+  const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -27,7 +27,7 @@ export const WorkListPlan = () => {
       id: "",
       date: "",
       refresh:0,
-      toDetail:"/work/detail/plan"
+      toDetail:"/food/plan/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -50,7 +50,7 @@ export const WorkListPlan = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "work",
+      schema: "food",
     }
   );
   const {val:PAGING, set:setPAGING} = useStorage(
@@ -70,38 +70,30 @@ export const WorkListPlan = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
     _id: "",
     plan_number: 0,
-    plan_schema: "work",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
+    plan_food: {
+      plan_kcal: "",
+    }
   }]);
   const [PLAN, setPLAN] = useState([{
     _id: "",
     plan_number: 0,
-    plan_schema: "work",
+    plan_schema: "food",
     plan_start: "",
     plan_end: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
+    plan_food: {
+      plan_kcal: "",
+    }
   }]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK_PLAN}/list`, {
+    const response = await axios.get(`${URL_FOOD_PLAN}/list`, {
       params: {
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        food_plan_dur: DATE.strDur,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -121,24 +113,23 @@ export const WorkListPlan = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>목표 운동 횟수</th>
-            <th>목표 유산소 시간</th>
-            <th>목표 운동 이름</th>
-            <th>목표 중량</th>
-            <th>목표 반복 횟수</th>
+            <th>칼로리</th>
           </tr>
         </thead>
         <tbody>
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.plan_start}</td>
-                <td>{item.plan_end}</td>
-                <td>{item.plan_work.plan_count_total}</td>
-                <td>{item.plan_work.plan_cardio_time}</td>
-                <td>{item.plan_work.plan_score_name}</td>
-                <td>{item.plan_work.plan_score_kg}</td>
-                <td>{item.plan_work.plan_score_rep}</td>
+                <td onClick={() => {
+                  STATE.id = item._id;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>
+                  {item.food_plan_start}
+                </td>
+                <td>{item.food_plan_end}</td>
+                <td>{item.food_plan_food.plan_kcal}</td>
               </tr>
             </React.Fragment>
           ))}

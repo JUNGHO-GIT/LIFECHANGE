@@ -13,10 +13,6 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  food_plan_schema: {
-    type: String,
-    required: false
-  },
   food_plan_start: {
     type: String,
     required: false
@@ -49,5 +45,5 @@ schema.pre("save", async function(next) {
 
 // 5. model --------------------------------------------------------------------------------------->
 export const FoodPlan = mongoose.model(
-  "FoodPlan", schema
+  "FoodPlan", schema, "foodPlan"
 );

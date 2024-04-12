@@ -53,7 +53,7 @@ export const SleepSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [SLEEP_DEFAULT, setSLEEP_DEFAULT] = useState({
+  const SLEEP_DEFAULT = {
     _id: "",
     sleep_number: 0,
     sleep_date: "",
@@ -62,17 +62,8 @@ export const SleepSave = () => {
       sleep_morning: "",
       sleep_time: "",
     }],
-  });
-  const [SLEEP, setSLEEP] = useState({
-    _id: "",
-    sleep_number: 0,
-    sleep_date: "",
-    sleep_section: [{
-      sleep_night: "",
-      sleep_morning: "",
-      sleep_time: "",
-    }],
-  });
+  };
+  const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(DATE, setDATE, location_date);
@@ -87,7 +78,12 @@ export const SleepSave = () => {
         sleep_dur: DATE.strDur
       },
     });
-    setSLEEP(response.data.result ? response.data.result : SLEEP_DEFAULT);
+    setSLEEP(response.data.result);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
+    }));
   })()}, [user_id, DATE.strDur]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -132,12 +128,12 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP.sleep_section[0]?.sleep_night}
+                value={SLEEP?.sleep_section[0]?.sleep_night}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_section: [{
-                      ...prev.sleep_section[0],
+                      ...prev?.sleep_section[0],
                       sleep_night: e ? e.toString() : "",
                     }],
                   }));
@@ -156,12 +152,12 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP.sleep_section[0]?.sleep_morning}
+                value={SLEEP?.sleep_section[0]?.sleep_morning}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
                     ...prev,
                     sleep_section: [{
-                      ...prev.sleep_section[0],
+                      ...prev?.sleep_section[0],
                       sleep_morning: e ? e.toString() : "",
                     }],
                   }));
@@ -181,7 +177,7 @@ export const SleepSave = () => {
                 clockIcon={null}
                 format="HH:mm"
                 locale="ko"
-                value={SLEEP.sleep_section[0]?.sleep_time}
+                value={SLEEP?.sleep_section[0]?.sleep_time}
               ></TimePicker>
             </div>
           </div>
@@ -211,23 +207,17 @@ export const SleepSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {dateNode()}
           </div>
-        </div>
-        <div className="row d-center mt-5 mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {tableNode()}
           </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

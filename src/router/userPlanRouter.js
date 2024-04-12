@@ -9,7 +9,7 @@ userPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.plan_dur,
+      req.query.user_plan_dur,
       req.query.FILTER,
       req.query.PAGING
     );
@@ -32,7 +32,7 @@ userPlanRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.plan_dur,
+      req.query.user_plan_dur,
       req.query.FILTER,
     );
     if (result) {
@@ -53,8 +53,8 @@ userPlanRouter.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
-      req.body.PLAN,
-      req.body.plan_dur,
+      req.body.USER_PLAN,
+      req.body.user_plan_dur,
       req.body.FILTER,
     );
     if (result) {
@@ -76,7 +76,7 @@ userPlanRouter.delete("/delete", async (req, res) => {
     const result = await service.deletes(
       req.query._id,
       req.query.user_id,
-      req.query.plan_dur,
+      req.query.user_plan_dur,
       req.query.FILTER,
     );
     if (result) {

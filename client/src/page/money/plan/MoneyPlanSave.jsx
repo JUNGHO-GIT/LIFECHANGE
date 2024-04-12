@@ -1,4 +1,4 @@
-// WorkSavePlan.jsx
+// MoneyPlanSave.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -14,10 +14,10 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkSavePlan = () => {
+export const MoneyPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
+  const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -30,7 +30,7 @@ export const WorkSavePlan = () => {
       id: "",
       date: "",
       refresh: 0,
-      toList:"/work/list/plan"
+      toList:"/money/plan/list"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -53,7 +53,7 @@ export const WorkSavePlan = () => {
       order: "asc",
       limit: 5,
       part: "전체",
-      schema: "work",
+      schema: "money",
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -67,39 +67,33 @@ export const WorkSavePlan = () => {
   const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "work",
+    plan_schema: "money",
     plan_start: "",
     plan_end: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
+    plan_money: {
+      plan_in: "",
+      plan_out: ""
+    }
   });
   const [PLAN, setPLAN] = useState({
     _id: "",
     plan_number: 0,
-    plan_schema: "work",
+    plan_schema: "money",
     plan_start: "",
     plan_end: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
+    plan_money: {
+      plan_in: "",
+      plan_out: ""
+    }
   });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK_PLAN}/detail`, {
+    const response = await axios.get(`${URL_MONEY_PLAN}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        plan_dur: DATE.strDur,
+        money_plan_dur: DATE.strDur,
         FILTER: FILTER,
       },
     });
@@ -112,10 +106,10 @@ export const WorkSavePlan = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_WORK_PLAN}/save`, {
+    const response = await axios.post(`${URL_MONEY_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
-      plan_dur: DATE.strDur,
+      money_plan_dur: DATE.strDur,
       FILTER: FILTER,
     });
     if (response.data === "success") {
@@ -139,7 +133,6 @@ export const WorkSavePlan = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
     function dayPicker (isOpen, setOpen, selectedDate, setSelectedDate) {
       return (
         <div className={`dayPicker-container ${isOpen ? "" : "d-none"}`}>
@@ -170,8 +163,7 @@ export const WorkSavePlan = () => {
         </div>
       );
     };
-
-    function workNode () {
+    function moneyNode () {
       return (
         <div>
           {/* <div className="row d-center mb-20">
@@ -197,49 +189,17 @@ export const WorkSavePlan = () => {
           <div className="row d-center mb-20">
             <div className="col-6">
               <div className="input-group">
-                <span className="input-group-text">목표 운동 횟수</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_count_total}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_count_total: e.target.value}})}
+                <span className="input-group-text">목표 수입</span>
+                <input type="text" className="form-control" value={PLAN.plan_money.plan_in}
+                  onChange={(e) => setPLAN({...PLAN, plan_money: {...PLAN.plan_money, plan_in: e.target.value}})}
                 />
               </div>
             </div>
-          </div>
-          <div className="row d-center mb-20">
             <div className="col-6">
               <div className="input-group">
-                <span className="input-group-text">목표 유산소 시간</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_cardio_time}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_cardio_time: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">운동명</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_score_name}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_score_name: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">중량</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_score_kg}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_score_kg: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">횟수</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_score_rep}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_score_rep: e.target.value}})}
+                <span className="input-group-text">목표 지출</span>
+                <input type="text" className="form-control" value={PLAN.plan_money.plan_out}
+                  onChange={(e) => setPLAN({...PLAN, plan_money: {...PLAN.plan_money, plan_out: e.target.value}})}
                 />
               </div>
             </div>
@@ -247,12 +207,11 @@ export const WorkSavePlan = () => {
         </div>
       );
     };
-
     return (
       <div>
         <div className="row d-center">
           <div className="col-12">
-            {workNode()}
+            {moneyNode()}
           </div>
         </div>
       </div>
