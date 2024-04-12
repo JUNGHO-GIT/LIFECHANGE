@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
-import {Plan} from "../schema/Plan.js"
+import {SleepPlan} from "../schema/SleepPlan.js"
 
 // 0-1. dash (bar) -------------------------------------------------------------------------------->
 export const dashBar = async (
@@ -271,7 +271,7 @@ export const compare = async (
   .limit(limit)
   .lean();
 
-  const findResultPlan = await Plan.find({
+  const findResultPlan = await SleepPlan.find({
     user_id: user_id_param,
     plan_start: {
       $lte: endDayPlan,

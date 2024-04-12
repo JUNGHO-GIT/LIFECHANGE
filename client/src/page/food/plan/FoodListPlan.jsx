@@ -14,7 +14,7 @@ import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 export const FoodListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
+  const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -90,7 +90,7 @@ export const FoodListPlan = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_PLAN}/list`, {
+    const response = await axios.get(`${URL_FOOD_PLAN}/list`, {
       params: {
         user_id: user_id,
         plan_dur: DATE.strDur,

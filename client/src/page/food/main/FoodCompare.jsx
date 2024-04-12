@@ -8,7 +8,7 @@ import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import axios from "axios";
-import { differenceInDays } from "date-fns";
+import {differenceInDays} from "date-fns";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodCompare = () => {

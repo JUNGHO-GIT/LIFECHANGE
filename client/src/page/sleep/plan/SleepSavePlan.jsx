@@ -20,7 +20,7 @@ import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 export const SleepSavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
+  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -98,7 +98,7 @@ export const SleepSavePlan = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_PLAN}/detail`, {
+    const response = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
@@ -115,7 +115,7 @@ export const SleepSavePlan = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_PLAN}/save`, {
+    const response = await axios.post(`${URL_SLEEP_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
       plan_dur: DATE.strDur,

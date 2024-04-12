@@ -17,7 +17,7 @@ import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 export const MoneySavePlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
+  const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -89,7 +89,7 @@ export const MoneySavePlan = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_PLAN}/detail`, {
+    const response = await axios.get(`${URL_MONEY_PLAN}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
@@ -106,7 +106,7 @@ export const MoneySavePlan = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_PLAN}/save`, {
+    const response = await axios.post(`${URL_MONEY_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
       plan_dur: DATE.strDur,

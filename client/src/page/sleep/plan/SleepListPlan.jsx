@@ -13,7 +13,7 @@ import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 export const SleepListPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
+  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_date = location?.state?.date;
@@ -93,7 +93,7 @@ export const SleepListPlan = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_PLAN}/list`, {
+    const response = await axios.get(`${URL_SLEEP_PLAN}/list`, {
       params: {
         user_id: user_id,
         plan_dur: DATE.strDur,

@@ -11,7 +11,7 @@ import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 export const SleepDetailPlan = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_PLAN = process.env.REACT_APP_URL_PLAN;
+  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
@@ -90,7 +90,7 @@ export const SleepDetailPlan = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_PLAN}/detail`, {
+    const response = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
@@ -107,7 +107,7 @@ export const SleepDetailPlan = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_PLAN}/delete`, {
+    const response = await axios.delete(`${URL_SLEEP_PLAN}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
