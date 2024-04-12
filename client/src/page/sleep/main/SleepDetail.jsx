@@ -25,6 +25,7 @@ export const SleepDetail = () => {
       id: "",
       date: "",
       refresh: 0,
+      toDetail:"/sleep/detail",
       toList:"/sleep/list",
       toSave:"/sleep/save"
     }
@@ -109,11 +110,15 @@ export const SleepDetail = () => {
       },
     });
     if (response.data === "success") {
-      alert("delete success");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
-        state: STATE
+      const updatedData = await axios.get(`${URL_SLEEP}/detail`, {
+        params: {
+          _id: location_id,
+          user_id: user_id,
+          sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        },
       });
+      setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
+      alert("삭제되었습니다.");
     }
     else {
       alert(`${response.data}`);
@@ -123,7 +128,7 @@ export const SleepDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>

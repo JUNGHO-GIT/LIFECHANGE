@@ -118,17 +118,18 @@ export const FoodDetail = () => {
         food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
-    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
+    setFOOD(response.data.result || FOOD_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>음식명</th>

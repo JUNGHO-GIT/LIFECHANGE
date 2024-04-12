@@ -72,8 +72,8 @@ export const SleepPlanList = () => {
   const SLEEP_PLAN_DEFAULT = [{
     _id: "",
     sleep_plan_number: 0,
-    sleep_plan_start: "",
-    sleep_plan_end: "",
+    sleep_plan_startDt: "",
+    sleep_plan_endDt: "",
     sleep_plan_night: "",
     sleep_plan_morning: "",
     sleep_plan_time: "",
@@ -104,7 +104,7 @@ export const SleepPlanList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>시작일</th>
@@ -120,14 +120,15 @@ export const SleepPlanList = () => {
               <tr>
                 <td className="pointer" onClick={() => {
                   STATE.id = item._id;
-                  STATE.date = item.sleep_plan_start;
+                  STATE.startDt = item.sleep_plan_startDt;
+                  STATE.endDt = item.sleep_plan_endDt;
                   navParam(STATE.toDetail, {
                     state: STATE
                   });
                 }}>
-                  {item.sleep_plan_start}
+                  {item.sleep_plan_startDt}
                 </td>
-                <td>{item.sleep_plan_end}</td>
+                <td>{item.sleep_plan_endDt}</td>
                 <td>{item.sleep_plan_night}</td>
                 <td>{item.sleep_plan_morning}</td>
                 <td>{item.sleep_plan_time}</td>

@@ -120,13 +120,12 @@ export const WorkSave = () => {
         work_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
-
-    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+    setWORK(response.data.result || WORK_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
     }));
-
   })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->

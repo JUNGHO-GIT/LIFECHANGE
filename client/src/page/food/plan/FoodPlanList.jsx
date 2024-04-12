@@ -73,8 +73,8 @@ export const FoodPlanList = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "food",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -83,8 +83,8 @@ export const FoodPlanList = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "food",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -100,17 +100,18 @@ export const FoodPlanList = () => {
         PAGING: PAGING
       },
     });
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+    setPLAN(response.data.result || PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [user_id, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>시작일</th>
@@ -128,9 +129,9 @@ export const FoodPlanList = () => {
                     state: STATE
                   });
                 }}>
-                  {item.food_plan_start}
+                  {item.food_plan_startDt}
                 </td>
-                <td>{item.food_plan_end}</td>
+                <td>{item.food_plan_endDt}</td>
                 <td>{item.food_plan_food.plan_kcal}</td>
               </tr>
             </React.Fragment>

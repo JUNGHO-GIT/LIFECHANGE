@@ -20,24 +20,24 @@ export const list = async (
 
   const totalCnt = await WorkPlan.countDocuments({
     user_id: user_id_param,
-    work_plan_start: {
+    work_plan_startDt: {
       $lte: endDay,
     },
-    work_plan_end: {
+    work_plan_endDt: {
       $gte: startDay,
     },
   });
 
   const findResult = await WorkPlan.find({
     user_id: user_id_param,
-    work_plan_start: {
+    work_plan_startDt: {
       $lte: endDay,
     },
-    work_plan_end: {
+    work_plan_endDt: {
       $gte: startDay,
     },
   })
-  .sort({work_plan_start: sort})
+  .sort({work_plan_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -60,10 +60,10 @@ export const detail = async (
   const finalResult = await WorkPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    work_plan_start: {
+    work_plan_startDt: {
       $lte: endDay,
     },
-    work_plan_end: {
+    work_plan_endDt: {
       $gte: startDay,
     }
   })
@@ -87,10 +87,10 @@ export const save = async (
 
   const findResult = await WorkPlan.findOne({
     user_id: user_id_param,
-    work_plan_start: {
+    work_plan_startDt: {
       $lte: endDay,
     },
-    work_plan_end: {
+    work_plan_endDt: {
       $gte: startDay,
     }
   })
@@ -100,8 +100,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      work_plan_start: startDay,
-      work_plan_end: endDay,
+      work_plan_startDt: startDay,
+      work_plan_endDt: endDay,
       work_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_plan_update: ""
     };
@@ -137,10 +137,10 @@ export const deletes = async (
     {
       _id: _id_param,
       user_id: user_id_param,
-      work_plan_start: {
+      work_plan_startDt: {
         $lte: endDay,
       },
-      work_plan_end: {
+      work_plan_endDt: {
         $gte: startDay,
       },
     },

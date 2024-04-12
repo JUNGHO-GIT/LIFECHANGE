@@ -85,7 +85,7 @@ export const MoneySave = () => {
   const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  /* useDate(DATE, setDATE, location_date); */
+  useDate(DATE, setDATE, location_date);
   useTime(MONEY, setMONEY, DATE, setDATE, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -341,28 +341,20 @@ export const MoneySave = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {dateNode()}
           </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-12">
-            {buttonNode()}
-          </div>
-        </div>
-        <div className="row d-center mt-5">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {handlerSectionCount()}
           </div>
-        </div>
-        <div className="row d-center mt-5">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {tableNode()}
+          </div>
+          <div className="col-12 mb-20">
+            {buttonNode()}
           </div>
         </div>
       </div>

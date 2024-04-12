@@ -32,8 +32,8 @@ export const dashBar = async (
   for (let key in dataFields) {
     const findResultPlan = await SleepPlan.findOne({
       user_id: user_id_param,
-      sleep_plan_start: { $lte: koreanDate },
-      sleep_plan_end: { $gte: koreanDate }
+      sleep_plan_startDt: { $lte: koreanDate },
+      sleep_plan_endDt: { $gte: koreanDate }
     })
     .lean();
     const findResultReal = await Sleep.findOne({
@@ -269,33 +269,33 @@ export const compare = async (
 
   const findResultPlan = await SleepPlan.find({
     user_id: user_id_param,
-    sleep_plan_start: {
+    sleep_plan_startDt: {
       $lte: endDayPlan,
     },
-    sleep_plan_end: {
+    sleep_plan_endDt: {
       $gte: startDayPlan,
     },
   })
-  .sort({sleep_plan_start: sort})
+  .sort({sleep_plan_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
 
   const finalResult = findResultReal.map((real) => {
     const match = findResultPlan.find((plan) => (
-      real.sleep_date >= plan.sleep_plan_start && real.sleep_date <= plan.sleep_plan_end
+      real.sleep_date >= plan.sleep_plan_startDt && real.sleep_date <= plan.sleep_plan_endDt
     ));
     return match ? {
       ...real,
-      sleep_plan_start: match.sleep_plan_start,
-      sleep_plan_end: match.sleep_plan_end,
+      sleep_plan_startDt: match.sleep_plan_startDt,
+      sleep_plan_endDt: match.sleep_plan_endDt,
       sleep_plan_night: match.sleep_plan_night,
       sleep_plan_morning: match.sleep_plan_morning,
       sleep_plan_time: match.sleep_plan_time,
     } : {
       ...real,
-      sleep_plan_start: "",
-      sleep_plan_end: "",
+      sleep_plan_startDt: "",
+      sleep_plan_endDt: "",
       sleep_plan_night: "",
       sleep_plan_morning: "",
       sleep_plan_time: "",
@@ -328,7 +328,8 @@ export const list = async (
       $gte: startDay,
       $lte: endDay,
     },
-  });
+  })
+  .lean();
 
   const findResult = await Sleep.find({
     user_id: user_id_param,
@@ -337,7 +338,7 @@ export const list = async (
       $lte: endDay,
     },
   })
-  .sort({ sleep_date: sort })
+  .sort({sleep_date: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -391,7 +392,7 @@ export const save = async (
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   let finalResult;
   if (!findResult) {
@@ -455,7 +456,8 @@ export const deletes = async (
         "elem._id": _id_param
       }],
     }
-  ).lean();
+  )
+  .lean();
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {

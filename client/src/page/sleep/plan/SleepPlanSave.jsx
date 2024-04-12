@@ -74,8 +74,8 @@ export const SleepPlanSave = () => {
   const SLEEP_PLAN_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,
-    sleep_plan_start: "",
-    sleep_plan_end: "",
+    sleep_plan_startDt: "",
+    sleep_plan_endDt: "",
     sleep_plan_night: "",
     sleep_plan_morning: "",
     sleep_plan_time: "",
@@ -84,6 +84,7 @@ export const SleepPlanSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(DATE, setDATE, location_date);
+  useTime(SLEEP_PLAN, setSLEEP_PLAN, DATE, setDATE, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {

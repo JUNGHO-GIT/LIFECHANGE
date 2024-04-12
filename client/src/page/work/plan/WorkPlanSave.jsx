@@ -76,8 +76,8 @@ export const WorkPlanSave = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "work",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_work: {
       plan_count_total: "",
       plan_cardio_time: "",
@@ -90,8 +90,8 @@ export const WorkPlanSave = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "work",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_work: {
       plan_count_total: "",
       plan_cardio_time: "",

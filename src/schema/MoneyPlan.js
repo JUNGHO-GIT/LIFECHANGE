@@ -13,11 +13,11 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  money_plan_start: {
+  money_plan_startDt: {
     type: String,
     required: false
   },
-  money_plan_end: {
+  money_plan_endDt: {
     type: String,
     required: false
   },

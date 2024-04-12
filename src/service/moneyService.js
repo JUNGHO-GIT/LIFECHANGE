@@ -17,8 +17,15 @@ export const list = async (
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
-  const part = FILTER_param.part || "";
-  const title = FILTER_param.title || "";
+
+  const totalCnt = await Money.countDocuments({
+    user_id: user_id_param,
+    money_date: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  })
+  .lean();
 
   const findResult = await Money.find({
     user_id: user_id_param,
@@ -27,35 +34,14 @@ export const list = async (
       $lte: endDay,
     },
   })
-  .sort({ money_date: sort })
+  .sort({money_date: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
   .lean();
-
-  const finalResult = findResult.map((money) => {
-    const FILTERed = money?.money_section.filter((item) => (
-      (part === "전체" || part === "") ? true : item.money_part_val === part) &&
-      (title === "전체" || title === "") ? true : item.money_title_val === title
-    );
-
-    function sliceData (data, page, limit) {
-      const startIndex = (page - 1) * limit;
-      let endIndex = startIndex + limit;
-      endIndex = endIndex > data.length ? data.length : endIndex;
-      return data.slice(startIndex, endIndex);
-    }
-
-    return {
-      ...money,
-      money_section: sliceData(FILTERed, page, limit),
-    };
-  });
-
-  const totalCnt = finalResult.reduce((acc, cur) => (
-    acc + cur?.money_section?.length || 0
-  ), 0);
 
   return {
     totalCnt: totalCnt,
-    result: finalResult,
+    result: findResult,
   };
 };
 
@@ -76,7 +62,7 @@ export const detail = async (
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   const sectionCnt = finalResult?.money_section?.length || 0;
 

@@ -71,8 +71,8 @@ export const MoneyPlanSave = () => {
   const MONEY_PLAN_DEFAULT = {
     _id: "",
     money_plan_number: 0,
-    money_plan_start: "",
-    money_plan_end: "",
+    money_plan_startDt: "",
+    money_plan_endDt: "",
     money_plan_in: "",
     money_plan_out: ""
   };

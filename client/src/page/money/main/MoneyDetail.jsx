@@ -25,15 +25,16 @@ export const MoneyDetail = () => {
       id: "",
       date: "",
       refresh: 0,
+      toDetail: "/money/detail",
       toList: "/money/list",
       toSave: "/money/save"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      strStartDt: "",
+      strEndDt: "",
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -68,7 +69,7 @@ export const MoneyDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [MONEY_DEFAULT, setMONEY_DEFAULT] = useState({
+  const MONEY_DEFAULT = {
     _id: "",
     money_number: 0,
     money_date: "",
@@ -80,23 +81,11 @@ export const MoneyDetail = () => {
       money_amount: 0,
       money_content: "",
     }],
-  });
-  const [MONEY, setMONEY] = useState({
-    _id: "",
-    money_number: 0,
-    money_date: "",
-    money_section: [{
-      money_part_idx: 0,
-      money_part_val: "전체",
-      money_title_idx: 0,
-      money_title_val: "전체",
-      money_amount: 0,
-      money_content: "",
-    }],
-  });
+  };
+  const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  /* useDate(DATE, setDATE, location_date); */
+  useDate(DATE, setDATE, location_date);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -107,9 +96,12 @@ export const MoneyDetail = () => {
         money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
-
-    setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
-
+    setMONEY(response.data.result || MONEY_DEFAULT);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
+    }));
   })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -122,11 +114,15 @@ export const MoneyDetail = () => {
       },
     });
     if (response.data === "success") {
-      alert("delete success");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
-        state: STATE
+      const updatedData = await axios.get(`${URL_MONEY}/detail`, {
+        params: {
+          _id: location_id,
+          user_id: user_id,
+          money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        },
       });
+      setMONEY(updatedData.data.result || MONEY_DEFAULT);
+      alert("삭제되었습니다.");
     }
     else {
       alert(`${response.data}`);
@@ -136,7 +132,7 @@ export const MoneyDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>

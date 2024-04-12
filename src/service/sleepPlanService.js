@@ -20,24 +20,28 @@ export const list = async (
 
   const totalCnt = await SleepPlan.countDocuments({
     user_id: user_id_param,
-    sleep_plan_start: {
+    sleep_plan_startDt: {
       $lte: endDay,
     },
-    sleep_plan_end: {
-      $gte: startDay,
-    },
-  });
-
-  const findResult = await SleepPlan.find({
-    user_id: user_id_param,
-    sleep_plan_start: {
-      $lte: endDay,
-    },
-    sleep_plan_end: {
+    sleep_plan_endDt: {
       $gte: startDay,
     },
   })
-  .sort({sleep_plan_start: sort})
+  .sort({sleep_plan_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const findResult = await SleepPlan.find({
+    user_id: user_id_param,
+    sleep_plan_startDt: {
+      $lte: endDay,
+    },
+    sleep_plan_endDt: {
+      $gte: startDay,
+    },
+  })
+  .sort({sleep_plan_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -60,10 +64,10 @@ export const detail = async (
   const finalResult = await SleepPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    sleep_plan_start: {
+    sleep_plan_startDt: {
       $lte: endDay,
     },
-    sleep_plan_end: {
+    sleep_plan_endDt: {
       $gte: startDay,
     }
   })
@@ -85,8 +89,8 @@ export const save = async (
 
   const findResult = await SleepPlan.findOne({
     user_id: user_id_param,
-    sleep_plan_start: startDay,
-    sleep_plan_end: endDay,
+    sleep_plan_startDt: startDay,
+    sleep_plan_endDt: endDay,
   })
   .lean();
 
@@ -95,8 +99,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      sleep_plan_start: startDay,
-      sleep_plan_end: endDay,
+      sleep_plan_startDt: startDay,
+      sleep_plan_endDt: endDay,
       sleep_plan_night: SLEEP_PLAN_param.sleep_plan_night,
       sleep_plan_morning: SLEEP_PLAN_param.sleep_plan_morning,
       sleep_plan_time: SLEEP_PLAN_param.sleep_plan_time,
@@ -135,8 +139,8 @@ export const deletes = async (
     {
       _id: _id_param,
       user_id: user_id_param,
-      sleep_plan_start: startDay,
-      sleep_plan_end: endDay,
+      sleep_plan_startDt: startDay,
+      sleep_plan_endDt: endDay,
     },
     {
       $set: {

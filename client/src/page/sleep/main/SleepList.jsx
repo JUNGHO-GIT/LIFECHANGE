@@ -105,7 +105,7 @@ export const SleepList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
@@ -115,26 +115,38 @@ export const SleepList = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP.map((item) => (
-            item?.sleep_section.map((section, index) => (
-              <React.Fragment key={item._id + index}>
-                <tr>
-                  <td rowSpan={item.sleep_section.length} className={"pointer"} onClick={() => {
-                    STATE.id = item._id;
-                    STATE.date = item.sleep_date;
-                    navParam(STATE.toDetail, {
-                      state: STATE
-                    });
-                  }}>
-                    {item.sleep_date}
-                  </td>
-                  <td>{section.sleep_night}</td>
-                  <td>{section.sleep_morning}</td>
-                  <td>{section.sleep_time}</td>
-                </tr>
-              </React.Fragment>
-            )))
-          )}
+          {SLEEP.map((item, index) => (
+            <React.Fragment key={item._id}>
+              {item.sleep_section.slice(0, 3).map((section, sectionIndex) => (
+                <React.Fragment key={section.sleep_part_idx}>
+                  <tr>
+                    {sectionIndex === 0 && (
+                      <td rowSpan={item.sleep_section.length > 3 ? 4 : item.sleep_section.length}
+                      className={"pointer"} onClick={() => {
+                        STATE.id = item._id;
+                        STATE.date = item.sleep_date;
+                        navParam(STATE.toDetail, {
+                          state: STATE
+                        });
+                      }}>
+                        {item.sleep_date}
+                      </td>
+                    )}
+                    <td>{section.sleep_night}</td>
+                    <td>{section.sleep_morning}</td>
+                    <td>{section.sleep_time}</td>
+                  </tr>
+                </React.Fragment>
+              ))}
+              {item.sleep_section.length > 3 && (
+                <React.Fragment key={item._id}>
+                  <tr>
+                    <td colSpan={5}>...</td>
+                  </tr>
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          ))}
         </tbody>
       </table>
     );

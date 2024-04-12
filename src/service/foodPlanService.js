@@ -20,24 +20,24 @@ export const list = async (
 
   const totalCnt = await FoodPlan.countDocuments({
     user_id: user_id_param,
-    food_plan_start: {
+    food_plan_startDt: {
       $lte: endDay,
     },
-    food_plan_end: {
+    food_plan_endDt: {
       $gte: startDay,
     },
   });
 
   const findResult = await FoodPlan.find({
     user_id: user_id_param,
-    food_plan_start: {
+    food_plan_startDt: {
       $lte: endDay,
     },
-    food_plan_end: {
+    food_plan_endDt: {
       $gte: startDay,
     },
   })
-  .sort({food_plan_start: sort})
+  .sort({food_plan_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -60,10 +60,10 @@ export const detail = async (
   const finalResult = await FoodPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    food_plan_start: {
+    food_plan_startDt: {
       $lte: endDay,
     },
-    food_plan_end: {
+    food_plan_endDt: {
       $gte: startDay,
     }
   })
@@ -87,10 +87,10 @@ export const save = async (
 
   const findResult = await FoodPlan.findOne({
     user_id: user_id_param,
-    food_plan_start: {
+    food_plan_startDt: {
       $lte: endDay,
     },
-    food_plan_end: {
+    food_plan_endDt: {
       $gte: startDay,
     }
   })
@@ -100,8 +100,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      food_plan_start: startDay,
-      food_plan_end: endDay,
+      food_plan_startDt: startDay,
+      food_plan_endDt: endDay,
       food_plan_kcal: FOOD_PLAN_param.food_plan_kcal,
       food_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       food_plan_update: ""
@@ -138,10 +138,10 @@ export const deletes = async (
     {
       _id: _id_param,
       user_id: user_id_param,
-      food_plan_start: {
+      food_plan_startDt: {
         $lte: endDay,
       },
-      food_plan_end: {
+      food_plan_endDt: {
         $gte: startDay,
       },
     },

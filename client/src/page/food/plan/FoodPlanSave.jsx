@@ -76,8 +76,8 @@ export const FoodPlanSave = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "food",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_food: {
       plan_kcal: ""
     },
@@ -86,8 +86,8 @@ export const FoodPlanSave = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "food",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_food: {
       plan_kcal: ""
     },
@@ -102,10 +102,11 @@ export const FoodPlanSave = () => {
         food_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+    setPLAN(response.data.result || PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 

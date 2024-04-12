@@ -73,8 +73,8 @@ export const WorkPlanList = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "work",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_work: {
       plan_count_total: "",
       plan_cardio_time: "",
@@ -87,8 +87,8 @@ export const WorkPlanList = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "work",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_work: {
       plan_count_total: "",
       plan_cardio_time: "",
@@ -108,17 +108,18 @@ export const WorkPlanList = () => {
         PAGING: PAGING
       },
     });
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+    setPLAN(response.data.result || PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [user_id, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>시작일</th>
@@ -134,8 +135,8 @@ export const WorkPlanList = () => {
           {PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.food_plan_start}</td>
-                <td>{item.food_plan_end}</td>
+                <td>{item.food_plan_startDt}</td>
+                <td>{item.food_plan_endDt}</td>
                 <td>{item.food_plan_work.plan_count_total}</td>
                 <td>{item.food_plan_work.plan_cardio_time}</td>
                 <td>{item.food_plan_work.plan_score_name}</td>

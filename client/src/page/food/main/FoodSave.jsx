@@ -128,9 +128,12 @@ export const FoodSave = () => {
         food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
-
-    setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
-
+    setFOOD(response.data.result || FOOD_DEFAULT);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
+    }));
   })()}, [user_id, DATE.strStartDt, DATE.strEndDt]); */
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -269,7 +272,7 @@ export const FoodSave = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>part</th>

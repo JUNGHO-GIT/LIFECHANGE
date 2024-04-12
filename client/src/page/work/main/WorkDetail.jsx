@@ -114,10 +114,11 @@ export const WorkDetail = () => {
       },
     });
 
-    setWORK(response.data.result ? response.data.result : WORK_DEFAULT);
+    setWORK(response.data.result || WORK_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
 
   })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
@@ -134,7 +135,7 @@ export const WorkDetail = () => {
     if (response.data === "success") {
       alert("delete success");
       STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
+      navParam(STATE.toDetail, {
         state: STATE
       });
     }
@@ -146,7 +147,7 @@ export const WorkDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>

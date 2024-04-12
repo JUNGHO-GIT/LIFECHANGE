@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -72,15 +71,12 @@ export const MoneyPlanList = () => {
   const MONEY_PLAN_DEFAULT = [{
     _id: "",
     money_plan_number: 0,
-    money_plan_start: "",
-    money_plan_end: "",
+    money_plan_startDt: "",
+    money_plan_endDt: "",
     money_plan_in: "",
     money_plan_out: ""
   }];
   const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -103,7 +99,7 @@ export const MoneyPlanList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>시작일</th>
@@ -116,8 +112,16 @@ export const MoneyPlanList = () => {
           {MONEY_PLAN.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.money_plan_start}</td>
-                <td>{item.money_plan_end}</td>
+                <td className="pointer" onClick={() => {
+                  STATE.id = item._id;
+                  STATE.date = item.money_plan_startDt;
+                  navParam(STATE.toDetail, {
+                    state: STATE
+                  });
+                }}>
+                  {item.money_plan_startDt}
+                </td>
+                <td>{item.money_plan_endDt}</td>
                 <td>{item.money_plan_in}</td>
                 <td>{item.money_plan_out}</td>
               </tr>
@@ -168,29 +172,21 @@ export const MoneyPlanList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>List</h1>
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {calendarNode()}
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {filterNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {pagingNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -85,9 +84,6 @@ export const MoneyList = () => {
   const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  /* useDate(DATE, setDATE, location_date); */
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
@@ -108,7 +104,7 @@ export const MoneyList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
@@ -120,26 +116,32 @@ export const MoneyList = () => {
         </thead>
         <tbody>
           {MONEY.map((item, index) => (
-            <React.Fragment key={index}>
-              {item.money_section.map((section, sectionIndex) => (
-                <tr key={section.money_part_idx}>
-                  {sectionIndex === 0 && (
-                    <td rowSpan={item.money_section.length} className={"pointer"} onClick={() => {
-                      STATE.id = item._id;
-                      STATE.date = item.money_date;
-                      navParam(STATE.toDetail, {
-                        state: STATE
-                      });
-                    }}>
-                      {item.money_date}
-                    </td>
-                  )}
-                  <td>{section.money_part_val}</td>
-                  <td>{section.money_title_val}</td>
-                  <td>{section.money_amount}</td>
-                  <td>{section.money_content}</td>
-                </tr>
+            <React.Fragment key={item._id}>
+              {item.money_section.slice(0, 3).map((section, sectionIndex) => (
+                <React.Fragment key={section.money_part_idx}>
+                  <tr>
+                    {sectionIndex === 0 && (
+                      <td rowSpan={item.money_section.length > 3 ? 4 : item.money_section.length}
+                      className={"pointer"} onClick={() => {
+                        STATE.id = item._id;
+                        STATE.date = item.money_date;
+                        navParam(STATE.toDetail, { state: STATE });
+                      }}>
+                        {item.money_date}
+                      </td>
+                    )}
+                    <td>{section.money_part_val}</td>
+                    <td>{section.money_title_val}</td>
+                    <td>{section.money_amount}</td>
+                    <td>{section.money_content}</td>
+                  </tr>
+                </React.Fragment>
               ))}
+              {item.money_section.length > 3 && (
+                <tr>
+                  <td colSpan={5}>...</td>
+                </tr>
+              )}
             </React.Fragment>
           ))}
         </tbody>

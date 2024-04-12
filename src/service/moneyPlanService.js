@@ -20,28 +20,28 @@ export const list = async (
 
   const totalCnt = await MoneyPlan.countDocuments({
     user_id: user_id_param,
-    money_plan_start: {
+    money_plan_startDt: {
       $lte: endDay,
     },
-    money_plan_end: {
+    money_plan_endDt: {
       $gte: startDay,
     },
   })
-  .sort({money_plan_start: sort})
+  .sort({money_plan_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
 
   const findResult = await MoneyPlan.find({
     user_id: user_id_param,
-    money_plan_start: {
+    money_plan_startDt: {
       $lte: endDay,
     },
-    money_plan_end: {
+    money_plan_endDt: {
       $gte: startDay,
     },
   })
-  .sort({money_plan_start: sort})
+  .sort({money_plan_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -64,8 +64,8 @@ export const detail = async (
   const finalResult = await MoneyPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    money_plan_start: startDay,
-    money_plan_end: endDay,
+    money_plan_startDt: startDay,
+    money_plan_endDt: endDay,
   })
   .lean();
 
@@ -85,8 +85,8 @@ export const save = async (
 
   const findResult = await MoneyPlan.findOne({
     user_id: user_id_param,
-    money_plan_start: startDay,
-    money_plan_end: endDay,
+    money_plan_startDt: startDay,
+    money_plan_endDt: endDay,
   })
   .lean();
 
@@ -95,8 +95,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      money_plan_start: startDay,
-      money_plan_end: endDay,
+      money_plan_startDt: startDay,
+      money_plan_endDt: endDay,
       money_plan_in: MONEY_PLAN_param.money_plan_in,
       money_plan_out: MONEY_PLAN_param.money_plan_out,
       money_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
@@ -134,10 +134,10 @@ export const deletes = async (
     {
       _id: _id_param,
       user_id: user_id_param,
-      money_plan_start: {
+      money_plan_startDt: {
         $lte: endDay,
       },
-      money_plan_end: {
+      money_plan_endDt: {
         $gte: startDay,
       },
     },

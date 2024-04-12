@@ -13,11 +13,11 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  sleep_plan_start: {
+  sleep_plan_startDt: {
     type: String,
     required: false
   },
-  sleep_plan_end: {
+  sleep_plan_endDt: {
     type: String,
     required: false
   },

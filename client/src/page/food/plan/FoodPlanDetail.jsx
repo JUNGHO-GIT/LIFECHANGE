@@ -76,8 +76,8 @@ export const FoodPlanDetail = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "food",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -86,8 +86,8 @@ export const FoodPlanDetail = () => {
     _id: "",
     plan_number: 0,
     plan_schema: "food",
-    plan_start: "",
-    plan_end: "",
+    plan_startDt: "",
+    plan_endDt: "",
     plan_food: {
       plan_kcal: "",
     }
@@ -103,10 +103,11 @@ export const FoodPlanDetail = () => {
         FILTER: FILTER,
       },
     });
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+    setPLAN(response.data.result || PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [location_id, user_id]);
 
@@ -123,7 +124,7 @@ export const FoodPlanDetail = () => {
     if (response.data === "success") {
       alert("delete success");
       STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
+      navParam(STATE.toDetail, {
         state: STATE
       });
     }
@@ -135,7 +136,7 @@ export const FoodPlanDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>시작일</th>
@@ -146,8 +147,8 @@ export const FoodPlanDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{PLAN.plan_start}</td>
-            <td>{PLAN.plan_end}</td>
+            <td>{PLAN.plan_startDt}</td>
+            <td>{PLAN.plan_endDt}</td>
             <td>{PLAN.plan_food.plan_kcal}</td>
             <td>
               <button className="btn btn-sm btn-danger" onClick={() => (

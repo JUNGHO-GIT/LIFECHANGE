@@ -15,7 +15,8 @@ export const SleepPlanDetail = () => {
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id;
-  const location_date = location?.state?.date;
+  const location_startDt = location?.state?.startDt;
+  const location_endDt = location?.state?.endDt;
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname;
 
@@ -31,9 +32,9 @@ export const SleepPlanDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      strStartDt: location_startDt,
+      strEndDt: location_endDt,
+      strDt: "",
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -71,8 +72,8 @@ export const SleepPlanDetail = () => {
   const SLEEP_PLAN_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,
-    sleep_plan_start: "",
-    sleep_plan_end: "",
+    sleep_plan_startDt: "",
+    sleep_plan_endDt: "",
     sleep_plan_night: "",
     sleep_plan_morning: "",
     sleep_plan_time: "",
@@ -109,11 +110,15 @@ export const SleepPlanDetail = () => {
       },
     });
     if (response.data === "success") {
-      alert("delete success");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
-        state: STATE
+      const updatedData = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
+        params: {
+          _id: location_id,
+          user_id: user_id,
+          sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        },
       });
+      setSLEEP_PLAN(updatedData.data.result || SLEEP_PLAN_DEFAULT);
+      alert("삭제되었습니다.");
     }
     else {
       alert(`${response.data}`);
@@ -123,7 +128,7 @@ export const SleepPlanDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover table-responsive">
+      <table className="table bg-white table-hover">
         <thead className="table-primary">
           <tr>
             <th>시작일</th>
@@ -137,10 +142,10 @@ export const SleepPlanDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {SLEEP_PLAN.sleep_plan_start}
+              {SLEEP_PLAN.sleep_plan_startDt}
             </td>
             <td className="fs-20 pt-20">
-              {SLEEP_PLAN.sleep_plan_end}
+              {SLEEP_PLAN.sleep_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
               {SLEEP_PLAN.sleep_plan_night}
