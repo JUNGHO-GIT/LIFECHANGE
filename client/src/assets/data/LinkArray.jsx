@@ -19,20 +19,9 @@ export const linkArray = [
       {to: "/food/compare", label: "FoodCompare"},
       {to: "/food/search", label: "FoodSearch"},
       {to: "/food/list", label: "FoodList"},
+      {to: "/plan/food/list", label: "FoodListPlan"},
       {to: "/food/save", label: "FoodSave"},
-    ]
-  },
-  {
-    label: "Plan",
-    items: [
-      {to: "/plan/food/list", label: "PlanFoodList"},
-      {to: "/plan/food/save", label: "PlanFoodSave"},
-      {to: "/plan/money/list", label: "PlanMoneyList"},
-      {to: "/plan/money/save", label: "PlanMoneySave"},
-      {to: "/plan/sleep/list", label: "PlanSleepList"},
-      {to: "/plan/sleep/save", label: "PlanSleepSave"},
-      {to: "/plan/work/list", label: "PlanWorkList"},
-      {to: "/plan/work/save", label: "PlanWorkSave"},
+      {to: "/plan/food/save", label: "FoodSavePlan"},
     ]
   },
   {
@@ -41,7 +30,9 @@ export const linkArray = [
       {to: "/money/dash", label: "MoneyDash"},
       {to: "/money/compare", label: "MoneyCompare"},
       {to: "/money/list", label: "MoneyList"},
+      {to: "/plan/money/list", label: "MoneyListPlan"},
       {to: "/money/save", label: "MoneySave"},
+      {to: "/plan/money/save", label: "MoneySavePlan"},
     ]
   },
   {
@@ -50,7 +41,9 @@ export const linkArray = [
       {to: "/sleep/dash", label: "SleepDash"},
       {to: "/sleep/compare", label: "SleepCompare"},
       {to: "/sleep/list", label: "SleepList"},
+      {to: "/plan/sleep/list", label: "SleepListPlan"},
       {to: "/sleep/save", label: "SleepSave"},
+      {to: "/plan/sleep/save", label: "SleepSavePlan"},
     ]
   },
   {
@@ -59,7 +52,9 @@ export const linkArray = [
       {to: "/work/dash", label: "WorkDash"},
       {to: "/work/compare", label: "WorkCompare"},
       {to: "/work/list", label: "WorkList"},
+      {to: "/plan/work/list", label: "WorkListPlan"},
       {to: "/work/save", label: "WorkSave"},
+      {to: "/plan/work/save", label: "WorkSavePlan"},
     ]
   }
 ];

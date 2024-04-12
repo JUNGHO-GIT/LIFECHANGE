@@ -23,54 +23,50 @@ import "../assets/css/Header.css";
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
 import {Footer} from "../layout/Footer";
-import {Dash} from "../page/main/Dash";
+import {Dash} from "../page/common/Dash.jsx";
 
 import {FoodDash} from "../page/food/dash/FoodDash.jsx";
-import {FoodCompare} from "../page/food/FoodCompare.jsx";
-import {FoodSearch} from "../page/food/FoodSearch.jsx";
-import {FoodList} from "../page/food/FoodList.jsx";
-import {FoodDetail} from "../page/food/FoodDetail.jsx";
-import {FoodSave} from "../page/food/FoodSave.jsx";
+import {FoodCompare} from "../page/food/main/FoodCompare.jsx";
+import {FoodSearch} from "../page/food/main/FoodSearch.jsx";
+import {FoodList} from "../page/food/main/FoodList.jsx";
+import {FoodDetail} from "../page/food/main/FoodDetail.jsx";
+import {FoodSave} from "../page/food/main/FoodSave.jsx";
+import {PlanFoodList} from "../page/food/plan/PlanFoodList.jsx";
+import {PlanFoodDetail} from "../page/food/plan/PlanFoodDetail.jsx";
+import {PlanFoodSave} from "../page/food/plan/PlanFoodSave.jsx";
 
 import {MoneyDash} from "../page/money/dash/MoneyDash.jsx";
-import {MoneyCompare} from "../page/money/MoneyCompare.jsx";
-import {MoneyList} from "../page/money/MoneyList.jsx";
-import {MoneyDetail} from "../page/money/MoneyDetail.jsx";
-import {MoneySave} from "../page/money/MoneySave.jsx";
-
-import {PlanFoodList} from "../page/plan/PlanFoodList.jsx";
-import {PlanFoodDetail} from "../page/plan/PlanFoodDetail.jsx";
-import {PlanFoodSave} from "../page/plan/PlanFoodSave.jsx";
-
-import {PlanMoneyList} from "../page/plan/PlanMoneyList.jsx";
-/* import {PlanMoneyDetail} from "../page/plan/PlanMoneyDetail.jsx"; */
-import {PlanMoneySave} from "../page/plan/PlanMoneySave.jsx";
-
-import {PlanSleepList} from "../page/plan/PlanSleepList.jsx";
-import {PlanSleepDetail} from "../page/plan/PlanSleepDetail.jsx";
-import {PlanSleepSave} from "../page/plan/PlanSleepSave.jsx";
-
-import {PlanWorkList} from "../page/plan/PlanWorkList.jsx";
-/* import {PlanWorkDetail} from "../page/plan/PlanWorkDetail.jsx"; */
-import {PlanWorkSave} from "../page/plan/PlanWorkSave.jsx";
+import {MoneyCompare} from "../page/money/main/MoneyCompare.jsx";
+import {MoneyList} from "../page/money/main/MoneyList.jsx";
+import {MoneyDetail} from "../page/money/main/MoneyDetail.jsx";
+import {MoneySave} from "../page/money/main/MoneySave.jsx";
+import {PlanMoneyList} from "../page/money/plan/PlanMoneyList.jsx";
+/* import {PlanMoneyDetail} from "../page/money/plan/PlanMoneyDetail.jsx"; */
+import {PlanMoneySave} from "../page/money/plan/PlanMoneySave.jsx";
 
 import {SleepDash} from "../page/sleep/dash/SleepDash.jsx";
-import {SleepCompare} from "../page/sleep/SleepCompare.jsx";
-import {SleepList} from "../page/sleep/SleepList.jsx";
-import {SleepDetail} from "../page/sleep/SleepDetail.jsx";
-import {SleepSave} from "../page/sleep/SleepSave.jsx";
+import {SleepCompare} from "../page/sleep/main/SleepCompare.jsx";
+import {SleepList} from "../page/sleep/main/SleepList.jsx";
+import {SleepDetail} from "../page/sleep/main/SleepDetail.jsx";
+import {SleepSave} from "../page/sleep/main/SleepSave.jsx";
+import {PlanSleepList} from "../page/sleep/plan/PlanSleepList.jsx";
+import {PlanSleepDetail} from "../page/sleep/plan/PlanSleepDetail.jsx";
+import {PlanSleepSave} from "../page/sleep/plan/PlanSleepSave.jsx";
 
-import {UserLogin} from "../page/user/UserLogin.jsx";
-import {UserSave} from "../page/user/UserSave.jsx";
-import {UserDetail} from "../page/user/UserDetail.jsx";
-import {UserDelete} from "../page/user/UserDelete.jsx";
-import {UserList} from "../page/user/UserList";
+import {UserLogin} from "../page/user/main/UserLogin.jsx";
+import {UserSave} from "../page/user/main/UserSave.jsx";
+import {UserDetail} from "../page/user/main/UserDetail.jsx";
+import {UserDelete} from "../page/user/main/UserDelete.jsx";
+import {UserList} from "../page/user/main/UserList";
 
 import {WorkDash} from "../page/work/dash/WorkDash.jsx";
-import {WorkCompare} from "../page/work/WorkCompare.jsx";
-import {WorkList} from "../page/work/WorkList.jsx";
-import {WorkDetail} from "../page/work/WorkDetail.jsx";
-import {WorkSave} from "../page/work/WorkSave.jsx";
+import {WorkCompare} from "../page/work/main/WorkCompare.jsx";
+import {WorkList} from "../page/work/main/WorkList.jsx";
+import {WorkDetail} from "../page/work/main/WorkDetail.jsx";
+import {WorkSave} from "../page/work/main/WorkSave.jsx";
+import {PlanWorkList} from "../page/work/plan/PlanWorkList.jsx";
+/* import {PlanWorkDetail} from "../page/work/plan/PlanWorkDetail.jsx"; */
+import {PlanWorkSave} from "../page/work/plan/PlanWorkSave.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 const Common = () => {
@@ -153,11 +149,11 @@ const User = () => {
 const Work = () => {
   return (
     <Routes>
-      <Route path="/dash" element={<WorkDash />} />
-      <Route path="/compare" element={<WorkCompare />} />
-      <Route path="/list" element={<WorkList />} />
-      <Route path="/detail" element={<WorkDetail />} />
-      <Route path="/save" element={<WorkSave />} />
+      <Route path="/dash/*" element={<WorkDash />} />
+      <Route path="/compare/*" element={<WorkCompare />} />
+      <Route path="/list/*" element={<WorkList />} />
+      <Route path="/detail/*" element={<WorkDetail />} />
+      <Route path="/save/*" element={<WorkSave />} />
     </Routes>
   );
 };

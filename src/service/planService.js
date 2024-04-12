@@ -37,7 +37,7 @@ export const list = async (
       $gte: startDay,
     },
   })
-  .sort({ sleep_date: sort })
+  .sort({plan_start: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();

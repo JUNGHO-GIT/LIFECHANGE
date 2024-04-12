@@ -235,7 +235,84 @@ export const dashAvgMonth = async (
   };
 };
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1-1. compare ----------------------------------------------------------------------------------->
+export const compare = async (
+  user_id_param,
+  sleep_dur_param,
+  plan_dur_param,
+  FILTER_param,
+  PAGING_param
+) => {
+
+  const [startDayReal, endDayReal] = sleep_dur_param.split(` ~ `);
+  const [startDayPlan, endDayPlan] = plan_dur_param.split(` ~ `);
+
+  const sort = FILTER_param.order === "asc" ? 1 : -1;
+  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+
+  const totalCnt = await Sleep.countDocuments({
+    user_id: user_id_param,
+    sleep_date: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    },
+  });
+
+  const findResultReal = await Sleep.find({
+    user_id: user_id_param,
+    sleep_date: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    },
+  })
+  .sort({sleep_date: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const findResultPlan = await Plan.find({
+    user_id: user_id_param,
+    plan_start: {
+      $lte: endDayPlan,
+    },
+    plan_end: {
+      $gte: startDayPlan,
+    },
+  })
+  .sort({plan_start: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const finalResult = findResultReal.map((real) => {
+    const match = findResultPlan.find((plan) => (
+      real.sleep_date >= plan.plan_start && real.sleep_date <= plan.plan_end
+    ));
+    return match ? {
+      ...real,
+      plan_start: match.plan_start,
+      plan_end: match.plan_end,
+      plan_sleep: match.plan_sleep,
+    } : {
+      ...real,
+      plan_start: "",
+      plan_end: "",
+      plan_sleep: {
+        plan_night: "",
+        plan_morning: "",
+        plan_time: "",
+      },
+    };
+  });
+
+  return {
+    totalCnt: totalCnt,
+    result: finalResult,
+  };
+}
+
+// 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
   sleep_dur_param,

@@ -42,35 +42,7 @@ export const Header = () => {
     setIsExpended(isExpended === menuLabel ? null : menuLabel);
   };
 
-  // 4-1. view ------------------------------------------------------------------------------------>
-  const SidebarItem = ({label, items}) => (
-    <li className="text-start pointer mt-30 ps-20">
-      <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
-        toggleExpand(label)
-      )}>
-        {label}
-      </div>
-      <Collapse in={isExpended === label}>
-        <ul>
-          {items.map(({ to, label }) => (
-            <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
-              <div className="pointer" onClick={() => {
-                STATE.date = koreanDate;
-                navParam(to, {
-                  state: STATE
-                });
-                setIsActive(to);
-              }}>
-                {label}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Collapse>
-    </li>
-  );
-
-  // 4-2. view ------------------------------------------------------------------------------------>
+  // 4. sidebar ----------------------------------------------------------------------------------->
   const Sidebar = () => {
 
     let preFix;
@@ -82,6 +54,33 @@ export const Header = () => {
         lowFix = preFix.toLowerCase()
       }
     });
+
+    const SidebarItem = ({label, items}) => (
+      <li className="text-start pointer mt-30 ps-20">
+        <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
+          toggleExpand(label)
+        )}>
+          {label}
+        </div>
+        <Collapse in={isExpended === label}>
+          <ul>
+            {items.map(({ to, label }) => (
+              <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
+                <div className="pointer" onClick={() => {
+                  STATE.date = koreanDate;
+                  navParam(to, {
+                    state: STATE
+                  });
+                  setIsActive(to);
+                }}>
+                  {label}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </Collapse>
+      </li>
+    );
 
     return (
       <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
