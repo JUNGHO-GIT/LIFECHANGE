@@ -32,7 +32,6 @@ export const MoneySave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -86,7 +85,7 @@ export const MoneySave = () => {
   const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
+  /* useDate(DATE, setDATE, location_date); */
   useTime(MONEY, setMONEY, DATE, setDATE, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -95,7 +94,7 @@ export const MoneySave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        money_dur: DATE.strDur
+        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     setMONEY(response.data.result || MONEY_DEFAULT);
@@ -104,14 +103,14 @@ export const MoneySave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strDur]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_MONEY}/save`, {
       user_id: user_id,
       MONEY: MONEY,
-      money_dur: DATE.strDur
+      money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");
@@ -136,29 +135,28 @@ export const MoneySave = () => {
   const handlerSectionCount = () => {
     function handlerCount(e) {
       const newCount = parseInt(e, 10);
-      const sectionCount = COUNT.sectionCnt;
-      let updatedSections = [...MONEY.money_section];
+      if (!isNaN(newCount)) {
+        let updatedSections = [...MONEY.money_section];
 
-      if (newCount > sectionCount) {
-        // 부족한 섹션 수만큼 기본값 섹션 추가
-        let defaultSection = {
-          money_part_idx: 0,
-          money_part_val: "전체",
-          money_title_idx: 0,
-          money_title_val: "전체",
-          money_amount: 0,
-          money_content: ""
-        };
-        let additionalSections = Array(newCount - sectionCount).fill(defaultSection);
-        updatedSections = [...updatedSections, ...additionalSections];
-      }
-      else if (newCount < sectionCount) {
-        // 초과된 섹션 제거
-        updatedSections = updatedSections.slice(0, newCount);
-      }
+        if (newCount > MONEY.money_section.length) {
+          // 새로 필요한 섹션 수 만큼 기본 섹션을 추가
+          let defaultSection = {
+            money_part_idx: 0,
+            money_part_val: "전체",
+            money_title_idx: 0,
+            money_title_val: "전체",
+            money_amount: 0,
+            money_content: ""
+          };
+          for (let i = MONEY.money_section.length; i < newCount; i++) {
+            updatedSections.push({...defaultSection}); // 새 객체로 삽입하여 참조 문제 방지
+          }
+        } else if (newCount < MONEY.money_section.length) {
+          // 초과된 섹션 제거
+          updatedSections = updatedSections.slice(0, newCount);
+        }
 
-      // 불필요한 업데이트 방지
-      if (newCount !== sectionCount) {
+        // 상태 업데이트
         setMONEY(prev => ({
           ...prev,
           money_section: updatedSections
@@ -168,7 +166,7 @@ export const MoneySave = () => {
           sectionCnt: newCount
         }));
       }
-    };
+    }
     function inputFragment () {
       return (
         <div className="row d-center">
@@ -241,30 +239,30 @@ export const MoneySave = () => {
                   className="form-control"
                   id={`money_title_idx-${i}`}
                   value={MONEY?.money_section[i]?.money_title_idx}
-              onChange={(e) => {
-                const newTitleIdx = parseInt(e.target.value);
-                const newTitleVal = moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
-                if (newTitleIdx >= 0 && newTitleVal) {
-                  setMONEY((prev) => {
-                    let updated = {...prev};
-                    let updatedSection = [...updated.money_section];
-                    updatedSection[i] = {
-                      ...updatedSection[i],
-                      money_title_idx: newTitleIdx,
-                      money_title_val: newTitleVal,
-                    };
-                    updated.money_section = updatedSection;
-                    return updated;
-                  });
-                }
-              }}
-            >
-              {moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title.map((title, idx) => (
-                <option key={idx} value={idx}>
-                  {title}
-                </option>
-              ))}
-            </select>
+                  onChange={(e) => {
+                    const newTitleIdx = parseInt(e.target.value);
+                    const newTitleVal = moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                    if (newTitleIdx >= 0 && newTitleVal) {
+                      setMONEY((prev) => {
+                        let updated = {...prev};
+                        let updatedSection = [...updated.money_section];
+                        updatedSection[i] = {
+                          ...updatedSection[i],
+                          money_title_idx: newTitleIdx,
+                          money_title_val: newTitleVal,
+                        };
+                        updated.money_section = updatedSection;
+                        return updated;
+                      });
+                    }
+                  }}
+                >
+                  {moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title.map((title, idx) => (
+                    <option key={idx} value={idx}>
+                      {title}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>

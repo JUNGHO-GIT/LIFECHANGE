@@ -17,37 +17,42 @@ export const CalendarNode = ({
     if (FILTER.type === "day") {
       setDATE((prev) => ({
         ...prev,
-        strDur: `${DATE.strDt} ~ ${DATE.strDt}`,
+        strStartDt: DATE.strDt,
+        strEndDt: DATE.strDt,
       }));
     }
     else if (FILTER.type === "week") {
       setDATE((prev) => ({
         ...prev,
-        strDur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        strStartDt: moment(DATE.strDt).startOf("isoWeek").format("YYYY-MM-DD"),
+        strEndDt: moment(DATE.strDt).endOf("isoWeek").format("YYYY-MM-DD"),
       }));
     }
     else if (FILTER.type === "month") {
       setDATE((prev) => ({
         ...prev,
-        strDur: `${moment(DATE.strDt).startOf("month").format("YYYY-MM-DD")} ~ ${moment(DATE.strDt).endOf("month").format("YYYY-MM-DD")}`,
+        strStartDt: moment(DATE.strDt).startOf("month").format("YYYY-MM-DD"),
+        strEndDt: moment(DATE.strDt).endOf("month").format("YYYY-MM-DD"),
       }));
     }
     else if (FILTER.type === "year") {
       setDATE((prev) => ({
         ...prev,
-        strDur: `${moment(DATE.strDt).startOf("year").format("YYYY-MM-DD")} ~ ${moment(DATE.strDt).endOf("year").format("YYYY-MM-DD")}`,
+        strStartDt: moment(DATE.strDt).startOf("year").format("YYYY-MM-DD"),
+        strEndDt: moment(DATE.strDt).endOf("year").format("YYYY-MM-DD"),
       }));
     }
     else if (FILTER.type === "select") {
       setDATE((prev) => ({
         ...prev,
-        strDur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        strStartDt: DATE.strStartDt,
+        strEndDt: DATE.strEndDt,
       }));
     }
-  }, [FILTER.type, DATE.strDt, DATE.strStartDt, DATE.strEndDt]);
+  }, [FILTER.type]);
 
   // 4. calendarType ------------------------------------------------------------------------------>
-  function calendarType () {
+  function calendarType() {
 
     let mode;
     let selected;
@@ -80,13 +85,12 @@ export const CalendarNode = ({
       selected = DATE.strStartDt && DATE.strEndDt && {from: new Date(DATE.strStartDt), to: new Date(DATE.strEndDt)};
       month = new Date(DATE.strStartDt)
       onDayClick= (day) => {
-        const selectedDate = moment(day);
-        const startOfWeek = selectedDate.startOf("isoWeek").format("YYYY-MM-DD");
-        const endOfWeek = selectedDate.endOf("isoWeek").format("YYYY-MM-DD");
+        const startOfWeek = moment(day).startOf("isoWeek").format("YYYY-MM-DD");
+        const endOfWeek = moment(day).endOf("isoWeek").format("YYYY-MM-DD");
         setDATE((prev) => ({
           ...prev,
-          strStartDt: moment(startOfWeek).format("YYYY-MM-DD"),
-          strEndDt: moment(endOfWeek).format("YYYY-MM-DD"),
+          strStartDt: startOfWeek,
+          strEndDt: endOfWeek,
         }));
       }
       onMonthChange= (month) => {
@@ -101,21 +105,26 @@ export const CalendarNode = ({
     // 3. month
     if (FILTER.type === "month") {
       mode = "default";
-      month = new Date(DATE?.strDur?.split(" ~ ")[0])
+      selected = undefined;
+      month = new Date(DATE.strStartDt);
+      onDayClick = undefined;
       onMonthChange = (month) => {
         const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
         const endOfMonth = moment(month).endOf("month").format("YYYY-MM-DD");
         setDATE((prev) => ({
           ...prev,
-          strDur: `${startOfMonth} ~ ${endOfMonth}`,
+          strStartDt: startOfMonth,
+          strEndDt: endOfMonth,
         }));
       }
     }
 
     // 4. year
     if (FILTER.type === "year") {
-      mode = "default"
-      month = new Date(DATE?.strDur?.split(" ~ ")[0])
+      mode = "default";
+      selected = undefined;
+      month = new Date(DATE.strStartDt);
+      onDayClick = undefined;
       onMonthChange = (year) => {
         const yearDate = new Date(year.getFullYear(), 0, 1);
         const monthDate = new Date(year.getFullYear(), year.getMonth(), 1);
@@ -124,13 +133,15 @@ export const CalendarNode = ({
         if (nextMonth > prevMonth) {
           setDATE((prev) => ({
             ...prev,
-            strDur: `${year.getFullYear() + 1}-01-01 ~ ${year.getFullYear() + 1}-12-31`,
+            strStartDt: `${year.getFullYear() + 1}-01-01`,
+            strEndDt: `${year.getFullYear() + 1}-12-31`,
           }));
         }
         else {
           setDATE((prev) => ({
             ...prev,
-            strDur: `${year.getFullYear()}-01-01 ~ ${year.getFullYear()}-12-31`,
+            strStartDt: `${year.getFullYear()}-01-01`,
+            strEndDt: `${year.getFullYear()}-12-31`,
           }));
         }
       }
@@ -138,7 +149,7 @@ export const CalendarNode = ({
 
     // 5. select
     if (FILTER.type === "select") {
-      mode = "range"
+      mode = "range";
       selected = DATE.strStartDt && DATE.strEndDt && {from: new Date(DATE.strStartDt), to: new Date(DATE.strEndDt)}
       month = new Date(DATE.strStartDt)
       onDayClick = (day) => {
@@ -217,7 +228,7 @@ export const CalendarNode = ({
         month={month}
         onDayClick={onDayClick}
         onMonthChange={onMonthChange}
-      />
+      ></DayPicker>
     );
   };
 

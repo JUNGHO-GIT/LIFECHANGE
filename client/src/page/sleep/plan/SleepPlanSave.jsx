@@ -34,7 +34,6 @@ export const SleepPlanSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -92,7 +91,7 @@ export const SleepPlanSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        sleep_plan_dur: DATE.strDur
+        sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     setSLEEP_PLAN(response.data.result || SLEEP_PLAN_DEFAULT);
@@ -101,14 +100,14 @@ export const SleepPlanSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strDur]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_SLEEP_PLAN}/save`, {
       user_id: user_id,
       SLEEP_PLAN: SLEEP_PLAN,
-      sleep_plan_dur: DATE.strDur
+      sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");

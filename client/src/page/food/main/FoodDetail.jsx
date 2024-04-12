@@ -31,7 +31,6 @@ export const FoodDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -116,7 +115,7 @@ export const FoodDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_dur: DATE.strDur
+        food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
@@ -124,7 +123,7 @@ export const FoodDetail = () => {
       ...prev,
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
-  })()}, [location_id, user_id, DATE.strDur]);
+  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {

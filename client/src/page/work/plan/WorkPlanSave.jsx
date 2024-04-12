@@ -35,7 +35,6 @@ export const WorkPlanSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -108,24 +107,23 @@ export const WorkPlanSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        work_plan_dur: DATE.strDur,
-        FILTER: FILTER,
+        work_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`
       },
     });
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+    setPLAN(response.data.result || PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.strDur]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_WORK_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
-      work_plan_dur: DATE.strDur,
-      FILTER: FILTER,
+      work_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`
     });
     if (response.data === "success") {
       alert("Save successfully");

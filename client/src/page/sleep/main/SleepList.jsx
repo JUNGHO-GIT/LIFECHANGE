@@ -32,7 +32,6 @@ export const SleepList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -90,7 +89,7 @@ export const SleepList = () => {
     const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: DATE.strDur,
+        sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -101,7 +100,7 @@ export const SleepList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -120,7 +119,7 @@ export const SleepList = () => {
             item?.sleep_section.map((section, index) => (
               <React.Fragment key={item._id + index}>
                 <tr>
-                  <td className={"pointer"} rowSpan={item.sleep_section.length} onClick={() => {
+                  <td rowSpan={item.sleep_section.length} className={"pointer"} onClick={() => {
                     STATE.id = item._id;
                     STATE.date = item.sleep_date;
                     navParam(STATE.toDetail, {

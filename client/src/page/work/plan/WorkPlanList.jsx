@@ -32,7 +32,6 @@ export const WorkPlanList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -104,7 +103,7 @@ export const WorkPlanList = () => {
     const response = await axios.get(`${URL_WORK_PLAN}/list`, {
       params: {
         user_id: user_id,
-        work_plan_dur: DATE.strDur,
+        work_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },

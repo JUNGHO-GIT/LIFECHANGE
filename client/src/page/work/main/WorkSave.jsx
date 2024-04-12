@@ -33,7 +33,6 @@ export const WorkSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -118,7 +117,7 @@ export const WorkSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        work_dur: DATE.strDur
+        work_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
 
@@ -128,14 +127,14 @@ export const WorkSave = () => {
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
 
-  })()}, [user_id, DATE.strDur]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_WORK}/save`, {
       user_id: user_id,
       WORK: WORK,
-      work_dur: DATE.strDur
+      work_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");

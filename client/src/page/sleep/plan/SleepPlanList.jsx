@@ -32,7 +32,6 @@ export const SleepPlanList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -89,7 +88,7 @@ export const SleepPlanList = () => {
     const response = await axios.get(`${URL_SLEEP_PLAN}/list`, {
       params: {
         user_id: user_id,
-        sleep_plan_dur: DATE.strDur,
+        sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -100,7 +99,7 @@ export const SleepPlanList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {

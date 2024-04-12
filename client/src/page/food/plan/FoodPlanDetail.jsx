@@ -35,7 +35,6 @@ export const FoodPlanDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -100,7 +99,7 @@ export const FoodPlanDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_plan_dur: DATE.strDur,
+        food_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
       },
     });
@@ -117,7 +116,7 @@ export const FoodPlanDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        food_plan_dur: DATE.strDur,
+        food_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
       },
     });

@@ -32,7 +32,6 @@ export const MoneyList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -86,14 +85,14 @@ export const MoneyList = () => {
   const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
+  /* useDate(DATE, setDATE, location_date); */
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
         user_id: user_id,
-        money_dur: DATE.strDur,
+        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -104,7 +103,7 @@ export const MoneyList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -120,25 +119,25 @@ export const MoneyList = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY.map((item) => (
-            <React.Fragment key={item.money_date}>
-              <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.money_date;
-                  navParam(STATE.toDetail, {
-                    state: STATE
-                  });
-                }}>
-                  {item.money_date}
-                </td>
-              </tr>
-              {item.money_section.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.money_part_val}</td>
-                  <td>{item.money_title_val}</td>
-                  <td>{item.money_amount}</td>
-                  <td>{item.money_content}</td>
+          {MONEY.map((item, index) => (
+            <React.Fragment key={index}>
+              {item.money_section.map((section, sectionIndex) => (
+                <tr key={section.money_part_idx}>
+                  {sectionIndex === 0 && (
+                    <td rowSpan={item.money_section.length} className={"pointer"} onClick={() => {
+                      STATE.id = item._id;
+                      STATE.date = item.money_date;
+                      navParam(STATE.toDetail, {
+                        state: STATE
+                      });
+                    }}>
+                      {item.money_date}
+                    </td>
+                  )}
+                  <td>{section.money_part_val}</td>
+                  <td>{section.money_title_val}</td>
+                  <td>{section.money_amount}</td>
+                  <td>{section.money_content}</td>
                 </tr>
               ))}
             </React.Fragment>

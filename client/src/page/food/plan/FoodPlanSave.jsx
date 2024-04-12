@@ -35,7 +35,6 @@ export const FoodPlanSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -100,8 +99,7 @@ export const FoodPlanSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        food_plan_dur: DATE.strDur,
-        FILTER: FILTER,
+        food_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
@@ -109,15 +107,14 @@ export const FoodPlanSave = () => {
       ...prev,
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
-  })()}, [user_id, DATE.strDur]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_FOOD_PLAN}/save`, {
       user_id: user_id,
       PLAN: PLAN,
-      food_plan_dur: DATE.strDur,
-      FILTER: FILTER,
+      food_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`
     });
     if (response.data === "success") {
       alert("Save successfully");

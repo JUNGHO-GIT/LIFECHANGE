@@ -33,7 +33,6 @@ export const FoodSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -126,13 +125,13 @@ export const FoodSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        food_dur: DATE.strDur
+        food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
 
     setFOOD(response.data.result ? response.data.result : FOOD_DEFAULT);
 
-  })()}, [DATE.strDur]); */
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]); */
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -205,7 +204,7 @@ export const FoodSave = () => {
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
       FOOD: FOOD,
-      food_dur: DATE.strDur
+      food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");

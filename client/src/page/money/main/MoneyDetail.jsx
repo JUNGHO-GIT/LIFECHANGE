@@ -31,7 +31,6 @@ export const MoneyDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -97,7 +96,7 @@ export const MoneyDetail = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
+  /* useDate(DATE, setDATE, location_date); */
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -105,13 +104,13 @@ export const MoneyDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        money_dur: DATE.strDur
+        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
 
     setMONEY(response.data.result ? response.data.result : MONEY_DEFAULT);
 
-  })()}, [DATE.strDur]);
+  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -119,7 +118,7 @@ export const MoneyDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        money_dur: DATE.strDur
+        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     if (response.data === "success") {

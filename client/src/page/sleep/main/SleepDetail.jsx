@@ -31,7 +31,6 @@ export const SleepDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -90,7 +89,7 @@ export const SleepDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_dur: DATE.strDur
+        sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     setSLEEP(response.data.result || SLEEP_DEFAULT);
@@ -98,7 +97,7 @@ export const SleepDetail = () => {
       ...prev,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [location_id, user_id, DATE.strDur]);
+  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -106,7 +105,7 @@ export const SleepDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        sleep_dur: DATE.strDur
+        sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     if (response.data === "success") {

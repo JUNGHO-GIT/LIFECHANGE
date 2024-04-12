@@ -32,7 +32,6 @@ export const SleepCompare = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -93,8 +92,8 @@ export const SleepCompare = () => {
     const response = await axios.get(`${URL_SLEEP}/compare`, {
       params: {
         user_id: user_id,
-        sleep_dur: DATE.strDur,
-        sleep_plan_dur: DATE.strDur,
+        sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -105,7 +104,7 @@ export const SleepCompare = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strDur, FILTER, PAGING]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {

@@ -31,7 +31,6 @@ export const MoneyPlanSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -88,7 +87,7 @@ export const MoneyPlanSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        money_plan_dur: DATE.strDur
+        money_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
       },
     });
     setMONEY_PLAN(response.data.result || MONEY_PLAN_DEFAULT);
@@ -97,14 +96,14 @@ export const MoneyPlanSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.strDur]);
+  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_MONEY_PLAN}/save`, {
       user_id: user_id,
       MONEY_PLAN: MONEY_PLAN,
-      money_plan_dur: DATE.strDur
+      money_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");

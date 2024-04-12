@@ -32,7 +32,6 @@ export const FoodPlanList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: `${location_date} ~ ${location_date}`,
       strStartDt: location_date,
       strEndDt: location_date,
       strDt: location_date,
@@ -96,7 +95,7 @@ export const FoodPlanList = () => {
     const response = await axios.get(`${URL_FOOD_PLAN}/list`, {
       params: {
         user_id: user_id,
-        food_plan_dur: DATE.strDur,
+        food_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
