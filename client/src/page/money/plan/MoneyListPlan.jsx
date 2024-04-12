@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
@@ -67,7 +66,7 @@ export const MoneyListPlan = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
+  const PLAN_DEFAULT = [{
     _id: "",
     plan_number: 0,
     plan_schema: "money",
@@ -77,18 +76,8 @@ export const MoneyListPlan = () => {
       plan_in: "",
       plan_out: ""
     }
-  }]);
-  const [PLAN, setPLAN] = useState([{
-    _id: "",
-    plan_number: 0,
-    plan_schema: "money",
-    plan_start: "",
-    plan_end: "",
-    plan_money: {
-      plan_in: "",
-      plan_out: ""
-    }
-  }]);
+  }];
+  const [PLAN, setPLAN] = useState(PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -101,10 +90,11 @@ export const MoneyListPlan = () => {
       },
     });
 
-    setPLAN(response.data.result ? response.data.result : PLAN_DEFAULT);
+    setPLAN(response.data.result);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [user_id, FILTER, PAGING]);
 
@@ -157,7 +147,7 @@ export const MoneyListPlan = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"plan"} compare={""}
+        type={"plan"}
       />
     );
   };

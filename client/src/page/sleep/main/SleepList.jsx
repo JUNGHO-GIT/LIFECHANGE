@@ -165,7 +165,7 @@ export const SleepList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"} compare={""}
+        type={"sleep"}
       />
     );
   };

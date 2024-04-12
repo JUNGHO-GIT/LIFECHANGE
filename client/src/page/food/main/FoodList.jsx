@@ -210,7 +210,7 @@ export const FoodList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"food"} compare={""}
+        type={"food"}
       />
     );
   };

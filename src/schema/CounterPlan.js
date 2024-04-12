@@ -1,4 +1,4 @@
-// Counter.js
+// CounterPlan.js
 
 import mongoose from "mongoose";
 
@@ -14,10 +14,11 @@ const schema = new mongoose.Schema({
   },
 });
 
-const Counter = mongoose.model("Counter", schema);
+const Counter = mongoose.model("CounterPlan", schema);
 
 // 2. incrementSeq -------------------------------------------------------------------------------->
 export async function incrementSeq(sequenceName, modelName) {
+
   // 시퀀스 번호 동기화 검증 로직
   const Model = mongoose.model(modelName);
   const latestDoc = await Model.findOne().sort({ [sequenceName]: -1 }).exec();

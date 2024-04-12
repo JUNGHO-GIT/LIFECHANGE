@@ -1,8 +1,8 @@
-// planService.js
+// foodPlanService.js
 
 import mongoose from "mongoose";
 import moment from "moment";
-import {Plan} from "../schema/Plan.js";
+import {FoodPlan} from "../schema/FoodPlan.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
@@ -18,7 +18,7 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await Plan.countDocuments({
+  const totalCnt = await FoodPlan.countDocuments({
     user_id: user_id_param,
     plan_start: {
       $lte: endDay,
@@ -28,7 +28,7 @@ export const list = async (
     },
   });
 
-  const findResult = await Plan.find({
+  const findResult = await FoodPlan.find({
     user_id: user_id_param,
     plan_start: {
       $lte: endDay,
@@ -58,7 +58,7 @@ export const detail = async (
 
   const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
-  const finalResult = await Plan.findOne({
+  const finalResult = await FoodPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
     plan_schema: FILTER_param.schema,
@@ -128,7 +128,7 @@ export const save = async (
     };
   }
 
-  const findResult = await Plan.findOne({
+  const findResult = await FoodPlan.findOne({
     user_id: user_id_param,
     plan_schema: PLAN_param.plan_schema,
     plan_start: {
@@ -151,7 +151,7 @@ export const save = async (
       plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       plan_update: ""
     };
-    finalResult = await Plan.create(createQuery);
+    finalResult = await FoodPlan.create(createQuery);
   }
   else {
     const updateQuery = {
@@ -163,7 +163,7 @@ export const save = async (
         plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       },
     };
-    finalResult = await Plan.updateOne(updateQuery, updateAction).lean();
+    finalResult = await FoodPlan.updateOne(updateQuery, updateAction).lean();
   }
 
   return {
@@ -181,7 +181,7 @@ export const deletes = async (
 
   const [startDay, endDay] = plan_dur_param.split(` ~ `);
 
-  const updateResult = await Plan.updateOne(
+  const updateResult = await FoodPlan.updateOne(
     {
       _id: _id_param,
       user_id: user_id_param,
@@ -208,14 +208,14 @@ export const deletes = async (
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
-    const doc = await Plan.findOne({
+    const doc = await FoodPlan.findOne({
       _id: _id_param,
       user_id: user_id_param
     })
     .lean();
 
     if (doc) {
-      finalResult = await Plan.deleteOne({
+      finalResult = await FoodPlan.deleteOne({
         _id: doc._id
       })
       .lean();

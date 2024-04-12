@@ -191,7 +191,7 @@ export const WorkList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"work"} compare={""}
+        type={"work"}
       />
     );
   };

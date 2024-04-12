@@ -201,7 +201,7 @@ export const SleepCompare = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"} compare={"true"}
+        type={"sleep"}
       />
     );
   };

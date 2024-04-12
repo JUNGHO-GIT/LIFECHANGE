@@ -1,11 +1,11 @@
-// planRouter.js
+// sleepPlanRouter.js
 
 import express from "express";
-import * as service from "../service/planService.js";
-export const planRouter = express.Router();
+import * as service from "../service/sleepPlanService.js";
+export const sleepPlanRouter = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-planRouter.get("/list", async (req, res) => {
+sleepPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -27,7 +27,7 @@ planRouter.get("/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-planRouter.get("/detail", async (req, res) => {
+sleepPlanRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
@@ -49,7 +49,7 @@ planRouter.get("/detail", async (req, res) => {
 });
 
 // 3. save ---------------------------------------------------------------------------------------->
-planRouter.post("/save", async (req, res) => {
+sleepPlanRouter.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
@@ -71,7 +71,7 @@ planRouter.post("/save", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-planRouter.delete("/delete", async (req, res) => {
+sleepPlanRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
       req.query._id,

@@ -180,7 +180,7 @@ export const MoneyList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"money"} compare={""}
+        type={"money"}
       />
     );
   };

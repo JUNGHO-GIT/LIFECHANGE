@@ -6,7 +6,7 @@ import {workArray} from "../data/WorkArray.jsx";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
-  FILTER, setFILTER, PAGING, setPAGING, type, compare
+  FILTER, setFILTER, PAGING, setPAGING, type
 }) => {
   function selectType() {
     return (
@@ -62,7 +62,7 @@ export const FilterNode = ({
   };
   function selectPartFood () {
     return (
-      <div>
+      <div className="mb-3">
         <select className="form-select" id="foodPart" onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
@@ -80,41 +80,45 @@ export const FilterNode = ({
   };
   function selectPartMoney () {
     return (
-      <select className="form-control" id="part" value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
-        const idxValue = selectedOption.getAttribute("data-idx");
-        const newPartIndex = Number(idxValue);
-        const newPartVal = String(e.target.value);
-        const newTitleVal = moneyArray[newPartIndex].money_title[0];
-        setFILTER((prev) => ({
-          ...prev,
-          partIdx: newPartIndex,
-          part: newPartVal,
-          title: newTitleVal
-        }));
-      }}>
-        {moneyArray.map((item, idx) => (
-          <option key={idx} data-idx={idx}>
-            {item.money_part}
-          </option>
-        ))}
-      </select>
+      <div className="mb-3">
+        <select className="form-control" id="part" value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
+          const selectedOption = e.target.options[e.target.selectedIndex];
+          const idxValue = selectedOption.getAttribute("data-idx");
+          const newPartIndex = Number(idxValue);
+          const newPartVal = String(e.target.value);
+          const newTitleVal = moneyArray[newPartIndex].money_title[0];
+          setFILTER((prev) => ({
+            ...prev,
+            partIdx: newPartIndex,
+            part: newPartVal,
+            title: newTitleVal
+          }));
+        }}>
+          {moneyArray.map((item, idx) => (
+            <option key={idx} data-idx={idx}>
+              {item.money_part}
+            </option>
+          ))}
+        </select>
+      </div>
     );
   };
   function selectTitleMoney () {
     return (
-      <select className="form-control" id="title" value={FILTER.title} onChange={(e) => {
-        setFILTER((prev) => ({
-          ...prev,
-          title: e.target.value
-        }));
-      }}>
-        {moneyArray[FILTER.partIdx].money_title.map((item, idx) => (
-          <option key={idx}>
-            {item}
-          </option>
-        ))}
-      </select>
+      <div className="mb-3">
+        <select className="form-control" id="title" value={FILTER.title} onChange={(e) => {
+          setFILTER((prev) => ({
+            ...prev,
+            title: e.target.value
+          }));
+        }}>
+          {moneyArray[FILTER.partIdx].money_title.map((item, idx) => (
+            <option key={idx}>
+              {item}
+            </option>
+          ))}
+        </select>
+      </div>
     );
   };
   return (
