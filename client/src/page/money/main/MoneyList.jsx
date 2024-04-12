@@ -32,10 +32,10 @@ export const MoneyList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: "",
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -98,10 +98,11 @@ export const MoneyList = () => {
         PAGING: PAGING
       },
     });
-    setMONEY(response.data.result);
+    setMONEY(response.data.result || MONEY_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [user_id, DATE.strDur, FILTER, PAGING]);
 

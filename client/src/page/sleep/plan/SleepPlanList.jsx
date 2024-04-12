@@ -32,10 +32,10 @@ export const SleepPlanList = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: "",
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -94,7 +94,7 @@ export const SleepPlanList = () => {
         PAGING: PAGING
       },
     });
-    setSLEEP_PLAN(response.data.result);
+    setSLEEP_PLAN(response.data.result || SLEEP_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,

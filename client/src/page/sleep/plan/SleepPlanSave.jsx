@@ -34,10 +34,10 @@ export const SleepPlanSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: "",
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -85,7 +85,6 @@ export const SleepPlanSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(DATE, setDATE, location_date);
-  useTime(SLEEP_PLAN, setSLEEP_PLAN, DATE, setDATE, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -96,7 +95,7 @@ export const SleepPlanSave = () => {
         sleep_plan_dur: DATE.strDur
       },
     });
-    setSLEEP_PLAN(response.data.result);
+    setSLEEP_PLAN(response.data.result || SLEEP_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -121,13 +120,6 @@ export const SleepPlanSave = () => {
     else {
       alert(`${response.data}error`);
     }
-  };
-
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"save"} />
-    );
   };
 
   // 5. table ------------------------------------------------------------------------------------->
@@ -256,9 +248,6 @@ export const SleepPlanSave = () => {
         <div className="row d-center">
           <div className="col-12 mb-20">
             <h1>Save</h1>
-          </div>
-          <div className="col-12 mb-20">
-            {dateNode()}
           </div>
           <div className="col-12 mb-20">
             {tableNode()}

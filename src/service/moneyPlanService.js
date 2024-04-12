@@ -64,12 +64,8 @@ export const detail = async (
   const finalResult = await MoneyPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    money_plan_start: {
-      $lte: endDay,
-    },
-    money_plan_end: {
-      $gte: startDay,
-    }
+    money_plan_start: startDay,
+    money_plan_end: endDay,
   })
   .lean();
 
@@ -87,19 +83,14 @@ export const save = async (
 
   const [startDay, endDay] = money_plan_dur_param.split(` ~ `);
 
-  let finalResult;
-
   const findResult = await MoneyPlan.findOne({
     user_id: user_id_param,
-    money_plan_start: {
-      $lte: endDay,
-    },
-    money_plan_end: {
-      $gte: startDay,
-    }
+    money_plan_start: startDay,
+    money_plan_end: endDay,
   })
   .lean();
 
+  let finalResult;
   if (!findResult) {
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),

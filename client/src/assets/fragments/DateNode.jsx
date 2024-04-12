@@ -31,7 +31,7 @@ export const DateNode = ({
 
         <DatePicker dateFormat="yyyy-MM-dd" popperPlacement="bottom"
           selected={new Date(DATE.strDt)} disabled={type === "save" ? false : true}
-          onChange={(date) => {
+          value={DATE.strDt} onChange={(date) => {
             setDATE((prev) => ({
               ...prev,
               strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),

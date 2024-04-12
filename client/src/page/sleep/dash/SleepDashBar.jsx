@@ -15,11 +15,12 @@ export const DashBar = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [DASH, setDASH] = useState([
+  const DASH_DEFAULT = [
     {name:"취침", 목표: 0, 실제: 0},
     {name:"수면", 목표: 0, 실제: 0},
     {name:"기상", 목표: 0, 실제: 0}
-  ]);
+  ];
+  const [DASH, setDASH] = useState(DASH_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -28,7 +29,7 @@ export const DashBar = () => {
         user_id: user_id
       },
     });
-    setDASH(response.data.result);
+    setDASH(response.data.result || DASH_DEFAULT);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->

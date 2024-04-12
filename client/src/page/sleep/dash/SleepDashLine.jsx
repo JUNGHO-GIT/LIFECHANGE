@@ -22,7 +22,7 @@ export const DashLine = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [DASH, setDASH] = useState([
+  const DASH_DEFAULT = [
     {name:"월", 취침: 0, 수면: 0, 기상: 0},
     {name:"화", 취침: 0, 수면: 0, 기상: 0},
     {name:"수", 취침: 0, 수면: 0, 기상: 0},
@@ -30,18 +30,17 @@ export const DashLine = () => {
     {name:"금", 취침: 0, 수면: 0, 기상: 0},
     {name:"토", 취침: 0, 수면: 0, 기상: 0},
     {name:"일", 취침: 0, 수면: 0, 기상: 0}
-  ]);
+  ];
+  const [DASH, setDASH] = useState(DASH_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-
     const response = await axios.get(`${URL_SLEEP}/dashLine`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH(response.data.result);
-
+    setDASH(response.data.result || DASH_DEFAULT);
   })()}, [user_id]);
 
   // 5-2. chart ----------------------------------------------------------------------------------->

@@ -85,12 +85,8 @@ export const save = async (
 
   const findResult = await SleepPlan.findOne({
     user_id: user_id_param,
-    sleep_plan_start: {
-      $lte: endDay,
-    },
-    sleep_plan_end: {
-      $gte: startDay,
-    }
+    sleep_plan_start: startDay,
+    sleep_plan_end: endDay,
   })
   .lean();
 
@@ -139,12 +135,8 @@ export const deletes = async (
     {
       _id: _id_param,
       user_id: user_id_param,
-      sleep_plan_start: {
-        $lte: endDay,
-      },
-      sleep_plan_end: {
-        $gte: startDay,
-      },
+      sleep_plan_start: startDay,
+      sleep_plan_end: endDay,
     },
     {
       $set: {

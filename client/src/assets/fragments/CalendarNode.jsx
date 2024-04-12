@@ -80,11 +80,9 @@ export const CalendarNode = ({
       selected = DATE.strStartDt && DATE.strEndDt && {from: new Date(DATE.strStartDt), to: new Date(DATE.strEndDt)};
       month = new Date(DATE.strStartDt)
       onDayClick= (day) => {
-
-        // 월 ~ 일
         const selectedDate = moment(day);
-        const startOfWeek = selectedDate.startOf("week").add(1, "day").format("YYYY-MM-DD");
-        const endOfWeek = selectedDate.endOf("week").add(1, "day").format("YYYY-MM-DD");
+        const startOfWeek = selectedDate.startOf("isoWeek").format("YYYY-MM-DD");
+        const endOfWeek = selectedDate.endOf("isoWeek").format("YYYY-MM-DD");
         setDATE((prev) => ({
           ...prev,
           strStartDt: moment(startOfWeek).format("YYYY-MM-DD"),

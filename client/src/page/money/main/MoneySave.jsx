@@ -32,10 +32,10 @@ export const MoneySave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: "",
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -98,7 +98,7 @@ export const MoneySave = () => {
         money_dur: DATE.strDur
       },
     });
-    setMONEY(response.data.result);
+    setMONEY(response.data.result || MONEY_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -134,38 +134,40 @@ export const MoneySave = () => {
 
   // 5. handler ----------------------------------------------------------------------------------->
   const handlerSectionCount = () => {
-    function handlerCount (e) {
-      let newCount = parseInt(e, 10);
-      let sectionCount = COUNT.sectionCnt;
-      let defaultSection = {
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: ""
-      };
+    function handlerCount(e) {
+      const newCount = parseInt(e, 10);
+      const sectionCount = COUNT.sectionCnt;
+      let updatedSections = [...MONEY.money_section];
 
       if (newCount > sectionCount) {
+        // 부족한 섹션 수만큼 기본값 섹션 추가
+        let defaultSection = {
+          money_part_idx: 0,
+          money_part_val: "전체",
+          money_title_idx: 0,
+          money_title_val: "전체",
+          money_amount: 0,
+          money_content: ""
+        };
         let additionalSections = Array(newCount - sectionCount).fill(defaultSection);
-        let updatedSection = [...MONEY.money_section, ...additionalSections];
-        setMONEY((prev) => ({
-          ...prev,
-          money_section: updatedSection,
-        }));
+        updatedSections = [...updatedSections, ...additionalSections];
       }
       else if (newCount < sectionCount) {
-        let updatedSection = [...MONEY.money_section];
-        updatedSection = updatedSection.slice(0, newCount);
-        setMONEY((prev) => ({
+        // 초과된 섹션 제거
+        updatedSections = updatedSections.slice(0, newCount);
+      }
+
+      // 불필요한 업데이트 방지
+      if (newCount !== sectionCount) {
+        setMONEY(prev => ({
           ...prev,
-          money_section: updatedSection,
+          money_section: updatedSections
+        }));
+        setCOUNT(prev => ({
+          ...prev,
+          sectionCnt: newCount
         }));
       }
-      setCOUNT((prev) => ({
-        ...prev,
-        sectionCnt: newCount,
-      }));
     };
     function inputFragment () {
       return (
@@ -207,8 +209,8 @@ export const MoneySave = () => {
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setMONEY((prev) => {
-                      let updatedObject = {...prev};
-                      let updatedSection = [...updatedObject.money_section];
+                      let updated = {...prev};
+                      let updatedSection = [...updated.money_section];
                       updatedSection[i] = {
                         ...updatedSection[i],
                         money_part_idx: newIndex,
@@ -216,8 +218,8 @@ export const MoneySave = () => {
                         money_title_idx: 0,
                         money_title_val: moneyArray[newIndex].money_title[0],
                       };
-                      updatedObject.money_section = updatedSection;
-                      return updatedObject;
+                      updated.money_section = updatedSection;
+                      return updated;
                     });
                   }}
                 >
@@ -244,15 +246,15 @@ export const MoneySave = () => {
                 const newTitleVal = moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
                 if (newTitleIdx >= 0 && newTitleVal) {
                   setMONEY((prev) => {
-                    let updatedObject = { ...prev };
-                    let updatedSection = [...updatedObject.money_section];
+                    let updated = {...prev};
+                    let updatedSection = [...updated.money_section];
                     updatedSection[i] = {
                       ...updatedSection[i],
                       money_title_idx: newTitleIdx,
                       money_title_val: newTitleVal,
                     };
-                    updatedObject.money_section = updatedSection;
-                    return updatedObject;
+                    updated.money_section = updatedSection;
+                    return updated;
                   });
                 }
               }}
@@ -277,11 +279,11 @@ export const MoneySave = () => {
                   onChange={(e) => {
                     const newAmount = parseInt(e.target.value, 10);
                     setMONEY((prev) => {
-                      let updatedObject = {...prev};
-                      let updatedSection = [...updatedObject.money_section];
+                      let updated = {...prev};
+                      let updatedSection = [...updated.money_section];
                       updatedSection[i].money_amount = isNaN(newAmount) ? 0 : newAmount;
-                      updatedObject.money_section = updatedSection;
-                      return updatedObject;
+                      updated.money_section = updatedSection;
+                      return updated;
                     });
                   }}
                 />
@@ -297,10 +299,10 @@ export const MoneySave = () => {
                   onChange={(e) => {
                     const newContent = e.target.value;
                     setMONEY((prev) => {
-                      let updatedObject = {...prev};
-                      let updatedSection = [...updatedObject.money_section];
+                      let updated = {...prev};
+                      let updatedSection = [...updated.money_section];
                       updatedSection[i].money_content = newContent;
-                      return updatedObject;
+                      return updated;
                     });
                   }}
                 />

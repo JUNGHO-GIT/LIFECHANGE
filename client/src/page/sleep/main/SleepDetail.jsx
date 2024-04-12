@@ -31,10 +31,10 @@ export const SleepDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strDur: "",
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
+      strDur: `${location_date} ~ ${location_date}`,
+      strStartDt: location_date,
+      strEndDt: location_date,
+      strDt: location_date,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
