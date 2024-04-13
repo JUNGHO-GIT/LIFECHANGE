@@ -126,44 +126,50 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
-
   const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
-  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
+  const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
+  const part = FILTER_param.part || "";
 
   const totalCnt = await Food.countDocuments({
     user_id: user_id_param,
-    food_startDt: {
-      $gte: startDay,
-      $lte: endDay,
-    },
-    food_endDt: {
-      $gte: startDay,
-      $lte: endDay,
-    },
-  })
-  .lean();
+    food_startDt: { $gte: startDay, $lte: endDay },
+    food_endDt: { $gte: startDay, $lte: endDay },
+    ...(part !== "전체" && { "food_section.food_part": part })
+  }).lean();
 
-  const findResult = await Food.find({
-    user_id: user_id_param,
-    food_startDt: {
-      $gte: startDay,
-      $lte: endDay,
+  const findResult = await Food.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        food_startDt: { $gte: startDay, $lte: endDay },
+        food_endDt: { $gte: startDay, $lte: endDay }
+      }
     },
-    food_endDt: {
-      $gte: startDay,
-      $lte: endDay,
+    {
+      $project: {
+        food_startDt: 1,
+        food_endDt: 1,
+        food_section: {
+          $filter: {
+            input: "$food_section",
+            as: "section",
+            cond: part === "전체" ? { $ne: ["$$section.food_part", null] } : { $eq: ["$$section.food_part", part] }
+          }
+        }
+      }
     },
-  })
-  .sort({food_startDt: sort})
-  .skip((page - 1) * limit)
-  .limit(limit)
-  .lean();
+    { $sort: { food_startDt: sort }},
+    { $skip: (page - 1) * limit },
+    { $limit: limit }
+  ]);
 
-  return {
+  const finalResult = {
     totalCnt: totalCnt,
-    result: findResult,
+    result: findResult
   };
+
+  return finalResult;
 };
 
 // 2. detail -------------------------------------------------------------------------------------->

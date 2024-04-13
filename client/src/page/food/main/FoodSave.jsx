@@ -158,7 +158,6 @@ export const FoodSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-
     const totals = FOOD?.food_section?.reduce((acc, current) => {
       return {
         totalKcal: acc.totalKcal + Number(current.food_kcal),

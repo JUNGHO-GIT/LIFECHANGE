@@ -194,7 +194,7 @@ export const FoodDetail = () => {
                 <button type="button" className="btn btn-sm btn-danger" onClick={() => (
                   flowDelete(item._id)
                 )}>
-                  X
+                  x
                 </button>
               </td>
             </tr>
