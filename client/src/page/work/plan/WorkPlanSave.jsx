@@ -236,7 +236,7 @@ export const WorkPlanSave = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
-        type={"save"} food={""}
+        part={"work"} plan={"plan"} type={"save"}
       />
     );
   };

@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  CALENDAR, setCALENDAR, DATE, setDATE, SEND, flowSave, navParam, type, food
+  CALENDAR, setCALENDAR, DATE, setDATE, SEND, flowSave, navParam, part, plan, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -99,27 +99,39 @@ export const ButtonNode = ({
   };
 
   return (
-    type === "list" ? (
+    part === "food" && type === "list" ? (
       <div className="d-inline-flex">
         {buttonCalendar()}
         {buttonToday()}
         {buttonRefresh()}
       </div>
-    ) : type === "save" && food === "" ? (
+    ) : part === "food" && type === "detail" ? (
       <div className="d-inline-flex">
-        {buttonSave()}
+        {buttonUpdate()}
         {buttonList()}
         {buttonRefresh()}
       </div>
-    ) : type === "save" && food === "food" ? (
+    ) : part === "food" && type === "save" ? (
       <div className="d-inline-flex">
         {buttonSave()}
         {buttonSearch()}
         {buttonRefresh()}
       </div>
-    ) : type === "detail" && food === "" ? (
+    ) : part !== "food" && type === "list" ? (
+      <div className="d-inline-flex">
+        {buttonCalendar()}
+        {buttonToday()}
+        {buttonRefresh()}
+      </div>
+    ) : part !== "food" && type === "detail" ? (
       <div className="d-inline-flex">
         {buttonUpdate()}
+        {buttonList()}
+        {buttonRefresh()}
+      </div>
+    ) : part !== "food" && type === "save" ? (
+      <div className="d-inline-flex">
+        {buttonSave()}
         {buttonList()}
         {buttonRefresh()}
       </div>

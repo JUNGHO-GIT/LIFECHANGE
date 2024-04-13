@@ -40,10 +40,10 @@ export const compare = async (
   const findResultPlan = await MoneyPlan.find({
     user_id: user_id_param,
     money_plan_startDt: {
-      $lte: endDayPlan,
+      $gte: startDayPlan,
     },
     money_plan_endDt: {
-      $gte: startDayPlan,
+      $lte: endDayPlan,
     },
   })
   .sort({money_plan_startDt: sort})
@@ -59,7 +59,8 @@ export const compare = async (
     money_plan_endDt: {
       $gte: startDayPlan,
     },
-  });
+  })
+  .lean();
 
   const finalResult = findResultPlan.map((plan) => {
     const matches = findResultReal.filter((real) => (

@@ -222,7 +222,7 @@ export const MoneyPlanSave = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
-        type={"save"} food={""}
+        part={"money"} plan={"plan"} type={"save"}
       />
     );
   };

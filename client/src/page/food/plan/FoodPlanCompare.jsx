@@ -180,7 +180,7 @@ export const FoodPlanCompare = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"food"} plan={""}
+        part={"food"} plan={"plan"} type={"compare"}
       />
     );
   };
@@ -190,7 +190,7 @@ export const FoodPlanCompare = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}  food={"food"}
+        part={"food"} plan={"plan"} type={"compare"}
       />
     );
   };

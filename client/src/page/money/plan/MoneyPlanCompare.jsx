@@ -166,7 +166,7 @@ export const MoneyPlanCompare = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"money"} plan={""}
+        part={"money"} plan={"plan"} type={"compare"}
       />
     );
   };
@@ -176,7 +176,7 @@ export const MoneyPlanCompare = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"} food={""}
+        part={"money"} plan={"plan"} type={"compare"}
       />
     );
   };

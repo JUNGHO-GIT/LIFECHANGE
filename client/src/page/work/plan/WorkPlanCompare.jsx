@@ -166,7 +166,7 @@ export const WorkPlanCompare = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"work"} plan={""}
+        part={"work"} plan={"plan"} type={"compare"}
       />
     );
   };
@@ -176,7 +176,7 @@ export const WorkPlanCompare = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"} food={""}
+        part={"work"} plan={"plan"} type={"compare"}
       />
     );
   };

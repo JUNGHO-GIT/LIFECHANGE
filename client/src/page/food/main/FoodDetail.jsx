@@ -217,7 +217,7 @@ export const FoodDetail = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"detail"} food={"food"}
+        part={"food"} plan={""} type={"detail"}
       />
     );
   };

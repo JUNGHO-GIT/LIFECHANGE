@@ -159,7 +159,7 @@ export const SleepPlanList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"sleep"} plan={"plan"}
+        part={"sleep"} plan={"plan"} type={"list"}
       />
     );
   };
@@ -169,7 +169,7 @@ export const SleepPlanList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"} food={""}
+        part={"sleep"} plan={"plan"} type={"list"}
       />
     );
   };

@@ -6,7 +6,7 @@ import {workArray} from "../data/WorkArray.jsx";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
-  FILTER, setFILTER, PAGING, setPAGING, type, plan
+  FILTER, setFILTER, PAGING, setPAGING, part, plan, type
 }) => {
   function selectType() {
     return (
@@ -165,21 +165,21 @@ export const FilterNode = ({
     );
   };
   return (
-    type === "food" && plan === "" ? (
+    part === "food" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
         {selectPartFood()}
       </div>
-    ) : type === "food" && plan === "plan" ? (
+    ) : part === "food" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
         {selectPartFood()}
       </div>
-    ) : type === "money" && plan === "" ? (
+    ) : part === "money" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
@@ -187,25 +187,25 @@ export const FilterNode = ({
         {selectPartMoney()}
         {selectTitleMoney()}
       </div>
-    ) : type === "money" && plan === "plan" ? (
+    ) : part === "money" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
-    ) : type === "sleep" && plan === "" ? (
+    ) : part === "sleep" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
-    ) : type === "sleep" && plan === "plan" ? (
+    ) : part === "sleep" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
-    ) : type === "work" && plan === "" ? (
+    ) : part === "work" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
@@ -213,7 +213,7 @@ export const FilterNode = ({
         {selectPartWork()}
         {selectTitleWork()}
       </div>
-    ) : type === "work" && plan === "plan" ? (
+    ) : part === "work" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}

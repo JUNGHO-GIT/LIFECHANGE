@@ -171,7 +171,7 @@ export const MoneyPlanDetail = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"detail"} food={""}
+        part={"money"} plan={"plan"} type={"detail"}
       />
     );
   };

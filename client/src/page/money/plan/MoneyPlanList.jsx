@@ -156,7 +156,7 @@ export const MoneyPlanList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"money"} plan={"plan"}
+        part={"money"} plan={"plan"} type={"list"}
       />
     );
   };
@@ -166,7 +166,7 @@ export const MoneyPlanList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"} food={""}
+        part={"money"} plan={"plan"} type={"list"}
       />
     );
   };

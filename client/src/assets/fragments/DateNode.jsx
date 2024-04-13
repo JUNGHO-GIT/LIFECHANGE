@@ -7,7 +7,7 @@ import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
-  DATE, setDATE, type
+  DATE, setDATE, part, plan, type
 }) => {
 
   function calcDate (days) {

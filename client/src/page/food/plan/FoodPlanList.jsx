@@ -162,7 +162,7 @@ export const FoodPlanList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"food"} plan={"plan"}
+        part={"food"} plan={"plan"} type={"list"}
       />
     );
   };
@@ -172,7 +172,7 @@ export const FoodPlanList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}  food={"food"}
+        part={"food"} plan={"plan"} type={"list"}
       />
     );
   };
