@@ -18,16 +18,6 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await UserPlan.countDocuments({
-    user_id: user_id_param,
-    user_plan_startDt: {
-      $lte: endDay,
-    },
-    user_plan_endDt: {
-      $gte: startDay,
-    },
-  });
-
   const findResult = await UserPlan.find({
     user_id: user_id_param,
     user_plan_startDt: {
@@ -41,6 +31,16 @@ export const list = async (
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
+
+  const totalCnt = await UserPlan.countDocuments({
+    user_id: user_id_param,
+    user_plan_startDt: {
+      $lte: endDay,
+    },
+    user_plan_endDt: {
+      $gte: startDay,
+    },
+  });
 
   return {
     totalCnt: totalCnt,

@@ -5,17 +5,13 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
+  const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -73,62 +69,58 @@ export const FoodPlanDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
+  const FOOD_PLAN_DEFAULT = {
     _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: "",
-    }
-  });
-  const [PLAN, setPLAN] = useState({
-    _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: "",
-    }
-  });
+    food_plan_number: 0,
+    food_plan_startDt: "",
+    food_plan_endDt: "",
+    food_plan_kcal: "",
+    food_plan_carb: "",
+    food_plan_protein: "",
+    food_plan_fat: "",
+  };
+  const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK_PLAN}/detail`, {
+    const response = await axios.get(`${URL_FOOD_PLAN}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
-        FILTER: FILTER,
+        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
-    setPLAN(response.data.result || PLAN_DEFAULT);
+    setFOOD_PLAN(response.data.result || FOOD_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [location_id, user_id]);
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_WORK_PLAN}/delete`, {
+    const response = await axios.delete(`${URL_FOOD_PLAN}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
-        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
-        FILTER: FILTER,
+        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
     if (response.data === "success") {
-      alert("delete success");
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navParam(SEND.toDetail, {
-        state: SEND
+      const updatedData = await axios.get(`${URL_FOOD_PLAN}/list`, {
+        params: {
+          _id: location_id,
+          user_id: user_id,
+          food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        },
       });
+      alert("삭제되었습니다.");
+      setFOOD_PLAN(updatedData.data.result || FOOD_PLAN_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);
@@ -144,19 +136,37 @@ export const FoodPlanDetail = () => {
             <th>시작일</th>
             <th>종료일</th>
             <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{PLAN.plan_startDt}</td>
-            <td>{PLAN.plan_endDt}</td>
-            <td>{PLAN.plan_food.plan_kcal}</td>
-            <td>
-              <button className="btn btn-sm btn-danger" onClick={() => (
-                flowDelete(PLAN._id)
-              )}>
-                x
+            <td className="fs-20 pt-20">
+              {FOOD_PLAN.food_plan_startDt}
+            </td>
+            <td className="fs-20 pt-20">
+              {FOOD_PLAN.food_plan_endDt}
+            </td>
+            <td className="fs-20 pt-20">
+              {FOOD_PLAN.food_plan_kcal}
+            </td>
+            <td className="fs-20 pt-20">
+              {FOOD_PLAN.food_plan_carb}
+            </td>
+            <td className="fs-20 pt-20">
+              {FOOD_PLAN.food_plan_protein}
+            </td>
+            <td className="fs-20 pt-20">
+              {FOOD_PLAN.food_plan_fat}
+            </td>
+            <td className="fs-20 pt-20">
+              <button className="btn btn-danger btn-sm" onClick={() => {
+                flowDelete(FOOD_PLAN._id);
+              }}>
+                X
               </button>
             </td>
           </tr>
@@ -170,7 +180,7 @@ export const FoodPlanDetail = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"detail"}
+        type={"detail"}  food={"food"}
       />
     );
   };
@@ -179,18 +189,14 @@ export const FoodPlanDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>Detail</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {tableNode()}
           </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

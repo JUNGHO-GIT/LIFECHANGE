@@ -65,22 +65,26 @@ export const compare = async (
 
   const finalResult = findResultPlan.map((plan) => {
     const match = findResultReal.find((real) => (
-      real.sleep_startDt >= plan.sleep_plan_startDt && real.sleep_endDt <= plan.sleep_plan_endDt
+      real && plan &&
+      real.sleep_startDt && real.sleep_endDt &&
+      plan.sleep_plan_startDt && plan.sleep_plan_endDt &&
+      real.sleep_startDt <= plan.sleep_plan_endDt &&
+      real.sleep_endDt >= plan.sleep_plan_startDt
     ));
     return match ? {
       ...plan,
-      sleep_startDt: match.sleep_startDt,
-      sleep_endDt: match.sleep_endDt,
-      sleep_section: match.sleep_section,
+      sleep_startDt: match?.sleep_startDt,
+      sleep_endDt: match?.sleep_endDt,
+      sleep_night: match?.sleep_section[0].sleep_night,
+      sleep_morning: match?.sleep_section[0].sleep_morning,
+      sleep_time: match?.sleep_section[0].sleep_time,
     } : {
       ...plan,
       sleep_startDt: "",
       sleep_endDt: "",
-      sleep_section: [{
-        sleep_night: "",
-        sleep_morning: "",
-        sleep_time: "",
-      }],
+      sleep_night: "",
+      sleep_morning: "",
+      sleep_time: "",
     };
   });
 
@@ -88,7 +92,7 @@ export const compare = async (
     totalCnt: totalCnt,
     result: finalResult,
   };
-}
+};
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
@@ -104,20 +108,6 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await SleepPlan.countDocuments({
-    user_id: user_id_param,
-    sleep_plan_startDt: {
-      $lte: endDay,
-    },
-    sleep_plan_endDt: {
-      $gte: startDay,
-    },
-  })
-  .sort({sleep_plan_startDt: sort})
-  .skip((page - 1) * limit)
-  .limit(limit)
-  .lean();
-
   const findResult = await SleepPlan.find({
     user_id: user_id_param,
     sleep_plan_startDt: {
@@ -131,6 +121,16 @@ export const list = async (
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
+
+  const totalCnt = await SleepPlan.countDocuments({
+    user_id: user_id_param,
+    sleep_plan_startDt: {
+      $lte: endDay,
+    },
+    sleep_plan_endDt: {
+      $gte: startDay,
+    },
+  });
 
   return {
     totalCnt: totalCnt,
@@ -150,12 +150,8 @@ export const detail = async (
   const finalResult = await SleepPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    sleep_plan_startDt: {
-      $lte: endDay,
-    },
-    sleep_plan_endDt: {
-      $gte: startDay,
-    }
+    sleep_plan_startDt: startDay,
+    sleep_plan_endDt: endDay,
   })
   .lean();
 

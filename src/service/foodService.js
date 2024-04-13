@@ -125,11 +125,24 @@ export const list = async (
   PAGING_param
 ) => {
 
-  const [startDay, endDay] = food_dur_param.split(" ~ ");
-  const part = FILTER_param.part || "전체";
+  const [startDay, endDay] = food_dur_param.split(` ~ `);
+
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+
+  const totalCnt = await Food.countDocuments({
+    user_id: user_id_param,
+    food_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    food_endDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+  })
+  .lean();
 
   const findResult = await Food.find({
     user_id: user_id_param,
@@ -143,31 +156,13 @@ export const list = async (
     },
   })
   .sort({food_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
   .lean();
-
-  let totalCnt = 0;
-  const finalResult = findResult.map((food) => {
-    if (food && food.food_section) {
-      let sections = food.food_section.filter((section) => (
-        part === "전체" ? true : section.food_part === part
-      ));
-
-      // 배열 갯수 누적 계산
-      totalCnt += sections.length;
-
-      // section 배열에서 페이지에 맞는 항목만 선택합니다.
-      const startIdx = (limit * page - 1) - (limit - 1);
-      const endIdx = (limit * page);
-      sections = sections.slice(startIdx, endIdx);
-
-      food.food_section = sections;
-    }
-    return food;
-  });
 
   return {
     totalCnt: totalCnt,
-    result: finalResult,
+    result: findResult,
   };
 };
 
@@ -231,6 +226,10 @@ export const save = async (
       user_id: user_id_param,
       food_startDt: startDay,
       food_endDt: endDay,
+      food_total_kcal: FOOD_param.food_total_kcal,
+      food_total_carb: FOOD_param.food_total_carb,
+      food_total_protein: FOOD_param.food_total_protein,
+      food_total_fat: FOOD_param.food_total_fat,
       food_section: FOOD_param.food_section,
       food_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       food_update: "",

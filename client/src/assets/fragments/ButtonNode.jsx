@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  CALENDAR, setCALENDAR, DATE, setDATE, SEND, flowSave, navParam, type
+  CALENDAR, setCALENDAR, DATE, setDATE, SEND, flowSave, navParam, type, food
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -82,6 +82,20 @@ export const ButtonNode = ({
       </button>
     );
   };
+  function buttonSearch () {
+    return (
+      <button type="button" className="btn btn-sm btn-secondary me-2" onClick={() => {
+        SEND.startDt = DATE.startDt;
+        SEND.endDt = DATE.endDt;
+        navParam(SEND.toSearch, {
+          state: SEND,
+        });
+      }}>
+        Search
+      </button>
+    );
+  };
+
   return (
     type === "list" ? (
       <div className="d-inline-flex">
@@ -89,10 +103,16 @@ export const ButtonNode = ({
         {buttonToday()}
         {buttonRefresh()}
       </div>
-    ) : type === "save" ? (
+    ) : type === "save" && food === "" ? (
       <div className="d-inline-flex">
         {buttonSave()}
         {buttonList()}
+        {buttonRefresh()}
+      </div>
+    ) : type === "save" && food === "food" ? (
+      <div className="d-inline-flex">
+        {buttonSave()}
+        {buttonSearch()}
         {buttonRefresh()}
       </div>
     ) : type === "detail" ? (

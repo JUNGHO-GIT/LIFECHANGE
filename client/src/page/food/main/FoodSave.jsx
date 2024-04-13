@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useTime} from "../../../assets/hooks/useTime.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
@@ -71,110 +71,86 @@ export const FoodSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:FOOD_DEFAULT, set:setFOOD_DEFAULT} = useStorage(
-    `FOOD_DEFAULT(${PATH})`, {
-      _id: "",
-      food_number: 0,
-      food_startDt: "",
-      food_endDt: "",
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    }
+  const FOOD_DEFAULT = {
+    _id: "",
+    food_number: 0,
+    food_startDt: "",
+    food_endDt: "",
+    food_total_kcal: "",
+    food_total_fat: "",
+    food_total_carb: "",
+    food_total_protein: "",
+    food_section: [{
+      food_part: "",
+      food_title: "",
+      food_count: "",
+      food_serv: "",
+      food_gram: "",
+      food_kcal: "",
+      food_fat: "",
+      food_carb: "",
+      food_protein: "",
+    }],
+  };
+  const {val:FOOD_BEFORE, set:setFOOD_BEFORE} = useStorage(
+    `FOOD_BEFORE(${PATH})`, FOOD_DEFAULT
   );
   const {val:FOOD, set:setFOOD} = useStorage(
-    `FOOD(${PATH})`, {
-      _id: "",
-      food_number: 0,
-      food_startDt: "",
-      food_endDt: "",
-      food_total_kcal: "",
-      food_total_fat: "",
-      food_total_carb: "",
-      food_total_protein: "",
-      food_section: [{
-        food_part: "",
-        food_title: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
-        food_kcal: "",
-        food_fat: "",
-        food_carb: "",
-        food_protein: "",
-      }],
-    }
+    `FOOD(${PATH})`, FOOD_DEFAULT
   );
-  useTime(FOOD, setFOOD, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
-  /* useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/detail`, {
-      params: {
-        _id: "",
-        user_id: user_id,
-        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
-      },
-    });
-    setFOOD(response.data.result || FOOD_DEFAULT);
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0,
-    }));
-  })()}, [user_id, DATE.startDt, DATE.endDt]);; */
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
+  // 2-3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {
+    const fetchDetail = async () => {
+      const response = await axios.get(`${URL_FOOD}/detail`, {
+        params: {
+          _id: "",
+          user_id: user_id,
+          food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        },
+      });
 
-    const getItem = localStorage.getItem("food_section");
-    let storageSection = [];
-
-    if (getItem) {
-      const storedData = JSON.parse(getItem);
-      storageSection = storedData;
-    }
-
-    setFOOD((prev) => {
-      let newFoodSection = [...prev.food_section];
-
-      // 첫 번째 항목이 빈 값 객체인지 확인하고, 조건에 맞으면 제거
-      if (
-        newFoodSection.length > 0 &&
-        Object.values(newFoodSection[0]).every((value) => (value === ""))
-      ) {
-        newFoodSection.shift();
+      // 결과 있는경우 FOOD 상태 업데이트
+      if (response.data.result) {
+        setFOOD((prev) => ({
+          ...prev,
+          ...response.data.result,
+        }));
       }
 
-      // 새로운 데이터가 배열인 경우 배열, 단일 객체인 경우 단일 객체를 추가
-      Array.isArray(storageSection)
-      ? newFoodSection.push(...storageSection)
-      : newFoodSection.push(storageSection);
+      // 결과가 null 일 경우, FOOD 상태를 명시적으로 초기화
+      else {
+        setFOOD(FOOD_DEFAULT);
+      }
 
-      return {
+      setCOUNT((prev) => ({
         ...prev,
-        food_section: newFoodSection,
-      };
-    })
-  }, []);
+        totalCnt: response.data.totalCnt || 0,
+        sectionCnt: response.data.sectionCnt || 0
+      }));
+
+      const getItem = localStorage.getItem("food_section");
+      let storageSection = getItem ? JSON.parse(getItem) : null;
+
+      // localStorage에 저장된 데이터가 있는 경우, FOOD 상태 업데이트
+      if (storageSection) {
+        setFOOD((prev) => ({
+          ...prev,
+          food_section: [...prev.food_section, storageSection],
+        }));
+        localStorage.removeItem("food_section");
+      }
+    };
+    fetchDetail();
+  }, [user_id, DATE.startDt, DATE.endDt, URL_FOOD]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-
     // 초기 영양소 값 설정
-    setFOOD_DEFAULT((prev) => ({
+    setFOOD_BEFORE((prev) => ({
       ...prev,
       food_section: [...FOOD.food_section],
     }));
@@ -199,11 +175,10 @@ export const FoodSave = () => {
       food_total_carb: totals.totalCarb.toFixed(1),
       food_total_protein: totals.totalProtein.toFixed(1),
     }));
-  }, [FOOD.food_section]);
+  }, [FOOD?.food_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
       FOOD: FOOD,
@@ -236,7 +211,7 @@ export const FoodSave = () => {
     setFOOD((prev) => {
       const newFoodSection = [...prev.food_section];
       const section = newFoodSection[index];
-      const defaultSection = FOOD_DEFAULT.food_section[index];
+      const defaultSection = FOOD_BEFORE.food_section[index];
       const ratio = newCountValue / (defaultSection.food_count || 1);
 
       if (defaultSection) {
@@ -356,10 +331,10 @@ export const FoodSave = () => {
             <td></td>
             <td></td>
             <td></td>
-            <td>{FOOD.food_total_kcal}</td>
-            <td>{FOOD.food_total_fat}</td>
-            <td>{FOOD.food_total_carb}</td>
-            <td>{FOOD.food_total_protein}</td>
+            <td>{FOOD?.food_total_kcal}</td>
+            <td>{FOOD?.food_total_fat}</td>
+            <td>{FOOD?.food_total_carb}</td>
+            <td>{FOOD?.food_total_protein}</td>
             <td></td>
           </tr>
         </tbody>
@@ -372,7 +347,7 @@ export const FoodSave = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
-        type={"save"}
+        type={"save"} food={"food"}
       />
     );
   };
@@ -381,23 +356,17 @@ export const FoodSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {dateNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

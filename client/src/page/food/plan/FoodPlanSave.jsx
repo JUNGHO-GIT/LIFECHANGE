@@ -3,14 +3,11 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {DayPicker} from "react-day-picker";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
+import DatePicker from "react-datepicker";
 import axios from "axios";
-import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
-import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -74,26 +71,20 @@ export const FoodPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
+  const FOOD_PLAN_DEFAULT = {
     _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: ""
-    },
-  });
-  const [PLAN, setPLAN] = useState({
-    _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: ""
-    },
-  });
+    food_plan_number: 0,
+    food_plan_startDt: "",
+    food_plan_endDt: "",
+    food_plan_kcal: "",
+    food_plan_carb: "",
+    food_plan_protein: "",
+    food_plan_fat: "",
+  };
+  const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -104,19 +95,19 @@ export const FoodPlanSave = () => {
         food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setPLAN(response.data.result || PLAN_DEFAULT);
+    setFOOD_PLAN(response.data.result || FOOD_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.startDt, DATE.endDt]);;
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_FOOD_PLAN}/save`, {
       user_id: user_id,
-      PLAN: PLAN,
+      FOOD_PLAN: FOOD_PLAN,
       food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data === "success") {
@@ -141,102 +132,134 @@ export const FoodPlanSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function dayPicker (isOpen, setOpen, selectedDate, setSelectedDate) {
+
+    // 1. startNode
+    function startNode () {
       return (
-        <div className={`dayPicker-container ${isOpen ? "" : "d-none"}`}>
-          <span className="d-right fw-700 pointer" style={{position: "absolute", right: "15px", top: "10px"}} onClick={() => setOpen(false)}>
-            X
-          </span>
-          <div className="h-2"></div>
-          <DayPicker
-            weekStartsOn={1}
-            showOutsideDays={true}
-            locale={ko}
-            modifiersClassNames={{
-              selected:"selected", disabled:"disabled", outside:"outside", inside:"inside",
-            }}
-            mode="single"
-            selected={selectedDate}
-            month={selectedDate}
-            onDayClick={(day) => {
-              const selectedDay = new Date(day);
-              const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
-              setSelectedDate(fmtDate);
-              setOpen(false);
-            }}
-            onMonthChange={(month) => {
-              setSelectedDate(new Date(month.getFullYear(), month.getMonth(), 1));
-            }}
-          />
-        </div>
-      );
-    };
-    function foodNode () {
-      return (
-        <div>
-          {/* <div className="row d-center mb-20">
-            <div className="col-3">
-              {dayPicker(calStartOpen, setCalendarStartOpen, STARTDT, DATE.setStrStartDt)}
-              <div className="input-group">
-                <p className={`btn btn-sm ${calStartOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarStartOpen(!calStartOpen)}>
-                  시작일
-                </p>
-                <input type="text" className="form-control" value={STARTDT} readOnly />
-              </div>
-            </div>
-            <div className="col-3">
-              {dayPicker(calEndOpen, setCalendarEndOpen, ENDDT, DATE.setEndDate)}
-              <div className="input-group">
-                <p className={`btn btn-sm ${calEndOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarEndOpen(!calEndOpen)}>
-                  종료일
-                </p>
-                <input type="text" className="form-control" value={ENDDT} readOnly />
-              </div>
-            </div>
-          </div> */}
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">칼로리</span>
-                <input type="text" className="form-control" value={PLAN.plan_food.plan_kcal}
-                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_kcal: e.target.value}})}
-                />
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">탄수화물</span>
-                <input type="text" className="form-control" value={PLAN.plan_food.plan_carb}
-                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_carb: e.target.value}})}
-                />
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">단백질</span>
-                <input type="text" className="form-control" value={PLAN.plan_food.plan_protein}
-                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_protein: e.target.value}})}
-                />
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">지방</span>
-                <input type="text" className="form-control" value={PLAN.plan_food.plan_fat}
-                  onChange={(e) => setPLAN({...PLAN, plan_food: {...PLAN.plan_food, plan_fat: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-    return (
-      <div>
         <div className="row d-center">
           <div className="col-12">
-            {foodNode()}
+            <div className="input-group">
+              <span className="input-group-text">시작일</span>
+              <DatePicker
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom"
+                className="form-control"
+                selected={new Date(DATE.startDt)}
+                disabled={false}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                  }));
+                }}
+              >
+              </DatePicker>
+            </div>
           </div>
+        </div>
+      );
+    };
+
+    // 2. endNode
+    function endNode () {
+      return (
+        <div className="row d-center">
+          <div className="col-12">
+            <div className="input-group">
+              <span className="input-group-text">종료일</span>
+              <DatePicker
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom"
+                className="form-control"
+                selected={new Date(DATE.endDt)}
+                disabled={false}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                  }));
+                }}
+              ></DatePicker>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // 3. foodNode
+    function foodNode () {
+      return (
+        <div className="row d-center mb-20">
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 칼로리</span>
+              <input type="text" className="form-control"
+                value={FOOD_PLAN?.food_plan_kcal}
+                onChange={(e) => {
+                  setFOOD_PLAN((prev) => ({
+                    ...prev,
+                    food_plan_kcal: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 탄수화물</span>
+              <input type="text" className="form-control"
+                value={FOOD_PLAN?.food_plan_carb}
+                onChange={(e) => {
+                  setFOOD_PLAN((prev) => ({
+                    ...prev,
+                    food_plan_carb: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 단백질</span>
+              <input type="text" className="form-control"
+                value={FOOD_PLAN?.food_plan_protein}
+                onChange={(e) => {
+                  setFOOD_PLAN((prev) => ({
+                    ...prev,
+                    food_plan_protein: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 지방</span>
+              <input type="text" className="form-control"
+                value={FOOD_PLAN?.food_plan_fat}
+                onChange={(e) => {
+                  setFOOD_PLAN((prev) => ({
+                    ...prev,
+                    food_plan_fat: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    };
+    // 5. return
+    return (
+      <div className="row d-center">
+        <div className="col-4 mb-20">
+          {startNode()}
+        </div>
+        <div className="col-4 mb-20">
+          {endNode()}
+        </div>
+        <div className="col-8 mb-20">
+          {foodNode()}
         </div>
       </div>
     );
@@ -247,7 +270,7 @@ export const FoodPlanSave = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
-        type={"save"}
+        type={"save"}  food={"food"}
       />
     );
   };
@@ -266,7 +289,7 @@ export const FoodPlanSave = () => {
           <div className="col-12 mb-20">
             {buttonNode()}
           </div>
-          <div className="col-12 mb-20 h-80">
+          <div className="col-12 mb-20">
             {tableNode()}
           </div>
         </div>

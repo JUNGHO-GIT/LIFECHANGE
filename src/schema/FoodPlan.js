@@ -21,10 +21,26 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
+
   food_plan_kcal: {
     type: String,
     required: false
   },
+  food_plan_carb: {
+    type: String,
+    required: false
+  },
+  food_plan_protein: {
+    type: String,
+    required: false
+  },
+  food_plan_fat: {
+    type: String,
+    required: false
+  },
+
+
   food_plan_regdate: {
     type: String,
     required: false

@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useTime} from "../../../assets/hooks/useTime.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {moneyArray} from "../../../assets/data/MoneyArray.jsx";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
@@ -85,7 +85,9 @@ export const MoneySave = () => {
     }]
   };
   const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
-  useTime(MONEY, setMONEY, PATH, "real");
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -102,7 +104,7 @@ export const MoneySave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.startDt, DATE.endDt]);;
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -331,7 +333,7 @@ export const MoneySave = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
-        type={"save"}
+        type={"save"} food={""}
       />
     );
   };

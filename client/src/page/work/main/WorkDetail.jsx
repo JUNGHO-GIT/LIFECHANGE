@@ -128,7 +128,7 @@ export const WorkDetail = () => {
       sectionCnt: response.data.sectionCnt || 0
     }));
 
-  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);;
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -213,7 +213,7 @@ export const WorkDetail = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"detail"}
+        type={"detail"} food={""}
       />
     );
   };

@@ -18,16 +18,6 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await WorkPlan.countDocuments({
-    user_id: user_id_param,
-    work_plan_startDt: {
-      $lte: endDay,
-    },
-    work_plan_endDt: {
-      $gte: startDay,
-    },
-  });
-
   const findResult = await WorkPlan.find({
     user_id: user_id_param,
     work_plan_startDt: {
@@ -41,6 +31,16 @@ export const list = async (
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
+
+  const totalCnt = await WorkPlan.countDocuments({
+    user_id: user_id_param,
+    work_plan_startDt: {
+      $lte: endDay,
+    },
+    work_plan_endDt: {
+      $gte: startDay,
+    },
+  });
 
   return {
     totalCnt: totalCnt,
@@ -60,12 +60,8 @@ export const detail = async (
   const finalResult = await WorkPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    work_plan_startDt: {
-      $lte: endDay,
-    },
-    work_plan_endDt: {
-      $gte: startDay,
-    }
+    work_plan_startDt: startDay,
+    work_plan_endDt: endDay
   })
   .lean();
 
@@ -87,12 +83,8 @@ export const save = async (
 
   const findResult = await WorkPlan.findOne({
     user_id: user_id_param,
-    work_plan_startDt: {
-      $lte: endDay,
-    },
-    work_plan_endDt: {
-      $gte: startDay,
-    }
+    work_plan_startDt: startDay,
+    work_plan_endDt: endDay
   })
   .lean();
 

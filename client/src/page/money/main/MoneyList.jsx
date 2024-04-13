@@ -184,7 +184,7 @@ export const MoneyList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}
+        type={"list"} food={""}
       />
     );
   };

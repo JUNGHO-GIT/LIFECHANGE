@@ -70,7 +70,7 @@ export const FoodList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
+  const FOOD_DEFAULT = [{
     _id: "",
     food_number: 0,
     food_startDt: "",
@@ -90,28 +90,8 @@ export const FoodList = () => {
       food_carb: "",
       food_protein: "",
     }],
-  }]);
-  const [FOOD, setFOOD] = useState([{
-    _id: "",
-    food_number: 0,
-    food_startDt: "",
-    food_endDt: "",
-    food_total_kcal: "",
-    food_total_fat: "",
-    food_total_carb: "",
-    food_total_protein: "",
-    food_section: [{
-      food_part: "",
-      food_title: "",
-      food_count: "",
-      food_serv: "",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: "",
-    }],
-  }]);
+  }];
+  const [FOOD, setFOOD] = useState(FOOD_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -151,40 +131,42 @@ export const FoodList = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD.map((item) => (
+          {FOOD?.map((item, index) => (
             <React.Fragment key={item._id}>
-              {item?.food_section.map((section, index) => (
-                <tr key={section._id}>
-                  <td className="pointer" onClick={() => {
-                    SEND.id = item._id;
-                    SEND.startDt = item.food_startDt;
-                    SEND.endDt = item.food_endDt;
-                    navParam(SEND.toDetail, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.food_startDt}
-                  </td>
-                  <td>{section.food_part}</td>
-                  <td>{section.food_title}</td>
-                  <td>{section.food_brand}</td>
-                  <td>{section.food_count}</td>
-                  <td>{section.food_serv}</td>
-                  <td>{section.food_gram}</td>
-                  <td>{section.food_kcal}</td>
-                  <td>{section.food_carb}</td>
-                  <td>{section.food_protein}</td>
-                  <td>{section.food_fat}</td>
-                </tr>
+              {item.food_section.slice(0, 3).map((section, sectionIndex) => (
+                <React.Fragment key={`${section.food_part}_${section.food_title}`}>
+                  <tr>
+                    {sectionIndex === 0 && (
+                      <td rowSpan={item.food_section.length > 3 ? 4 : item.food_section.length}
+                      className={"pointer"} onClick={() => {
+                        SEND.id = item._id;
+                        SEND.startDt = item.food_startDt;
+                        SEND.endDt = item.food_endDt;
+                        navParam(SEND.toDetail, {
+                          state: SEND
+                        });
+                      }}>
+                        {item.food_startDt}
+                      </td>
+                    )}
+                    <td>{section.food_part}</td>
+                    <td>{section.food_title}</td>
+                    <td>{section.food_brand}</td>
+                    <td>{section.food_count}</td>
+                    <td>{section.food_serv}</td>
+                    <td>{section.food_gram}</td>
+                    <td>{section.food_kcal}</td>
+                    <td>{section.food_carb}</td>
+                    <td>{section.food_protein}</td>
+                    <td>{section.food_fat}</td>
+                  </tr>
+                </React.Fragment>
               ))}
-              <tr className="table-secondary">
-                <td colSpan={6}>합계</td>
-                <td></td>
-                <td>{item.food_total_kcal}kcal</td>
-                <td>{item.food_total_carb}g</td>
-                <td>{item.food_total_protein}g</td>
-                <td>{item.food_total_fat}g</td>
-              </tr>
+              {item.food_section.length > 3 && (
+                <tr>
+                  <td colSpan={11}>...</td>
+                </tr>
+              )}
             </React.Fragment>
           ))}
         </tbody>
@@ -223,7 +205,7 @@ export const FoodList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}
+        type={"list"}  food={"food"}
       />
     );
   };
@@ -232,29 +214,21 @@ export const FoodList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>List</h1>
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {calendarNode()}
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {filterNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {pagingNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

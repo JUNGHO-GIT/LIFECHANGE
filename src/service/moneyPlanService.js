@@ -53,40 +53,43 @@ export const compare = async (
 
   const totalCnt = await MoneyPlan.countDocuments({
     user_id: user_id_param,
-    money_startDt: {
-      $gte: startDayReal,
-      $lte: endDayReal,
+    money_plan_startDt: {
+      $lte: endDayPlan,
     },
-    money_endDt: {
-      $gte: startDayReal,
-      $lte: endDayReal,
-    }
+    money_plan_endDt: {
+      $gte: startDayPlan,
+    },
   });
 
-  const finalResult = findResultReal.map((real) => {
-    const match = findResultPlan.find((plan) => (
-      real.money_startDt >= plan.money_plan_startDt && real.money_endDt <= plan.money_plan_endDt
+  const finalResult = findResultPlan.map((plan) => {
+    const matches = findResultReal.filter((real) => (
+      real && plan &&
+      real.money_startDt && real.money_endDt &&
+      plan.money_plan_startDt && plan.money_plan_endDt &&
+      real.money_startDt <= plan.money_plan_endDt &&
+      real.money_endDt >= plan.money_plan_startDt
     ));
-    return match ? {
-      ...real,
-      money_plan_startDt: match.money_plan_startDt,
-      money_plan_endDt: match.money_plan_endDt,
-      money_plan_night: match.money_plan_night,
-      money_plan_morning: match.money_plan_morning,
-      money_plan_time: match.money_plan_time,
-    } : {
-      ...real,
-      money_plan_startDt: "",
-      money_plan_endDt: "",
-      money_plan_night: "",
-      money_plan_morning: "",
-      money_plan_time: "",
+    const totalIn = matches.reduce((sum, curr) => (
+      sum + curr.money_section.reduce((acc, section) => (
+        section.money_part_val === "수입" ? acc + (section.money_amount || 0) : acc
+      ), 0)
+    ), 0);
+    const totalOut = matches.reduce((sum, curr) => (
+      sum + curr.money_section.reduce((acc, section) => (
+        section.money_part_val === "지출" ? acc + (section.money_amount || 0) : acc
+      ), 0)
+    ), 0);
+
+    return {
+      ...plan,
+      money_in: totalIn,
+      money_out: totalOut
     };
   });
 
   return {
     totalCnt: totalCnt,
-    result: finalResult,
+    result: finalResult
   };
 };
 
@@ -104,20 +107,6 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await MoneyPlan.countDocuments({
-    user_id: user_id_param,
-    money_plan_startDt: {
-      $lte: endDay,
-    },
-    money_plan_endDt: {
-      $gte: startDay,
-    },
-  })
-  .sort({money_plan_startDt: sort})
-  .skip((page - 1) * limit)
-  .limit(limit)
-  .lean();
-
   const findResult = await MoneyPlan.find({
     user_id: user_id_param,
     money_plan_startDt: {
@@ -131,6 +120,16 @@ export const list = async (
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
+
+  const totalCnt = await MoneyPlan.countDocuments({
+    user_id: user_id_param,
+    money_plan_startDt: {
+      $lte: endDay,
+    },
+    money_plan_endDt: {
+      $gte: startDay,
+    },
+  });
 
   return {
     totalCnt: totalCnt,

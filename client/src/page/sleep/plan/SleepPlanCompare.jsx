@@ -75,11 +75,9 @@ export const SleepPlanCompare = () => {
     sleep_endDt: "",
     sleep_plan_startDt: "",
     sleep_plan_endDt: "",
-    sleep_section: [{
-      sleep_night: "",
-      sleep_morning: "",
-      sleep_time: "",
-    }],
+    sleep_night: "",
+    sleep_morning: "",
+    sleep_time: "",
     sleep_plan_night: "",
     sleep_plan_morning: "",
     sleep_plan_time: "",
@@ -146,42 +144,35 @@ export const SleepPlanCompare = () => {
           <tbody>
             {SLEEP_COMPARE.map((item, index) => (
               <React.Fragment key={item._id}>
-                {item.sleep_section.slice(0, 3).map((section, sectionIndex) => (
-                  <React.Fragment key={item._id}>
-                    <tr>
-                      {sectionIndex === 0 && (
-                        <td rowSpan={4}>
-                          {item.sleep_plan_startDt}
-                        </td>
-                      )}
-                    </tr>
-                    <tr>
-                      <td>취침</td>
-                      <td>{item.sleep_plan_night}</td>
-                      <td>{item.sleep_section[0].sleep_night}</td>
-                      <td className={successOrNot(item.sleep_plan_night, item.sleep_section[0].sleep_night)}>●</td>
-                    </tr>
-                    <tr>
-                      <td>기상</td>
-                      <td>{item.sleep_plan_morning}</td>
-                      <td>{item.sleep_section[0].sleep_morning}</td>
-                      <td className={successOrNot(item.sleep_plan_morning, item.sleep_section[0].sleep_morning)}>●</td>
-                    </tr>
-                    <tr>
-                      <td>수면</td>
-                      <td>{item.sleep_plan_time}</td>
-                      <td>{item.sleep_section[0].sleep_time}</td>
-                      <td className={successOrNot(item.sleep_plan_time, item.sleep_section[0].sleep_time)}>●</td>
-                    </tr>
-                  </React.Fragment>
-                ))}
-                {item.sleep_section.length > 3 && (
-                  <React.Fragment key={item._id}>
-                    <tr>
-                      <td colSpan={5}>...</td>
-                    </tr>
-                  </React.Fragment>
-                )}
+                <tr>
+                  <td rowSpan={4}>
+                    {item.sleep_plan_startDt}
+                  </td>
+                </tr>
+                <tr>
+                  <td>취침</td>
+                  <td>{item.sleep_plan_night}</td>
+                  <td>{item.sleep_night}</td>
+                  <td className={successOrNot(item.sleep_night, item.sleep_plan_night)}>
+                    ●
+                  </td>
+                </tr>
+                <tr>
+                  <td>기상</td>
+                  <td>{item.sleep_plan_morning}</td>
+                  <td>{item.sleep_morning}</td>
+                  <td className={successOrNot(item.sleep_morning, item.sleep_plan_morning)}>
+                    ●
+                  </td>
+                </tr>
+                <tr>
+                  <td>수면</td>
+                  <td>{item.sleep_plan_time}</td>
+                  <td>{item.sleep_time}</td>
+                  <td className={successOrNot(item.sleep_time, item.sleep_plan_time)}>
+                    ●
+                  </td>
+                </tr>
               </React.Fragment>
             ))}
           </tbody>
@@ -226,7 +217,7 @@ export const SleepPlanCompare = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}
+        type={"list"} food={""}
       />
     );
   };

@@ -111,7 +111,7 @@ export const MoneyPlanList = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY_PLAN.map((item) => (
+          {MONEY_PLAN?.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
                 <td className="pointer" onClick={() => {
@@ -166,7 +166,7 @@ export const MoneyPlanList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}
+        type={"list"} food={""}
       />
     );
   };

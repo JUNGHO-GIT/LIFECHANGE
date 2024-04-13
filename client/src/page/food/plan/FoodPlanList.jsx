@@ -70,26 +70,17 @@ export const FoodPlanList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
+  const FOOD_PLAN_DEFAULT = [{
     _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: "",
-    }
-  }]);
-  const [PLAN, setPLAN] = useState([{
-    _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: "",
-    }
-  }]);
+    food_plan_number: 0,
+    food_plan_startDt: "",
+    food_plan_endDt: "",
+    food_plan_kcal: "",
+    food_plan_carb: "",
+    food_plan_protein: "",
+    food_plan_fat: "",
+  }];
+  const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -101,13 +92,13 @@ export const FoodPlanList = () => {
         PAGING: PAGING
       },
     });
-    setPLAN(response.data.result || PLAN_DEFAULT);
+    setFOOD_PLAN(response.data.result || FOOD_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, FILTER, PAGING]);
+  })()}, [user_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -117,15 +108,20 @@ export const FoodPlanList = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>칼로리</th>
+            <th>목표 칼로리</th>
+            <th>목표 탄수화물</th>
+            <th>목표 단백질</th>
+            <th>목표 지방</th>
           </tr>
         </thead>
         <tbody>
-          {PLAN.map((item) => (
+          {FOOD_PLAN?.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td onClick={() => {
+                <td className="pointer" onClick={() => {
                   SEND.id = item._id;
+                  SEND.startDt = item.food_plan_startDt;
+                  SEND.endDt = item.food_plan_endDt;
                   navParam(SEND.toDetail, {
                     state: SEND
                   });
@@ -133,7 +129,10 @@ export const FoodPlanList = () => {
                   {item.food_plan_startDt}
                 </td>
                 <td>{item.food_plan_endDt}</td>
-                <td>{item.food_plan_food.plan_kcal}</td>
+                <td>{item.food_plan_kcal}</td>
+                <td>{item.food_plan_carb}</td>
+                <td>{item.food_plan_protein}</td>
+                <td>{item.food_plan_fat}</td>
               </tr>
             </React.Fragment>
           ))}
@@ -173,7 +172,7 @@ export const FoodPlanList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}
+        type={"list"}  food={"food"}
       />
     );
   };
@@ -182,29 +181,21 @@ export const FoodPlanList = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>List</h1>
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {calendarNode()}
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {filterNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {pagingNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

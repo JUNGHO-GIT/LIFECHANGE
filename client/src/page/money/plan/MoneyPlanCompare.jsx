@@ -13,7 +13,7 @@ import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 export const MoneyPlanCompare = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -75,14 +75,8 @@ export const MoneyPlanCompare = () => {
     money_endDt: "",
     money_plan_startDt: "",
     money_plan_endDt: "",
-    money_section: [{
-      money_part_idx: 0,
-      money_part_val: "전체",
-      money_title_idx: 0,
-      money_title_val: "전체",
-      money_amount: 0,
-      money_content: "",
-    }],
+    money_in: "",
+    money_out: "",
     money_plan_in: "",
     money_plan_out: ""
   }];
@@ -90,10 +84,11 @@ export const MoneyPlanCompare = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/list`, {
+    const response = await axios.get(`${URL_MONEY_PLAN}/compare`, {
       params: {
         user_id: user_id,
         money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -115,41 +110,28 @@ export const MoneyPlanCompare = () => {
             <tr>
               <th>기간</th>
               <th>분류</th>
-              <th>실제</th>
               <th>목표</th>
+              <th>실제</th>
             </tr>
           </thead>
           <tbody>
             {MONEY_COMPARE.map((item, index) => (
               <React.Fragment key={item._id}>
-                {item.money_section.slice(0, 3).map((section, sectionIndex) => (
-                  <React.Fragment key={item._id}>
-                    <tr>
-                      {sectionIndex === 0 && (
-                        <td rowSpan={4}>
-                          {item.money_startDt} ~ {item.money_endDt}
-                        </td>
-                      )}
-                    </tr>
-                    <tr>
-                      <td>수입</td>
-                      <td>0</td>
-                      <td>{item.money_plan_in}</td>
-                    </tr>
-                    <tr>
-                      <td>지출</td>
-                      <td>0</td>
-                      <td>{item.money_plan_out}</td>
-                    </tr>
-                  </React.Fragment>
-                ))}
-                {item.money_section.length > 3 && (
-                  <React.Fragment key={item._id}>
-                    <tr>
-                      <td colSpan={4}>...</td>
-                    </tr>
-                  </React.Fragment>
-                )}
+                <tr>
+                  <td rowSpan={4}>
+                    {item.money_plan_startDt} ~ {item.money_plan_endDt}
+                  </td>
+                </tr>
+                <tr>
+                  <td>수입</td>
+                  <td>{item.money_plan_in}</td>
+                  <td>{item.money_in}</td>
+                </tr>
+                <tr>
+                  <td>지출</td>
+                  <td>{item.money_plan_out}</td>
+                  <td>{item.money_out}</td>
+                </tr>
               </React.Fragment>
             ))}
           </tbody>
@@ -194,7 +176,7 @@ export const MoneyPlanCompare = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
-        type={"list"}
+        type={"list"} food={""}
       />
     );
   };

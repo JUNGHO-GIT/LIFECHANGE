@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import moment from "moment-timezone";
@@ -24,7 +25,6 @@ export const FoodSearch = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      date: koreanDate,
       startDt: "",
       endDt: "",
       refresh: 0,
@@ -84,6 +84,9 @@ export const FoodSearch = () => {
       }],
     },
   );
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

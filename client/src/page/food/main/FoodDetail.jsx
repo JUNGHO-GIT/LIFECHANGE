@@ -69,7 +69,7 @@ export const FoodDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState({
+  const FOOD_DEFAULT = {
     _id: "",
     food_number: 0,
     food_startDt: "",
@@ -89,28 +89,11 @@ export const FoodDetail = () => {
       food_carb: "",
       food_protein: "",
     }],
-  });
-  const [FOOD, setFOOD] = useState({
-    _id: "",
-    food_number: 0,
-    food_startDt: "",
-    food_endDt: "",
-    food_total_kcal: "",
-    food_total_fat: "",
-    food_total_carb: "",
-    food_total_protein: "",
-    food_section: [{
-      food_part: "",
-      food_title: "",
-      food_count: "",
-      food_serv: "",
-      food_gram: "",
-      food_kcal: "",
-      food_fat: "",
-      food_carb: "",
-      food_protein: "",
-    }],
-  });
+  };
+  const [FOOD, setFOOD] = useState(FOOD_DEFAULT);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -129,6 +112,32 @@ export const FoodDetail = () => {
     }));
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowDelete = async (id) => {
+    const response = await axios.delete(`${URL_FOOD}/delete`, {
+      params: {
+        _id: id,
+        user_id: user_id,
+        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      },
+    });
+    if (response.data === "success") {
+      const updatedData = await axios.get(`${URL_FOOD}/detail`, {
+        params: {
+          _id: location_id,
+          user_id: user_id,
+          food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        },
+      });
+      alert("삭제되었습니다.");
+      setFOOD(updatedData.data.result || FOOD_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
+    }
+    else {
+      alert(`${response.data}`);
+    }
+  };
+
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
@@ -137,35 +146,66 @@ export const FoodDetail = () => {
           <tr>
             <th>음식명</th>
             <th>브랜드</th>
+            <th>분류</th>
             <th>횟수</th>
             <th>서빙</th>
             <th>칼로리</th>
             <th>탄수화물</th>
             <th>단백질</th>
             <th>지방</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {FOOD?.food_section.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td>{item.food_title}</td>
-                <td>{item.food_part}</td>
-                <td>{item.food_count}</td>
-                <td>{item.food_serv}</td>
-                <td>{item.food_kcal}</td>
-                <td>{item.food_carb}</td>
-                <td>{item.food_protein}</td>
-                <td>{item.food_fat}</td>
-              </tr>
-            );
-          })}
+          {FOOD?.food_section.map((item, index) => (
+            <tr key={index}>
+              {index === 0 && (
+                <React.Fragment>
+                  <td className="fs-20 pt-20" rowSpan={FOOD?.food_section?.length}>
+                    {FOOD.food_startDt}
+                  </td>
+                </React.Fragment>
+              )}
+              <td className="fs-20 pt-20">
+                {item.food_title}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.food_part}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.food_count}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.food_serv}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.food_kcal}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.food_carb}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.food_protein}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.food_fat}
+              </td>
+              <td className="fs-20 pt-20">
+                <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+                  flowDelete(item._id)
+                )}>
+                  X
+                </button>
+              </td>
+            </tr>
+          ))}
           <tr>
-            <td colSpan={4} className="text-end">합계</td>
+            <td colSpan={5} className="text-center">합계</td>
             <td>{FOOD.food_total_kcal}</td>
             <td>{FOOD.food_total_carb}</td>
             <td>{FOOD.food_total_protein}</td>
             <td>{FOOD.food_total_fat}</td>
+            <td></td>
           </tr>
         </tbody>
       </table>
@@ -176,8 +216,8 @@ export const FoodDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND}
-        flowSave={""} navParam={navParam} type={"detail"}
+        SEND={SEND} flowSave={""} navParam={navParam}
+        type={"detail"} food={"food"}
       />
     );
   };
@@ -186,18 +226,14 @@ export const FoodDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className="col-12">
+        <div className="row d-center">
+          <div className="col-12 mb-20">
             <h1>Detail</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {tableNode()}
           </div>
-        </div>
-        <div className="row d-center">
-          <div className="col-12">
+          <div className="col-12 mb-20">
             {buttonNode()}
           </div>
         </div>

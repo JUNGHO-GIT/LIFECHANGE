@@ -130,7 +130,7 @@ export const WorkSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.startDt, DATE.endDt]);;
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -458,7 +458,7 @@ export const WorkSave = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
-        type={"save"}
+        type={"save"} food={""}
       />
     );
   };
