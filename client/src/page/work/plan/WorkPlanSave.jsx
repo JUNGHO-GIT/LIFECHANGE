@@ -110,7 +110,7 @@ export const WorkPlanSave = () => {
   const flowSave = async () => {
     const response = await axios.post(`${URL_WORK_PLAN}/save`, {
       user_id: user_id,
-      WORK_param: WORK_PLAN,
+      WORK_PLAN: WORK_PLAN,
       work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data === "success") {

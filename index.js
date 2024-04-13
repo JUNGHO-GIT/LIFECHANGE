@@ -32,15 +32,17 @@ app.use(cors(), (req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "client/build")));
+
 app.use("/food", foodRouter);
-app.use("/food/plan", foodPlanRouter);
 app.use("/money", moneyRouter);
-app.use("/money/plan", moneyPlanRouter);
 app.use("/sleep", sleepRouter);
-app.use("/sleep/plan", sleepPlanRouter);
 app.use("/user", userRouter);
-app.use("/user/plan", userPlanRouter);
 app.use("/work", workRouter);
+
+app.use("/food/plan", foodPlanRouter);
+app.use("/money/plan", moneyPlanRouter);
+app.use("/sleep/plan", sleepPlanRouter);
+app.use("/user/plan", userPlanRouter);
 app.use("/work/plan", workPlanRouter);
 
 // ------------------------------------------------------------------------------------------------>

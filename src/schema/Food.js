@@ -5,6 +5,7 @@ import {incrementSeq} from "./Counter.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
+
   user_id: {
     type: String,
     required: true
@@ -13,6 +14,7 @@ const schema = new mongoose.Schema({
     type : String,
     unique : true
   },
+
   food_startDt: {
     type: String,
     required: false
@@ -25,6 +27,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
   food_total_carb: {
     type: String,
     required: false
@@ -37,6 +40,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
   food_section: [{
     food_part_val: {
       type: String,
@@ -79,6 +83,7 @@ const schema = new mongoose.Schema({
       required : false
     },
   }],
+
   food_regdate: {
     type: String,
     required: false
@@ -87,6 +92,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   }
+
 });
 
 // 3. counter ------------------------------------------------------------------------------------->

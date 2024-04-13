@@ -5,6 +5,7 @@ import {incrementSeq} from "./CounterPlan.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
+
   user_id: {
     type: String,
     required: true
@@ -13,6 +14,7 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
+
   money_plan_startDt: {
     type: String,
     required: false
@@ -39,6 +41,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   }
+
 });
 
 // 3. counter ------------------------------------------------------------------------------------->

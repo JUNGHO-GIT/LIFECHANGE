@@ -147,9 +147,6 @@ export const dashAvgWeek = async (
     })
     .lean();
 
-    console.log("===================================");
-    console.log(JSON.stringify("findResult : " + JSON.stringify(findResult)));
-
     if (findResult) {
 
       const weekNum = Math.max(moment(findResult.sleep_startDt).week() - moment(findResult.sleep_startDt).startOf("month").week() + 1);
