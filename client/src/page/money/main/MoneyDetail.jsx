@@ -18,7 +18,7 @@ export const MoneyDetail = () => {
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location.pathname;
+  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -123,8 +123,9 @@ export const MoneyDetail = () => {
           money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      setMONEY(updatedData.data.result || MONEY_DEFAULT);
       alert("삭제되었습니다.");
+      setMONEY(updatedData.data.result || MONEY_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);

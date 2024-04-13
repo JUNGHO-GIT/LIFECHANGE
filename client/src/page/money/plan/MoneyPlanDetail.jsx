@@ -18,7 +18,7 @@ export const MoneyPlanDetail = () => {
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location.pathname;
+  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -117,8 +117,9 @@ export const MoneyPlanDetail = () => {
           money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      setMONEY_PLAN(updatedData.data.result || MONEY_PLAN_DEFAULT);
       alert("삭제되었습니다.");
+      setMONEY_PLAN(updatedData.data.result || MONEY_PLAN_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);
@@ -141,16 +142,16 @@ export const MoneyPlanDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_startDt}
+              {MONEY_PLAN.money_plan_startDt}
             </td>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_endDt}
+              {MONEY_PLAN.money_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_in}
+              {MONEY_PLAN.money_plan_in}
             </td>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_out}
+              {MONEY_PLAN.money_plan_out}
             </td>
             <td className="fs-20 pt-20">
               <button className="btn btn-danger btn-sm" onClick={() => {

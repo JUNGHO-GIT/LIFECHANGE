@@ -26,31 +26,31 @@ import {Footer} from "../layout/Footer";
 import {Dash} from "../page/common/Dash.jsx";
 
 import {FoodDash} from "../page/food/dash/FoodDash.jsx";
-import {FoodCompare} from "../page/food/main/FoodCompare.jsx";
 import {FoodSearch} from "../page/food/main/FoodSearch.jsx";
 import {FoodList} from "../page/food/main/FoodList.jsx";
-import {FoodPlanList} from "../page/food/plan/FoodPlanList.jsx";
 import {FoodDetail} from "../page/food/main/FoodDetail.jsx";
-import {FoodPlanDetail} from "../page/food/plan/FoodPlanDetail.jsx";
 import {FoodSave} from "../page/food/main/FoodSave.jsx";
+import {FoodPlanList} from "../page/food/plan/FoodPlanList.jsx";
+import {FoodPlanCompare} from "../page/food/plan/FoodPlanCompare.jsx";
+import {FoodPlanDetail} from "../page/food/plan/FoodPlanDetail.jsx";
 import {FoodPlanSave} from "../page/food/plan/FoodPlanSave.jsx";
 
 import {MoneyDash} from "../page/money/dash/MoneyDash.jsx";
-import {MoneyCompare} from "../page/money/main/MoneyCompare.jsx";
 import {MoneyList} from "../page/money/main/MoneyList.jsx";
-import {MoneyPlanList} from "../page/money/plan/MoneyPlanList.jsx";
 import {MoneyDetail} from "../page/money/main/MoneyDetail.jsx";
-import {MoneyPlanDetail} from "../page/money/plan/MoneyPlanDetail.jsx";
 import {MoneySave} from "../page/money/main/MoneySave.jsx";
+import {MoneyPlanList} from "../page/money/plan/MoneyPlanList.jsx";
+import {MoneyPlanCompare} from "../page/money/plan/MoneyPlanCompare.jsx";
+import {MoneyPlanDetail} from "../page/money/plan/MoneyPlanDetail.jsx";
 import {MoneyPlanSave} from "../page/money/plan/MoneyPlanSave.jsx";
 
 import {SleepDash} from "../page/sleep/dash/SleepDash.jsx";
-import {SleepCompare} from "../page/sleep/main/SleepCompare.jsx";
 import {SleepList} from "../page/sleep/main/SleepList.jsx";
-import {SleepPlanList} from "../page/sleep/plan/SleepPlanList.jsx";
 import {SleepDetail} from "../page/sleep/main/SleepDetail.jsx";
-import {SleepPlanDetail} from "../page/sleep/plan/SleepPlanDetail.jsx";
 import {SleepSave} from "../page/sleep/main/SleepSave.jsx";
+import {SleepPlanList} from "../page/sleep/plan/SleepPlanList.jsx";
+import {SleepPlanCompare} from "../page/sleep/plan/SleepPlanCompare.jsx";
+import {SleepPlanDetail} from "../page/sleep/plan/SleepPlanDetail.jsx";
 import {SleepPlanSave} from "../page/sleep/plan/SleepPlanSave.jsx";
 
 import {UserLogin} from "../page/user/main/UserLogin.jsx";
@@ -60,12 +60,12 @@ import {UserDelete} from "../page/user/main/UserDelete.jsx";
 import {UserList} from "../page/user/main/UserList";
 
 import {WorkDash} from "../page/work/dash/WorkDash.jsx";
-import {WorkCompare} from "../page/work/main/WorkCompare.jsx";
 import {WorkList} from "../page/work/main/WorkList.jsx";
-import {WorkPlanList} from "../page/work/plan/WorkPlanList.jsx";
 import {WorkDetail} from "../page/work/main/WorkDetail.jsx";
-import {WorkPlanDetail} from "../page/work/plan/WorkPlanDetail.jsx";
 import {WorkSave} from "../page/work/main/WorkSave.jsx";
+import {WorkPlanList} from "../page/work/plan/WorkPlanList.jsx";
+import {WorkPlanCompare} from "../page/work/plan/WorkPlanCompare.jsx";
+import {WorkPlanDetail} from "../page/work/plan/WorkPlanDetail.jsx";
 import {WorkPlanSave} from "../page/work/plan/WorkPlanSave.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -81,13 +81,13 @@ const Food = () => {
   return (
     <Routes>
       <Route path="/dash" element={<FoodDash />} />
-      <Route path="/compare" element={<FoodCompare />} />
       <Route path="/search" element={<FoodSearch />} />
       <Route path="/list" element={<FoodList />} />
-      <Route path="/plan/list" element={<FoodPlanList />} />
       <Route path="/detail" element={<FoodDetail />} />
-      <Route path="/plan/detail" element={<FoodPlanDetail />} />
       <Route path="/save" element={<FoodSave />} />
+      <Route path="/plan/list" element={<FoodPlanList />} />
+      <Route path="/plan/compare" element={<FoodPlanCompare />} />
+      <Route path="/plan/detail" element={<FoodPlanDetail />} />
       <Route path="/plan/save" element={<FoodPlanSave />} />
     </Routes>
   );
@@ -97,12 +97,12 @@ const Money = () => {
   return (
     <Routes>
       <Route path="/dash" element={<MoneyDash />} />
-      <Route path="/compare" element={<MoneyCompare />} />
       <Route path="/list" element={<MoneyList />} />
-      <Route path="/plan/list" element={<MoneyPlanList />} />
       <Route path="/detail" element={<MoneyDetail />} />
-      <Route path="/plan/detail" element={<MoneyPlanDetail />} />
       <Route path="/save" element={<MoneySave />} />
+      <Route path="/plan/list" element={<MoneyPlanList />} />
+      <Route path="/plan/compare" element={<MoneyPlanCompare />} />
+      <Route path="/plan/detail" element={<MoneyPlanDetail />} />
       <Route path="/plan/save" element={<MoneyPlanSave />} />
     </Routes>
   );
@@ -112,12 +112,12 @@ const Sleep = () => {
   return (
     <Routes>
       <Route path="/dash" element={<SleepDash />} />
-      <Route path="/compare" element={<SleepCompare />} />
       <Route path="/list" element={<SleepList />} />
-      <Route path="/plan/list" element={<SleepPlanList />} />
       <Route path="/detail" element={<SleepDetail />} />
-      <Route path="/plan/detail" element={<SleepPlanDetail />} />
       <Route path="/save" element={<SleepSave />} />
+      <Route path="/plan/list" element={<SleepPlanList />} />
+      <Route path="/plan/compare" element={<SleepPlanCompare />} />
+      <Route path="/plan/detail" element={<SleepPlanDetail />} />
       <Route path="/plan/save" element={<SleepPlanSave />} />
     </Routes>
   );
@@ -139,12 +139,12 @@ const Work = () => {
   return (
     <Routes>
       <Route path="/dash" element={<WorkDash />} />
-      <Route path="/compare" element={<WorkCompare />} />
       <Route path="/list" element={<WorkList />} />
-      <Route path="/plan/list" element={<WorkPlanList />} />
       <Route path="/detail" element={<WorkDetail />} />
-      <Route path="/plan/detail" element={<WorkPlanDetail />} />
       <Route path="/save" element={<WorkSave />} />
+      <Route path="/plan/list" element={<WorkPlanList />} />
+      <Route path="/plan/compare" element={<WorkPlanCompare />} />
+      <Route path="/plan/detail" element={<WorkPlanDetail />} />
       <Route path="/plan/save" element={<WorkPlanSave />} />
     </Routes>
   );

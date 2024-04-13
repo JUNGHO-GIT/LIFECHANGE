@@ -1,4 +1,4 @@
-// FoodPlanList.jsx
+// SleepPlanCompare.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -10,17 +10,17 @@ import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodPlanList = () => {
+export const SleepPlanCompare = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
+  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location.pathname?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -29,7 +29,7 @@ export const FoodPlanList = () => {
       startDt: "",
       endDt: "",
       refresh: 0,
-      toDetail:"/food/plan/detail"
+      toDetail:"/sleep/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -70,75 +70,128 @@ export const FoodPlanList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
-    _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: "",
-    }
-  }]);
-  const [PLAN, setPLAN] = useState([{
-    _id: "",
-    plan_number: 0,
-    plan_schema: "food",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_food: {
-      plan_kcal: "",
-    }
-  }]);
+  const SLEEP_COMPARE_DEFAULT = [{
+    sleep_startDt: "",
+    sleep_endDt: "",
+    sleep_plan_startDt: "",
+    sleep_plan_endDt: "",
+    sleep_section: [{
+      sleep_night: "",
+      sleep_morning: "",
+      sleep_time: "",
+    }],
+    sleep_plan_night: "",
+    sleep_plan_morning: "",
+    sleep_plan_time: "",
+  }];
+  const [SLEEP_COMPARE, setSLEEP_COMPARE] = useState(SLEEP_COMPARE_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD_PLAN}/list`, {
+    const response = await axios.get(`${URL_SLEEP_PLAN}/compare`, {
       params: {
         user_id: user_id,
-        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setPLAN(response.data.result || PLAN_DEFAULT);
+    setSLEEP_COMPARE(response.data.result || SLEEP_COMPARE_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, FILTER, PAGING]);
+  })()}, [user_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real) {
+      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
+      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
+      if (realDate < planDate) {
+        realDate.setHours(realDate.getHours() + 24);
+      }
+      const diff = Math.abs(realDate.getTime() - planDate.getTime());
+      const diffMinutes = Math.floor(diff / 60000);
+
+      let textColor = "text-muted";
+      if (0 <= diffMinutes && diffMinutes <= 10) {
+        textColor = "text-primary";
+      }
+      if (10 < diffMinutes && diffMinutes <= 20) {
+        textColor = "text-success";
+      }
+      if (20 < diffMinutes && diffMinutes <= 30) {
+        textColor = "text-warning";
+      }
+      if (30 < diffMinutes) {
+        textColor = "text-danger";
+      }
+      return textColor;
+    };
+    function tableFragment () {
+      return (
+        <table className="table bg-white table-hover">
+          <thead className="table-primary">
+            <tr>
+              <th>날짜</th>
+              <th>분류</th>
+              <th>목표</th>
+              <th>실제</th>
+              <th>비교</th>
+            </tr>
+          </thead>
+          <tbody>
+            {SLEEP_COMPARE.map((item, index) => (
+              <React.Fragment key={item._id}>
+                {item.sleep_section.slice(0, 3).map((section, sectionIndex) => (
+                  <React.Fragment key={item._id}>
+                    <tr>
+                      {sectionIndex === 0 && (
+                        <td rowSpan={4}>
+                          {item.sleep_plan_startDt}
+                        </td>
+                      )}
+                    </tr>
+                    <tr>
+                      <td>취침</td>
+                      <td>{item.sleep_plan_night}</td>
+                      <td>{item.sleep_section[0].sleep_night}</td>
+                      <td className={successOrNot(item.sleep_plan_night, item.sleep_section[0].sleep_night)}>●</td>
+                    </tr>
+                    <tr>
+                      <td>기상</td>
+                      <td>{item.sleep_plan_morning}</td>
+                      <td>{item.sleep_section[0].sleep_morning}</td>
+                      <td className={successOrNot(item.sleep_plan_morning, item.sleep_section[0].sleep_morning)}>●</td>
+                    </tr>
+                    <tr>
+                      <td>수면</td>
+                      <td>{item.sleep_plan_time}</td>
+                      <td>{item.sleep_section[0].sleep_time}</td>
+                      <td className={successOrNot(item.sleep_plan_time, item.sleep_section[0].sleep_time)}>●</td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+                {item.sleep_section.length > 3 && (
+                  <React.Fragment key={item._id}>
+                    <tr>
+                      <td colSpan={5}>...</td>
+                    </tr>
+                  </React.Fragment>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      );
+    };
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
-          <tr>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>칼로리</th>
-          </tr>
-        </thead>
-        <tbody>
-          {PLAN.map((item) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td onClick={() => {
-                  SEND.id = item._id;
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
-                  {item.food_plan_startDt}
-                </td>
-                <td>{item.food_plan_endDt}</td>
-                <td>{item.food_plan_food.plan_kcal}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+      <div className="d-flex">
+        {tableFragment()}
+      </div>
     );
   };
 
@@ -163,7 +216,7 @@ export const FoodPlanList = () => {
   const filterNode = () => {
     return (
       <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        type={"food"} plan={"plan"}
+        type={"sleep"} plan={""}
       />
     );
   };
@@ -184,7 +237,7 @@ export const FoodPlanList = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List</h1>
+            <h1>Compare</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">

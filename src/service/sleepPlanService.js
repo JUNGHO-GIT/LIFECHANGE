@@ -2,9 +2,95 @@
 
 import mongoose from "mongoose";
 import moment from "moment";
+import {Sleep} from "../schema/Sleep.js";
 import {SleepPlan} from "../schema/SleepPlan.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1-1. compare ----------------------------------------------------------------------------------->
+export const compare = async (
+  user_id_param,
+  sleep_dur_param,
+  sleep_plan_dur_param,
+  FILTER_param,
+  PAGING_param
+) => {
+
+  const [startDayReal, endDayReal] = sleep_dur_param.split(` ~ `);
+  const [startDayPlan, endDayPlan] = sleep_plan_dur_param.split(` ~ `);
+
+  const sort = FILTER_param.order === "asc" ? 1 : -1;
+  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+
+  const findResultReal = await Sleep.find({
+    user_id: user_id_param,
+    sleep_startDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    },
+    sleep_endDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    }
+  })
+  .sort({sleep_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const findResultPlan = await SleepPlan.find({
+    user_id: user_id_param,
+    sleep_plan_startDt: {
+      $lte: endDayPlan,
+    },
+    sleep_plan_endDt: {
+      $gte: startDayPlan,
+    },
+  })
+  .sort({sleep_plan_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const totalCnt = await SleepPlan.countDocuments({
+    user_id: user_id_param,
+    sleep_plan_startDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    },
+    sleep_plan_endDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    }
+  });
+
+  const finalResult = findResultPlan.map((plan) => {
+    const match = findResultReal.find((real) => (
+      real.sleep_startDt >= plan.sleep_plan_startDt && real.sleep_endDt <= plan.sleep_plan_endDt
+    ));
+    return match ? {
+      ...plan,
+      sleep_startDt: match.sleep_startDt,
+      sleep_endDt: match.sleep_endDt,
+      sleep_section: match.sleep_section,
+    } : {
+      ...plan,
+      sleep_startDt: "",
+      sleep_endDt: "",
+      sleep_section: [{
+        sleep_night: "",
+        sleep_morning: "",
+        sleep_time: "",
+      }],
+    };
+  });
+
+  return {
+    totalCnt: totalCnt,
+    result: finalResult,
+  };
+}
+
+// 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
   sleep_plan_dur_param,

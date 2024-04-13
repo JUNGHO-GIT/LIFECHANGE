@@ -2,9 +2,95 @@
 
 import mongoose from "mongoose";
 import moment from "moment";
+import {Money} from "../schema/Money.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1-1. compare ----------------------------------------------------------------------------------->
+export const compare = async (
+  user_id_param,
+  money_dur_param,
+  money_plan_dur_param,
+  FILTER_param,
+  PAGING_param
+) => {
+
+  const [startDayReal, endDayReal] = money_dur_param.split(` ~ `);
+  const [startDayPlan, endDayPlan] = money_plan_dur_param.split(` ~ `);
+
+  const sort = FILTER_param.order === "asc" ? 1 : -1;
+  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+
+  const findResultReal = await Money.find({
+    user_id: user_id_param,
+    money_startDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    },
+    money_endDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    }
+  })
+  .sort({money_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const findResultPlan = await MoneyPlan.find({
+    user_id: user_id_param,
+    money_plan_startDt: {
+      $lte: endDayPlan,
+    },
+    money_plan_endDt: {
+      $gte: startDayPlan,
+    },
+  })
+  .sort({money_plan_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const totalCnt = await MoneyPlan.countDocuments({
+    user_id: user_id_param,
+    money_startDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    },
+    money_endDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    }
+  });
+
+  const finalResult = findResultReal.map((real) => {
+    const match = findResultPlan.find((plan) => (
+      real.money_startDt >= plan.money_plan_startDt && real.money_endDt <= plan.money_plan_endDt
+    ));
+    return match ? {
+      ...real,
+      money_plan_startDt: match.money_plan_startDt,
+      money_plan_endDt: match.money_plan_endDt,
+      money_plan_night: match.money_plan_night,
+      money_plan_morning: match.money_plan_morning,
+      money_plan_time: match.money_plan_time,
+    } : {
+      ...real,
+      money_plan_startDt: "",
+      money_plan_endDt: "",
+      money_plan_night: "",
+      money_plan_morning: "",
+      money_plan_time: "",
+    };
+  });
+
+  return {
+    totalCnt: totalCnt,
+    result: finalResult,
+  };
+};
+
+// 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
   money_plan_dur_param,

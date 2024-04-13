@@ -14,7 +14,7 @@ export const DashAvg = () => {
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeAvg, set:setActiveAvg} = useStorage(

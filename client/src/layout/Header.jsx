@@ -16,7 +16,7 @@ export const Header = () => {
   const navParam = useNavigate();
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();

@@ -119,6 +119,7 @@ export const SleepPlanDetail = () => {
       });
       setSLEEP_PLAN(updatedData.data.result || SLEEP_PLAN_DEFAULT);
       alert("삭제되었습니다.");
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);

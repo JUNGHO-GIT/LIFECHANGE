@@ -4,7 +4,30 @@ import express from "express";
 import * as service from "../service/foodPlanService.js";
 export const foodPlanRouter = express.Router();
 
-// 1-1. list -------------------------------------------------------------------------------------->
+// 1-1. compare ----------------------------------------------------------------------------------->
+foodPlanRouter.get("/compare", async (req, res) => {
+  try {
+    const result = await service.compare (
+      req.query.user_id,
+      req.query.food_dur,
+      req.query.food_plan_dur,
+      req.query.FILTER,
+      req.query.PAGING
+    );
+    if (result) {
+      res.send(result);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 1-2. list -------------------------------------------------------------------------------------->
 foodPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (

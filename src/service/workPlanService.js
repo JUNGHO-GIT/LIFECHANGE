@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {WorkPlan} from "../schema/WorkPlan.js";
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
   work_plan_dur_param,

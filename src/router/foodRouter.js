@@ -24,30 +24,7 @@ foodRouter.get("/search", async (req, res) => {
   }
 });
 
-// 1-1. compare ----------------------------------------------------------------------------------->
-foodRouter.get("/compare", async (req, res) => {
-  try {
-    const result = await service.compare (
-      req.query.user_id,
-      req.query.food_dur,
-      req.query.food_plan_dur,
-      req.query.FILTER,
-      req.query.PAGING
-    );
-    if (result) {
-      res.send(result);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 1-2. list -------------------------------------------------------------------------------------->
+// 1-1. list -------------------------------------------------------------------------------------->
 foodRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (

@@ -119,8 +119,9 @@ export const SleepDetail = () => {
           sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
       alert("삭제되었습니다.");
+      setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);

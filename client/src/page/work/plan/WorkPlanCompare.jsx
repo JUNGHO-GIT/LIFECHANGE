@@ -1,9 +1,9 @@
-// MoneyCompare.jsx
+// WorkPlanCompare.jsx
 
 import React from "react";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyCompare = () => {
+export const WorkPlanCompare = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (

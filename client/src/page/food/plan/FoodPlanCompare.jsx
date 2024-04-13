@@ -1,9 +1,9 @@
-// Compare.jsx
+// FoodPlanCompare.jsx
 
 import React from "react";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkCompare = () => {
+export const FoodPlanCompare = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
