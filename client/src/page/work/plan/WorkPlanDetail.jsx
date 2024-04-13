@@ -78,11 +78,8 @@ export const WorkPlanDetail = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total: "",
+    work_plan_total_count: "",
     work_plan_cardio_time: "",
-    work_plan_score_name: "",
-    work_plan_score_kg: "",
-    work_plan_score_rep: "",
     work_plan_regdate: "",
     work_plan_update: "",
   };
@@ -144,9 +141,6 @@ export const WorkPlanDetail = () => {
             <th>종료일</th>
             <th>목표 운동 횟수</th>
             <th>목표 유산소 시간</th>
-            <th>목표 운동 이름</th>
-            <th>목표 중량</th>
-            <th>목표 반복 횟수</th>
             <th>삭제</th>
           </tr>
         </thead>
@@ -159,19 +153,10 @@ export const WorkPlanDetail = () => {
               {WORK_PLAN.work_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_total}
+              {WORK_PLAN.work_plan_total_count}
             </td>
             <td className="fs-20 pt-20">
               {WORK_PLAN.work_plan_cardio_time}
-            </td>
-            <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_score_name}
-            </td>
-            <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_score_kg}
-            </td>
-            <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_score_rep}
             </td>
             <td className="fs-20 pt-20">
               <button className="btn btn-danger btn-sm" onClick={() => {
@@ -228,7 +213,7 @@ export const WorkPlanDetail = () => {
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
           <div className="col-12">
-            <h1>List</h1>
+            <h1>Detail</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">

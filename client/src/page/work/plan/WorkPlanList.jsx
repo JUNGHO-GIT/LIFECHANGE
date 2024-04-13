@@ -75,11 +75,8 @@ export const WorkPlanList = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total: "",
+    work_plan_total_count: "",
     work_plan_cardio_time: "",
-    work_plan_score_name: "",
-    work_plan_score_kg: "",
-    work_plan_score_rep: "",
     work_plan_regdate: "",
     work_plan_update: "",
   }];
@@ -113,9 +110,6 @@ export const WorkPlanList = () => {
             <th>종료일</th>
             <th>목표 운동 횟수</th>
             <th>목표 유산소 시간</th>
-            <th>목표 운동 이름</th>
-            <th>목표 중량</th>
-            <th>목표 반복 횟수</th>
           </tr>
         </thead>
         <tbody>
@@ -133,11 +127,8 @@ export const WorkPlanList = () => {
                   {item.work_plan_startDt}
                 </td>
                 <td>{item.work_plan_endDt}</td>
-                <td>{item.work_plan_total}</td>
+                <td>{item.work_plan_total_count}</td>
                 <td>{item.work_plan_cardio_time}</td>
-                <td>{item.work_plan_score_name}</td>
-                <td>{item.work_plan_score_kg}</td>
-                <td>{item.work_plan_score_rep}</td>
               </tr>
             </React.Fragment>
           ))}

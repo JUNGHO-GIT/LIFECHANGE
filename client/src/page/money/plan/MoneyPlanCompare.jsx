@@ -118,7 +118,7 @@ export const MoneyPlanCompare = () => {
             {MONEY_COMPARE.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={4}>
+                  <td rowSpan={3}>
                     {item.money_plan_startDt} ~ {item.money_plan_endDt}
                   </td>
                 </tr>
@@ -187,7 +187,7 @@ export const MoneyPlanCompare = () => {
       <div className="container-wrapper">
         <div className="row d-center">
           <div className="col-12 mb-20">
-            <h1>List</h1>
+            <h1>Compare</h1>
           </div>
           <div className="col-12 mb-20">
             {calendarNode()}

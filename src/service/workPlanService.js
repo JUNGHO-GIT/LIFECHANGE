@@ -53,13 +53,23 @@ export const compare = async (
 
   const totalCnt = await WorkPlan.countDocuments({
     user_id: user_id_param,
-    work_plan_startDt: {
+    money_plan_startDt: {
       $lte: endDayPlan,
     },
-    work_plan_endDt: {
+    money_plan_endDt: {
       $gte: startDayPlan,
     },
   });
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else {
+      const time = data.split(":");
+      return parseFloat((parseInt(time[0], 10) + parseInt(time[1], 10) / 60).toFixed(1));
+    }
+  };
 
   const finalResult = findResultPlan.map((plan) => {
     const matches = findResultReal.filter((real) => (
@@ -69,27 +79,27 @@ export const compare = async (
       real.work_startDt <= plan.work_plan_endDt &&
       real.work_endDt >= plan.work_plan_startDt
     ));
-    const totalIn = matches.reduce((sum, curr) => (
-      sum + curr.work_section.reduce((acc, section) => (
-        section.work_part_val === "수입" ? acc + (section.work_amount || 0) : acc
-      ), 0)
+
+    const totalCount = matches.reduce((sum, curr) => (
+      sum + 1
     ), 0);
-    const totalOut = matches.reduce((sum, curr) => (
+
+    const totalCardio = matches.reduce((sum, curr) => (
       sum + curr.work_section.reduce((acc, section) => (
-        section.work_part_val === "지출" ? acc + (section.work_amount || 0) : acc
+        section.work_part_val === "유산소" ? acc + fmtData(curr.work_time) : acc
       ), 0)
     ), 0);
 
     return {
       ...plan,
-      work_in: totalIn,
-      work_out: totalOut
+      work_total_count: totalCount,
+      work_cardio_time: totalCardio,
     };
   });
 
   return {
     totalCnt: totalCnt,
-    result: finalResult
+    result: finalResult,
   };
 };
 
@@ -183,11 +193,8 @@ export const save = async (
       user_id: user_id_param,
       work_plan_startDt: startDay,
       work_plan_endDt: endDay,
-      work_plan_total: WORK_PLAN_param.work_plan_total,
+      work_plan_total_count: WORK_PLAN_param.work_plan_total_count,
       work_plan_cardio_time: WORK_PLAN_param.work_plan_cardio_time,
-      work_plan_score_name: WORK_PLAN_param.work_plan_score_name,
-      work_plan_score_kg: WORK_PLAN_param.work_plan_score_kg,
-      work_plan_score_rep: WORK_PLAN_param.work_plan_score_rep,
       work_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_plan_update: ""
     };

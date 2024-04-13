@@ -201,7 +201,7 @@ export const FoodPlanCompare = () => {
       <div className="container-wrapper">
         <div className="row d-center">
           <div className="col-12 mb-20">
-            <h1>List</h1>
+            <h1>Compare</h1>
           </div>
           <div className="col-12 mb-20">
             {calendarNode()}

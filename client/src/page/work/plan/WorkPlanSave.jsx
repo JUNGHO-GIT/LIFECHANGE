@@ -76,11 +76,8 @@ export const WorkPlanSave = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total: "",
+    work_plan_total_count: "",
     work_plan_cardio_time: "",
-    work_plan_score_name: "",
-    work_plan_score_kg: "",
-    work_plan_score_rep: "",
     work_plan_regdate: "",
     work_plan_update: "",
   };
@@ -190,11 +187,11 @@ export const WorkPlanSave = () => {
             <div className="input-group">
               <span className="input-group-text">목표 운동 횟수</span>
               <input type="text" className="form-control"
-                value={WORK_PLAN?.work_plan_total}
+                value={WORK_PLAN?.work_plan_total_count}
                 onChange={(e) => {
                   setWORK_PLAN((prev) => ({
                     ...prev,
-                    work_plan_total: e.target.value
+                    work_plan_total_count: e.target.value
                   }));
                 }}
               />
@@ -209,48 +206,6 @@ export const WorkPlanSave = () => {
                   setWORK_PLAN((prev) => ({
                     ...prev,
                     work_plan_cardio_time: e.target.value
-                  }));
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">목표 운동이름</span>
-              <input type="text" className="form-control"
-                value={WORK_PLAN?.work_plan_score_name}
-                onChange={(e) => {
-                  setWORK_PLAN((prev) => ({
-                    ...prev,
-                    work_plan_score_name: e.target.value
-                  }));
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">목표 운동무게</span>
-              <input type="text" className="form-control"
-                value={WORK_PLAN?.work_plan_score_kg}
-                onChange={(e) => {
-                  setWORK_PLAN((prev) => ({
-                    ...prev,
-                    work_plan_score_kg: e.target.value
-                  }));
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">목표 운동횟수</span>
-              <input type="text" className="form-control"
-                value={WORK_PLAN?.work_plan_score_rep}
-                onChange={(e) => {
-                  setWORK_PLAN((prev) => ({
-                    ...prev,
-                    work_plan_score_rep: e.target.value
                   }));
                 }}
               />

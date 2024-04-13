@@ -165,21 +165,21 @@ export const FilterNode = ({
     );
   };
   return (
-    plan === "" && type === "food" ? (
+    type === "food" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
         {selectPartFood()}
       </div>
-    ) : plan === "plan" && type === "food" ? (
+    ) : type === "food" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
         {selectPartFood()}
       </div>
-    ) : plan === "" && type === "money" ? (
+    ) : type === "money" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
@@ -187,25 +187,25 @@ export const FilterNode = ({
         {selectPartMoney()}
         {selectTitleMoney()}
       </div>
-    ) : plan === "plan" && type === "money" ? (
+    ) : type === "money" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
-    ) : plan === "" && type === "sleep" ? (
+    ) : type === "sleep" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
-    ) : plan === "plan" && type === "sleep" ? (
+    ) : type === "sleep" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
-    ) : plan === "" && type === "work" ? (
+    ) : type === "work" && plan === "" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}
@@ -213,7 +213,7 @@ export const FilterNode = ({
         {selectPartWork()}
         {selectTitleWork()}
       </div>
-    ) : plan === "plan" && type === "work" ? (
+    ) : type === "work" && plan === "plan" ? (
       <div className="d-inline-flex">
         {selectType()}
         {selectOrder()}

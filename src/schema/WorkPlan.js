@@ -24,23 +24,11 @@ const schema = new mongoose.Schema({
     required: false
   },
 
-  work_plan_total: {
+  work_plan_total_count: {
     type: String,
     required: false
   },
   work_plan_cardio_time: {
-    type: String,
-    required: false
-  },
-  work_plan_score_name: {
-    type: String,
-    required: false
-  },
-  work_plan_score_kg: {
-    type: String,
-    required: false
-  },
-  work_plan_score_rep: {
     type: String,
     required: false
   },
