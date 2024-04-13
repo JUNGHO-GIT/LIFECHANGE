@@ -95,7 +95,7 @@ export const search = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        food_title: titleElement || "-",
+        food_title_val: titleElement || "-",
         food_brand: brandElement || "-",
         food_count: nutritionElement.count,
         food_serv: nutritionElement.serv,
@@ -129,39 +129,63 @@ export const list = async (
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
   const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
-  const part = FILTER_param.part || "";
+  const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
+  const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
   const totalCnt = await Food.countDocuments({
     user_id: user_id_param,
-    food_startDt: { $gte: startDay, $lte: endDay },
-    food_endDt: { $gte: startDay, $lte: endDay },
-    ...(part !== "전체" && { "food_section.food_part": part })
-  }).lean();
+    food_startDt: {
+      $gte: startDay,
+      $lte: endDay
+    },
+    food_endDt: {
+      $gte: startDay,
+      $lte: endDay
+    },
+    ...(part !== "전체" && {
+      "food_section.food_part_val": part
+    }),
+    ...(title !== "전체" && {
+      "food_section.food_title_val": title
+    }),
+  })
+  .lean();
 
   const findResult = await Food.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        food_startDt: { $gte: startDay, $lte: endDay },
-        food_endDt: { $gte: startDay, $lte: endDay }
-      }
-    },
-    {
-      $project: {
-        food_startDt: 1,
-        food_endDt: 1,
-        food_section: {
-          $filter: {
-            input: "$food_section",
-            as: "section",
-            cond: part === "전체" ? { $ne: ["$$section.food_part", null] } : { $eq: ["$$section.food_part", part] }
+    {$match: {
+      user_id: user_id_param,
+      food_startDt: {
+        $gte: startDay,
+        $lte: endDay
+      },
+      food_endDt: {
+        $gte: startDay,
+        $lte: endDay
+      },
+    }},
+    {$project: {
+      food_startDt: 1,
+      food_endDt: 1,
+      food_section: {
+        $filter: {
+          input: "$food_section",
+          as: "section",
+          cond: {
+            $and: [
+              part === "전체"
+              ? {$ne: ["$$section.food_part_val", null]}
+              : {$eq: ["$$section.food_part_val", part]},
+              title === "전체"
+              ? {$ne: ["$$section.food_title_val", null]}
+              : {$eq: ["$$section.food_title_val", title]}
+            ]
           }
         }
       }
-    },
-    { $sort: { food_startDt: sort }},
-    { $skip: (page - 1) * limit },
-    { $limit: limit }
+    }},
+    {$sort: {food_startDt: sort}},
+    {$skip: (page - 1) * limit},
+    {$limit: limit}
   ]);
 
   const finalResult = {

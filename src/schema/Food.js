@@ -38,11 +38,11 @@ const schema = new mongoose.Schema({
     required: false
   },
   food_section: [{
-    food_part: {
+    food_part_val: {
       type: String,
       required: false,
     },
-    food_title: {
+    food_title_val: {
       type: String,
       required: false,
     },

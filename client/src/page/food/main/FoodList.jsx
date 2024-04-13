@@ -80,8 +80,8 @@ export const FoodList = () => {
     food_total_carb: "",
     food_total_protein: "",
     food_section: [{
-      food_part: "",
-      food_title: "",
+      food_part_val: "",
+      food_title_val: "",
       food_count: "",
       food_serv: "",
       food_gram: "",
@@ -134,7 +134,7 @@ export const FoodList = () => {
           {FOOD?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.food_section.slice(0, 3).map((section, sectionIndex) => (
-                <React.Fragment key={`${section.food_part}_${section.food_title}`}>
+                <React.Fragment key={`${section.food_part_val}_${section.food_title_val}`}>
                   <tr>
                     {sectionIndex === 0 && (
                       <td rowSpan={item.food_section.length > 3 ? 4 : item.food_section.length}
@@ -149,8 +149,8 @@ export const FoodList = () => {
                         {item.food_startDt}
                       </td>
                     )}
-                    <td>{section.food_part}</td>
-                    <td>{section.food_title}</td>
+                    <td>{section.food_part_val}</td>
+                    <td>{section.food_title_val}</td>
                     <td>{section.food_brand}</td>
                     <td>{section.food_count}</td>
                     <td>{section.food_serv}</td>

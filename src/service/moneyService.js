@@ -13,44 +13,74 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
-
   const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
-  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
+  const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
+  const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
+  const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
   const totalCnt = await Money.countDocuments({
     user_id: user_id_param,
     money_startDt: {
       $gte: startDay,
-      $lte: endDay,
+      $lte: endDay
     },
     money_endDt: {
       $gte: startDay,
-      $lte: endDay,
+      $lte: endDay
     },
+    ...(part !== "전체" && {
+      "money_section.money_part_val": part
+    }),
+    ...(title !== "전체" && {
+      "money_section.money_title_val": title
+    }),
   })
   .lean();
 
-  const findResult = await Money.find({
-    user_id: user_id_param,
-    money_startDt: {
-      $gte: startDay,
-      $lte: endDay,
-    },
-    money_endDt: {
-      $gte: startDay,
-      $lte: endDay,
-    },
-  })
-  .sort({money_startDt: sort})
-  .skip((page - 1) * limit)
-  .limit(limit)
-  .lean();
+  const findResult = await Money.aggregate([
+    {$match: {
+      user_id: user_id_param,
+      money_startDt: {
+        $gte: startDay,
+        $lte: endDay
+      },
+      money_endDt: {
+        $gte: startDay,
+        $lte: endDay
+      },
+    }},
+    {$project: {
+      money_startDt: 1,
+      money_endDt: 1,
+      money_section: {
+        $filter: {
+          input: "$money_section",
+          as: "section",
+          cond: {
+            $and: [
+              part === "전체"
+              ? {$ne: ["$$section.money_part_val", null]}
+              : {$eq: ["$$section.money_part_val", part]},
+              title === "전체"
+              ? {$ne: ["$$section.money_title_val", null]}
+              : {$eq: ["$$section.money_title_val", title]}
+            ]
+          }
+        }
+      }
+    }},
+    {$sort: {money_startDt: sort}},
+    {$skip: (page - 1) * limit},
+    {$limit: limit}
+  ]);
 
-  return {
+  const finalResult = {
     totalCnt: totalCnt,
-    result: findResult,
+    result: findResult
   };
+
+  return finalResult;
 };
 
 // 2. detail -------------------------------------------------------------------------------------->

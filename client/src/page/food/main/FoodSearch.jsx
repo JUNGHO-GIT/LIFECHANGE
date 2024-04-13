@@ -72,8 +72,8 @@ export const FoodSearch = () => {
       food_total_carb: "",
       food_total_protein: "",
       food_section: [{
-        food_part: "",
-        food_title: "",
+        food_part_val: "",
+        food_title_val: "",
         food_count: "",
         food_serv: "",
         food_gram: "",
@@ -146,7 +146,7 @@ export const FoodSearch = () => {
               <td className="pointer" onClick={() => {
                 handleStorage(item);
               }}>
-                {item.food_title}
+                {item.food_title_val}
               </td>
               <td>{item.food_brand}</td>
               <td>{item.food_count} {item.food_serv}</td>

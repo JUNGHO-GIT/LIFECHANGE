@@ -81,8 +81,8 @@ export const FoodSave = () => {
     food_total_carb: "",
     food_total_protein: "",
     food_section: [{
-      food_part: "",
-      food_title: "",
+      food_part_val: "",
+      food_title_val: "",
       food_count: "",
       food_serv: "",
       food_gram: "",
@@ -268,17 +268,17 @@ export const FoodSave = () => {
               <tr>
                 <td>
                   <select
-                    id="food_part"
-                    name="food_part"
+                    id="food_part_val"
+                    name="food_part_val"
                     className="form-select"
-                    value={item.food_part}
+                    value={item.food_part_val}
                     onChange={(e) => {
                       const newPart = e.target.value;
                       setFOOD((prev) => {
                         const newFoodSection = [...prev.food_section];
                         newFoodSection[index] = {
                           ...item,
-                          food_part: newPart,
+                          food_part_val: newPart,
                         };
                         return {
                           ...prev,
@@ -294,7 +294,7 @@ export const FoodSave = () => {
                     <option value="간식">간식</option>
                   </select>
                 </td>
-                <td>{item.food_title}</td>
+                <td>{item.food_title_val}</td>
                 <td>{item.food_brand}</td>
                 <td>
                   <div className="d-flex">

@@ -79,8 +79,8 @@ export const FoodDetail = () => {
     food_total_carb: "",
     food_total_protein: "",
     food_section: [{
-      food_part: "",
-      food_title: "",
+      food_part_val: "",
+      food_title_val: "",
       food_count: "",
       food_serv: "",
       food_gram: "",
@@ -167,10 +167,10 @@ export const FoodDetail = () => {
                 </React.Fragment>
               )}
               <td className="fs-20 pt-20">
-                {item.food_title}
+                {item.food_title_val}
               </td>
               <td className="fs-20 pt-20">
-                {item.food_part}
+                {item.food_part_val}
               </td>
               <td className="fs-20 pt-20">
                 {item.food_count}

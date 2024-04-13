@@ -66,7 +66,7 @@ export const DashDetail = () => {
           params: {
             user_id: user_id,
             food_dur: resDur,
-            food_part: "all",
+            food_part_val: "all",
           },
         });
         setFOOD_LIST(response.data);
