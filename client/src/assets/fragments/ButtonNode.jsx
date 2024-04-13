@@ -117,7 +117,7 @@ export const ButtonNode = ({
         {buttonSearch()}
         {buttonRefresh()}
       </div>
-    ) : type === "detail" ? (
+    ) : type === "detail" && food === "" ? (
       <div className="d-inline-flex">
         {buttonUpdate()}
         {buttonList()}
