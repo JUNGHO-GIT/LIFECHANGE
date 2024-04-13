@@ -26,9 +26,6 @@ export const DashBar = () => {
   const [DASH, setDASH] = useState(DASH_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(location_startDt, location_endDt, DATE, setDATE);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/dashBar`, {
       params: {

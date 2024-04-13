@@ -102,7 +102,7 @@ export const MoneyList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE, FILTER, PAGING]);
+  })()}, [user_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {

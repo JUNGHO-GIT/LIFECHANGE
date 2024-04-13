@@ -102,7 +102,7 @@ export const SleepPlanSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);;
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {

@@ -100,7 +100,7 @@ export const SleepDetail = () => {
       ...prev,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [location_id, user_id, DATE]);
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);;
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
