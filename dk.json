@@ -1,0 +1,48 @@
+WORK : [
+  {
+    "_id": "661a5f695f2dedc9a7caea00",
+    "work_startDt": "2024-04-13",
+    "work_endDt": "2024-04-13",
+    "work_section": [
+      {
+        "work_part_idx": 2,
+        "work_part_val": "하체",
+        "work_title_idx": 0,
+        "work_title_val": "프론트스쿼트",
+        "work_kg": 0,
+        "work_set": 0,
+        "work_rep": 0,
+        "work_rest": 0,
+        "_id": "661a5f695f2dedc9a7caea02"
+      },
+      {
+        "work_part_idx": 0,
+        "work_part_val": "전체",
+        "work_title_idx": 0,
+        "work_title_val": "전체",
+        "_id": "661a5f695f2dedc9a7caea03"
+      },
+      {
+        "work_part_idx": 0,
+        "work_part_val": "전체",
+        "work_title_idx": 0,
+        "work_title_val": "전체",
+        "_id": "661a5f695f2dedc9a7caea04"
+      },
+      {
+        "work_part_idx": 0,
+        "work_part_val": "전체",
+        "work_title_idx": 0,
+        "work_title_val": "전체",
+        "_id": "661a5f695f2dedc9a7caea05"
+      },
+      {
+        "work_part_idx": 0,
+        "work_part_val": "전체",
+        "work_title_idx": 0,
+        "work_title_val": "전체",
+        "_id": "661a5f695f2dedc9a7caea06"
+      }
+    ]
+  }
+]

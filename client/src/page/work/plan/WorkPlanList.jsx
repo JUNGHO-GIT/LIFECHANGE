@@ -70,34 +70,20 @@ export const WorkPlanList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState([{
+  const WORK_PLAN_DEFAULT = [{
     _id: "",
-    plan_number: 0,
-    plan_schema: "work",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
-  }]);
-  const [PLAN, setPLAN] = useState([{
-    _id: "",
-    plan_number: 0,
-    plan_schema: "work",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
-  }]);
+    work_plan_number: 0,
+    work_plan_startDt: "",
+    work_plan_endDt: "",
+    work_plan_total: "",
+    work_plan_cardio_time: "",
+    work_plan_score_name: "",
+    work_plan_score_kg: "",
+    work_plan_score_rep: "",
+    work_plan_regdate: "",
+    work_plan_update: "",
+  }];
+  const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -109,13 +95,13 @@ export const WorkPlanList = () => {
         PAGING: PAGING
       },
     });
-    setPLAN(response.data.result || PLAN_DEFAULT);
+    setWORK_PLAN(response.data.result || WORK_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, FILTER, PAGING]);
+  })()}, [user_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -133,16 +119,25 @@ export const WorkPlanList = () => {
           </tr>
         </thead>
         <tbody>
-          {PLAN.map((item) => (
+          {WORK_PLAN?.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td>{item.food_plan_startDt}</td>
-                <td>{item.food_plan_endDt}</td>
-                <td>{item.food_plan_work.plan_count_total}</td>
-                <td>{item.food_plan_work.plan_cardio_time}</td>
-                <td>{item.food_plan_work.plan_score_name}</td>
-                <td>{item.food_plan_work.plan_score_kg}</td>
-                <td>{item.food_plan_work.plan_score_rep}</td>
+                <td className="pointer" onClick={() => {
+                  SEND.id = item._id;
+                  SEND.startDt = item.work_plan_startDt;
+                  SEND.endDt = item.work_plan_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  {item.work_plan_startDt}
+                </td>
+                <td>{item.work_plan_endDt}</td>
+                <td>{item.work_plan_total}</td>
+                <td>{item.work_plan_cardio_time}</td>
+                <td>{item.work_plan_score_name}</td>
+                <td>{item.work_plan_score_kg}</td>
+                <td>{item.work_plan_score_rep}</td>
               </tr>
             </React.Fragment>
           ))}

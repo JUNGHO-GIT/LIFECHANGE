@@ -121,6 +121,49 @@ export const FilterNode = ({
       </div>
     );
   };
+  function selectPartWork () {
+    return (
+      <div className="mb-3">
+        <select className="form-control" id="part" value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
+          const selectedOption = e.target.options[e.target.selectedIndex];
+          const idxValue = selectedOption.getAttribute("data-idx");
+          const newPartIndex = Number(idxValue);
+          const newPartVal = String(e.target.value);
+          const newTitleVal = workArray[newPartIndex].work_title[0];
+          setFILTER((prev) => ({
+            ...prev,
+            partIdx: newPartIndex,
+            part: newPartVal,
+            title: newTitleVal
+          }));
+        }}>
+          {workArray.map((item, idx) => (
+            <option key={idx} data-idx={idx}>
+              {item.work_part}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  };
+  function selectTitleWork () {
+    return (
+      <div className="mb-3">
+        <select className="form-control" id="title" value={FILTER.title} onChange={(e) => {
+          setFILTER((prev) => ({
+            ...prev,
+            title: e.target.value
+          }));
+        }}>
+          {workArray[FILTER.partIdx].work_title.map((item, idx) => (
+            <option key={idx}>
+              {item}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  };
   return (
     plan === "" && type === "food" ? (
       <div className="d-inline-flex">
@@ -167,6 +210,8 @@ export const FilterNode = ({
         {selectType()}
         {selectOrder()}
         {selectLimit()}
+        {selectPartWork()}
+        {selectTitleWork()}
       </div>
     ) : plan === "plan" && type === "work" ? (
       <div className="d-inline-flex">

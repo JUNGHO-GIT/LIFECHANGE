@@ -147,36 +147,36 @@ export const MoneyDetail = () => {
           </tr>
         </thead>
         <tbody>
-        {MONEY?.money_section.map((item, index) => (
-          <tr key={index}>
-            {index === 0 && (
-              <React.Fragment>
-                <td className="fs-20 pt-20" rowSpan={MONEY?.money_section?.length}>
-                  {MONEY.money_startDt}
-                </td>
-              </React.Fragment>
-            )}
-            <td className="fs-20 pt-20">
-              {item.money_part_val}
-            </td>
-            <td className="fs-20 pt-20">
-              {item.money_title_val}
-            </td>
-            <td className="fs-20 pt-20">
-              {item.money_amount}
-            </td>
-            <td className="fs-20 pt-20">
-              {item.money_content}
-            </td>
-            <td className="fs-20 pt-20">
-              <button type="button" className="btn btn-sm btn-danger" onClick={() => (
-                flowDelete(item._id)
-              )}>
-                X
-              </button>
-            </td>
-          </tr>
-        ))}
+          {MONEY?.money_section.map((item, index) => (
+            <tr key={index}>
+              {index === 0 && (
+                <React.Fragment>
+                  <td className="fs-20 pt-20" rowSpan={MONEY?.money_section?.length}>
+                    {MONEY.money_startDt}
+                  </td>
+                </React.Fragment>
+              )}
+              <td className="fs-20 pt-20">
+                {item.money_part_val}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.money_title_val}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.money_amount}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.money_content}
+              </td>
+              <td className="fs-20 pt-20">
+                <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+                  flowDelete(item._id)
+                )}>
+                  X
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     );

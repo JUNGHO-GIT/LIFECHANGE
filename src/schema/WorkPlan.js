@@ -21,7 +21,8 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
-  work_plan_count_total: {
+
+  work_plan_total: {
     type: String,
     required: false
   },
@@ -41,6 +42,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
   work_plan_regdate: {
     type: String,
     required: false

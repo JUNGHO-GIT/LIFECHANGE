@@ -2,7 +2,96 @@
 
 import mongoose from "mongoose";
 import moment from "moment";
+import {Work} from "../schema/Work.js";
 import {WorkPlan} from "../schema/WorkPlan.js";
+
+// 1-1. compare ----------------------------------------------------------------------------------->
+export const compare = async (
+  user_id_param,
+  work_dur_param,
+  work_plan_dur_param,
+  FILTER_param,
+  PAGING_param
+) => {
+
+  const [startDayReal, endDayReal] = work_dur_param.split(` ~ `);
+  const [startDayPlan, endDayPlan] = work_plan_dur_param.split(` ~ `);
+
+  const sort = FILTER_param.order === "asc" ? 1 : -1;
+  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+
+  const findResultReal = await Work.find({
+    user_id: user_id_param,
+    work_startDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    },
+    work_endDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    }
+  })
+  .sort({work_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const findResultPlan = await WorkPlan.find({
+    user_id: user_id_param,
+    work_plan_startDt: {
+      $lte: endDayPlan,
+    },
+    work_plan_endDt: {
+      $gte: startDayPlan,
+    },
+  })
+  .sort({work_plan_startDt: sort})
+  .skip((page - 1) * limit)
+  .limit(limit)
+  .lean();
+
+  const totalCnt = await WorkPlan.countDocuments({
+    user_id: user_id_param,
+    work_plan_startDt: {
+      $lte: endDayPlan,
+    },
+    work_plan_endDt: {
+      $gte: startDayPlan,
+    },
+  });
+
+  const finalResult = findResultPlan.map((plan) => {
+    const matches = findResultReal.filter((real) => (
+      real && plan &&
+      real.work_startDt && real.work_endDt &&
+      plan.work_plan_startDt && plan.work_plan_endDt &&
+      real.work_startDt <= plan.work_plan_endDt &&
+      real.work_endDt >= plan.work_plan_startDt
+    ));
+    const totalIn = matches.reduce((sum, curr) => (
+      sum + curr.work_section.reduce((acc, section) => (
+        section.work_part_val === "수입" ? acc + (section.work_amount || 0) : acc
+      ), 0)
+    ), 0);
+    const totalOut = matches.reduce((sum, curr) => (
+      sum + curr.work_section.reduce((acc, section) => (
+        section.work_part_val === "지출" ? acc + (section.work_amount || 0) : acc
+      ), 0)
+    ), 0);
+
+    return {
+      ...plan,
+      work_in: totalIn,
+      work_out: totalOut
+    };
+  });
+
+  return {
+    totalCnt: totalCnt,
+    result: finalResult
+  };
+};
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
@@ -94,6 +183,11 @@ export const save = async (
       user_id: user_id_param,
       work_plan_startDt: startDay,
       work_plan_endDt: endDay,
+      work_plan_total: WORK_PLAN_param.work_plan_total,
+      work_plan_cardio_time: WORK_PLAN_param.work_plan_cardio_time,
+      work_plan_score_name: WORK_PLAN_param.work_plan_score_name,
+      work_plan_score_kg: WORK_PLAN_param.work_plan_score_kg,
+      work_plan_score_rep: WORK_PLAN_param.work_plan_score_rep,
       work_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_plan_update: ""
     };

@@ -72,7 +72,7 @@ export const WorkSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
+  const WORK_DEFAULT = {
     _id: "",
     work_number: 0,
     work_startDt: "",
@@ -90,26 +90,8 @@ export const WorkSave = () => {
       work_kg: 0,
       work_rest: 0,
     }],
-  });
-  const [WORK, setWORK] = useState({
-    _id: "",
-    work_number: 0,
-    work_startDt: "",
-    work_endDt: "",
-    work_start: "",
-    work_end: "",
-    work_time: "",
-    work_section: [{
-      work_part_idx: 0,
-      work_part_val: "",
-      work_title_idx: 0,
-      work_title_val: "",
-      work_set: 0,
-      work_rep: 0,
-      work_kg: 0,
-      work_rest: 0,
-    }],
-  });
+  };
+  const [WORK, setWORK] = useState(WORK_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -169,6 +151,10 @@ export const WorkSave = () => {
         work_part_val: "전체",
         work_title_idx: 0,
         work_title_val: "전체",
+        work_set: 0,
+        work_rep: 0,
+        work_kg: 0,
+        work_rest: 0,
       };
 
       if (newCount > sectionCount) {

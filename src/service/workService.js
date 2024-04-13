@@ -13,49 +13,77 @@ export const list = async (
 ) => {
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
-  const part = FILTER_param.part || "전체";
   const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
-  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
+  const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
+  const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
+  const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
-  const findResult = await Work.find({
+  const totalCnt = await Work.countDocuments({
     user_id: user_id_param,
     work_startDt: {
       $gte: startDay,
-      $lte: endDay,
+      $lte: endDay
     },
     work_endDt: {
       $gte: startDay,
-      $lte: endDay,
+      $lte: endDay
     },
+    ...(part !== "전체" && {
+      "work_section.work_part_val": part
+    }),
+    ...(title !== "전체" && {
+      "work_section.work_title_val": title
+    }),
   })
-  .sort({work_startDt: sort})
   .lean();
 
-  let totalCnt = 0;
-  const finalResult = findResult.map((work) => {
-    if (work && work.work_section) {
-      let sections = work.work_section.filter((section) => (
-        part === "전체" ? true : section.work_part_val === part
-      ));
+  const findResult = await Work.aggregate([
+    {$match: {
+      user_id: user_id_param,
+      work_startDt: {
+        $gte: startDay,
+        $lte: endDay
+      },
+      work_endDt: {
+        $gte: startDay,
+        $lte: endDay
+      },
+    }},
+    {$project: {
+      work_startDt: 1,
+      work_endDt: 1,
+      work_start: 1,
+      work_end: 1,
+      work_time: 1,
+      work_section: {
+        $filter: {
+          input: "$work_section",
+          as: "section",
+          cond: {
+            $and: [
+              part === "전체"
+              ? {$ne: ["$$section.work_part_val", null]}
+              : {$eq: ["$$section.work_part_val", part]},
+              title === "전체"
+              ? {$ne: ["$$section.work_title_val", null]}
+              : {$eq: ["$$section.work_title_val", title]}
+            ]
+          }
+        }
+      }
+    }},
+    {$sort: {work_startDt: sort}},
+    {$skip: (page - 1) * limit},
+    {$limit: limit}
+  ]);
 
-      // 배열 갯수 누적 계산
-      totalCnt += sections.length;
-
-      // section 배열에서 페이지에 맞는 항목만 선택합니다.
-      const startIdx = (limit * page - 1) - (limit - 1);
-      const endIdx = (limit * page);
-      sections = sections.slice(startIdx, endIdx);
-
-      work.work_section = sections;
-    }
-    return work;
-  });
-
-  return {
+  const finalResult = {
     totalCnt: totalCnt,
-    result: finalResult,
+    result: findResult
   };
+
+  return finalResult;
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
@@ -79,7 +107,7 @@ export const detail = async (
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   const sectionCnt = finalResult?.work_section?.length || 0;
 
@@ -109,7 +137,7 @@ export const save = async (
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   let finalResult;
   if (!findResult) {
@@ -118,6 +146,9 @@ export const save = async (
       user_id: user_id_param,
       work_startDt: startDay,
       work_endDt: endDay,
+      work_start: WORK_param.work_start,
+      work_end: WORK_param.work_end,
+      work_time: WORK_param.work_time,
       work_section: WORK_param.work_section,
       work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_update: "",

@@ -4,9 +4,8 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
-import {DayPicker} from "react-day-picker";
+import DatePicker from "react-datepicker";
 import axios from "axios";
-import {ko} from "date-fns/locale";
 import moment from "moment-timezone";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
@@ -72,34 +71,20 @@ export const WorkPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [PLAN_DEFAULT, setPLAN_DEFAULT] = useState({
+  const WORK_PLAN_DEFAULT = {
     _id: "",
-    plan_number: 0,
-    plan_schema: "work",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
-  });
-  const [PLAN, setPLAN] = useState({
-    _id: "",
-    plan_number: 0,
-    plan_schema: "work",
-    plan_startDt: "",
-    plan_endDt: "",
-    plan_work: {
-      plan_count_total: "",
-      plan_cardio_time: "",
-      plan_score_name: "",
-      plan_score_kg: "",
-      plan_score_rep: "",
-    },
-  });
+    work_plan_number: 0,
+    work_plan_startDt: "",
+    work_plan_endDt: "",
+    work_plan_total: "",
+    work_plan_cardio_time: "",
+    work_plan_score_name: "",
+    work_plan_score_kg: "",
+    work_plan_score_rep: "",
+    work_plan_regdate: "",
+    work_plan_update: "",
+  };
+  const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -113,7 +98,7 @@ export const WorkPlanSave = () => {
         work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setPLAN(response.data.result || PLAN_DEFAULT);
+    setWORK_PLAN(response.data.result || WORK_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -125,7 +110,7 @@ export const WorkPlanSave = () => {
   const flowSave = async () => {
     const response = await axios.post(`${URL_WORK_PLAN}/save`, {
       user_id: user_id,
-      PLAN: PLAN,
+      WORK_param: WORK_PLAN,
       work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data === "success") {
@@ -141,130 +126,151 @@ export const WorkPlanSave = () => {
     }
   };
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} type={"save"} />
-    );
-  };
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
 
-    function dayPicker (isOpen, setOpen, selectedDate, setSelectedDate) {
+    // 1. startNode
+    function startNode () {
       return (
-        <div className={`dayPicker-container ${isOpen ? "" : "d-none"}`}>
-          <span className="d-right fw-700 pointer" style={{position: "absolute", right: "15px", top: "10px"}} onClick={() => setOpen(false)}>
-            X
-          </span>
-          <div className="h-2"></div>
-          <DayPicker
-            weekStartsOn={1}
-            showOutsideDays={true}
-            locale={ko}
-            modifiersClassNames={{
-              selected:"selected", disabled:"disabled", outside:"outside", inside:"inside",
-            }}
-            mode="single"
-            selected={selectedDate}
-            month={selectedDate}
-            onDayClick={(day) => {
-              const selectedDay = new Date(day);
-              const fmtDate = moment(selectedDay).format("YYYY-MM-DD");
-              setSelectedDate(fmtDate);
-              setOpen(false);
-            }}
-            onMonthChange={(month) => {
-              setSelectedDate(new Date(month.getFullYear(), month.getMonth(), 1));
-            }}
-          />
-        </div>
-      );
-    };
-
-    function workNode () {
-      return (
-        <div>
-          {/* <div className="row d-center mb-20">
-            <div className="col-3">
-              {dayPicker(calStartOpen, setCalendarStartOpen, STARTDT, DATE.setStrStartDt)}
-              <div className="input-group">
-                <p className={`btn btn-sm ${calStartOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarStartOpen(!calStartOpen)}>
-                  시작일
-                </p>
-                <input type="text" className="form-control" value={STARTDT} readOnly />
-              </div>
-            </div>
-            <div className="col-3">
-              {dayPicker(calEndOpen, setCalendarEndOpen, ENDDT, DATE.setEndDate)}
-              <div className="input-group">
-                <p className={`btn btn-sm ${calEndOpen ? "btn-primary-outline" : "btn-primary"} m-5 input-group-text`} onClick={() => setCalendarEndOpen(!calEndOpen)}>
-                  종료일
-                </p>
-                <input type="text" className="form-control" value={ENDDT} readOnly />
-              </div>
-            </div>
-          </div> */}
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">목표 운동 횟수</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_count_total}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_count_total: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">목표 유산소 시간</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_cardio_time}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_cardio_time: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">운동명</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_score_name}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_score_name: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">중량</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_score_kg}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_score_kg: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row d-center mb-20">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">횟수</span>
-                <input type="text" className="form-control" value={PLAN.plan_work.plan_score_rep}
-                  onChange={(e) => setPLAN({...PLAN, plan_work: {...PLAN.plan_work, plan_score_rep: e.target.value}})}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    return (
-      <div>
         <div className="row d-center">
           <div className="col-12">
-            {workNode()}
+            <div className="input-group">
+              <span className="input-group-text">시작일</span>
+              <DatePicker
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom"
+                className="form-control"
+                selected={new Date(DATE.startDt)}
+                disabled={false}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                  }));
+                }}
+              >
+              </DatePicker>
+            </div>
           </div>
+        </div>
+      );
+    };
+
+    // 2. endNode
+    function endNode () {
+      return (
+        <div className="row d-center">
+          <div className="col-12">
+            <div className="input-group">
+              <span className="input-group-text">종료일</span>
+              <DatePicker
+                dateFormat="yyyy-MM-dd"
+                popperPlacement="bottom"
+                className="form-control"
+                selected={new Date(DATE.endDt)}
+                disabled={false}
+                onChange={(date) => {
+                  setDATE((prev) => ({
+                    ...prev,
+                    endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                  }));
+                }}
+              ></DatePicker>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // 3. moneyNode
+    function moneyNode () {
+      return (
+        <div className="row d-center mb-20">
+          <div className="col-12">
+            <div className="input-group">
+              <span className="input-group-text">목표 운동 횟수</span>
+              <input type="text" className="form-control"
+                value={WORK_PLAN?.work_plan_total}
+                onChange={(e) => {
+                  setWORK_PLAN((prev) => ({
+                    ...prev,
+                    work_plan_total: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 유산소 시간</span>
+              <input type="text" className="form-control"
+                value={WORK_PLAN?.work_plan_cardio_time}
+                onChange={(e) => {
+                  setWORK_PLAN((prev) => ({
+                    ...prev,
+                    work_plan_cardio_time: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 운동이름</span>
+              <input type="text" className="form-control"
+                value={WORK_PLAN?.work_plan_score_name}
+                onChange={(e) => {
+                  setWORK_PLAN((prev) => ({
+                    ...prev,
+                    work_plan_score_name: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 운동무게</span>
+              <input type="text" className="form-control"
+                value={WORK_PLAN?.work_plan_score_kg}
+                onChange={(e) => {
+                  setWORK_PLAN((prev) => ({
+                    ...prev,
+                    work_plan_score_kg: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">목표 운동횟수</span>
+              <input type="text" className="form-control"
+                value={WORK_PLAN?.work_plan_score_rep}
+                onChange={(e) => {
+                  setWORK_PLAN((prev) => ({
+                    ...prev,
+                    work_plan_score_rep: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // 5. return
+    return (
+      <div className="row d-center">
+        <div className="col-4 mb-20">
+          {startNode()}
+        </div>
+        <div className="col-4 mb-20">
+          {endNode()}
+        </div>
+        <div className="col-8 mb-20">
+          {moneyNode()}
         </div>
       </div>
     );
@@ -289,13 +295,10 @@ export const WorkPlanSave = () => {
             <h1>Save</h1>
           </div>
           <div className="col-12 mb-20">
-            {dateNode()}
+            {tableNode()}
           </div>
           <div className="col-12 mb-20">
             {buttonNode()}
-          </div>
-          <div className="col-12 mb-20 h-80">
-            {tableNode()}
           </div>
         </div>
       </div>

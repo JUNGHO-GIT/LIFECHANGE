@@ -69,7 +69,7 @@ export const WorkDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
+  const WORK_DEFAULT = {
     _id: "",
     work_number: 0,
     work_startDt: "",
@@ -87,26 +87,8 @@ export const WorkDetail = () => {
       work_kg: 0,
       work_rest: 0,
     }],
-  });
-  const [WORK, setWORK] = useState({
-    _id: "",
-    work_number: 0,
-    work_startDt: "",
-    work_endDt: "",
-    work_start: "",
-    work_end: "",
-    work_time: "",
-    work_section: [{
-      work_part_idx: 0,
-      work_part_val: "전체",
-      work_title_idx: 0,
-      work_title_val: "전체",
-      work_set: 0,
-      work_rep: 0,
-      work_kg: 0,
-      work_rest: 0,
-    }],
-  });
+  };
+  const [WORK, setWORK] = useState(WORK_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -140,12 +122,16 @@ export const WorkDetail = () => {
       },
     });
     if (response.data === "success") {
-      alert("delete success");
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navParam(SEND.toDetail, {
-        state: SEND
+      const updatedData = await axios.get(`${URL_WORK}/detail`, {
+        params: {
+          _id: location_id,
+          user_id: user_id,
+          work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        },
       });
+      alert("삭제되었습니다.");
+      setWORK(updatedData.data.result || WORK_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);
@@ -164,45 +150,59 @@ export const WorkDetail = () => {
             <th>시간</th>
             <th>부위</th>
             <th>종목</th>
-            <th>세트 x 횟수 x 무게</th>
+            <th>세트</th>
+            <th>횟수</th>
+            <th>중량</th>
             <th>휴식</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="fs-20 pt-20">
-              {WORK.work_startDt}
-            </td>
-            <td className="fs-20 pt-20">
-              {WORK.work_start}
-            </td>
-            <td className="fs-20 pt-20">
-              {WORK.work_end}
-            </td>
-            <td className="fs-20 pt-20">
-              {WORK.work_time}
-            </td>
-            <td colSpan={5}>
-              {WORK.work_section.map((item, index) => (
-                <div key={index} className="d-flex justify-content-between">
-                  <span>{item.work_part_val}</span>
-                  <span>{item.work_title_val}</span>
-                  <span>{item.work_set} x {item.work_rep} x {item.work_kg}</span>
-                  <span>{item.work_rest}</span>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-danger ms-2"
-                    onClick={() => (
-                      flowDelete(item._id)
-                    )}
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
-            </td>
-          </tr>
+          {WORK?.work_section.map((item, index) => (
+            <tr key={index}>
+              {index === 0 && (
+                <React.Fragment>
+                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                    {WORK.work_startDt}
+                  </td>
+                </React.Fragment>
+              )}
+              <td className="fs-20 pt-20">
+                {WORK.work_start}
+              </td>
+              <td className="fs-20 pt-20">
+                {WORK.work_end}
+              </td>
+              <td className="fs-20 pt-20">
+                {WORK.work_time}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.work_part_val}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.work_title_val}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.work_set}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.work_rep}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.work_kg}
+              </td>
+              <td className="fs-20 pt-20">
+                {item.work_rest}
+              </td>
+              <td className="fs-20 pt-20">
+                <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+                  flowDelete(item._id)
+                )}>
+                  X
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     );

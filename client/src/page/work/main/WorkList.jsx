@@ -70,7 +70,7 @@ export const WorkList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [WORK_DEFAULT, setWORK_DEFAULT] = useState([{
+  const WORK_DEFAULT = [{
     _id: "",
     work_number: 0,
     work_startDt: "",
@@ -88,26 +88,8 @@ export const WorkList = () => {
       work_kg: 0,
       work_rest: 0,
     }],
-  }]);
-  const [WORK, setWORK] = useState([{
-    _id: "",
-    work_number: 0,
-    work_startDt: "",
-    work_endDt: "",
-    work_start: "",
-    work_end: "",
-    work_time: "",
-    work_section: [{
-      work_part_idx: 0,
-      work_part_val: "전체",
-      work_title_idx: 0,
-      work_title_val: "전체",
-      work_set: 0,
-      work_rep: 0,
-      work_kg: 0,
-      work_rest: 0,
-    }],
-  }]);
+  }];
+  const [WORK, setWORK] = useState(WORK_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -139,39 +121,48 @@ export const WorkList = () => {
             <th>시간</th>
             <th>부위</th>
             <th>종목</th>
-            <th>세트 x 횟수 x 무게</th>
+            <th>세트</th>
+            <th>횟수</th>
+            <th>중량</th>
             <th>휴식</th>
           </tr>
         </thead>
         <tbody>
-          {WORK.map((item) => (
-            <React.Fragment key={item.work_startDt}>
-              <tr>
-                <td rowSpan={6} className="pointer" onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.work_startDt;
-                  SEND.endDt = item.work_endDt;
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
-                  {item.work_startDt}
-                </td>
-                <td>시작</td>
-                <td>{item.work_start}</td>
-                <td>{item.work_end}</td>
-                <td>{item.work_time}</td>
-                <td colSpan={5}>
-                  {item.work_section.map((section, index) => (
-                    <div key={index} className="d-flex justify-content-between">
-                      <span>{section.work_part_val}</span>
-                      <span>{section.work_title_val}</span>
-                      <span>{section.work_set} x {section.work_rep} x {section.work_kg}</span>
-                      <span>{section.work_rest}</span>
-                    </div>
-                  ))}
-                </td>
-              </tr>
+          {WORK?.map((item, index) => (
+            <React.Fragment key={item._id}>
+              {item.work_section.slice(0, 3).map((section, sectionIndex) => (
+                <React.Fragment key={`${section.work_part_val}_${section.work_title_val}`}>
+                  <tr>
+                    {sectionIndex === 0 && (
+                      <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}
+                      className={"pointer"} onClick={() => {
+                        SEND.id = item._id;
+                        SEND.startDt = item.work_startDt;
+                        SEND.endDt = item.work_endDt;
+                        navParam(SEND.toDetail, {
+                          state: SEND
+                        });
+                      }}>
+                        {item.work_startDt}
+                      </td>
+                    )}
+                    <td>{item.work_start}</td>
+                    <td>{item.work_end}</td>
+                    <td>{item.work_time}</td>
+                    <td>{section.work_part_val}</td>
+                    <td>{section.work_title_val}</td>
+                    <td>{section.work_set}</td>
+                    <td>{section.work_rep}</td>
+                    <td>{section.work_kg}</td>
+                    <td>{section.work_rest}</td>
+                  </tr>
+                </React.Fragment>
+              ))}
+              {item.work_section.length > 3 && (
+                <tr>
+                  <td colSpan={10}>...</td>
+                </tr>
+              )}
             </React.Fragment>
           ))}
         </tbody>
