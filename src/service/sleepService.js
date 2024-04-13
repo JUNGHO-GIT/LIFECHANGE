@@ -32,13 +32,22 @@ export const dashBar = async (
   for (let key in dataFields) {
     const findResultPlan = await SleepPlan.findOne({
       user_id: user_id_param,
-      sleep_plan_startDt: { $lte: koreanDate },
-      sleep_plan_endDt: { $gte: koreanDate }
+      sleep_plan_startDt: {
+        $lte: koreanDate
+      },
+      sleep_plan_endDt: {
+        $gte: koreanDate
+      }
     })
     .lean();
     const findResultReal = await Sleep.findOne({
       user_id: user_id_param,
-      sleep_date: koreanDate
+      sleep_startDt: {
+        $lte: koreanDate
+      },
+      sleep_endDt: {
+        $gte: koreanDate
+      }
     })
     .lean();
 
@@ -82,7 +91,8 @@ export const dashLine = async (
     const date = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
-      sleep_date: date.format("YYYY-MM-DD"),
+      sleep_startDt: date.format("YYYY-MM-DD"),
+      sleep_endDt: date.format("YYYY-MM-DD"),
     })
     .lean();
 
@@ -129,15 +139,20 @@ export const dashAvgWeek = async (
     }
   };
 
-  for (let i in names) {
+  for (let day in names) {
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
-      sleep_date: moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days").format("YYYY-MM-DD"),
+      sleep_startDt : moment().tz("Asia/Seoul").startOf("isoWeek").add(day, "days").format("YYYY-MM-DD"),
+      sleep_endDt : moment().tz("Asia/Seoul").startOf("isoWeek").add(day, "days").format("YYYY-MM-DD"),
     })
     .lean();
 
+    console.log("===================================");
+    console.log(JSON.stringify("findResult : " + JSON.stringify(findResult)));
+
     if (findResult) {
-      const weekNum = Math.max(moment(findResult.sleep_date).week() - moment(findResult.sleep_date).startOf("month").week() + 1);
+
+      const weekNum = Math.max(moment(findResult.sleep_startDt).week() - moment(findResult.sleep_startDt).startOf("month").week() + 1);
       sumSleepStart[weekNum - 1] += fmtData(
         findResult?.sleep_section?.map((item) => (item.sleep_night)).join(":")
       );
@@ -154,7 +169,7 @@ export const dashAvgWeek = async (
   let finalResult = [];
   for (let i = 0; i < 5; i++) {
     finalResult.push({
-      name: names[i],
+      name: `${names[i]}`,
       취침: countRecords[i] > 0 ? (sumSleepStart[i] / countRecords[i]).toFixed(1) : "0",
       기상: countRecords[i] > 0 ? (sumSleepEnd[i] / countRecords[i]).toFixed(1) : "0",
       수면: countRecords[i] > 0 ? (sumSleepTime[i] / countRecords[i]).toFixed(1) : "0",
@@ -197,7 +212,8 @@ export const dashAvgMonth = async (
   ) {
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
-      sleep_date: m.format("YYYY-MM-DD"),
+      sleep_startDt: m.format("YYYY-MM-DD"),
+      sleep_endDt: m.format("YYYY-MM-DD"),
     })
     .lean();
 
@@ -249,20 +265,28 @@ export const compare = async (
 
   const totalCnt = await Sleep.countDocuments({
     user_id: user_id_param,
-    sleep_date: {
+    sleep_startDt: {
       $gte: startDayReal,
       $lte: endDayReal,
     },
+    sleep_endDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    }
   });
 
   const findResultReal = await Sleep.find({
     user_id: user_id_param,
-    sleep_date: {
+    sleep_startDt: {
       $gte: startDayReal,
       $lte: endDayReal,
     },
+    sleep_endDt: {
+      $gte: startDayReal,
+      $lte: endDayReal,
+    }
   })
-  .sort({sleep_date: sort})
+  .sort({sleep_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -283,7 +307,7 @@ export const compare = async (
 
   const finalResult = findResultReal.map((real) => {
     const match = findResultPlan.find((plan) => (
-      real.sleep_date >= plan.sleep_plan_startDt && real.sleep_date <= plan.sleep_plan_endDt
+      real.sleep_startDt >= plan.sleep_plan_startDt && real.sleep_endDt <= plan.sleep_plan_endDt
     ));
     return match ? {
       ...real,
@@ -324,7 +348,11 @@ export const list = async (
 
   const totalCnt = await Sleep.countDocuments({
     user_id: user_id_param,
-    sleep_date: {
+    sleep_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    sleep_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -333,12 +361,16 @@ export const list = async (
 
   const findResult = await Sleep.find({
     user_id: user_id_param,
-    sleep_date: {
+    sleep_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    sleep_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
   })
-  .sort({sleep_date: sort})
+  .sort({sleep_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -361,10 +393,14 @@ export const detail = async (
   const finalResult = await Sleep.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    sleep_date: {
+    sleep_startDt: {
       $gte: startDay,
       $lte: endDay,
     },
+    sleep_endDt: {
+      $gte: startDay,
+      $lte: endDay,
+    }
   })
   .lean();
 
@@ -387,7 +423,11 @@ export const save = async (
 
   const findResult = await Sleep.findOne({
     user_id: user_id_param,
-    sleep_date: {
+    sleep_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    sleep_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -399,7 +439,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      sleep_date: startDay,
+      sleep_startDt: startDay,
+      sleep_endDt: endDay,
       sleep_section: SLEEP_param.sleep_section,
       sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       sleep_update: "",
@@ -436,7 +477,11 @@ export const deletes = async (
   const updateResult = await Sleep.updateOne(
     {
       user_id: user_id_param,
-      sleep_date: {
+      sleep_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      sleep_endDt: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -463,7 +508,11 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await Sleep.findOne({
       user_id: user_id_param,
-      sleep_date: {
+      sleep_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      sleep_endDt: {
         $gte: startDay,
         $lte: endDay,
       },

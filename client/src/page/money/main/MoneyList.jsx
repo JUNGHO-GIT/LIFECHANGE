@@ -14,26 +14,28 @@ export const MoneyList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
-      toDetail:"/money/detail"
+      toDetail: "/money/detail",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -71,7 +73,8 @@ export const MoneyList = () => {
   const MONEY_DEFAULT = [{
     _id: "",
     money_number: 0,
-    money_date: "",
+    money_startDt: "",
+    money_endDt: "",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -88,7 +91,7 @@ export const MoneyList = () => {
     const response = await axios.get(`${URL_MONEY}/list`, {
       params: {
         user_id: user_id,
-        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -99,7 +102,7 @@ export const MoneyList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
+  })()}, [user_id, DATE, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -123,11 +126,12 @@ export const MoneyList = () => {
                     {sectionIndex === 0 && (
                       <td rowSpan={item.money_section.length > 3 ? 4 : item.money_section.length}
                       className={"pointer"} onClick={() => {
-                        STATE.id = item._id;
-                        STATE.date = item.money_date;
-                        navParam(STATE.toDetail, { state: STATE });
+                        SEND.id = item._id;
+                        SEND.startDt = item.money_startDt;
+                        SEND.endDt = item.money_endDt;
+                        navParam(SEND.toDetail, { state: SEND });
                       }}>
-                        {item.money_date}
+                        {item.money_startDt}
                       </td>
                     )}
                     <td>{section.money_part_val}</td>
@@ -179,7 +183,7 @@ export const MoneyList = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        SEND={SEND} flowSave={""} navParam={navParam}
         type={"list"}
       />
     );

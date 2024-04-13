@@ -20,8 +20,8 @@ export const Header = () => {
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
-  const {val:STATE, set:setSTATE} = useStorage (
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage (
+    `SEND(${PATH})`, {
       id: "",
       date: koreanDate,
       refresh: 0,
@@ -67,9 +67,10 @@ export const Header = () => {
             {items.map(({ to, label }) => (
               <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
                 <div className="pointer" onClick={() => {
-                  STATE.date = koreanDate;
+                  SEND.startDt = koreanDate;
+                  SEND.endDt = koreanDate;
                   navParam(to, {
-                    state: STATE
+                    state: SEND
                   });
                   setIsActive(to);
                 }}>

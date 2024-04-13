@@ -20,7 +20,11 @@ export const list = async (
 
   const totalCnt = await Money.countDocuments({
     user_id: user_id_param,
-    money_date: {
+    money_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    money_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -29,12 +33,16 @@ export const list = async (
 
   const findResult = await Money.find({
     user_id: user_id_param,
-    money_date: {
+    money_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    money_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
   })
-  .sort({money_date: sort})
+  .sort({money_startDt: sort})
   .skip((page - 1) * limit)
   .limit(limit)
   .lean();
@@ -57,7 +65,11 @@ export const detail = async (
   const finalResult = await Money.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
     user_id: user_id_param,
-    money_date: {
+    money_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    money_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -83,7 +95,11 @@ export const save = async (
 
   const findResult = await Money.findOne({
     user_id: user_id_param,
-    money_date: {
+    money_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    money_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -95,7 +111,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      money_date: startDay,
+      money_startDt: startDay,
+      money_endDt: endDay,
       money_section: MONEY_param.money_section,
       money_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       money_update: "",
@@ -132,7 +149,11 @@ export const deletes = async (
   const updateResult = await Money.updateOne(
     {
       user_id: user_id_param,
-      money_date: {
+      money_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+        money_endDt: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -158,7 +179,11 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await Money.findOne({
       user_id: user_id_param,
-      money_date: {
+      money_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+        money_endDt: {
         $gte: startDay,
         $lte: endDay,
       },

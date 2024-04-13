@@ -45,7 +45,7 @@ export const UserList = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-dark">
           <tr>
-            <th>User ID</th>
+            <th>User location_id</th>
             <th>User PW</th>
           </tr>
         </thead>

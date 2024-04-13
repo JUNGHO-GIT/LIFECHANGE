@@ -37,7 +37,7 @@ export const UserLogin = () => {
         navParam("/");
       }
       else {
-        alert("Incorrect ID or PW");
+        alert("Incorrect location_id or PW");
         window.sessionStorage.setItem("user_id", "false");
       }
     }
@@ -56,7 +56,6 @@ export const UserLogin = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="ID"
             value={user_id}
             onChange={(e) => {setUserId(e.target.value);}}
           />
@@ -65,7 +64,6 @@ export const UserLogin = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Password"
             value={user_pw}
             onChange={(e) => {setUserPw(e.target.value);}}
           />

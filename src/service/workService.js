@@ -20,12 +20,16 @@ export const list = async (
 
   const findResult = await Work.find({
     user_id: user_id_param,
-    work_date: {
+    work_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    work_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
   })
-  .sort({ work_date: sort })
+  .sort({work_startDt: sort})
   .lean();
 
   let totalCnt = 0;
@@ -66,7 +70,11 @@ export const detail = async (
   const finalResult = await Work.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
     user_id: user_id_param,
-    work_date: {
+    work_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    work_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -92,7 +100,11 @@ export const save = async (
 
   const findResult = await Work.findOne({
     user_id: user_id_param,
-    work_date: {
+    work_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    work_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
@@ -104,7 +116,8 @@ export const save = async (
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      work_date: startDay,
+      work_startDt: startDay,
+      work_endDt: endDay,
       work_section: WORK_param.work_section,
       work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       work_update: "",
@@ -141,7 +154,11 @@ export const deletes = async (
   const updateResult = await Work.updateOne(
     {
       user_id: user_id_param,
-      work_date: {
+      work_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      work_endDt: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -167,7 +184,11 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await Work.findOne({
       user_id: user_id_param,
-      work_date: {
+      work_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+      work_endDt: {
         $gte: startDay,
         $lte: endDay,
       },

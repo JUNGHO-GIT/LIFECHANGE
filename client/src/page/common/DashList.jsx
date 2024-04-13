@@ -1,4 +1,4 @@
-// CalendarList.jsx
+// DashList.jsx
 
 import React from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -9,7 +9,7 @@ import moment from "moment-timezone";
 import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const CalendarList = () => {
+export const DashList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Calendar List";
@@ -33,12 +33,6 @@ export const CalendarList = () => {
   const flowDayClick = (day) => {
     const clickDate = moment(day).format("YYYY-MM-DD");
     setCalendarDay(day);
-    navParam(`/calendar/detail`, {
-      state: {
-        user_id: user_id,
-        calendar_date: clickDate,
-      },
-    });
   };
 
   // 4-1. view ------------------------------------------------------------------------------------>

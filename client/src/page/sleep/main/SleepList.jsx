@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -15,26 +14,28 @@ export const SleepList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toDetail:"/sleep/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -72,7 +73,8 @@ export const SleepList = () => {
   const SLEEP_DEFAULT = [{
     _id: "",
     sleep_number: 0,
-    sleep_date: "",
+    sleep_startDt: "",
+    sleep_endDt: "",
     sleep_section: [{
       sleep_night: "",
       sleep_morning: "",
@@ -82,14 +84,11 @@ export const SleepList = () => {
   const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -100,7 +99,7 @@ export const SleepList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
+  })()}, [user_id, DATE, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -123,13 +122,14 @@ export const SleepList = () => {
                     {sectionIndex === 0 && (
                       <td rowSpan={item.sleep_section.length > 3 ? 4 : item.sleep_section.length}
                       className={"pointer"} onClick={() => {
-                        STATE.id = item._id;
-                        STATE.date = item.sleep_date;
-                        navParam(STATE.toDetail, {
-                          state: STATE
+                        SEND.id = item._id;
+                        SEND.startDt = item.sleep_startDt;
+                        SEND.endDt = item.sleep_endDt;
+                        navParam(SEND.toDetail, {
+                          state: SEND
                         });
                       }}>
-                        {item.sleep_date}
+                        {item.sleep_startDt}
                       </td>
                     )}
                     <td>{section.sleep_night}</td>
@@ -182,7 +182,7 @@ export const SleepList = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        SEND={SEND} flowSave={""} navParam={navParam}
         type={"list"}
       />
     );

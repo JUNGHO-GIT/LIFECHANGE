@@ -1,14 +1,16 @@
 // useTime.jsx
 
-import {useEffect} from "react";
+import React, {useEffect} from "react";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const useTime = (
-  OBJECT, setOBJECT, DATE, setDATE, PATH, type
+  OBJECT, setOBJECT, PATH, type
 ) => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const strLow = PATH.match(/\/([^\/]+)\//)[1];
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -19,8 +21,8 @@ export const useTime = (
       const endTime = OBJECT?.work_end;
 
       if (startTime && endTime) {
-        const startDate = new Date(`${DATE.strDt}T${startTime}`);
-        const endDate = new Date(`${DATE.strDt}T${endTime}`);
+        const startDate = new Date(`${koreanDate}T${startTime}`);
+        const endDate = new Date(`${koreanDate}T${endTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -46,8 +48,8 @@ export const useTime = (
       const morningTime = OBJECT?.sleep_section[0]?.sleep_morning;
 
       if (nightTime && morningTime) {
-        const startDate = new Date(`${DATE.strDt}T${nightTime}`);
-        const endDate = new Date(`${DATE.strDt}T${morningTime}`);
+        const startDate = new Date(`${koreanDate}T${nightTime}`);
+        const endDate = new Date(`${koreanDate}T${morningTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -74,8 +76,8 @@ export const useTime = (
       const morningTime = OBJECT?.sleep_plan_morning;
 
       if (nightTime && morningTime) {
-        const startDate = new Date(`${DATE.strDt}T${nightTime}`);
-        const endDate = new Date(`${DATE.strDt}T${morningTime}`);
+        const startDate = new Date(`${koreanDate}T${nightTime}`);
+        const endDate = new Date(`${koreanDate}T${morningTime}`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -94,7 +96,6 @@ export const useTime = (
     }
   }, [
     strLow,
-    DATE?.strDt,
     type === "real" && strLow === "work" ? OBJECT?.work_start : "",
     type === "real" && strLow === "work" ? OBJECT?.work_end : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",

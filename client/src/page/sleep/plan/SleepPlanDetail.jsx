@@ -12,19 +12,20 @@ export const SleepPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id;
-  const location_startDt = location?.state?.startDt;
-  const location_endDt = location?.state?.endDt;
-  const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toList:"/sleep/plan/list",
       toSave:"/sleep/plan/save"
@@ -32,9 +33,8 @@ export const SleepPlanDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_startDt,
-      strEndDt: location_endDt,
-      strDt: "",
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -80,8 +80,8 @@ export const SleepPlanDetail = () => {
   };
   const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_PLAN_DEFAULT);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -89,7 +89,7 @@ export const SleepPlanDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setSLEEP_PLAN(response.data.result || SLEEP_PLAN_DEFAULT);
@@ -98,7 +98,7 @@ export const SleepPlanDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [location_id, user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -106,7 +106,7 @@ export const SleepPlanDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data === "success") {
@@ -114,7 +114,7 @@ export const SleepPlanDetail = () => {
         params: {
           _id: location_id,
           user_id: user_id,
-          sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+          sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       setSLEEP_PLAN(updatedData.data.result || SLEEP_PLAN_DEFAULT);
@@ -173,7 +173,7 @@ export const SleepPlanDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        SEND={SEND} flowSave={""} navParam={navParam}
         type={"detail"}
       />
     );

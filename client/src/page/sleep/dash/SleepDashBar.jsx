@@ -11,7 +11,6 @@ export const DashBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-2. useState -------------------------------------------------------------------------------->

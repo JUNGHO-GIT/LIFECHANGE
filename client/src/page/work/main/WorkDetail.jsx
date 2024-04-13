@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
@@ -11,18 +12,20 @@ export const WorkDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id;
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh:0,
       toList:"/work/list",
       toSave:"/work/save",
@@ -30,9 +33,8 @@ export const WorkDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -70,7 +72,8 @@ export const WorkDetail = () => {
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
     _id: "",
     work_number: 0,
-    work_date: "",
+    work_startDt: "",
+    work_endDt: "",
     work_start: "",
     work_end: "",
     work_time: "",
@@ -88,7 +91,8 @@ export const WorkDetail = () => {
   const [WORK, setWORK] = useState({
     _id: "",
     work_number: 0,
-    work_date: "",
+    work_startDt: "",
+    work_endDt: "",
     work_start: "",
     work_end: "",
     work_time: "",
@@ -104,13 +108,16 @@ export const WorkDetail = () => {
     }],
   });
 
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
+
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_WORK}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        work_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
 
@@ -121,7 +128,7 @@ export const WorkDetail = () => {
       sectionCnt: response.data.sectionCnt || 0
     }));
 
-  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [location_id, user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -129,14 +136,15 @@ export const WorkDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        work_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data === "success") {
       alert("delete success");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toDetail, {
-        state: STATE
+      SEND.startDt = DATE.startDt;
+      SEND.endDt = DATE.endDt;
+      navParam(SEND.toDetail, {
+        state: SEND
       });
     }
     else {
@@ -164,7 +172,7 @@ export const WorkDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {WORK.work_date}
+              {WORK.work_startDt}
             </td>
             <td className="fs-20 pt-20">
               {WORK.work_start}
@@ -204,7 +212,7 @@ export const WorkDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        SEND={SEND} flowSave={""} navParam={navParam}
         type={"detail"}
       />
     );

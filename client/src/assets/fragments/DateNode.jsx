@@ -11,11 +11,12 @@ export const DateNode = ({
 }) => {
 
   function calcDate (days) {
-    const date = new Date(DATE.strDt);
+    const date = new Date(DATE.startDt);
     date.setDate(date.getDate() + days);
     setDATE((prev) => ({
       ...prev,
-      strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+      startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+      endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
     }));
   };
 
@@ -29,12 +30,16 @@ export const DateNode = ({
           </div>
         ) : null}
 
-        <DatePicker dateFormat="yyyy-MM-dd" popperPlacement="bottom"
-          selected={new Date(DATE.strDt)} disabled={type === "save" ? false : true}
-          value={DATE.strDt} onChange={(date) => {
+        <DatePicker dateFormat="yyyy-MM-dd"
+          popperPlacement="bottom"
+          selected={new Date(DATE.startDt)}
+          disabled={type === "save" ? false : true}
+          value={DATE.startDt}
+          onChange={(date) => {
             setDATE((prev) => ({
               ...prev,
-              strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+              startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+              endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
             }));
           }}
         />

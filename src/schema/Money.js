@@ -13,7 +13,11 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  money_date: {
+  money_startDt: {
+    type: String,
+    required: false
+  },
+  money_endDt: {
     type: String,
     required: false
   },

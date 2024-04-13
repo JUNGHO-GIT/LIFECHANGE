@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  CALENDAR, setCALENDAR, DATE, setDATE, STATE, setSTATE, flowSave, navParam, type
+  CALENDAR, setCALENDAR, DATE, setDATE, SEND, flowSave, navParam, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -29,7 +29,8 @@ export const ButtonNode = ({
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
         setDATE((prev) => ({
           ...prev,
-          strDt: koreanDate,
+          startDt: koreanDate,
+          endDt: koreanDate,
         }));
         localStorage.clear();
       }}>
@@ -49,9 +50,10 @@ export const ButtonNode = ({
   function buttonUpdate () {
     return (
       <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
-        STATE.date = DATE.strDt;
-        navParam(STATE.toSave, {
-          state: STATE,
+        SEND.startDt = DATE.startDt;
+        SEND.endDt = DATE.endDt;
+        navParam(SEND.toSave, {
+          state: SEND,
         });
       }}>
         Update
@@ -61,7 +63,7 @@ export const ButtonNode = ({
   function buttonRefresh () {
     return (
       <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
-        navParam(STATE.refresh);
+        navParam(SEND.refresh);
       }}>
         Refresh
       </button>
@@ -70,9 +72,10 @@ export const ButtonNode = ({
   function buttonList () {
     return (
       <button type="button" className="btn btn-sm btn-secondary me-2" onClick={() => {
-        STATE.date = DATE.strDt;
-        navParam(STATE.toList, {
-          state: STATE,
+        SEND.startDt = DATE.startDt;
+        SEND.endDt = DATE.endDt;
+        navParam(SEND.toList, {
+          state: SEND,
         });
       }}>
         List

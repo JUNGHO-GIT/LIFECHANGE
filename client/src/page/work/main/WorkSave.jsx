@@ -3,8 +3,8 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {useTime} from "../../../assets/hooks/useTime.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {TimePicker} from "react-time-picker";
 import axios from "axios";
 import {workPartArray, workTitleArray} from "../../../assets/data/WorkArray.jsx";
@@ -16,26 +16,28 @@ export const WorkSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
-      refresh: 0,
+      startDt: "",
+      endDt: "",
+      refresh:0,
       toList:"/work/list"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -73,7 +75,8 @@ export const WorkSave = () => {
   const [WORK_DEFAULT, setWORK_DEFAULT] = useState({
     _id: "",
     work_number: 0,
-    work_date: "",
+    work_startDt: "",
+    work_endDt: "",
     work_start: "",
     work_end: "",
     work_time: "",
@@ -91,7 +94,8 @@ export const WorkSave = () => {
   const [WORK, setWORK] = useState({
     _id: "",
     work_number: 0,
-    work_date: "",
+    work_startDt: "",
+    work_endDt: "",
     work_start: "",
     work_end: "",
     work_time: "",
@@ -108,8 +112,8 @@ export const WorkSave = () => {
   });
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
-  useTime(WORK, setWORK, DATE, setDATE, PATH, "real");
+  useDate(location_startDt, location_endDt, DATE, setDATE);
+  useTime(WORK, setWORK, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -117,7 +121,7 @@ export const WorkSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        work_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setWORK(response.data.result || WORK_DEFAULT);
@@ -126,20 +130,21 @@ export const WorkSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_WORK}/save`, {
       user_id: user_id,
       WORK: WORK,
-      work_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+      work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
-        state: STATE
+      SEND.startDt = DATE.startDt;
+      SEND.endDt = DATE.endDt;
+      navParam(SEND.toList, {
+        state: SEND
       });
     }
     else {
@@ -452,7 +457,7 @@ export const WorkSave = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
+        SEND={SEND} flowSave={flowSave} navParam={navParam}
         type={"save"}
       />
     );

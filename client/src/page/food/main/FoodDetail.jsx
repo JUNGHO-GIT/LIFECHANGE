@@ -3,8 +3,8 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -12,18 +12,20 @@ export const FoodDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id;
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh:0,
       toList:"/food/list",
       toSave:"/food/save"
@@ -31,9 +33,8 @@ export const FoodDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -71,7 +72,8 @@ export const FoodDetail = () => {
   const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState({
     _id: "",
     food_number: 0,
-    food_date: "",
+    food_startDt: "",
+    food_endDt: "",
     food_total_kcal: "",
     food_total_fat: "",
     food_total_carb: "",
@@ -91,7 +93,8 @@ export const FoodDetail = () => {
   const [FOOD, setFOOD] = useState({
     _id: "",
     food_number: 0,
-    food_date: "",
+    food_startDt: "",
+    food_endDt: "",
     food_total_kcal: "",
     food_total_fat: "",
     food_total_carb: "",
@@ -115,7 +118,7 @@ export const FoodDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setFOOD(response.data.result || FOOD_DEFAULT);
@@ -124,7 +127,7 @@ export const FoodDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [location_id, user_id, DATE]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -173,8 +176,8 @@ export const FoodDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
-        type={"detail"}
+        SEND={SEND}
+        flowSave={""} navParam={navParam} type={"detail"}
       />
     );
   };

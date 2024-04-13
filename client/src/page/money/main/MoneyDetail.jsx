@@ -12,18 +12,20 @@ export const MoneyDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id.toString();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toDetail: "/money/detail",
       toList: "/money/list",
@@ -32,9 +34,8 @@ export const MoneyDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -72,7 +73,8 @@ export const MoneyDetail = () => {
   const MONEY_DEFAULT = {
     _id: "",
     money_number: 0,
-    money_date: "",
+    money_startDt: "",
+    money_endDt: "",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -84,8 +86,8 @@ export const MoneyDetail = () => {
   };
   const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -93,7 +95,7 @@ export const MoneyDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setMONEY(response.data.result || MONEY_DEFAULT);
@@ -102,7 +104,7 @@ export const MoneyDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [location_id, user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -110,7 +112,7 @@ export const MoneyDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data === "success") {
@@ -118,7 +120,7 @@ export const MoneyDetail = () => {
         params: {
           _id: location_id,
           user_id: user_id,
-          money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+          money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       setMONEY(updatedData.data.result || MONEY_DEFAULT);
@@ -149,7 +151,7 @@ export const MoneyDetail = () => {
             {index === 0 && (
               <React.Fragment>
                 <td className="fs-20 pt-20" rowSpan={MONEY?.money_section?.length}>
-                  {MONEY.money_date}
+                  {MONEY.money_startDt}
                 </td>
               </React.Fragment>
             )}
@@ -183,7 +185,7 @@ export const MoneyDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        SEND={SEND} flowSave={""} navParam={navParam}
         type={"detail"}
       />
     );

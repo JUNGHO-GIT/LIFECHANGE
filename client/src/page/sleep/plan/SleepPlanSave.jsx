@@ -3,13 +3,12 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {useTime} from "../../../assets/hooks/useTime.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import DatePicker from "react-datepicker";
 import {TimePicker} from "react-time-picker";
 import axios from "axios";
 import moment from "moment-timezone";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -17,26 +16,28 @@ export const SleepPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toList:"/sleep/plan/list"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -83,8 +84,8 @@ export const SleepPlanSave = () => {
   const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
-  useTime(SLEEP_PLAN, setSLEEP_PLAN, DATE, setDATE, PATH, "plan");
+  useDate(location_startDt, location_endDt, DATE, setDATE);
+  useTime(SLEEP_PLAN, setSLEEP_PLAN, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -92,7 +93,7 @@ export const SleepPlanSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setSLEEP_PLAN(response.data.result || SLEEP_PLAN_DEFAULT);
@@ -101,20 +102,21 @@ export const SleepPlanSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_SLEEP_PLAN}/save`, {
       user_id: user_id,
       SLEEP_PLAN: SLEEP_PLAN,
-      sleep_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+      sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
-        state: STATE
+      SEND.startDt = DATE.startDt;
+      SEND.endDt = DATE.endDt;
+      navParam(SEND.toList, {
+        state: SEND
       });
     }
     else {
@@ -136,16 +138,16 @@ export const SleepPlanSave = () => {
                 dateFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
                 className="form-control"
-                selected={new Date(DATE.strDt)}
+                selected={new Date(DATE.startDt)}
                 disabled={false}
                 onChange={(date) => {
                   setDATE((prev) => ({
                     ...prev,
-                    strDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+                    startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                    endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
                   }));
                 }}
-              >
-              </DatePicker>
+              ></DatePicker>
             </div>
           </div>
         </div>
@@ -235,7 +237,7 @@ export const SleepPlanSave = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
+        SEND={SEND} flowSave={flowSave} navParam={navParam}
         type={"save"}
       />
     );

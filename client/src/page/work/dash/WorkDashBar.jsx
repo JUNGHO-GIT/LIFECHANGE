@@ -2,7 +2,6 @@
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Bar, Line, ComposedChart} from 'recharts';
@@ -12,8 +11,8 @@ export const DashBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const location = useLocation();
   const PATH = location.pathname;
 
   // 2-2. useState -------------------------------------------------------------------------------->

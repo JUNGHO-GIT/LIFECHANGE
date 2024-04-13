@@ -31,12 +31,6 @@ export const Dash = () => {
   const flowDayClick = (day) => {
     const clickDate = moment(day).format("YYYY-MM-DD");
     setDashDay(day);
-    navParam(`/calendar/detail`, {
-      state: {
-        user_id: user_id,
-        calendar_date: clickDate,
-      },
-    });
   };
 
   // 4-1. view ------------------------------------------------------------------------------------>

@@ -12,18 +12,20 @@ export const SleepDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id;
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname;
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toDetail:"/sleep/detail",
       toList:"/sleep/list",
@@ -32,9 +34,8 @@ export const SleepDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -72,7 +73,8 @@ export const SleepDetail = () => {
   const SLEEP_DEFAULT = {
     _id: "",
     sleep_number: 0,
-    sleep_date: "",
+    sleep_startDt: "",
+    sleep_endDt: "",
     sleep_section: [{
       sleep_night: "",
       sleep_morning: "",
@@ -81,8 +83,8 @@ export const SleepDetail = () => {
   };
   const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -90,7 +92,7 @@ export const SleepDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setSLEEP(response.data.result || SLEEP_DEFAULT);
@@ -98,7 +100,7 @@ export const SleepDetail = () => {
       ...prev,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [location_id, user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -106,7 +108,7 @@ export const SleepDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data === "success") {
@@ -114,7 +116,7 @@ export const SleepDetail = () => {
         params: {
           _id: location_id,
           user_id: user_id,
-          sleep_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+          sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
@@ -141,7 +143,7 @@ export const SleepDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {SLEEP.sleep_date}
+              {SLEEP.sleep_startDt}
             </td>
             {SLEEP?.sleep_section?.map((item, index) => (
               <React.Fragment key={index}>
@@ -173,8 +175,7 @@ export const SleepDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
-        type={"detail"}
+        SEND={SEND} flowSave={""} navParam={navParam} type={"detail"}
       />
     );
   };

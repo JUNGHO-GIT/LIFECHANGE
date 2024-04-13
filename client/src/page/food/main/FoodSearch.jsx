@@ -11,26 +11,30 @@ export const FoodSearch = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const user_id = window.sessionStorage.getItem("user_id");
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
       date: koreanDate,
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toSave:"/food/save",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -113,9 +117,10 @@ export const FoodSearch = () => {
   const tableNode = () => {
     function handleStorage (param) {
       localStorage.setItem("food_section", JSON.stringify(param));
-      STATE.date = koreanDate;
-      navParam(STATE.toSave, {
-        state: STATE
+      SEND.startDt = DATE.startDt;
+      SEND.endDt = DATE.endDt;
+      navParam(SEND.toSave, {
+        state: SEND
       });
     };
     return (

@@ -12,18 +12,20 @@ export const MoneyPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id.toString();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toDetail: "/money/detail",
       toList: "/money/list",
@@ -32,9 +34,8 @@ export const MoneyPlanDetail = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: "",
-      strEndDt: "",
-      strDt: "",
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -79,8 +80,8 @@ export const MoneyPlanDetail = () => {
   };
   const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -88,7 +89,7 @@ export const MoneyPlanDetail = () => {
       params: {
         _id: location_id,
         user_id: user_id,
-        money_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setMONEY_PLAN(response.data.result || MONEY_PLAN_DEFAULT);
@@ -97,7 +98,7 @@ export const MoneyPlanDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [location_id, user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
@@ -105,7 +106,7 @@ export const MoneyPlanDetail = () => {
       params: {
         _id: id,
         user_id: user_id,
-        money_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data === "success") {
@@ -113,7 +114,7 @@ export const MoneyPlanDetail = () => {
         params: {
           _id: location_id,
           user_id: user_id,
-          money_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+          money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       setMONEY_PLAN(updatedData.data.result || MONEY_PLAN_DEFAULT);
@@ -168,7 +169,7 @@ export const MoneyPlanDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        SEND={SEND} flowSave={""} navParam={navParam}
         type={"detail"}
       />
     );

@@ -1,4 +1,4 @@
-// CalendarDetail.jsx
+// DashDetail.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -10,7 +10,7 @@ import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const CalendarDetail = () => {
+export const DashDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Calendar Detail";
@@ -55,11 +55,6 @@ export const CalendarDetail = () => {
       setResDur(`${viewDate} ~ ${viewDate}`);
     }
   }, [calendarDay]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setCalendarDay(parseISO(location.state.calendar_date));
-  }, [location.state.calendar_date]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

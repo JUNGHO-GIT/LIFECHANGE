@@ -13,7 +13,11 @@ const schema = new mongoose.Schema({
     type : Number,
     unique : true
   },
-  sleep_date: {
+  sleep_startDt: {
+    type: String,
+    required: false
+  },
+  sleep_endDt: {
     type: String,
     required: false
   },

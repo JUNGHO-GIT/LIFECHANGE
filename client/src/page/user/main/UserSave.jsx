@@ -41,7 +41,7 @@ export const UserSave = () => {
         navParam("/user/login");
       }
       else if (response.data === "duplicate") {
-        alert("This ID already exists");
+        alert("This location_id already exists");
         setUserId("");
         setUserPw("");
       }
@@ -68,11 +68,11 @@ export const UserSave = () => {
         <div className="form-floating">
           <input type="text"
             className="form-control"
-            placeholder="ID"
+            placeholder="location_id"
             value={user_id}
             onChange={(e) => {setUserId(e.target.value);}}
           />
-          <label htmlFor="floatingId">ID</label>
+          <label htmlFor="floatingId">location_id</label>
         </div>
         <div className="form-floating">
           <input

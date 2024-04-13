@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {useTime} from "../../../assets/hooks/useTime.jsx";
 import axios from "axios";
 import {moneyArray} from "../../../assets/data/MoneyArray.jsx";
@@ -15,26 +14,28 @@ export const MoneySave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toList:"/money/list"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -72,7 +73,8 @@ export const MoneySave = () => {
   const MONEY_DEFAULT = {
     _id: "",
     money_number: 0,
-    money_date: "",
+    money_startDt: "",
+    money_endDt: "",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "",
@@ -83,10 +85,7 @@ export const MoneySave = () => {
     }]
   };
   const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
-  useTime(MONEY, setMONEY, DATE, setDATE, PATH, "real");
+  useTime(MONEY, setMONEY, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -94,7 +93,7 @@ export const MoneySave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setMONEY(response.data.result || MONEY_DEFAULT);
@@ -103,20 +102,21 @@ export const MoneySave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]);
+  })()}, [user_id, DATE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_MONEY}/save`, {
       user_id: user_id,
       MONEY: MONEY,
-      money_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+      money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
-        state: STATE
+      SEND.startDt = DATE.startDt;
+      SEND.endDt = DATE.endDt;
+      navParam(SEND.toList, {
+        state: SEND
       });
     }
     else {
@@ -330,7 +330,7 @@ export const MoneySave = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={flowSave} navParam={navParam}
+        SEND={SEND} flowSave={flowSave} navParam={navParam}
         type={"save"}
       />
     );

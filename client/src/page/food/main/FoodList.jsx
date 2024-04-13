@@ -3,9 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import moment from "moment-timezone";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../../assets/fragments/FilterNode.jsx";
@@ -16,26 +14,28 @@ export const FoodList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh: 0,
       toDetail:"/food/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -73,7 +73,8 @@ export const FoodList = () => {
   const [FOOD_DEFAULT, setFOOD_DEFAULT] = useState([{
     _id: "",
     food_number: 0,
-    food_date: "",
+    food_startDt: "",
+    food_endDt: "",
     food_total_kcal: "",
     food_total_fat: "",
     food_total_carb: "",
@@ -93,7 +94,8 @@ export const FoodList = () => {
   const [FOOD, setFOOD] = useState([{
     _id: "",
     food_number: 0,
-    food_date: "",
+    food_startDt: "",
+    food_endDt: "",
     food_total_kcal: "",
     food_total_fat: "",
     food_total_carb: "",
@@ -116,7 +118,7 @@ export const FoodList = () => {
     const response = await axios.get(`${URL_FOOD}/list`, {
       params: {
         user_id: user_id,
-        food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -127,7 +129,7 @@ export const FoodList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
+  })()}, [user_id, DATE, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -154,13 +156,14 @@ export const FoodList = () => {
               {item?.food_section.map((section, index) => (
                 <tr key={section._id}>
                   <td className="pointer" onClick={() => {
-                    STATE.id = item._id;
-                    STATE.date = item.food_date;
-                    navParam(STATE.toDetail, {
-                      state: STATE
+                    SEND.id = item._id;
+                    SEND.startDt = item.food_startDt;
+                    SEND.endDt = item.food_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
                     });
                   }}>
-                    {item.food_date}
+                    {item.food_startDt}
                   </td>
                   <td>{section.food_part}</td>
                   <td>{section.food_title}</td>
@@ -218,9 +221,9 @@ export const FoodList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-        DATE={DATE} setDATE={setDATE} STATE={STATE} setSTATE={setSTATE}
-        flowSave={""} navParam={navParam} type={"list"}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        SEND={SEND} flowSave={""} navParam={navParam}
+        type={"list"}
       />
     );
   };

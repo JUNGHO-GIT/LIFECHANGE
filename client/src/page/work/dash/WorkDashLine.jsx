@@ -12,8 +12,8 @@ export const DashLine = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
-  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const location = useLocation();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->

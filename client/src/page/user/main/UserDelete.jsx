@@ -88,12 +88,12 @@ export const UserDelete = () => {
         <div className="form-floating">
           <input type="text"
             className="form-control"
-            placeholder="User ID"
+            placeholder="User location_id"
             value={user_id}
             onChange={(e) => setUserId(e.target.value)}
             readOnly
           />
-          <label htmlFor="user_id">User ID</label>
+          <label htmlFor="user_id">User location_id</label>
         </div>
         <div className="form-floating">
           <input type="text"

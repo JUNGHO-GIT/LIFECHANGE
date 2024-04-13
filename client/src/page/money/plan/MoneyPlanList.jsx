@@ -14,26 +14,28 @@ export const MoneyPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
-      refresh:0,
+      startDt: "",
+      endDt: "",
+      refresh: 0,
       toDetail:"/money/plan/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -83,7 +85,7 @@ export const MoneyPlanList = () => {
     const response = await axios.get(`${URL_MONEY_PLAN}/list`, {
       params: {
         user_id: user_id,
-        money_plan_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
@@ -94,7 +96,7 @@ export const MoneyPlanList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt, FILTER, PAGING]);
+  })()}, [user_id, DATE, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -113,10 +115,11 @@ export const MoneyPlanList = () => {
             <React.Fragment key={item._id}>
               <tr>
                 <td className="pointer" onClick={() => {
-                  STATE.id = item._id;
-                  STATE.date = item.money_plan_startDt;
-                  navParam(STATE.toDetail, {
-                    state: STATE
+                  SEND.id = item._id;
+                  SEND.startDt = item.money_plan_startDt;
+                  SEND.endDt = item.money_plan_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
                   });
                 }}>
                   {item.money_plan_startDt}
@@ -162,7 +165,7 @@ export const MoneyPlanList = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE} flowSave={""} navParam={navParam}
+        SEND={SEND} flowSave={""} navParam={navParam}
         type={"list"}
       />
     );

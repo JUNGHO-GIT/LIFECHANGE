@@ -13,7 +13,11 @@ const schema = new mongoose.Schema({
     type : String,
     unique : true
   },
-  food_date: {
+  food_startDt: {
+    type: String,
+    required: false
+  },
+  food_endDt: {
     type: String,
     required: false
   },

@@ -133,12 +133,16 @@ export const list = async (
 
   const findResult = await Food.find({
     user_id: user_id_param,
-    food_date: {
+    food_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    food_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
   })
-  .sort({ food_date: sort })
+  .sort({food_startDt: sort})
   .lean();
 
   let totalCnt = 0;
@@ -179,12 +183,16 @@ export const detail = async (
   const finalResult = await Food.findOne({
     _id: _id_param === "" ? {$exists: true} : _id_param,
     user_id: user_id_param,
-    food_date: {
+    food_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    food_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   const sectionCnt = finalResult?.food_section?.length || 0;
 
@@ -205,19 +213,24 @@ export const save = async (
 
   const findResult = await Food.findOne({
     user_id: user_id_param,
-    food_date: {
+    food_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    food_endDt: {
       $gte: startDay,
       $lte: endDay,
     },
   })
-    .lean();
+  .lean();
 
   let finalResult;
   if (!findResult) {
     const createQuery = {
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      food_date: startDay,
+      food_startDt: startDay,
+      food_endDt: endDay,
       food_section: FOOD_param.food_section,
       food_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
       food_update: "",
@@ -255,7 +268,11 @@ export const deletes = async (
   const updateResult = await Food.updateOne(
     {
       user_id: user_id_param,
-      food_date: {
+      food_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+        food_endDt: {
         $gte: startDay,
         $lte: endDay,
       },
@@ -281,7 +298,11 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await Food.findOne({
       user_id: user_id_param,
-      food_date: {
+      food_startDt: {
+        $gte: startDay,
+        $lte: endDay,
+      },
+        food_endDt: {
         $gte: startDay,
         $lte: endDay,
       },

@@ -1,32 +1,20 @@
 // useDate.jsx
 
-// 1. compare = X
-// 2. list = X
+// list 사용금지
 
-// 3. detail = O
-// 4. save = O
-
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 
 // ------------------------------------------------------------------------------------------------>
-export const useDate  = (
-  DATE, setDATE, location_date
+export const useDate = (
+  location_startDt, location_endDt, DATE, setDATE
 ) => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setDATE((prev) => ({
       ...prev,
-      strDt: location_date
+      startDt: location_startDt,
+      endDt: location_endDt,
     }));
-  }, [location_date]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setDATE((prev) => ({
-      ...prev,
-      strStartDt: DATE.strDt,
-      strEndDt: DATE.strDt
-    }));
-  }, [DATE.strDt]);
+  }, [location_startDt, location_endDt]);
 };

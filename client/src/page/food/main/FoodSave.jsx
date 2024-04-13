@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {useTime} from "../../../assets/hooks/useTime.jsx";
 import axios from "axios";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
@@ -14,17 +13,20 @@ export const FoodSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_date = location?.state?.date;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:STATE, set:setSTATE} = useStorage(
-    `STATE(${PATH})`, {
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
       id: "",
-      date: "",
+      startDt: "",
+      endDt: "",
       refresh:0,
       toList:"/food/list",
       toSave:"/food/save",
@@ -33,9 +35,8 @@ export const FoodSave = () => {
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      strStartDt: location_date,
-      strEndDt: location_date,
-      strDt: location_date,
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
@@ -74,7 +75,8 @@ export const FoodSave = () => {
     `FOOD_DEFAULT(${PATH})`, {
       _id: "",
       food_number: 0,
-      food_date: "",
+      food_startDt: "",
+      food_endDt: "",
       food_total_kcal: "",
       food_total_fat: "",
       food_total_carb: "",
@@ -96,7 +98,8 @@ export const FoodSave = () => {
     `FOOD(${PATH})`, {
       _id: "",
       food_number: 0,
-      food_date: "",
+      food_startDt: "",
+      food_endDt: "",
       food_total_kcal: "",
       food_total_fat: "",
       food_total_carb: "",
@@ -114,10 +117,7 @@ export const FoodSave = () => {
       }],
     }
   );
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useDate(DATE, setDATE, location_date);
-  useTime(FOOD, setFOOD, DATE, setDATE, PATH, "real");
+  useTime(FOOD, setFOOD, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   /* useEffect(() => {(async () => {
@@ -125,7 +125,7 @@ export const FoodSave = () => {
       params: {
         _id: "",
         user_id: user_id,
-        food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setFOOD(response.data.result || FOOD_DEFAULT);
@@ -134,7 +134,7 @@ export const FoodSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.strStartDt, DATE.strEndDt]); */
+  })()}, [user_id, DATE]); */
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -207,13 +207,14 @@ export const FoodSave = () => {
     const response = await axios.post(`${URL_FOOD}/save`, {
       user_id: user_id,
       FOOD: FOOD,
-      food_dur: `${DATE.strStartDt} ~ ${DATE.strEndDt}`,
+      food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data === "success") {
       alert("Save successfully");
-      STATE.date = DATE.strDt;
-      navParam(STATE.toList, {
-        state: STATE
+      SEND.startDt = DATE.startDt;
+      SEND.endDt = DATE.endDt;
+      navParam(SEND.toList, {
+        state: SEND
       });
     }
     else {
@@ -369,10 +370,8 @@ export const FoodSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-        DATE={DATE} setDATE={setDATE}
-        STATE={STATE} setSTATE={setSTATE}
-        flowSave={flowSave} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        SEND={SEND} flowSave={flowSave} navParam={navParam}
         type={"save"}
       />
     );

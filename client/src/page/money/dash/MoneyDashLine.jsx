@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Line, LineChart} from "recharts";
@@ -32,6 +33,9 @@ export const DashLine = () => {
     {name:"일", 취침: 0, 수면: 0, 기상: 0}
   ];
   const [DASH, setDASH] = useState(DASH_DEFAULT);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
