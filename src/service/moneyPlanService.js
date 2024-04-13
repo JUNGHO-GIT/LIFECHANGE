@@ -54,10 +54,10 @@ export const compare = async (
   const totalCnt = await MoneyPlan.countDocuments({
     user_id: user_id_param,
     money_plan_startDt: {
-      $lte: endDayPlan,
+      $gte: startDayReal
     },
     money_plan_endDt: {
-      $gte: startDayPlan,
+      $lte: endDayReal
     },
   })
   .lean();
@@ -111,10 +111,10 @@ export const list = async (
   const findResult = await MoneyPlan.find({
     user_id: user_id_param,
     money_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     money_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   })
   .sort({money_plan_startDt: sort})
@@ -125,10 +125,10 @@ export const list = async (
   const totalCnt = await MoneyPlan.countDocuments({
     user_id: user_id_param,
     money_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     money_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   });
 

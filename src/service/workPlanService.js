@@ -40,10 +40,10 @@ export const compare = async (
   const findResultPlan = await WorkPlan.find({
     user_id: user_id_param,
     work_plan_startDt: {
-      $lte: endDayPlan,
+      $gte: startDayPlan,
     },
     work_plan_endDt: {
-      $gte: startDayPlan,
+      $lte: endDayPlan,
     },
   })
   .sort({work_plan_startDt: sort})
@@ -54,10 +54,10 @@ export const compare = async (
   const totalCnt = await WorkPlan.countDocuments({
     user_id: user_id_param,
     money_plan_startDt: {
-      $lte: endDayPlan,
+      $gte: startDayReal
     },
     money_plan_endDt: {
-      $gte: startDayPlan,
+      $lte: endDayReal
     },
   });
 
@@ -120,10 +120,10 @@ export const list = async (
   const findResult = await WorkPlan.find({
     user_id: user_id_param,
     work_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     work_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   })
   .sort({work_plan_startDt: sort})
@@ -134,10 +134,10 @@ export const list = async (
   const totalCnt = await WorkPlan.countDocuments({
     user_id: user_id_param,
     work_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     work_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   });
 
@@ -231,10 +231,10 @@ export const deletes = async (
       _id: _id_param,
       user_id: user_id_param,
       work_plan_startDt: {
-        $lte: endDay,
+        $gte: startDay,
       },
       work_plan_endDt: {
-        $gte: startDay,
+        $lte: endDay,
       },
     },
     {

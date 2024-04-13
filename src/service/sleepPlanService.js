@@ -40,10 +40,10 @@ export const compare = async (
   const findResultPlan = await SleepPlan.find({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $lte: endDayPlan,
+      $gte: startDayPlan,
     },
     sleep_plan_endDt: {
-      $gte: startDayPlan,
+      $lte: endDayPlan,
     },
   })
   .sort({sleep_plan_startDt: sort})
@@ -54,12 +54,10 @@ export const compare = async (
   const totalCnt = await SleepPlan.countDocuments({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $gte: startDayReal,
-      $lte: endDayReal,
+      $gte: startDayReal
     },
     sleep_plan_endDt: {
-      $gte: startDayReal,
-      $lte: endDayReal,
+      $lte: endDayReal
     }
   });
 
@@ -111,10 +109,10 @@ export const list = async (
   const findResult = await SleepPlan.find({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     sleep_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   })
   .sort({sleep_plan_startDt: sort})
@@ -125,10 +123,10 @@ export const list = async (
   const totalCnt = await SleepPlan.countDocuments({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     sleep_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   });
 

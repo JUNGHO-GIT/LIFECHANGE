@@ -21,10 +21,10 @@ export const list = async (
   const findResult = await UserPlan.find({
     user_id: user_id_param,
     user_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     user_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   })
   .sort({user_plan_startDt: sort})
@@ -35,10 +35,10 @@ export const list = async (
   const totalCnt = await UserPlan.countDocuments({
     user_id: user_id_param,
     user_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     user_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   });
 
@@ -61,10 +61,10 @@ export const detail = async (
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
     user_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     user_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     }
   })
   .lean();
@@ -91,7 +91,7 @@ export const save = async (
       $lte: endDay,
     },
     user_plan_endDt: {
-      $gte: startDay,
+      $lte: startDay,
     }
   })
   .lean();

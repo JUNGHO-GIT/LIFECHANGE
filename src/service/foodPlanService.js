@@ -40,10 +40,10 @@ export const compare = async (
   const findResultPlan = await FoodPlan.find({
     user_id: user_id_param,
     food_plan_startDt: {
-      $lte: endDayPlan,
+      $gte: startDayPlan,
     },
     food_plan_endDt: {
-      $gte: startDayPlan,
+      $lte: endDayPlan,
     },
   })
   .sort({food_plan_startDt: sort})
@@ -54,10 +54,10 @@ export const compare = async (
   const totalCnt = await FoodPlan.countDocuments({
     user_id: user_id_param,
     food_plan_startDt: {
-      $lte: endDayPlan,
+      $gte: startDayReal
     },
     food_plan_endDt: {
-      $gte: startDayPlan,
+      $lte: endDayReal
     },
   });
 
@@ -114,10 +114,10 @@ export const list = async (
   const findResult = await FoodPlan.find({
     user_id: user_id_param,
     food_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     food_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   })
   .sort({food_plan_startDt: sort})
@@ -128,10 +128,10 @@ export const list = async (
   const totalCnt = await FoodPlan.countDocuments({
     user_id: user_id_param,
     food_plan_startDt: {
-      $lte: endDay,
+      $gte: startDay,
     },
     food_plan_endDt: {
-      $gte: startDay,
+      $lte: endDay,
     },
   });
 
