@@ -177,7 +177,6 @@ export const FilterNode = ({
         {selectType()}
         {selectOrder()}
         {selectLimit()}
-        {selectPartFood()}
       </div>
     ) : part === "money" && plan === "" ? (
       <div className="d-inline-flex">

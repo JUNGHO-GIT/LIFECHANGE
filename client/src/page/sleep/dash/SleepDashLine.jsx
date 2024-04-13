@@ -1,4 +1,4 @@
-// DashLine.jsx
+// SleepDashLine.jsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -8,7 +8,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {Line, LineChart} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const DashLine = () => {
+export const SleepDashLine = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;

@@ -23,7 +23,7 @@ sleepRouter.get("/dashBar", async (req, res) => {
   }
 });
 
-// 0-2. dash (line) ------------------------------------------------------------------------------->
+// 0-3. dash (line) ------------------------------------------------------------------------------->
 sleepRouter.get("/dashLine", async (req, res) => {
   try {
     const result = await service.dashLine (
@@ -42,7 +42,7 @@ sleepRouter.get("/dashLine", async (req, res) => {
   }
 });
 
-// 0-3. dash (avg - week) ------------------------------------------------------------------------->
+// 0-4. dash (avg - week) ------------------------------------------------------------------------->
 sleepRouter.get("/dashAvgWeek", async (req, res) => {
   try {
     const result = await service.dashAvgWeek (

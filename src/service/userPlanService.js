@@ -138,10 +138,10 @@ export const deletes = async (
       _id: _id_param,
       user_id: user_id_param,
       user_plan_startDt: {
-        $lte: endDay,
+        $gte: startDay,
       },
       user_plan_endDt: {
-        $gte: startDay,
+        $lte: endDay,
       },
     },
     {

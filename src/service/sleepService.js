@@ -33,20 +33,20 @@ export const dashBar = async (
     const findResultPlan = await SleepPlan.findOne({
       user_id: user_id_param,
       sleep_plan_startDt: {
-        $lte: koreanDate
+        $gte: koreanDate
       },
       sleep_plan_endDt: {
-        $gte: koreanDate
+        $lte: koreanDate
       }
     })
     .lean();
     const findResultReal = await Sleep.findOne({
       user_id: user_id_param,
       sleep_startDt: {
-        $lte: koreanDate
+        $gte: koreanDate
       },
       sleep_endDt: {
-        $gte: koreanDate
+        $lte: koreanDate
       }
     })
     .lean();
@@ -67,7 +67,7 @@ export const dashBar = async (
   };
 };
 
-// 0-2. dash (line) ------------------------------------------------------------------------------->
+// 0-3. dash (line) ------------------------------------------------------------------------------->
 export const dashLine = async (
   user_id_param
 ) => {
@@ -115,7 +115,7 @@ export const dashLine = async (
   };
 };
 
-// 0-3. dash (avg-week) --------------------------------------------------------------------------->
+// 0-4. dash (avg-week) --------------------------------------------------------------------------->
 export const dashAvgWeek = async (
   user_id_param
 ) => {
@@ -139,27 +139,35 @@ export const dashAvgWeek = async (
     }
   };
 
-  for (let day in names) {
-    const findResult = await Sleep.findOne({
-      user_id: user_id_param,
-      sleep_startDt : moment().tz("Asia/Seoul").startOf("isoWeek").add(day, "days").format("YYYY-MM-DD"),
-      sleep_endDt : moment().tz("Asia/Seoul").startOf("isoWeek").add(day, "days").format("YYYY-MM-DD"),
-    })
-    .lean();
+  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
 
-    if (findResult) {
+  for (
+    let w = currentMonthStart.clone();
+    w.isBefore(currentMonthEnd);
+    w.add(1, "days")
+  ) {
+    const weekNum = w.week() - currentMonthStart.week() + 1;
 
-      const weekNum = Math.max(moment(findResult.sleep_startDt).week() - moment(findResult.sleep_startDt).startOf("month").week() + 1);
-      sumSleepStart[weekNum - 1] += fmtData(
-        findResult?.sleep_section?.map((item) => (item.sleep_night)).join(":")
-      );
-      sumSleepEnd[weekNum - 1] += fmtData(
-        findResult?.sleep_section?.map((item) => (item.sleep_morning)).join(":")
-      );
-      sumSleepTime[weekNum - 1] += fmtData(
-        findResult?.sleep_section?.map((item) => (item.sleep_time)).join(":")
-      );
-      countRecords[weekNum - 1]++;
+    if (weekNum >= 1 && weekNum <= 5) {
+      const findResult = await Sleep.findOne({
+        user_id: user_id_param,
+        sleep_startDt: w.format("YYYY-MM-DD"),
+        sleep_endDt: w.format("YYYY-MM-DD"),
+      }).lean();
+
+      if (findResult) {
+        sumSleepStart[weekNum - 1] += fmtData(
+          findResult?.sleep_section?.map((item) => (item.sleep_night)).join(":")
+        );
+        sumSleepEnd[weekNum - 1] += fmtData(
+          findResult?.sleep_section?.map((item) => (item.sleep_morning)).join(":")
+        );
+        sumSleepTime[weekNum - 1] += fmtData(
+          findResult?.sleep_section?.map((item) => (item.sleep_time)).join(":")
+        );
+        countRecords[weekNum - 1]++;
+      }
     }
   };
 
@@ -202,11 +210,16 @@ export const dashAvgMonth = async (
     }
   };
 
+  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+
   for (
-    let m = moment(moment().tz("Asia/Seoul").startOf("year"));
-    m.isBefore(moment().tz("Asia/Seoul").endOf("year"));
+    let m = currentMonthStart.clone();
+    m.isBefore(currentMonthEnd);
     m.add(1, "days")
   ) {
+    const monthNum = m.month();
+
     const findResult = await Sleep.findOne({
       user_id: user_id_param,
       sleep_startDt: m.format("YYYY-MM-DD"),
@@ -215,7 +228,6 @@ export const dashAvgMonth = async (
     .lean();
 
     if (findResult) {
-      const monthNum = m.month();
       sumSleepStart[monthNum] += fmtData(
         findResult?.sleep_section?.map((item) => (item.sleep_night)).join(":")
       );

@@ -104,6 +104,12 @@ export const FoodSave = () => {
 
   // 2-3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {
+
+    // 스토리지 데이터 가져오기
+    const getItem = localStorage.getItem("food_section");
+    let storageSection = getItem ? JSON.parse(getItem) : null;
+
+    // 상세 데이터 가져오기
     const fetchDetail = async () => {
       const response = await axios.get(`${URL_FOOD}/detail`, {
         params: {
@@ -114,11 +120,41 @@ export const FoodSave = () => {
       });
 
       // 결과 있는경우 FOOD 상태 업데이트
-      if (response.data.result) {
+      if (response.data.result !== null && !storageSection) {
         setFOOD((prev) => ({
           ...prev,
           ...response.data.result,
         }));
+      }
+
+      // 결과가 null or !null 이면서 스토리지 데이터가 있는 경우, FOOD 상태 업데이트
+      else if (
+        (response.data.result !== null && storageSection) ||
+        (response.data.result === null && storageSection)
+      ) {
+        if (storageSection) {
+          setFOOD((prev) => {
+            let newFoodSection = [...prev.food_section];
+
+            // 첫 번째 항목이 빈 값 객체인지 확인하고, 조건에 맞으면 제거
+            if (
+              newFoodSection.length > 0 &&
+              Object.values(newFoodSection[0]).every((value) => (value === ""))
+            ) {
+              newFoodSection.shift();
+            }
+
+            // 새로운 데이터가 배열인 경우 배열, 단일 객체인 경우 단일 객체를 추가
+            Array.isArray(storageSection)
+            ? newFoodSection.push(...storageSection)
+            : newFoodSection.push(storageSection);
+
+            return {
+              ...prev,
+              food_section: newFoodSection,
+            };
+          })
+        }
       }
 
       // 결과가 null 일 경우, FOOD 상태를 명시적으로 초기화
@@ -131,21 +167,10 @@ export const FoodSave = () => {
         totalCnt: response.data.totalCnt || 0,
         sectionCnt: response.data.sectionCnt || 0
       }));
-
-      const getItem = localStorage.getItem("food_section");
-      let storageSection = getItem ? JSON.parse(getItem) : null;
-
-      // localStorage에 저장된 데이터가 있는 경우, FOOD 상태 업데이트
-      if (storageSection) {
-        setFOOD((prev) => ({
-          ...prev,
-          food_section: [...prev.food_section, storageSection],
-        }));
-        localStorage.removeItem("food_section");
-      }
     };
+
     fetchDetail();
-  }, [user_id, DATE.startDt, DATE.endDt, URL_FOOD]);
+  }, [user_id, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

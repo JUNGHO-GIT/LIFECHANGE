@@ -1,25 +1,24 @@
-// Dash.tsx
+// FoodDashAvg.tsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {BarChart, Bar} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const DashAvg = () => {
+export const FoodDashAvg = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeAvg, set:setActiveAvg} = useStorage(
-    `activeAvg(${PATH})`, ["취침", "수면", "기상"]
+    `activeAvg(${PATH})`, ["칼로리", "단백질", "지방", "탄수화물"]
   );
   const {val:activeType, set:setActiveType} = useStorage(
     `activeType(${PATH})`, "week"
@@ -27,38 +26,38 @@ export const DashAvg = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [DASH_WEEK, setDASH_WEEK] = useState([
-    {name:"1주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"2주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"3주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"4주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"5주차", 취침: 0, 수면: 0, 기상: 0}
+    {name:"1주차", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"2주차", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"3주차", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"4주차", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"5주차", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0}
   ]);
   const [DASH_MONTH, setDASH_MONTH] = useState([
-    {name:"1월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"2월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"3월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"4월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"5월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"6월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"7월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"8월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"9월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"10월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"11월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"12월", 취침: 0, 수면: 0, 기상: 0}
+    {name:"1월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"2월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"3월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"4월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"5월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"6월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"7월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"8월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"9월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"10월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"11월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+    {name:"12월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0}
   ]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const responseWeek = await axios.get(`${URL_SLEEP}/dashAvgWeek`, {
+    const responseWeek = await axios.get(`${URL_FOOD}/dashAvgWeek`, {
       params: {
         user_id: user_id
       },
     });
     setDASH_WEEK(responseWeek.data.result);
 
-    const responseMonth = await axios.get(`${URL_SLEEP}/dashAvgMonth`, {
+    const responseMonth = await axios.get(`${URL_FOOD}/dashAvgMonth`, {
       params: {
         user_id: user_id
       },
@@ -67,8 +66,35 @@ export const DashAvg = () => {
 
   })()}, [user_id]);
 
+  // 4. handler ----------------------------------------------------------------------------------->
+  const handlerCalcY = (value) => {
+    const ticks = [];
+    const maxValue = Math.max(...value?.map((item) => Math.max(item.수입, item.지출)));
+    let topValue = Math.ceil(maxValue / 100000) * 100000;
+
+    // topValue에 따른 동적 틱 간격 설정
+    let tickInterval = 100000;
+    if (topValue > 5000000) {
+      tickInterval = 1000000;
+    }
+    else if (topValue > 1000000) {
+      tickInterval = 500000;
+    }
+    for (let i = 0; i <= topValue; i += tickInterval) {
+      ticks.push(i);
+    }
+    return {
+      domain: [0, topValue],
+      ticks: ticks,
+      tickFormatter: (tick) => (`${Number((tick / 1000000).toFixed(1))}M`)
+    };
+  };
+
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartSleepAvgWeek = () => {
+  const chartFoodAvgWeek = () => {
+
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_WEEK);
+
     return (
       <React.Fragment>
         <ResponsiveContainer width="100%" height={300}>
@@ -77,20 +103,21 @@ export const DashAvg = () => {
             <XAxis type="category" dataKey="name" />
             <YAxis
               type="number"
-              domain={[0, 30]}
-              ticks={[0, 6, 12, 18, 24, 30]}
-              tickFormatter={(tick) => {
-                return tick > 24 ? tick -= 24 : tick;
-              }}
+              domain={domain}
+              ticks={ticks}
+              tickFormatter={tickFormatter}
             />
-            {activeAvg.includes("취침")
-              && <Bar type="monotone" dataKey="취침" fill="#8884d8" />
+            {activeAvg.includes("칼로리")
+              && <Bar type="monotone" dataKey="칼로리" fill="#8884d8" minPointSize={1} />
             }
-            {activeAvg.includes("기상")
-              && <Bar type="monotone" dataKey="기상" fill="#82ca9d" />
+            {activeAvg.includes("탄수화물")
+              && <Bar type="monotone" dataKey="탄수화물" fill="#ffc658" minPointSize={1} />
             }
-            {activeAvg.includes("수면")
-              && <Bar type="monotone" dataKey="수면" fill="#ffc658" />
+            {activeAvg.includes("단백질")
+              && <Bar type="monotone" dataKey="단백질" fill="#82ca9d" minPointSize={1} />
+            }
+            {activeAvg.includes("지방")
+              && <Bar type="monotone" dataKey="지방" fill="#ff7300" minPointSize={1} />
             }
             <Tooltip />
             <Legend />
@@ -101,7 +128,10 @@ export const DashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartSleepAvgMonth = () => {
+  const chartFoodAvgMonth = () => {
+
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_MONTH);
+
     return (
       <React.Fragment>
         <ResponsiveContainer width="100%" height={300}>
@@ -110,20 +140,21 @@ export const DashAvg = () => {
             <XAxis type="category" dataKey="name" />
             <YAxis
               type="number"
-              domain={[0, 30]}
-              ticks={[0, 6, 12, 18, 24, 30]}
-              tickFormatter={(tick) => {
-                return tick > 24 ? tick -= 24 : tick;
-              }}
+              domain={domain}
+              ticks={ticks}
+              tickFormatter={tickFormatter}
             />
-            {activeAvg.includes("취침")
-              && <Bar type="monotone" dataKey="취침" fill="#8884d8" />
+            {activeAvg.includes("칼로리")
+              && <Bar type="monotone" dataKey="칼로리" fill="#8884d8" minPointSize={1} />
             }
-            {activeAvg.includes("기상")
-              && <Bar type="monotone" dataKey="기상" fill="#82ca9d" />
+            {activeAvg.includes("탄수화물")
+              && <Bar type="monotone" dataKey="탄수화물" fill="#ffc658" minPointSize={1} />
             }
-            {activeAvg.includes("수면")
-              && <Bar type="monotone" dataKey="수면" fill="#ffc658" />
+            {activeAvg.includes("단백질")
+              && <Bar type="monotone" dataKey="단백질" fill="#82ca9d" minPointSize={1} />
+            }
+            {activeAvg.includes("지방")
+              && <Bar type="monotone" dataKey="지방" fill="#ff7300" minPointSize={1} />
             }
             <Tooltip />
             <Legend />
@@ -134,31 +165,25 @@ export const DashAvg = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableSleepAvg = () => {
+  const tableFoodAvg = () => {
     return (
       <table className="table bg-white border">
         <tbody>
           <button
-            className={`
-              btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"}
-              mt-10
-            `}
+            className={`btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"} mt-10`}
             onClick={() => setActiveType("week")}
           >
             주간
           </button>
           &nbsp;&nbsp;
           <button
-            className={`
-              btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"}
-              mt-10
-            `}
+            className={`btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"} mt-10`}
             onClick={() => setActiveType("month")}
           >
             월간
           </button>
           <div className="mt-10 mb-10">
-            {["취침", "수면", "기상"].map((key, index) => (
+            {["칼로리", "단백질", "지방", "탄수화물"].map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -185,10 +210,10 @@ export const DashAvg = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {activeType === "week" ? chartSleepAvgWeek() : chartSleepAvgMonth()}
+        {activeType === "week" ? chartFoodAvgWeek() : chartFoodAvgMonth()}
       </div>
       <div className="col-3">
-        {tableSleepAvg()}
+        {tableFoodAvg()}
       </div>
     </div>
   );

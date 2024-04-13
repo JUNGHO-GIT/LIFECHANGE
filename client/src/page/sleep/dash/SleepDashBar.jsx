@@ -1,4 +1,4 @@
-// DashBar.jsx
+// SleepDashBar.jsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -7,7 +7,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {Bar, Line, ComposedChart} from 'recharts';
 
 // ------------------------------------------------------------------------------------------------>
-export const DashBar = () => {
+export const SleepDashBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;

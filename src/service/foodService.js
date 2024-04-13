@@ -5,6 +5,60 @@ import moment from "moment";
 import {JSDOM} from "jsdom";
 import axios from "axios";
 import {Food} from "../schema/Food.js";
+import {FoodPlan} from "../schema/FoodPlan.js";
+
+// 0-1. dash (bar) -------------------------------------------------------------------------------->
+export const dashBar = async (
+  user_id_param
+) => {
+
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+
+  const dataFields = {
+    "칼로리": { plan: "food_plan_kcal", real: "food_total_kcal" },
+    "탄수화물": { plan: "food_plan_carb", real: "food_total_carb" },
+    "단백질": { plan: "food_plan_protein", real: "food_total_protein" },
+    "지방": { plan: "food_plan_fat", real: "food_total_fat" },
+  };
+
+  let finalResult = [];
+  for (let key in dataFields) {
+    const findResultPlan = await FoodPlan.findOne({
+      user_id: user_id_param,
+      food_plan_startDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+      food_plan_endDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      }
+    })
+    .lean();
+    const findResultReal = await Food.findOne({
+      user_id: user_id_param,
+      food_startDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+      food_endDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      }
+    })
+    .lean();
+
+    finalResult.push({
+      name: key,
+      목표: findResultPlan?.[dataFields[key].plan] || 0,
+      실제: findResultReal?.[dataFields[key].real] || 0
+    });
+  };
+
+  return {
+    result: finalResult,
+  };
+};
 
 // 1-0. search ------------------------------------------------------------------------------------>
 export const search = async (

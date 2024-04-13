@@ -3,6 +3,294 @@
 import mongoose from "mongoose";
 import moment from "moment";
 import {Money} from "../schema/Money.js";
+import {MoneyPlan} from "../schema/MoneyPlan.js";
+
+// 0-1. dash (bar) -------------------------------------------------------------------------------->
+export const dashBar = async (
+  user_id_param
+) => {
+
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+
+  const dataFields = {
+    "칼로리": { plan: "money_plan_kcal", real: "money_total_kcal" },
+    "탄수화물": { plan: "money_plan_carb", real: "money_total_carb" },
+    "단백질": { plan: "money_plan_protein", real: "money_total_protein" },
+    "지방": { plan: "money_plan_fat", real: "money_total_fat" },
+  };
+
+  let finalResult = [];
+  for (let key in dataFields) {
+    const findResultPlan = await MoneyPlan.findOne({
+      user_id: user_id_param,
+      money_plan_startDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+      money_plan_endDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      }
+    })
+    .lean();
+    const findResultReal = await Money.findOne({
+      user_id: user_id_param,
+      money_startDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+      money_endDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      }
+    })
+    .lean();
+
+    finalResult.push({
+      name: key,
+      목표: findResultPlan?.[dataFields[key].plan] || 0,
+      실제: findResultReal?.[dataFields[key].real] || 0
+    });
+  };
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 0-2. dash (in - pie) --------------------------------------------------------------------------->
+export const dashPieIn = async (
+  user_id_param
+) => {
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+  const findResult = await Money.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        money_startDt: {
+          $gte: koreanDate,
+          $lte: koreanDate
+        },
+        money_endDt: {
+          $gte: koreanDate,
+          $lte: koreanDate
+        },
+      }
+    },
+    {
+      $unwind: "$money_section"
+    },
+    {
+      $match: {
+        "money_section.money_part_val": "수입"
+      }
+    },
+    {
+      $group: {
+        _id: "$money_section.money_title_val",
+        value: {
+          $sum: "$money_section.money_amount"
+        }
+      }
+    }
+  ]);
+
+  const finalResult = findResult.map((item) => ({
+    name: item._id,
+    value: item.value
+  }));
+
+  return {
+    result: finalResult
+  };
+};
+
+// 0-2. dash (out - pie) -------------------------------------------------------------------------->
+export const dashPieOut = async (
+  user_id_param
+) => {
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+  const findResult = await Money.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        money_startDt: {
+          $gte: koreanDate,
+          $lte: koreanDate
+        },
+        money_endDt: {
+          $gte: koreanDate,
+          $lte: koreanDate
+        },
+      }
+    },
+    {
+      $unwind: "$money_section"
+    },
+    {
+      $match: {
+        "money_section.money_part_val": "지출"
+      }
+    },
+    {
+      $group: {
+        _id: "$money_section.money_title_val",
+        value: {
+          $sum: "$money_section.money_amount"
+        }
+      }
+    }
+  ]);
+
+  const finalResult = findResult.map((item) => ({
+    name: item._id,
+    value: item.value
+  }));
+
+  return {
+    result: finalResult
+  };
+};
+
+// 0-3. dash (line) ------------------------------------------------------------------------------->
+export const dashLine = async (
+  user_id_param
+) => {
+
+  const names = [
+    "월", "화", "수", "목", "금", "토", "일"
+  ];
+
+  let finalResult = [];
+  for (let i in names) {
+    const date = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
+    const findResult = await Money.findOne({
+      user_id: user_id_param,
+      money_startDt: date.format("YYYY-MM-DD"),
+      money_endDt: date.format("YYYY-MM-DD"),
+    })
+    .lean();
+
+    finalResult.push({
+      name: `${names[i]} ${date.format("MM/DD")}`,
+      수입: findResult?.money_section?.filter((item) => item.money_part_val === "수입")
+        .reduce((acc, cur) => acc + cur.money_amount, 0) || 0,
+      지출: findResult?.money_section?.filter((item) => item.money_part_val === "지출")
+        .reduce((acc, cur) => acc + cur.money_amount, 0) || 0,
+    });
+  };
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 0-4. dash (avg-week) --------------------------------------------------------------------------->
+export const dashAvgWeek = async (
+  user_id_param
+) => {
+
+  let sumMoneyIn = Array(5).fill(0);
+  let sumMoneyOut = Array(5).fill(0);
+  let countRecords = Array(5).fill(0);
+
+  const names = [
+    "1주차", "2주차", "3주차", "4주차", "5주차"
+  ];
+
+  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+
+  for (
+    let w = currentMonthStart.clone();
+    w.isBefore(currentMonthEnd);
+    w.add(1, "days")
+  ) {
+    const weekNum = w.week() - currentMonthStart.week() + 1;
+
+    if (weekNum >= 1 && weekNum <= 5) {
+      const findResult = await Money.findOne({
+        user_id: user_id_param,
+        money_startDt: w.format("YYYY-MM-DD"),
+        money_endDt: w.format("YYYY-MM-DD"),
+      }).lean();
+
+      if (findResult) {
+        sumMoneyIn[weekNum - 1] += findResult?.money_section?.filter((item) => item.money_part_val === "수입")
+          .reduce((acc, cur) => acc + cur.money_amount, 0);
+        sumMoneyOut[weekNum - 1] += findResult?.money_section?.filter((item) => item.money_part_val === "지출")
+          .reduce((acc, cur) => acc + cur.money_amount, 0);
+        countRecords[weekNum - 1]++;
+      }
+    }
+  };
+
+  let finalResult = [];
+  for (let i = 0; i < 5; i++) {
+    finalResult.push({
+      name: `${names[i]}`,
+      수입: countRecords[i] > 0 ? (sumMoneyIn[i] / countRecords[i]).toFixed(0) : "0",
+      지출: countRecords[i] > 0 ? (sumMoneyOut[i] / countRecords[i]).toFixed(0) : "0",
+    });
+  };
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 0-4. dash (avg-month) -------------------------------------------------------------------------->
+export const dashAvgMonth = async (
+  user_id_param
+) => {
+
+  let sumMoneyIn = Array(12).fill(0);
+  let sumMoneyOut = Array(12).fill(0);
+  let countRecords = Array(12).fill(0);
+
+  const names = [
+    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+  ];
+
+  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+
+  for (
+    let m = currentMonthStart.clone();
+    m.isBefore(currentMonthEnd);
+    m.add(1, "days")
+  ) {
+    const monthNum = m.month();
+
+    const findResult = await Money.findOne({
+      user_id: user_id_param,
+      money_startDt: m.format("YYYY-MM-DD"),
+      money_endDt: m.format("YYYY-MM-DD"),
+    })
+    .lean();
+
+    if (findResult) {
+      sumMoneyIn[monthNum] += findResult?.money_section?.filter((item) => item.money_part_val === "수입")
+        .reduce((acc, cur) => acc + cur.money_amount, 0);
+      sumMoneyOut[monthNum] += findResult?.money_section?.filter((item) => item.money_part_val === "지출")
+        .reduce((acc, cur) => acc + cur.money_amount, 0);
+      countRecords[monthNum]++;
+    }
+  };
+
+  let finalResult = [];
+  for (let i = 0; i < 12; i++) {
+    finalResult.push({
+      name: names[i],
+      수입: countRecords[i] > 0 ? (sumMoneyIn[i] / countRecords[i]).toFixed(0) : "0",
+      지출: countRecords[i] > 0 ? (sumMoneyOut[i] / countRecords[i]).toFixed(0) : "0",
+    });
+  };
+
+  return {
+    result: finalResult,
+  };
+};
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
