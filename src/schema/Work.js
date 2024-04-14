@@ -35,7 +35,6 @@ const schema = new mongoose.Schema({
     type: String,
     required: false,
   },
-
   work_body_weight: {
     type: String,
     required: false,

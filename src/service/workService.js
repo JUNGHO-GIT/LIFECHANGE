@@ -399,6 +399,7 @@ export const list = async (
       work_start: 1,
       work_end: 1,
       work_time: 1,
+      work_body_weight: 1,
       work_section: {
         $filter: {
           input: "$work_section",
@@ -504,6 +505,7 @@ export const save = async (
   const options = {
     upsert: true,
     new: true,
+    setDefaultsOnInsert: true,
   };
 
   let finalResult;
