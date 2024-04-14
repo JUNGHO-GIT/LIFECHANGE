@@ -77,6 +77,7 @@ export const WorkDetail = () => {
     work_start: "",
     work_end: "",
     work_time: "",
+    work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
       work_part_val: "전체",

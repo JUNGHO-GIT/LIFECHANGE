@@ -5,7 +5,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {moneyArray} from "../../../assets/data/MoneyArray.jsx";
+import {moneyArray} from "../../../assets/data/DataArray.jsx";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
@@ -338,30 +338,34 @@ export const MoneySave = () => {
           <div className="col-12">
             {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
           </div>
-          <div className="row d-center">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">총수입</span>
-                <input
-                  disabled
-                  type="text"
-                  className="form-control"
-                  value={MONEY?.money_total_in}
-                  readOnly
-                />
-              </div>
+        </div>
+      );
+    };
+    function tableRemain () {
+      return (
+        <div className="row d-center">
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">총수입</span>
+              <input
+                disabled
+                type="text"
+                className="form-control"
+                value={MONEY?.money_total_in}
+                readOnly
+              />
             </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">총지출</span>
-                <input
-                  disabled
-                  type="text"
-                  className="form-control"
-                  value={MONEY?.money_total_out}
-                  readOnly
-                />
-              </div>
+          </div>
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">총지출</span>
+              <input
+                disabled
+                type="text"
+                className="form-control"
+                value={MONEY?.money_total_out}
+                readOnly
+              />
             </div>
           </div>
         </div>
@@ -370,6 +374,7 @@ export const MoneySave = () => {
     return (
       <React.Fragment>
         {tableFragment()}
+        {tableRemain()}
       </React.Fragment>
     );
   };

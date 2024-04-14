@@ -23,6 +23,10 @@ const schema = new mongoose.Schema({
     required: false
   },
 
+  work_plan_body_weight: {
+    type: String,
+    required: false
+  },
   work_plan_total_count: {
     type: String,
     required: false

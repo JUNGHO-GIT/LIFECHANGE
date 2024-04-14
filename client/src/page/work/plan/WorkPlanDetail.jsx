@@ -78,6 +78,7 @@ export const WorkPlanDetail = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
+    work_plan_body_weight: "",
     work_plan_total_count: "",
     work_plan_cardio_time: "",
     work_plan_regdate: "",

@@ -23,7 +23,7 @@ foodRouter.get("/dashBar", async (req, res) => {
   }
 });
 
-// 0-2. dash  ------------------------------------------------------------------------------------->
+// 0-2. dash (pie) -------------------------------------------------------------------------------->
 foodRouter.get("/dashPie", async (req, res) => {
   try {
     const result = await service.dashPie (

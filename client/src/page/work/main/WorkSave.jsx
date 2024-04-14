@@ -7,7 +7,7 @@ import {useTime} from "../../../assets/hooks/useTime.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {TimePicker} from "react-time-picker";
 import axios from "axios";
-import {workPartArray, workTitleArray} from "../../../assets/data/WorkArray.jsx";
+import {workArray} from "../../../assets/data/DataArray.jsx";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
@@ -80,6 +80,7 @@ export const WorkSave = () => {
     work_start: "",
     work_end: "",
     work_time: "",
+    work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
       work_part_val: "",
@@ -214,27 +215,27 @@ export const WorkSave = () => {
                 <select
                   className="form-control"
                   id={`work_part_idx-${i}`}
-                  value={WORK.work_section[i]?.work_part_idx}
+                  value={WORK?.work_section[i]?.work_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setWORK((prev) => {
-                      let updated = { ...prev };
+                      let updated = {...prev};
                       let updatedSection = [...updated.work_section];
                       updatedSection[i] = {
                         ...updatedSection[i],
                         work_part_idx: newIndex,
-                        work_part_val: workPartArray[newIndex].work_part,
+                        work_part_val: workArray[newIndex].work_part,
                         work_title_idx: 0,
-                        work_title_val: workTitleArray[newIndex].work_title[0],
+                        work_title_val: workArray[newIndex].work_title[0],
                       };
                       updated.work_section = updatedSection;
                       return updated;
                     });
                   }}
                 >
-                  {workPartArray?.map((part, idx) => (
+                  {workArray?.map((item, idx) => (
                     <option key={idx} value={idx}>
-                      {part.work_part}
+                      {item.work_part}
                     </option>
                   ))}
                 </select>
@@ -246,20 +247,27 @@ export const WorkSave = () => {
                 <select
                   className="form-control"
                   id={`work_title_idx-${i}`}
-                  value={WORK.work_section[i]?.work_title_val}
+                  value={WORK?.work_section[i]?.work_title_idx}
                   onChange={(e) => {
-                    const newTitle = e.target.value;
-                    setWORK((prev) => {
-                      let updated = { ...prev };
-                      let updatedSection = [...updated.work_section];
-                      updatedSection[i].work_title_val = newTitle;
-                      updated.work_section = updatedSection;
-                      return updated;
-                    });
+                    const newTitleIdx = parseInt(e.target.value);
+                    const newTitleVal = workArray[WORK?.work_section[i]?.work_part_idx]?.work_title[newTitleIdx];
+                    if (newTitleIdx >= 0 && newTitleVal) {
+                      setWORK((prev) => {
+                        let updated = {...prev};
+                        let updatedSection = [...updated.work_section];
+                        updatedSection[i] = {
+                          ...updatedSection[i],
+                          work_title_idx: newTitleIdx,
+                          work_title_val: newTitleVal,
+                        };
+                        updated.work_section = updatedSection;
+                        return updated;
+                      });
+                    }
                   }}
                 >
-                  {workTitleArray[WORK.work_section[i]?.work_part_idx]?.work_title?.map((title, idx) => (
-                    <option key={idx} value={title}>
+                  {workArray[WORK?.work_section[i]?.work_part_idx]?.work_title?.map((title, idx) => (
+                    <option key={idx} value={idx}>
                       {title}
                     </option>
                   ))}
@@ -268,7 +276,7 @@ export const WorkSave = () => {
             </div>
           </div>
           <div className="row d-center">
-            <div className="col-3">
+            <div className="col-6">
               <div className="input-group">
                 <span className="input-group-text">세트</span>
                 <input
@@ -276,11 +284,11 @@ export const WorkSave = () => {
                   className="form-control"
                   value={WORK?.work_section[i]?.work_set}
                   onChange={(e) => {
-                    const newSet = parseInt(e.target.value);
+                    const newVal = parseInt(e.target.value, 10);
                     setWORK((prev) => {
-                      let updated = { ...prev };
+                      let updated = {...prev};
                       let updatedSection = [...updated.work_section];
-                      updatedSection[i].work_set = isNaN(newSet) ? 0 : newSet;
+                      updatedSection[i].work_set = isNaN(newVal) ? 0 : newVal;
                       updated.work_section = updatedSection;
                       return updated;
                     });
@@ -288,7 +296,7 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-6">
               <div className="input-group">
                 <span className="input-group-text">횟수</span>
                 <input
@@ -296,11 +304,11 @@ export const WorkSave = () => {
                   className="form-control"
                   value={WORK?.work_section[i]?.work_rep}
                   onChange={(e) => {
-                    const newCount = parseInt(e.target.value);
+                    const newVal = parseInt(e.target.value, 10);
                     setWORK((prev) => {
-                      let updated = { ...prev };
+                      let updated = {...prev};
                       let updatedSection = [...updated.work_section];
-                      updatedSection[i].work_rep = isNaN(newCount) ? 0 : newCount;
+                      updatedSection[i].work_rep = isNaN(newVal) ? 0 : newVal;
                       updated.work_section = updatedSection;
                       return updated;
                     });
@@ -308,7 +316,9 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-            <div className="col-3">
+          </div>
+          <div className="row d-center">
+            <div className="col-6">
               <div className="input-group">
                 <span className="input-group-text">무게</span>
                 <input
@@ -316,11 +326,11 @@ export const WorkSave = () => {
                   className="form-control"
                   value={WORK?.work_section[i]?.work_kg}
                   onChange={(e) => {
-                    const newKg = parseInt(e.target.value);
+                    const newVal = parseInt(e.target.value, 10);
                     setWORK((prev) => {
-                      const updated = { ...prev };
-                      const updatedSection = [...updated.work_section];
-                      updatedSection[i].work_kg = isNaN(newKg) ? 0 : newKg;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_kg = isNaN(newVal) ? 0 : newVal;
                       updated.work_section = updatedSection;
                       return updated;
                     });
@@ -328,7 +338,7 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-            <div className="col-3">
+            <div className="col-6">
               <div className="input-group">
                 <span className="input-group-text">휴식</span>
                 <input
@@ -336,11 +346,11 @@ export const WorkSave = () => {
                   className="form-control"
                   value={WORK?.work_section[i]?.work_rest}
                   onChange={(e) => {
-                    const newRest = parseInt(e.target.value);
+                    const newVal = parseInt(e.target.value, 10);
                     setWORK((prev) => {
-                      const updated = { ...prev };
-                      const updatedSection = [...updated.work_section];
-                      updatedSection[i].work_rest = isNaN(newRest) ? 0 : newRest;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_rest = isNaN(newVal) ? 0 : newVal;
                       updated.work_section = updatedSection;
                       return updated;
                     });

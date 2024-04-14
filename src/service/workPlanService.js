@@ -200,6 +200,7 @@ export const save = async (
     user_id: user_id_param,
     work_plan_startDt: startDay,
     work_plan_endDt: endDay,
+    work_plan_body_weight: WORK_PLAN_param.work_plan_body_weight,
     work_plan_total_count: WORK_PLAN_param.work_plan_total_count,
     work_plan_cardio_time: WORK_PLAN_param.work_plan_cardio_time,
     work_plan_regdate: koreanDate,
