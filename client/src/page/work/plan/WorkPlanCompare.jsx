@@ -124,13 +124,13 @@ export const WorkPlanCompare = () => {
                 </tr>
                 <tr>
                   <td>총 운동횟수</td>
-                  <td>{item.work_total_count || "0"}</td>
                   <td>{item.work_plan_total_count || "0"}</td>
+                  <td>{item.work_total_count || "0"}</td>
                 </tr>
                 <tr>
                   <td>유산소 시간</td>
-                  <td>{item.work_cardio_time || "0"}</td>
                   <td>{item.work_plan_cardio_time || "0"}</td>
+                  <td>{item.work_cardio_time || "0"}</td>
                 </tr>
               </React.Fragment>
             ))}

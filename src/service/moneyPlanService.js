@@ -5,6 +5,9 @@ import moment from "moment";
 import {Money} from "../schema/Money.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
 
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 1-1. compare ----------------------------------------------------------------------------------->
 export const compare = async (
   user_id_param,
@@ -180,19 +183,36 @@ export const save = async (
       $lte: endDay,
     }
   };
+  const findResult = await MoneyPlan.find(filter).lean();
+
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    money_plan_startDt: startDay,
+    money_plan_endDt: endDay,
+    money_plan_in: MONEY_PLAN_param.money_plan_in,
+    money_plan_out: MONEY_PLAN_param.money_plan_out,
+    money_plan_regdate: koreanDate,
+    money_plan_update: "",
+  };
   const update = {
     $set: {
       ...MONEY_PLAN_param,
-      money_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }
+      money_plan_update: koreanDate,
+    },
   };
   const options = {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true
   };
 
-  const finalResult = await MoneyPlan.findOneAndUpdate(filter, update, options).lean();
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await MoneyPlan.create(create);
+  }
+  else {
+    finalResult = await MoneyPlan.findOneAndUpdate(filter, update, options).lean();
+  }
 
   return {
     result: finalResult

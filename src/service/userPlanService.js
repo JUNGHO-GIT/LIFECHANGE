@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import moment from "moment";
 import {UserPlan} from "../schema/UserPlan.js";
 
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
@@ -83,44 +86,47 @@ export const save = async (
 
   const [startDay, endDay] = user_plan_dur_param.split(` ~ `);
 
-  let finalResult;
-
-  const findResult = await UserPlan.findOne({
+  const filter = {
     user_id: user_id_param,
     user_plan_startDt: {
+      $gte: startDay,
       $lte: endDay,
     },
     user_plan_endDt: {
-      $lte: startDay,
+      $gte: startDay,
+      $lte: endDay,
     }
-  })
-  .lean();
+  };
+  const findResult = await UserPlan.find(filter).lean();
 
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      user_plan_startDt: startDay,
-      user_plan_endDt: endDay,
-      user_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      user_plan_update: ""
-    };
-    finalResult = await UserPlan.create(createQuery);
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    ...USER_PLAN_param,
+    user_plan_regdate: koreanDate,
+    user_plan_update: "",
+  };
+  const update = {
+    $set: {
+      ...USER_PLAN_param,
+      user_plan_update: koreanDate,
+    },
+  };
+  const options = {
+    upsert: true,
+    new: true,
+  };
+
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await UserPlan.create(create);
   }
   else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        user_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      },
-    };
-    finalResult = await UserPlan.updateOne(updateQuery, updateAction).lean();
+    finalResult = await UserPlan.findOneAndUpdate(filter, update, options).lean();
   }
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

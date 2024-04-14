@@ -5,6 +5,9 @@ import moment from "moment";
 import {Food} from "../schema/Food.js";
 import {FoodPlan} from "../schema/FoodPlan.js";
 
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 1-1. compare ----------------------------------------------------------------------------------->
 export const compare = async (
   user_id_param,
@@ -183,19 +186,38 @@ export const save = async (
       $lte: endDay,
     }
   };
+  const findResult = await FoodPlan.find(filter).lean();
+
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    food_plan_startDt: startDay,
+    food_plan_endDt: endDay,
+    food_plan_kcal: FOOD_PLAN_param.food_plan_kcal,
+    food_plan_carb: FOOD_PLAN_param.food_plan_carb,
+    food_plan_protein: FOOD_PLAN_param.food_plan_protein,
+    food_plan_fat: FOOD_PLAN_param.food_plan_fat,
+    food_plan_regdate: koreanDate,
+    food_plan_update: "",
+  };
   const update = {
     $set: {
       ...FOOD_PLAN_param,
-      food_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }
+      food_plan_update: koreanDate,
+    },
   };
   const options = {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true
   };
 
-  const finalResult = await FoodPlan.findOneAndUpdate(filter, update, options).lean();
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await FoodPlan.create(create);
+  }
+  else {
+    finalResult = await FoodPlan.findOneAndUpdate(filter, update, options).lean();
+  }
 
   return {
     result: finalResult

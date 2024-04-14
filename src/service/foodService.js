@@ -7,6 +7,9 @@ import axios from "axios";
 import {Food} from "../schema/Food.js";
 import {FoodPlan} from "../schema/FoodPlan.js";
 
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 0-1. dash (bar) -------------------------------------------------------------------------------->
 export const dashBar = async (
   user_id_param
@@ -648,19 +651,39 @@ export const save = async (
       $lte: endDay,
     }
   };
+  const findResult = await Food.find(filter).lean();
+
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    food_startDt: startDay,
+    food_endDt: endDay,
+    food_total_kcal: FOOD_param.food_total_kcal,
+    food_total_carb: FOOD_param.food_total_carb,
+    food_total_protein: FOOD_param.food_total_protein,
+    food_total_fat: FOOD_param.food_total_fat,
+    food_section: FOOD_param.food_section,
+    food_regdate: koreanDate,
+    food_update: "",
+  };
   const update = {
     $set: {
       ...FOOD_param,
-      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }
+      food_update: koreanDate,
+    },
   };
   const options = {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Food.findOneAndUpdate(filter, update, options).lean();
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await Food.create(create);
+  }
+  else {
+    finalResult = await Food.findOneAndUpdate(filter, update, options).lean();
+  }
 
   return {
     result: finalResult

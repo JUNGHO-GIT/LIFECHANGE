@@ -1,7 +1,11 @@
 // userService.js
 
 import mongoose from "mongoose";
+import moment from "moment";
 import {User} from "../schema/User.js";
+
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (

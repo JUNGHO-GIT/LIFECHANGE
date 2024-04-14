@@ -5,6 +5,9 @@ import moment from "moment";
 import {Work} from "../schema/Work.js";
 import {WorkPlan} from "../schema/WorkPlan.js";
 
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 1-1. compare ----------------------------------------------------------------------------------->
 export const compare = async (
   user_id_param,
@@ -180,28 +183,45 @@ export const save = async (
 
   const filter = {
     user_id: user_id_param,
-    work_startDt: {
+    work_plan_startDt: {
       $gte: startDay,
       $lte: endDay,
     },
-    work_endDt: {
+    work_plan_endDt: {
       $gte: startDay,
       $lte: endDay,
     }
+  };
+  const findResult = await WorkPlan.find(filter).lean();
+
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    work_plan_startDt: startDay,
+    work_plan_endDt: endDay,
+    work_plan_total_count: WORK_PLAN_param.work_plan_total_count,
+    work_plan_cardio_time: WORK_PLAN_param.work_plan_cardio_time,
+    work_plan_regdate: koreanDate,
+    work_plan_update: "",
   };
   const update = {
     $set: {
       ...WORK_PLAN_param,
-      work_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }
+      work_plan_update: koreanDate,
+    },
   };
   const options = {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Work.findOneAndUpdate(filter, update, options).lean();
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await WorkPlan.create(create);
+  }
+  else {
+    finalResult = await WorkPlan.findOneAndUpdate(filter, update, options).lean();
+  }
 
   return {
     result: finalResult

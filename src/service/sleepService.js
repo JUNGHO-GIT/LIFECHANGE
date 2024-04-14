@@ -3,7 +3,10 @@
 import mongoose from "mongoose";
 import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
-import {SleepPlan} from "../schema/SleepPlan.js"
+import {SleepPlan} from "../schema/SleepPlan.js";
+
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 0-1. dash (bar) -------------------------------------------------------------------------------->
 export const dashBar = async (
@@ -353,19 +356,35 @@ export const save = async (
       $lte: endDay,
     }
   };
+  const findResult = await Sleep.find(filter).lean();
+
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    sleep_startDt: startDay,
+    sleep_endDt: endDay,
+    sleep_section: SLEEP_param.sleep_section,
+    sleep_regdate: koreanDate,
+    sleep_update: "",
+  };
   const update = {
     $set: {
       ...SLEEP_param,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }
+      sleep_update: koreanDate,
+    },
   };
   const options = {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Sleep.findOneAndUpdate(filter, update, options).lean();
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await Sleep.create(create);
+  }
+  else {
+    finalResult = await Sleep.findOneAndUpdate(filter, update, options).lean();
+  }
 
   return {
     result: finalResult

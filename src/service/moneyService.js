@@ -5,6 +5,9 @@ import moment from "moment";
 import {Money} from "../schema/Money.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
 
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 0-1. dash (bar) -------------------------------------------------------------------------------->
 export const dashBar = async (
   user_id_param
@@ -14,11 +17,11 @@ export const dashBar = async (
 
   const dataInOut = {
     "수입": {
-      plan: "money_in",
+      plan: "money_plan_in",
       real: "money_total_in"
     },
     "지출": {
-      plan: "money_out",
+      plan: "money_plan_out",
       real: "money_total_out"
     }
   };
@@ -40,11 +43,11 @@ export const dashBar = async (
   for (let key in dataInOut) {
     const findResultPlan = await MoneyPlan.findOne({
       user_id: user_id_param,
-      money_startDt: {
+      money_plan_startDt: {
         $gte: koreanDate,
         $lte: koreanDate
       },
-      money_endDt: {
+      money_plan_endDt: {
         $gte: koreanDate,
         $lte: koreanDate
       }
@@ -477,19 +480,37 @@ export const save = async (
       $lte: endDay,
     }
   };
+  const findResult = await Money.find(filter).lean();
+
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    money_startDt: startDay,
+    money_endDt: endDay,
+    money_total_in: MONEY_param.money_total_in,
+    money_total_out: MONEY_param.money_total_out,
+    money_section: MONEY_param.money_section,
+    money_regdate: koreanDate,
+    money_update: "",
+  };
   const update = {
     $set: {
       ...MONEY_param,
-      money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }
+      money_update: koreanDate,
+    },
   };
   const options = {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Money.findOneAndUpdate(filter, update, options).lean();
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await Money.create(create);
+  }
+  else {
+    finalResult = await Money.findOneAndUpdate(filter, update, options).lean();
+  }
 
   return {
     result: finalResult

@@ -5,6 +5,9 @@ import moment from "moment";
 import {Sleep} from "../schema/Sleep.js";
 import {SleepPlan} from "../schema/SleepPlan.js";
 
+// 0. common -------------------------------------------------------------------------------------->
+const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
 // 1-1. compare ----------------------------------------------------------------------------------->
 export const compare = async (
   user_id_param,
@@ -169,28 +172,46 @@ export const save = async (
 
   const filter = {
     user_id: user_id_param,
-    sleep_startDt: {
+    sleep_plan_startDt: {
       $gte: startDay,
       $lte: endDay,
     },
-    sleep_endDt: {
+    sleep_plan_endDt: {
       $gte: startDay,
       $lte: endDay,
     }
+  };
+  const findResult = await SleepPlan.find(filter).lean();
+
+  const create = {
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    sleep_plan_startDt: startDay,
+    sleep_plan_endDt: endDay,
+    sleep_plan_night: SLEEP_PLAN_param.sleep_plan_night,
+    sleep_plan_morning: SLEEP_PLAN_param.sleep_plan_morning,
+    sleep_plan_time: SLEEP_PLAN_param.sleep_plan_time,
+    sleep_plan_regdate: koreanDate,
+    sleep_plan_update: "",
   };
   const update = {
     $set: {
       ...SLEEP_PLAN_param,
-      sleep_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-    }
+      sleep_plan_update: koreanDate,
+    },
   };
   const options = {
     upsert: true,
     new: true,
-    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Sleep.findOneAndUpdate(filter, update, options).lean();
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await SleepPlan.create(create);
+  }
+  else {
+    finalResult = await SleepPlan.findOneAndUpdate(filter, update, options).lean();
+  }
 
   return {
     result: finalResult
