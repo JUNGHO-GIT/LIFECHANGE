@@ -6,14 +6,13 @@ import {Money} from "../schema/Money.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
+const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 0-1. dash (bar) -------------------------------------------------------------------------------->
 export const dashBar = async (
   user_id_param
 ) => {
-
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
   const dataInOut = {
     "수입": {
@@ -44,24 +43,24 @@ export const dashBar = async (
     const findResultPlan = await MoneyPlan.findOne({
       user_id: user_id_param,
       money_plan_startDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       },
       money_plan_endDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       }
     })
     .lean();
     const findResultReal = await Money.findOne({
       user_id: user_id_param,
       money_startDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       },
       money_endDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       }
     })
     .lean();
@@ -82,7 +81,6 @@ export const dashBar = async (
 export const dashPie = async (
   user_id_param
 ) => {
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
   const fmtData = (data) => {
     if (!data) {
@@ -103,12 +101,12 @@ export const dashPie = async (
       $match: {
         user_id: user_id_param,
         money_startDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
+          $gte: fmtDate,
+          $lte: fmtDate
         },
         money_endDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
+          $gte: fmtDate,
+          $lte: fmtDate
         },
       }
     },
@@ -140,12 +138,12 @@ export const dashPie = async (
       $match: {
         user_id: user_id_param,
         money_startDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
+          $gte: fmtDate,
+          $lte: fmtDate
         },
         money_endDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
+          $gte: fmtDate,
+          $lte: fmtDate
         },
       }
     },
@@ -545,7 +543,7 @@ export const deletes = async (
         },
       },
       $set: {
-        money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        money_update: koreanDate,
       },
     },
     {
@@ -570,10 +568,7 @@ export const deletes = async (
     })
     .lean();
 
-    if (
-      (doc) &&
-      (!doc.money_section || doc.money_section.length === 0)
-    ) {
+    if ((doc) && (!doc.money_section || doc.money_section.length === 0)) {
       finalResult = await Money.deleteOne({
         _id: doc._id
       })

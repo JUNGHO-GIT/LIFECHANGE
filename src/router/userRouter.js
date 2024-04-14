@@ -4,7 +4,27 @@ import express from "express";
 import * as service from "../service/userService.js";
 export const userRouter = express.Router();
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1-1. dataset ----------------------------------------------------------------------------------->
+userRouter.get("/dataset", async (req, res) => {
+  try {
+    const result = await service.dataset (
+      req.query.user_id,
+      req.query.user_pw
+    );
+    if (result) {
+      res.send(result);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 1-2. list -------------------------------------------------------------------------------------->
 userRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (

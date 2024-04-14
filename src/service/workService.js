@@ -5,6 +5,7 @@ import moment from "moment";
 import {Work} from "../schema/Work.js";
 
 // 0. common -------------------------------------------------------------------------------------->
+const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 1. list ---------------------------------------------------------------------------------------->
@@ -206,7 +207,7 @@ export const deletes = async (
         },
       },
       $set: {
-        work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        work_update: koreanDate,
       },
     },
     {
@@ -231,10 +232,7 @@ export const deletes = async (
     })
     .lean();
 
-    if (
-      (doc) &&
-      (!doc.work_section || doc.work_section.length === 0)
-    ) {
+    if ((doc) && (!doc.work_section || doc.work_section.length === 0)) {
       finalResult = await Work.deleteOne({
         _id: doc._id
       })

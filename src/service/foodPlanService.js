@@ -6,6 +6,7 @@ import {Food} from "../schema/Food.js";
 import {FoodPlan} from "../schema/FoodPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
+const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 1-1. compare ----------------------------------------------------------------------------------->
@@ -246,7 +247,7 @@ export const deletes = async (
     },
     {
       $set: {
-        food_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        food_plan_update: koreanDate,
       },
     },
     {

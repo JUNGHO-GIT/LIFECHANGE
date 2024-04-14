@@ -1,8 +1,9 @@
 // User.js
 
 import mongoose from "mongoose";
-import moment from "moment-timezone";
 import {incrementSeq} from "./Counter.js";
+import {workArray} from "../assets/data/workArray.js";
+import {moneyArray} from "../assets/data/moneyArray.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
@@ -43,6 +44,19 @@ const schema = new mongoose.Schema({
   user_weight: {
     type : String,
     required : false
+  },
+
+  user_dataset: {
+    money: {
+      type: Array,
+      default: moneyArray,
+      required: false
+    },
+    work: {
+      type: Array,
+      default: workArray,
+      required: false
+    }
   },
 
   user_regdate: {

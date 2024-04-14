@@ -6,6 +6,7 @@ import {Sleep} from "../schema/Sleep.js";
 import {SleepPlan} from "../schema/SleepPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
+const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 0-1. dash (bar) -------------------------------------------------------------------------------->
@@ -13,12 +14,19 @@ export const dashBar = async (
   user_id_param
 ) => {
 
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-
   const dataFields = {
-    "취침": { plan: "sleep_plan_night", real: "sleep_night" },
-    "기상": { plan: "sleep_plan_morning", real: "sleep_morning" },
-    "수면": { plan: "sleep_plan_time", real: "sleep_time" }
+    "취침": {
+      plan: "sleep_plan_night",
+      real: "sleep_night"
+    },
+    "기상": {
+      plan: "sleep_plan_morning",
+      real: "sleep_morning"
+    },
+    "수면": {
+      plan: "sleep_plan_time",
+      real: "sleep_time"
+    },
   };
 
   const fmtData = (data) => {
@@ -36,20 +44,24 @@ export const dashBar = async (
     const findResultPlan = await SleepPlan.findOne({
       user_id: user_id_param,
       sleep_plan_startDt: {
-        $gte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       },
       sleep_plan_endDt: {
-        $lte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       }
     })
     .lean();
     const findResultReal = await Sleep.findOne({
       user_id: user_id_param,
       sleep_startDt: {
-        $gte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       },
       sleep_endDt: {
-        $lte: koreanDate
+        $gte: fmtDate,
+        $lte: fmtDate
       }
     })
     .lean();
@@ -419,7 +431,7 @@ export const deletes = async (
         },
       },
       $set: {
-        sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        sleep_update: koreanDate,
       },
     },
     {
@@ -445,10 +457,7 @@ export const deletes = async (
     })
     .lean();
 
-    if (
-      (doc) &&
-      (!doc.sleep_section || doc.sleep_section.length === 0)
-    ) {
+    if ((doc) && (!doc.sleep_section || doc.sleep_section.length === 0)) {
       finalResult = await Sleep.deleteOne({
         _id: doc._id
       })

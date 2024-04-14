@@ -5,9 +5,45 @@ import moment from "moment";
 import {User} from "../schema/User.js";
 
 // 0. common -------------------------------------------------------------------------------------->
+const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
-// 1. list ---------------------------------------------------------------------------------------->
+// 1-1. dataset ----------------------------------------------------------------------------------->
+export const dataset = async (
+  user_id_param,
+  user_pw_param
+) => {
+
+  const findResult = await User.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        user_pw: user_pw_param
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        user_dataset: {
+          money: 1,
+          work: 1
+        }
+      }
+    }
+  ]);
+
+  const workSet = findResult[0].user_dataset.work;
+  const moneySet = findResult[0].user_dataset.money;
+
+  return {
+    result: {
+      work: workSet,
+      money: moneySet
+    }
+  };
+};
+
+// 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
 ) => {
 
@@ -68,7 +104,6 @@ export const insert = async (
 
   let createQuery;
   let createResult;
-  let finalResult;
 
   createQuery = {
     _id : new mongoose.Types.ObjectId(),

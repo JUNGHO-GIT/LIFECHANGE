@@ -5,6 +5,7 @@ import moment from "moment";
 import {UserPlan} from "../schema/UserPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
+const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 1-2. list -------------------------------------------------------------------------------------->
@@ -152,7 +153,7 @@ export const deletes = async (
     },
     {
       $set: {
-        user_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        user_plan_update: koreanDate,
       },
     },
     {

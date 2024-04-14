@@ -6,6 +6,7 @@ import {Sleep} from "../schema/Sleep.js";
 import {SleepPlan} from "../schema/SleepPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
+const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 1-1. compare ----------------------------------------------------------------------------------->
@@ -236,7 +237,7 @@ export const deletes = async (
     },
     {
       $set: {
-        sleep_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+        sleep_plan_update: koreanDate,
       },
     },
     {
