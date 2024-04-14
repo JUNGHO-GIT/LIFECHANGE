@@ -54,10 +54,7 @@ export const dashBar = async (
     finalResult.push({
       name: key,
       목표: fmtData(findResultPlan?.[dataFields[key].plan]),
-      실제: fmtData(
-        findResultReal?.sleep_section
-          ?.map((item) => item[dataFields[key].real])
-          .join(":")
+      실제: fmtData(findResultReal?.sleep_section?.map((item) => item[dataFields[key].real]).join(":")
       ),
     });
   };

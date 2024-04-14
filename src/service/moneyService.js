@@ -13,9 +13,14 @@ export const dashBar = async (
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
   const dataInOut = {
-    "탄수화물": { plan: "food_plan_carb", real: "food_total_carb" },
-    "단백질": { plan: "food_plan_protein", real: "food_total_protein" },
-    "지방": { plan: "food_plan_fat", real: "food_total_fat" },
+    "수입": {
+      plan: "money_plan_in",
+      real: "money_total_in"
+    },
+    "지출": {
+      plan: "money_plan_out",
+      real: "money_total_out"
+    }
   };
 
   const fmtData = (data) => {
@@ -58,10 +63,13 @@ export const dashBar = async (
     })
     .lean();
 
+    console.log(findResultPlan);
+    console.log(findResultReal);
+
     finalResult.push({
       name: key,
-      목표: findResultPlan?.[dataInOut[key].plan] || 0,
-      실제: findResultReal?.[dataInOut[key].real] || 0
+      목표: fmtData(findResultPlan?.[dataInOut[key].plan] || 0),
+      실제: fmtData(findResultReal?.[dataInOut[key].real] || 0),
     });
   };
 
@@ -75,6 +83,21 @@ export const dashPie = async (
   user_id_param
 ) => {
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else if (typeof data === "string") {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
+    }
+  };
+
+  // in
   const findResultIn = await Money.aggregate([
     {
       $match: {
@@ -106,6 +129,12 @@ export const dashPie = async (
       }
     }
   ]);
+  const finalResultIn = findResultIn?.map((item) => ({
+    name: item._id,
+    value: fmtData(item.value)
+  }));
+
+  // out
   const findResultOut = await Money.aggregate([
     {
       $match: {
@@ -137,15 +166,9 @@ export const dashPie = async (
       }
     }
   ]);
-
   const finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
-    value: item.value
-  }));
-
-  const finalResultIn = findResultIn?.map((item) => ({
-    name: item._id,
-    value: item.value
+    value: fmtData(item.value)
   }));
 
   return {
@@ -163,6 +186,19 @@ export const dashLine = async (
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else if (typeof data === "string") {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
+    }
+  };
+
   let finalResult = [];
   for (let i in names) {
     const date = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
@@ -175,10 +211,8 @@ export const dashLine = async (
 
     finalResult.push({
       name: `${names[i]} ${date.format("MM/DD")}`,
-      수입: findResult?.money_section?.filter((item) => item.money_part_val === "수입")
-        .reduce((acc, cur) => acc + cur.money_amount, 0) || 0,
-      지출: findResult?.money_section?.filter((item) => item.money_part_val === "지출")
-        .reduce((acc, cur) => acc + cur.money_amount, 0) || 0,
+      수입: fmtData(findResult?.money_total_in || 0),
+      지출: fmtData(findResult?.money_total_out || 0),
     });
   };
 
@@ -200,6 +234,19 @@ export const dashAvgWeek = async (
     "1주차", "2주차", "3주차", "4주차", "5주차"
   ];
 
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else if (typeof data === "string") {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
+    }
+  };
+
   const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
   const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
 
@@ -218,10 +265,8 @@ export const dashAvgWeek = async (
       }).lean();
 
       if (findResult) {
-        sumMoneyIn[weekNum - 1] += findResult?.money_section?.filter((item) => item.money_part_val === "수입")
-          .reduce((acc, cur) => acc + cur.money_amount, 0);
-        sumMoneyOut[weekNum - 1] += findResult?.money_section?.filter((item) => item.money_part_val === "지출")
-          .reduce((acc, cur) => acc + cur.money_amount, 0);
+        sumMoneyIn[weekNum - 1] += fmtData(findResult?.money_total_in || 0);
+        sumMoneyOut[weekNum - 1] += fmtData(findResult?.money_total_out || 0);
         countRecords[weekNum - 1]++;
       }
     }
@@ -231,8 +276,8 @@ export const dashAvgWeek = async (
   for (let i = 0; i < 5; i++) {
     finalResult.push({
       name: `${names[i]}`,
-      수입: countRecords[i] > 0 ? (sumMoneyIn[i] / countRecords[i]).toFixed(0) : "0",
-      지출: countRecords[i] > 0 ? (sumMoneyOut[i] / countRecords[i]).toFixed(0) : "0",
+      수입: fmtData(sumMoneyIn[i] / countRecords[i]),
+      지출: fmtData(sumMoneyOut[i] / countRecords[i]),
     });
   };
 
@@ -254,6 +299,19 @@ export const dashAvgMonth = async (
     "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
   ];
 
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else if (typeof data === "string") {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
+    }
+  };
+
   const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
   const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
 
@@ -272,10 +330,8 @@ export const dashAvgMonth = async (
     .lean();
 
     if (findResult) {
-      sumMoneyIn[monthNum] += findResult?.money_section?.filter((item) => item.money_part_val === "수입")
-        .reduce((acc, cur) => acc + cur.money_amount, 0);
-      sumMoneyOut[monthNum] += findResult?.money_section?.filter((item) => item.money_part_val === "지출")
-        .reduce((acc, cur) => acc + cur.money_amount, 0);
+      sumMoneyIn[monthNum] += fmtData(findResult?.money_total_in || 0);
+      sumMoneyOut[monthNum] += fmtData(findResult?.money_total_out || 0);
       countRecords[monthNum]++;
     }
   };
@@ -284,8 +340,8 @@ export const dashAvgMonth = async (
   for (let i = 0; i < 12; i++) {
     finalResult.push({
       name: names[i],
-      수입: countRecords[i] > 0 ? (sumMoneyIn[i] / countRecords[i]).toFixed(0) : "0",
-      지출: countRecords[i] > 0 ? (sumMoneyOut[i] / countRecords[i]).toFixed(0) : "0",
+      수입: fmtData(sumMoneyIn[i] / countRecords[i]),
+      지출: fmtData(sumMoneyOut[i] / countRecords[i]),
     });
   };
 

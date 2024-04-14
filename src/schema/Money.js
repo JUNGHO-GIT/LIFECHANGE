@@ -68,7 +68,6 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   }
-
 });
 
 // 3. counter ------------------------------------------------------------------------------------->

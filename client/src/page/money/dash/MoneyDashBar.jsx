@@ -32,16 +32,16 @@ export const MoneyDashBar = () => {
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item.목표, item.실제)));
-    let topValue = Math.ceil(maxValue / 100000) * 100000;
+    const maxValue = Math.max(...value?.map((item) => Math.max(item?.목표, item?.실제)));
+    let topValue = Math.ceil(maxValue / 1000) * 1000;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 100000;
-    if (topValue > 5000000) {
-      tickInterval = 1000000;
+    let tickInterval = 1000;
+    if (topValue > 5000) {
+      tickInterval = 5000;
     }
-    else if (topValue > 1000000) {
-      tickInterval = 500000;
+    else if (topValue > 1000) {
+      tickInterval = 1000;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -49,7 +49,7 @@ export const MoneyDashBar = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick / 1000000).toFixed(1))}M`)
+      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
     };
   };
 
