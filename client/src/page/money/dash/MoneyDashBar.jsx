@@ -54,7 +54,7 @@ export const MoneyDashBar = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartMoneyBar = () => {
+  const chartBar = () => {
 
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
@@ -82,7 +82,7 @@ export const MoneyDashBar = () => {
   return (
     <div className="row d-center">
       <div className="col-12">
-        {chartMoneyBar()}
+        {chartBar()}
       </div>
     </div>
   );

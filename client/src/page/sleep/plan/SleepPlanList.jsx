@@ -113,7 +113,7 @@ export const SleepPlanList = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP_PLAN.map((item) => (
+          {SLEEP_PLAN?.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
                 <td className="pointer" onClick={() => {

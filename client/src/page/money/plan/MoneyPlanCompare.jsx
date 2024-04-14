@@ -115,7 +115,7 @@ export const MoneyPlanCompare = () => {
             </tr>
           </thead>
           <tbody>
-            {MONEY_COMPARE.map((item, index) => (
+            {MONEY_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={3}>

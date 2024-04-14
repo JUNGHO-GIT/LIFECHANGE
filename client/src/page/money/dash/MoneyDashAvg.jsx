@@ -91,7 +91,7 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartMoneyAvgWeek = () => {
+  const chartAvgWeek = () => {
 
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_WEEK);
 
@@ -122,7 +122,7 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartMoneyAvgMonth = () => {
+  const chartAvgMonth = () => {
 
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_MONTH);
 
@@ -171,7 +171,7 @@ export const MoneyDashAvg = () => {
             월간
           </button>
           <div className="mt-10 mb-10">
-            {["수입", "지출"].map((key, index) => (
+            {["수입", "지출"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -198,7 +198,7 @@ export const MoneyDashAvg = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {activeType === "week" ? chartMoneyAvgWeek() : chartMoneyAvgMonth()}
+        {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
       </div>
       <div className="col-3">
         {tableMoneyAvg()}

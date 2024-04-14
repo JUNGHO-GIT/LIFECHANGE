@@ -17,7 +17,7 @@ export const FilterNode = ({
             type: e.target.value
           }))
         )}>
-          {["day", "week", "month", "year", "select"].map((item) => (
+          {["day", "week", "month", "year", "select"]?.map((item) => (
             <option key={item} value={item} selected={FILTER.type === item}>
               {item}
             </option>
@@ -94,7 +94,7 @@ export const FilterNode = ({
             title: newTitleVal
           }));
         }}>
-          {moneyArray.map((item, idx) => (
+          {moneyArray?.map((item, idx) => (
             <option key={idx} data-idx={idx}>
               {item.money_part}
             </option>
@@ -112,7 +112,7 @@ export const FilterNode = ({
             title: e.target.value
           }));
         }}>
-          {moneyArray[FILTER.partIdx].money_title.map((item, idx) => (
+          {moneyArray[FILTER.partIdx].money_title?.map((item, idx) => (
             <option key={idx}>
               {item}
             </option>
@@ -137,7 +137,7 @@ export const FilterNode = ({
             title: newTitleVal
           }));
         }}>
-          {workArray.map((item, idx) => (
+          {workArray?.map((item, idx) => (
             <option key={idx} data-idx={idx}>
               {item.work_part}
             </option>
@@ -155,7 +155,7 @@ export const FilterNode = ({
             title: e.target.value
           }));
         }}>
-          {workArray[FILTER.partIdx].work_title.map((item, idx) => (
+          {workArray[FILTER.partIdx].work_title?.map((item, idx) => (
             <option key={idx}>
               {item}
             </option>

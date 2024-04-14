@@ -130,12 +130,12 @@ export const dashPie = async (
     }
   ]);
 
-  const finalResultOut = findResultOut.map((item) => ({
+  const finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
     value: item.value
   }));
 
-  const finalResultIn = findResultIn.map((item) => ({
+  const finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
     value: item.value
   }));

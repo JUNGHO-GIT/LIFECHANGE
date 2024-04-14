@@ -50,7 +50,7 @@ export const UserList = () => {
           </tr>
         </thead>
         <tbody>
-          {USER_LIST.map((key) => (
+          {USER_LIST?.map((key) => (
             <tr>
               <td>{key.user_id}</td>
               <td>{key.user_pw}</td>

@@ -180,7 +180,7 @@ export const DashDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD_LIST.map((index) => (
+          {FOOD_LIST?.map((index) => (
             <tr key={index._id}>
               <td>{index.food_kcal}</td>
               <td>{index.food_carb}</td>
@@ -206,7 +206,7 @@ export const DashDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP_LIST.map((index) => (
+          {SLEEP_LIST?.map((index) => (
             <tr key={index._id}>
               <td className="pointer" onClick={() => {
                 navParam("/sleep/detail", {
@@ -241,8 +241,8 @@ export const DashDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK_LIST.map((workItem ) => {
-            return workItem.work_section.map((work_section) => (
+          {WORK_LIST?.map((workItem ) => {
+            return workItem.work_section?.map((work_section) => (
               <tr key={work_section._id}>
                 <td className="pointer" onClick={() => {
                     navParam("/work/detail", {
@@ -281,8 +281,8 @@ export const DashDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY_LIST.map((moneyItem) => {
-            return moneyItem.money_section.map((money_section) => (
+          {MONEY_LIST?.map((moneyItem) => {
+            return moneyItem.money_section?.map((money_section) => (
               <tr key={money_section._id}>
                 <td className="pointer" onClick={() => {
                     navParam("/money/detail", {

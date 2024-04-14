@@ -119,7 +119,7 @@ export const FoodPlanCompare = () => {
             </tr>
           </thead>
           <tbody>
-            {FOOD_COMPARE.map((item, index) => (
+            {FOOD_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={5}>

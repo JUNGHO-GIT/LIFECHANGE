@@ -157,7 +157,7 @@ export const FoodDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD?.food_section.map((item, index) => (
+          {FOOD?.food_section?.map((item, index) => (
             <tr key={index}>
               {index === 0 && (
                 <React.Fragment>

@@ -34,7 +34,7 @@ export const DashBar = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartSleepBar = () => {
+  const chartBar = () => {
     return (
       <ResponsiveContainer width="100%" height={300}>
         <ComposedChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -61,7 +61,7 @@ export const DashBar = () => {
   return (
     <div className="row d-center">
       <div className="col-12">
-        {chartSleepBar()}
+        {chartBar()}
       </div>
     </div>
   );

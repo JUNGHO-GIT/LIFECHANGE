@@ -61,7 +61,7 @@ export const compare = async (
     },
   });
 
-  const finalResult = findResultPlan.map((plan) => {
+  const finalResult = findResultPlan?.map((plan) => {
     const matches = findResultReal.filter((real) => (
       real && plan &&
       real.food_startDt && real.food_endDt &&

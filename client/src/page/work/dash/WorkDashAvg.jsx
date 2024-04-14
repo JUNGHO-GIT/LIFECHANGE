@@ -67,7 +67,7 @@ export const DashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartSleepAvgWeek = () => {
+  const chartAvgWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width="100%" height={300}>
@@ -100,7 +100,7 @@ export const DashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartSleepAvgMonth = () => {
+  const chartAvgMonth = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width="100%" height={300}>
@@ -157,7 +157,7 @@ export const DashAvg = () => {
             월간
           </button>
           <div className="mt-10 mb-10">
-            {["취침", "수면", "기상"].map((key, index) => (
+            {["취침", "수면", "기상"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -184,7 +184,7 @@ export const DashAvg = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {activeType === "week" ? chartSleepAvgWeek() : chartSleepAvgMonth()}
+        {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
       </div>
       <div className="col-3">
         {tableSleepAvg()}

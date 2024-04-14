@@ -120,7 +120,7 @@ export const MoneyList = () => {
         <tbody>
           {MONEY?.map((item, index) => (
             <React.Fragment key={item._id}>
-              {item.money_section.slice(0, 3).map((section, sectionIndex) => (
+              {item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <React.Fragment key={section.money_part_idx}>
                   <tr>
                     {sectionIndex === 0 && (

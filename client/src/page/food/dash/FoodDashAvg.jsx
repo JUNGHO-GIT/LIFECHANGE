@@ -69,16 +69,16 @@ export const FoodDashAvg = () => {
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item.수입, item.지출)));
-    let topValue = Math.ceil(maxValue / 100000) * 100000;
+    const maxValue = Math.max(...value?.map((item) => Math.max(item.목표, item.실제)));
+    let topValue = Math.ceil(maxValue / 1000) * 1000;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 100000;
-    if (topValue > 5000000) {
-      tickInterval = 1000000;
+    let tickInterval = 1000;
+    if (topValue > 5000) {
+      tickInterval = 5000;
     }
-    else if (topValue > 1000000) {
-      tickInterval = 500000;
+    else if (topValue > 1000) {
+      tickInterval = 1000;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -86,12 +86,12 @@ export const FoodDashAvg = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick / 1000000).toFixed(1))}M`)
+      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
     };
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartFoodAvgWeek = () => {
+  const chartAvgWeek = () => {
 
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_WEEK);
 
@@ -128,7 +128,7 @@ export const FoodDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartFoodAvgMonth = () => {
+  const chartAvgMonth = () => {
 
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_MONTH);
 
@@ -183,7 +183,7 @@ export const FoodDashAvg = () => {
             월간
           </button>
           <div className="mt-10 mb-10">
-            {["칼로리", "단백질", "지방", "탄수화물"].map((key, index) => (
+            {["칼로리", "단백질", "지방", "탄수화물"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -210,7 +210,7 @@ export const FoodDashAvg = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {activeType === "week" ? chartFoodAvgWeek() : chartFoodAvgMonth()}
+        {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
       </div>
       <div className="col-3">
         {tableFoodAvg()}

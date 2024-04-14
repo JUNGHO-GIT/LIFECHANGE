@@ -18,20 +18,33 @@ export const FoodDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine(${PATH})`, ["칼로리", "탄수화물", "단백질", "지방"]
+    `activeLine(${PATH})`, ["탄수화물", "단백질", "지방"]
+  );
+  const {val:activeType, set:setActiveType} = useStorage(
+    `activeType(${PATH})`, "kcal"
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const DASH_DEFAULT = [
-    {name:"월", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
-    {name:"화", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
-    {name:"수", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
-    {name:"목", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
-    {name:"금", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
-    {name:"토", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
-    {name:"일", 칼로리: 0, 단백질: 0, 지방: 0, 탄수화물: 0},
+  const DASH_KCAL_DEFAULT = [
+    {name:"월", 칼로리: 0},
+    {name:"화", 칼로리: 0},
+    {name:"수", 칼로리: 0},
+    {name:"목", 칼로리: 0},
+    {name:"금", 칼로리: 0},
+    {name:"토", 칼로리: 0},
+    {name:"일", 칼로리: 0},
   ];
-  const [DASH, setDASH] = useState(DASH_DEFAULT);
+  const DASH_NUT_DEFAULT = [
+    {name:"월", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"화", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"수", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"목", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"금", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"토", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"일", 탄수화물: 0, 단백질: 0, 지방: 0},
+  ];
+  const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
+  const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -40,22 +53,23 @@ export const FoodDashLine = () => {
         user_id: user_id
       },
     });
-    setDASH(response.data.result || DASH_DEFAULT);
+    setDASH_KCAL(response.data.result.kcal || DASH_KCAL_DEFAULT);
+    setDASH_NUT(response.data.result.nut || DASH_NUT_DEFAULT);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item.수입, item.지출)));
-    let topValue = Math.ceil(maxValue / 100000) * 100000;
+    const maxValue = Math.max(...value?.map((item) => Math.max(item.목표, item.실제)));
+    let topValue = Math.ceil(maxValue / 1000) * 1000;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 100000;
-    if (topValue > 5000000) {
-      tickInterval = 1000000;
+    let tickInterval = 1000;
+    if (topValue > 5000) {
+      tickInterval = 5000;
     }
-    else if (topValue > 1000000) {
-      tickInterval = 500000;
+    else if (topValue > 1000) {
+      tickInterval = 1000;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -63,18 +77,18 @@ export const FoodDashLine = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick / 1000000).toFixed(1))}M`)
+      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
     };
   };
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartFoodLine = () => {
+  // 5-1. chart ----------------------------------------------------------------------------------->
+  const chartLineKcal = () => {
 
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
 
     return (
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="name" />
           <YAxis
@@ -86,6 +100,29 @@ export const FoodDashLine = () => {
           {activeLine.includes("칼로리")
             && <Line type="monotone" dataKey="칼로리" stroke="#8884d8" activeDot={{r: 8}} />
           }
+          <Tooltip />
+          <Legend />
+        </LineChart>
+      </ResponsiveContainer>
+    );
+  };
+
+  // 5-2. chart ----------------------------------------------------------------------------------->
+  const chartLineNut = () => {
+
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
+
+    return (
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="category" dataKey="name" />
+          <YAxis
+            type="number"
+            domain={domain}
+            ticks={ticks}
+            tickFormatter={tickFormatter}
+          />
           {activeLine.includes("탄수화물")
             && <Line type="monotone" dataKey="탄수화물" stroke="#82ca9d" activeDot={{r: 8}} />
           }
@@ -93,7 +130,7 @@ export const FoodDashLine = () => {
             && <Line type="monotone" dataKey="단백질" stroke="#ff7300" activeDot={{r: 8}} />
           }
           {activeLine.includes("지방")
-            && <Line type="monotone" dataKey="지방" stroke="#ff7300" activeDot={{r: 8}} />
+            && <Line type="monotone" dataKey="지방" stroke="#ffc658" activeDot={{r: 8}} />
           }
           <Tooltip />
           <Legend />
@@ -102,13 +139,28 @@ export const FoodDashLine = () => {
     );
   };
 
-  // 5-3. table ----------------------------------------------------------------------------------->
+  // 6-1. table ----------------------------------------------------------------------------------->
   const tableFoodLine = () => {
     return (
       <table className="table bg-white border">
+        <thead>
+          <button
+            className={`btn ${activeType === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActiveType("kcal"))}
+          >
+            칼로리
+          </button>
+          &nbsp;&nbsp;
+          <button
+            className={`btn ${activeType === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActiveType("nut"))}
+          >
+            영양소
+          </button>
+        </thead>
         <tbody>
           <div className="mt-10 mb-10">
-            {["칼로리", "탄수화물", "단백질", "지방"].map((key, index) => (
+            {activeType === "nut" && ["탄수화물", "단백질", "지방"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -135,7 +187,7 @@ export const FoodDashLine = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {chartFoodLine()}
+        {activeType === "kcal" ? chartLineKcal() : chartLineNut()}
       </div>
       <div className="col-3">
         {tableFoodLine()}

@@ -23,11 +23,11 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
   food_total_kcal: {
     type: String,
     required: false
   },
-
   food_total_carb: {
     type: String,
     required: false

@@ -46,7 +46,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartSleepPieIn = () => {
+  const chartPieIn = () => {
     const COLORS_IN = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <ResponsiveContainer width="100%" height={300}>
@@ -68,7 +68,7 @@ export const MoneyDashPie = () => {
               data.payload.opacity = 1.0;
             }}
           >
-            {DASH_IN.map((entry, index) => (
+            {DASH_IN?.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS_IN[index % COLORS_IN.length]} />
             ))}
           </Pie>
@@ -79,7 +79,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartSleepPieOut = () => {
+  const chartPieOut = () => {
     const COLORS_OUT = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <ResponsiveContainer width="100%" height={300}>
@@ -100,7 +100,7 @@ export const MoneyDashPie = () => {
               data.payload.opacity = 1.0;
             }}
           >
-            {DASH_OUT.map((entry, index) => (
+            {DASH_OUT?.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS_OUT[index % COLORS_OUT.length]} />
             ))}
           </Pie>
@@ -114,10 +114,10 @@ export const MoneyDashPie = () => {
   return (
     <div className="row d-center">
       <div className="col-6">
-        {chartSleepPieIn()}
+        {chartPieIn()}
       </div>
       <div className="col-6">
-        {chartSleepPieOut()}
+        {chartPieOut()}
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export const FoodDash = () => {
         </div>
         <div className="container-wrapper mb-10">
           <h5 className="container-title">주간 영양소</h5>
-          {/* {FoodDashLine()} */}
+          {FoodDashLine()}
         </div>
         <div className="container-wrapper mb-10">
           <h5 className="container-title">주간/월간 평균 영양소</h5>

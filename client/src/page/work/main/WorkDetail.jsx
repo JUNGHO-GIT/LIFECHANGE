@@ -158,7 +158,7 @@ export const WorkDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {WORK?.work_section.map((item, index) => (
+          {WORK?.work_section?.map((item, index) => (
             <tr key={index}>
               {index === 0 && (
                 <React.Fragment>

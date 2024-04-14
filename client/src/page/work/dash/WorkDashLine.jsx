@@ -44,7 +44,7 @@ export const DashLine = () => {
   })()}, [user_id]);
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartSleepLine = () => {
+  const chartLine = () => {
     return (
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -85,7 +85,7 @@ export const DashLine = () => {
       <table className="table bg-white border">
         <tbody>
           <div className="mt-10 mb-10">
-            {["취침", "수면", "기상"].map((key, index) => (
+            {["취침", "수면", "기상"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -112,7 +112,7 @@ export const DashLine = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {chartSleepLine()}
+        {chartLine()}
       </div>
       <div className="col-3">
         {tableSleepLine()}

@@ -232,7 +232,7 @@ export const WorkSave = () => {
                     });
                   }}
                 >
-                  {workPartArray.map((part, idx) => (
+                  {workPartArray?.map((part, idx) => (
                     <option key={idx} value={idx}>
                       {part.work_part}
                     </option>
@@ -258,7 +258,7 @@ export const WorkSave = () => {
                     });
                   }}
                 >
-                  {workTitleArray[WORK.work_section[i]?.work_part_idx]?.work_title.map((title, idx) => (
+                  {workTitleArray[WORK.work_section[i]?.work_part_idx]?.work_title?.map((title, idx) => (
                     <option key={idx} value={title}>
                       {title}
                     </option>

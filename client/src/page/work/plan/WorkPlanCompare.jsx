@@ -115,7 +115,7 @@ export const WorkPlanCompare = () => {
             </tr>
           </thead>
           <tbody>
-            {WORK_COMPARE.map((item, index) => (
+            {WORK_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={3}>

@@ -71,7 +71,7 @@ export const compare = async (
     }
   };
 
-  const finalResult = findResultPlan.map((plan) => {
+  const finalResult = findResultPlan?.map((plan) => {
     const matches = findResultReal.filter((real) => (
       real && plan &&
       real.work_startDt && real.work_endDt &&

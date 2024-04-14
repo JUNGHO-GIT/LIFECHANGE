@@ -130,7 +130,7 @@ export const WorkList = () => {
         <tbody>
           {WORK?.map((item, index) => (
             <React.Fragment key={item._id}>
-              {item.work_section.slice(0, 3).map((section, sectionIndex) => (
+              {item.work_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <React.Fragment key={`${section.work_part_val}_${section.work_title_val}`}>
                   <tr>
                     {sectionIndex === 0 && (

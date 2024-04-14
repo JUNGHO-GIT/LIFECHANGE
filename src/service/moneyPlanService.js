@@ -62,7 +62,7 @@ export const compare = async (
   })
   .lean();
 
-  const finalResult = findResultPlan.map((plan) => {
+  const finalResult = findResultPlan?.map((plan) => {
     const matches = findResultReal.filter((real) => (
       real && plan &&
       real.money_startDt && real.money_endDt &&

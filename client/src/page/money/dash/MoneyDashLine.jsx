@@ -68,7 +68,7 @@ export const MoneyDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartMoneyLine = () => {
+  const chartLine = () => {
 
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
@@ -102,7 +102,7 @@ export const MoneyDashLine = () => {
       <table className="table bg-white border">
         <tbody>
           <div className="mt-10 mb-10">
-            {["수입", "지출"].map((key, index) => (
+            {["수입", "지출"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -129,7 +129,7 @@ export const MoneyDashLine = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {chartMoneyLine()}
+        {chartLine()}
       </div>
       <div className="col-3">
         {tableMoneyLine()}

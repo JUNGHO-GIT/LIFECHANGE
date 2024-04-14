@@ -114,9 +114,9 @@ export const SleepList = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP.map((item, index) => (
+          {SLEEP?.map((item, index) => (
             <React.Fragment key={item._id}>
-              {item.sleep_section.slice(0, 3).map((section, sectionIndex) => (
+              {item.sleep_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <React.Fragment key={section.sleep_part_idx}>
                   <tr>
                     {sectionIndex === 0 && (

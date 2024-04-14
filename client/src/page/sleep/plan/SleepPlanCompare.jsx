@@ -142,7 +142,7 @@ export const SleepPlanCompare = () => {
             </tr>
           </thead>
           <tbody>
-            {SLEEP_COMPARE.map((item, index) => (
+            {SLEEP_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={4}>

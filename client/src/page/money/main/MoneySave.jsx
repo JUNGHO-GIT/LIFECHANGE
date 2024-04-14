@@ -223,7 +223,7 @@ export const MoneySave = () => {
                     });
                   }}
                 >
-                  {moneyArray.map((item, idx) => (
+                  {moneyArray?.map((item, idx) => (
                     <option
                       key={idx}
                       value={idx}
@@ -259,7 +259,7 @@ export const MoneySave = () => {
                     }
                   }}
                 >
-                  {moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title.map((title, idx) => (
+                  {moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
                     <option key={idx} value={idx}>
                       {title}
                     </option>

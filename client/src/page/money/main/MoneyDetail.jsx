@@ -147,7 +147,7 @@ export const MoneyDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY?.money_section.map((item, index) => (
+          {MONEY?.money_section?.map((item, index) => (
             <tr key={index}>
               {index === 0 && (
                 <React.Fragment>

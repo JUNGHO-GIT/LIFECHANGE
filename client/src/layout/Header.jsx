@@ -64,7 +64,7 @@ export const Header = () => {
         </div>
         <Collapse in={isExpended === label}>
           <ul>
-            {items.map(({ to, label }) => (
+            {items?.map(({ to, label }) => (
               <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
                 <div className="pointer" onClick={() => {
                   SEND.startDt = koreanDate;
@@ -91,7 +91,7 @@ export const Header = () => {
         </div>
         <div className="d-flex flex-column p-3">
           <ul className="nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark">
-            {linkArray.map((menu) => (
+            {linkArray?.map((menu) => (
               <SidebarItem key={menu.label}
                 {...menu}
               />

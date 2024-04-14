@@ -133,7 +133,7 @@ export const FoodList = () => {
         <tbody>
           {FOOD?.map((item, index) => (
             <React.Fragment key={item._id}>
-              {item.food_section.slice(0, 3).map((section, sectionIndex) => (
+              {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <React.Fragment key={`${section.food_part_val}_${section.food_title_val}`}>
                   <tr>
                     {sectionIndex === 0 && (

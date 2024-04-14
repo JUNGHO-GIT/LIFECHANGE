@@ -14,15 +14,28 @@ export const dashBar = async (
 
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
-  const dataFields = {
-    "칼로리": { plan: "food_plan_kcal", real: "food_total_kcal" },
+  const dataKcal = {
+    "칼로리": { plan: "food_plan_kcal", real: "food_total_kcal" }
+  };
+  const dataNut = {
     "탄수화물": { plan: "food_plan_carb", real: "food_total_carb" },
     "단백질": { plan: "food_plan_protein", real: "food_total_protein" },
     "지방": { plan: "food_plan_fat", real: "food_total_fat" },
   };
 
-  let finalResult = [];
-  for (let key in dataFields) {
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+  };
+
+  // kcal
+  let finalResultKcal = [];
+  for (let key in dataKcal) {
     const findResultPlan = await FoodPlan.findOne({
       user_id: user_id_param,
       food_plan_startDt: {
@@ -35,6 +48,7 @@ export const dashBar = async (
       }
     })
     .lean();
+
     const findResultReal = await Food.findOne({
       user_id: user_id_param,
       food_startDt: {
@@ -48,15 +62,54 @@ export const dashBar = async (
     })
     .lean();
 
-    finalResult.push({
+    finalResultKcal.push({
       name: key,
-      목표: findResultPlan?.[dataFields[key].plan] || 0,
-      실제: findResultReal?.[dataFields[key].real] || 0
+      목표: fmtData(findResultPlan?.[dataKcal[key].plan]),
+      실제: fmtData(findResultReal?.[dataKcal[key].real])
+    });
+  };
+
+  // carb, protein, fat
+  let finalResultNut = [];
+  for (let key in dataNut) {
+    const findResultPlan = await FoodPlan.findOne({
+      user_id: user_id_param,
+      food_plan_startDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+      food_plan_endDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      }
+    })
+    .lean();
+
+    const findResultReal = await Food.findOne({
+      user_id: user_id_param,
+      food_startDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+      food_endDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      }
+    })
+    .lean();
+
+    finalResultNut.push({
+      name: key,
+      목표: fmtData(findResultPlan?.[dataNut[key].plan]),
+      실제: fmtData(findResultReal?.[dataNut[key].real])
     });
   };
 
   return {
-    result: finalResult,
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
   };
 };
 
@@ -65,42 +118,128 @@ export const dashPie = async (
   user_id_param
 ) => {
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-  const findResult = await Food.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        food_startDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
-        },
-        food_endDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
-        },
-      }
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+  };
+
+  // kcal
+  const findResultKcal = await Food.aggregate([
+    {$match: {
+      user_id: user_id_param,
+      food_startDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+      food_endDt: {
+        $gte: koreanDate,
+        $lte: koreanDate
+      },
+    }},
+    {$unwind: "$food_section"
     },
-    {
-      $unwind: "$food_section"
-    },
-    {
-      $group: {
-        _id: "$food_section.food_title_val",
-        value: {
-          $sum: {
-            $toDouble: "$food_section.food_kcal"
-          }
+    {$group: {
+      _id: "$food_section.food_title_val",
+      value: {
+        $sum: {
+          $toDouble: "$food_section.food_kcal"
         }
       }
-    }
+    }}
   ]);
 
-  const finalResult = findResult.map((item) => ({
+  // carb, protein, fat
+  const findResultNut = await Food.aggregate([
+    {$match: {
+      user_id: user_id_param,
+      food_startDt: { $gte: koreanDate, $lte: koreanDate },
+      food_endDt: { $gte: koreanDate, $lte: koreanDate }
+    }},
+    {$project: {
+      _id: 0,
+      food_total_carb: 1,
+      food_total_protein: 1,
+      food_total_fat: 1
+    }}
+  ]);
+
+  const finalResultKcal = findResultKcal?.map((item) => ({
     name: item._id,
-    value: item.value
+    value: fmtData(item.value)
   }));
 
+  const finalResultNut = [
+    { name: "탄수화물", value: fmtData(findResultNut[0]?.food_total_carb) },
+    { name: "단백질", value: fmtData(findResultNut[0]?.food_total_protein) },
+    { name: "지방", value: fmtData(findResultNut[0]?.food_total_fat) }
+  ];
+
   return {
-    result: finalResult,
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
+  };
+};
+
+// 0-3. dash (line) ------------------------------------------------------------------------------->
+export const dashLine = async (
+  user_id_param
+) => {
+
+  const names = [
+    "월", "화", "수", "목", "금", "토", "일"
+  ];
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+  };
+
+  // kcal
+  let finalResultKcal = [];
+
+  // carb, protein, fat
+  let finalResultNut = [];
+
+  for (let i in names) {
+    const date = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
+    const findResult = await Food.findOne({
+      user_id: user_id_param,
+      food_startDt: date.format("YYYY-MM-DD"),
+      food_endDt: date.format("YYYY-MM-DD"),
+    })
+    .lean();
+
+    finalResultKcal.push({
+      name: `${names[i]} ${date.format("MM/DD")}`,
+      칼로리: fmtData(findResult?.food_total_kcal)
+    });
+
+    finalResultNut.push({
+      name: `${names[i]} ${date.format("MM/DD")}`,
+      탄수화물: fmtData(findResult?.food_total_carb),
+      단백질: fmtData(findResult?.food_total_protein),
+      지방: fmtData(findResult?.food_total_fat),
+    });
+  };
+
+  return {
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
   };
 };
 
