@@ -20,18 +20,13 @@ export const MoneyDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseIn = await axios.get(`${URL_MONEY}/dashPieIn`, {
+    const response = await axios.get(`${URL_MONEY}/dashPie`, {
       params: {
         user_id: user_id
       },
     });
-    const responseOut = await axios.get(`${URL_MONEY}/dashPieOut`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setDASH_IN(responseIn.data.result.length > 0 ? responseIn.data.result : DASH_DEFAULT);
-    setDASH_OUT(responseOut.data.result.length > 0 ? responseOut.data.result : DASH_DEFAULT);
+    setDASH_IN(response.data.resultIn.length > 0 ? response.data.resultIn : DASH_DEFAULT);
+    setDASH_OUT(response.data.resultOut.length > 0 ? response.data.resultOut : DASH_DEFAULT);
   })()}, [user_id]);
 
   // 4. render ------------------------------------------------------------------------------------>

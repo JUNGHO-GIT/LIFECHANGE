@@ -23,29 +23,10 @@ foodRouter.get("/dashBar", async (req, res) => {
   }
 });
 
-// 0-2. dash (in - pie) --------------------------------------------------------------------------->
-foodRouter.get("/dashPieIn", async (req, res) => {
+// 0-2. dash  ------------------------------------------------------------------------------------->
+foodRouter.get("/dashPie", async (req, res) => {
   try {
-    const result = await service.dashPieIn (
-      req.query.user_id
-    );
-    if (result) {
-      res.send(result);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 0-2. dash (out - pie) -------------------------------------------------------------------------->
-foodRouter.get("/dashPieOut", async (req, res) => {
-  try {
-    const result = await service.dashPieOut (
+    const result = await service.dashPie (
       req.query.user_id
     );
     if (result) {
@@ -80,7 +61,7 @@ foodRouter.get("/dashLine", async (req, res) => {
   }
 });
 
-// 0-3. dash (avg - week) ------------------------------------------------------------------------->
+// 0-4. dash (avg - week) ------------------------------------------------------------------------->
 foodRouter.get("/dashAvgWeek", async (req, res) => {
   try {
     const result = await service.dashAvgWeek (

@@ -13,10 +13,14 @@ export const dashBar = async (
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
   const dataFields = {
-    "칼로리": { plan: "money_plan_kcal", real: "money_total_kcal" },
-    "탄수화물": { plan: "money_plan_carb", real: "money_total_carb" },
-    "단백질": { plan: "money_plan_protein", real: "money_total_protein" },
-    "지방": { plan: "money_plan_fat", real: "money_total_fat" },
+    "수입": {
+      plan: "money_plan_in",
+      real: "money_real_in"
+    },
+    "지출": {
+      plan: "money_plan_out",
+      real: "money_real_out"
+    }
   };
 
   let finalResult = [];
@@ -58,12 +62,12 @@ export const dashBar = async (
   };
 };
 
-// 0-2. dash (in - pie) --------------------------------------------------------------------------->
-export const dashPieIn = async (
+// 0-2. dash (pie) -------------------------------------------------------------------------------->
+export const dashPie = async (
   user_id_param
 ) => {
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-  const findResult = await Money.aggregate([
+  const findResultIn = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -94,23 +98,7 @@ export const dashPieIn = async (
       }
     }
   ]);
-
-  const finalResult = findResult.map((item) => ({
-    name: item._id,
-    value: item.value
-  }));
-
-  return {
-    result: finalResult
-  };
-};
-
-// 0-2. dash (out - pie) -------------------------------------------------------------------------->
-export const dashPieOut = async (
-  user_id_param
-) => {
-  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-  const findResult = await Money.aggregate([
+  const findResultOut = await Money.aggregate([
     {
       $match: {
         user_id: user_id_param,
@@ -142,13 +130,19 @@ export const dashPieOut = async (
     }
   ]);
 
-  const finalResult = findResult.map((item) => ({
+  const finalResultOut = findResultOut.map((item) => ({
+    name: item._id,
+    value: item.value
+  }));
+
+  const finalResultIn = findResultIn.map((item) => ({
     name: item._id,
     value: item.value
   }));
 
   return {
-    result: finalResult
+    resultIn: finalResultIn,
+    resultOut: finalResultOut
   };
 };
 

@@ -60,6 +60,50 @@ export const dashBar = async (
   };
 };
 
+// 0-2. dash (pie) -------------------------------------------------------------------------------->
+export const dashPie = async (
+  user_id_param
+) => {
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
+  const findResult = await Food.aggregate([
+    {
+      $match: {
+        user_id: user_id_param,
+        food_startDt: {
+          $gte: koreanDate,
+          $lte: koreanDate
+        },
+        food_endDt: {
+          $gte: koreanDate,
+          $lte: koreanDate
+        },
+      }
+    },
+    {
+      $unwind: "$food_section"
+    },
+    {
+      $group: {
+        _id: "$food_section.food_title_val",
+        value: {
+          $sum: {
+            $toDouble: "$food_section.food_kcal"
+          }
+        }
+      }
+    }
+  ]);
+
+  const finalResult = findResult.map((item) => ({
+    name: item._id,
+    value: item.value
+  }));
+
+  return {
+    result: finalResult,
+  };
+};
+
 // 1-0. search ------------------------------------------------------------------------------------>
 export const search = async (
   user_id_param,

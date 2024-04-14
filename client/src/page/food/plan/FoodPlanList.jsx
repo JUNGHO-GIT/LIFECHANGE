@@ -108,10 +108,10 @@ export const FoodPlanList = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>목표 칼로리</th>
-            <th>목표 탄수화물</th>
-            <th>목표 단백질</th>
-            <th>목표 지방</th>
+            <th>칼로리(하루섭취량)</th>
+            <th>탄수화물(하루섭취량)</th>
+            <th>단백질(하루섭취량)</th>
+            <th>지방(하루섭취량)</th>
           </tr>
         </thead>
         <tbody>

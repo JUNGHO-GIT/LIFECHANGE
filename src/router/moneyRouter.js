@@ -23,29 +23,10 @@ moneyRouter.get("/dashBar", async (req, res) => {
   }
 });
 
-// 0-2. dash (in - pie) --------------------------------------------------------------------------->
-moneyRouter.get("/dashPieIn", async (req, res) => {
+// 0-2. dash  ------------------------------------------------------------------------------------->
+moneyRouter.get("/dashPie", async (req, res) => {
   try {
-    const result = await service.dashPieIn (
-      req.query.user_id
-    );
-    if (result) {
-      res.send(result);
-    }
-    else {
-      res.send("fail");
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// 0-2. dash (out - pie) -------------------------------------------------------------------------->
-moneyRouter.get("/dashPieOut", async (req, res) => {
-  try {
-    const result = await service.dashPieOut (
+    const result = await service.dashPie (
       req.query.user_id
     );
     if (result) {

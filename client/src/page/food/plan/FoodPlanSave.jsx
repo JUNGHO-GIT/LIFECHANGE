@@ -192,7 +192,7 @@ export const FoodPlanSave = () => {
         <div className="row d-center mb-20">
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">목표 칼로리</span>
+              <span className="input-group-text">칼로리(하루섭취량)</span>
               <input type="text" className="form-control"
                 value={FOOD_PLAN?.food_plan_kcal}
                 onChange={(e) => {
@@ -206,7 +206,7 @@ export const FoodPlanSave = () => {
           </div>
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">목표 탄수화물</span>
+              <span className="input-group-text">탄수화물(하루섭취량)</span>
               <input type="text" className="form-control"
                 value={FOOD_PLAN?.food_plan_carb}
                 onChange={(e) => {
@@ -220,7 +220,7 @@ export const FoodPlanSave = () => {
           </div>
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">목표 단백질</span>
+              <span className="input-group-text">단백질(하루섭취량)</span>
               <input type="text" className="form-control"
                 value={FOOD_PLAN?.food_plan_protein}
                 onChange={(e) => {
@@ -234,7 +234,7 @@ export const FoodPlanSave = () => {
           </div>
           <div className="col-6">
             <div className="input-group">
-              <span className="input-group-text">목표 지방</span>
+              <span className="input-group-text">지방(하루섭취량)</span>
               <input type="text" className="form-control"
                 value={FOOD_PLAN?.food_plan_fat}
                 onChange={(e) => {
