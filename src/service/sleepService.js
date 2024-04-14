@@ -345,7 +345,7 @@ export const save = async (
 
   const [startDay, endDay] = sleep_dur_param.split(` ~ `);
 
-  const findResult = await Sleep.findOne({
+  const filter = {
     user_id: user_id_param,
     sleep_startDt: {
       $gte: startDay,
@@ -354,38 +354,23 @@ export const save = async (
     sleep_endDt: {
       $gte: startDay,
       $lte: endDay,
-    },
-  })
-  .lean();
+    }
+  };
+  const update = {
+    $set: {
+      ...SLEEP_param,
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+    }
+  };
+  const options = {
+    new: true,
+    upsert: true
+  };
 
-  let finalResult;
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      sleep_startDt: startDay,
-      sleep_endDt: endDay,
-      sleep_section: SLEEP_param.sleep_section,
-      sleep_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      sleep_update: "",
-    };
-    finalResult = await Sleep.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        sleep_section: SLEEP_param.sleep_section,
-        sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      }
-    };
-    finalResult = await Sleep.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await Sleep.updateOne(filter, update, options);
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

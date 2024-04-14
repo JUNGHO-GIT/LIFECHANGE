@@ -637,7 +637,7 @@ export const save = async (
 
   const [startDay, endDay] = food_dur_param.split(` ~ `);
 
-  const findResult = await Food.findOne({
+  const filter = {
     user_id: user_id_param,
     food_startDt: {
       $gte: startDay,
@@ -646,43 +646,23 @@ export const save = async (
     food_endDt: {
       $gte: startDay,
       $lte: endDay,
-    },
-  })
-  .lean();
+    }
+  };
+  const update = {
+    $set: {
+      ...FOOD_param,
+      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+    }
+  };
+  const options = {
+    new: true,
+    upsert: true
+  };
 
-  let finalResult;
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      food_startDt: startDay,
-      food_endDt: endDay,
-      food_total_kcal: FOOD_param.food_total_kcal,
-      food_total_carb: FOOD_param.food_total_carb,
-      food_total_protein: FOOD_param.food_total_protein,
-      food_total_fat: FOOD_param.food_total_fat,
-      food_section: FOOD_param.food_section,
-      food_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      food_update: "",
-    };
-    finalResult = await Food.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        food_section: FOOD_param.food_section,
-        food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      }
-    };
-
-    finalResult = await Food.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await Food.updateOne(filter, update, options);
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

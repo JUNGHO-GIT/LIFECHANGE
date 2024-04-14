@@ -75,6 +75,8 @@ export const MoneySave = () => {
     money_number: 0,
     money_startDt: "",
     money_endDt: "",
+    money_total_in: "",
+    money_total_out: "",
     money_section: [{
       money_part_idx: 0,
       money_part_val: "",
@@ -105,6 +107,24 @@ export const MoneySave = () => {
       sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [user_id, DATE.startDt, DATE.endDt]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    // money_part_val 가 수입인경우, 지출인 경우
+    const totals = MONEY.money_section.reduce((acc, cur) => {
+      return {
+        totalIn: acc.totalIn + (cur.money_part_val === "수입" ? cur.money_amount : 0),
+        totalOut: acc.totalOut + (cur.money_part_val === "지출" ? cur.money_amount : 0)
+      };
+    }, {totalIn: 0, totalOut: 0});
+
+    setMONEY((prev) => ({
+      ...prev,
+      money_total_in: (Math.round(totals.totalIn)).toString(),
+      money_total_out: (Math.round(totals.totalOut)).toString()
+    }));
+
+  }, [MONEY.money_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -317,6 +337,32 @@ export const MoneySave = () => {
         <div className="row d-center">
           <div className="col-12">
             {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
+          </div>
+          <div className="row d-center">
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">총수입</span>
+                <input
+                  disabled
+                  type="text"
+                  className="form-control"
+                  value={MONEY?.money_total_in}
+                  readOnly
+                />
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">총지출</span>
+                <input
+                  disabled
+                  type="text"
+                  className="form-control"
+                  value={MONEY?.money_total_out}
+                  readOnly
+                />
+              </div>
+            </div>
           </div>
         </div>
       );

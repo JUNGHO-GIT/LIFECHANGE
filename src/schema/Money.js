@@ -24,6 +24,15 @@ const schema = new mongoose.Schema({
     required: false
   },
 
+  money_total_in: {
+    type: String,
+    required: false
+  },
+  money_total_out: {
+    type: String,
+    required: false
+  },
+
   money_section: [{
     money_part_idx : {
       type : Number,

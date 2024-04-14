@@ -126,7 +126,7 @@ export const save = async (
 
   const [startDay, endDay] = work_dur_param.split(` ~ `);
 
-  const findResult = await Work.findOne({
+  const filter = {
     user_id: user_id_param,
     work_startDt: {
       $gte: startDay,
@@ -135,41 +135,23 @@ export const save = async (
     work_endDt: {
       $gte: startDay,
       $lte: endDay,
-    },
-  })
-  .lean();
+    }
+  };
+  const update = {
+    $set: {
+      ...WORK_param,
+      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+    }
+  };
+  const options = {
+    new: true,
+    upsert: true
+  };
 
-  let finalResult;
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      work_startDt: startDay,
-      work_endDt: endDay,
-      work_start: WORK_param.work_start,
-      work_end: WORK_param.work_end,
-      work_time: WORK_param.work_time,
-      work_section: WORK_param.work_section,
-      work_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      work_update: "",
-    };
-    finalResult = await Work.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        work_section: WORK_param.work_section,
-        work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      }
-    };
-    finalResult = await Work.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await Work.updateOne(filter, update, options);
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

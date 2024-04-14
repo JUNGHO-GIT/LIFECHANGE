@@ -12,19 +12,27 @@ export const dashBar = async (
 
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 
-  const dataFields = {
-    "수입": {
-      plan: "money_plan_in",
-      real: "money_real_in"
-    },
-    "지출": {
-      plan: "money_plan_out",
-      real: "money_real_out"
+  const dataInOut = {
+    "탄수화물": { plan: "food_plan_carb", real: "food_total_carb" },
+    "단백질": { plan: "food_plan_protein", real: "food_total_protein" },
+    "지방": { plan: "food_plan_fat", real: "food_total_fat" },
+  };
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else if (typeof data === "string") {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
     }
   };
 
   let finalResult = [];
-  for (let key in dataFields) {
+  for (let key in dataInOut) {
     const findResultPlan = await MoneyPlan.findOne({
       user_id: user_id_param,
       money_plan_startDt: {
@@ -52,8 +60,8 @@ export const dashBar = async (
 
     finalResult.push({
       name: key,
-      목표: findResultPlan?.[dataFields[key].plan] || 0,
-      실제: findResultReal?.[dataFields[key].real] || 0
+      목표: findResultPlan?.[dataInOut[key].plan] || 0,
+      실제: findResultReal?.[dataInOut[key].real] || 0
     });
   };
 
@@ -405,7 +413,7 @@ export const save = async (
 
   const [startDay, endDay] = money_dur_param.split(` ~ `);
 
-  const findResult = await Money.findOne({
+  const filter = {
     user_id: user_id_param,
     money_startDt: {
       $gte: startDay,
@@ -414,38 +422,23 @@ export const save = async (
     money_endDt: {
       $gte: startDay,
       $lte: endDay,
-    },
-  })
-  .lean();
+    }
+  };
+  const update = {
+    $set: {
+      ...MONEY_param,
+      money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+    }
+  };
+  const options = {
+    new: true,
+    upsert: true
+  };
 
-  let finalResult;
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      money_startDt: startDay,
-      money_endDt: endDay,
-      money_section: MONEY_param.money_section,
-      money_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      money_update: "",
-    };
-    finalResult = await Money.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        money_section: MONEY_param.money_section,
-        money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      }
-    };
-    finalResult = await Money.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await Money.updateOne(filter, update, options);
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 
