@@ -1,11 +1,11 @@
 // Food.js
 
 import mongoose from "mongoose";
+import moment from "moment-timezone";
 import {incrementSeq} from "./Counter.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-
   user_id: {
     type: String,
     required: true
@@ -88,6 +88,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: false
   },
+
   food_update: {
     type: String,
     required: false
@@ -96,6 +97,7 @@ const schema = new mongoose.Schema({
 });
 
 // 3. counter ------------------------------------------------------------------------------------->
+// @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
     this.food_number = await incrementSeq("food_number", "Food");

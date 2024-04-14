@@ -167,42 +167,33 @@ export const save = async (
 
   const [startDay, endDay] = sleep_plan_dur_param.split(` ~ `);
 
-  const findResult = await SleepPlan.findOne({
+  const filter = {
     user_id: user_id_param,
-    sleep_plan_startDt: startDay,
-    sleep_plan_endDt: endDay,
-  })
-  .lean();
+    sleep_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    sleep_endDt: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
+  const update = {
+    $set: {
+      ...SLEEP_PLAN_param,
+      sleep_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+    }
+  };
+  const options = {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true
+  };
 
-  let finalResult;
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      sleep_plan_startDt: startDay,
-      sleep_plan_endDt: endDay,
-      sleep_plan_night: SLEEP_PLAN_param.sleep_plan_night,
-      sleep_plan_morning: SLEEP_PLAN_param.sleep_plan_morning,
-      sleep_plan_time: SLEEP_PLAN_param.sleep_plan_time,
-      sleep_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      sleep_plan_update: ""
-    };
-    finalResult = await SleepPlan.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        sleep_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      },
-    };
-    finalResult = await SleepPlan.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await Sleep.findOneAndUpdate(filter, update, options).lean();
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

@@ -178,42 +178,33 @@ export const save = async (
 
   const [startDay, endDay] = work_plan_dur_param.split(` ~ `);
 
-  let finalResult;
-
-  const findResult = await WorkPlan.findOne({
+  const filter = {
     user_id: user_id_param,
-    work_plan_startDt: startDay,
-    work_plan_endDt: endDay
-  })
-  .lean();
+    work_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    work_endDt: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
+  const update = {
+    $set: {
+      ...WORK_PLAN_param,
+      work_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+    }
+  };
+  const options = {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true
+  };
 
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      work_plan_startDt: startDay,
-      work_plan_endDt: endDay,
-      work_plan_total_count: WORK_PLAN_param.work_plan_total_count,
-      work_plan_cardio_time: WORK_PLAN_param.work_plan_cardio_time,
-      work_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      work_plan_update: ""
-    };
-    finalResult = await WorkPlan.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        work_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      },
-    };
-    finalResult = await WorkPlan.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await Work.findOneAndUpdate(filter, update, options).lean();
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

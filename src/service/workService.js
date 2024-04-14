@@ -140,15 +140,16 @@ export const save = async (
   const update = {
     $set: {
       ...WORK_param,
-      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      work_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }
   };
   const options = {
+    upsert: true,
     new: true,
-    upsert: true
+    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Work.updateOne(filter, update, options);
+  const finalResult = await Work.findOneAndUpdate(filter, update, options).lean();
 
   return {
     result: finalResult

@@ -169,41 +169,33 @@ export const save = async (
 
   const [startDay, endDay] = money_plan_dur_param.split(` ~ `);
 
-  const findResult = await MoneyPlan.findOne({
+  const filter = {
     user_id: user_id_param,
-    money_plan_startDt: startDay,
-    money_plan_endDt: endDay,
-  })
-  .lean();
+    money_plan_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    money_plan_endDt: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
+  const update = {
+    $set: {
+      ...MONEY_PLAN_param,
+      money_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+    }
+  };
+  const options = {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true
+  };
 
-  let finalResult;
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      money_plan_startDt: startDay,
-      money_plan_endDt: endDay,
-      money_plan_in: MONEY_PLAN_param.money_plan_in,
-      money_plan_out: MONEY_PLAN_param.money_plan_out,
-      money_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      money_plan_update: ""
-    };
-    finalResult = await MoneyPlan.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        money_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      },
-    };
-    finalResult = await MoneyPlan.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await MoneyPlan.findOneAndUpdate(filter, update, options).lean();
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

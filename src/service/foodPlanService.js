@@ -172,43 +172,33 @@ export const save = async (
 
   const [startDay, endDay] = food_plan_dur_param.split(` ~ `);
 
-  const findResult = await FoodPlan.findOne({
+  const filter = {
     user_id: user_id_param,
-    food_plan_startDt: startDay,
-    food_plan_endDt: endDay
-  })
-  .lean();
+    food_plan_startDt: {
+      $gte: startDay,
+      $lte: endDay,
+    },
+    food_plan_endDt: {
+      $gte: startDay,
+      $lte: endDay,
+    }
+  };
+  const update = {
+    $set: {
+      ...FOOD_PLAN_param,
+      food_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
+    }
+  };
+  const options = {
+    upsert: true,
+    new: true,
+    setDefaultsOnInsert: true
+  };
 
-  let finalResult;
-  if (!findResult) {
-    const createQuery = {
-      _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
-      food_plan_startDt: startDay,
-      food_plan_endDt: endDay,
-      food_plan_kcal: FOOD_PLAN_param.food_plan_kcal,
-      food_plan_carb: FOOD_PLAN_param.food_plan_carb,
-      food_plan_protein: FOOD_PLAN_param.food_plan_protein,
-      food_plan_fat: FOOD_PLAN_param.food_plan_fat,
-      food_plan_regdate: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      food_plan_update: ""
-    };
-    finalResult = await FoodPlan.create(createQuery);
-  }
-  else {
-    const updateQuery = {
-      _id: findResult._id
-    };
-    const updateAction = {
-      $set: {
-        food_plan_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
-      },
-    };
-    finalResult = await FoodPlan.updateOne(updateQuery, updateAction).lean();
-  }
+  const finalResult = await FoodPlan.findOneAndUpdate(filter, update, options).lean();
 
   return {
-    result: finalResult,
+    result: finalResult
   };
 };
 

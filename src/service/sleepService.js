@@ -356,15 +356,16 @@ export const save = async (
   const update = {
     $set: {
       ...SLEEP_param,
-      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      sleep_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }
   };
   const options = {
+    upsert: true,
     new: true,
-    upsert: true
+    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Sleep.updateOne(filter, update, options);
+  const finalResult = await Sleep.findOneAndUpdate(filter, update, options).lean();
 
   return {
     result: finalResult

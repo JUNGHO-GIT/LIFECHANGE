@@ -14,11 +14,11 @@ export const dashBar = async (
 
   const dataInOut = {
     "수입": {
-      plan: "money_plan_in",
+      plan: "money_in",
       real: "money_total_in"
     },
     "지출": {
-      plan: "money_plan_out",
+      plan: "money_out",
       real: "money_total_out"
     }
   };
@@ -40,11 +40,11 @@ export const dashBar = async (
   for (let key in dataInOut) {
     const findResultPlan = await MoneyPlan.findOne({
       user_id: user_id_param,
-      money_plan_startDt: {
+      money_startDt: {
         $gte: koreanDate,
         $lte: koreanDate
       },
-      money_plan_endDt: {
+      money_endDt: {
         $gte: koreanDate,
         $lte: koreanDate
       }
@@ -62,9 +62,6 @@ export const dashBar = async (
       }
     })
     .lean();
-
-    console.log(findResultPlan);
-    console.log(findResultReal);
 
     finalResult.push({
       name: key,
@@ -483,15 +480,16 @@ export const save = async (
   const update = {
     $set: {
       ...MONEY_param,
-      money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      money_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }
   };
   const options = {
+    upsert: true,
     new: true,
-    upsert: true
+    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Money.updateOne(filter, update, options);
+  const finalResult = await Money.findOneAndUpdate(filter, update, options).lean();
 
   return {
     result: finalResult

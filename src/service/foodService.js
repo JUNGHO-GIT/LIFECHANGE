@@ -651,15 +651,16 @@ export const save = async (
   const update = {
     $set: {
       ...FOOD_param,
-      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss")
+      food_update: moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss"),
     }
   };
   const options = {
+    upsert: true,
     new: true,
-    upsert: true
+    setDefaultsOnInsert: true
   };
 
-  const finalResult = await Food.updateOne(filter, update, options);
+  const finalResult = await Food.findOneAndUpdate(filter, update, options).lean();
 
   return {
     result: finalResult
