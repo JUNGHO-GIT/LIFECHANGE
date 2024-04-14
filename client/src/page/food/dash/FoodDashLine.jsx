@@ -18,10 +18,10 @@ export const FoodDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine(${PATH})`, ["탄수화물", "단백질", "지방"]
+    `activeLine-line (${PATH})`, ["탄수화물", "단백질", "지방"]
   );
-  const {val:activeType, set:setActiveType} = useStorage(
-    `activeType(${PATH})`, "kcal"
+  const {val:activePart, set:setActivePart} = useStorage(
+    `activePart-line (${PATH})`, "kcal"
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -60,7 +60,7 @@ export const FoodDashLine = () => {
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item.목표, item.실제)));
+    const maxValue = Math.max(...value?.map((item) => Math.max(item?.칼로리, item?.탄수화물, item?.단백질, item?.지방)));
     let topValue = Math.ceil(maxValue / 1000) * 1000;
 
     // topValue에 따른 동적 틱 간격 설정
@@ -97,9 +97,7 @@ export const FoodDashLine = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          {activeLine.includes("칼로리")
-            && <Line type="monotone" dataKey="칼로리" stroke="#8884d8" activeDot={{r: 8}} />
-          }
+          <Line type="monotone" dataKey="칼로리" stroke="#8884d8" activeDot={{r: 8}} />
           <Tooltip />
           <Legend />
         </LineChart>
@@ -143,24 +141,21 @@ export const FoodDashLine = () => {
   const tableFoodLine = () => {
     return (
       <table className="table bg-white border">
-        <thead>
+        <tbody>
           <button
-            className={`btn ${activeType === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveType("kcal"))}
+            className={`btn ${activePart === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActivePart("kcal"))}
           >
             칼로리
           </button>
-          &nbsp;&nbsp;
           <button
-            className={`btn ${activeType === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveType("nut"))}
+            className={`btn ${activePart === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActivePart("nut"))}
           >
             영양소
           </button>
-        </thead>
-        <tbody>
           <div className="mt-10 mb-10">
-            {activeType === "nut" && ["탄수화물", "단백질", "지방"]?.map((key, index) => (
+            {["탄수화물", "단백질", "지방"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -187,7 +182,7 @@ export const FoodDashLine = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {activeType === "kcal" ? chartLineKcal() : chartLineNut()}
+        {activePart === "kcal" ? chartLineKcal() : chartLineNut()}
       </div>
       <div className="col-3">
         {tableFoodLine()}

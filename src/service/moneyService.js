@@ -192,15 +192,15 @@ export const dashAvgWeek = async (
     "1주차", "2주차", "3주차", "4주차", "5주차"
   ];
 
-  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
-  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+  const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
 
   for (
-    let w = currentMonthStart.clone();
-    w.isBefore(currentMonthEnd);
+    let w = curMonthStart.clone();
+    w.isBefore(curMonthEnd);
     w.add(1, "days")
   ) {
-    const weekNum = w.week() - currentMonthStart.week() + 1;
+    const weekNum = w.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
       const findResult = await Money.findOne({
@@ -246,12 +246,12 @@ export const dashAvgMonth = async (
     "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
   ];
 
-  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
-  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+  const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
 
   for (
-    let m = currentMonthStart.clone();
-    m.isBefore(currentMonthEnd);
+    let m = curMonthStart.clone();
+    m.isBefore(curMonthEnd);
     m.add(1, "days")
   ) {
     const monthNum = m.month();

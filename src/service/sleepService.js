@@ -139,15 +139,15 @@ export const dashAvgWeek = async (
     }
   };
 
-  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
-  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+  const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
 
   for (
-    let w = currentMonthStart.clone();
-    w.isBefore(currentMonthEnd);
+    let w = curMonthStart.clone();
+    w.isBefore(curMonthEnd);
     w.add(1, "days")
   ) {
-    const weekNum = w.week() - currentMonthStart.week() + 1;
+    const weekNum = w.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
       const findResult = await Sleep.findOne({
@@ -210,12 +210,12 @@ export const dashAvgMonth = async (
     }
   };
 
-  const currentMonthStart = moment().tz("Asia/Seoul").startOf('month');
-  const currentMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+  const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
 
   for (
-    let m = currentMonthStart.clone();
-    m.isBefore(currentMonthEnd);
+    let m = curMonthStart.clone();
+    m.isBefore(curMonthEnd);
     m.add(1, "days")
   ) {
     const monthNum = m.month();

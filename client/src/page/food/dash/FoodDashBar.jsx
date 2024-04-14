@@ -17,8 +17,8 @@ export const FoodDashBar = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeType, set:setActiveType} = useStorage(
-    `activeType(${PATH})`, "kcal"
+  const {val:activePart, set:setActivePart} = useStorage(
+    `activePart-bar (${PATH})`, "kcal"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -124,15 +124,15 @@ export const FoodDashBar = () => {
       <table className="table bg-white border">
         <tbody>
           <button
-            className={`btn ${activeType === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveType("kcal"))}
+            className={`btn ${activePart === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActivePart("kcal"))}
           >
             칼로리
           </button>
           &nbsp;&nbsp;
           <button
-            className={`btn ${activeType === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveType("nut"))}
+            className={`btn ${activePart === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActivePart("nut"))}
           >
             영양소
           </button>
@@ -145,7 +145,7 @@ export const FoodDashBar = () => {
   return (
     <div className="row d-center">
       <div className="col-9">
-        {activeType === "kcal" ? chartBarKcal() : chartBarNut()}
+        {activePart === "kcal" ? chartBarKcal() : chartBarNut()}
       </div>
       <div className="col-3">
         {tableFoodAvg()}

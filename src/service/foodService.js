@@ -27,9 +27,12 @@ export const dashBar = async (
     if (!data) {
       return 0;
     }
-    else {
+    else if (typeof data === "string") {
       const toInt = parseInt(data, 10);
       return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
     }
   };
 
@@ -123,9 +126,12 @@ export const dashPie = async (
     if (!data) {
       return 0;
     }
-    else {
+    else if (typeof data === "string") {
       const toInt = parseInt(data, 10);
       return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
     }
   };
 
@@ -201,9 +207,12 @@ export const dashLine = async (
     if (!data) {
       return 0;
     }
-    else {
+    else if (typeof data === "string") {
       const toInt = parseInt(data, 10);
       return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
     }
   };
 
@@ -232,6 +241,161 @@ export const dashLine = async (
       탄수화물: fmtData(findResult?.food_total_carb),
       단백질: fmtData(findResult?.food_total_protein),
       지방: fmtData(findResult?.food_total_fat),
+    });
+  };
+
+  return {
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
+  };
+};
+
+// 0-4. dash (avg-week) --------------------------------------------------------------------------->
+export const dashAvgWeek = async (
+  user_id_param
+) => {
+
+  let sumFoodKcal = Array(5).fill(0);
+  let sumFoodCarb = Array(5).fill(0);
+  let sumFoodProtein = Array(5).fill(0);
+  let sumFoodFat = Array(5).fill(0);
+  let countRecords = Array(5).fill(0);
+
+  const names = [
+    "1주차", "2주차", "3주차", "4주차", "5주차"
+  ];
+
+  const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else if (typeof data === "string") {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
+    }
+  };
+
+  for (
+    let w = curMonthStart.clone();
+    w.isBefore(curMonthEnd);
+    w.add(1, "days")
+  ) {
+    const weekNum = w.week() - curMonthStart.week() + 1;
+
+    if (weekNum >= 1 && weekNum <= 5) {
+      const findResult = await Food.findOne({
+        user_id: user_id_param,
+        food_startDt: w.format("YYYY-MM-DD"),
+        food_endDt: w.format("YYYY-MM-DD"),
+      }).lean();
+
+      if (findResult) {
+        sumFoodKcal[weekNum - 1] += fmtData(findResult?.food_total_kcal);
+        sumFoodCarb[weekNum - 1] += fmtData(findResult?.food_total_carb);
+        sumFoodProtein[weekNum - 1] += fmtData(findResult?.food_total_protein);
+        sumFoodFat[weekNum - 1] += fmtData(findResult?.food_total_fat);
+        countRecords[weekNum - 1]++;
+      }
+    }
+  };
+
+  let finalResultKcal = [];
+  let finalResultNut = [];
+  for (let i = 0; i < 5; i++) {
+    finalResultKcal.push({
+      name: names[i],
+      칼로리: fmtData(sumFoodKcal[i] / countRecords[i])
+    });
+    finalResultNut.push({
+      name: names[i],
+      탄수화물: fmtData(sumFoodCarb[i] / countRecords[i]),
+      단백질: fmtData(sumFoodProtein[i] / countRecords[i]),
+      지방: fmtData(sumFoodFat[i] / countRecords[i]),
+    });
+  };
+
+  return {
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
+  };
+};
+
+// 0-4. dash (avg-month) -------------------------------------------------------------------------->
+export const dashAvgMonth = async (
+  user_id_param
+) => {
+
+  let sumFoodKcal = Array(12).fill(0);
+  let sumFoodCarb = Array(12).fill(0);
+  let sumFoodProtein = Array(12).fill(0);
+  let sumFoodFat = Array(12).fill(0);
+  let countRecords = Array(12).fill(0);
+
+  const names = [
+    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+  ];
+
+  const curMonthStart = moment().tz("Asia/Seoul").startOf('month');
+  const curMonthEnd = moment().tz("Asia/Seoul").endOf('month');
+
+  const fmtData = (data) => {
+    if (!data) {
+      return 0;
+    }
+    else if (typeof data === "string") {
+      const toInt = parseInt(data, 10);
+      return Math.round(toInt);
+    }
+    else {
+      return Math.round(data);
+    }
+  };
+
+  for (
+    let m = curMonthStart.clone();
+    m.isBefore(curMonthEnd);
+    m.add(1, "days")
+  ) {
+    const monthNum = m.month();
+
+    const findResult = await Food.findOne({
+      user_id: user_id_param,
+      food_startDt: m.format("YYYY-MM-DD"),
+      food_endDt: m.format("YYYY-MM-DD"),
+    })
+    .lean();
+
+    if (findResult) {
+      sumFoodKcal[monthNum] += fmtData(findResult?.food_total_kcal);
+      sumFoodCarb[monthNum] += fmtData(findResult?.food_total_carb);
+      sumFoodProtein[monthNum] += fmtData(findResult?.food_total_protein);
+      sumFoodFat[monthNum] += fmtData(findResult?.food_total_fat);
+      countRecords[monthNum]++;
+    }
+  };
+
+  let finalResultKcal = [];
+  let finalResultNut = [];
+  for (let i = 0; i < 12; i++) {
+    finalResultKcal.push({
+      name: names[i],
+      칼로리: fmtData(sumFoodKcal[i] / countRecords[i])
+    });
+    finalResultNut.push({
+      name: names[i],
+      탄수화물: fmtData(sumFoodCarb[i] / countRecords[i]),
+      단백질: fmtData(sumFoodProtein[i] / countRecords[i]),
+      지방: fmtData(sumFoodFat[i] / countRecords[i]),
     });
   };
 
