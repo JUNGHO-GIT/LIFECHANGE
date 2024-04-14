@@ -73,10 +73,10 @@ textarea.form-control {
 
 /**************************************************************************************************/
 .root-wrapper {
-  max-width: 60%;
+  /* max-width: 60%; */
   margin: 0 auto;
   position: relative;
-  left: 150px;
+  /* left: 150px; */
 }
 
 .container-wrapper {
