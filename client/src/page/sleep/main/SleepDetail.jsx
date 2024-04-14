@@ -144,7 +144,7 @@ export const SleepDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {SLEEP.sleep_startDt}
+              {SLEEP?.sleep_startDt}
             </td>
             {SLEEP?.sleep_section?.map((item, index) => (
               <React.Fragment key={index}>

@@ -177,7 +177,7 @@ export const FoodSave = () => {
     // 초기 영양소 값 설정
     setFOOD_BEFORE((prev) => ({
       ...prev,
-      food_section: [...FOOD.food_section],
+      food_section: [...FOOD?.food_section],
     }));
   }, [FOOD]);
 

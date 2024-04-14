@@ -162,7 +162,7 @@ export const FoodDetail = () => {
               {index === 0 && (
                 <React.Fragment>
                   <td className="fs-20 pt-20" rowSpan={FOOD?.food_section?.length}>
-                    {FOOD.food_startDt}
+                    {FOOD?.food_startDt}
                   </td>
                 </React.Fragment>
               )}
@@ -201,10 +201,10 @@ export const FoodDetail = () => {
           ))}
           <tr>
             <td colSpan={5} className="text-center">합계</td>
-            <td>{FOOD.food_total_kcal}</td>
-            <td>{FOOD.food_total_carb}</td>
-            <td>{FOOD.food_total_protein}</td>
-            <td>{FOOD.food_total_fat}</td>
+            <td>{FOOD?.food_total_kcal}</td>
+            <td>{FOOD?.food_total_carb}</td>
+            <td>{FOOD?.food_total_protein}</td>
+            <td>{FOOD?.food_total_fat}</td>
             <td></td>
           </tr>
         </tbody>

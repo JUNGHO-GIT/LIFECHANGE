@@ -111,7 +111,7 @@ export const MoneySave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     // money_part_val 가 수입인경우, 지출인 경우
-    const totals = MONEY.money_section.reduce((acc, cur) => {
+    const totals = MONEY?.money_section.reduce((acc, cur) => {
       return {
         totalIn: acc.totalIn + (cur.money_part_val === "수입" ? cur.money_amount : 0),
         totalOut: acc.totalOut + (cur.money_part_val === "지출" ? cur.money_amount : 0)
@@ -124,7 +124,7 @@ export const MoneySave = () => {
       money_total_out: (Math.round(totals.totalOut)).toString()
     }));
 
-  }, [MONEY.money_section]);
+  }, [MONEY?.money_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -158,9 +158,9 @@ export const MoneySave = () => {
     function handlerCount(e) {
       const newCount = parseInt(e, 10);
       if (!isNaN(newCount)) {
-        let updatedSections = [...MONEY.money_section];
+        let updatedSections = [...MONEY?.money_section];
 
-        if (newCount > MONEY.money_section.length) {
+        if (newCount > MONEY?.money_section.length) {
           // 새로 필요한 섹션 수 만큼 기본 섹션을 추가
           let defaultSection = {
             money_part_idx: 0,
@@ -170,10 +170,10 @@ export const MoneySave = () => {
             money_amount: 0,
             money_content: ""
           };
-          for (let i = MONEY.money_section.length; i < newCount; i++) {
+          for (let i = MONEY?.money_section.length; i < newCount; i++) {
             updatedSections.push({...defaultSection}); // 새 객체로 삽입하여 참조 문제 방지
           }
-        } else if (newCount < MONEY.money_section.length) {
+        } else if (newCount < MONEY?.money_section.length) {
           // 초과된 섹션 제거
           updatedSections = updatedSections.slice(0, newCount);
         }

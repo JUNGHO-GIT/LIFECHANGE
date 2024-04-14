@@ -143,23 +143,23 @@ export const SleepPlanDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {SLEEP_PLAN.sleep_plan_startDt}
+              {SLEEP_PLAN?.sleep_plan_startDt}
             </td>
             <td className="fs-20 pt-20">
-              {SLEEP_PLAN.sleep_plan_endDt}
+              {SLEEP_PLAN?.sleep_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
-              {SLEEP_PLAN.sleep_plan_night}
+              {SLEEP_PLAN?.sleep_plan_night}
             </td>
             <td className="fs-20 pt-20">
-              {SLEEP_PLAN.sleep_plan_morning}
+              {SLEEP_PLAN?.sleep_plan_morning}
             </td>
             <td className="fs-20 pt-20">
-              {SLEEP_PLAN.sleep_plan_time}
+              {SLEEP_PLAN?.sleep_plan_time}
             </td>
             <td className="fs-20 pt-20">
               <button type="button" className="btn btn-sm btn-danger" onClick={() => (
-                flowDelete(SLEEP_PLAN._id)
+                flowDelete(SLEEP_PLAN?._id)
               )}>
                 X
               </button>

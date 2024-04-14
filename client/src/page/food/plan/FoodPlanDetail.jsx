@@ -145,26 +145,26 @@ export const FoodPlanDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {FOOD_PLAN.food_plan_startDt}
+              {FOOD_PLAN?.food_plan_startDt}
             </td>
             <td className="fs-20 pt-20">
-              {FOOD_PLAN.food_plan_endDt}
+              {FOOD_PLAN?.food_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
-              {FOOD_PLAN.food_plan_kcal}
+              {FOOD_PLAN?.food_plan_kcal}
             </td>
             <td className="fs-20 pt-20">
-              {FOOD_PLAN.food_plan_carb}
+              {FOOD_PLAN?.food_plan_carb}
             </td>
             <td className="fs-20 pt-20">
-              {FOOD_PLAN.food_plan_protein}
+              {FOOD_PLAN?.food_plan_protein}
             </td>
             <td className="fs-20 pt-20">
-              {FOOD_PLAN.food_plan_fat}
+              {FOOD_PLAN?.food_plan_fat}
             </td>
             <td className="fs-20 pt-20">
               <button className="btn btn-danger btn-sm" onClick={() => {
-                flowDelete(FOOD_PLAN._id);
+                flowDelete(FOOD_PLAN?._id);
               }}>
                 X
               </button>

@@ -160,14 +160,14 @@ export const WorkSave = () => {
 
       if (newCount > sectionCount) {
         let additionalSections = Array(newCount - sectionCount).fill(defaultSection);
-        let updatedSection = [...WORK.work_section, ...additionalSections];
+        let updatedSection = [...WORK?.work_section, ...additionalSections];
         setWORK((prev) => ({
           ...prev,
           work_section: updatedSection,
         }));
       }
       else if (newCount < sectionCount) {
-        let updatedSection = [...WORK.work_section];
+        let updatedSection = [...WORK?.work_section];
         updatedSection = updatedSection.slice(0, newCount);
         setWORK((prev) => ({
           ...prev,
@@ -434,6 +434,24 @@ export const WorkSave = () => {
                   format="HH:mm"
                   locale="ko"
                   value={WORK?.work_time}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row d-center mt-3">
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">체중</span>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={WORK?.work_body_weight}
+                  onChange={(e) => {
+                    setWORK((prev) => ({
+                      ...prev,
+                      work_body_weight: e.target.value,
+                    }));
+                  }}
                 />
               </div>
             </div>

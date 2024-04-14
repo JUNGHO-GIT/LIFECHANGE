@@ -140,6 +140,7 @@ export const WorkPlanDetail = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
+            <th>목표 체중</th>
             <th>목표 운동 횟수</th>
             <th>목표 유산소 시간</th>
             <th>삭제</th>
@@ -148,20 +149,23 @@ export const WorkPlanDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_startDt}
+              {WORK_PLAN?.work_plan_startDt}
             </td>
             <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_endDt}
+              {WORK_PLAN?.work_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_total_count}
+              {WORK_PLAN?.work_plan_body_weight}
             </td>
             <td className="fs-20 pt-20">
-              {WORK_PLAN.work_plan_cardio_time}
+              {WORK_PLAN?.work_plan_total_count}
+            </td>
+            <td className="fs-20 pt-20">
+              {WORK_PLAN?.work_plan_cardio_time}
             </td>
             <td className="fs-20 pt-20">
               <button className="btn btn-danger btn-sm" onClick={() => {
-                flowDelete(WORK_PLAN._id);
+                flowDelete(WORK_PLAN?._id);
               }}>
                 X
               </button>

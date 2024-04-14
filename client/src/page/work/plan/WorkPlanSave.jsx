@@ -198,7 +198,7 @@ export const WorkPlanSave = () => {
               />
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-12">
             <div className="input-group">
               <span className="input-group-text">목표 유산소 시간</span>
               <input type="text" className="form-control"
@@ -207,6 +207,20 @@ export const WorkPlanSave = () => {
                   setWORK_PLAN((prev) => ({
                     ...prev,
                     work_plan_cardio_time: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="input-group">
+              <span className="input-group-text">목표 체중</span>
+              <input type="text" className="form-control"
+                value={WORK_PLAN?.work_plan_body_weight}
+                onChange={(e) => {
+                  setWORK_PLAN((prev) => ({
+                    ...prev,
+                    work_plan_body_weight: e.target.value
                   }));
                 }}
               />

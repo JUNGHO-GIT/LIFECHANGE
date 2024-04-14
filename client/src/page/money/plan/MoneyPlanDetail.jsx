@@ -142,20 +142,20 @@ export const MoneyPlanDetail = () => {
         <tbody>
           <tr>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_plan_startDt}
+              {MONEY_PLAN?.money_plan_startDt}
             </td>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_plan_endDt}
+              {MONEY_PLAN?.money_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_plan_in}
+              {MONEY_PLAN?.money_plan_in}
             </td>
             <td className="fs-20 pt-20">
-              {MONEY_PLAN.money_plan_out}
+              {MONEY_PLAN?.money_plan_out}
             </td>
             <td className="fs-20 pt-20">
               <button className="btn btn-danger btn-sm" onClick={() => {
-                flowDelete(MONEY_PLAN._id);
+                flowDelete(MONEY_PLAN?._id);
               }}>
                 X
               </button>

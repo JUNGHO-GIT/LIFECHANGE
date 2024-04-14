@@ -117,6 +117,7 @@ export const WorkList = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
+            <th>체중</th>
             <th>시작</th>
             <th>종료</th>
             <th>시간</th>
@@ -135,17 +136,22 @@ export const WorkList = () => {
                 <React.Fragment key={`${section.work_part_val}_${section.work_title_val}`}>
                   <tr>
                     {sectionIndex === 0 && (
-                      <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}
-                      className={"pointer"} onClick={() => {
-                        SEND.id = item._id;
-                        SEND.startDt = item.work_startDt;
-                        SEND.endDt = item.work_endDt;
-                        navParam(SEND.toDetail, {
-                          state: SEND
-                        });
-                      }}>
-                        {item.work_startDt}
-                      </td>
+                      <React.Fragment>
+                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}
+                        className={"pointer"} onClick={() => {
+                          SEND.id = item._id;
+                          SEND.startDt = item.work_startDt;
+                          SEND.endDt = item.work_endDt;
+                          navParam(SEND.toDetail, {
+                            state: SEND
+                          });
+                        }}>
+                          {item.work_startDt}
+                        </td>
+                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          {item.work_body_weight}
+                        </td>
+                      </React.Fragment>
                     )}
                     <td>{item.work_start}</td>
                     <td>{item.work_end}</td>

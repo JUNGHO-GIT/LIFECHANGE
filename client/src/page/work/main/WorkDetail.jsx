@@ -146,6 +146,7 @@ export const WorkDetail = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
+            <th>체중</th>
             <th>시작</th>
             <th>종료</th>
             <th>시간</th>
@@ -164,18 +165,21 @@ export const WorkDetail = () => {
               {index === 0 && (
                 <React.Fragment>
                   <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
-                    {WORK.work_startDt}
+                    {WORK?.work_startDt}
+                  </td>
+                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                    {WORK?.work_body_weight}
                   </td>
                 </React.Fragment>
               )}
               <td className="fs-20 pt-20">
-                {WORK.work_start}
+                {WORK?.work_start}
               </td>
               <td className="fs-20 pt-20">
-                {WORK.work_end}
+                {WORK?.work_end}
               </td>
               <td className="fs-20 pt-20">
-                {WORK.work_time}
+                {WORK?.work_time}
               </td>
               <td className="fs-20 pt-20">
                 {item.work_part_val}

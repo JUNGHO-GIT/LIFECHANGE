@@ -152,7 +152,7 @@ export const MoneyDetail = () => {
               {index === 0 && (
                 <React.Fragment>
                   <td className="fs-20 pt-20" rowSpan={MONEY?.money_section?.length}>
-                    {MONEY.money_startDt}
+                    {MONEY?.money_startDt}
                   </td>
                 </React.Fragment>
               )}

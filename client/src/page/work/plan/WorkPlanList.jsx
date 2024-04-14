@@ -109,6 +109,7 @@ export const WorkPlanList = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
+            <th>목표 체중</th>
             <th>목표 운동 횟수</th>
             <th>목표 유산소 시간</th>
           </tr>
@@ -128,6 +129,7 @@ export const WorkPlanList = () => {
                   {item.work_plan_startDt}
                 </td>
                 <td>{item.work_plan_endDt}</td>
+                <td>{item.work_plan_body_weight}</td>
                 <td>{item.work_plan_total_count}</td>
                 <td>{item.work_plan_cardio_time}</td>
               </tr>
