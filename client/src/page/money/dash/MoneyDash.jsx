@@ -5,6 +5,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {DashBarToday} from "./DashBarToday.jsx";
 import {DashPieToday} from "./DashPieToday.jsx";
+import {DashPieWeek} from "./DashPieWeek.jsx";
 import {DashPieMonth} from "./DashPieMonth.jsx";
 import {DashLineWeek} from "./DashLineWeek.jsx";
 import {DashLineMonth} from "./DashLineMonth.jsx";
@@ -38,6 +39,9 @@ export const MoneyDash = () => {
             <p className={`btn ${activeDash === "pie-today" ? "btn-primary" : "btn-secondary"} me-20`} onClick={() => setActiveDash("pie-today")}>
               오늘 수입 / 지출 대분류
             </p>
+            <p className={`btn ${activeDash === "pie-week" ? "btn-primary" : "btn-secondary"} me-20`} onClick={() => setActiveDash("pie-week")}>
+              주간 수입 / 지출 대분류
+            </p>
             <p className={`btn ${activeDash === "pie-month" ? "btn-primary" : "btn-secondary"} me-20`} onClick={() => setActiveDash("pie-month")}>
               월간 수입 / 지출 대분류
             </p>
@@ -69,6 +73,10 @@ export const MoneyDash = () => {
           <div className={`${activeDash === "pie-today" ? "" : "d-none"}`}>
             <h5>오늘 수입 / 지출 대분류</h5>
             {DashPieToday()}
+          </div>
+          <div className={`${activeDash === "pie-week" ? "" : "d-none"}`}>
+            <h5>주간 수입 / 지출 대분류</h5>
+            {DashPieWeek()}
           </div>
           <div className={`${activeDash === "pie-month" ? "" : "d-none"}`}>
             <h5>월간 수입 / 지출 대분류</h5>

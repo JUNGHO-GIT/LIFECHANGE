@@ -41,23 +41,6 @@ export const WorkPlanDetail = () => {
       endDt: location_endDt
     }
   );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      type: "day",
-      limit: 5,
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
-    }
-  );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 5
-    }
-  );
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
@@ -181,32 +164,6 @@ export const WorkPlanDetail = () => {
     );
   };
 
-  // 6. calendar ---------------------------------------------------------------------------------->
-  const calendarNode = () => {
-    return (
-      <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
-        CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-      />
-    );
-  };
-
-  // 7. paging ------------------------------------------------------------------------------------>
-  const pagingNode = () => {
-    return (
-      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      />
-    );
-  };
-
-  // 8. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
-    return (
-      <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        part={"work"} plan={"plan"} type={"detail"}
-      />
-    );
-  };
-
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
@@ -226,14 +183,7 @@ export const WorkPlanDetail = () => {
             <h1>Detail</h1>
           </div>
           <div className={"col-12 mb-20"}>
-            {calendarNode()}
             {tableNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
-            {filterNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
-            {pagingNode()}
           </div>
           <div className={"col-12 mb-20"}>
             {buttonNode()}

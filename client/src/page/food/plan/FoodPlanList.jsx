@@ -17,7 +17,6 @@ export const FoodPlanList = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
@@ -108,10 +107,10 @@ export const FoodPlanList = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>칼로리(하루섭취량)</th>
-            <th>탄수화물(하루섭취량)</th>
-            <th>단백질(하루섭취량)</th>
-            <th>지방(하루섭취량)</th>
+            <th>칼로리</th>
+            <th>탄수화물</th>
+            <th>단백질</th>
+            <th>지방</th>
           </tr>
         </thead>
         <tbody>

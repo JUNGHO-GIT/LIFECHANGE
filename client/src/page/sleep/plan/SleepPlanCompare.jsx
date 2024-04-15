@@ -17,7 +17,6 @@ export const SleepPlanCompare = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
@@ -180,7 +179,7 @@ export const SleepPlanCompare = () => {
       );
     };
     return (
-      <div className={"d-inline-flex"}>
+      <div className={"d-flex"}>
         {tableFragment()}
       </div>
     );

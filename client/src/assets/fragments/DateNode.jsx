@@ -30,8 +30,8 @@ export const DateNode = ({
           </div>
         ) : null}
 
-        <DatePicker timeFormat="yyyy-MM-dd"
-          popperPlacement="bottom"
+        <DatePicker timeFormat={"yyyy-MM-dd"}
+          popperPlacement={"bottom"}
           selected={new Date(DATE.startDt)}
           disabled={type === "save" ? false : true}
           value={DATE.startDt}

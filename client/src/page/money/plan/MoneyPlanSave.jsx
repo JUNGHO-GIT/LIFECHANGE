@@ -17,7 +17,6 @@ export const MoneyPlanSave = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
@@ -36,12 +35,6 @@ export const MoneyPlanSave = () => {
     `DATE(${PATH})`, {
       startDt: location_startDt,
       endDt: location_endDt
-    }
-  );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 5
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -120,8 +113,8 @@ export const MoneyPlanSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>시작일</span>
               <DatePicker
-                timeFormat="yyyy-MM-dd"
-                popperPlacement="bottom"
+                timeFormat={"yyyy-MM-dd"}
+                popperPlacement={"bottom"}
                 className={"form-control"}
                 selected={new Date(DATE.startDt)}
                 disabled={false}
@@ -147,8 +140,8 @@ export const MoneyPlanSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>종료일</span>
               <DatePicker
-                timeFormat="yyyy-MM-dd"
-                popperPlacement="bottom"
+                timeFormat={"yyyy-MM-dd"}
+                popperPlacement={"bottom"}
                 className={"form-control"}
                 selected={new Date(DATE.endDt)}
                 disabled={false}

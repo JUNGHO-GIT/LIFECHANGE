@@ -72,9 +72,6 @@ export const aggregateNut = async (
     }},
   ]);
 
-  console.log("===================================");
-  console.log(JSON.stringify(finalResult, null, 2));
-
   return finalResult;
 };
 

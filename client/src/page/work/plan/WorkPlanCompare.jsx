@@ -17,7 +17,6 @@ export const WorkPlanCompare = () => {
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
@@ -136,16 +135,6 @@ export const WorkPlanCompare = () => {
                   <td>{item.work_plan_cardio_time || "0"}</td>
                   <td>{item.work_total_cardio || "0"}</td>
                 </tr>
-                <tr>
-                  <td>총 볼륨</td>
-                  <td>{item.work_plan_total_volume || "0"}</td>
-                  <td>{item.work_total_volume || "0"}</td>
-                </tr>
-                <tr>
-                  <td>체중</td>
-                  <td>{item.work_plan_body_weight || "0"}</td>
-                  <td>{item.work_body_weight || "0"}</td>
-                </tr>
               </React.Fragment>
             ))}
           </tbody>
@@ -153,7 +142,7 @@ export const WorkPlanCompare = () => {
       );
     };
     return (
-      <div className={"d-inline-flex"}>
+      <div className={"d-flex"}>
         {tableFragment()}
       </div>
     );
