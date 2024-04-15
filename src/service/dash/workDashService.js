@@ -118,7 +118,7 @@ export const dashLine = async (
   let finalResult = [];
 
   for (let i = 0; i < 7; i++) {
-    const dayNum = curWeekStart.clone().day(i);
+    const dayNum = curWeekStart.clone().add(i, "days");
     const findResult = await repo.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
@@ -126,7 +126,7 @@ export const dashLine = async (
     finalResult.push({
       name: `${data[i]} ${dayNum.format("MM/DD")}`,
       볼륨: intFormat(findResult?.work_total_volume || 0),
-      시간: intFormat(findResult?.work_cardio_time || 0)
+      시간: intFormat(findResult?.work_total_cardio || 0)
     });
   };
 

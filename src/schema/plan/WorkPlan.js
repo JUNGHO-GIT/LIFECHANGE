@@ -16,36 +16,44 @@ const schema = new mongoose.Schema({
 
   work_plan_startDt: {
     type: String,
+    default: "",
     required: false
   },
   work_plan_endDt: {
     type: String,
+    default: "",
     required: false
   },
 
   work_plan_total_count: {
     type: Number,
+    default: 0,
     required: false
   },
   work_plan_total_volume: {
     type: Number,
+    default: 0,
     required: false
   },
   work_plan_cardio_time: {
     type: String,
+    default: "",
     required: false
   },
   work_plan_body_weight: {
     type: Number,
+    default: 0,
     required: false
   },
 
   work_plan_regdate: {
     type: String,
+    default: "",
     required: false
   },
   work_plan_update: {
     type: String,
+    default: "",
     required: false
   }
 });

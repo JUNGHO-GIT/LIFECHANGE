@@ -11,7 +11,7 @@ const curMonthStart = moment().tz("Asia/Seoul").startOf("month");
 const curMonthEnd = moment().tz("Asia/Seoul").endOf("month");
 
 // 0-2. format ------------------------------------------------------------------------------------>
-const dateFormat = (data) => {
+const timeFormat = (data) => {
   if (!data) {
     return 0;
   }
@@ -63,8 +63,8 @@ export const dashBar = async (
 
     finalResult.push({
       name: key,
-      목표: dateFormat(findResultPlan?.[data[key].plan]),
-      실제: dateFormat(findResultReal?.sleep_section?.[0]?.[data[key].real]),
+      목표: timeFormat(findResultPlan?.[data[key].plan]),
+      실제: timeFormat(findResultReal?.sleep_section?.[0]?.[data[key].real]),
     });
   };
 
@@ -85,16 +85,16 @@ export const dashLine = async (
   let finalResult = [];
 
   for (let i = 0; i < 7; i++) {
-    const dayNum = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
+    const dayNum = curWeekStart.clone().add(i, "days");
     const findResult = await repo.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResult.push({
       name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      취침: dateFormat(findResult?.sleep_section?.[0]?.sleep_night),
-      기상: dateFormat(findResult?.sleep_section?.[0]?.sleep_morning),
-      수면: dateFormat(findResult?.sleep_section?.[0]?.sleep_time),
+      취침: timeFormat(findResult?.sleep_section?.[0]?.sleep_night),
+      기상: timeFormat(findResult?.sleep_section?.[0]?.sleep_morning),
+      수면: timeFormat(findResult?.sleep_section?.[0]?.sleep_time),
     });
   };
 
@@ -132,9 +132,9 @@ export const dashAvgWeek = async (
       );
 
       if (findResult) {
-        sumSleepStart[weekNum - 1] += dateFormat(findResult?.sleep_section?.[0]?.sleep_night);
-        sumSleepEnd[weekNum - 1] += dateFormat(findResult?.sleep_section?.[0]?.sleep_morning);
-        sumSleepTime[weekNum - 1] += dateFormat(findResult?.sleep_section?.[0]?.sleep_time);
+        sumSleepStart[weekNum - 1] += timeFormat(findResult?.sleep_section?.[0]?.sleep_night);
+        sumSleepEnd[weekNum - 1] += timeFormat(findResult?.sleep_section?.[0]?.sleep_morning);
+        sumSleepTime[weekNum - 1] += timeFormat(findResult?.sleep_section?.[0]?.sleep_time);
         countRecords[weekNum - 1]++;
       }
     }
@@ -143,9 +143,9 @@ export const dashAvgWeek = async (
   for (let i = 0; i < 5; i++) {
     finalResult.push({
       name: `${data[i]}`,
-      취침: dateFormat(sumSleepStart[i] / countRecords[i]),
-      기상: dateFormat(sumSleepEnd[i] / countRecords[i]),
-      수면: dateFormat(sumSleepTime[i] / countRecords[i]),
+      취침: timeFormat(sumSleepStart[i] / countRecords[i]),
+      기상: timeFormat(sumSleepEnd[i] / countRecords[i]),
+      수면: timeFormat(sumSleepTime[i] / countRecords[i]),
     });
   };
 
@@ -182,9 +182,9 @@ export const dashAvgMonth = async (
     );
 
     if (findResult) {
-      sumSleepStart[monthNum] += dateFormat(findResult?.sleep_section?.[0]?.sleep_night);
-      sumSleepEnd[monthNum] += dateFormat(findResult?.sleep_section?.[0]?.sleep_morning);
-      sumSleepTime[monthNum] += dateFormat(findResult?.sleep_section?.[0]?.sleep_time);
+      sumSleepStart[monthNum] += timeFormat(findResult?.sleep_section?.[0]?.sleep_night);
+      sumSleepEnd[monthNum] += timeFormat(findResult?.sleep_section?.[0]?.sleep_morning);
+      sumSleepTime[monthNum] += timeFormat(findResult?.sleep_section?.[0]?.sleep_time);
       countRecords[monthNum]++;
     }
   };
@@ -192,9 +192,9 @@ export const dashAvgMonth = async (
   for (let i = 0; i < 12; i++) {
     finalResult.push({
       name: data[i],
-      취침: dateFormat(sumSleepStart[i] / countRecords[i]),
-      기상: dateFormat(sumSleepEnd[i] / countRecords[i]),
-      수면: dateFormat(sumSleepTime[i] / countRecords[i]),
+      취침: timeFormat(sumSleepStart[i] / countRecords[i]),
+      기상: timeFormat(sumSleepEnd[i] / countRecords[i]),
+      수면: timeFormat(sumSleepTime[i] / countRecords[i]),
     });
   };
 

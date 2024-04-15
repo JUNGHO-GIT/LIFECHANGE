@@ -79,7 +79,7 @@ export const WorkList = () => {
     work_end: "",
     work_time: "",
     work_total_volume: 0,
-    work_cardio_time: "",
+    work_total_cardio: "",
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
@@ -90,7 +90,8 @@ export const WorkList = () => {
       work_rep: 1,
       work_kg: 1,
       work_rest: 1,
-      work_time: "",
+      work_volume: 0,
+      work_cardio: "",
     }],
   }];
   const [WORK, setWORK] = useState(WORK_DEFAULT);
@@ -124,6 +125,7 @@ export const WorkList = () => {
             <th>종료</th>
             <th>시간</th>
             <th>볼륨</th>
+            <th>유산소</th>
             <th>체중</th>
             <th>부위</th>
             <th>종목</th>
@@ -165,16 +167,29 @@ export const WorkList = () => {
                           {item.work_total_volume}
                         </td>
                         <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          {item.work_total_cardio}
+                        </td>
+                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
                           {item.work_body_weight}
                         </td>
                       </React.Fragment>
                     )}
-                    <td>{section.work_part_val}</td>
-                    <td>{section.work_title_val}</td>
-                    <td>{section.work_set}</td>
-                    <td>{section.work_rep}</td>
-                    <td>{section.work_kg}</td>
-                    <td>{section.work_rest}</td>
+                    <React.Fragment>
+                      <td>{section.work_part_val}</td>
+                      <td>{section.work_title_val}</td>
+                    </React.Fragment>
+                    {(section.work_part_val !== "유산소") ? (
+                      <React.Fragment>
+                        <td>{section.work_set}</td>
+                        <td>{section.work_rep}</td>
+                        <td>{section.work_kg}</td>
+                        <td>{section.work_rest}</td>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <td colSpan={4}>{section.work_cardio}</td>
+                      </React.Fragment>
+                    )}
                   </tr>
                 </React.Fragment>
               ))}

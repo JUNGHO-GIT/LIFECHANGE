@@ -16,10 +16,12 @@ const schema = new mongoose.Schema({
 
   sleep_startDt: {
     type: String,
+    default: "",
     required: false
   },
   sleep_endDt: {
     type: String,
+    default: "",
     required: false
   },
 
@@ -40,10 +42,12 @@ const schema = new mongoose.Schema({
 
   sleep_regdate: {
     type: String,
+    default: "",
     required: false
   },
   sleep_update: {
     type: String,
+    default: "",
     required: false
   }
 });

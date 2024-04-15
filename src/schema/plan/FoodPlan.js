@@ -16,36 +16,44 @@ const schema = new mongoose.Schema({
 
   food_plan_startDt: {
     type: String,
+    default: "",
     required: false
   },
   food_plan_endDt: {
     type: String,
+    default: "",
     required: false
   },
 
   food_plan_kcal: {
     type: Number,
+    default: 0,
     required: false
   },
   food_plan_carb: {
     type: Number,
+    default: 0,
     required: false
   },
   food_plan_protein: {
     type: Number,
+    default: 0,
     required: false
   },
   food_plan_fat: {
     type: Number,
+    default: 0,
     required: false
   },
 
   food_plan_regdate: {
     type: String,
+    default: "",
     required: false
   },
   food_plan_update: {
     type: String,
+    default: "",
     required: false
   }
 });

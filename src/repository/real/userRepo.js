@@ -5,7 +5,6 @@ import moment from "moment";
 import {User} from "../../schema/real/User.js";
 
 // 0. common -------------------------------------------------------------------------------------->
-const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 1-1. dataset ----------------------------------------------------------------------------------->

@@ -77,7 +77,7 @@ export const WorkPlanCompare = () => {
     work_plan_endDt: "",
     work_total_count: 0,
     work_total_volume: 0,
-    work_cardio_time: "",
+    work_total_cardio: "",
     work_body_weight: 0,
     work_plan_total_count: 0,
     work_plan_cardio_time: "",
@@ -134,7 +134,7 @@ export const WorkPlanCompare = () => {
                 <tr>
                   <td>유산소 시간</td>
                   <td>{item.work_plan_cardio_time || "0"}</td>
-                  <td>{item.work_cardio_time || "0"}</td>
+                  <td>{item.work_total_cardio || "0"}</td>
                 </tr>
                 <tr>
                   <td>총 볼륨</td>

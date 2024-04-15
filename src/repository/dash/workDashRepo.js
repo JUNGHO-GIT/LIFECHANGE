@@ -55,7 +55,7 @@ export const aggregateWeightReal = async (
   return finalResult;
 };
 
-// 1-3. aggregate (top-part) ---------------------------------------------------------------------->
+// 1-3. aggregate (top - part) -------------------------------------------------------------------->
 export const aggregateTopPart = async (
   user_id_param,
   startDt_param,
@@ -92,7 +92,7 @@ export const aggregateTopPart = async (
   return finalResult;
 };
 
-// 1-4. aggregate (top-title) --------------------------------------------------------------------->
+// 1-4. aggregate (top - title) ------------------------------------------------------------------->
 export const aggregateTopTitle = async (
   user_id_param,
   startDt_param,

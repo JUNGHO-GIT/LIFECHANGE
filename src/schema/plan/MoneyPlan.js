@@ -16,28 +16,34 @@ const schema = new mongoose.Schema({
 
   money_plan_startDt: {
     type: String,
+    default: "",
     required: false
   },
   money_plan_endDt: {
     type: String,
+    default: "",
     required: false
   },
 
   money_plan_in: {
     type: Number,
+    default: 0,
     required: false
   },
   money_plan_out: {
     type: Number,
+    default: 0,
     required: false
   },
 
   money_plan_regdate: {
     type: String,
+    default: "",
     required: false
   },
   money_plan_update: {
     type: String,
+    default: "",
     required: false
   }
 });

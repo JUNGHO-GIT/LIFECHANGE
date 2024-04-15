@@ -61,10 +61,12 @@ const schema = new mongoose.Schema({
 
   user_regdate: {
     type: String,
+    default: "",
     required: false
   },
   user_update: {
     type: String,
+    default: "",
     required: false
   }
 });

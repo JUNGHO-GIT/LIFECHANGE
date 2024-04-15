@@ -7,92 +7,118 @@ import {incrementSeq} from "./Counter.js";
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
+    default: "",
     required: true
   },
   work_number: {
     type : Number,
+    default: 0,
     unique : true
   },
 
   work_startDt : {
     type: String,
+    default: "",
     required: false
   },
   work_endDt : {
     type: String,
+    default: "",
     required: false
   },
 
   work_start: {
     type: String,
+    default: "",
     required: false,
   },
   work_end: {
     type: String,
+    default: "",
     required: false,
   },
   work_time: {
     type: String,
+    default: "",
     required: false,
   },
   work_total_volume: {
     type: Number,
+    default: 0,
     required: false
   },
-  work_cardio_time: {
+  work_total_cardio: {
     type: String,
+    default: "",
     required: false,
   },
   work_body_weight: {
     type: Number,
+    default: 0,
     required: false
   },
 
   work_section: [{
     work_part_idx : {
       type: Number,
+      default: 0,
       required: false,
     },
     work_part_val : {
       type: String,
+      default: "",
       required: false,
     },
     work_title_idx : {
       type: Number,
+      default: 0,
       required: false,
     },
     work_title_val : {
       type: String,
+      default: "",
       required: false,
     },
     work_kg: {
       type: Number,
+      default: 0,
       required: false,
     },
     work_set: {
       type: Number,
+      default: 0,
       required: false,
     },
     work_rep: {
       type: Number,
+      default: 0,
       required: false,
     },
     work_rest: {
       type: Number,
+      default: 0,
       required: false,
     },
-    work_time: {
+    work_volume: {
+      type: Number,
+      default: 0,
+      required: false
+    },
+    work_cardio: {
       type: String,
+      default: "",
       required: false,
     },
   }],
 
   work_regdate: {
     type: String,
+    default: "",
     required: false
   },
   work_update: {
     type: String,
+    default: "",
     required: false
   }
 });

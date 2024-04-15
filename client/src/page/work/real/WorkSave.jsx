@@ -81,7 +81,7 @@ export const WorkSave = () => {
     work_end: "",
     work_time: "",
     work_total_volume: 0,
-    work_cardio_time: "",
+    work_total_cardio: "",
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
@@ -92,7 +92,8 @@ export const WorkSave = () => {
       work_rep: 1,
       work_kg: 1,
       work_rest: 1,
-      work_time: "",
+      work_volume: 0,
+      work_cardio: "",
     }],
   };
   const [WORK, setWORK] = useState(WORK_DEFAULT);
@@ -120,21 +121,55 @@ export const WorkSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (WORK?.work_section) {
-      let totalVolume = 0;
-      let cardioTime;
 
-      WORK?.work_section.forEach((item) => {
-        totalVolume += item.work_set * item.work_rep * item.work_kg;
-        cardioTime += item.work_time;
-      });
+    let sectionVolume = 0;
+    let totalVolume = 0;
+    let totalMinutes = 0;
+
+    const timeFormat = (data) => {
+      if (!data) {
+        return 0;
+      }
+      else if (typeof data === "string") {
+        const time = data.split(":");
+        if (time.length === 2) {
+          const hours = parseInt(time[0], 10) * 60;
+          const minutes = parseInt(time[1], 10);
+          return hours + minutes;
+        }
+        else {
+          return 0;
+        }
+      }
+      else {
+        return 0;
+      }
+    };
+
+    const updatedSections = WORK.work_section.map((item) => {
+      sectionVolume = item.work_set * item.work_rep * item.work_kg;
+      totalVolume += sectionVolume;
+      totalMinutes += timeFormat(item.work_cardio);
+      return {
+        ...item,
+        work_volume: sectionVolume
+      };
+    });
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    const cardioTime = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+
+    // 이전 상태와 비교
+    if (WORK.work_total_volume !== totalVolume || WORK.work_total_cardio !== cardioTime) {
       setWORK((prev) => ({
         ...prev,
         work_total_volume: totalVolume,
-        work_cardio_time: cardioTime,
+        work_total_cardio: cardioTime,
+        work_section: updatedSections,
       }));
     }
-  }, [WORK?.work_section]);
+  }, [WORK.work_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -177,7 +212,8 @@ export const WorkSave = () => {
         work_rep: 1,
         work_kg: 1,
         work_rest: 1,
-        work_time: "",
+        work_volume: 0,
+        work_cardio: "",
       };
 
       if (newCount > sectionCount) {
@@ -298,29 +334,7 @@ export const WorkSave = () => {
             </div>
           </div>
           <div className={"row d-center"}>
-            <div className={"col-12"}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>시간</span>
-                <input
-                  type={"text"}
-                  className={"form-control"}
-                  disabled={WORK?.work_section[i]?.work_part_val !== "유산소"}
-                  value={WORK?.work_section[i]?.work_time}
-                  onChange={(e) => {
-                    setWORK((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.work_section];
-                      updatedSection[i].work_time = e.target.value;
-                      updated.work_section = updatedSection;
-                      return updated;
-                    });
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          <div className={"row d-center"}>
-            <div className={"col-6"}>
+            <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>세트</span>
                 <input
@@ -342,7 +356,7 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-            <div className={"col-6"}>
+            <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>횟수</span>
                 <input
@@ -364,9 +378,7 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-          </div>
-          <div className={"row d-center"}>
-            <div className={"col-6"}>
+            <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>무게</span>
                 <input
@@ -388,7 +400,7 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-            <div className={"col-6"}>
+            <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>휴식</span>
                 <input
@@ -410,6 +422,53 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
+            <div className={"col-12"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>볼륨</span>
+                <input
+                  type={"number"}
+                  disabled={true}
+                  className={"form-control"}
+                  value={WORK?.work_section[i]?.work_volume}
+                  onChange={(e) => {
+                    setWORK((prev) => {
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_volume = Number(e.target.value);
+                      updated.work_section = updatedSection;
+                      return updated;
+                    });
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={"row d-center"}>
+            <div className={"col-12"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>유산소</span>
+                <TimePicker
+                  id={"work_cardio"}
+                  name={"work_cardio"}
+                  className={"form-control"}
+                  disableClock={false}
+                  clockIcon={null}
+                  format="HH:mm"
+                  locale="ko"
+                  disabled={WORK?.work_section[i]?.work_part_val !== "유산소"}
+                  value={WORK?.work_section[i]?.work_cardio}
+                  onChange={(e) => {
+                    setWORK((prev) => {
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_cardio  = e ? e.toString() : "";
+                      updated.work_section = updatedSection;
+                      return updated;
+                    });
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -423,9 +482,9 @@ export const WorkSave = () => {
         </div>
       );
     };
-    function tableRemain () {
+    function tableTime () {
       return (
-        <div>
+        <React.Fragment>
           <div className={"row d-center mt-3"}>
             <div className={"col-6"}>
               <div className={"input-group"}>
@@ -490,15 +549,22 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
+        </React.Fragment>
+      );
+    };
+
+    function tableRemain () {
+      return (
+        <React.Fragment>
           <div className={"row d-center mt-3"}>
             <div className={"col-6"}>
               <div className={"input-group"}>
-                <span className={"input-group-text"}>볼륨</span>
+                <span className={"input-group-text"}>총 볼륨</span>
                 <input
                   type={"number"}
                   disabled={true}
                   className={"form-control"}
-                  min={1}
+                  min={0}
                   value={WORK?.work_total_volume}
                   onChange={(e) => {
                     setWORK((prev) => ({
@@ -513,17 +579,16 @@ export const WorkSave = () => {
           <div className={"row d-center mt-3"}>
             <div className={"col-6"}>
               <div className={"input-group"}>
-                <span className={"input-group-text"}>유산소</span>
+                <span className={"input-group-text"}>총 유산소 시간</span>
                 <input
                   type={"text"}
                   disabled={true}
                   className={"form-control"}
-                  min={1}
-                  value={WORK?.work_cardio_time}
+                  value={WORK?.work_total_cardio}
                   onChange={(e) => {
                     setWORK((prev) => ({
                       ...prev,
-                      work_cardio_time: e.target.value,
+                      work_total_cardio: e.target.value,
                     }));
                   }}
                 />
@@ -548,12 +613,15 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
-        </div>
+        </React.Fragment>
       );
     };
     return (
       <React.Fragment>
         {tableFragment()}
+        <br />
+        {tableTime()}
+        <br />
         {tableRemain()}
       </React.Fragment>
     );

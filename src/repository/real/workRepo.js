@@ -6,7 +6,6 @@ import {Work} from "../../schema/real/Work.js";
 import {WorkPlan} from "../../schema/plan/WorkPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
-const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
@@ -68,7 +67,7 @@ export const findReal = async (
       work_end: 1,
       work_time: 1,
       work_total_volume: 1,
-      work_cardio_time: 1,
+      work_total_cardio: 1,
       work_body_weight: 1,
       work_section: {
         $filter: {
@@ -164,7 +163,7 @@ export const create = async (
     work_end: WORK_param.work_end,
     work_time: WORK_param.work_time,
     work_total_volume: WORK_param.work_total_volume,
-    work_cardio_time: WORK_param.work_cardio_time,
+    work_total_cardio: WORK_param.work_total_cardio,
     work_body_weight: WORK_param.work_body_weight,
     work_section: WORK_param.work_section,
     work_regdate: fmtDate,

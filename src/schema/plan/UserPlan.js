@@ -15,18 +15,22 @@ const schema = new mongoose.Schema({
   },
   user_plan_startDt: {
     type: String,
+    default: "",
     required: false
   },
   user_plan_endDt: {
     type: String,
+    default: "",
     required: false
   },
   user_plan_regdate: {
     type: String,
+    default: "",
     required: false
   },
   user_plan_update: {
     type: String,
+    default: "",
     required: false
   }
 });

@@ -16,32 +16,39 @@ const schema = new mongoose.Schema({
 
   sleep_plan_startDt: {
     type: String,
+    default: "",
     required: false
   },
   sleep_plan_endDt: {
     type: String,
+    default: "",
     required: false
   },
 
   sleep_plan_night: {
     type: String,
+    default: "",
     required: false
   },
   sleep_plan_morning: {
     type: String,
+    default: "",
     required: false
   },
   sleep_plan_time: {
     type: String,
+    default: "",
     required: false
   },
 
   sleep_plan_regdate: {
     type: String,
+    default: "",
     required: false
   },
   sleep_plan_update: {
     type: String,
+    default: "",
     required: false
   }
 });

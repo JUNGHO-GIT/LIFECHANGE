@@ -78,7 +78,7 @@ export const WorkDetail = () => {
     work_end: "",
     work_time: "",
     work_total_volume: 0,
-    work_cardio_time: "",
+    work_total_cardio: "",
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
@@ -89,13 +89,65 @@ export const WorkDetail = () => {
       work_rep: 1,
       work_kg: 1,
       work_rest: 1,
-      work_time: "",
+      work_cardio: "",
     }],
   };
   const [WORK, setWORK] = useState(WORK_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+
+    let sectionVolume = 0;
+    let totalVolume = 0;
+    let totalMinutes = 0;
+
+    const timeFormat = (data) => {
+      if (!data) {
+        return 0;
+      }
+      else if (typeof data === "string") {
+        const time = data.split(":");
+        if (time.length === 2) {
+          const hours = parseInt(time[0], 10) * 60;
+          const minutes = parseInt(time[1], 10);
+          return hours + minutes;
+        }
+        else {
+          return 0;
+        }
+      }
+      else {
+        return 0;
+      }
+    };
+
+    const updatedSections = WORK.work_section.map((item) => {
+      sectionVolume = item.work_set * item.work_rep * item.work_kg;
+      totalVolume += sectionVolume;
+      totalMinutes += timeFormat(item.work_cardio);
+      return {
+        ...item,
+        work_volume: sectionVolume
+      };
+    });
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    const cardioTime = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+
+    // 이전 상태와 비교
+    if (WORK.work_total_volume !== totalVolume || WORK.work_total_cardio !== cardioTime) {
+      setWORK((prev) => ({
+        ...prev,
+        work_total_volume: totalVolume,
+        work_total_cardio: cardioTime,
+        work_section: updatedSections,
+      }));
+    }
+  }, [WORK.work_section]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -135,7 +187,7 @@ export const WorkDetail = () => {
       });
       alert("삭제되었습니다.");
       setWORK(updatedData.data.result || WORK_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      updatedData.data.result.work_section.length === 0 && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);
@@ -152,8 +204,6 @@ export const WorkDetail = () => {
             <th>시작</th>
             <th>종료</th>
             <th>시간</th>
-            <th>볼륨</th>
-            <th>체중</th>
             <th>부위</th>
             <th>종목</th>
             <th>세트</th>
@@ -180,32 +230,24 @@ export const WorkDetail = () => {
                   <td rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_time}
                   </td>
-                  <td rowSpan={WORK?.work_section?.length}>
-                    {WORK?.work_total_volume}
-                  </td>
-                  <td rowSpan={WORK?.work_section?.length}>
-                    {WORK?.work_body_weight}
-                  </td>
                 </React.Fragment>
               )}
-              <td>
-                {item.work_part_val}
-              </td>
-              <td>
-                {item.work_title_val}
-              </td>
-              <td>
-                {item.work_set}
-              </td>
-              <td>
-                {item.work_rep}
-              </td>
-              <td>
-                {item.work_kg}
-              </td>
-              <td>
-                {item.work_rest}
-              </td>
+              <React.Fragment>
+                <td>{item.work_part_val}</td>
+                <td>{item.work_title_val}</td>
+              </React.Fragment>
+              {(item.work_part_val !== "유산소") ? (
+                <React.Fragment>
+                  <td>{item.work_set}</td>
+                  <td>{item.work_rep}</td>
+                  <td>{item.work_kg}</td>
+                  <td>{item.work_rest}</td>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <td colSpan={4}>{item.work_cardio}</td>
+                </React.Fragment>
+              )}
               <td>
                 <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
                   flowDelete(item._id)
@@ -215,6 +257,24 @@ export const WorkDetail = () => {
               </td>
             </tr>
           ))}
+          <tr>
+            <td colSpan={4}>총 볼륨</td>
+            <td colSpan={2}></td>
+            <td colSpan={4}>{WORK?.work_total_volume}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colSpan={4}>총 유산소 시간</td>
+            <td colSpan={2}></td>
+            <td colSpan={4}>{WORK?.work_total_cardio}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colSpan={4}>체중</td>
+            <td colSpan={2}></td>
+            <td colSpan={4}>{WORK?.work_body_weight}</td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
     );

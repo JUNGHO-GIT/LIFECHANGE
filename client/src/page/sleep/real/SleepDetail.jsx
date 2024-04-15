@@ -121,7 +121,7 @@ export const SleepDetail = () => {
       });
       alert("삭제되었습니다.");
       setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      updatedData.data.result.sleep_section.length === 0 && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);

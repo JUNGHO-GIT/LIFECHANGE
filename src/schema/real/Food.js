@@ -17,37 +17,45 @@ const schema = new mongoose.Schema({
 
   food_startDt: {
     type: String,
+    default: "",
     required: false
   },
   food_endDt: {
     type: String,
+    default: "",
     required: false
   },
 
   food_total_kcal: {
     type: Number,
+    default: 0,
     required: false
   },
   food_total_carb: {
     type: Number,
+    default: 0,
     required: false
   },
   food_total_protein: {
     type: Number,
+    default: 0,
     required: false
   },
   food_total_fat: {
     type: Number,
+    default: 0,
     required: false
   },
 
   food_section: [{
     food_part_val: {
       type: String,
+      default: "",
       required: false,
     },
     food_title_val: {
       type: String,
+      default: "",
       required: false,
     },
     food_brand : {
@@ -86,10 +94,12 @@ const schema = new mongoose.Schema({
 
   food_regdate: {
     type: String,
+    default: "",
     required: false
   },
   food_update: {
     type: String,
+    default: "",
     required: false
   }
 });

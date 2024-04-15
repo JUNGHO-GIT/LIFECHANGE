@@ -131,7 +131,7 @@ export const FoodDetail = () => {
       });
       alert("삭제되었습니다.");
       setFOOD(updatedData.data.result || FOOD_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      updatedData.data.result.food_section.length === 0 && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);

@@ -62,7 +62,7 @@ export const compare = async (
     return {
       ...plan,
       work_total_count: totalCount,
-      work_cardio_time: totalCardio,
+      work_total_cardio: totalCardio,
     };
   });
 

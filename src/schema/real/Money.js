@@ -16,19 +16,23 @@ const schema = new mongoose.Schema({
 
   money_startDt: {
     type: String,
+    default: "",
     required: false
   },
   money_endDt: {
     type: String,
+    default: "",
     required: false
   },
 
   money_total_in: {
     type: Number,
+    default: 0,
     required: false
   },
   money_total_out: {
     type: Number,
+    default: 0,
     required: false
   },
 
@@ -61,10 +65,12 @@ const schema = new mongoose.Schema({
 
   money_regdate: {
     type: String,
+    default: "",
     required: false
   },
   money_update: {
     type: String,
+    default: "",
     required: false
   }
 });

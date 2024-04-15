@@ -135,7 +135,7 @@ export const SleepPlanSave = () => {
             <div className={"input-group d-center"}>
               <span className={"input-group-text"}>날짜</span>
               <DatePicker
-                dateFormat="yyyy-MM-dd"
+                timeFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
                 className={"form-control"}
                 selected={new Date(DATE.startDt)}

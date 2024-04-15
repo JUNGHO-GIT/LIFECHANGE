@@ -136,7 +136,7 @@ export const WorkPlanSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>시작일</span>
               <DatePicker
-                dateFormat="yyyy-MM-dd"
+                timeFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
                 className={"form-control"}
                 selected={new Date(DATE.startDt)}
@@ -163,7 +163,7 @@ export const WorkPlanSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>종료일</span>
               <DatePicker
-                dateFormat="yyyy-MM-dd"
+                timeFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
                 className={"form-control"}
                 selected={new Date(DATE.endDt)}
