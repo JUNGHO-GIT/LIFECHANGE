@@ -92,6 +92,7 @@ export const WorkSave = () => {
       work_rep: 1,
       work_kg: 1,
       work_rest: 1,
+      work_time: "",
     }],
   };
   const [WORK, setWORK] = useState(WORK_DEFAULT);
@@ -119,22 +120,20 @@ export const WorkSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    let totalVolume = 0;
-    let totalCardioTime = 0;
+    if (WORK?.work_section) {
+      let totalVolume = 0;
+      let cardioTime;
 
-    WORK?.work_section?.forEach((item) => {
-      if (item.work_part_val === "유산소") {
-        totalCardioTime += item.work_set * item.work_rep * item.work_kg;
-      }
-      else {
+      WORK?.work_section.forEach((item) => {
         totalVolume += item.work_set * item.work_rep * item.work_kg;
-      }
-    });
-    setWORK((prev) => ({
-      ...prev,
-      work_total_volume: totalVolume,
-      work_cardio_time: totalCardioTime.toString(),
-    }));
+        cardioTime += item.work_time;
+      });
+      setWORK((prev) => ({
+        ...prev,
+        work_total_volume: totalVolume,
+        work_cardio_time: cardioTime,
+      }));
+    }
   }, [WORK?.work_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -178,6 +177,7 @@ export const WorkSave = () => {
         work_rep: 1,
         work_kg: 1,
         work_rest: 1,
+        work_time: "",
       };
 
       if (newCount > sectionCount) {
@@ -207,9 +207,9 @@ export const WorkSave = () => {
           <div className={"col-4"}>
             <input
               type={"number"}
+              className={"form-control mb-30"}
               value={COUNT.sectionCnt}
               min={0}
-              className={"form-control mb-30"}
               onChange={(e) => (
                 handlerCount(e.target.value)
               )}
@@ -298,6 +298,28 @@ export const WorkSave = () => {
             </div>
           </div>
           <div className={"row d-center"}>
+            <div className={"col-12"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>시간</span>
+                <input
+                  type={"text"}
+                  className={"form-control"}
+                  disabled={WORK?.work_section[i]?.work_part_val !== "유산소"}
+                  value={WORK?.work_section[i]?.work_time}
+                  onChange={(e) => {
+                    setWORK((prev) => {
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_time = e.target.value;
+                      updated.work_section = updatedSection;
+                      return updated;
+                    });
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={"row d-center"}>
             <div className={"col-6"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>세트</span>
@@ -305,6 +327,7 @@ export const WorkSave = () => {
                   type={"number"}
                   min={1}
                   className={"form-control"}
+                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
                   value={WORK?.work_section[i]?.work_set}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -326,6 +349,7 @@ export const WorkSave = () => {
                   type={"number"}
                   min={1}
                   className={"form-control"}
+                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
                   value={WORK?.work_section[i]?.work_rep}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -349,6 +373,7 @@ export const WorkSave = () => {
                   type={"number"}
                   min={1}
                   className={"form-control"}
+                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
                   value={WORK?.work_section[i]?.work_kg}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -370,6 +395,7 @@ export const WorkSave = () => {
                   type={"number"}
                   min={1}
                   className={"form-control"}
+                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
                   value={WORK?.work_section[i]?.work_rest}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -472,6 +498,7 @@ export const WorkSave = () => {
                   type={"number"}
                   disabled={true}
                   className={"form-control"}
+                  min={1}
                   value={WORK?.work_total_volume}
                   onChange={(e) => {
                     setWORK((prev) => ({
@@ -491,6 +518,7 @@ export const WorkSave = () => {
                   type={"text"}
                   disabled={true}
                   className={"form-control"}
+                  min={1}
                   value={WORK?.work_cardio_time}
                   onChange={(e) => {
                     setWORK((prev) => ({
@@ -522,7 +550,7 @@ export const WorkSave = () => {
           </div>
         </div>
       );
-    }
+    };
     return (
       <React.Fragment>
         {tableFragment()}

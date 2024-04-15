@@ -183,6 +183,7 @@ export const deletes = async (
   .lean();
 
   let finalResult;
+
   if (updateResult.modifiedCount > 0) {
     const doc = await FoodPlan.findOne({
       _id: _id_param,
@@ -194,9 +195,9 @@ export const deletes = async (
       finalResult = await FoodPlan.deleteOne({
         _id: doc._id
       })
+      .lean();
     }
   }
 
   return finalResult;
 };
-

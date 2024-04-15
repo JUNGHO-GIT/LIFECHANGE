@@ -181,6 +181,7 @@ export const deletes = async (
   .lean();
 
   let finalResult;
+
   if (updateResult.modifiedCount > 0) {
     const doc = await MoneyPlan.findOne({
       _id: _id_param,
@@ -192,9 +193,9 @@ export const deletes = async (
       finalResult = await MoneyPlan.deleteOne({
         _id: doc._id
       })
+      .lean();
     }
   }
 
   return finalResult;
 };
-

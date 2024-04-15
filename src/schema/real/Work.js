@@ -81,6 +81,10 @@ const schema = new mongoose.Schema({
       type: Number,
       required: false,
     },
+    work_time: {
+      type: String,
+      required: false,
+    },
   }],
 
   work_regdate: {

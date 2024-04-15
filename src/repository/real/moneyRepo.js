@@ -197,23 +197,25 @@ export const deletes = async (
 ) => {
 
   const updateResult = await Money.updateOne(
-    {_id: _id_param,
-      user_id: user_id_param,
+    {user_id: user_id_param,
       money_startDt: {
         $gte: startDt_param,
+        $lte: endDt_param,
       },
       money_endDt: {
+        $gte: startDt_param,
         $lte: endDt_param,
       },
     },
     {$pull: {
-      money_section: {
-        _id: _id_param
+        money_section: {
+          _id: _id_param
+        },
+      },
+      $set: {
+        money_update: fmtDate,
       },
     },
-    $set: {
-      money_update: fmtDate,
-    }},
     {arrayFilters: [{
       "elem._id": _id_param
     }]}
@@ -221,6 +223,7 @@ export const deletes = async (
   .lean();
 
   let finalResult;
+
   if (updateResult.modifiedCount > 0) {
     const doc = await Money.findOne({
       _id: _id_param,
@@ -228,12 +231,13 @@ export const deletes = async (
     })
     .lean();
 
-    if ((doc) && (!doc?.money_section || doc?.money_section?.length === 0)) {
+    if ((doc) && (!doc.money_section || doc.money_section.length === 0)) {
       finalResult = await Money.deleteOne({
         _id: doc._id
       })
+      .lean();
     }
-  }
+  };
 
   return finalResult;
 };

@@ -89,6 +89,7 @@ export const WorkDetail = () => {
       work_rep: 1,
       work_kg: 1,
       work_rest: 1,
+      work_time: "",
     }],
   };
   const [WORK, setWORK] = useState(WORK_DEFAULT);

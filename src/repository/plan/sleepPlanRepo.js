@@ -182,6 +182,7 @@ export const deletes = async (
   .lean();
 
   let finalResult;
+
   if (updateResult.modifiedCount > 0) {
     const doc = await SleepPlan.findOne({
       _id: _id_param,
@@ -193,6 +194,7 @@ export const deletes = async (
       finalResult = await SleepPlan.deleteOne({
         _id: doc._id
       })
+      .lean();
     }
   }
 

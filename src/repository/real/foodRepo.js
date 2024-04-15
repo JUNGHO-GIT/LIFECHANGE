@@ -200,23 +200,25 @@ export const deletes = async (
 ) => {
 
   const updateResult = await Food.updateOne(
-    {_id: _id_param,
-      user_id: user_id_param,
+    {user_id: user_id_param,
       food_startDt: {
         $gte: startDt_param,
+        $lte: endDt_param,
       },
       food_endDt: {
+        $gte: startDt_param,
         $lte: endDt_param,
       },
     },
     {$pull: {
-      food_section: {
-        _id: _id_param
+        food_section: {
+          _id: _id_param
+        },
+      },
+      $set: {
+        food_update: fmtDate,
       },
     },
-    $set: {
-      food_update: fmtDate,
-    }},
     {arrayFilters: [{
       "elem._id": _id_param
     }]}
@@ -224,6 +226,7 @@ export const deletes = async (
   .lean();
 
   let finalResult;
+
   if (updateResult.modifiedCount > 0) {
     const doc = await Food.findOne({
       _id: _id_param,
@@ -231,12 +234,13 @@ export const deletes = async (
     })
     .lean();
 
-    if ((doc) && (!doc?.food_section || doc?.food_section?.length === 0)) {
+    if ((doc) && (!doc.food_section || doc.food_section.length === 0)) {
       finalResult = await Food.deleteOne({
         _id: doc._id
       })
+      .lean();
     }
-  }
+  };
 
   return finalResult;
 };

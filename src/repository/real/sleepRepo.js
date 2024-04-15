@@ -162,23 +162,25 @@ export const deletes = async (
 ) => {
 
   const updateResult = await Sleep.updateOne(
-    {_id: _id_param,
-      user_id: user_id_param,
+    {user_id: user_id_param,
       sleep_startDt: {
         $gte: startDt_param,
+        $lte: endDt_param,
       },
       sleep_endDt: {
+        $gte: startDt_param,
         $lte: endDt_param,
       },
     },
     {$pull: {
-      sleep_section: {
-        _id: _id_param
+        sleep_section: {
+          _id: _id_param
+        },
+      },
+      $set: {
+        sleep_update: fmtDate,
       },
     },
-    $set: {
-      sleep_update: fmtDate,
-    }},
     {arrayFilters: [{
       "elem._id": _id_param
     }]}
@@ -186,6 +188,7 @@ export const deletes = async (
   .lean();
 
   let finalResult;
+
   if (updateResult.modifiedCount > 0) {
     const doc = await Sleep.findOne({
       _id: _id_param,
@@ -193,12 +196,13 @@ export const deletes = async (
     })
     .lean();
 
-    if ((doc) && (!doc?.sleep_section || doc?.sleep_section?.length === 0)) {
+    if ((doc) && (!doc.sleep_section || doc.sleep_section.length === 0)) {
       finalResult = await Sleep.deleteOne({
         _id: doc._id
       })
+      .lean();
     }
-  }
+  };
 
   return finalResult;
 };

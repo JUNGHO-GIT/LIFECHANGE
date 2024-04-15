@@ -27,9 +27,9 @@ export const MoneyPlanDetail = () => {
       startDt: "",
       endDt: "",
       refresh: 0,
-      toDetail: "/money/detail",
-      toList: "/money/list",
-      toSave: "/money/save"
+      toDetail: "/money/plan/detail",
+      toList: "/money/plan/list",
+      toSave: "/money/plan/save"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
