@@ -103,14 +103,6 @@ export const WorkSave = () => {
   useTime(WORK, setWORK, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {
-    console.log("===================================");
-    console.log(JSON.stringify(WORK));
-    console.log("===================================");
-    console.log("sectionCnt: ", COUNT.sectionCnt);
-  }, [WORK]);
-
-  // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_WORK}/detail`, {
       params: {

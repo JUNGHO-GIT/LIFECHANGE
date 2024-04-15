@@ -18,7 +18,7 @@ export const SleepDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine(${PATH})`, ["취침", "수면", "기상"]
+    `activeLine-line (${PATH})`, ["취침", "수면", "기상"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->

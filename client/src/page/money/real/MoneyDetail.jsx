@@ -147,7 +147,7 @@ export const MoneyDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY?.money_section?.map((item, index) => (
+          {MONEY?.money_section?.map((section, index) => (
             <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
                 <React.Fragment>
@@ -157,20 +157,20 @@ export const MoneyDetail = () => {
                 </React.Fragment>
               )}
               <td>
-                {item.money_part_val}
+                {section.money_part_val}
               </td>
               <td>
-                {item.money_title_val}
+                {section.money_title_val}
               </td>
               <td>
-                {item.money_amount}
+                {section.money_amount}
               </td>
               <td>
-                {item.money_content}
+                {section.money_content}
               </td>
               <td>
                 <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                  flowDelete(item._id)
+                  flowDelete(section._id)
                 )}>
                   X
                 </button>

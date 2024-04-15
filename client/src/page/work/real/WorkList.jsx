@@ -124,15 +124,13 @@ export const WorkList = () => {
             <th>시작</th>
             <th>종료</th>
             <th>시간</th>
-            <th>볼륨</th>
-            <th>유산소</th>
-            <th>체중</th>
             <th>부위</th>
             <th>종목</th>
             <th>세트</th>
             <th>횟수</th>
             <th>중량</th>
             <th>휴식</th>
+            <th>볼륨</th>
           </tr>
         </thead>
         <tbody>
@@ -163,15 +161,6 @@ export const WorkList = () => {
                         <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
                           {item.work_time}
                         </td>
-                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
-                          {item.work_total_volume}
-                        </td>
-                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
-                          {item.work_total_cardio}
-                        </td>
-                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
-                          {item.work_body_weight}
-                        </td>
                       </React.Fragment>
                     )}
                     <React.Fragment>
@@ -184,10 +173,11 @@ export const WorkList = () => {
                         <td>{section.work_rep}</td>
                         <td>{section.work_kg}</td>
                         <td>{section.work_rest}</td>
+                        <td>{section.work_volume}</td>
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
-                        <td colSpan={4}>{section.work_cardio}</td>
+                        <td colSpan={5}>{section.work_cardio}</td>
                       </React.Fragment>
                     )}
                   </tr>

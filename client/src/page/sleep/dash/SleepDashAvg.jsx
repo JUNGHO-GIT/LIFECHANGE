@@ -17,11 +17,11 @@ export const SleepDashAvg = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeAvg, set:setActiveAvg} = useStorage(
-    `activeAvg(${PATH})`, ["취침", "수면", "기상"]
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine-avg (${PATH})`, ["취침", "수면", "기상"]
   );
   const {val:activeType, set:setActiveType} = useStorage(
-    `activeType(${PATH})`, "week"
+    `activeType-avg (${PATH})`, "week"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -82,13 +82,13 @@ export const SleepDashAvg = () => {
                 return tick > 24 ? tick -= 24 : tick;
               }}
             />
-            {activeAvg.includes("취침")
+            {activeLine.includes("취침")
               && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
             }
-            {activeAvg.includes("기상")
+            {activeLine.includes("기상")
               && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
             }
-            {activeAvg.includes("수면")
+            {activeLine.includes("수면")
               && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
             <Tooltip />
@@ -115,13 +115,13 @@ export const SleepDashAvg = () => {
                 return tick > 24 ? tick -= 24 : tick;
               }}
             />
-            {activeAvg.includes("취침")
+            {activeLine.includes("취침")
               && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
             }
-            {activeAvg.includes("기상")
+            {activeLine.includes("기상")
               && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
             }
-            {activeAvg.includes("수면")
+            {activeLine.includes("수면")
               && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
             <Tooltip />
@@ -161,13 +161,13 @@ export const SleepDashAvg = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeAvg.includes(key)}
+                  checked={activeLine.includes(key)}
                   onChange={() => {
-                    if (activeAvg.includes(key)) {
-                      setActiveAvg(activeAvg?.filter((item) => item !== key));
+                    if (activeLine.includes(key)) {
+                      setActiveLine(activeLine?.filter((item) => item !== key));
                     }
                     else {
-                      setActiveAvg([...activeAvg, key]);
+                      setActiveLine([...activeLine, key]);
                     }
                   }}
                 />

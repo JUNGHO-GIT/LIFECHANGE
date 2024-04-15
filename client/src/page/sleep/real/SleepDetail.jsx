@@ -146,20 +146,20 @@ export const SleepDetail = () => {
             <td>
               {SLEEP?.sleep_startDt}
             </td>
-            {SLEEP?.sleep_section?.map((item, index) => (
+            {SLEEP?.sleep_section?.map((section, index) => (
               <React.Fragment key={index}>
                 <td>
-                  {item.sleep_night}
+                  {section.sleep_night}
                 </td>
                 <td>
-                  {item.sleep_morning}
+                  {section.sleep_morning}
                 </td>
                 <td>
-                  {item.sleep_time}
+                  {section.sleep_time}
                 </td>
                 <td>
                   <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                    flowDelete(item._id)
+                    flowDelete(section._id)
                   )}>
                     X
                   </button>

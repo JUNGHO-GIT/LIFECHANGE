@@ -28,8 +28,8 @@ export const FoodDashPie = () => {
         user_id: user_id
       },
     });
-    setDASH_KCAL(response.data.result.kcal || DASH_KCAL_DEFAULT);
-    setDASH_NUT(response.data.result.nut || DASH_NUT_DEFAULT);
+    setDASH_KCAL(response.data.result.kcal.length > 0 ? response.data.result.kcal : DASH_KCAL_DEFAULT);
+    setDASH_NUT(response.data.result.nut.length > 0 ? response.data.result.nut : DASH_NUT_DEFAULT);
   })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->

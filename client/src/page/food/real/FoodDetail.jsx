@@ -157,7 +157,7 @@ export const FoodDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD?.food_section?.map((item, index) => (
+          {FOOD?.food_section?.map((section, index) => (
             <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
                 <React.Fragment>
@@ -167,32 +167,32 @@ export const FoodDetail = () => {
                 </React.Fragment>
               )}
               <td>
-                {item.food_title_val}
+                {section.food_title_val}
               </td>
               <td>
-                {item.food_part_val}
+                {section.food_part_val}
               </td>
               <td>
-                {item.food_count}
+                {section.food_count}
               </td>
               <td>
-                {item.food_serv}
+                {section.food_serv}
               </td>
               <td>
-                {item.food_kcal}
+                {section.food_kcal}
               </td>
               <td>
-                {item.food_carb}
+                {section.food_carb}
               </td>
               <td>
-                {item.food_protein}
+                {section.food_protein}
               </td>
               <td>
-                {item.food_fat}
+                {section.food_fat}
               </td>
               <td>
                 <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                  flowDelete(item._id)
+                  flowDelete(section._id)
                 )}>
                   x
                 </button>

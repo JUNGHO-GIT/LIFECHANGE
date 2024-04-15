@@ -134,3 +134,117 @@ export const dashLine = async (
     result: finalResult,
   };
 };
+
+// 0-4. dash (avg-week) --------------------------------------------------------------------------->
+export const dashAvgWeek = async (
+  user_id_param
+) => {
+
+  let sumWorkVolume = Array(5).fill(0);
+  let sumWorkCardio = Array(5).fill(0);
+  let countRecords = Array(5).fill(0);
+
+  const data = [
+    "1주차", "2주차", "3주차", "4주차", "5주차"
+  ];
+
+  // volume
+  let finalResultVolume = [];
+
+  // cardio
+  let finalResultCardio = [];
+
+  for (
+    let week = curMonthStart.clone();
+    week.isBefore(curMonthEnd);
+    week.add(1, "days")
+  ) {
+    const weekNum = week.week() - curMonthStart.week() + 1;
+
+    if (weekNum >= 1 && weekNum <= 5) {
+      const findResult = await repo.detailReal(
+        "", user_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
+      );
+
+      if (findResult) {
+        sumWorkVolume[weekNum - 1] += intFormat(findResult?.work_total_volume);
+        sumWorkCardio[weekNum - 1] += intFormat(findResult?.work_total_cardio);
+        countRecords[weekNum - 1]++;
+      }
+    }
+  };
+
+  for (let i = 0; i < 5; i++) {
+    finalResultVolume.push({
+      name: data[i],
+      볼륨: intFormat(sumWorkVolume[i] / countRecords[i])
+    });
+    finalResultCardio.push({
+      name: data[i],
+      시간: intFormat(sumWorkCardio[i] / countRecords[i])
+    });
+  };
+
+  return {
+    result: {
+      volume: finalResultVolume,
+      cardio: finalResultCardio
+    }
+  };
+};
+
+// 0-4. dash (avg-month) -------------------------------------------------------------------------->
+export const dashAvgMonth = async (
+  user_id_param
+) => {
+
+  let sumWorkVolume = Array(12).fill(0);
+  let sumWorkCardio = Array(12).fill(0);
+  let countRecords = Array(12).fill(0);
+
+  const data = [
+    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
+  ];
+
+  // volume
+  let finalResultVolume = [];
+
+  // cardio
+  let finalResultCardio = [];
+
+  for (
+    let month = curMonthStart.clone();
+    month.isBefore(curMonthEnd);
+    month.add(1, "days")
+  ) {
+    const monthNum = month.month();
+
+    const findResult = await repo.detailReal(
+      "", user_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
+    );
+
+    if (findResult) {
+      sumWorkVolume[monthNum] += intFormat(findResult?.work_total_volume);
+      sumWorkCardio[monthNum] += intFormat(findResult?.work_total_cardio);
+      countRecords[monthNum]++;
+    }
+  };
+
+  for (let i = 0; i < 12; i++) {
+    finalResultVolume.push({
+      name: data[i],
+      볼륨: intFormat(sumWorkVolume[i] / countRecords[i])
+    });
+    finalResultCardio.push({
+      name: data[i],
+      시간: intFormat(sumWorkCardio[i] / countRecords[i])
+    });
+  };
+
+  return {
+    result: {
+      volume: finalResultVolume,
+      cardio: finalResultCardio
+    }
+  };
+};

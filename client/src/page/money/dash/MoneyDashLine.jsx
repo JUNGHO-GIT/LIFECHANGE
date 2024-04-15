@@ -18,7 +18,7 @@ export const MoneyDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine(${PATH})`, ["수입", "지출"]
+    `activeLine-line (${PATH})`, ["수입", "지출"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -69,7 +69,6 @@ export const MoneyDashLine = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartLine = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
     return (

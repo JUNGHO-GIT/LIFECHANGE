@@ -18,7 +18,7 @@ export const WorkDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine(${PATH})`, ["볼륨", "시간"]
+    `activeLine-line (${PATH})`, ["볼륨", "시간"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -69,7 +69,6 @@ export const WorkDashLine = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartLine = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
     return (

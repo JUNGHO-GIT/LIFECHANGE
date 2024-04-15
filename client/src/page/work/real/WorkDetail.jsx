@@ -124,12 +124,12 @@ export const WorkDetail = () => {
       }
     };
 
-    const updatedSections = WORK.work_section.map((item) => {
-      sectionVolume = item.work_set * item.work_rep * item.work_kg;
+    const updatedSections = WORK.work_section.map((section) => {
+      sectionVolume = section.work_set * section.work_rep * section.work_kg;
       totalVolume += sectionVolume;
-      totalMinutes += timeFormat(item.work_cardio);
+      totalMinutes += timeFormat(section.work_cardio);
       return {
-        ...item,
+        ...section,
         work_volume: sectionVolume
       };
     });
@@ -210,11 +210,12 @@ export const WorkDetail = () => {
             <th>횟수</th>
             <th>중량</th>
             <th>휴식</th>
+            <th>볼륨</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {WORK?.work_section?.map((item, index) => (
+          {WORK?.work_section?.map((section, index) => (
             <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
                 <React.Fragment>
@@ -233,48 +234,51 @@ export const WorkDetail = () => {
                 </React.Fragment>
               )}
               <React.Fragment>
-                <td>{item.work_part_val}</td>
-                <td>{item.work_title_val}</td>
+                <td>{section.work_part_val}</td>
+                <td>{section.work_title_val}</td>
               </React.Fragment>
-              {(item.work_part_val !== "유산소") ? (
+              {(section.work_part_val !== "유산소") ? (
                 <React.Fragment>
-                  <td>{item.work_set}</td>
-                  <td>{item.work_rep}</td>
-                  <td>{item.work_kg}</td>
-                  <td>{item.work_rest}</td>
+                  <td>{section.work_set}</td>
+                  <td>{section.work_rep}</td>
+                  <td>{section.work_kg}</td>
+                  <td>{section.work_rest}</td>
+                  <td>{section.work_volume}</td>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <td colSpan={4}>{item.work_cardio}</td>
+                  <td colSpan={4}>{section.work_cardio}</td>
                 </React.Fragment>
               )}
               <td>
                 <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                  flowDelete(item._id)
+                  flowDelete(section._id)
                 )}>
                   X
                 </button>
               </td>
             </tr>
           ))}
-          <tr>
-            <td colSpan={4}>총 볼륨</td>
-            <td colSpan={2}></td>
-            <td colSpan={4}>{WORK?.work_total_volume}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td colSpan={4}>총 유산소 시간</td>
-            <td colSpan={2}></td>
-            <td colSpan={4}>{WORK?.work_total_cardio}</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td colSpan={4}>체중</td>
-            <td colSpan={2}></td>
-            <td colSpan={4}>{WORK?.work_body_weight}</td>
-            <td></td>
-          </tr>
+          <React.Fragment>
+            <tr>
+              <td colSpan={4}>총 볼륨</td>
+              <td colSpan={2}></td>
+              <td colSpan={4}>{WORK?.work_total_volume}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colSpan={4}>총 유산소 시간</td>
+              <td colSpan={2}></td>
+              <td colSpan={4}>{WORK?.work_total_cardio}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colSpan={4}>체중</td>
+              <td colSpan={2}></td>
+              <td colSpan={4}>{WORK?.work_body_weight}</td>
+              <td></td>
+            </tr>
+          </React.Fragment>
         </tbody>
       </table>
     );

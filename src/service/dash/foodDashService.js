@@ -30,12 +30,24 @@ export const dashBar = async (
 ) => {
 
   const dataKcal = {
-    "칼로리": { plan: "food_plan_kcal", real: "food_total_kcal" }
+    "칼로리": {
+      plan: "food_plan_kcal",
+      real: "food_total_kcal"
+    }
   };
   const dataNut = {
-    "탄수화물": { plan: "food_plan_carb", real: "food_total_carb" },
-    "단백질": { plan: "food_plan_protein", real: "food_total_protein" },
-    "지방": { plan: "food_plan_fat", real: "food_total_fat" },
+    "탄수화물": {
+      plan: "food_plan_carb",
+      real: "food_total_carb"
+    },
+    "단백질": {
+      plan: "food_plan_protein",
+      real: "food_total_protein"
+    },
+    "지방": {
+      plan: "food_plan_fat",
+      real: "food_total_fat"
+    },
   };
 
   // kcal
@@ -94,11 +106,10 @@ export const dashPie = async (
     value: intFormat(item.value)
   }));
 
-  const finalResultNut = [
-    { name: "탄수화물", value: intFormat(findResultNut[0]?.food_total_carb) },
-    { name: "단백질", value: intFormat(findResultNut[0]?.food_total_protein) },
-    { name: "지방", value: intFormat(findResultNut[0]?.food_total_fat) }
-  ];
+  const finalResultNut = findResultNut?.map((item) => ({
+    name: item._id,
+    value: intFormat(item.value)
+  }));
 
   return {
     result: {

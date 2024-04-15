@@ -17,11 +17,11 @@ export const MoneyDashAvg = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeAvg, set:setActiveAvg} = useStorage(
-    `activeAvg(${PATH})`, ["수입", "지출"]
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine-avg (${PATH})`, ["수입", "지출"]
   );
   const {val:activeType, set:setActiveType} = useStorage(
-    `activeType(${PATH})`, "week"
+    `activeType-avg (${PATH})`, "week"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -92,7 +92,6 @@ export const MoneyDashAvg = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartAvgWeek = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_WEEK);
 
     return (
@@ -107,10 +106,10 @@ export const MoneyDashAvg = () => {
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            {activeAvg.includes("수입")
+            {activeLine.includes("수입")
               && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
             }
-            {activeAvg.includes("지출")
+            {activeLine.includes("지출")
               && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
             }
             <Tooltip />
@@ -123,7 +122,6 @@ export const MoneyDashAvg = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartAvgMonth = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_MONTH);
 
     return (
@@ -138,10 +136,10 @@ export const MoneyDashAvg = () => {
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            {activeAvg.includes("수입")
+            {activeLine.includes("수입")
               && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
             }
-            {activeAvg.includes("지출")
+            {activeLine.includes("지출")
               && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
             }
             <Tooltip />
@@ -174,13 +172,13 @@ export const MoneyDashAvg = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeAvg.includes(key)}
+                  checked={activeLine.includes(key)}
                   onChange={() => {
-                    if (activeAvg.includes(key)) {
-                      setActiveAvg(activeAvg?.filter((item) => item !== key));
+                    if (activeLine.includes(key)) {
+                      setActiveLine(activeLine?.filter((item) => item !== key));
                     }
                     else {
-                      setActiveAvg([...activeAvg, key]);
+                      setActiveLine([...activeLine, key]);
                     }
                   }}
                 />

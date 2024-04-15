@@ -17,8 +17,8 @@ export const FoodDashAvg = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeAvg, set:setActiveAvg} = useStorage(
-    `activeAvg-avg (${PATH})`, ["탄수화물", "단백질", "지방"]
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine-avg (${PATH})`, ["탄수화물", "단백질", "지방"]
   );
   const {val:activeType, set:setActiveType} = useStorage(
     `activeType-avg (${PATH})`, "week"
@@ -117,7 +117,6 @@ export const FoodDashAvg = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartWeekKcal = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL_WEEK);
 
     return (
@@ -143,7 +142,6 @@ export const FoodDashAvg = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartWeekNut = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT_WEEK);
 
     return (
@@ -158,13 +156,13 @@ export const FoodDashAvg = () => {
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            {activeAvg.includes("탄수화물")
+            {activeLine.includes("탄수화물")
               && <Bar type={"monotone"} dataKey={"탄수화물"} fill={"#ffc658"} minPointSize={1} />
             }
-            {activeAvg.includes("단백질")
+            {activeLine.includes("단백질")
               && <Bar type={"monotone"} dataKey={"단백질"} fill={"#82ca9d"} minPointSize={1} />
             }
-            {activeAvg.includes("지방")
+            {activeLine.includes("지방")
               && <Bar type={"monotone"} dataKey={"지방"} fill={"#ff7300"} minPointSize={1} />
             }
             <Tooltip />
@@ -177,7 +175,6 @@ export const FoodDashAvg = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartMonthKcal = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL_MONTH);
 
     return (
@@ -203,7 +200,6 @@ export const FoodDashAvg = () => {
 
   // 5-4. chart ----------------------------------------------------------------------------------->
   const chartMonthNut = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT_MONTH);
 
     return (
@@ -218,13 +214,13 @@ export const FoodDashAvg = () => {
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            {activeAvg.includes("탄수화물")
+            {activeLine.includes("탄수화물")
               && <Bar type={"monotone"} dataKey={"탄수화물"} fill={"#ffc658"} minPointSize={1} />
             }
-            {activeAvg.includes("단백질")
+            {activeLine.includes("단백질")
               && <Bar type={"monotone"} dataKey={"단백질"} fill={"#82ca9d"} minPointSize={1} />
             }
-            {activeAvg.includes("지방")
+            {activeLine.includes("지방")
               && <Bar type={"monotone"} dataKey={"지방"} fill={"#ff7300"} minPointSize={1} />
             }
             <Tooltip />
@@ -270,13 +266,13 @@ export const FoodDashAvg = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeAvg.includes(key)}
+                  checked={activeLine.includes(key)}
                   onChange={() => {
-                    if (activeAvg.includes(key)) {
-                      setActiveAvg(activeAvg?.filter((item) => item !== key));
+                    if (activeLine.includes(key)) {
+                      setActiveLine(activeLine?.filter((item) => item !== key));
                     }
                     else {
-                      setActiveAvg([...activeAvg, key]);
+                      setActiveLine([...activeLine, key]);
                     }
                   }}
                 />

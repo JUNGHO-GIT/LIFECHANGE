@@ -56,12 +56,26 @@ export const aggregateNut = async (
         $lte: endDt_param
       },
     }},
-    {$project: {
-      _id: 0,
-      food_total_carb: 1,
-      food_total_protein: 1,
-      food_total_fat: 1
-    }}
+    {$unwind: "$food_section"
+    },
+    {$group: {
+      _id: "$food_section.food_title_val",
+      food_total_carb: {
+        $sum: {
+          $toDouble: "$food_section.food_carb"
+        }
+      },
+      food_total_protein: {
+        $sum: {
+          $toDouble: "$food_section.food_protein"
+        }
+      },
+      food_total_fat: {
+        $sum: {
+          $toDouble: "$food_section.food_fat"
+        }
+      }
+    }},
   ]);
 
   return finalResult;

@@ -83,7 +83,6 @@ export const FoodDashLine = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartLineKcal = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
 
     return (
@@ -107,7 +106,6 @@ export const FoodDashLine = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartLineNut = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
 
     return (

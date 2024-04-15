@@ -54,7 +54,6 @@ export const WorkDashScatter = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartBar = () => {
-
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
     return (
