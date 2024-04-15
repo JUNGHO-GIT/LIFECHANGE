@@ -208,8 +208,8 @@ export const WorkSave = () => {
             <input
               type={"number"}
               value={COUNT.sectionCnt}
-              min="0"
-              className="form-control mb-30"
+              min={0}
+              className={"form-control mb-30"}
               onChange={(e) => (
                 handlerCount(e.target.value)
               )}
@@ -543,30 +543,22 @@ export const WorkSave = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
-      <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className={"col-12"}>
+    <div className={"root-wrapper"}>
+      <div className={"container-wrapper"}>
+        <div className={"row"}>
+          <div className={"col-12 mb-20 d-center"}>
             <h1>Save</h1>
           </div>
-        </div>
-        <div className="row d-center mb-20">
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {dateNode()}
           </div>
-        </div>
-        <div className="row d-center mt-5">
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {handlerSectionCount()}
           </div>
-        </div>
-        <div className="row d-center mt-5 mb-20">
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {tableNode()}
           </div>
-        </div>
-        <div className={"row d-center"}>
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {buttonNode()}
           </div>
         </div>

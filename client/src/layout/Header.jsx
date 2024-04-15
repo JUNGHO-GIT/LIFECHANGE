@@ -221,7 +221,7 @@ export const Header = () => {
           </div>
         </div>
       </div>
-      <div className="root-wrapper">
+      <div className={"root-wrapper"}>
         <div className="container-fluid">
           <div className="row d-center pt-15 pb-15">
             <div className={"col-12"}>

@@ -130,8 +130,8 @@ export const FoodPlanDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
+      <table className={"table bg-white table-hover"}>
+        <thead className={"table-primary"}>
           <tr>
             <th>시작일</th>
             <th>종료일</th>
@@ -187,8 +187,8 @@ export const FoodPlanDetail = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
-      <div className="container-wrapper">
+    <div className={"root-wrapper"}>
+      <div className={"container-wrapper"}>
         <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Detail</h1>

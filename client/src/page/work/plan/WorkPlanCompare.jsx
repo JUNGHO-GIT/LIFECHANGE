@@ -109,8 +109,8 @@ export const WorkPlanCompare = () => {
   const tableNode = () => {
     function tableFragment () {
       return (
-        <table className="table bg-white table-hover">
-          <thead className="table-primary">
+        <table className={"table bg-white table-hover"}>
+          <thead className={"table-primary"}>
             <tr>
               <th>기간</th>
               <th>분류</th>
@@ -197,8 +197,8 @@ export const WorkPlanCompare = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
-      <div className="container-wrapper">
+    <div className={"root-wrapper"}>
+      <div className={"container-wrapper"}>
         <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Compare</h1>

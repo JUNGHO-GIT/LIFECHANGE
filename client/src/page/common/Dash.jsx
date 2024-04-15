@@ -81,7 +81,7 @@ export const Dash = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
+    <div className={"root-wrapper"}>
       <div className="container-fluid">
         <div className="row  mb-20">
           <div className={"col-12"}>
@@ -108,7 +108,7 @@ export const Dash = () => {
         </div>
         <div className="row">
           <div className={"col-6"}>
-            <div className="container-wrapper">
+            <div className={"container-wrapper"}>
               <div className="row d-center mt-5">
                 <div className={"col-12"}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>
@@ -129,7 +129,7 @@ export const Dash = () => {
             </div>
           </div>
           <div className={"col-6"}>
-            <div className="container-wrapper">
+            <div className={"container-wrapper"}>
               <div className="row d-center mt-5">
                 <div className={"col-12"}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>

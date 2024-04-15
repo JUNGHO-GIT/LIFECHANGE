@@ -127,8 +127,8 @@ export const FoodSearch = () => {
       });
     };
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
+      <table className={"table bg-white table-hover"}>
+        <thead className={"table-primary"}>
           <tr>
             <th>Title</th>
             <th>Brand</th>
@@ -246,24 +246,18 @@ export const FoodSearch = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
-      <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className={"col-12"}>
+    <div className={"root-wrapper"}>
+      <div className={"container-wrapper"}>
+        <div className={"row"}>
+          <div className={"col-12 mb-20 d-center"}>
             <h1>Search</h1>
           </div>
-        </div>
-        <div className="row mb-20 d-center">
           <div className={"col-12"}>
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
           <div className={"col-12"}>
             {searchFood()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
           <div className={"col-12"}>
             {pagingNode()}
           </div>

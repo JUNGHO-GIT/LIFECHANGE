@@ -115,8 +115,8 @@ export const WorkList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className="table bg-white table-hover">
-        <thead className="table-primary">
+      <table className={"table bg-white table-hover"}>
+        <thead className={"table-primary"}>
           <tr>
             <th>날짜</th>
             <th>시작</th>
@@ -227,31 +227,23 @@ export const WorkList = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
-      <div className="container-wrapper">
-        <div className="row mb-20 d-center">
-          <div className={"col-12"}>
+    <div className={"root-wrapper"}>
+      <div className={"container-wrapper"}>
+        <div className={"row"}>
+          <div className={"col-12 mb-20 d-center"}>
             <h1>List</h1>
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {calendarNode()}
             {tableNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {filterNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {pagingNode()}
           </div>
-        </div>
-        <div className="row mb-20 d-center">
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20 d-center"}>
             {buttonNode()}
           </div>
         </div>

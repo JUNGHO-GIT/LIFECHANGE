@@ -92,7 +92,7 @@ export const UserLogin = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
+    <div className={"root-wrapper"}>
       <div className="container">
         <div className="container-wrapper mb-30">
           <div className="row d-center mt-5">

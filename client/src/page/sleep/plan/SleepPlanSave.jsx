@@ -245,8 +245,8 @@ export const SleepPlanSave = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
-      <div className="container-wrapper">
+    <div className={"root-wrapper"}>
+      <div className={"container-wrapper"}>
         <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Save</h1>

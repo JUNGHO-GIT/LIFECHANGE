@@ -10,7 +10,7 @@ export const SleepDash = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="root-wrapper">
+    <div className={"root-wrapper"}>
       <div className="container">
         <div className="container-wrapper mb-10">
           <h5 className="container-title">오늘 목표/실제 수면 데이터</h5>
