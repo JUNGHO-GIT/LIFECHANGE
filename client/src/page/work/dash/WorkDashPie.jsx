@@ -42,7 +42,7 @@ export const WorkDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
       fontSize={"12"}>
         {`${DASH_PART[index].name} ${Math.round(percent * 100)}%`}
       </text>
@@ -59,7 +59,7 @@ export const WorkDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
       fontSize={"12"}>
         {`${DASH_TITLE[index].name} ${Math.round(percent * 100)}%`}
       </text>

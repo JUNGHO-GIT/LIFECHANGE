@@ -59,7 +59,7 @@ export const FoodDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
       fontSize={"12"}>
         {`${DASH_NUT[index]?.name} ${Math.round(percent * 100)}%`}
       </text>

@@ -42,7 +42,7 @@ export const MoneyDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
       fontSize={"12"}>
         {`${DASH_IN[index].name} ${Math.round(percent * 100)}%`}
       </text>
@@ -59,7 +59,7 @@ export const MoneyDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
       fontSize={"12"}>
         {`${DASH_OUT[index].name} ${Math.round(percent * 100)}%`}
       </text>
