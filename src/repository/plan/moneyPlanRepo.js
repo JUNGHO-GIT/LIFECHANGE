@@ -18,10 +18,10 @@ export const totalCnt = async (
   const finalResult = await MoneyPlan.countDocuments({
     user_id: user_id_param,
     money_plan_startDt: {
-      $gte: startDt_param,
+      $lte: startDt_param,
     },
     money_plan_endDt: {
-      $lte: endDt_param,
+      $gte: endDt_param,
     },
   });
 
@@ -41,10 +41,10 @@ export const findPlan = async (
   const finalResult = await MoneyPlan.find({
     user_id: user_id_param,
     money_plan_startDt: {
-      $gte: startDt_param,
+      $lte: startDt_param,
     },
     money_plan_endDt: {
-      $lte: endDt_param,
+      $gte: endDt_param,
     },
   })
   .sort({money_plan_startDt: sort_param})
@@ -95,14 +95,8 @@ export const detail = async (
   const finalResult = await MoneyPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    money_plan_startDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    },
-    money_plan_endDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    }
+    money_plan_startDt: startDt_param,
+    money_plan_endDt: endDt_param,
   })
   .lean();
 
@@ -164,12 +158,8 @@ export const deletes = async (
   const updateResult = await MoneyPlan.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      money_plan_startDt: {
-        $gte: startDt_param,
-      },
-      money_plan_endDt: {
-        $lte: endDt_param,
-      },
+      money_plan_startDt: startDt_param,
+      money_plan_endDt: endDt_param,
     },
     {$set: {
       money_plan_update: fmtDate,
@@ -185,12 +175,8 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await MoneyPlan.findOne({
       user_id: user_id_param,
-      money_plan_startDt: {
-        $gte: startDt_param,
-      },
-      money_plan_endDt: {
-        $lte: endDt_param,
-      }
+      money_plan_startDt: startDt_param,
+      money_plan_endDt: endDt_param,
     })
     .lean();
 

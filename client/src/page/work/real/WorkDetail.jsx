@@ -247,7 +247,7 @@ export const WorkDetail = () => {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <td colSpan={4}>{section.work_cardio}</td>
+                  <td colSpan={5}>{section.work_cardio}</td>
                 </React.Fragment>
               )}
               <td>

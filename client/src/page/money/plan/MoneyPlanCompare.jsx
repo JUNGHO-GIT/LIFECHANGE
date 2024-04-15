@@ -102,6 +102,47 @@ export const MoneyPlanCompare = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real, type) {
+      // 절댓값 구하기
+      const abs = Math.abs(plan - real);
+      // 1. 수입 항목인 경우
+      if (type === "in") {
+        if (real < plan) {
+          return (
+            <span className={"text-danger"}>{abs}</span>
+          );
+        }
+        else if (real === plan) {
+          return (
+            <span className={"text-primary"}>{abs}</span>
+          );
+        }
+        else if (real > plan) {
+          return (
+            <span className={"text-success"}>{abs}</span>
+          );
+        }
+      }
+      // 2. 지출 항목인 경우
+      else if (type === "out") {
+        if (real < plan) {
+          return (
+            <span className={"text-success"}>{abs}</span>
+          );
+        }
+        else if (real === plan) {
+          return (
+            <span className={"text-primary"}>{abs}</span>
+          );
+        }
+        else if (real > plan) {
+          return (
+            <span className={"text-danger"}>{abs}</span>
+          );
+        }
+      }
+    };
+
     function tableFragment () {
       return (
         <table className={"table bg-white table-hover"}>
@@ -111,6 +152,7 @@ export const MoneyPlanCompare = () => {
               <th>분류</th>
               <th>목표</th>
               <th>실제</th>
+              <th>비교</th>
             </tr>
           </thead>
           <tbody>
@@ -125,11 +167,13 @@ export const MoneyPlanCompare = () => {
                   <td>수입</td>
                   <td>{item.money_plan_in}</td>
                   <td>{item.money_in}</td>
+                  <td>{successOrNot(item.money_plan_in, item.money_in, "in")}</td>
                 </tr>
                 <tr>
                   <td>지출</td>
                   <td>{item.money_plan_out}</td>
                   <td>{item.money_out}</td>
+                  <td>{successOrNot(item.money_plan_out, item.money_out, "out")}</td>
                 </tr>
               </React.Fragment>
             ))}

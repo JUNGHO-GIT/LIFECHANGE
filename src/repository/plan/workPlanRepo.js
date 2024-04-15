@@ -18,10 +18,10 @@ export const totalCnt = async (
   const finalResult = await WorkPlan.countDocuments({
     user_id: user_id_param,
     work_plan_startDt: {
-      $gte: startDt_param,
+      $lte: endDt_param,
     },
     work_plan_endDt: {
-      $lte: endDt_param,
+      $gte: startDt_param,
     },
   });
 
@@ -41,10 +41,10 @@ export const findPlan = async (
   const finalResult = await WorkPlan.find({
     user_id: user_id_param,
     work_plan_startDt: {
-      $gte: startDt_param,
+      $lte: endDt_param,
     },
     work_plan_endDt: {
-      $lte: endDt_param,
+      $gte: startDt_param,
     },
   })
   .sort({work_plan_startDt: sort_param})
@@ -95,14 +95,8 @@ export const detail = async (
   const finalResult = await WorkPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    work_plan_startDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    },
-    work_plan_endDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    }
+    work_plan_startDt: startDt_param,
+    work_plan_endDt: endDt_param,
   })
   .lean();
 
@@ -122,9 +116,10 @@ export const create = async (
     user_id: user_id_param,
     work_plan_startDt: startDt_param,
     work_plan_endDt: endDt_param,
-    work_plan_body_weight: WORK_PLAN_param.work_plan_body_weight,
     work_plan_total_count: WORK_PLAN_param.work_plan_total_count,
+    work_plan_total_volume: WORK_PLAN_param.work_plan_total_volume,
     work_plan_cardio_time: WORK_PLAN_param.work_plan_cardio_time,
+    work_plan_body_weight: WORK_PLAN_param.work_plan_body_weight,
     work_plan_regdate: fmtDate,
     work_plan_update: "",
   });
@@ -165,12 +160,8 @@ export const deletes = async (
   const updateResult = await WorkPlan.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      work_plan_startDt: {
-        $gte: startDt_param,
-      },
-      work_plan_endDt: {
-        $lte: endDt_param,
-      },
+      work_plan_startDt: startDt_param,
+      work_plan_endDt: endDt_param,
     },
     {$set: {
       work_plan_update: fmtDate,
@@ -186,12 +177,8 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await WorkPlan.findOne({
       user_id: user_id_param,
-      work_plan_startDt: {
-        $gte: startDt_param,
-      },
-      work_plan_endDt: {
-        $lte: endDt_param,
-      },
+      work_plan_startDt: startDt_param,
+      work_plan_endDt: endDt_param,
     })
     .lean();
 

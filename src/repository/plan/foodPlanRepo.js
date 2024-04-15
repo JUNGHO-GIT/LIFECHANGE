@@ -18,10 +18,10 @@ export const totalCnt = async (
   const finalResult = await FoodPlan.countDocuments({
     user_id: user_id_param,
     food_plan_startDt: {
-      $gte: startDt_param,
+      $lte: startDt_param,
     },
     food_plan_endDt: {
-      $lte: endDt_param,
+      $gte: endDt_param,
     },
   });
 
@@ -41,10 +41,10 @@ export const findPlan = async (
   const finalResult = await FoodPlan.find({
     user_id: user_id_param,
     food_plan_startDt: {
-      $gte: startDt_param,
+      $lte: startDt_param,
     },
     food_plan_endDt: {
-      $lte: endDt_param,
+      $gte: endDt_param,
     },
   })
   .sort({food_plan_startDt: sort_param})
@@ -67,14 +67,8 @@ export const findReal = async (
 
   const finalResult = await Food.find({
     user_id: user_id_param,
-    food_startDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    },
-    food_endDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    }
+    food_startDt: startDt_param,
+    food_endDt: endDt_param,
   })
   .sort({food_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
@@ -95,14 +89,8 @@ export const detail = async (
   const finalResult = await FoodPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    food_plan_startDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    },
-    food_plan_endDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    }
+    food_plan_startDt: startDt_param,
+    food_plan_endDt: endDt_param,
   })
   .lean();
 
@@ -166,12 +154,8 @@ export const deletes = async (
   const updateResult = await FoodPlan.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      food_plan_startDt: {
-        $gte: startDt_param,
-      },
-      food_plan_endDt: {
-        $lte: endDt_param,
-      },
+      food_plan_startDt: startDt_param,
+      food_plan_endDt: endDt_param,
     },
     {$set: {
       food_plan_update: fmtDate,
@@ -187,12 +171,8 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await FoodPlan.findOne({
       user_id: user_id_param,
-      food_plan_startDt: {
-        $gte: startDt_param,
-      },
-      food_plan_endDt: {
-        $lte: endDt_param,
-      },
+      food_plan_startDt: startDt_param,
+      food_plan_endDt: endDt_param,
     })
     .lean();
 

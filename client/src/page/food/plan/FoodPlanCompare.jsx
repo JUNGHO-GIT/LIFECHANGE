@@ -106,6 +106,25 @@ export const FoodPlanCompare = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real) {
+      // 절댓값 구하기
+      const abs = Math.abs(plan - real);
+      if (real < plan) {
+        return (
+          <span className={"text-success"}>{abs}</span>
+        );
+      }
+      else if (real === plan) {
+        return (
+          <span className={"text-primary"}>{abs}</span>
+        );
+      }
+      else if (real > plan) {
+        return (
+          <span className={"text-danger"}>{abs}</span>
+        );
+      }
+    };
     function tableFragment () {
       return (
         <table className={"table bg-white table-hover"}>
@@ -115,6 +134,7 @@ export const FoodPlanCompare = () => {
               <th>분류</th>
               <th>목표</th>
               <th>실제</th>
+              <th>비교</th>
             </tr>
           </thead>
           <tbody>
@@ -129,21 +149,25 @@ export const FoodPlanCompare = () => {
                   <td>칼로리</td>
                   <td>{item.food_plan_kcal}</td>
                   <td>{item.food_kcal}</td>
+                  <td>{successOrNot(item.food_plan_kcal, item.food_kcal)}</td>
                 </tr>
                 <tr>
                   <td>탄수화물</td>
                   <td>{item.food_plan_carb}</td>
                   <td>{item.food_carb}</td>
+                  <td>{successOrNot(item.food_plan_carb, item.food_carb)}</td>
                 </tr>
                 <tr>
                   <td>단백질</td>
                   <td>{item.food_plan_protein}</td>
                   <td>{item.food_protein}</td>
+                  <td>{successOrNot(item.food_plan_protein, item.food_protein)}</td>
                 </tr>
                 <tr>
                   <td>지방</td>
                   <td>{item.food_plan_fat}</td>
                   <td>{item.food_fat}</td>
+                  <td>{successOrNot(item.food_plan_fat, item.food_fat)}</td>
                 </tr>
               </React.Fragment>
             ))}

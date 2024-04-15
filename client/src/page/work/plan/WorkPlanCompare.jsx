@@ -106,6 +106,13 @@ export const WorkPlanCompare = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real) {
+      if (plan === real) {
+        return "일치";
+      } else {
+        return plan > real ? "미달" : "초과";
+      }
+    };
     function tableFragment () {
       return (
         <table className={"table bg-white table-hover"}>
@@ -115,6 +122,7 @@ export const WorkPlanCompare = () => {
               <th>분류</th>
               <th>목표</th>
               <th>실제</th>
+              <th>비교</th>
             </tr>
           </thead>
           <tbody>
@@ -129,11 +137,13 @@ export const WorkPlanCompare = () => {
                   <td>총 운동횟수</td>
                   <td>{item.work_plan_total_count || "0"}</td>
                   <td>{item.work_total_count || "0"}</td>
+                  <td>{successOrNot(item.work_plan_total_count, item.work_total_count)}</td>
                 </tr>
                 <tr>
                   <td>유산소 시간</td>
                   <td>{item.work_plan_cardio_time || "0"}</td>
                   <td>{item.work_total_cardio || "0"}</td>
+                  <td>{successOrNot(item.work_plan_cardio_time, item.work_total_cardio)}</td>
                 </tr>
               </React.Fragment>
             ))}

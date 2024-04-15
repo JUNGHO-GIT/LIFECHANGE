@@ -18,10 +18,10 @@ export const totalCnt = async (
   const finalResult = await SleepPlan.countDocuments({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $gte: startDt_param,
+      $lte: startDt_param,
     },
     sleep_plan_endDt: {
-      $lte: endDt_param,
+      $gte: endDt_param,
     },
   });
 
@@ -41,10 +41,10 @@ export const findPlan = async (
   const finalResult = await SleepPlan.find({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $gte: startDt_param,
+      $lte: startDt_param,
     },
     sleep_plan_endDt: {
-      $lte: endDt_param,
+      $gte: endDt_param,
     },
   })
   .sort({sleep_plan_startDt: sort_param})
@@ -95,14 +95,8 @@ export const detail = async (
   const finalResult = await SleepPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    sleep_plan_startDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    },
-    sleep_plan_endDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    }
+    sleep_plan_startDt: startDt_param,
+    sleep_plan_endDt: endDt_param,
   })
   .lean();
 
@@ -165,12 +159,8 @@ export const deletes = async (
   const updateResult = await SleepPlan.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      sleep_plan_startDt: {
-        $gte: startDt_param,
-      },
-      sleep_plan_endDt: {
-        $lte: endDt_param,
-      },
+      sleep_plan_startDt: startDt_param,
+      sleep_plan_endDt: endDt_param,
     },
     {$set: {
       sleep_plan_update: fmtDate,
@@ -186,12 +176,8 @@ export const deletes = async (
   if (updateResult.modifiedCount > 0) {
     const doc = await SleepPlan.findOne({
       user_id: user_id_param,
-      sleep_plan_startDt: {
-        $gte: startDt_param,
-      },
-      sleep_plan_endDt: {
-        $lte: endDt_param,
-      },
+      sleep_plan_startDt: startDt_param,
+      sleep_plan_endDt: endDt_param,
     })
     .lean();
 

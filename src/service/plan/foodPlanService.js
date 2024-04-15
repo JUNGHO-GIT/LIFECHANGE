@@ -51,9 +51,6 @@ export const compare = async (
       sum + (curr?.food_total_fat ?? 0)
     ), 0);
 
-    console.log("===================================");
-    console.log(JSON.stringify(matches, null, 2));
-
     return {
       ...plan,
       food_kcal: totalKcal,
