@@ -178,7 +178,7 @@ export const MoneyDashAvg = () => {
                   checked={activeAvg.includes(key)}
                   onChange={() => {
                     if (activeAvg.includes(key)) {
-                      setActiveAvg(activeAvg.filter((item) => item !== key));
+                      setActiveAvg(activeAvg?.filter((item) => item !== key));
                     }
                     else {
                       setActiveAvg([...activeAvg, key]);

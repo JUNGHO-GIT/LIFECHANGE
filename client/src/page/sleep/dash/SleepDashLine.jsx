@@ -92,7 +92,7 @@ export const SleepDashLine = () => {
                   checked={activeLine.includes(key)}
                   onChange={() => {
                     if (activeLine.includes(key)) {
-                      setActiveLine(activeLine.filter((item) => item !== key));
+                      setActiveLine(activeLine?.filter((item) => item !== key));
                     }
                     else {
                       setActiveLine([...activeLine, key]);

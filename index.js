@@ -4,16 +4,16 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import {fileURLToPath} from "url";
-import {foodRouter} from "./src/router/foodRouter.js";
-import {foodPlanRouter} from "./src/router/foodPlanRouter.js";
-import {moneyRouter} from "./src/router/moneyRouter.js";
-import {moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
-import {sleepRouter} from "./src/router/sleepRouter.js";
-import {sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
-import {userRouter} from "./src/router/userRouter.js";
-import {userPlanRouter} from "./src/router/userPlanRouter.js";
-import {workRouter} from "./src/router/workRouter.js";
-import {workPlanRouter} from "./src/router/workPlanRouter.js";
+import {foodPlanRouter} from "./src/router/plan/foodPlanRouter.js";
+import {moneyPlanRouter} from "./src/router/plan/moneyPlanRouter.js";
+import {sleepPlanRouter} from "./src/router/plan/sleepPlanRouter.js";
+import {userPlanRouter} from "./src/router/plan/userPlanRouter.js";
+import {workPlanRouter} from "./src/router/plan/workPlanRouter.js";
+import {foodRouter} from "./src/router/real/foodRouter.js";
+import {moneyRouter} from "./src/router/real/moneyRouter.js";
+import {sleepRouter} from "./src/router/real/sleepRouter.js";
+import {userRouter} from "./src/router/real/userRouter.js";
+import {workRouter} from "./src/router/real/workRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://127.0.0.1:27017");
@@ -33,17 +33,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.use("/food", foodRouter);
-app.use("/money", moneyRouter);
-app.use("/sleep", sleepRouter);
-app.use("/user", userRouter);
-app.use("/work", workRouter);
-
 app.use("/food/plan", foodPlanRouter);
 app.use("/money/plan", moneyPlanRouter);
 app.use("/sleep/plan", sleepPlanRouter);
 app.use("/user/plan", userPlanRouter);
 app.use("/work/plan", workPlanRouter);
+
+app.use("/food", foodRouter);
+app.use("/money", moneyRouter);
+app.use("/sleep", sleepRouter);
+app.use("/user", userRouter);
+app.use("/work", workRouter);
 
 // ------------------------------------------------------------------------------------------------>
 app.listen(app.get("port"), () => {
