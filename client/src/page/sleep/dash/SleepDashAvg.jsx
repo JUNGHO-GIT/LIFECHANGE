@@ -50,14 +50,14 @@ export const SleepDashAvg = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const responseWeek = await axios.get(`${URL_SLEEP}/dashAvgWeek`, {
+    const responseWeek = await axios.get(`${URL_SLEEP}/dash/avgWeek`, {
       params: {
         user_id: user_id
       },
     });
     setDASH_WEEK(responseWeek.data.result);
 
-    const responseMonth = await axios.get(`${URL_SLEEP}/dashAvgMonth`, {
+    const responseMonth = await axios.get(`${URL_SLEEP}/dash/avgMonth`, {
       params: {
         user_id: user_id
       },

@@ -50,14 +50,14 @@ export const MoneyDashAvg = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const responseWeek = await axios.get(`${URL_MONEY}/dashAvgWeek`, {
+    const responseWeek = await axios.get(`${URL_MONEY}/dash/avgWeek`, {
       params: {
         user_id: user_id
       },
     });
     setDASH_WEEK(responseWeek.data.result);
 
-    const responseMonth = await axios.get(`${URL_MONEY}/dashAvgMonth`, {
+    const responseMonth = await axios.get(`${URL_MONEY}/dash/avgMonth`, {
       params: {
         user_id: user_id
       },

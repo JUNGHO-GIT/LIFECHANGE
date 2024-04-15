@@ -23,7 +23,7 @@ export const FoodDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/dashPie`, {
+    const response = await axios.get(`${URL_FOOD}/dash/pie`, {
       params: {
         user_id: user_id
       },

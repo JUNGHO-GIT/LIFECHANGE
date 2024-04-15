@@ -20,7 +20,7 @@ export const MoneyDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/dashPie`, {
+    const response = await axios.get(`${URL_MONEY}/dash/pie`, {
       params: {
         user_id: user_id
       },

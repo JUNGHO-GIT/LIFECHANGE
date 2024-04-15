@@ -1,9 +1,9 @@
-// moneyPlanRepository.js
+// foodPlanRepo.js
 
 import mongoose from "mongoose";
 import moment from "moment";
-import {Money} from "../../schema/real/Money.js";
-import {MoneyPlan} from "../../schema/plan/MoneyPlan.js";
+import {Food} from "../../schema/real/Food.js";
+import {FoodPlan} from "../../schema/plan/FoodPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -18,19 +18,19 @@ export const totalCnt = async (
   endDt_param
 ) => {
 
-  const finalResult = await Money.countDocuments({
+  const finalResult = await Food.countDocuments({
     user_id: user_id_param,
-    money_startDt: {
+    food_startDt: {
       $gte: startDt_param,
     },
-    money_endDt: {
+    food_endDt: {
       $lte: endDt_param,
     },
     ...(part_param !== "전체" && {
-      "money_section.money_part_val": part_param
+      "food_section.food_part_val": part_param
     }),
     ...(title_param !== "전체" && {
-      "money_section.money_title_val": title_param
+      "food_section.food_title_val": title_param
     }),
   });
 
@@ -49,41 +49,43 @@ export const findReal = async (
   endDt_param,
 ) => {
 
-  const finalResult = await Money.aggregate([
+  const finalResult = await Food.aggregate([
     {$match: {
       user_id: user_id_param,
-      money_startDt: {
+      food_startDt: {
         $gte: startDt_param,
         $lte: endDt_param
       },
-      money_endDt: {
+      food_endDt: {
         $gte: startDt_param,
         $lte: endDt_param
       },
     }},
     {$project: {
-      money_startDt: 1,
-      money_endDt: 1,
-      money_total_in: 1,
-      money_total_out: 1,
-      money_section: {
+      food_startDt: 1,
+      food_endDt: 1,
+      food_total_kcal: 1,
+      food_total_carb: 1,
+      food_total_protein: 1,
+      food_total_fat: 1,
+      food_section: {
         $filter: {
-          input: "$money_section",
+          input: "$food_section",
           as: "section",
           cond: {
             $and: [
               part_param === "전체"
-              ? {$ne: ["$$section.money_part_val", null]}
-              : {$eq: ["$$section.money_part_val", part_param]},
+              ? {$ne: ["$$section.food_part_val", null]}
+              : {$eq: ["$$section.food_part_val", part_param]},
               title_param === "전체"
-              ? {$ne: ["$$section.money_title_val", null]}
-              : {$eq: ["$$section.money_title_val", title_param]}
+              ? {$ne: ["$$section.food_title_val", null]}
+              : {$eq: ["$$section.food_title_val", title_param]}
             ]
           }
         }
       }
     }},
-    {$sort: {money_startDt: sort_param}},
+    {$sort: {food_startDt: sort_param}},
     {$skip: (page_param - 1) * limit_param},
     {$limit: limit_param}
   ]);
@@ -94,23 +96,23 @@ export const findReal = async (
 // 1-2. find (plan) ------------------------------------------------------------------------------->
 export const findPlan = async (
   user_id_param,
-  startDt_param,
-  endDt_param,
   sort_param,
   limit_param,
-  page_param
+  page_param,
+  startDt_param,
+  endDt_param,
 ) => {
 
-  const finalResult = await MoneyPlan.find({
+  const finalResult = await FoodPlan.find({
     user_id: user_id_param,
-    money_plan_startDt: {
+    food_plan_startDt: {
       $gte: startDt_param,
     },
-    money_plan_endDt: {
+    food_plan_endDt: {
       $lte: endDt_param,
     },
   })
-  .sort({money_plan_startDt: sort_param})
+  .sort({food_plan_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
   .limit(limit_param)
   .lean();
@@ -126,14 +128,14 @@ export const detail = async (
   endDt_param
 ) => {
 
-  const finalResult = await Money.findOne({
+  const finalResult = await Food.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    money_startDt: {
+    food_startDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     },
-    money_endDt: {
+    food_endDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     }
@@ -146,21 +148,22 @@ export const detail = async (
 // 3-1. create ------------------------------------------------------------------------------------>
 export const create = async (
   user_id_param,
-  MONEY_param,
+  FOOD_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await Money.create({
+  const finalResult = await Food.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
-    money_startDt: startDt_param,
-    money_endDt: endDt_param,
-    money_total_in: MONEY_param.money_total_in,
-    money_total_out: MONEY_param.money_total_out,
-    money_section: MONEY_param.money_section,
-    money_regdate: fmtDate,
-    money_update: "",
+    food_startDt: startDt_param,
+    food_endDt: endDt_param,
+    food_kcal: FOOD_param.food_kcal,
+    food_carb: FOOD_param.food_carb,
+    food_protein: FOOD_param.food_protein,
+    food_fat: FOOD_param.food_fat,
+    food_regdate: fmtDate,
+    food_update: "",
   });
 
   return finalResult;
@@ -169,15 +172,15 @@ export const create = async (
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
   _id_param,
-  MONEY_param
+  FOOD_param
 ) => {
 
-  const finalResult = await Money.findOneAndUpdate(
+  const finalResult = await Food.findOneAndUpdate(
     {_id: _id_param
     },
     {$set: {
-      ...MONEY_param,
-      money_update: fmtDate,
+      ...FOOD_param,
+      food_update: fmtDate,
     }},
     {upsert: true,
       new: true
@@ -196,23 +199,23 @@ export const deletes = async (
   endDt_param
 ) => {
 
-  const updateResult = await Money.updateOne(
+  const updateResult = await Food.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      money_startDt: {
+      food_startDt: {
         $gte: startDt_param,
       },
-      money_endDt: {
+      food_endDt: {
         $lte: endDt_param,
       },
     },
     {$pull: {
-      money_section: {
+      food_section: {
         _id: _id_param
       },
     },
     $set: {
-      money_update: fmtDate,
+      food_update: fmtDate,
     }},
     {arrayFilters: [{
       "elem._id": _id_param
@@ -222,14 +225,14 @@ export const deletes = async (
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
-    const doc = await Money.findOne({
+    const doc = await Food.findOne({
       _id: _id_param,
       user_id: user_id_param
     })
     .lean();
 
-    if ((doc) && (!doc?.money_section || doc?.money_section?.length === 0)) {
-      finalResult = await Money.deleteOne({
+    if ((doc) && (!doc?.food_section || doc?.food_section?.length === 0)) {
+      finalResult = await Food.deleteOne({
         _id: doc._id
       })
     }

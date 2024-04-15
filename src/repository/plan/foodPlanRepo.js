@@ -1,9 +1,9 @@
-// sleepPlanRepository.js
+// foodPlanRepo.js
 
 import mongoose from "mongoose";
 import moment from "moment";
-import {Sleep} from "../../schema/real/Sleep.js";
-import {SleepPlan} from "../../schema/plan/SleepPlan.js";
+import {Food} from "../../schema/real/Food.js";
+import {FoodPlan} from "../../schema/plan/FoodPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -16,20 +16,47 @@ export const totalCnt = async (
   endDt_param
 ) => {
 
-  const finalResult = await Sleep.countDocuments({
+  const finalResult = await FoodPlan.countDocuments({
     user_id: user_id_param,
-    sleep_startDt: {
+    food_plan_startDt: {
       $gte: startDt_param,
     },
-    sleep_endDt: {
+    food_plan_endDt: {
       $lte: endDt_param,
     },
   });
 
   return finalResult;
-}
+};
 
-// 1-1. find (real) ------------------------------------------------------------------------------->
+// 1-1. find (plan) ------------------------------------------------------------------------------->
+export const findPlan = async (
+  user_id_param,
+  sort_param,
+  limit_param,
+  page_param,
+  startDt_param,
+  endDt_param,
+) => {
+
+  const finalResult = await FoodPlan.find({
+    user_id: user_id_param,
+    food_plan_startDt: {
+      $gte: startDt_param,
+    },
+    food_plan_endDt: {
+      $lte: endDt_param,
+    },
+  })
+  .sort({food_plan_startDt: sort_param})
+  .skip((page_param - 1) * limit_param)
+  .limit(limit_param)
+  .lean();
+
+  return finalResult;
+};
+
+// 1-2. find (real) ------------------------------------------------------------------------------->
 export const findReal = async (
   user_id_param,
   sort_param,
@@ -39,45 +66,18 @@ export const findReal = async (
   endDt_param,
 ) => {
 
-  const finalResult = await Sleep.find({
+  const finalResult = await Food.find({
     user_id: user_id_param,
-    sleep_startDt: {
+    food_startDt: {
       $gte: startDt_param,
-      $lte: endDt_param
-    },
-    sleep_endDt: {
-      $gte: startDt_param,
-      $lte: endDt_param
-    }
-  })
-  .sort({sleep_startDt: sort_param})
-  .skip((page_param - 1) * limit_param)
-  .limit(limit_param)
-  .lean();
-
-  return finalResult;
-};
-
-// 1-2. find (plan) ------------------------------------------------------------------------------->
-export const findPlan = async (
-  user_id_param,
-  startDt_param,
-  endDt_param,
-  sort_param,
-  limit_param,
-  page_param
-) => {
-
-  const finalResult = await SleepPlan.find({
-    user_id: user_id_param,
-    sleep_plan_startDt: {
-      $gte: startDt_param,
-    },
-    sleep_plan_endDt: {
       $lte: endDt_param,
     },
+    food_endDt: {
+      $gte: startDt_param,
+      $lte: endDt_param,
+    }
   })
-  .sort({sleep_plan_startDt: sort_param})
+  .sort({food_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
   .limit(limit_param)
   .lean();
@@ -93,14 +93,14 @@ export const detail = async (
   endDt_param
 ) => {
 
-  const finalResult = await Sleep.findOne({
+  const finalResult = await FoodPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    sleep_startDt: {
+    food_plan_startDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     },
-    sleep_endDt: {
+    food_plan_endDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     }
@@ -113,19 +113,22 @@ export const detail = async (
 // 3-1. create ------------------------------------------------------------------------------------>
 export const create = async (
   user_id_param,
-  SLEEP_param,
+  FOOD_PLAN_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await Sleep.create({
+  const finalResult = await FoodPlan.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
-    sleep_startDt: startDt_param,
-    sleep_endDt: endDt_param,
-    sleep_section: SLEEP_param.sleep_section,
-    sleep_regdate: fmtDate,
-    sleep_update: "",
+    food_plan_startDt: startDt_param,
+    food_plan_endDt: endDt_param,
+    food_plan_kcal: FOOD_PLAN_param.food_plan_kcal,
+    food_plan_carb: FOOD_PLAN_param.food_plan_carb,
+    food_plan_protein: FOOD_PLAN_param.food_plan_protein,
+    food_plan_fat: FOOD_PLAN_param.food_plan_fat,
+    food_plan_regdate: fmtDate,
+    food_plan_update: "",
   });
 
   return finalResult;
@@ -134,15 +137,15 @@ export const create = async (
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
   _id_param,
-  SLEEP_param
+  FOOD_PLAN_param
 ) => {
 
-  const finalResult = await Sleep.findOneAndUpdate(
+  const finalResult = await FoodPlan.findOneAndUpdate(
     {_id: _id_param
     },
     {$set: {
-      ...SLEEP_param,
-      sleep_update: fmtDate,
+      ...FOOD_PLAN_param,
+      food_plan_update: fmtDate,
     }},
     {upsert: true,
       new: true
@@ -161,23 +164,18 @@ export const deletes = async (
   endDt_param
 ) => {
 
-  const updateResult = await Sleep.updateOne(
+  const updateResult = await FoodPlan.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      sleep_startDt: {
+      food_plan_startDt: {
         $gte: startDt_param,
       },
-      sleep_endDt: {
+      food_plan_endDt: {
         $lte: endDt_param,
       },
     },
-    {$pull: {
-      sleep_section: {
-        _id: _id_param
-      },
-    },
-    $set: {
-      sleep_update: fmtDate,
+    {$set: {
+      food_plan_update: fmtDate,
     }},
     {arrayFilters: [{
       "elem._id": _id_param
@@ -187,14 +185,14 @@ export const deletes = async (
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
-    const doc = await Sleep.findOne({
+    const doc = await FoodPlan.findOne({
       _id: _id_param,
       user_id: user_id_param
     })
     .lean();
 
-    if ((doc) && (!doc?.sleep_section || doc?.sleep_section?.length === 0)) {
-      finalResult = await Sleep.deleteOne({
+    if (doc) {
+      finalResult = await FoodPlan.deleteOne({
         _id: doc._id
       })
     }

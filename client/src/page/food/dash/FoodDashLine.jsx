@@ -48,7 +48,7 @@ export const FoodDashLine = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/dashLine`, {
+    const response = await axios.get(`${URL_FOOD}/dash/line`, {
       params: {
         user_id: user_id
       },

@@ -73,7 +73,7 @@ export const FoodDashAvg = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_FOOD}/dashAvgWeek`, {
+    const responseWeek = await axios.get(`${URL_FOOD}/dash/avgWeek`, {
       params: {
         user_id: user_id
       },
@@ -81,7 +81,7 @@ export const FoodDashAvg = () => {
     setDASH_KCAL_WEEK(responseWeek.data.result.kcal);
     setDASH_NUT_WEEK(responseWeek.data.result.nut);
 
-    const responseMonth = await axios.get(`${URL_FOOD}/dashAvgMonth`, {
+    const responseMonth = await axios.get(`${URL_FOOD}/dash/avgMonth`, {
       params: {
         user_id: user_id
       },

@@ -1,6 +1,6 @@
 // sleepPlanService.js
 
-import * as repository from "../../repository/plan/sleepPlanRepository.js";
+import * as repo from "../../repository/plan/sleepPlanRepo.js";
 
 // 1-1. compare ----------------------------------------------------------------------------------->
 export const compare = async (
@@ -18,16 +18,16 @@ export const compare = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repo.totalCnt(
     user_id_param, startDtReal, endDtReal
   );
 
-  const findResultPlan = await repository.findPlan(
-    user_id_param, startDtPlan, endDtPlan, sort, limit, page
+  const findResultPlan = await repo.findPlan(
+    user_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
 
-  const findResultReal = await repository.findReal(
-    user_id_param, startDtReal, endDtReal, sort, limit, page
+  const findResultReal = await repo.findReal(
+    user_id_param, sort, limit, page, startDtReal, endDtReal
   );
 
   const finalResult = findResultPlan?.map((plan) => {
@@ -75,12 +75,12 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repo.totalCnt(
     user_id_param, startDt, endDt
   );
 
-  const findResult = await repository.findPlan(
-    user_id_param, startDt, endDt, sort, limit, page
+  const findResult = await repo.findPlan(
+    user_id_param, sort, limit, page, startDt, endDt
   );
 
   return {
@@ -98,7 +98,7 @@ export const detail = async (
 
   const [startDt, endDt] = sleep_plan_dur_param.split(` ~ `);
 
-  const finalResult = await repository.detail(
+  const finalResult = await repo.detail(
     _id_param, user_id_param, startDt, endDt
   );
 
@@ -116,18 +116,18 @@ export const save = async (
 
   const [startDt, endDt] = sleep_plan_dur_param.split(` ~ `);
 
-  const findResult = await repository.detail(
+  const findResult = await repo.detail(
     "", user_id_param, startDt, endDt
   );
 
   let finalResult;
   if (!findResult) {
-    finalResult = await repository.create(
+    finalResult = await repo.create(
       user_id_param, SLEEP_PLAN_param, startDt, endDt
     );
   }
   else {
-    finalResult = await repository.update(
+    finalResult = await repo.update(
       findResult._id, SLEEP_PLAN_param
     );
   }
@@ -146,7 +146,7 @@ export const deletes = async (
 
   const [startDt, endDt] = sleep_plan_dur_param.split(` ~ `);
 
-  const finalResult = await repository.deletes(
+  const finalResult = await repo.deletes(
     _id_param, user_id_param, startDt, endDt
   );
 

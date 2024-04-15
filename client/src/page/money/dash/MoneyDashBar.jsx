@@ -21,7 +21,7 @@ export const MoneyDashBar = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/dashBar`, {
+    const response = await axios.get(`${URL_MONEY}/dash/bar`, {
       params: {
         user_id: user_id
       },

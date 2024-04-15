@@ -35,7 +35,7 @@ export const MoneyDashLine = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/dashLine`, {
+    const response = await axios.get(`${URL_MONEY}/dash/line`, {
       params: {
         user_id: user_id
       },

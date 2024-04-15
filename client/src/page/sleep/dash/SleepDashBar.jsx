@@ -23,7 +23,7 @@ export const SleepDashBar = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/dashBar`, {
+    const response = await axios.get(`${URL_SLEEP}/dash/bar`, {
       params: {
         user_id: user_id
       },

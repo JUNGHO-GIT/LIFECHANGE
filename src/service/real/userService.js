@@ -1,35 +1,7 @@
 // userService.js
 
 import mongoose from "mongoose";
-import moment from "moment";
 import {User} from "../../schema/real/User.js";
-
-// 0. common -------------------------------------------------------------------------------------->
-const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
-const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
-
-// 0-2. format ------------------------------------------------------------------------------------>
-const dateFormat = (data) => {
-  if (!data) {
-    return 0;
-  }
-  else {
-    const time = data.split(":");
-    return parseFloat((parseInt(time[0], 10) + parseInt(time[1], 10) / 60).toFixed(1));
-  }
-};
-const intFormat = (data) => {
-  if (!data) {
-    return 0;
-  }
-  else if (typeof data === "string") {
-    const toInt = parseInt(data, 10);
-    return Math.round(toInt);
-  }
-  else {
-    return Math.round(data);
-  }
-};
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = async (

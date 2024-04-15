@@ -4,11 +4,17 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import {fileURLToPath} from "url";
+
+import {foodDashRouter} from "./src/router/dash/foodDashRouter.js";
+import {moneyDashRouter} from "./src/router/dash/moneyDashRouter.js";
+import {sleepDashRouter} from "./src/router/dash/sleepDashRouter.js";
+import {workDashRouter} from "./src/router/dash/workDashRouter.js";
+
 import {foodPlanRouter} from "./src/router/plan/foodPlanRouter.js";
 import {moneyPlanRouter} from "./src/router/plan/moneyPlanRouter.js";
 import {sleepPlanRouter} from "./src/router/plan/sleepPlanRouter.js";
-import {userPlanRouter} from "./src/router/plan/userPlanRouter.js";
 import {workPlanRouter} from "./src/router/plan/workPlanRouter.js";
+
 import {foodRouter} from "./src/router/real/foodRouter.js";
 import {moneyRouter} from "./src/router/real/moneyRouter.js";
 import {sleepRouter} from "./src/router/real/sleepRouter.js";
@@ -33,10 +39,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use("/food/dash", foodDashRouter);
+app.use("/money/dash", moneyDashRouter);
+app.use("/sleep/dash", sleepDashRouter);
+app.use("/work/dash", workDashRouter);
+
 app.use("/food/plan", foodPlanRouter);
 app.use("/money/plan", moneyPlanRouter);
 app.use("/sleep/plan", sleepPlanRouter);
-app.use("/user/plan", userPlanRouter);
 app.use("/work/plan", workPlanRouter);
 
 app.use("/food", foodRouter);

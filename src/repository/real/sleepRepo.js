@@ -1,9 +1,9 @@
-// workPlanRepository.js
+// sleepPlanRepo.js
 
 import mongoose from "mongoose";
 import moment from "moment";
-import {Work} from "../../schema/real/Work.js";
-import {WorkPlan} from "../../schema/plan/WorkPlan.js";
+import {Sleep} from "../../schema/real/Sleep.js";
+import {SleepPlan} from "../../schema/plan/SleepPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -12,26 +12,18 @@ const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
   user_id_param,
-  part_param,
-  title_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await Work.countDocuments({
+  const finalResult = await Sleep.countDocuments({
     user_id: user_id_param,
-    work_startDt: {
+    sleep_startDt: {
       $gte: startDt_param,
     },
-    work_endDt: {
+    sleep_endDt: {
       $lte: endDt_param,
     },
-    ...(part_param !== "전체" && {
-      "work_section.work_part_val": part_param
-    }),
-    ...(title_param !== "전체" && {
-      "work_section.work_title_val": title_param
-    }),
   });
 
   return finalResult;
@@ -40,8 +32,6 @@ export const totalCnt = async (
 // 1-1. find (real) ------------------------------------------------------------------------------->
 export const findReal = async (
   user_id_param,
-  part_param,
-  title_param,
   sort_param,
   limit_param,
   page_param,
@@ -49,46 +39,21 @@ export const findReal = async (
   endDt_param,
 ) => {
 
-  const finalResult = await Work.aggregate([
-    {$match: {
-      user_id: user_id_param,
-      work_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param
-      },
-      work_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param
-      },
-    }},
-    {$project: {
-      work_startDt: 1,
-      work_endDt: 1,
-      work_start: 1,
-      work_end: 1,
-      work_time: 1,
-      work_body_weight: 1,
-      work_section: {
-        $filter: {
-          input: "$work_section",
-          as: "section",
-          cond: {
-            $and: [
-              part_param === "전체"
-              ? {$ne: ["$$section.work_part_val", null]}
-              : {$eq: ["$$section.work_part_val", part_param]},
-              title_param === "전체"
-              ? {$ne: ["$$section.work_title_val", null]}
-              : {$eq: ["$$section.work_title_val", title_param]}
-            ]
-          }
-        }
-      }
-    }},
-    {$sort: {work_startDt: sort_param}},
-    {$skip: (page_param - 1) * limit_param},
-    {$limit: limit_param}
-  ]);
+  const finalResult = await Sleep.find({
+    user_id: user_id_param,
+    sleep_startDt: {
+      $gte: startDt_param,
+      $lte: endDt_param
+    },
+    sleep_endDt: {
+      $gte: startDt_param,
+      $lte: endDt_param
+    }
+  })
+  .sort({sleep_startDt: sort_param})
+  .skip((page_param - 1) * limit_param)
+  .limit(limit_param)
+  .lean();
 
   return finalResult;
 };
@@ -96,23 +61,23 @@ export const findReal = async (
 // 1-2. find (plan) ------------------------------------------------------------------------------->
 export const findPlan = async (
   user_id_param,
-  startDt_param,
-  endDt_param,
   sort_param,
   limit_param,
-  page_param
+  page_param,
+  startDt_param,
+  endDt_param,
 ) => {
 
-  const finalResult = await WorkPlan.find({
+  const finalResult = await SleepPlan.find({
     user_id: user_id_param,
-    work_plan_startDt: {
+    sleep_plan_startDt: {
       $gte: startDt_param,
     },
-    work_plan_endDt: {
+    sleep_plan_endDt: {
       $lte: endDt_param,
     },
   })
-  .sort({work_plan_startDt: sort_param})
+  .sort({sleep_plan_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
   .limit(limit_param)
   .lean();
@@ -128,14 +93,14 @@ export const detail = async (
   endDt_param
 ) => {
 
-  const finalResult = await Work.findOne({
+  const finalResult = await Sleep.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    work_startDt: {
+    sleep_startDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     },
-    work_endDt: {
+    sleep_endDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     }
@@ -148,23 +113,19 @@ export const detail = async (
 // 3-1. create ------------------------------------------------------------------------------------>
 export const create = async (
   user_id_param,
-  WORK_param,
+  SLEEP_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await Work.create({
+  const finalResult = await Sleep.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
-    work_startDt: startDt_param,
-    work_endDt: endDt_param,
-    work_start: WORK_param.work_start,
-    work_end: WORK_param.work_end,
-    work_time: WORK_param.work_time,
-    work_body_weight: WORK_param.work_body_weight,
-    work_section: WORK_param.work_section,
-    work_regdate: fmtDate,
-    work_update: "",
+    sleep_startDt: startDt_param,
+    sleep_endDt: endDt_param,
+    sleep_section: SLEEP_param.sleep_section,
+    sleep_regdate: fmtDate,
+    sleep_update: "",
   });
 
   return finalResult;
@@ -173,15 +134,15 @@ export const create = async (
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
   _id_param,
-  WORK_param
+  SLEEP_param
 ) => {
 
-  const finalResult = await Work.findOneAndUpdate(
+  const finalResult = await Sleep.findOneAndUpdate(
     {_id: _id_param
     },
     {$set: {
-      ...WORK_param,
-      work_update: fmtDate,
+      ...SLEEP_param,
+      sleep_update: fmtDate,
     }},
     {upsert: true,
       new: true
@@ -200,23 +161,23 @@ export const deletes = async (
   endDt_param
 ) => {
 
-  const updateResult = await Work.updateOne(
+  const updateResult = await Sleep.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      work_startDt: {
+      sleep_startDt: {
         $gte: startDt_param,
       },
-      work_endDt: {
+      sleep_endDt: {
         $lte: endDt_param,
       },
     },
     {$pull: {
-      work_section: {
+      sleep_section: {
         _id: _id_param
       },
     },
     $set: {
-      work_update: fmtDate,
+      sleep_update: fmtDate,
     }},
     {arrayFilters: [{
       "elem._id": _id_param
@@ -226,14 +187,14 @@ export const deletes = async (
 
   let finalResult;
   if (updateResult.modifiedCount > 0) {
-    const doc = await Work.findOne({
+    const doc = await Sleep.findOne({
       _id: _id_param,
       user_id: user_id_param
     })
     .lean();
 
-    if ((doc) && (!doc?.work_section || doc?.work_section?.length === 0)) {
-      finalResult = await Work.deleteOne({
+    if ((doc) && (!doc?.sleep_section || doc?.sleep_section?.length === 0)) {
+      finalResult = await Sleep.deleteOne({
         _id: doc._id
       })
     }
