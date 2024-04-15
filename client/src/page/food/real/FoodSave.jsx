@@ -324,8 +324,8 @@ export const FoodSave = () => {
                 <td>
                   <div className="d-flex">
                     <input
-                      type="number"
-                      className="form-control"
+                      type={"number"}
+                      className={"form-control"}
                       value={item.food_count}
                       min="1"
                       max="100"
@@ -380,7 +380,7 @@ export const FoodSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
+        <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>

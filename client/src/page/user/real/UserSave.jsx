@@ -66,8 +66,8 @@ export const UserSave = () => {
     return (
       <div>
         <div className="form-floating">
-          <input type="text"
-            className="form-control"
+          <input type={"text"}
+            className={"form-control"}
             placeholder="location_id"
             value={user_id}
             onChange={(e) => {setUserId(e.target.value);}}
@@ -76,7 +76,7 @@ export const UserSave = () => {
         </div>
         <div className="form-floating">
           <input
-            className="form-control"
+            className={"form-control"}
             type="password"
             placeholder="Password"
             value={user_pw}
@@ -123,7 +123,7 @@ export const UserSave = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row d-center mt-5">
-          <div className="col-12">
+          <div className={"col-12"}>
             <form className="form-inline">
               {tableUserSave()}
               <br/>

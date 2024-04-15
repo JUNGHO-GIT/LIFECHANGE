@@ -29,7 +29,7 @@ export const dashBar = async (
   user_id_param
 ) => {
 
-  const dataInOut = {
+  const data  = {
     "수입": {
       plan: "money_plan_in",
       real: "money_total_in"
@@ -42,7 +42,7 @@ export const dashBar = async (
 
   let finalResult = [];
 
-  for (let key in dataInOut) {
+  for (let key in data) {
     const findResultPlan = await repo.detailPlan(
       "", user_id_param, koreanDate, koreanDate
     );
@@ -52,8 +52,8 @@ export const dashBar = async (
 
     finalResult.push({
       name: key,
-      목표: intFormat(findResultPlan?.[dataInOut[key].plan] || 0),
-      실제: intFormat(findResultReal?.[dataInOut[key].real] || 0),
+      목표: intFormat(findResultPlan?.[data[key].plan] || 0),
+      실제: intFormat(findResultReal?.[data[key].real] || 0),
     });
   };
 
@@ -98,20 +98,20 @@ export const dashLine = async (
   user_id_param
 ) => {
 
-  const names = [
+  const data = [
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
   let finalResult = [];
 
-  for (let i in names) {
+  for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
     const findResult = await repo.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResult.push({
-      name: `${names[i]} ${dayNum.format("MM/DD")}`,
+      name: `${data[i]} ${dayNum.format("MM/DD")}`,
       수입: intFormat(findResult?.money_total_in || 0),
       지출: intFormat(findResult?.money_total_out || 0),
     });
@@ -131,7 +131,7 @@ export const dashAvgWeek = async (
   let sumMoneyOut = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  const names = [
+  const data = [
     "1주차", "2주차", "3주차", "4주차", "5주차"
   ];
 
@@ -159,7 +159,7 @@ export const dashAvgWeek = async (
 
   for (let i = 0; i < 5; i++) {
     finalResult.push({
-      name: `${names[i]}`,
+      name: `${data[i]}`,
       수입: intFormat(sumMoneyIn[i] / countRecords[i]),
       지출: intFormat(sumMoneyOut[i] / countRecords[i]),
     });
@@ -179,7 +179,7 @@ export const dashAvgMonth = async (
   let sumMoneyOut = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
-  const names = [
+  const data = [
     "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
   ];
 
@@ -205,7 +205,7 @@ export const dashAvgMonth = async (
 
   for (let i = 0; i < 12; i++) {
     finalResult.push({
-      name: names[i],
+      name: data[i],
       수입: intFormat(sumMoneyIn[i] / countRecords[i]),
       지출: intFormat(sumMoneyOut[i] / countRecords[i]),
     });

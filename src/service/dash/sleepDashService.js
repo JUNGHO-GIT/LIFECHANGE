@@ -36,7 +36,7 @@ export const dashBar = async (
   user_id_param
 ) => {
 
-  const dataFields = {
+  const data = {
     "취침": {
       plan: "sleep_plan_night",
       real: "sleep_night"
@@ -53,7 +53,7 @@ export const dashBar = async (
 
   let finalResult = [];
 
-  for (let key in dataFields) {
+  for (let key in data) {
     const findResultPlan = await repo.detailPlan(
       "", user_id_param, koreanDate, koreanDate
     );
@@ -63,8 +63,8 @@ export const dashBar = async (
 
     finalResult.push({
       name: key,
-      목표: dateFormat(findResultPlan?.[dataFields[key].plan]),
-      실제: dateFormat(findResultReal?.sleep_section?.[0]?.[dataFields[key].real]),
+      목표: dateFormat(findResultPlan?.[data[key].plan]),
+      실제: dateFormat(findResultReal?.sleep_section?.[0]?.[data[key].real]),
     });
   };
 
@@ -78,20 +78,20 @@ export const dashLine = async (
   user_id_param
 ) => {
 
-  const names = [
+  const data = [
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
   let finalResult = [];
 
-  for (let i in names) {
+  for (let i = 0; i < 7; i++) {
     const dayNum = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
     const findResult = await repo.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResult.push({
-      name: `${names[i]} ${dayNum.format("MM/DD")}`,
+      name: `${data[i]} ${dayNum.format("MM/DD")}`,
       취침: dateFormat(findResult?.sleep_section?.[0]?.sleep_night),
       기상: dateFormat(findResult?.sleep_section?.[0]?.sleep_morning),
       수면: dateFormat(findResult?.sleep_section?.[0]?.sleep_time),
@@ -113,7 +113,7 @@ export const dashAvgWeek = async (
   let sumSleepTime = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  const names = [
+  const data = [
     "1주차", "2주차", "3주차", "4주차", "5주차"
   ];
 
@@ -142,7 +142,7 @@ export const dashAvgWeek = async (
 
   for (let i = 0; i < 5; i++) {
     finalResult.push({
-      name: `${names[i]}`,
+      name: `${data[i]}`,
       취침: dateFormat(sumSleepStart[i] / countRecords[i]),
       기상: dateFormat(sumSleepEnd[i] / countRecords[i]),
       수면: dateFormat(sumSleepTime[i] / countRecords[i]),
@@ -164,7 +164,7 @@ export const dashAvgMonth = async (
   let sumSleepTime = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
-  const names = [
+  const data = [
     "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
   ];
 
@@ -191,7 +191,7 @@ export const dashAvgMonth = async (
 
   for (let i = 0; i < 12; i++) {
     finalResult.push({
-      name: names[i],
+      name: data[i],
       취침: dateFormat(sumSleepStart[i] / countRecords[i]),
       기상: dateFormat(sumSleepEnd[i] / countRecords[i]),
       수면: dateFormat(sumSleepTime[i] / countRecords[i]),

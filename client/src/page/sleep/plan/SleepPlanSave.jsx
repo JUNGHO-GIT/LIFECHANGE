@@ -130,14 +130,14 @@ export const SleepPlanSave = () => {
     // 3. nowNode
     function nowNode () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
             <div className="input-group d-center">
-              <span className="input-group-text">날짜</span>
+              <span className={"input-group-text"}>날짜</span>
               <DatePicker
                 dateFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
-                className="form-control"
+                className={"form-control"}
                 selected={new Date(DATE.startDt)}
                 disabled={false}
                 onChange={(date) => {
@@ -157,14 +157,14 @@ export const SleepPlanSave = () => {
     // 4. sleepNode
     function sleepNode () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">취침</span>
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>취침</span>
               <TimePicker
                 id="sleep_plan_night"
                 name="sleep_plan_night"
-                className="form-control"
+                className={"form-control"}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
@@ -179,13 +179,13 @@ export const SleepPlanSave = () => {
               ></TimePicker>
             </div>
           </div>
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">기상</span>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>기상</span>
               <TimePicker
                 id="sleep_plan_morning"
                 name="sleep_plan_morning"
-                className="form-control"
+                className={"form-control"}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
@@ -200,13 +200,13 @@ export const SleepPlanSave = () => {
               ></TimePicker>
             </div>
           </div>
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">수면</span>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>수면</span>
               <TimePicker
                 id="sleep_plan_time"
                 name="sleep_plan_time"
-                className="form-control"
+                className={"form-control"}
                 disableClock={false}
                 disabled={true}
                 clockIcon={null}
@@ -222,7 +222,7 @@ export const SleepPlanSave = () => {
 
     // 5. return
     return (
-      <div className="row d-center">
+      <div className={"row d-center"}>
         <div className="col-8 mb-20">
           {nowNode()}
         </div>
@@ -247,7 +247,7 @@ export const SleepPlanSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
+        <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>

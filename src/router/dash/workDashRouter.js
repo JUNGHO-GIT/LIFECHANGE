@@ -4,10 +4,10 @@ import express from "express";
 import * as service from "../../service/dash//workDashService.js";
 export const workDashRouter = express.Router();
 
-// 0-1. dash (bar) -------------------------------------------------------------------------------->
-workDashRouter.get("/bar", async (req, res) => {
+// 0-1. dash (Scatter) ---------------------------------------------------------------------------->
+workDashRouter.get("/Scatter", async (req, res) => {
   try {
-    const result = await service.dashBar (
+    const result = await service.dashScatter (
       req.query.user_id
     );
     if (result) {

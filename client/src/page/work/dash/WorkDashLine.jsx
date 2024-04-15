@@ -11,31 +11,31 @@ import {Line, LineChart} from "recharts";
 export const WorkDashLine = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_WORK = process.env.REACT_APP_URL_WORK;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine(${PATH})`, ["수입", "지출"]
+    `activeLine(${PATH})`, ["볼륨", "시간"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const DASH_DEFAULT = [
-    {name:"월", 수입: 0, 지출: 0},
-    {name:"화", 수입: 0, 지출: 0},
-    {name:"수", 수입: 0, 지출: 0},
-    {name:"목", 수입: 0, 지출: 0},
-    {name:"금", 수입: 0, 지출: 0},
-    {name:"토", 수입: 0, 지출: 0},
-    {name:"일", 수입: 0, 지출: 0},
+    {name:"월", 볼륨: 0, 시간: 0},
+    {name:"화", 볼륨: 0, 시간: 0},
+    {name:"수", 볼륨: 0, 시간: 0},
+    {name:"목", 볼륨: 0, 시간: 0},
+    {name:"금", 볼륨: 0, 시간: 0},
+    {name:"토", 볼륨: 0, 시간: 0},
+    {name:"일", 볼륨: 0, 시간: 0},
   ];
   const [DASH, setDASH] = useState(DASH_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/dash/line`, {
+    const response = await axios.get(`${URL_WORK}/dash/line`, {
       params: {
         user_id: user_id
       },
@@ -47,15 +47,15 @@ export const WorkDashLine = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    let topValue = Math.ceil(maxValue / 100) * 100;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    let tickInterval = 100;
+    if (topValue > 500) {
+      tickInterval = 500;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 100) {
+      tickInterval = 100;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -78,16 +78,16 @@ export const WorkDashLine = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="name" />
           <YAxis
-            type="number"
+            type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          {activeLine.includes("수입")
-            && <Line type="monotone" dataKey="수입" stroke="#8884d8" activeDot={{r: 8}} />
+          {activeLine.includes("볼륨")
+            && <Line type="monotone" dataKey="볼륨" stroke="#8884d8" activeDot={{r: 8}} />
           }
-          {activeLine.includes("지출")
-            && <Line type="monotone" dataKey="지출" stroke="#82ca9d" activeDot={{r: 8}} />
+          {activeLine.includes("시간")
+            && <Line type="monotone" dataKey="시간" stroke="#82ca9d" />
           }
           <Tooltip />
           <Legend />
@@ -102,7 +102,7 @@ export const WorkDashLine = () => {
       <table className="table bg-white border">
         <tbody>
           <div className="mt-10 mb-10">
-            {["수입", "지출"]?.map((key, index) => (
+            {["볼륨", "시간"].map((key, index) => (
               <div key={index}>
                 <input
                   type="checkbox"
@@ -127,11 +127,11 @@ export const WorkDashLine = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {chartLine()}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableWorkLine()}
       </div>
     </div>

@@ -201,7 +201,7 @@ export const Header = () => {
     <div>
       <div className="container-fluid bg-white box-bottom">
         <div className="row d-center pt-15 pb-15">
-          <div className="col-1">
+          <div className={"col-1"}>
             {Sidebar()}
             <button type="button" className="btn btn-sm ms-2" onClick={() => {
               setIsSidebar(!isSidebar);
@@ -209,13 +209,13 @@ export const Header = () => {
               Sidebar
             </button>
           </div>
-          <div className="col-7">
+          <div className={"col-7"}>
             &nbsp;
           </div>
-          <div className="col-1">
+          <div className={"col-1"}>
             {buttonDeveloperMode()}
           </div>
-          <div className="col-2">
+          <div className={"col-2"}>
             {loginFalse()}
             {loginTrue()}
           </div>
@@ -224,7 +224,7 @@ export const Header = () => {
       <div className="root-wrapper">
         <div className="container-fluid">
           <div className="row d-center pt-15 pb-15">
-            <div className="col-12">
+            <div className={"col-12"}>
               {Navbar()}
             </div>
           </div>

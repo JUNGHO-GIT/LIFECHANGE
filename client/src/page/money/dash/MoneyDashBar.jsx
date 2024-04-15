@@ -64,7 +64,7 @@ export const MoneyDashBar = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis
-            type="number"
+            type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
@@ -80,8 +80,8 @@ export const MoneyDashBar = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-12">
+    <div className={"row d-center"}>
+      <div className={"col-12"}>
         {chartBar()}
       </div>
     </div>

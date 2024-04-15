@@ -131,14 +131,14 @@ export const WorkPlanSave = () => {
     // 1. startNode
     function startNode () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">시작일</span>
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>시작일</span>
               <DatePicker
                 dateFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
-                className="form-control"
+                className={"form-control"}
                 selected={new Date(DATE.startDt)}
                 disabled={false}
                 onChange={(date) => {
@@ -158,14 +158,14 @@ export const WorkPlanSave = () => {
     // 2. endNode
     function endNode () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">종료일</span>
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>종료일</span>
               <DatePicker
                 dateFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
-                className="form-control"
+                className={"form-control"}
                 selected={new Date(DATE.endDt)}
                 disabled={false}
                 onChange={(date) => {
@@ -185,10 +185,10 @@ export const WorkPlanSave = () => {
     function moneyNode () {
       return (
         <div className="row d-center mb-20">
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">목표 운동 횟수</span>
-              <input type="text" className="form-control"
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 운동 횟수</span>
+              <input type={"text"} className={"form-control"}
                 value={WORK_PLAN?.work_plan_total_count}
                 onChange={(e) => {
                   setWORK_PLAN((prev) => ({
@@ -199,10 +199,10 @@ export const WorkPlanSave = () => {
               />
             </div>
           </div>
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">목표 유산소 시간</span>
-              <input type="text" className="form-control"
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 유산소 시간</span>
+              <input type={"text"} className={"form-control"}
                 value={WORK_PLAN?.work_plan_cardio_time}
                 onChange={(e) => {
                   setWORK_PLAN((prev) => ({
@@ -213,10 +213,10 @@ export const WorkPlanSave = () => {
               />
             </div>
           </div>
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">목표 총 볼륨</span>
-              <input type="text" className="form-control"
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 총 볼륨</span>
+              <input type={"text"} className={"form-control"}
                 value={WORK_PLAN?.work_plan_total_volume}
                 onChange={(e) => {
                   setWORK_PLAN((prev) => ({
@@ -227,10 +227,10 @@ export const WorkPlanSave = () => {
               />
             </div>
           </div>
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">목표 체중</span>
-              <input type="text" className="form-control"
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 체중</span>
+              <input type={"text"} className={"form-control"}
                 value={WORK_PLAN?.work_plan_body_weight}
                 onChange={(e) => {
                   setWORK_PLAN((prev) => ({
@@ -247,7 +247,7 @@ export const WorkPlanSave = () => {
 
     // 5. return
     return (
-      <div className="row d-center">
+      <div className={"row d-center"}>
         <div className="col-4 mb-20">
           {startNode()}
         </div>
@@ -275,7 +275,7 @@ export const WorkPlanSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
+        <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>

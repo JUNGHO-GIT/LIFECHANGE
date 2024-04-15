@@ -84,15 +84,15 @@ export const Dash = () => {
     <div className="root-wrapper">
       <div className="container-fluid">
         <div className="row  mb-20">
-          <div className="col-12">
+          <div className={"col-12"}>
             <div className="container-wrapper d-left">
               <div className="row d-center mt-5">
-                <div className="col-12">
+                <div className={"col-12"}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>
                   <h2 className="mb-3 fw-7">일별로 조회</h2>
                 </div>
               </div>
-              <div className="row d-center mt-3">
+              <div className={"row d-center mt-3"}>
                 <div className="col-md-6 col-12 d-center">
                   {viewDashDay()}
                 </div>
@@ -107,15 +107,15 @@ export const Dash = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-6">
+          <div className={"col-6"}>
             <div className="container-wrapper">
               <div className="row d-center mt-5">
-                <div className="col-12">
+                <div className={"col-12"}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>
                   <h2 className="mb-3 fw-7">일별로 조회</h2>
                 </div>
               </div>
-              <div className="row d-center mt-3">
+              <div className={"row d-center mt-3"}>
                 <div className="col-md-6 col-12 d-center">
                   {viewDashDay()}
                 </div>
@@ -128,15 +128,15 @@ export const Dash = () => {
               </div>
             </div>
           </div>
-          <div className="col-6">
+          <div className={"col-6"}>
             <div className="container-wrapper">
               <div className="row d-center mt-5">
-                <div className="col-12">
+                <div className={"col-12"}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>
                   <h2 className="mb-3 fw-7">일별로 조회</h2>
                 </div>
               </div>
-              <div className="row d-center mt-3">
+              <div className={"row d-center mt-3"}>
                 <div className="col-md-6 col-12 d-center">
                   {viewDashDay()}
                 </div>

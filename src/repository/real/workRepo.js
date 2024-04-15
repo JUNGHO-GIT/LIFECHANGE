@@ -68,6 +68,7 @@ export const findReal = async (
       work_end: 1,
       work_time: 1,
       work_total_volume: 1,
+      work_cardio_time: 1,
       work_body_weight: 1,
       work_section: {
         $filter: {
@@ -162,6 +163,8 @@ export const create = async (
     work_start: WORK_param.work_start,
     work_end: WORK_param.work_end,
     work_time: WORK_param.work_time,
+    work_total_volume: WORK_param.work_total_volume,
+    work_cardio_time: WORK_param.work_cardio_time,
     work_body_weight: WORK_param.work_body_weight,
     work_section: WORK_param.work_section,
     work_regdate: fmtDate,

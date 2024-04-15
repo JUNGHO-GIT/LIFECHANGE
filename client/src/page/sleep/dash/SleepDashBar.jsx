@@ -39,7 +39,7 @@ export const SleepDashBar = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis
-            type="number"
+            type={"number"}
             domain={[0, 30]}
             ticks={[0, 6, 12, 18, 24, 30]}
             tickFormatter={(tick) => {
@@ -57,8 +57,8 @@ export const SleepDashBar = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-12">
+    <div className={"row d-center"}>
+      <div className={"col-12"}>
         {chartBar()}
       </div>
     </div>

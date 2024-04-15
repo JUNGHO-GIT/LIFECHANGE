@@ -166,7 +166,7 @@ export const FoodSearch = () => {
   const searchFood = () => {
     return (
       <div className="d-flex">
-        <input type="text" className="form-control" value={FILTER.query} onChange={(e) => {
+        <input type={"text"} className={"form-control"} value={FILTER.query} onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
             query: e.target.value
@@ -249,22 +249,22 @@ export const FoodSearch = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             <h1>Search</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             {tableNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             {searchFood()}
           </div>
         </div>
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             {pagingNode()}
           </div>
         </div>

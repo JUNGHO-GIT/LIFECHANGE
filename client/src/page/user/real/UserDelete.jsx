@@ -86,8 +86,8 @@ export const UserDelete = () => {
     return (
       <div>
         <div className="form-floating">
-          <input type="text"
-            className="form-control"
+          <input type={"text"}
+            className={"form-control"}
             placeholder="User location_id"
             value={user_id}
             onChange={(e) => setUserId(e.target.value)}
@@ -96,8 +96,8 @@ export const UserDelete = () => {
           <label htmlFor="user_id">User location_id</label>
         </div>
         <div className="form-floating">
-          <input type="text"
-            className="form-control"
+          <input type={"text"}
+            className={"form-control"}
             placeholder="User PW"
             value={user_pw}
             onChange={(e) => setUserPw(e.target.value)}
@@ -131,12 +131,12 @@ export const UserDelete = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           <form className="form-inline">
             {tableUserDelete()}
             <br/>

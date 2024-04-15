@@ -27,12 +27,12 @@ const schema = new mongoose.Schema({
     type: Number,
     required: false
   },
-  work_plan_cardio_time: {
-    type: String,
-    required: false
-  },
   work_plan_total_volume: {
     type: Number,
+    required: false
+  },
+  work_plan_cardio_time: {
+    type: String,
     required: false
   },
   work_plan_body_weight: {

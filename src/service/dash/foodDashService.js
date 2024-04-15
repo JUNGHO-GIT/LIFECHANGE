@@ -113,7 +113,7 @@ export const dashLine = async (
   user_id_param
 ) => {
 
-  const names = [
+  const data = [
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
@@ -123,19 +123,19 @@ export const dashLine = async (
   // carb, protein, fat
   let finalResultNut = [];
 
-  for (let i in names) {
+  for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
     const findResult = await repo.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResultKcal.push({
-      name: `${names[i]} ${dayNum.format("MM-DD")}`,
+      name: `${data[i]} ${dayNum.format("MM-DD")}`,
       칼로리: intFormat(findResult?.food_total_kcal)
     });
 
     finalResultNut.push({
-      name: `${names[i]} ${dayNum.format("MM-DD")}`,
+      name: `${data[i]} ${dayNum.format("MM-DD")}`,
       탄수화물: intFormat(findResult?.food_total_carb),
       단백질: intFormat(findResult?.food_total_protein),
       지방: intFormat(findResult?.food_total_fat),
@@ -161,7 +161,7 @@ export const dashAvgWeek = async (
   let sumFoodFat = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  const names = [
+  const data = [
     "1주차", "2주차", "3주차", "4주차", "5주차"
   ];
 
@@ -195,11 +195,11 @@ export const dashAvgWeek = async (
 
   for (let i = 0; i < 5; i++) {
     finalResultKcal.push({
-      name: names[i],
+      name: data[i],
       칼로리: intFormat(sumFoodKcal[i] / countRecords[i])
     });
     finalResultNut.push({
-      name: names[i],
+      name: data[i],
       탄수화물: intFormat(sumFoodCarb[i] / countRecords[i]),
       단백질: intFormat(sumFoodProtein[i] / countRecords[i]),
       지방: intFormat(sumFoodFat[i] / countRecords[i]),
@@ -225,7 +225,7 @@ export const dashAvgMonth = async (
   let sumFoodFat = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
-  const names = [
+  const data = [
     "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
   ];
 
@@ -257,11 +257,11 @@ export const dashAvgMonth = async (
 
   for (let i = 0; i < 12; i++) {
     finalResultKcal.push({
-      name: names[i],
+      name: data[i],
       칼로리: intFormat(sumFoodKcal[i] / countRecords[i])
     });
     finalResultNut.push({
-      name: names[i],
+      name: data[i],
       탄수화물: intFormat(sumFoodCarb[i] / countRecords[i]),
       단백질: intFormat(sumFoodProtein[i] / countRecords[i]),
       지방: intFormat(sumFoodFat[i] / countRecords[i]),

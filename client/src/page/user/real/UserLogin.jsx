@@ -54,16 +54,16 @@ export const UserLogin = () => {
       <div>
         <div className="input-group mb-10">
           <input
-            type="text"
-            className="form-control"
+            type={"text"}
+            className={"form-control"}
             value={user_id}
             onChange={(e) => {setUserId(e.target.value);}}
           />
         </div>
         <div className="input-group mb-10">
           <input
-            type="text"
-            className="form-control"
+            type={"text"}
+            className={"form-control"}
             value={user_pw}
             onChange={(e) => {setUserPw(e.target.value);}}
           />
@@ -96,12 +96,12 @@ export const UserLogin = () => {
       <div className="container">
         <div className="container-wrapper mb-30">
           <div className="row d-center mt-5">
-            <div className="col-12">
+            <div className={"col-12"}>
               <h1 className="mb-3 fw-7">{TITLE}</h1>
             </div>
           </div>
           <div className="row d-center mt-5 mb-20">
-            <div className="col-12">
+            <div className={"col-12"}>
               <form className="form-inline">
                 {tableUserLogin()}
                 <br/>

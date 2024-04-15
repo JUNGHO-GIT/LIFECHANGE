@@ -115,14 +115,14 @@ export const MoneyPlanSave = () => {
     // 1. startNode
     function startNode () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">시작일</span>
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>시작일</span>
               <DatePicker
                 dateFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
-                className="form-control"
+                className={"form-control"}
                 selected={new Date(DATE.startDt)}
                 disabled={false}
                 onChange={(date) => {
@@ -142,14 +142,14 @@ export const MoneyPlanSave = () => {
     // 2. endNode
     function endNode () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">종료일</span>
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>종료일</span>
               <DatePicker
                 dateFormat="yyyy-MM-dd"
                 popperPlacement="bottom"
-                className="form-control"
+                className={"form-control"}
                 selected={new Date(DATE.endDt)}
                 disabled={false}
                 onChange={(date) => {
@@ -169,12 +169,12 @@ export const MoneyPlanSave = () => {
     function moneyNode () {
       return (
         <div className="row d-center mb-20">
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">목표 수입</span>
+          <div className={"col-6"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 수입</span>
               <input
-                type="number"
-                className="form-control"
+                type={"number"}
+                className={"form-control"}
                 value={MONEY_PLAN?.money_plan_in}
                 onChange={(e) => {
                   setMONEY_PLAN((prev) => ({
@@ -185,12 +185,12 @@ export const MoneyPlanSave = () => {
               />
             </div>
           </div>
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">목표 지출</span>
+          <div className={"col-6"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 지출</span>
               <input
-                type="number"
-                className="form-control"
+                type={"number"}
+                className={"form-control"}
                 value={MONEY_PLAN?.money_plan_out}
                 onChange={(e) => {
                   setMONEY_PLAN((prev) => ({
@@ -207,7 +207,7 @@ export const MoneyPlanSave = () => {
 
     // 5. return
     return (
-      <div className="row d-center">
+      <div className={"row d-center"}>
         <div className="col-4 mb-20">
           {startNode()}
         </div>
@@ -235,7 +235,7 @@ export const MoneyPlanSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
+        <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>

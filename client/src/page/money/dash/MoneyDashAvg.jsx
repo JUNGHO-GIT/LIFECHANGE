@@ -102,7 +102,7 @@ export const MoneyDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -133,7 +133,7 @@ export const MoneyDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -196,11 +196,11 @@ export const MoneyDashAvg = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableMoneyAvg()}
       </div>
     </div>

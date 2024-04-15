@@ -185,7 +185,7 @@ export const MoneyPlanCompare = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
+        <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Compare</h1>
           </div>

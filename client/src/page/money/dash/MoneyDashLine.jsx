@@ -78,7 +78,7 @@ export const MoneyDashLine = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="name" />
           <YAxis
-            type="number"
+            type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
@@ -127,11 +127,11 @@ export const MoneyDashLine = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {chartLine()}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableMoneyLine()}
       </div>
     </div>

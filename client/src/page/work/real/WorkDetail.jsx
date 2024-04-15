@@ -78,6 +78,7 @@ export const WorkDetail = () => {
     work_end: "",
     work_time: "",
     work_total_volume: 0,
+    work_cardio_time: "",
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
@@ -233,17 +234,17 @@ export const WorkDetail = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             <h1>Detail</h1>
           </div>
         </div>
         <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className={"col-12"}>
             {tableNode()}
           </div>
         </div>
-        <div className="row d-center">
-          <div className="col-12">
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
             {buttonNode()}
           </div>
         </div>

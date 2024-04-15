@@ -331,13 +331,13 @@ export const DashDetail = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-      <div className="row d-center">
-        <div className="col-12">
+      <div className={"row d-center"}>
+        <div className={"col-12"}>
           <h1 className="mb-3 fw-7">{TITLE}</h1>
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           <h1 className="mb-3 fw-5">
             <span>
               {viewCalendarDay()}
@@ -346,27 +346,27 @@ export const DashDetail = () => {
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           {tableFoodList()}
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           {tableSleepList()}
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           {tableWorkList()}
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           {tableMoneyList()}
         </div>
       </div>
       <div className="row d-center mt-5">
-        <div className="col-12">
+        <div className={"col-12"}>
           {buttonCalendarToday()}
           {buttonCalendarReset()}
         </div>

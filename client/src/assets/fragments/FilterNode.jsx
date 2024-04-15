@@ -81,7 +81,7 @@ export const FilterNode = ({
   function selectPartMoney () {
     return (
       <div className="mb-3">
-        <select className="form-control" id="part" value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
+        <select className={"form-control"} id="part" value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
           const selectedOption = e.target.options[e.target.selectedIndex];
           const idxValue = selectedOption.getAttribute("data-idx");
           const newPartIndex = Number(idxValue);
@@ -106,7 +106,7 @@ export const FilterNode = ({
   function selectTitleMoney () {
     return (
       <div className="mb-3">
-        <select className="form-control" id="title" value={FILTER.title} onChange={(e) => {
+        <select className={"form-control"} id="title" value={FILTER.title} onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
             title: e.target.value
@@ -124,7 +124,7 @@ export const FilterNode = ({
   function selectPartWork () {
     return (
       <div className="mb-3">
-        <select className="form-control" id="part" value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
+        <select className={"form-control"} id="part" value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
           const selectedOption = e.target.options[e.target.selectedIndex];
           const idxValue = selectedOption.getAttribute("data-idx");
           const newPartIndex = Number(idxValue);
@@ -149,7 +149,7 @@ export const FilterNode = ({
   function selectTitleWork () {
     return (
       <div className="mb-3">
-        <select className="form-control" id="title" value={FILTER.title} onChange={(e) => {
+        <select className={"form-control"} id="title" value={FILTER.title} onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
             title: e.target.value

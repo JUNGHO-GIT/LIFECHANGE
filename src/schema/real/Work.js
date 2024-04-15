@@ -39,6 +39,10 @@ const schema = new mongoose.Schema({
     type: Number,
     required: false
   },
+  work_cardio_time: {
+    type: String,
+    required: false,
+  },
   work_body_weight: {
     type: Number,
     required: false

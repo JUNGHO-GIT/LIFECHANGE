@@ -191,10 +191,10 @@ export const MoneySave = () => {
     }
     function inputFragment () {
       return (
-        <div className="row d-center">
-          <div className="col-4">
+        <div className={"row d-center"}>
+          <div className={"col-4"}>
             <input
-              type="number"
+              type={"number"}
               value={COUNT.sectionCnt}
               min="0"
               className="form-control mb-30"
@@ -218,12 +218,12 @@ export const MoneySave = () => {
     function tableSection (i) {
       return (
         <div key={i} className="mb-20">
-          <div className="row d-center">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">파트</span>
+          <div className={"row d-center"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>파트</span>
                 <select
-                  className="form-control"
+                  className={"form-control"}
                   id={`money_part_idx-${i}`}
                   value={MONEY?.money_section[i]?.money_part_idx}
                   onChange={(e) => {
@@ -254,11 +254,11 @@ export const MoneySave = () => {
                 </select>
               </div>
             </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">타이틀</span>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>타이틀</span>
                 <select
-                  className="form-control"
+                  className={"form-control"}
                   id={`money_title_idx-${i}`}
                   value={MONEY?.money_section[i]?.money_title_idx}
                   onChange={(e) => {
@@ -288,13 +288,13 @@ export const MoneySave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">금액</span>
+          <div className={"row d-center"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>금액</span>
                 <input
-                  type="number"
-                  className="form-control"
+                  type={"number"}
+                  className={"form-control"}
                   value={MONEY?.money_section[i]?.money_amount}
                   onChange={(e) => {
                     const newAmount = parseInt(e.target.value, 10);
@@ -309,12 +309,12 @@ export const MoneySave = () => {
                 />
               </div>
             </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">메모</span>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>메모</span>
                 <input
-                  type="text"
-                  className="form-control"
+                  type={"text"}
+                  className={"form-control"}
                   value={MONEY?.money_section[i]?.money_content}
                   onChange={(e) => {
                     const newContent = e.target.value;
@@ -334,8 +334,8 @@ export const MoneySave = () => {
     };
     function tableFragment () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
             {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
           </div>
         </div>
@@ -343,25 +343,25 @@ export const MoneySave = () => {
     };
     function tableRemain () {
       return (
-        <div className="row d-center">
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">총수입</span>
+        <div className={"row d-center"}>
+          <div className={"col-6"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>총수입</span>
               <input
-                type="number"
-                className="form-control"
+                type={"number"}
+                className={"form-control"}
                 value={MONEY?.money_total_in}
                 disabled
                 readOnly
               />
             </div>
           </div>
-          <div className="col-6">
-            <div className="input-group">
-              <span className="input-group-text">총지출</span>
+          <div className={"col-6"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>총지출</span>
               <input
-                type="number"
-                className="form-control"
+                type={"number"}
+                className={"form-control"}
                 value={MONEY?.money_total_out}
                 disabled
                 readOnly

@@ -222,28 +222,28 @@ export const WorkPlanDetail = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             <h1>Detail</h1>
           </div>
         </div>
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             {calendarNode()}
             {tableNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             {filterNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             {pagingNode()}
           </div>
         </div>
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             {buttonNode()}
           </div>
         </div>

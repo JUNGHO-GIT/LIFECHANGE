@@ -24,55 +24,41 @@ const intFormat = (data) => {
   }
 };
 
-// 0-1. dash (bar) -------------------------------------------------------------------------------->
-export const dashBar = async (
+// 0-1. dash (scatter) ---------------------------------------------------------------------------->
+export const dashScatter = async (
   user_id_param
 ) => {
 
-  const dataInOut = {
-    "수입": {
-      plan: "work_plan_in",
-      real: "work_total_in"
-    },
-    "지출": {
-      plan: "work_plan_out",
-      real: "work_total_out"
+  const data = {
+    "체중": {
+      plan: "work_plan_body_weight",
+      real: "work_body_weight"
     }
   };
 
   let finalResult = [];
 
-  for (let key in dataInOut) {
-    const findResultPlan = await WorkPlan.findOne({
-      user_id: user_id_param,
-      work_plan_startDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
-      },
-      work_plan_endDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
-      }
-    })
-    .lean();
-    const findResultReal = await Work.findOne({
-      user_id: user_id_param,
-      work_startDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
-      },
-      work_endDt: {
-        $gte: koreanDate,
-        $lte: koreanDate
-      }
-    })
-    .lean();
+  for (
+    let day = curMonthStart.clone();
+    day.isBefore(curMonthEnd);
+    day.add(1, "days")
+  ) {
 
-    finalResult.push({
-      name: key,
-      목표: intFormat(findResultPlan?.[dataInOut[key].plan] || 0),
-      실제: intFormat(findResultReal?.[dataInOut[key].real] || 0),
-    });
+    const findResultPlan = await repo.aggregateWeightPlan(
+      user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
+    );
+
+    const findResultReal = await repo.aggregateWeightReal(
+      user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
+    );
+
+    for (let key in data) {
+      finalResult.push({
+        name: day.format("MM/DD"),
+        목표: intFormat(findResultPlan?.[0]?.[data[key].plan]),
+        실제: intFormat(findResultReal?.[0]?.[data[key].real])
+      });
+    };
   };
 
   return {
@@ -85,83 +71,38 @@ export const dashPie = async (
   user_id_param
 ) => {
 
-  // in
-  const findResultIn = await Work.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        work_startDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
-        },
-        work_endDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
-        },
-      }
-    },
-    {
-      $unwind: "$work_section"
-    },
-    {
-      $match: {
-        "work_section.work_part_val": "수입"
-      }
-    },
-    {
-      $group: {
-        _id: "$work_section.work_title_val",
-        value: {
-          $sum: "$work_section.work_amount"
-        }
-      }
-    }
-  ]);
-  const finalResultIn = findResultIn?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
-  }));
+  // top part
+  let finalResultPart = [];
 
-  // out
-  const findResultOut = await Work.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        work_startDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
-        },
-        work_endDt: {
-          $gte: koreanDate,
-          $lte: koreanDate
-        },
-      }
-    },
-    {
-      $unwind: "$work_section"
-    },
-    {
-      $match: {
-        "work_section.work_part_val": "지출"
-      }
-    },
-    {
-      $group: {
-        _id: "$work_section.work_title_val",
-        value: {
-          $sum: "$work_section.work_amount"
-        }
-      }
-    }
-  ]);
-  const finalResultOut = findResultOut?.map((item) => ({
-    name: item._id,
-    value: intFormat(item.value)
-  }));
+  // top title
+  let finalResultTitle = [];
+
+  const findResultPart = await repo.aggregateTopPart(
+    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  );
+  const findResultTitle = await repo.aggregateTopTitle(
+    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  );
+
+  for (let i = 0; i < findResultPart.length; i++) {
+    finalResultPart.push({
+      name: findResultPart[i]._id,
+      value: findResultPart[i].count
+    });
+  }
+
+  for (let i = 0; i < findResultTitle.length; i++) {
+    finalResultTitle.push({
+      name: findResultTitle[i]._id,
+      value: findResultTitle[i].count
+    });
+  }
 
   return {
-    resultIn: finalResultIn,
-    resultOut: finalResultOut
+    result: {
+      part: finalResultPart,
+      title: finalResultTitle
+    }
   };
 };
 
@@ -170,121 +111,22 @@ export const dashLine = async (
   user_id_param
 ) => {
 
-  const names = [
+  const data = [
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
   let finalResult = [];
-  for (let i in names) {
-    const date = moment().tz("Asia/Seoul").startOf("isoWeek").add(i, "days");
-    const findResult = await Work.findOne({
-      user_id: user_id_param,
-      work_startDt: date.format("YYYY-MM-DD"),
-      work_endDt: date.format("YYYY-MM-DD"),
-    })
-    .lean();
+
+  for (let i = 0; i < 7; i++) {
+    const dayNum = curWeekStart.clone().day(i);
+    const findResult = await repo.detailReal(
+      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+    );
 
     finalResult.push({
-      name: `${names[i]} ${date.format("MM/DD")}`,
-      수입: intFormat(findResult?.work_total_in || 0),
-      지출: intFormat(findResult?.work_total_out || 0),
-    });
-  };
-
-  return {
-    result: finalResult,
-  };
-};
-
-// 0-4. dash (avg-week) --------------------------------------------------------------------------->
-export const dashAvgWeek = async (
-  user_id_param
-) => {
-
-  let sumWorkIn = Array(5).fill(0);
-  let sumWorkOut = Array(5).fill(0);
-  let countRecords = Array(5).fill(0);
-
-  const names = [
-    "1주차", "2주차", "3주차", "4주차", "5주차"
-  ];
-
-  for (
-    let week = curMonthStart.clone();
-    week.isBefore(curMonthEnd);
-    week.add(1, "days")
-  ) {
-    const weekNum = w.week() - curMonthStart.week() + 1;
-
-    if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await Work.findOne({
-        user_id: user_id_param,
-        work_startDt: w.format("YYYY-MM-DD"),
-        work_endDt: w.format("YYYY-MM-DD"),
-      }).lean();
-
-      if (findResult) {
-        sumWorkIn[weekNum - 1] += intFormat(findResult?.work_total_in || 0);
-        sumWorkOut[weekNum - 1] += intFormat(findResult?.work_total_out || 0);
-        countRecords[weekNum - 1]++;
-      }
-    }
-  };
-
-  let finalResult = [];
-  for (let i = 0; i < 5; i++) {
-    finalResult.push({
-      name: `${names[i]}`,
-      수입: intFormat(sumWorkIn[i] / countRecords[i]),
-      지출: intFormat(sumWorkOut[i] / countRecords[i]),
-    });
-  };
-
-  return {
-    result: finalResult,
-  };
-};
-
-// 0-4. dash (avg-month) -------------------------------------------------------------------------->
-export const dashAvgMonth = async (
-  user_id_param
-) => {
-
-  let sumWorkIn = Array(12).fill(0);
-  let sumWorkOut = Array(12).fill(0);
-  let countRecords = Array(12).fill(0);
-
-  const names = [
-    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
-  ];
-
-  for (
-    let month = curMonthStart.clone();
-    month.isBefore(curMonthEnd);
-    month.add(1, "days")
-  ) {
-    const monthNum = month.month();
-
-    const findResult = await Work.findOne({
-      user_id: user_id_param,
-      work_startDt: m.format("YYYY-MM-DD"),
-      work_endDt: m.format("YYYY-MM-DD"),
-    })
-    .lean();
-
-    if (findResult) {
-      sumWorkIn[monthNum] += intFormat(findResult?.work_total_in || 0);
-      sumWorkOut[monthNum] += intFormat(findResult?.work_total_out || 0);
-      countRecords[monthNum]++;
-    }
-  };
-
-  let finalResult = [];
-  for (let i = 0; i < 12; i++) {
-    finalResult.push({
-      name: names[i],
-      수입: intFormat(sumWorkIn[i] / countRecords[i]),
-      지출: intFormat(sumWorkOut[i] / countRecords[i]),
+      name: `${data[i]} ${dayNum.format("MM/DD")}`,
+      볼륨: intFormat(findResult?.work_total_volume || 0),
+      시간: intFormat(findResult?.work_cardio_time || 0)
     });
   };
 

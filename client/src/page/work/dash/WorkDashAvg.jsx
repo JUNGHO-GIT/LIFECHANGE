@@ -11,7 +11,7 @@ import {BarChart, Bar} from "recharts";
 export const WorkDashAvg = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_WORK = process.env.REACT_APP_URL_WORK;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -50,14 +50,14 @@ export const WorkDashAvg = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const responseWeek = await axios.get(`${URL_MONEY}/dash/avgWeek`, {
+    const responseWeek = await axios.get(`${URL_WORK}/dash/avgWeek`, {
       params: {
         user_id: user_id
       },
     });
     setDASH_WEEK(responseWeek.data.result);
 
-    const responseMonth = await axios.get(`${URL_MONEY}/dash/avgMonth`, {
+    const responseMonth = await axios.get(`${URL_WORK}/dash/avgMonth`, {
       params: {
         user_id: user_id
       },
@@ -102,7 +102,7 @@ export const WorkDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -133,7 +133,7 @@ export const WorkDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -196,11 +196,11 @@ export const WorkDashAvg = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableWorkAvg()}
       </div>
     </div>

@@ -51,7 +51,7 @@ export const SleepDashLine = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="name" />
           <YAxis
-            type="number"
+            type={"number"}
             domain={[0, 30]}
             ticks={[0, 6, 12, 18, 24, 30]}
             tickFormatter={(tick) => {
@@ -110,11 +110,11 @@ export const SleepDashLine = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {chartLine()}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableSleepLine()}
       </div>
     </div>

@@ -136,14 +136,14 @@ export const SleepSave = () => {
   const tableNode = () => {
     function sleepNode () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">취침</span>
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>취침</span>
               <TimePicker
                 id="sleep_night"
                 name="sleep_night"
-                className="form-control"
+                className={"form-control"}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
@@ -161,13 +161,13 @@ export const SleepSave = () => {
               ></TimePicker>
             </div>
           </div>
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">기상</span>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>기상</span>
               <TimePicker
                 id="sleep_morning"
                 name="sleep_morning"
-                className="form-control"
+                className={"form-control"}
                 disableClock={false}
                 clockIcon={null}
                 format="HH:mm"
@@ -185,13 +185,13 @@ export const SleepSave = () => {
               ></TimePicker>
             </div>
           </div>
-          <div className="col-12">
-            <div className="input-group">
-              <span className="input-group-text">수면</span>
+          <div className={"col-12"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>수면</span>
               <TimePicker
                 id="sleep_time"
                 name="sleep_time"
-                className="form-control"
+                className={"form-control"}
                 disableClock={false}
                 disabled={true}
                 clockIcon={null}
@@ -205,7 +205,7 @@ export const SleepSave = () => {
       );
     };
     return (
-      <div className="row d-center">
+      <div className={"row d-center"}>
         <div className="col-8 mb-20">
           {sleepNode()}
         </div>
@@ -227,7 +227,7 @@ export const SleepSave = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
+        <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Save</h1>
           </div>

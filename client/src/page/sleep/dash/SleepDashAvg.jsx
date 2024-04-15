@@ -75,7 +75,7 @@ export const SleepDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={[0, 30]}
               ticks={[0, 6, 12, 18, 24, 30]}
               tickFormatter={(tick) => {
@@ -108,7 +108,7 @@ export const SleepDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={[0, 30]}
               ticks={[0, 6, 12, 18, 24, 30]}
               tickFormatter={(tick) => {
@@ -182,11 +182,11 @@ export const SleepDashAvg = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableSleepAvg()}
       </div>
     </div>

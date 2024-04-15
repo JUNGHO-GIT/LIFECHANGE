@@ -92,7 +92,7 @@ export const FoodDashLine = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="name" />
           <YAxis
-            type="number"
+            type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
@@ -116,7 +116,7 @@ export const FoodDashLine = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="name" />
           <YAxis
-            type="number"
+            type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
@@ -180,11 +180,11 @@ export const FoodDashLine = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {activePart === "kcal" ? chartLineKcal() : chartLineNut()}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableFoodLine()}
       </div>
     </div>

@@ -81,6 +81,7 @@ export const WorkSave = () => {
     work_end: "",
     work_time: "",
     work_total_volume: 0,
+    work_cardio_time: "",
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
@@ -119,13 +120,20 @@ export const WorkSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     let totalVolume = 0;
+    let totalCardioTime = 0;
 
     WORK?.work_section?.forEach((item) => {
-      totalVolume += item.work_set * item.work_rep * item.work_kg;
+      if (item.work_part_val === "유산소") {
+        totalCardioTime += item.work_set * item.work_rep * item.work_kg;
+      }
+      else {
+        totalVolume += item.work_set * item.work_rep * item.work_kg;
+      }
     });
     setWORK((prev) => ({
       ...prev,
       work_total_volume: totalVolume,
+      work_cardio_time: totalCardioTime.toString(),
     }));
   }, [WORK?.work_section]);
 
@@ -195,10 +203,10 @@ export const WorkSave = () => {
     };
     function inputFragment () {
       return (
-        <div className="row d-center">
-          <div className="col-4">
+        <div className={"row d-center"}>
+          <div className={"col-4"}>
             <input
-              type="number"
+              type={"number"}
               value={COUNT.sectionCnt}
               min="0"
               className="form-control mb-30"
@@ -222,12 +230,12 @@ export const WorkSave = () => {
     function tableSection (i) {
       return (
         <div key={i} className="mb-20">
-          <div className="row d-center">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">파트</span>
+          <div className={"row d-center"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>파트</span>
                 <select
-                  className="form-control"
+                  className={"form-control"}
                   id={`work_part_idx-${i}`}
                   value={WORK?.work_section[i]?.work_part_idx}
                   onChange={(e) => {
@@ -255,11 +263,11 @@ export const WorkSave = () => {
                 </select>
               </div>
             </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">타이틀</span>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>타이틀</span>
                 <select
-                  className="form-control"
+                  className={"form-control"}
                   id={`work_title_idx-${i}`}
                   value={WORK?.work_section[i]?.work_title_idx}
                   onChange={(e) => {
@@ -289,14 +297,14 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">세트</span>
+          <div className={"row d-center"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>세트</span>
                 <input
                   type={"number"}
                   min={1}
-                  className="form-control"
+                  className={"form-control"}
                   value={WORK?.work_section[i]?.work_set}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -311,13 +319,13 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">횟수</span>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>횟수</span>
                 <input
-                  type="number"
+                  type={"number"}
                   min={1}
-                  className="form-control"
+                  className={"form-control"}
                   value={WORK?.work_section[i]?.work_rep}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -333,14 +341,14 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">무게</span>
+          <div className={"row d-center"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>무게</span>
                 <input
-                  type="number"
+                  type={"number"}
                   min={1}
-                  className="form-control"
+                  className={"form-control"}
                   value={WORK?.work_section[i]?.work_kg}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -355,13 +363,13 @@ export const WorkSave = () => {
                 />
               </div>
             </div>
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">휴식</span>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>휴식</span>
                 <input
-                  type="number"
+                  type={"number"}
                   min={1}
-                  className="form-control"
+                  className={"form-control"}
                   value={WORK?.work_section[i]?.work_rest}
                   onChange={(e) => {
                     const newVal = parseInt(e.target.value, 10);
@@ -382,8 +390,8 @@ export const WorkSave = () => {
     };
     function tableFragment () {
       return (
-        <div className="row d-center">
-          <div className="col-12">
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
             {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
           </div>
         </div>
@@ -392,14 +400,14 @@ export const WorkSave = () => {
     function tableRemain () {
       return (
         <div>
-          <div className="row d-center">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">시작시간</span>
+          <div className={"row d-center mt-3"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>시작시간</span>
                 <TimePicker
                   id="work_start"
                   name="work_start"
-                  className="form-control"
+                  className={"form-control"}
                   disableClock={false}
                   clockIcon={null}
                   format="HH:mm"
@@ -415,14 +423,14 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center mt-3">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">종료시간</span>
+          <div className={"row d-center mt-3"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>종료시간</span>
                 <TimePicker
                   id="work_end"
                   name="work_end"
-                  className="form-control"
+                  className={"form-control"}
                   disableClock={false}
                   clockIcon={null}
                   format="HH:mm"
@@ -438,14 +446,14 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center mt-3">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">운동시간</span>
+          <div className={"row d-center mt-3"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>운동시간</span>
                 <TimePicker
                   id="work_time"
                   name="work_time"
-                  className="form-control"
+                  className={"form-control"}
                   disableClock={false}
                   disabled={true}
                   clockIcon={null}
@@ -456,13 +464,14 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center mt-3">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">볼륨</span>
+          <div className={"row d-center mt-3"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>볼륨</span>
                 <input
-                  type="number"
-                  className="form-control"
+                  type={"number"}
+                  disabled={true}
+                  className={"form-control"}
                   value={WORK?.work_total_volume}
                   onChange={(e) => {
                     setWORK((prev) => ({
@@ -474,13 +483,32 @@ export const WorkSave = () => {
               </div>
             </div>
           </div>
-          <div className="row d-center mt-3">
-            <div className="col-6">
-              <div className="input-group">
-                <span className="input-group-text">체중</span>
+          <div className={"row d-center mt-3"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>유산소</span>
                 <input
-                  type="text"
-                  className="form-control"
+                  type={"text"}
+                  disabled={true}
+                  className={"form-control"}
+                  value={WORK?.work_cardio_time}
+                  onChange={(e) => {
+                    setWORK((prev) => ({
+                      ...prev,
+                      work_cardio_time: e.target.value,
+                    }));
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={"row d-center mt-3"}>
+            <div className={"col-6"}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>체중</span>
+                <input
+                  type={"text"}
+                  className={"form-control"}
                   value={WORK?.work_body_weight}
                   onChange={(e) => {
                     setWORK((prev) => ({
@@ -518,27 +546,27 @@ export const WorkSave = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             <h1>Save</h1>
           </div>
         </div>
         <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className={"col-12"}>
             {dateNode()}
           </div>
         </div>
         <div className="row d-center mt-5">
-          <div className="col-12">
+          <div className={"col-12"}>
             {handlerSectionCount()}
           </div>
         </div>
         <div className="row d-center mt-5 mb-20">
-          <div className="col-12">
+          <div className={"col-12"}>
             {tableNode()}
           </div>
         </div>
-        <div className="row d-center">
-          <div className="col-12">
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
             {buttonNode()}
           </div>
         </div>

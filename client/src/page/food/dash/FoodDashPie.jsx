@@ -132,11 +132,11 @@ export const FoodDashPie = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-6">
+    <div className={"row d-center"}>
+      <div className={"col-6"}>
         {chartPieKcal()}
       </div>
-      <div className="col-6">
+      <div className={"col-6"}>
         {chartPieNut()}
       </div>
     </div>

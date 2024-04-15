@@ -11,35 +11,28 @@ export const aggregateIn = async (
 ) => {
 
   const finalResult = await Money.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-      }
+    {$match: {
+      user_id: user_id_param,
+      money_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param
+      },
+      money_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param
+      },
+    }},
+    {$unwind: "$money_section"
     },
-    {
-      $unwind: "$money_section"
-    },
-    {
-      $match: {
-        "money_section.money_part_val": "수입"
+    {$match: {
+      "money_section.money_part_val": "수입"
+    }},
+    {$group: {
+      _id: "$money_section.money_title_val",
+      value: {
+        $sum: "$money_section.money_amount"
       }
-    },
-    {
-      $group: {
-        _id: "$money_section.money_title_val",
-        value: {
-          $sum: "$money_section.money_amount"
-        }
-      }
-    }
+    }}
   ]);
 
   return finalResult;
@@ -53,35 +46,28 @@ export const aggregateOut = async (
 ) => {
 
   const finalResult = await Money.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-      }
+    {$match: {
+      user_id: user_id_param,
+      money_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param
+      },
+      money_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param
+      },
+    }},
+    {$unwind: "$money_section"
     },
-    {
-      $unwind: "$money_section"
-    },
-    {
-      $match: {
-        "money_section.money_part_val": "지출"
+    {$match: {
+      "money_section.money_part_val": "지출"
+    }},
+    {$group: {
+      _id: "$money_section.money_title_val",
+      value: {
+        $sum: "$money_section.money_amount"
       }
-    },
-    {
-      $group: {
-        _id: "$money_section.money_title_val",
-        value: {
-          $sum: "$money_section.money_amount"
-        }
-      }
-    }
+    }}
   ]);
 
   return finalResult;

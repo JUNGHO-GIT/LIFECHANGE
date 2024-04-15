@@ -75,14 +75,14 @@ export const WorkPlanCompare = () => {
     work_endDt: "",
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_total_count: "",
+    work_total_count: 0,
+    work_total_volume: 0,
     work_cardio_time: "",
-    work_total_volume: "",
-    work_body_weight: "",
-    work_plan_total_count: "",
+    work_body_weight: 0,
+    work_plan_total_count: 0,
     work_plan_cardio_time: "",
-    work_plan_total_volume: "",
-    work_plan_body_weight: "",
+    work_plan_total_volume: 0,
+    work_plan_body_weight: 0,
   }];
   const [WORK_COMPARE, setWORK_COMPARE] = useState(WORK_COMPARE_DEFAULT);
 
@@ -199,7 +199,7 @@ export const WorkPlanCompare = () => {
   return (
     <div className="root-wrapper">
       <div className="container-wrapper">
-        <div className="row d-center">
+        <div className={"row d-center"}>
           <div className="col-12 mb-20">
             <h1>Compare</h1>
           </div>

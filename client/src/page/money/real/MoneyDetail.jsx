@@ -197,17 +197,17 @@ export const MoneyDetail = () => {
     <div className="root-wrapper">
       <div className="container-wrapper">
         <div className="row mb-20 d-center">
-          <div className="col-12">
+          <div className={"col-12"}>
             <h1>Detail</h1>
           </div>
         </div>
         <div className="row d-center mb-20">
-          <div className="col-12">
+          <div className={"col-12"}>
             {tableNode()}
           </div>
         </div>
-        <div className="row d-center">
-          <div className="col-12">
+        <div className={"row d-center"}>
+          <div className={"col-12"}>
             {buttonNode()}
           </div>
         </div>

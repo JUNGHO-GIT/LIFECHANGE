@@ -127,7 +127,7 @@ export const FoodDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -153,7 +153,7 @@ export const FoodDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -187,7 +187,7 @@ export const FoodDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -213,7 +213,7 @@ export const FoodDashAvg = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="category" dataKey="name" />
             <YAxis
-              type="number"
+              type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
@@ -291,14 +291,14 @@ export const FoodDashAvg = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className="row d-center">
-      <div className="col-9">
+    <div className={"row d-center"}>
+      <div className={"col-9"}>
         {activePart === "kcal" && activeType === "week" ? chartWeekKcal() : null}
         {activePart === "nut" && activeType === "week" ? chartWeekNut() : null}
         {activePart === "kcal" && activeType === "month" ? chartMonthKcal() : null}
         {activePart === "nut" && activeType === "month" ? chartMonthNut() : null}
       </div>
-      <div className="col-3">
+      <div className={"col-3"}>
         {tableFoodAvg()}
       </div>
     </div>
