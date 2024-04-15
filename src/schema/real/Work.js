@@ -35,9 +35,13 @@ const schema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  work_total_volume: {
+    type: Number,
+    required: false
+  },
   work_body_weight: {
-    type: String,
-    required: false,
+    type: Number,
+    required: false
   },
 
   work_section: [{

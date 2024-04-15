@@ -77,16 +77,17 @@ export const WorkDetail = () => {
     work_start: "",
     work_end: "",
     work_time: "",
+    work_total_volume: 0,
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
       work_part_val: "전체",
       work_title_idx: 0,
       work_title_val: "전체",
-      work_set: 0,
-      work_rep: 0,
-      work_kg: 0,
-      work_rest: 0,
+      work_set: 1,
+      work_rep: 1,
+      work_kg: 1,
+      work_rest: 1,
     }],
   };
   const [WORK, setWORK] = useState(WORK_DEFAULT);
@@ -146,10 +147,11 @@ export const WorkDetail = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>체중</th>
             <th>시작</th>
             <th>종료</th>
             <th>시간</th>
+            <th>볼륨</th>
+            <th>체중</th>
             <th>부위</th>
             <th>종목</th>
             <th>세트</th>
@@ -168,19 +170,22 @@ export const WorkDetail = () => {
                     {WORK?.work_startDt}
                   </td>
                   <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                    {WORK?.work_start}
+                  </td>
+                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                    {WORK?.work_end}
+                  </td>
+                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                    {WORK?.work_time}
+                  </td>
+                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                    {WORK?.work_total_volume}
+                  </td>
+                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_body_weight}
                   </td>
                 </React.Fragment>
               )}
-              <td className="fs-20 pt-20">
-                {WORK?.work_start}
-              </td>
-              <td className="fs-20 pt-20">
-                {WORK?.work_end}
-              </td>
-              <td className="fs-20 pt-20">
-                {WORK?.work_time}
-              </td>
               <td className="fs-20 pt-20">
                 {item.work_part_val}
               </td>

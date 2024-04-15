@@ -75,14 +75,14 @@ export const FoodPlanCompare = () => {
     food_endDt: "",
     food_plan_startDt: "",
     food_plan_endDt: "",
-    food_kcal: "",
-    food_carb: "",
-    food_protein: "",
-    food_fat: "",
-    food_plan_kcal: "",
-    food_plan_carb: "",
-    food_plan_protein: "",
-    food_plan_fat: "",
+    food_kcal: 0,
+    food_carb: 0,
+    food_protein: 0,
+    food_fat: 0,
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
   }];
   const [FOOD_COMPARE, setFOOD_COMPARE] = useState(FOOD_COMPARE_DEFAULT);
 

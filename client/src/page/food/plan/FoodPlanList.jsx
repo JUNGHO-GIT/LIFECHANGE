@@ -75,10 +75,10 @@ export const FoodPlanList = () => {
     food_plan_number: 0,
     food_plan_startDt: "",
     food_plan_endDt: "",
-    food_plan_kcal: "",
-    food_plan_carb: "",
-    food_plan_protein: "",
-    food_plan_fat: "",
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
   }];
   const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
 

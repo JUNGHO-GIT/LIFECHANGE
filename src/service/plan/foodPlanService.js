@@ -38,17 +38,17 @@ export const compare = async (
       real.food_startDt <= plan.food_plan_endDt &&
       real.food_endDt >= plan.food_plan_startDt
     ));
-    const totalKcal = matches.reduce((sum, curr) => (
-      sum + parseFloat(curr.food_total_kcal || "0")
+    const totalKcal = matches?.reduce((sum, curr) => (
+      sum + (curr?.food_total_kcal ?? 0)
     ), 0);
-    const totalCarb = matches.reduce((sum, curr) => (
-      sum + parseFloat(curr.food_total_carb || "0")
+    const totalCarb = matches?.reduce((sum, curr) => (
+      sum + (curr?.food_total_carb ?? 0)
     ), 0);
-    const totalProtein = matches.reduce((sum, curr) => (
-      sum + parseFloat(curr.food_total_protein || "0")
+    const totalProtein = matches?.reduce((sum, curr) => (
+      sum + (curr?.food_total_protein ?? 0)
     ), 0);
-    const totalFat = matches.reduce((sum, curr) => (
-      sum + parseFloat(curr.food_total_fat || "0")
+    const totalFat = matches?.reduce((sum, curr) => (
+      sum + (curr?.food_total_fat ?? 0)
     ), 0);
 
     return {

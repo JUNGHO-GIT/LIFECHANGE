@@ -75,12 +75,14 @@ export const WorkPlanCompare = () => {
     work_endDt: "",
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_body_weight: "",
     work_total_count: "",
     work_cardio_time: "",
-    work_plan_body_weight: "",
+    work_total_volume: "",
+    work_body_weight: "",
     work_plan_total_count: "",
     work_plan_cardio_time: "",
+    work_plan_total_volume: "",
+    work_plan_body_weight: "",
   }];
   const [WORK_COMPARE, setWORK_COMPARE] = useState(WORK_COMPARE_DEFAULT);
 
@@ -133,6 +135,16 @@ export const WorkPlanCompare = () => {
                   <td>유산소 시간</td>
                   <td>{item.work_plan_cardio_time || "0"}</td>
                   <td>{item.work_cardio_time || "0"}</td>
+                </tr>
+                <tr>
+                  <td>총 볼륨</td>
+                  <td>{item.work_plan_total_volume || "0"}</td>
+                  <td>{item.work_total_volume || "0"}</td>
+                </tr>
+                <tr>
+                  <td>체중</td>
+                  <td>{item.work_plan_body_weight || "0"}</td>
+                  <td>{item.work_body_weight || "0"}</td>
                 </tr>
               </React.Fragment>
             ))}

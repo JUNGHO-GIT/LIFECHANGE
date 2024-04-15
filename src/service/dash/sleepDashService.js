@@ -15,7 +15,6 @@ const dateFormat = (data) => {
   if (!data) {
     return 0;
   }
-  // 시간은 time[0], 분은 time[1]로 가정, 시간 단위로 변환
   else if (typeof data === "string") {
     const time = data.split(":");
     if (time.length === 2) {
@@ -27,12 +26,8 @@ const dateFormat = (data) => {
       return 0;
     }
   }
-  // 숫자 데이터가 분 단위로 주어지면 시간 단위로 변환
-  else if (typeof data === "number") {
-    return parseFloat((data / 60).toFixed(1));
-  }
   else {
-    return 0;
+    return parseFloat(data.toFixed(1));
   }
 };
 
@@ -135,9 +130,6 @@ export const dashAvgWeek = async (
       const findResult = await repo.detailReal(
         "", user_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
-
-      console.log(`==================== ${week.format("YYYY-MM-DD")} ====================`);
-      console.log(JSON.stringify(findResult));
 
       if (findResult) {
         sumSleepStart[weekNum - 1] += dateFormat(findResult?.sleep_section?.[0]?.sleep_night);

@@ -78,16 +78,17 @@ export const WorkList = () => {
     work_start: "",
     work_end: "",
     work_time: "",
+    work_total_volume: 0,
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
       work_part_val: "전체",
       work_title_idx: 0,
       work_title_val: "전체",
-      work_set: 0,
-      work_rep: 0,
-      work_kg: 0,
-      work_rest: 0,
+      work_set: 1,
+      work_rep: 1,
+      work_kg: 1,
+      work_rest: 1,
     }],
   }];
   const [WORK, setWORK] = useState(WORK_DEFAULT);
@@ -117,10 +118,11 @@ export const WorkList = () => {
         <thead className="table-primary">
           <tr>
             <th>날짜</th>
-            <th>체중</th>
             <th>시작</th>
             <th>종료</th>
             <th>시간</th>
+            <th>볼륨</th>
+            <th>체중</th>
             <th>부위</th>
             <th>종목</th>
             <th>세트</th>
@@ -149,13 +151,22 @@ export const WorkList = () => {
                           {item.work_startDt}
                         </td>
                         <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          {item.work_start}
+                        </td>
+                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          {item.work_end}
+                        </td>
+                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          {item.work_time}
+                        </td>
+                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          {item.work_total_volume}
+                        </td>
+                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
                           {item.work_body_weight}
                         </td>
                       </React.Fragment>
                     )}
-                    <td>{item.work_start}</td>
-                    <td>{item.work_end}</td>
-                    <td>{item.work_time}</td>
                     <td>{section.work_part_val}</td>
                     <td>{section.work_title_val}</td>
                     <td>{section.work_set}</td>

@@ -158,7 +158,10 @@ export const detail = async (
     _id_param, user_id_param, startDt, endDt
   );
 
+  const sectionCnt = finalResult?.food_section.length || 0;
+
   return {
+    sectionCnt: sectionCnt,
     result: finalResult,
   };
 };

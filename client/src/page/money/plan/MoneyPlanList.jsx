@@ -75,8 +75,8 @@ export const MoneyPlanList = () => {
     money_plan_number: 0,
     money_plan_startDt: "",
     money_plan_endDt: "",
-    money_plan_in: "",
-    money_plan_out: ""
+    money_plan_in: 0,
+    money_plan_out: 0
   }];
   const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
 

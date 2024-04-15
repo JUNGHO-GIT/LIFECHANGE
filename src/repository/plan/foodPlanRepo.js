@@ -6,7 +6,6 @@ import {Food} from "../../schema/real/Food.js";
 import {FoodPlan} from "../../schema/plan/FoodPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
-const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
 const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->

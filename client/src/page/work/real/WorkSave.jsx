@@ -80,16 +80,17 @@ export const WorkSave = () => {
     work_start: "",
     work_end: "",
     work_time: "",
+    work_total_volume: 0,
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
       work_part_val: "",
       work_title_idx: 0,
       work_title_val: "",
-      work_set: 0,
-      work_rep: 0,
-      work_kg: 0,
-      work_rest: 0,
+      work_set: 1,
+      work_rep: 1,
+      work_kg: 1,
+      work_rest: 1,
     }],
   };
   const [WORK, setWORK] = useState(WORK_DEFAULT);
@@ -114,6 +115,19 @@ export const WorkSave = () => {
       sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [user_id, DATE.startDt, DATE.endDt]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    let totalVolume = 0;
+
+    WORK?.work_section?.forEach((item) => {
+      totalVolume += item.work_set * item.work_rep * item.work_kg;
+    });
+    setWORK((prev) => ({
+      ...prev,
+      work_total_volume: totalVolume,
+    }));
+  }, [WORK?.work_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -152,10 +166,10 @@ export const WorkSave = () => {
         work_part_val: "전체",
         work_title_idx: 0,
         work_title_val: "전체",
-        work_set: 0,
-        work_rep: 0,
-        work_kg: 0,
-        work_rest: 0,
+        work_set: 1,
+        work_rep: 1,
+        work_kg: 1,
+        work_rest: 1,
       };
 
       if (newCount > sectionCount) {
@@ -280,7 +294,8 @@ export const WorkSave = () => {
               <div className="input-group">
                 <span className="input-group-text">세트</span>
                 <input
-                  type="number"
+                  type={"number"}
+                  min={1}
                   className="form-control"
                   value={WORK?.work_section[i]?.work_set}
                   onChange={(e) => {
@@ -301,6 +316,7 @@ export const WorkSave = () => {
                 <span className="input-group-text">횟수</span>
                 <input
                   type="number"
+                  min={1}
                   className="form-control"
                   value={WORK?.work_section[i]?.work_rep}
                   onChange={(e) => {
@@ -323,6 +339,7 @@ export const WorkSave = () => {
                 <span className="input-group-text">무게</span>
                 <input
                   type="number"
+                  min={1}
                   className="form-control"
                   value={WORK?.work_section[i]?.work_kg}
                   onChange={(e) => {
@@ -343,6 +360,7 @@ export const WorkSave = () => {
                 <span className="input-group-text">휴식</span>
                 <input
                   type="number"
+                  min={1}
                   className="form-control"
                   value={WORK?.work_section[i]?.work_rest}
                   onChange={(e) => {
@@ -434,6 +452,24 @@ export const WorkSave = () => {
                   format="HH:mm"
                   locale="ko"
                   value={WORK?.work_time}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row d-center mt-3">
+            <div className="col-6">
+              <div className="input-group">
+                <span className="input-group-text">볼륨</span>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={WORK?.work_total_volume}
+                  onChange={(e) => {
+                    setWORK((prev) => ({
+                      ...prev,
+                      work_total_volume: Number(e.target.value),
+                    }));
+                  }}
                 />
               </div>
             </div>

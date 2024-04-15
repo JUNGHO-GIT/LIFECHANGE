@@ -75,10 +75,10 @@ export const MoneyPlanCompare = () => {
     money_endDt: "",
     money_plan_startDt: "",
     money_plan_endDt: "",
-    money_in: "",
-    money_out: "",
-    money_plan_in: "",
-    money_plan_out: ""
+    money_in: 0,
+    money_out: 0,
+    money_plan_in: 0,
+    money_plan_out: 0
   }];
   const [MONEY_COMPARE, setMONEY_COMPARE] = useState(MONEY_COMPARE_DEFAULT);
 

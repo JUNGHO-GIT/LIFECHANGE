@@ -79,6 +79,7 @@ export const WorkPlanDetail = () => {
     work_plan_startDt: "",
     work_plan_endDt: "",
     work_plan_body_weight: "",
+    work_plan_total_volume: "",
     work_plan_total_count: "",
     work_plan_cardio_time: "",
     work_plan_regdate: "",
@@ -140,9 +141,10 @@ export const WorkPlanDetail = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>목표 체중</th>
             <th>목표 운동 횟수</th>
             <th>목표 유산소 시간</th>
+            <th>목표 볼륨</th>
+            <th>목표 체중</th>
             <th>삭제</th>
           </tr>
         </thead>
@@ -155,13 +157,16 @@ export const WorkPlanDetail = () => {
               {WORK_PLAN?.work_plan_endDt}
             </td>
             <td className="fs-20 pt-20">
-              {WORK_PLAN?.work_plan_body_weight}
-            </td>
-            <td className="fs-20 pt-20">
               {WORK_PLAN?.work_plan_total_count}
             </td>
             <td className="fs-20 pt-20">
               {WORK_PLAN?.work_plan_cardio_time}
+            </td>
+            <td className="fs-20 pt-20">
+              {WORK_PLAN?.work_plan_total_volume}
+            </td>
+            <td className="fs-20 pt-20">
+              {WORK_PLAN?.work_plan_body_weight}
             </td>
             <td className="fs-20 pt-20">
               <button className="btn btn-danger btn-sm" onClick={() => {

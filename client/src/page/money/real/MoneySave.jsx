@@ -75,8 +75,8 @@ export const MoneySave = () => {
     money_number: 0,
     money_startDt: "",
     money_endDt: "",
-    money_total_in: "",
-    money_total_out: "",
+    money_total_in: 0,
+    money_total_out: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "",
@@ -120,8 +120,8 @@ export const MoneySave = () => {
 
     setMONEY((prev) => ({
       ...prev,
-      money_total_in: (Math.round(totals.totalIn)).toString(),
-      money_total_out: (Math.round(totals.totalOut)).toString()
+      money_total_in: Math.round(totals.totalIn),
+      money_total_out: Math.round(totals.totalOut)
     }));
 
   }, [MONEY?.money_section]);
@@ -348,10 +348,10 @@ export const MoneySave = () => {
             <div className="input-group">
               <span className="input-group-text">총수입</span>
               <input
-                disabled
-                type="text"
+                type="number"
                 className="form-control"
                 value={MONEY?.money_total_in}
+                disabled
                 readOnly
               />
             </div>
@@ -360,10 +360,10 @@ export const MoneySave = () => {
             <div className="input-group">
               <span className="input-group-text">총지출</span>
               <input
-                disabled
-                type="text"
+                type="number"
                 className="form-control"
                 value={MONEY?.money_total_out}
+                disabled
                 readOnly
               />
             </div>

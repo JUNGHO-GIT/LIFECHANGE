@@ -12,11 +12,14 @@ export const MoneyDashPie = () => {
   const user_id = window.sessionStorage.getItem("user_id");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_DEFAULT = [
+  const DASH_IN_DEFAULT = [
     {name:"Empty", value: 100}
   ];
-  const [DASH_IN, setDASH_IN] = useState(DASH_DEFAULT);
-  const [DASH_OUT, setDASH_OUT] = useState(DASH_DEFAULT);
+  const DASH_OUT_DEFAULT = [
+    {name:"Empty", value: 100}
+  ];
+  const [DASH_IN, setDASH_IN] = useState(DASH_IN_DEFAULT);
+  const [DASH_OUT, setDASH_OUT] = useState(DASH_OUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -25,12 +28,12 @@ export const MoneyDashPie = () => {
         user_id: user_id
       },
     });
-    setDASH_IN(response.data.resultIn.length > 0 ? response.data.resultIn : DASH_DEFAULT);
-    setDASH_OUT(response.data.resultOut.length > 0 ? response.data.resultOut : DASH_DEFAULT);
+    setDASH_IN(response.data.result.in.length > 0 ? response.data.result.in : DASH_IN_DEFAULT);
+    setDASH_OUT(response.data.result.out.length > 0 ? response.data.result.out : DASH_OUT_DEFAULT);
   })()}, [user_id]);
 
-  // 4. render ------------------------------------------------------------------------------------>
-  const renderCustomizedLabel = ({
+  // 4-1. renderIn -------------------------------------------------------------------------------->
+  const renderIn = ({
     cx, cy, midAngle, innerRadius, outerRadius, percent, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -41,6 +44,22 @@ export const MoneyDashPie = () => {
     return (
       <text x={x} y={y} fill="black" textAnchor="middle" dominantBaseline="central" fontSize="12">
         {`${DASH_IN[index].name} ${Math.round(percent * 100)}%`}
+      </text>
+    );
+  };
+
+  // 4-2. renderOut ------------------------------------------------------------------------------->
+  const renderOut = ({
+    cx, cy, midAngle, innerRadius, outerRadius, percent, index
+  }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text x={x} y={y} fill="black" textAnchor="middle" dominantBaseline="central" fontSize="12">
+        {`${DASH_OUT[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
   };
@@ -56,7 +75,7 @@ export const MoneyDashPie = () => {
             cx="50%"
             cy="50%"
             labelLine={false}
-            label={renderCustomizedLabel}
+            label={renderIn}
             outerRadius={80}
             fill="#8884d8"
             dataKey="value"
@@ -89,7 +108,7 @@ export const MoneyDashPie = () => {
             cx="50%"
             cy="50%"
             labelLine={false}
-            label={renderCustomizedLabel}
+            label={renderOut}
             outerRadius={80}
             fill="#8884d8"
             dataKey="value"

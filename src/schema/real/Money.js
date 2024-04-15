@@ -24,11 +24,11 @@ const schema = new mongoose.Schema({
   },
 
   money_total_in: {
-    type: String,
+    type: Number,
     required: false
   },
   money_total_out: {
-    type: String,
+    type: Number,
     required: false
   },
 

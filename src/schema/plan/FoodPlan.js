@@ -24,19 +24,19 @@ const schema = new mongoose.Schema({
   },
 
   food_plan_kcal: {
-    type: String,
+    type: Number,
     required: false
   },
   food_plan_carb: {
-    type: String,
+    type: Number,
     required: false
   },
   food_plan_protein: {
-    type: String,
+    type: Number,
     required: false
   },
   food_plan_fat: {
-    type: String,
+    type: Number,
     required: false
   },
 

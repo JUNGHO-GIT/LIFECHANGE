@@ -76,10 +76,10 @@ export const FoodPlanSave = () => {
     food_plan_number: 0,
     food_plan_startDt: "",
     food_plan_endDt: "",
-    food_plan_kcal: "",
-    food_plan_carb: "",
-    food_plan_protein: "",
-    food_plan_fat: "",
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
   };
   const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
 
@@ -193,12 +193,14 @@ export const FoodPlanSave = () => {
           <div className="col-6">
             <div className="input-group">
               <span className="input-group-text">칼로리(하루섭취량)</span>
-              <input type="text" className="form-control"
+              <input
+                type="number"
+                className="form-control"
                 value={FOOD_PLAN?.food_plan_kcal}
                 onChange={(e) => {
                   setFOOD_PLAN((prev) => ({
                     ...prev,
-                    food_plan_kcal: e.target.value
+                    food_plan_kcal: Number(e.target.value)
                   }));
                 }}
               />
@@ -207,12 +209,14 @@ export const FoodPlanSave = () => {
           <div className="col-6">
             <div className="input-group">
               <span className="input-group-text">탄수화물(하루섭취량)</span>
-              <input type="text" className="form-control"
+              <input
+                type="number"
+                className="form-control"
                 value={FOOD_PLAN?.food_plan_carb}
                 onChange={(e) => {
                   setFOOD_PLAN((prev) => ({
                     ...prev,
-                    food_plan_carb: e.target.value
+                    food_plan_carb: Number(e.target.value)
                   }));
                 }}
               />
@@ -221,12 +225,14 @@ export const FoodPlanSave = () => {
           <div className="col-6">
             <div className="input-group">
               <span className="input-group-text">단백질(하루섭취량)</span>
-              <input type="text" className="form-control"
+              <input
+                type="number"
+                className="form-control"
                 value={FOOD_PLAN?.food_plan_protein}
                 onChange={(e) => {
                   setFOOD_PLAN((prev) => ({
                     ...prev,
-                    food_plan_protein: e.target.value
+                    food_plan_protein: Number(e.target.value)
                   }));
                 }}
               />
@@ -235,12 +241,14 @@ export const FoodPlanSave = () => {
           <div className="col-6">
             <div className="input-group">
               <span className="input-group-text">지방(하루섭취량)</span>
-              <input type="text" className="form-control"
+              <input
+                type="number"
+                className="form-control"
                 value={FOOD_PLAN?.food_plan_fat}
                 onChange={(e) => {
                   setFOOD_PLAN((prev) => ({
                     ...prev,
-                    food_plan_fat: e.target.value
+                    food_plan_fat: Number(e.target.value)
                   }));
                 }}
               />

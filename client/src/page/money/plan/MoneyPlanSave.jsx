@@ -64,8 +64,8 @@ export const MoneyPlanSave = () => {
     money_plan_number: 0,
     money_plan_startDt: "",
     money_plan_endDt: "",
-    money_plan_in: "",
-    money_plan_out: ""
+    money_plan_in: 0,
+    money_plan_out: 0
   };
   const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
 
@@ -172,12 +172,14 @@ export const MoneyPlanSave = () => {
           <div className="col-6">
             <div className="input-group">
               <span className="input-group-text">목표 수입</span>
-              <input type="text" className="form-control"
+              <input
+                type="number"
+                className="form-control"
                 value={MONEY_PLAN?.money_plan_in}
                 onChange={(e) => {
                   setMONEY_PLAN((prev) => ({
                     ...prev,
-                    money_plan_in: e.target.value
+                    money_plan_in: Number(e.target.value)
                   }));
                 }}
               />
@@ -186,12 +188,14 @@ export const MoneyPlanSave = () => {
           <div className="col-6">
             <div className="input-group">
               <span className="input-group-text">목표 지출</span>
-              <input type="text" className="form-control"
+              <input
+                type="number"
+                className="form-control"
                 value={MONEY_PLAN?.money_plan_out}
                 onChange={(e) => {
                   setMONEY_PLAN((prev) => ({
                     ...prev,
-                    money_plan_out: e.target.value
+                    money_plan_out: Number(e.target.value)
                   }));
                 }}
               />

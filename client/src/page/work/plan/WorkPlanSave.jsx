@@ -76,9 +76,10 @@ export const WorkPlanSave = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_body_weight: "",
     work_plan_total_count: "",
     work_plan_cardio_time: "",
+    work_plan_total_volume: "",
+    work_plan_body_weight: "",
     work_plan_regdate: "",
     work_plan_update: "",
   };
@@ -207,6 +208,20 @@ export const WorkPlanSave = () => {
                   setWORK_PLAN((prev) => ({
                     ...prev,
                     work_plan_cardio_time: e.target.value
+                  }));
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-12">
+            <div className="input-group">
+              <span className="input-group-text">목표 총 볼륨</span>
+              <input type="text" className="form-control"
+                value={WORK_PLAN?.work_plan_total_volume}
+                onChange={(e) => {
+                  setWORK_PLAN((prev) => ({
+                    ...prev,
+                    work_plan_total_volume: e.target.value
                   }));
                 }}
               />
