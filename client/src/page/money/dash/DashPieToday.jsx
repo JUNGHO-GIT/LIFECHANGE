@@ -1,6 +1,8 @@
 // DashPieToday.jsx
 
 import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
@@ -9,14 +11,21 @@ export const DashPieToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname?.trim()?.toString();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine (line-month) (${PATH})`, "수입"
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_IN_DEFAULT = [
-    {name:"Empty", value: 100}
+    {name:"", value: 100}
   ];
   const DASH_OUT_DEFAULT = [
-    {name:"Empty", value: 100}
+    {name:"", value: 100}
   ];
   const [DASH_IN, setDASH_IN] = useState(DASH_IN_DEFAULT);
   const [DASH_OUT, setDASH_OUT] = useState(DASH_OUT_DEFAULT);
@@ -67,7 +76,7 @@ export const DashPieToday = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartPieIn = () => {
+  const chartNodeIn = () => {
     const COLORS_IN = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <ResponsiveContainer width={"100%"} height={300}>
@@ -100,7 +109,7 @@ export const DashPieToday = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartPieOut = () => {
+  const chartNodeOut = () => {
     const COLORS_OUT = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <ResponsiveContainer width={"100%"} height={300}>
@@ -135,10 +144,10 @@ export const DashPieToday = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-6"}>
-        {chartPieIn()}
+        {chartNodeIn()}
       </div>
       <div className={"col-6"}>
-        {chartPieOut()}
+        {chartNodeOut()}
       </div>
     </div>
   );

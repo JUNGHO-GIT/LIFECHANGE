@@ -32,7 +32,9 @@ export const aggregateIn = async (
       value: {
         $sum: "$money_section.money_amount"
       }
-    }}
+    }},
+    {$sort: {value: -1}},
+    {$limit: 5}
   ]);
 
   return finalResult;
@@ -67,7 +69,9 @@ export const aggregateOut = async (
       value: {
         $sum: "$money_section.money_amount"
       }
-    }}
+    }},
+    {$sort: {value: -1}},
+    {$limit: 10}
   ]);
 
   return finalResult;

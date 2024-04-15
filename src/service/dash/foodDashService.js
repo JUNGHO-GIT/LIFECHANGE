@@ -24,7 +24,7 @@ const intFormat = (data) => {
   }
 };
 
-// 1-1. dash (bar - today) ----------------------------------------------------------------------->
+// 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
   user_id_param
 ) => {
@@ -106,10 +106,79 @@ export const pieToday = async (
     value: intFormat(item.value)
   }));
 
-  const finalResultNut = findResultNut?.map((item) => ({
+  const finalResultNut = findResultNut.map((item) => [
+    {name: "탄수화물", value: intFormat(item.food_total_carb)},
+    {name: "단백질", value: intFormat(item.food_total_protein)},
+    {name: "지방", value: intFormat(item.food_total_fat)}
+  ]).flat();
+
+  return {
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
+  };
+};
+
+// 2-2. dash (pie - week) ------------------------------------------------------------------------->
+export const pieWeek = async (
+  user_id_param
+) => {
+
+  // kcal
+  const findResultKcal = await repo.aggregateKcal(
+    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  );
+
+  // carb, protein, fat
+  const findResultNut = await repo.aggregateNut(
+    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  );
+
+  const finalResultKcal = findResultKcal?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
   }));
+
+  const finalResultNut = findResultNut.map((item) => [
+    {name: "탄수화물", value: intFormat(item.food_total_carb)},
+    {name: "단백질", value: intFormat(item.food_total_protein)},
+    {name: "지방", value: intFormat(item.food_total_fat)}
+  ]).flat();
+
+  return {
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
+  };
+};
+
+// 2-3. dash (pie - month) ------------------------------------------------------------------------>
+export const pieMonth = async (
+  user_id_param
+) => {
+
+  // kcal
+  const findResultKcal = await repo.aggregateKcal(
+    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  );
+
+  // carb, protein, fat
+  const findResultNut = await repo.aggregateNut(
+    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  );
+
+  const finalResultKcal = findResultKcal?.map((item) => ({
+    name: item._id,
+    value: intFormat(item.value)
+  }));
+
+  const finalResultNut = findResultNut.map((item) => [
+    {name: "탄수화물", value: intFormat(item.food_total_carb)},
+    {name: "단백질", value: intFormat(item.food_total_protein)},
+    {name: "지방", value: intFormat(item.food_total_fat)}
+  ]).flat();
 
   return {
     result: {
@@ -152,6 +221,53 @@ export const lineWeek = async (
       지방: intFormat(findResult?.food_total_fat),
     });
   };
+
+  return {
+    result: {
+      kcal: finalResultKcal,
+      nut: finalResultNut
+    }
+  };
+};
+
+// 3-2. dash (line - month) ----------------------------------------------------------------------->
+export const lineMonth = async (
+  user_id_param
+) => {
+
+  const data = [
+    "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
+    "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일",
+    "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
+  ];
+
+  // kcal
+  let finalResultKcal = [];
+
+  // carb, protein, fat
+  let finalResultNut = [];
+
+  for (
+    let day = curMonthStart.clone();
+    day.isBefore(curMonthEnd);
+    day.add(1, "days")
+  ) {
+    const findResult = await repo.detailReal(
+      "", user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
+    );
+
+    finalResultKcal.push({
+      name: data[day.date() - 1],
+      칼로리: intFormat(findResult?.food_total_kcal)
+    });
+
+    finalResultNut.push({
+      name: data[day.date() - 1],
+      탄수화물: intFormat(findResult?.food_total_carb),
+      단백질: intFormat(findResult?.food_total_protein),
+      지방: intFormat(findResult?.food_total_fat),
+    });
+  }
 
   return {
     result: {

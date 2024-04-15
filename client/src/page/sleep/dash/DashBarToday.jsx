@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Bar, Line, ComposedChart} from 'recharts';
+import {Bar, Line, ComposedChart} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
@@ -14,9 +14,7 @@ export const DashBarToday = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_DEFAULT = [
-    {name:"취침", 목표: 0, 실제: 0},
-    {name:"수면", 목표: 0, 실제: 0},
-    {name:"기상", 목표: 0, 실제: 0}
+    {name:"", 목표: 0, 실제: 0}
   ];
   const [DASH, setDASH] = useState(DASH_DEFAULT);
 
@@ -31,7 +29,7 @@ export const DashBarToday = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartBar = () => {
+  const chartNode = () => {
     return (
       <ResponsiveContainer width={"100%"} height={300}>
         <ComposedChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -58,7 +56,7 @@ export const DashBarToday = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-12"}>
-        {chartBar()}
+        {chartNode()}
       </div>
     </div>
   );

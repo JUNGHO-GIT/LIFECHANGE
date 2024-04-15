@@ -17,24 +17,16 @@ export const DashAvgWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activePart, set:setActivePart} = useStorage(
-    `activePart-avg (${PATH})`, "볼륨"
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine (avg-week) (${PATH})`, "볼륨"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_VOLUME_DEFAULT = [
-    {name:"1주차", 볼륨: 0},
-    {name:"2주차", 볼륨: 0},
-    {name:"3주차", 볼륨: 0},
-    {name:"4주차", 볼륨: 0},
-    {name:"5주차", 볼륨: 0},
+    {name:"", 볼륨: 0},
   ];
   const DASH_CARDIO_DEFAULT = [
-    {name:"1주차", 시간: 0},
-    {name:"2주차", 시간: 0},
-    {name:"3주차", 시간: 0},
-    {name:"4주차", 시간: 0},
-    {name:"5주차", 시간: 0},
+    {name:"", 시간: 0},
   ];
   const [DASH_VOLUME, setDASH_VOLUME] = useState(DASH_VOLUME_DEFAULT);
   const [DASH_CARDIO, setDASH_CARDIO] = useState(DASH_CARDIO_DEFAULT);
@@ -46,8 +38,8 @@ export const DashAvgWeek = () => {
         user_id: user_id
       },
     });
-    setDASH_VOLUME(response.data.result.volume);
-    setDASH_CARDIO(response.data.result.cardio);
+    setDASH_VOLUME(response.data.result.volume || DASH_VOLUME_DEFAULT);
+    setDASH_CARDIO(response.data.result.cardio || DASH_CARDIO_DEFAULT);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -75,7 +67,7 @@ export const DashAvgWeek = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartVolume = () => {
+  const chartNodeVolume = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_VOLUME);
     return (
       <React.Fragment>
@@ -99,7 +91,7 @@ export const DashAvgWeek = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartCardio = () => {
+  const chartNodeCardio = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_CARDIO);
     return (
       <React.Fragment>
@@ -123,19 +115,19 @@ export const DashAvgWeek = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableWorkAvg = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activePart === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActivePart("볼륨")}
+            className={`btn ${activeLine === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => setActiveLine("볼륨")}
           >
             볼륨
           </button>
           <button
-            className={`btn ${activePart === "시간" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActivePart("시간")}
+            className={`btn ${activeLine === "시간" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => setActiveLine("시간")}
           >
             시간
           </button>
@@ -148,10 +140,10 @@ export const DashAvgWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "볼륨" ? chartVolume() : chartCardio()}
+        {activeLine === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
       </div>
       <div className={"col-3"}>
-        {tableWorkAvg()}
+        {tableNode()}
       </div>
     </div>
   );

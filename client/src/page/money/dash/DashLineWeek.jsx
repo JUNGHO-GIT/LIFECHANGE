@@ -18,18 +18,12 @@ export const DashLineWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine-line (${PATH})`, ["수입", "지출"]
+    `activeLine (line-week) (${PATH})`, "수입"
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const DASH_DEFAULT = [
-    {name:"월", 수입: 0, 지출: 0},
-    {name:"화", 수입: 0, 지출: 0},
-    {name:"수", 수입: 0, 지출: 0},
-    {name:"목", 수입: 0, 지출: 0},
-    {name:"금", 수입: 0, 지출: 0},
-    {name:"토", 수입: 0, 지출: 0},
-    {name:"일", 수입: 0, 지출: 0},
+    {name:"", 수입: 0, 지출: 0},
   ];
   const [DASH, setDASH] = useState(DASH_DEFAULT);
 
@@ -47,15 +41,15 @@ export const DashLineWeek = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    let topValue = Math.ceil(maxValue / 10) * 10;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    let tickInterval = 10;
+    if (topValue > 50) {
+      tickInterval = 50;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 10) {
+      tickInterval = 10;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -68,9 +62,8 @@ export const DashLineWeek = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartLine = () => {
+  const chartNode = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
-
     return (
       <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -96,7 +89,7 @@ export const DashLineWeek = () => {
   };
 
   // 5-3. table ----------------------------------------------------------------------------------->
-  const tableMoneyLine = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
@@ -128,10 +121,10 @@ export const DashLineWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {chartLine()}
+        {chartNode()}
       </div>
       <div className={"col-3"}>
-        {tableMoneyLine()}
+        {tableNode()}
       </div>
     </div>
   );

@@ -122,7 +122,7 @@ export const aggregateTopTitle = async (
       _id: "$work_section.work_title_val",
       count: {$sum: 1}
     }},
-    {$sort: {count: 1}},
+    {$sort: {count: -1}},
     {$limit: 5}
   ]);
 

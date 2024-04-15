@@ -1,6 +1,8 @@
 // DashPieWeek.jsx
 
 import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
@@ -9,14 +11,21 @@ export const DashPieWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname?.trim()?.toString();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine (pie-week) (${PATH})`, "파트"
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_PART_DEFAULT = [
-    {name:"Empty", value: 100}
+    {name:"", value: 100}
   ];
   const DASH_TITLE_DEFAULT = [
-    {name:"Empty", value: 100}
+    {name:"", value: 100}
   ];
   const [DASH_PART, setDASH_PART] = useState(DASH_PART_DEFAULT);
   const [DASH_TITLE, setDASH_TITLE] = useState(DASH_TITLE_DEFAULT);
@@ -33,7 +42,7 @@ export const DashPieWeek = () => {
   })()}, [user_id]);
 
   // 4-1. renderIn -------------------------------------------------------------------------------->
-  const renderIn = ({
+  const renderPart = ({
     cx, cy, midAngle, innerRadius, outerRadius, percent, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -50,7 +59,7 @@ export const DashPieWeek = () => {
   };
 
   // 4-2. renderOut ------------------------------------------------------------------------------->
-  const renderOut = ({
+  const renderTitle = ({
     cx, cy, midAngle, innerRadius, outerRadius, percent, index
   }) => {
     const RADIAN = Math.PI / 180;
@@ -67,7 +76,7 @@ export const DashPieWeek = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartPieIn = () => {
+  const chartNodePart = () => {
     const COLORS_PART = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <ResponsiveContainer width={"100%"} height={300}>
@@ -77,7 +86,7 @@ export const DashPieWeek = () => {
             cx={"50%"}
             cy={"50%"}
             labelLine={false}
-            label={renderIn}
+            label={renderPart}
             outerRadius={80}
             fill={"#8884d8"}
             dataKey={"value"}
@@ -100,7 +109,7 @@ export const DashPieWeek = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartPieOut = () => {
+  const chartNodeTitle = () => {
     const COLORS_TITLE = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <ResponsiveContainer width={"100%"} height={300}>
@@ -110,7 +119,7 @@ export const DashPieWeek = () => {
             cx={"50%"}
             cy={"50%"}
             labelLine={false}
-            label={renderOut}
+            label={renderTitle}
             outerRadius={80}
             fill={"#8884d8"}
             dataKey={"value"}
@@ -135,10 +144,10 @@ export const DashPieWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-6"}>
-        {chartPieIn()}
+        {chartNodePart()}
       </div>
       <div className={"col-6"}>
-        {chartPieOut()}
+        {chartNodeTitle()}
       </div>
     </div>
   );

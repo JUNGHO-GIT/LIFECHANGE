@@ -24,7 +24,49 @@ const intFormat = (data) => {
   }
 };
 
-// 1-1. dash (scatter - month) -------------------------------------------------------------------->
+// 1-1. dash (scatter - week) -------------------------------------------------------------------->
+export const scatterWeek = async (
+  user_id_param
+) => {
+
+  const data = {
+    "체중": {
+      plan: "work_plan_body_weight",
+      real: "work_body_weight"
+    }
+  };
+
+  let finalResult = [];
+
+  for (
+    let day = curWeekStart.clone();
+    day.isBefore(curWeekEnd);
+    day.add(1, "days")
+  ) {
+
+    const findResultPlan = await repo.aggregateWeightPlan(
+      user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
+    );
+
+    const findResultReal = await repo.aggregateWeightReal(
+      user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
+    );
+
+    for (let key in data) {
+      finalResult.push({
+        name: day.format("MM/DD"),
+        목표: intFormat(findResultPlan?.[0]?.[data[key].plan]),
+        실제: intFormat(findResultReal?.[0]?.[data[key].real])
+      });
+    };
+  };
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 1-2. dash (scatter - month) -------------------------------------------------------------------->
 export const scatterMonth = async (
   user_id_param
 ) => {
@@ -106,6 +148,46 @@ export const pieWeek = async (
   };
 };
 
+// 2-2. dash (pie - month) ------------------------------------------------------------------------>
+export const pieMonth = async (
+  user_id_param
+) => {
+
+  // top part
+  let finalResultPart = [];
+
+  // top title
+  let finalResultTitle = [];
+
+  const findResultPart = await repo.aggregateTopPart(
+    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  );
+  const findResultTitle = await repo.aggregateTopTitle(
+    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  );
+
+  for (let i = 0; i < findResultPart.length; i++) {
+    finalResultPart.push({
+      name: findResultPart[i]._id,
+      value: findResultPart[i].count
+    });
+  }
+
+  for (let i = 0; i < findResultTitle.length; i++) {
+    finalResultTitle.push({
+      name: findResultTitle[i]._id,
+      value: findResultTitle[i].count
+    });
+  }
+
+  return {
+    result: {
+      part: finalResultPart,
+      title: finalResultTitle
+    }
+  };
+};
+
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = async (
   user_id_param
@@ -129,6 +211,37 @@ export const lineWeek = async (
       시간: intFormat(findResult?.work_total_cardio || 0)
     });
   };
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 3-2. dash (line - month) ----------------------------------------------------------------------->
+export const lineMonth = async (
+  user_id_param
+) => {
+
+  const data = [
+    "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
+    "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일",
+    "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
+  ];
+
+  let finalResult = [];
+
+  for (let i = 0; i < 31; i++) {
+    const dayNum = curMonthStart.clone().add(i, "days");
+    const findResult = await repo.detailReal(
+      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+    );
+
+    finalResult.push({
+      name: `${data[i]}`,
+      볼륨: intFormat(findResult?.work_total_volume || 0),
+      시간: intFormat(findResult?.work_total_cardio || 0)
+    });
+  }
 
   return {
     result: finalResult,

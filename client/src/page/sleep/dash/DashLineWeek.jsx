@@ -18,18 +18,12 @@ export const DashLineWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine-line (${PATH})`, ["취침", "수면", "기상"]
+    `activeLine (line-week) (${PATH})`, "취침"
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const DASH_DEFAULT = [
-    {name:"월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"화", 취침: 0, 수면: 0, 기상: 0},
-    {name:"수", 취침: 0, 수면: 0, 기상: 0},
-    {name:"목", 취침: 0, 수면: 0, 기상: 0},
-    {name:"금", 취침: 0, 수면: 0, 기상: 0},
-    {name:"토", 취침: 0, 수면: 0, 기상: 0},
-    {name:"일", 취침: 0, 수면: 0, 기상: 0}
+    {name:"", 취침: 0, 수면: 0, 기상: 0},
   ];
   const [DASH, setDASH] = useState(DASH_DEFAULT);
 
@@ -44,7 +38,7 @@ export const DashLineWeek = () => {
   })()}, [user_id]);
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartLine = () => {
+  const chartNode = () => {
     return (
       <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -80,7 +74,7 @@ export const DashLineWeek = () => {
   };
 
   // 5-3. table ----------------------------------------------------------------------------------->
-  const tableSleepLine = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
@@ -112,10 +106,10 @@ export const DashLineWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {chartLine()}
+        {chartNode()}
       </div>
       <div className={"col-3"}>
-        {tableSleepLine()}
+        {tableNode()}
       </div>
     </div>
   );

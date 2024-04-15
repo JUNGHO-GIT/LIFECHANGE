@@ -18,30 +18,18 @@ export const DashLineWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine-line (${PATH})`, ["탄수화물", "단백질", "지방"]
+    `activeLine (line-week) (${PATH})`, "탄수화물"
   );
   const {val:activePart, set:setActivePart} = useStorage(
-    `activePart-line (${PATH})`, "kcal"
+    `activePart (line-week) (${PATH})`, "kcal"
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const DASH_KCAL_DEFAULT = [
-    {name:"월", 칼로리: 0},
-    {name:"화", 칼로리: 0},
-    {name:"수", 칼로리: 0},
-    {name:"목", 칼로리: 0},
-    {name:"금", 칼로리: 0},
-    {name:"토", 칼로리: 0},
-    {name:"일", 칼로리: 0},
+    {name:"", 칼로리: 0},
   ];
   const DASH_NUT_DEFAULT = [
-    {name:"월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"화", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"수", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"목", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"금", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"토", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"일", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
   ];
   const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
   const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
@@ -61,15 +49,15 @@ export const DashLineWeek = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.칼로리, item?.탄수화물, item?.단백질, item?.지방)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    let topValue = Math.ceil(maxValue / 10) * 10;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    let tickInterval = 10;
+    if (topValue > 50) {
+      tickInterval = 50;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 10) {
+      tickInterval = 10;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -82,7 +70,7 @@ export const DashLineWeek = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartLineKcal = () => {
+  const chartNodeKcal = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
 
     return (
@@ -105,7 +93,7 @@ export const DashLineWeek = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartLineNut = () => {
+  const chartNodeNut = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
 
     return (
@@ -136,7 +124,7 @@ export const DashLineWeek = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableFoodLine = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
@@ -180,10 +168,10 @@ export const DashLineWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "kcal" ? chartLineKcal() : chartLineNut()}
+        {activePart === "kcal" ? chartNodeKcal() : chartNodeNut()}
       </div>
       <div className={"col-3"}>
-        {tableFoodLine()}
+        {tableNode()}
       </div>
     </div>
   );

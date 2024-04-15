@@ -1,4 +1,4 @@
-// DashAvgWeek.tsx
+// DashAvgWeek.jsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -18,51 +18,23 @@ export const DashAvgWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine-avg (${PATH})`, ["수입", "지출"]
-  );
-  const {val:activeType, set:setActiveType} = useStorage(
-    `activeType-avg (${PATH})`, "week"
+    `activeLine (avg-week) (${PATH})`, "수입"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [DASH_WEEK, setDASH_WEEK] = useState([
-    {name:"1주차", 수입: 0, 지출: 0},
-    {name:"2주차", 수입: 0, 지출: 0},
-    {name:"3주차", 수입: 0, 지출: 0},
-    {name:"4주차", 수입: 0, 지출: 0},
-    {name:"5주차", 수입: 0, 지출: 0}
-  ]);
-  const [DASH_MONTH, setDASH_MONTH] = useState([
-    {name:"1월", 수입: 0, 지출: 0},
-    {name:"2월", 수입: 0, 지출: 0},
-    {name:"3월", 수입: 0, 지출: 0},
-    {name:"4월", 수입: 0, 지출: 0},
-    {name:"5월", 수입: 0, 지출: 0},
-    {name:"6월", 수입: 0, 지출: 0},
-    {name:"7월", 수입: 0, 지출: 0},
-    {name:"8월", 수입: 0, 지출: 0},
-    {name:"9월", 수입: 0, 지출: 0},
-    {name:"10월", 수입: 0, 지출: 0},
-    {name:"11월", 수입: 0, 지출: 0},
-    {name:"12월", 수입: 0, 지출: 0}
-  ]);
+  const DASH_DEFAULT = [
+    {name:"", 수입: 0, 지출: 0},
+  ];
+  const [DASH, setDASH] = useState(DASH_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-
-    const responseWeek = await axios.get(`${URL_MONEY}/dash/avg/week`, {
+    const response = await axios.get(`${URL_MONEY}/dash/avg/week`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_WEEK(responseWeek.data.result);
-
-    const responseMonth = await axios.get(`${URL_MONEY}/dash/avg/month`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setDASH_MONTH(responseMonth.data.result);
+    setDASH(response.data.result || DASH_DEFAULT);
 
   })()}, [user_id]);
 
@@ -70,15 +42,15 @@ export const DashAvgWeek = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    let topValue = Math.ceil(maxValue / 10) * 10;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    let tickInterval = 10;
+    if (topValue > 50) {
+      tickInterval = 50;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 10) {
+      tickInterval = 10;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -91,43 +63,12 @@ export const DashAvgWeek = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartAvgWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_WEEK);
-
+  const chartNode = () => {
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type={"category"} dataKey={"name"} />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-            />
-            {activeLine.includes("수입")
-              && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
-            }
-            {activeLine.includes("지출")
-              && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
-            }
-            <Tooltip />
-            <Legend />
-          </BarChart>
-        </ResponsiveContainer>
-      </React.Fragment>
-    );
-  };
-
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartAvgMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_MONTH);
-
-    return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
@@ -151,22 +92,10 @@ export const DashAvgWeek = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableMoneyAvg = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
-          <button
-            className={`btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActiveType("week")}
-          >
-            주간
-          </button>
-          <button
-            className={`btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActiveType("month")}
-          >
-            월간
-          </button>
           <div className={"mt-10 mb-10"}>
             {["수입", "지출"]?.map((key, index) => (
               <div key={index}>
@@ -195,10 +124,10 @@ export const DashAvgWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
+        {chartNode()}
       </div>
       <div className={"col-3"}>
-        {tableMoneyAvg()}
+        {tableNode()}
       </div>
     </div>
   );

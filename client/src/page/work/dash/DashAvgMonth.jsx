@@ -1,4 +1,4 @@
-// DashAvgWeek.tsx
+// DashAvgMonth.tsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -8,7 +8,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {BarChart, Bar} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const DashAvgWeek = () => {
+export const DashAvgMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -17,38 +17,16 @@ export const DashAvgWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activePart, set:setActivePart} = useStorage(
-    `activePart-avg (${PATH})`, "볼륨"
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine (avg-month) (${PATH})`, "볼륨"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_VOLUME_DEFAULT = [
-    {name:"1월", 볼륨: 0},
-    {name:"2월", 볼륨: 0},
-    {name:"3월", 볼륨: 0},
-    {name:"4월", 볼륨: 0},
-    {name:"5월", 볼륨: 0},
-    {name:"6월", 볼륨: 0},
-    {name:"7월", 볼륨: 0},
-    {name:"8월", 볼륨: 0},
-    {name:"9월", 볼륨: 0},
-    {name:"10월", 볼륨: 0},
-    {name:"11월", 볼륨: 0},
-    {name:"12월", 볼륨: 0},
+    {name:"", 볼륨: 0},
   ];
   const DASH_CARDIO_DEFAULT = [
-    {name:"1월", 시간: 0},
-    {name:"2월", 시간: 0},
-    {name:"3월", 시간: 0},
-    {name:"4월", 시간: 0},
-    {name:"5월", 시간: 0},
-    {name:"6월", 시간: 0},
-    {name:"7월", 시간: 0},
-    {name:"8월", 시간: 0},
-    {name:"9월", 시간: 0},
-    {name:"10월", 시간: 0},
-    {name:"11월", 시간: 0},
-    {name:"12월", 시간: 0},
+    {name:"", 시간: 0},
   ];
   const [DASH_VOLUME, setDASH_VOLUME] = useState(DASH_VOLUME_DEFAULT);
   const [DASH_CARDIO, setDASH_CARDIO] = useState(DASH_CARDIO_DEFAULT);
@@ -89,7 +67,7 @@ export const DashAvgWeek = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartVolume = () => {
+  const chartNodeVolume = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_VOLUME);
     return (
       <React.Fragment>
@@ -113,7 +91,7 @@ export const DashAvgWeek = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartCardio = () => {
+  const chartNodeCardio = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_CARDIO);
     return (
       <React.Fragment>
@@ -137,19 +115,19 @@ export const DashAvgWeek = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableWorkAvg = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activePart === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActivePart("볼륨")}
+            className={`btn ${activeLine === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActiveLine("볼륨"))}
           >
             볼륨
           </button>
           <button
-            className={`btn ${activePart === "시간" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActivePart("시간")}
+            className={`btn ${activeLine === "시간" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActiveLine("시간"))}
           >
             시간
           </button>
@@ -162,10 +140,10 @@ export const DashAvgWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "볼륨" ? chartVolume() : chartCardio()}
+        {activeLine === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
       </div>
       <div className={"col-3"}>
-        {tableWorkAvg()}
+        {tableNode()}
       </div>
     </div>
   );

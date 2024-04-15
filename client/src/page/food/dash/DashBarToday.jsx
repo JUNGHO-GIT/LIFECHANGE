@@ -5,7 +5,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Bar, Line, ComposedChart} from 'recharts';
+import {Bar, Line, ComposedChart} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
@@ -17,18 +17,16 @@ export const DashBarToday = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activePart, set:setActivePart} = useStorage(
-    `activePart-bar (${PATH})`, "kcal"
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine (bar-today) (${PATH})`, "kcal"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_KCAL_DEFAULT = [
-    {name:"칼로리", 목표: 0, 실제: 0},
+    {name:"", 목표: 0, 실제: 0},
   ];
   const DASH_NUT_DEFAULT = ([
-    {name:"탄수화물", 목표: 0, 실제: 0},
-    {name:"단백질", 목표: 0, 실제: 0},
-    {name:"지방", 목표: 0, 실제: 0},
+    {name:"", 목표: 0, 실제: 0},
   ]);
   const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
   const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
@@ -48,15 +46,15 @@ export const DashBarToday = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item.목표, item.실제)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    let topValue = Math.ceil(maxValue / 10) * 10;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    let tickInterval = 10;
+    if (topValue > 50) {
+      tickInterval = 50;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 10) {
+      tickInterval = 10;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -69,7 +67,7 @@ export const DashBarToday = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartBarKcal = () => {
+  const chartNodeKcal = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
 
     return (
@@ -93,7 +91,7 @@ export const DashBarToday = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartBarNut = () => {
+  const chartNodeNut = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
 
     return (
@@ -117,20 +115,19 @@ export const DashBarToday = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableFoodAvg = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activePart === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActivePart("kcal"))}
+            className={`btn ${activeLine === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActiveLine("kcal"))}
           >
             칼로리
           </button>
-          &nbsp;&nbsp;
           <button
-            className={`btn ${activePart === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActivePart("nut"))}
+            className={`btn ${activeLine === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setActiveLine("nut"))}
           >
             영양소
           </button>
@@ -143,10 +140,10 @@ export const DashBarToday = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "kcal" ? chartBarKcal() : chartBarNut()}
+        {activeLine === "kcal" ? chartNodeKcal() : chartNodeNut()}
       </div>
       <div className={"col-3"}>
-        {tableFoodAvg()}
+        {tableNode()}
       </div>
     </div>
   );

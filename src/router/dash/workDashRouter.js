@@ -4,7 +4,26 @@ import express from "express";
 import * as service from "../../service/dash//workDashService.js";
 export const workDashRouter = express.Router();
 
-// 1-1. dash (scatter - month) -------------------------------------------------------------------->
+// 1-1. dash (scatter - week) -------------------------------------------------------------------->
+workDashRouter.get("/scatter/week", async (req, res) => {
+  try {
+    const result = await service.scatterWeek (
+      req.query.user_id
+    );
+    if (result) {
+      res.send(result);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// 1-2. dash (scatter - month) -------------------------------------------------------------------->
 workDashRouter.get("/scatter/month", async (req, res) => {
   try {
     const result = await service.scatterMonth (

@@ -42,6 +42,25 @@ sleepDashRouter.get("/line/week", async (req, res) => {
   }
 });
 
+// 3-2. dash (line - month) ----------------------------------------------------------------------->
+sleepDashRouter.get("/line/month", async (req, res) => {
+  try {
+    const result = await service.lineMonth (
+      req.query.user_id
+    );
+    if (result) {
+      res.send(result);
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 sleepDashRouter.get("/avg/week", async (req, res) => {
   try {

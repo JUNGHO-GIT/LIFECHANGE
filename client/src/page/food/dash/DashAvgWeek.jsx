@@ -18,92 +18,46 @@ export const DashAvgWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine-avg (${PATH})`, ["탄수화물", "단백질", "지방"]
-  );
-  const {val:activeType, set:setActiveType} = useStorage(
-    `activeType-avg (${PATH})`, "week"
+    `activeLine (avg-week) (${PATH})`, "탄수화물"
   );
   const {val:activePart, set:setActivePart} = useStorage(
-    `activePart-avg (${PATH})`, "kcal"
+    `activePart (avg-week) (${PATH})`, "kcal"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [DASH_KCAL_WEEK, setDASH_KCAL_WEEK] = useState([
-    {name:"1주차", 칼로리: 0},
-    {name:"2주차", 칼로리: 0},
-    {name:"3주차", 칼로리: 0},
-    {name:"4주차", 칼로리: 0},
-    {name:"5주차", 칼로리: 0},
-  ]);
-  const [DASH_KCAL_MONTH, setDASH_KCAL_MONTH] = useState([
-    {name:"1월", 칼로리: 0},
-    {name:"2월", 칼로리: 0},
-    {name:"3월", 칼로리: 0},
-    {name:"4월", 칼로리: 0},
-    {name:"5월", 칼로리: 0},
-    {name:"6월", 칼로리: 0},
-    {name:"7월", 칼로리: 0},
-    {name:"8월", 칼로리: 0},
-    {name:"9월", 칼로리: 0},
-    {name:"10월", 칼로리: 0},
-    {name:"11월", 칼로리: 0},
-    {name:"12월", 칼로리: 0}
-  ]);
-  const [DASH_NUT_WEEK, setDASH_NUT_WEEK] = useState([
-    {name:"1주차", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"2주차", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"3주차", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"4주차", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"5주차", 탄수화물: 0, 단백질: 0, 지방: 0},
-  ]);
-  const [DASH_NUT_MONTH, setDASH_NUT_MONTH] = useState([
-    {name:"1월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"2월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"3월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"4월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"5월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"6월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"7월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"8월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"9월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"10월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"11월", 탄수화물: 0, 단백질: 0, 지방: 0},
-    {name:"12월", 탄수화물: 0, 단백질: 0, 지방: 0}
-  ]);
+  const DASH_KCAL_DEFAULT = [
+    {name:"", 칼로리: 0},
+  ];
+  const DASH_NUT_DEFAULT = [
+    {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+  ];
+  const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
+  const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_FOOD}/dash/avg/week`, {
+    const response = await axios.get(`${URL_FOOD}/dash/avg/week`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_KCAL_WEEK(responseWeek.data.result.kcal);
-    setDASH_NUT_WEEK(responseWeek.data.result.nut);
-
-    const responseMonth = await axios.get(`${URL_FOOD}/dash/avg/month`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setDASH_KCAL_MONTH(responseMonth.data.result.kcal);
-    setDASH_NUT_MONTH(responseMonth.data.result.nut);
-
+    setDASH_KCAL(response.data.result.kcal);
+    setDASH_NUT(response.data.result.nut);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.칼로리, item?.탄수화물, item?.단백질, item?.지방)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    let topValue = Math.ceil(maxValue / 10) * 10;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    let tickInterval = 10;
+    if (topValue > 50) {
+      tickInterval = 50;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 10) {
+      tickInterval = 10;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -116,13 +70,12 @@ export const DashAvgWeek = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartWeekKcal = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL_WEEK);
-
+  const chartNodeKcal = () => {
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_KCAL_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
@@ -141,71 +94,12 @@ export const DashAvgWeek = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartWeekNut = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT_WEEK);
-
+  const chartNodeNut = () => {
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_NUT_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type={"category"} dataKey={"name"} />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-            />
-            {activeLine.includes("탄수화물")
-              && <Bar type={"monotone"} dataKey={"탄수화물"} fill={"#ffc658"} minPointSize={1} />
-            }
-            {activeLine.includes("단백질")
-              && <Bar type={"monotone"} dataKey={"단백질"} fill={"#82ca9d"} minPointSize={1} />
-            }
-            {activeLine.includes("지방")
-              && <Bar type={"monotone"} dataKey={"지방"} fill={"#ff7300"} minPointSize={1} />
-            }
-            <Tooltip />
-            <Legend />
-          </BarChart>
-        </ResponsiveContainer>
-      </React.Fragment>
-    );
-  };
-
-  // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartMonthKcal = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL_MONTH);
-
-    return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_KCAL_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type={"category"} dataKey={"name"} />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-            />
-            <Bar type={"monotone"} dataKey={"칼로리"} fill={"#8884d8"} minPointSize={1} />
-            <Tooltip />
-            <Legend />
-          </BarChart>
-        </ResponsiveContainer>
-      </React.Fragment>
-    );
-  };
-
-  // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartMonthNut = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT_MONTH);
-
-    return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_NUT_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
@@ -232,23 +126,10 @@ export const DashAvgWeek = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableFoodAvg = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
-          <button
-            className={`btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"} mt-10 me-5`}
-            onClick={() => setActiveType("week")}
-          >
-            주간
-          </button>
-          <button
-            className={`btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"} mt-10 ms-5`}
-            onClick={() => setActiveType("month")}
-          >
-            월간
-          </button>
-          <br />
           <button
             className={`btn ${activePart === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10 me-5`}
             onClick={() => (setActivePart("kcal"))}
@@ -289,13 +170,10 @@ export const DashAvgWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "kcal" && activeType === "week" ? chartWeekKcal() : null}
-        {activePart === "nut" && activeType === "week" ? chartWeekNut() : null}
-        {activePart === "kcal" && activeType === "month" ? chartMonthKcal() : null}
-        {activePart === "nut" && activeType === "month" ? chartMonthNut() : null}
+        {activePart === "kcal" ? chartNodeKcal() : chartNodeNut()}
       </div>
       <div className={"col-3"}>
-        {tableFoodAvg()}
+        {tableNode()}
       </div>
     </div>
   );

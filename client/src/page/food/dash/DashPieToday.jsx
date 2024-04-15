@@ -1,6 +1,8 @@
 // DashPieToday.jsx
 
 import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
@@ -9,14 +11,21 @@ export const DashPieToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname?.trim()?.toString();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine (bar-today) (${PATH})`, "kcal"
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_KCAL_DEFAULT = [
-    {name:"Empty", value: 100}
+    {name:"", value: 100}
   ];
   const DASH_NUT_DEFAULT = [
-    {name:"Empty", value: 100}
+    {name:"", value: 100}
   ];
   const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
   const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
@@ -67,7 +76,7 @@ export const DashPieToday = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartPieKcal = () => {
+  const chartNodeKcal = () => {
     const COLORS_KCAL = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <ResponsiveContainer width={"100%"} height={300}>
@@ -100,7 +109,7 @@ export const DashPieToday = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartPieNut = () => {
+  const chartNodeNut = () => {
     const COLORS_NUT = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <ResponsiveContainer width={"100%"} height={300}>
@@ -136,10 +145,10 @@ export const DashPieToday = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-6"}>
-        {chartPieKcal()}
+        {chartNodeKcal()}
       </div>
       <div className={"col-6"}>
-        {chartPieNut()}
+        {chartNodeNut()}
       </div>
     </div>
   );

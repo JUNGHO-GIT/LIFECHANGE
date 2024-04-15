@@ -24,7 +24,7 @@ const intFormat = (data) => {
   }
 };
 
-// 1-1. dash (bar - today) ----------------------------------------------------------------------->
+// 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
   user_id_param
 ) => {
@@ -62,7 +62,7 @@ export const barToday = async (
   };
 };
 
-// 2-1. dash (bar - week) ------------------------------------------------------------------------->
+// 2-1. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = async (
   user_id_param
 ) => {
@@ -80,6 +80,39 @@ export const pieWeek = async (
   const findResultOut = await repo.aggregateOut(
     user_id_param, koreanDate, koreanDate
   );
+  const finalResultOut = findResultOut?.map((item) => ({
+    name: item._id,
+    value: intFormat(item.value)
+  }));
+
+  return {
+    result: {
+      in: finalResultIn,
+      out: finalResultOut
+    }
+  };
+};
+
+// 2-2. dash (pie - month) ------------------------------------------------------------------------>
+export const pieMonth = async (
+  user_id_param
+) => {
+
+  // in
+  const findResultIn = await repo.aggregateIn(
+    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  );
+
+  const finalResultIn = findResultIn?.map((item) => ({
+    name: item._id,
+    value: intFormat(item.value)
+  }));
+
+  // out
+  const findResultOut = await repo.aggregateOut(
+    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  );
+
   const finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
@@ -116,6 +149,37 @@ export const lineWeek = async (
       지출: intFormat(findResult?.money_total_out || 0),
     });
   };
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 3-2. dash (line - month) ----------------------------------------------------------------------->
+export const lineMonth = async (
+  user_id_param
+) => {
+
+  const data = [
+    "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
+    "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일",
+    "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
+  ];
+
+  let finalResult = [];
+
+  for (let i = 0; i < 31; i++) {
+    const dayNum = curMonthStart.clone().add(i, "days");
+    const findResult = await repo.detailReal(
+      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+    );
+
+    finalResult.push({
+      name: `${data[i]}`,
+      수입: intFormat(findResult?.money_total_in || 0),
+      지출: intFormat(findResult?.money_total_out || 0),
+    });
+  }
 
   return {
     result: finalResult,

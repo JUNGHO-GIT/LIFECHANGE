@@ -18,93 +18,31 @@ export const DashAvgWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine-avg (${PATH})`, ["취침", "수면", "기상"]
-  );
-  const {val:activeType, set:setActiveType} = useStorage(
-    `activeType-avg (${PATH})`, "week"
+    `activeLine (avg-week) (${PATH})`, "취침"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [DASH_WEEK, setDASH_WEEK] = useState([
-    {name:"1주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"2주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"3주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"4주차", 취침: 0, 수면: 0, 기상: 0},
-    {name:"5주차", 취침: 0, 수면: 0, 기상: 0}
-  ]);
-  const [DASH_MONTH, setDASH_MONTH] = useState([
-    {name:"1월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"2월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"3월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"4월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"5월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"6월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"7월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"8월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"9월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"10월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"11월", 취침: 0, 수면: 0, 기상: 0},
-    {name:"12월", 취침: 0, 수면: 0, 기상: 0}
-  ]);
+  const DASH_DEFAULT = [
+    {name:"", 취침: 0, 수면: 0, 기상: 0}
+  ];
+  const [DASH, setDASH] = useState(DASH_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-
     const responseWeek = await axios.get(`${URL_SLEEP}/dash/avg/week`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_WEEK(responseWeek.data.result);
-
-    const responseMonth = await axios.get(`${URL_SLEEP}/dash/avg/month`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setDASH_MONTH(responseMonth.data.result);
-
+    setDASH(responseWeek.data.result || DASH_DEFAULT);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartAvgWeek = () => {
+  const chartNode = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type={"category"} dataKey={"name"} />
-            <YAxis
-              type={"number"}
-              domain={[0, 30]}
-              ticks={[0, 6, 12, 18, 24, 30]}
-              tickFormatter={(tick) => {
-                return tick > 24 ? tick -= 24 : tick;
-              }}
-            />
-            {activeLine.includes("취침")
-              && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
-            }
-            {activeLine.includes("기상")
-              && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
-            }
-            {activeLine.includes("수면")
-              && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
-            }
-            <Tooltip />
-            <Legend />
-          </BarChart>
-        </ResponsiveContainer>
-      </React.Fragment>
-    );
-  };
-
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartAvgMonth = () => {
-    return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
@@ -133,29 +71,10 @@ export const DashAvgWeek = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableSleepAvg = () => {
+  const tableNode = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
-          <button
-            className={`
-              btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"}
-              mt-10
-            `}
-            onClick={() => setActiveType("week")}
-          >
-            주간
-          </button>
-          &nbsp;&nbsp;
-          <button
-            className={`
-              btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"}
-              mt-10
-            `}
-            onClick={() => setActiveType("month")}
-          >
-            월간
-          </button>
           <div className={"mt-10 mb-10"}>
             {["취침", "수면", "기상"]?.map((key, index) => (
               <div key={index}>
@@ -184,10 +103,10 @@ export const DashAvgWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
+        {chartNode()}
       </div>
       <div className={"col-3"}>
-        {tableSleepAvg()}
+        {tableNode()}
       </div>
     </div>
   );

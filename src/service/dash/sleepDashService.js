@@ -31,7 +31,7 @@ const timeFormat = (data) => {
   }
 };
 
-// 1-1. dash (bar - today) ----------------------------------------------------------------------->
+// 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
   user_id_param
 ) => {
@@ -97,6 +97,38 @@ export const lineWeek = async (
       수면: timeFormat(findResult?.sleep_section?.[0]?.sleep_time),
     });
   };
+
+  return {
+    result: finalResult,
+  };
+};
+
+// 3-2. dash (line - month) ----------------------------------------------------------------------->
+export const lineMonth = async (
+  user_id_param
+) => {
+
+  const data = [
+    "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
+    "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일",
+    "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
+  ];
+
+  let finalResult = [];
+
+  for (let i = 0; i < 31; i++) {
+    const dayNum = curMonthStart.clone().add(i, "days");
+    const findResult = await repo.detailReal(
+      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+    );
+
+    finalResult.push({
+      name: `${data[i]}`,
+      취침: timeFormat(findResult?.sleep_section?.[0]?.sleep_night),
+      기상: timeFormat(findResult?.sleep_section?.[0]?.sleep_morning),
+      수면: timeFormat(findResult?.sleep_section?.[0]?.sleep_time),
+    });
+  }
 
   return {
     result: finalResult,

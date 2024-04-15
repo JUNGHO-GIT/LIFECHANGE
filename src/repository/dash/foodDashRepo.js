@@ -31,7 +31,9 @@ export const aggregateKcal = async (
           $toDouble: "$food_section.food_kcal"
         }
       }
-    }}
+    }},
+    {$sort: {value: -1}},
+    {$limit: 10}
   ]);
 
   return finalResult;
@@ -56,27 +58,22 @@ export const aggregateNut = async (
         $lte: endDt_param
       },
     }},
-    {$unwind: "$food_section"
-    },
     {$group: {
-      _id: "$food_section.food_title_val",
-      food_total_carb: {
-        $sum: {
-          $toDouble: "$food_section.food_carb"
-        }
-      },
-      food_total_protein: {
-        $sum: {
-          $toDouble: "$food_section.food_protein"
-        }
-      },
-      food_total_fat: {
-        $sum: {
-          $toDouble: "$food_section.food_fat"
-        }
-      }
+      _id: null,
+      total_carb: {$sum: "$food_total_carb"},
+      total_protein: {$sum: "$food_total_protein"},
+      total_fat: {$sum: "$food_total_fat"}
+    }},
+    {$project: {
+      _id: 0,
+      food_total_carb: "$total_carb",
+      food_total_protein: "$total_protein",
+      food_total_fat: "$total_fat"
     }},
   ]);
+
+  console.log("===================================");
+  console.log(JSON.stringify(finalResult, null, 2));
 
   return finalResult;
 };
@@ -106,7 +103,7 @@ export const detailPlan = async (
   return finalResult;
 };
 
-// 2-2. detail (real) ---------------------------------------------------------------------------->
+// 2-2. detail (real) ----------------------------------------------------------------------------->
 export const detailReal = async (
   _id_param,
   user_id_param,
