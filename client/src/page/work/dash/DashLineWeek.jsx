@@ -1,4 +1,4 @@
-// WorkDashLine.jsx
+// DashLineWeek.jsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -8,7 +8,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {Line, LineChart} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkDashLine = () => {
+export const DashLineWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -35,7 +35,7 @@ export const WorkDashLine = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/dash/line`, {
+    const response = await axios.get(`${URL_WORK}/dash/line/week`, {
       params: {
         user_id: user_id
       },

@@ -3,9 +3,9 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {SleepDashBar} from "./SleepDashBar.jsx";
-import {SleepDashLine} from "./SleepDashLine.jsx";
-import {SleepDashAvg} from "./SleepDashAvg.jsx";
+import {DashBarToday} from "./DashBarToday.jsx";
+import {DashLineWeek} from "./DashLineWeek.jsx";
+import {DashAvgWeek} from "./DashAvgWeek.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDash = () => {
@@ -48,15 +48,15 @@ export const SleepDash = () => {
         <div className={"container-wrapper mb-10"}>
           <div className={`${activeDash === "bar" ? "" : "d-none"}`}>
             <h5>오늘 목표/실제 수면 데이터</h5>
-            {SleepDashBar()}
+            {DashBarToday()}
           </div>
           <div className={`${activeDash === "line" ? "" : "d-none"}`}>
             <h5>주간 수면 데이터</h5>
-            {SleepDashLine()}
+            {DashLineWeek()}
           </div>
           <div className={`${activeDash === "avg" ? "" : "d-none"}`}>
             <h5>주간/월간 평균 수면 데이터</h5>
-            {SleepDashAvg()}
+            {DashAvgWeek()}
           </div>
         </div>
       </div>

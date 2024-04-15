@@ -1,11 +1,11 @@
-// FoodDashPie.jsx
+// DashPieToday.jsx
 
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDashPie = () => {
+export const DashPieToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -23,7 +23,7 @@ export const FoodDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/dash/pie`, {
+    const response = await axios.get(`${URL_FOOD}/dash/pie/today`, {
       params: {
         user_id: user_id
       },

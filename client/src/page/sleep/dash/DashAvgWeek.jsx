@@ -1,4 +1,4 @@
-// MoneyDashAvg.tsx
+// DashAvgWeek.tsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -8,17 +8,17 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {BarChart, Bar} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDashAvg = () => {
+export const DashAvgWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine-avg (${PATH})`, ["수입", "지출"]
+    `activeLine-avg (${PATH})`, ["취침", "수면", "기상"]
   );
   const {val:activeType, set:setActiveType} = useStorage(
     `activeType-avg (${PATH})`, "week"
@@ -26,38 +26,38 @@ export const MoneyDashAvg = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [DASH_WEEK, setDASH_WEEK] = useState([
-    {name:"1주차", 수입: 0, 지출: 0},
-    {name:"2주차", 수입: 0, 지출: 0},
-    {name:"3주차", 수입: 0, 지출: 0},
-    {name:"4주차", 수입: 0, 지출: 0},
-    {name:"5주차", 수입: 0, 지출: 0}
+    {name:"1주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"2주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"3주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"4주차", 취침: 0, 수면: 0, 기상: 0},
+    {name:"5주차", 취침: 0, 수면: 0, 기상: 0}
   ]);
   const [DASH_MONTH, setDASH_MONTH] = useState([
-    {name:"1월", 수입: 0, 지출: 0},
-    {name:"2월", 수입: 0, 지출: 0},
-    {name:"3월", 수입: 0, 지출: 0},
-    {name:"4월", 수입: 0, 지출: 0},
-    {name:"5월", 수입: 0, 지출: 0},
-    {name:"6월", 수입: 0, 지출: 0},
-    {name:"7월", 수입: 0, 지출: 0},
-    {name:"8월", 수입: 0, 지출: 0},
-    {name:"9월", 수입: 0, 지출: 0},
-    {name:"10월", 수입: 0, 지출: 0},
-    {name:"11월", 수입: 0, 지출: 0},
-    {name:"12월", 수입: 0, 지출: 0}
+    {name:"1월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"2월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"3월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"4월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"5월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"6월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"7월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"8월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"9월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"10월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"11월", 취침: 0, 수면: 0, 기상: 0},
+    {name:"12월", 취침: 0, 수면: 0, 기상: 0}
   ]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
 
-    const responseWeek = await axios.get(`${URL_MONEY}/dash/avgWeek`, {
+    const responseWeek = await axios.get(`${URL_SLEEP}/dash/avg/week`, {
       params: {
         user_id: user_id
       },
     });
     setDASH_WEEK(responseWeek.data.result);
 
-    const responseMonth = await axios.get(`${URL_MONEY}/dash/avgMonth`, {
+    const responseMonth = await axios.get(`${URL_SLEEP}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
@@ -66,34 +66,8 @@ export const MoneyDashAvg = () => {
 
   })()}, [user_id]);
 
-  // 4. handler ----------------------------------------------------------------------------------->
-  const handlerCalcY = (value) => {
-    const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
-
-    // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
-    }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
-    }
-    for (let i = 0; i <= topValue; i += tickInterval) {
-      ticks.push(i);
-    }
-    return {
-      domain: [0, topValue],
-      ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
-    };
-  };
-
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartAvgWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_WEEK);
-
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
@@ -102,15 +76,20 @@ export const MoneyDashAvg = () => {
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
+              domain={[0, 30]}
+              ticks={[0, 6, 12, 18, 24, 30]}
+              tickFormatter={(tick) => {
+                return tick > 24 ? tick -= 24 : tick;
+              }}
             />
-            {activeLine.includes("수입")
-              && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
+            {activeLine.includes("취침")
+              && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
             }
-            {activeLine.includes("지출")
-              && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
+            {activeLine.includes("기상")
+              && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
+            }
+            {activeLine.includes("수면")
+              && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
             <Tooltip />
             <Legend />
@@ -122,8 +101,6 @@ export const MoneyDashAvg = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartAvgMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_MONTH);
-
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
@@ -132,15 +109,20 @@ export const MoneyDashAvg = () => {
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
+              domain={[0, 30]}
+              ticks={[0, 6, 12, 18, 24, 30]}
+              tickFormatter={(tick) => {
+                return tick > 24 ? tick -= 24 : tick;
+              }}
             />
-            {activeLine.includes("수입")
-              && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
+            {activeLine.includes("취침")
+              && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
             }
-            {activeLine.includes("지출")
-              && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
+            {activeLine.includes("기상")
+              && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
+            }
+            {activeLine.includes("수면")
+              && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
             <Tooltip />
             <Legend />
@@ -151,24 +133,31 @@ export const MoneyDashAvg = () => {
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableMoneyAvg = () => {
+  const tableSleepAvg = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            className={`
+              btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"}
+              mt-10
+            `}
             onClick={() => setActiveType("week")}
           >
             주간
           </button>
+          &nbsp;&nbsp;
           <button
-            className={`btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            className={`
+              btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"}
+              mt-10
+            `}
             onClick={() => setActiveType("month")}
           >
             월간
           </button>
           <div className={"mt-10 mb-10"}>
-            {["수입", "지출"]?.map((key, index) => (
+            {["취침", "수면", "기상"]?.map((key, index) => (
               <div key={index}>
                 <input
                   type={"checkbox"}
@@ -198,7 +187,7 @@ export const MoneyDashAvg = () => {
         {activeType === "week" ? chartAvgWeek() : chartAvgMonth()}
       </div>
       <div className={"col-3"}>
-        {tableMoneyAvg()}
+        {tableSleepAvg()}
       </div>
     </div>
   );

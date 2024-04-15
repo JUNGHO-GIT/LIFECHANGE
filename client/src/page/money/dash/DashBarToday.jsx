@@ -1,4 +1,4 @@
-// MoneyDashBar.jsx
+// DashBarToday.jsx
 
 import React, {useEffect, useState} from "react";
 import axios from "axios";
@@ -6,7 +6,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {Bar, Line, ComposedChart} from 'recharts';
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDashBar = () => {
+export const DashBarToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
@@ -21,7 +21,7 @@ export const MoneyDashBar = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/dash/bar`, {
+    const response = await axios.get(`${URL_MONEY}/dash/bar/today`, {
       params: {
         user_id: user_id
       },

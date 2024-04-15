@@ -4,10 +4,10 @@ import express from "express";
 import * as service from "../../service/dash/sleepDashService.js";
 export const sleepDashRouter = express.Router();
 
-// 0-1. dash (bar) -------------------------------------------------------------------------------->
-sleepDashRouter.get("/bar", async (req, res) => {
+// 1-1. dash (bar - today) ----------------------------------------------------------------------->
+sleepDashRouter.get("/bar/today", async (req, res) => {
   try {
-    const result = await service.dashBar (
+    const result = await service.barToday (
       req.query.user_id
     );
     if (result) {
@@ -23,10 +23,10 @@ sleepDashRouter.get("/bar", async (req, res) => {
   }
 });
 
-// 0-3. dash (line) ------------------------------------------------------------------------------->
-sleepDashRouter.get("/line", async (req, res) => {
+// 3-1. dash (line - week) ------------------------------------------------------------------------>
+sleepDashRouter.get("/line/week", async (req, res) => {
   try {
-    const result = await service.dashLine (
+    const result = await service.lineWeek (
       req.query.user_id
     );
     if (result) {
@@ -42,10 +42,10 @@ sleepDashRouter.get("/line", async (req, res) => {
   }
 });
 
-// 0-4. dash (avg - week) ------------------------------------------------------------------------->
-sleepDashRouter.get("/avgWeek", async (req, res) => {
+// 4-1. dash (avg - week) ------------------------------------------------------------------------->
+sleepDashRouter.get("/avg/week", async (req, res) => {
   try {
-    const result = await service.dashAvgWeek (
+    const result = await service.avgWeek (
       req.query.user_id
     );
     if (result) {
@@ -61,10 +61,10 @@ sleepDashRouter.get("/avgWeek", async (req, res) => {
   }
 });
 
-// 0-4. dash (avg - month) ------------------------------------------------------------------------>
-sleepDashRouter.get("/avgMonth", async (req, res) => {
+// 4-2. dash (avg - month) ------------------------------------------------------------------------>
+sleepDashRouter.get("/avg/month", async (req, res) => {
   try {
-    const result = await service.dashAvgMonth (
+    const result = await service.avgMonth (
       req.query.user_id
     );
     if (result) {

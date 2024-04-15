@@ -1,14 +1,14 @@
-// FoodDashBar.jsx
+// DashLineWeek.jsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Bar, Line, ComposedChart} from 'recharts';
+import {Line, LineChart} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDashBar = () => {
+export const DashLineWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -17,25 +17,38 @@ export const FoodDashBar = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine-line (${PATH})`, ["탄수화물", "단백질", "지방"]
+  );
   const {val:activePart, set:setActivePart} = useStorage(
-    `activePart-bar (${PATH})`, "kcal"
+    `activePart-line (${PATH})`, "kcal"
   );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useState -------------------------------------------------------------------------------->
   const DASH_KCAL_DEFAULT = [
-    {name:"칼로리", 목표: 0, 실제: 0},
+    {name:"월", 칼로리: 0},
+    {name:"화", 칼로리: 0},
+    {name:"수", 칼로리: 0},
+    {name:"목", 칼로리: 0},
+    {name:"금", 칼로리: 0},
+    {name:"토", 칼로리: 0},
+    {name:"일", 칼로리: 0},
   ];
-  const DASH_NUT_DEFAULT = ([
-    {name:"탄수화물", 목표: 0, 실제: 0},
-    {name:"단백질", 목표: 0, 실제: 0},
-    {name:"지방", 목표: 0, 실제: 0},
-  ]);
+  const DASH_NUT_DEFAULT = [
+    {name:"월", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"화", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"수", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"목", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"금", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"토", 탄수화물: 0, 단백질: 0, 지방: 0},
+    {name:"일", 탄수화물: 0, 단백질: 0, 지방: 0},
+  ];
   const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
   const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/dash/bar`, {
+    const response = await axios.get(`${URL_FOOD}/dash/line/week`, {
       params: {
         user_id: user_id
       },
@@ -47,7 +60,7 @@ export const FoodDashBar = () => {
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item.목표, item.실제)));
+    const maxValue = Math.max(...value?.map((item) => Math.max(item?.칼로리, item?.탄수화물, item?.단백질, item?.지방)));
     let topValue = Math.ceil(maxValue / 1000) * 1000;
 
     // topValue에 따른 동적 틱 간격 설정
@@ -69,55 +82,61 @@ export const FoodDashBar = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartBarKcal = () => {
+  const chartLineKcal = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
 
     return (
       <ResponsiveContainer width={"100%"} height={300}>
-        <ComposedChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={"name"} />
+          <XAxis type={"category"} dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          <Line dataKey={"목표"} type={"monotone"} stroke="#ff7300" />
-          <Bar dataKey={"실제"} type={"monotone"} fill={"#8884d8"} barSize={30} minPointSize={1} />
+          <Line type={"monotone"} dataKey={"칼로리"} stroke="#8884d8" activeDot={{r: 8}} />
           <Tooltip />
           <Legend />
-        </ComposedChart>
+        </LineChart>
       </ResponsiveContainer>
     );
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartBarNut = () => {
+  const chartLineNut = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
 
     return (
       <ResponsiveContainer width={"100%"} height={300}>
-        <ComposedChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={"name"} />
+          <XAxis type={"category"} dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          <Line dataKey={"목표"} type={"monotone"} stroke="#ff7300" />
-          <Bar dataKey={"실제"} type={"monotone"} fill={"#8884d8"} barSize={30} minPointSize={1} />
+          {activeLine.includes("탄수화물")
+            && <Line type={"monotone"} dataKey={"탄수화물"} stroke="#82ca9d" activeDot={{r: 8}} />
+          }
+          {activeLine.includes("단백질")
+            && <Line type={"monotone"} dataKey={"단백질"} stroke="#ff7300" activeDot={{r: 8}} />
+          }
+          {activeLine.includes("지방")
+            && <Line type={"monotone"} dataKey={"지방"} stroke="#ffc658" activeDot={{r: 8}} />
+          }
           <Tooltip />
           <Legend />
-        </ComposedChart>
+        </LineChart>
       </ResponsiveContainer>
     );
   };
 
   // 6-1. table ----------------------------------------------------------------------------------->
-  const tableFoodAvg = () => {
+  const tableFoodLine = () => {
     return (
       <table className={"table bg-white border"}>
         <tbody>
@@ -127,13 +146,31 @@ export const FoodDashBar = () => {
           >
             칼로리
           </button>
-          &nbsp;&nbsp;
           <button
             className={`btn ${activePart === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
             onClick={() => (setActivePart("nut"))}
           >
             영양소
           </button>
+          <div className={"mt-10 mb-10"}>
+            {["탄수화물", "단백질", "지방"]?.map((key, index) => (
+              <div key={index}>
+                <input
+                  type={"checkbox"}
+                  checked={activeLine.includes(key)}
+                  onChange={() => {
+                    if (activeLine.includes(key)) {
+                      setActiveLine(activeLine?.filter((item) => (item !== key)));
+                    }
+                    else {
+                      setActiveLine([...activeLine, key]);
+                    }
+                  }}
+                />
+                {key}
+              </div>
+            ))}
+          </div>
         </tbody>
       </table>
     );
@@ -143,10 +180,10 @@ export const FoodDashBar = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "kcal" ? chartBarKcal() : chartBarNut()}
+        {activePart === "kcal" ? chartLineKcal() : chartLineNut()}
       </div>
       <div className={"col-3"}>
-        {tableFoodAvg()}
+        {tableFoodLine()}
       </div>
     </div>
   );

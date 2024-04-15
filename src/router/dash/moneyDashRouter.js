@@ -4,10 +4,10 @@ import express from "express";
 import * as service from "../../service/dash/moneyDashService.js";
 export const moneyDashRouter = express.Router();
 
-// 0-1. dash (bar) -------------------------------------------------------------------------------->
-moneyDashRouter.get("/bar", async (req, res) => {
+// 1-1. dash (bar - today) ------------------------------------------------------------------------>
+moneyDashRouter.get("/bar/today", async (req, res) => {
   try {
-    const result = await service.dashBar (
+    const result = await service.barToday (
       req.query.user_id
     );
     if (result) {
@@ -23,10 +23,10 @@ moneyDashRouter.get("/bar", async (req, res) => {
   }
 });
 
-// 0-2. dash (pie) -------------------------------------------------------------------------------->
-moneyDashRouter.get("/pie", async (req, res) => {
+// 3-1. dash (pie - week) ------------------------------------------------------------------------->
+moneyDashRouter.get("/pie/week", async (req, res) => {
   try {
-    const result = await service.dashPie (
+    const result = await service.pieWeek (
       req.query.user_id
     );
     if (result) {
@@ -42,10 +42,10 @@ moneyDashRouter.get("/pie", async (req, res) => {
   }
 });
 
-// 0-3. dash (line) ------------------------------------------------------------------------------->
-moneyDashRouter.get("/line", async (req, res) => {
+// 3-1. dash (line - week) ------------------------------------------------------------------------>
+moneyDashRouter.get("/line/week", async (req, res) => {
   try {
-    const result = await service.dashLine (
+    const result = await service.lineWeek (
       req.query.user_id
     );
     if (result) {
@@ -61,10 +61,10 @@ moneyDashRouter.get("/line", async (req, res) => {
   }
 });
 
-// 0-3. dash (avg - week) ------------------------------------------------------------------------->
-moneyDashRouter.get("/avgWeek", async (req, res) => {
+// 4-1. dash (avg - week) ------------------------------------------------------------------------->
+moneyDashRouter.get("/avg/week", async (req, res) => {
   try {
-    const result = await service.dashAvgWeek (
+    const result = await service.avgWeek (
       req.query.user_id
     );
     if (result) {
@@ -80,10 +80,10 @@ moneyDashRouter.get("/avgWeek", async (req, res) => {
   }
 });
 
-// 0-4. dash (avg - month) ------------------------------------------------------------------------>
-moneyDashRouter.get("/avgMonth", async (req, res) => {
+// 4-2. dash (avg - month) ------------------------------------------------------------------------>
+moneyDashRouter.get("/avg/month", async (req, res) => {
   try {
-    const result = await service.dashAvgMonth (
+    const result = await service.avgMonth (
       req.query.user_id
     );
     if (result) {

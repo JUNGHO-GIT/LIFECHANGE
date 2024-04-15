@@ -1,11 +1,11 @@
-// WorkDashPie.jsx
+// DashPieWeek.jsx
 
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkDashPie = () => {
+export const DashPieWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -23,7 +23,7 @@ export const WorkDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/dash/pie`, {
+    const response = await axios.get(`${URL_WORK}/dash/pie/week`, {
       params: {
         user_id: user_id
       },

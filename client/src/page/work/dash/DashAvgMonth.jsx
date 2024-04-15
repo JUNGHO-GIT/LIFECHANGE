@@ -1,4 +1,4 @@
-// WorkDashAvg.tsx
+// DashAvgWeek.tsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -8,7 +8,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {BarChart, Bar} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const WorkDashAvg = () => {
+export const DashAvgWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
@@ -17,22 +17,12 @@ export const WorkDashAvg = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeType, set:setActiveType} = useStorage(
-    `activeType-avg (${PATH})`, "week"
-  );
   const {val:activePart, set:setActivePart} = useStorage(
     `activePart-avg (${PATH})`, "볼륨"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [DASH_VOLUME_WEEK, setDASH_VOLUME_WEEK] = useState([
-    {name:"1주차", 볼륨: 0},
-    {name:"2주차", 볼륨: 0},
-    {name:"3주차", 볼륨: 0},
-    {name:"4주차", 볼륨: 0},
-    {name:"5주차", 볼륨: 0},
-  ]);
-  const [DASH_VOLUME_MONTH, setDASH_VOLUME_MONTH] = useState([
+  const DASH_VOLUME_DEFAULT = [
     {name:"1월", 볼륨: 0},
     {name:"2월", 볼륨: 0},
     {name:"3월", 볼륨: 0},
@@ -45,15 +35,8 @@ export const WorkDashAvg = () => {
     {name:"10월", 볼륨: 0},
     {name:"11월", 볼륨: 0},
     {name:"12월", 볼륨: 0},
-  ]);
-  const [DASH_CARDIO_WEEK, setDASH_CARDIO_WEEK] = useState([
-    {name:"1주차", 시간: 0},
-    {name:"2주차", 시간: 0},
-    {name:"3주차", 시간: 0},
-    {name:"4주차", 시간: 0},
-    {name:"5주차", 시간: 0},
-  ]);
-  const [DASH_CARDIO_MONTH, setDASH_CARDIO_MONTH] = useState([
+  ];
+  const DASH_CARDIO_DEFAULT = [
     {name:"1월", 시간: 0},
     {name:"2월", 시간: 0},
     {name:"3월", 시간: 0},
@@ -66,26 +49,19 @@ export const WorkDashAvg = () => {
     {name:"10월", 시간: 0},
     {name:"11월", 시간: 0},
     {name:"12월", 시간: 0},
-  ]);
+  ];
+  const [DASH_VOLUME, setDASH_VOLUME] = useState(DASH_VOLUME_DEFAULT);
+  const [DASH_CARDIO, setDASH_CARDIO] = useState(DASH_CARDIO_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_WORK}/dash/avgWeek`, {
+    const response = await axios.get(`${URL_WORK}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_VOLUME_WEEK(responseWeek.data.result.volume);
-    setDASH_CARDIO_WEEK(responseWeek.data.result.cardio);
-
-    const responseMonth = await axios.get(`${URL_WORK}/dash/avgMonth`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setDASH_VOLUME_MONTH(responseMonth.data.result.volume);
-    setDASH_CARDIO_MONTH(responseMonth.data.result.cardio);
-
+    setDASH_VOLUME(response.data.result.volume);
+    setDASH_CARDIO(response.data.result.cardio);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -112,61 +88,13 @@ export const WorkDashAvg = () => {
     };
   };
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartWeekVolume = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_VOLUME_WEEK);
-    return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_VOLUME_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type={"category"} dataKey={"name"} />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-            />
-            <Bar type={"monotone"} dataKey={"볼륨"} fill={"#82ca9d"} minPointSize={1} />
-            <Tooltip />
-            <Legend />
-          </BarChart>
-        </ResponsiveContainer>
-      </React.Fragment>
-    );
-  };
-
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartWeekCardio = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_CARDIO_WEEK);
-    return (
-      <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_CARDIO_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type={"category"} dataKey={"name"} />
-            <YAxis
-              type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
-            />
-            <Bar type={"monotone"} dataKey={"시간"} fill={"#ffc658"} minPointSize={1} />
-            <Tooltip />
-            <Legend />
-          </BarChart>
-        </ResponsiveContainer>
-      </React.Fragment>
-    );
-  };
-
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartMonthVolume = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_VOLUME_MONTH);
+  const chartVolume = () => {
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_VOLUME);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_VOLUME_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH_VOLUME} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
@@ -185,12 +113,12 @@ export const WorkDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartMonthCardio = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_CARDIO_MONTH);
+  const chartCardio = () => {
+    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_CARDIO);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH_CARDIO_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+          <BarChart data={DASH_CARDIO} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type={"category"} dataKey={"name"} />
             <YAxis
@@ -214,19 +142,6 @@ export const WorkDashAvg = () => {
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActiveType("week")}
-          >
-            주간
-          </button>
-          <button
-            className={`btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setActiveType("month")}
-          >
-            월간
-          </button>
-          <br />
-          <button
             className={`btn ${activePart === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
             onClick={() => setActivePart("볼륨")}
           >
@@ -247,10 +162,7 @@ export const WorkDashAvg = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activeType === "week" && activePart === "볼륨" && chartWeekVolume()}
-        {activeType === "week" && activePart === "시간" && chartWeekCardio()}
-        {activeType === "month" && activePart === "볼륨" && chartMonthVolume()}
-        {activeType === "month" && activePart === "시간" && chartMonthCardio()}
+        {activePart === "볼륨" ? chartVolume() : chartCardio()}
       </div>
       <div className={"col-3"}>
         {tableWorkAvg()}

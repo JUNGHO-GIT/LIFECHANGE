@@ -1,4 +1,4 @@
-// FoodDashAvg.tsx
+// DashAvgWeek.tsx
 
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
@@ -8,7 +8,7 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {BarChart, Bar} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDashAvg = () => {
+export const DashAvgWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
@@ -73,7 +73,7 @@ export const FoodDashAvg = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_FOOD}/dash/avgWeek`, {
+    const responseWeek = await axios.get(`${URL_FOOD}/dash/avg/week`, {
       params: {
         user_id: user_id
       },
@@ -81,7 +81,7 @@ export const FoodDashAvg = () => {
     setDASH_KCAL_WEEK(responseWeek.data.result.kcal);
     setDASH_NUT_WEEK(responseWeek.data.result.nut);
 
-    const responseMonth = await axios.get(`${URL_FOOD}/dash/avgMonth`, {
+    const responseMonth = await axios.get(`${URL_FOOD}/dash/avg/month`, {
       params: {
         user_id: user_id
       },

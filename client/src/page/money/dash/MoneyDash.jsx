@@ -3,10 +3,10 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {MoneyDashBar} from "./MoneyDashBar.jsx";
-import {MoneyDashPie} from "./MoneyDashPie.jsx";
-import {MoneyDashLine} from "./MoneyDashLine.jsx";
-import {MoneyDashAvg} from "./MoneyDashAvg.jsx";
+import {DashBarToday} from "./DashBarToday.jsx";
+import {DashPieToday} from "./DashPieToday.jsx";
+import {DashLineWeek} from "./DashLineWeek.jsx";
+import {DashAvgWeek} from "./DashAvgWeek.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDash = () => {
@@ -55,19 +55,19 @@ export const MoneyDash = () => {
         <div className={"container-wrapper mb-10"}>
           <div className={`${activeDash === "bar" ? "" : "d-none"}`}>
             <h5>오늘 목표/실제 수입/지출</h5>
-            {MoneyDashBar()}
+            {DashBarToday()}
           </div>
           <div className={`${activeDash === "pie" ? "" : "d-none"}`}>
             <h5>오늘 수입/지출</h5>
-            {MoneyDashPie()}
+            {DashPieToday()}
           </div>
           <div className={`${activeDash === "line" ? "" : "d-none"}`}>
             <h5>주간 수입/지출</h5>
-            {MoneyDashLine()}
+            {DashLineWeek()}
           </div>
           <div className={`${activeDash === "avg" ? "" : "d-none"}`}>
             <h5>주간/월간 평균 수입/지출</h5>
-            {MoneyDashAvg()}
+            {DashAvgWeek()}
           </div>
         </div>
       </div>

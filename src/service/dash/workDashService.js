@@ -24,8 +24,8 @@ const intFormat = (data) => {
   }
 };
 
-// 0-1. dash (scatter) ---------------------------------------------------------------------------->
-export const dashScatter = async (
+// 1-1. dash (scatter - month) -------------------------------------------------------------------->
+export const scatterMonth = async (
   user_id_param
 ) => {
 
@@ -66,8 +66,8 @@ export const dashScatter = async (
   };
 };
 
-// 0-2. dash (pie) -------------------------------------------------------------------------------->
-export const dashPie = async (
+// 2-1. dash (pie - week) ------------------------------------------------------------------------->
+export const pieWeek = async (
   user_id_param
 ) => {
 
@@ -106,8 +106,8 @@ export const dashPie = async (
   };
 };
 
-// 0-3. dash (line) ------------------------------------------------------------------------------->
-export const dashLine = async (
+// 3-1. dash (line - week) ------------------------------------------------------------------------>
+export const lineWeek = async (
   user_id_param
 ) => {
 
@@ -135,8 +135,8 @@ export const dashLine = async (
   };
 };
 
-// 0-4. dash (avg-week) --------------------------------------------------------------------------->
-export const dashAvgWeek = async (
+// 4-1. dash (avg - week) ------------------------------------------------------------------------->
+export const avgWeek = async (
   user_id_param
 ) => {
 
@@ -193,8 +193,8 @@ export const dashAvgWeek = async (
   };
 };
 
-// 0-4. dash (avg-month) -------------------------------------------------------------------------->
-export const dashAvgMonth = async (
+// 4-2. dash (avg - month) ------------------------------------------------------------------------>
+export const avgMonth = async (
   user_id_param
 ) => {
 
