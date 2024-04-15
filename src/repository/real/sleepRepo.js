@@ -190,8 +190,15 @@ export const deletes = async (
 
   if (updateResult.modifiedCount > 0) {
     const doc = await Sleep.findOne({
-      _id: _id_param,
-      user_id: user_id_param
+      user_id: user_id_param,
+      sleep_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      sleep_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
 

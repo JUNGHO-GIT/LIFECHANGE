@@ -156,39 +156,38 @@ export const MoneySave = () => {
   // 5. handler ----------------------------------------------------------------------------------->
   const handlerSectionCount = () => {
     function handlerCount(e) {
-      const newCount = parseInt(e, 10);
-      if (!isNaN(newCount)) {
-        let updatedSections = [...MONEY?.money_section];
+      let newCount = parseInt(e, 10);
+      let defaultSection = {
+        money_part_idx: 0,
+        money_part_val: "전체",
+        money_title_idx: 0,
+        money_title_val: "전체",
+        money_amount: 0,
+        money_content: ""
+      };
 
-        if (newCount > MONEY?.money_section.length) {
-          // 새로 필요한 섹션 수 만큼 기본 섹션을 추가
-          let defaultSection = {
-            money_part_idx: 0,
-            money_part_val: "전체",
-            money_title_idx: 0,
-            money_title_val: "전체",
-            money_amount: 0,
-            money_content: ""
-          };
-          for (let i = MONEY?.money_section.length; i < newCount; i++) {
-            updatedSections.push({...defaultSection}); // 새 객체로 삽입하여 참조 문제 방지
-          }
-        } else if (newCount < MONEY?.money_section.length) {
-          // 초과된 섹션 제거
-          updatedSections = updatedSections.slice(0, newCount);
-        }
+      setCOUNT((prev) => ({
+        ...prev,
+        sectionCnt: newCount
+      }));
 
-        // 상태 업데이트
-        setMONEY(prev => ({
+      if (newCount > 0) {
+        let updatedSections = Array(newCount).fill(null).map((_, idx) =>
+          idx < MONEY.money_section.length ? MONEY.money_section[idx] : defaultSection
+        );
+        setMONEY((prev) => ({
           ...prev,
           money_section: updatedSections
         }));
-        setCOUNT(prev => ({
+      }
+      else {
+        setMONEY((prev) => ({
           ...prev,
-          sectionCnt: newCount
+          money_section: []
         }));
       }
-    }
+    };
+
     function inputFragment () {
       return (
         <div className={"row d-center"}>

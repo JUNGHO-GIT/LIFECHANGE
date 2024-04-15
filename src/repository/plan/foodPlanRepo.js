@@ -186,8 +186,13 @@ export const deletes = async (
 
   if (updateResult.modifiedCount > 0) {
     const doc = await FoodPlan.findOne({
-      _id: _id_param,
-      user_id: user_id_param
+      user_id: user_id_param,
+      food_plan_startDt: {
+        $gte: startDt_param,
+      },
+      food_plan_endDt: {
+        $lte: endDt_param,
+      },
     })
     .lean();
 

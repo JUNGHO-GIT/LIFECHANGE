@@ -187,7 +187,7 @@ export const WorkDetail = () => {
       });
       alert("삭제되었습니다.");
       setWORK(updatedData.data.result || WORK_DEFAULT);
-      updatedData.data.result.work_section.length === 0 && navParam(SEND.toList);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);

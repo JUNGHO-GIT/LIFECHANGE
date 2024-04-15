@@ -228,8 +228,15 @@ export const deletes = async (
 
   if (updateResult.modifiedCount > 0) {
     const doc = await Food.findOne({
-      _id: _id_param,
-      user_id: user_id_param
+      user_id: user_id_param,
+      food_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      food_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
 

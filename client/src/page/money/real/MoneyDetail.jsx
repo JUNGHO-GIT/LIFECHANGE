@@ -125,7 +125,7 @@ export const MoneyDetail = () => {
       });
       alert("삭제되었습니다.");
       setMONEY(updatedData.data.result || MONEY_DEFAULT);
-      updatedData.data.result.money_section.length === 0 && navParam(SEND.toList);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(`${response.data}`);

@@ -233,8 +233,15 @@ export const deletes = async (
 
   if (updateResult.modifiedCount > 0) {
     const doc = await Work.findOne({
-      _id: _id_param,
-      user_id: user_id_param
+      user_id: user_id_param,
+      work_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      work_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
 

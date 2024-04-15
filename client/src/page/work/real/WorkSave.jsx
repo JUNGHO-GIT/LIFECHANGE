@@ -85,9 +85,9 @@ export const WorkSave = () => {
     work_body_weight: "",
     work_section: [{
       work_part_idx: 0,
-      work_part_val: "",
+      work_part_val: "전체",
       work_title_idx: 0,
-      work_title_val: "",
+      work_title_val: "전체",
       work_set: 1,
       work_rep: 1,
       work_kg: 1,
@@ -101,6 +101,14 @@ export const WorkSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
   useTime(WORK, setWORK, PATH, "real");
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {
+    console.log("===================================");
+    console.log(JSON.stringify(WORK));
+    console.log("===================================");
+    console.log("sectionCnt: ", COUNT.sectionCnt);
+  }, [WORK]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -162,14 +170,14 @@ export const WorkSave = () => {
 
     // 이전 상태와 비교
     if (WORK.work_total_volume !== totalVolume || WORK.work_total_cardio !== cardioTime) {
-      setWORK((prev) => ({
-        ...prev,
+      setWORK({
+        ...WORK,
         work_total_volume: totalVolume,
         work_total_cardio: cardioTime,
         work_section: updatedSections,
-      }));
+      });
     }
-  }, [WORK.work_section]);
+  }, [WORK?.work_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -202,7 +210,6 @@ export const WorkSave = () => {
   const handlerSectionCount = () => {
     function handlerCount (e) {
       let newCount = parseInt(e, 10);
-      let sectionCount = COUNT.sectionCnt;
       let defaultSection = {
         work_part_idx: 0,
         work_part_val: "전체",
@@ -216,27 +223,28 @@ export const WorkSave = () => {
         work_cardio: "",
       };
 
-      if (newCount > sectionCount) {
-        let additionalSections = Array(newCount - sectionCount).fill(defaultSection);
-        let updatedSection = [...WORK?.work_section, ...additionalSections];
-        setWORK((prev) => ({
-          ...prev,
-          work_section: updatedSection,
-        }));
-      }
-      else if (newCount < sectionCount) {
-        let updatedSection = [...WORK?.work_section];
-        updatedSection = updatedSection.slice(0, newCount);
-        setWORK((prev) => ({
-          ...prev,
-          work_section: updatedSection,
-        }));
-      }
       setCOUNT((prev) => ({
         ...prev,
-        sectionCnt: newCount,
+        sectionCnt: newCount
       }));
-    };
+
+      if (newCount > 0) {
+        let updatedSections = Array(newCount).fill(null).map((_, idx) =>
+          idx < WORK.work_section.length ? WORK.work_section[idx] : defaultSection
+        );
+        setWORK((prev) => ({
+          ...prev,
+          work_section: updatedSections
+        }));
+      }
+      else {
+        setWORK((prev) => ({
+          ...prev,
+          work_section: []
+        }));
+      }
+    }
+
     function inputFragment () {
       return (
         <div className={"row d-center"}>
@@ -244,7 +252,7 @@ export const WorkSave = () => {
             <input
               type={"number"}
               className={"form-control mb-30"}
-              value={COUNT.sectionCnt}
+              value={COUNT?.sectionCnt}
               min={0}
               onChange={(e) => (
                 handlerCount(e.target.value)
@@ -477,7 +485,7 @@ export const WorkSave = () => {
       return (
         <div className={"row d-center"}>
           <div className={"col-12"}>
-            {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
+            {Array.from({length: COUNT.sectionCnt}, (_, i) => tableSection(i))}
           </div>
         </div>
       );

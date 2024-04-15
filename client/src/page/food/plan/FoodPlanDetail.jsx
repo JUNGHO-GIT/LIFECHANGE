@@ -111,7 +111,7 @@ export const FoodPlanDetail = () => {
       },
     });
     if (response.data === "success") {
-      const updatedData = await axios.get(`${URL_FOOD_PLAN}/list`, {
+      const updatedData = await axios.get(`${URL_FOOD_PLAN}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
