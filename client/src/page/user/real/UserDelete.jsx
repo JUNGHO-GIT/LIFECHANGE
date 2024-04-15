@@ -85,7 +85,7 @@ export const UserDelete = () => {
   const tableUserDelete = () => {
     return (
       <div>
-        <div className="form-floating">
+        <div className={"form-floating"}>
           <input type={"text"}
             className={"form-control"}
             placeholder="User location_id"
@@ -95,7 +95,7 @@ export const UserDelete = () => {
           />
           <label htmlFor="user_id">User location_id</label>
         </div>
-        <div className="form-floating">
+        <div className={"form-floating"}>
           <input type={"text"}
             className={"form-control"}
             placeholder="User PW"
@@ -111,14 +111,14 @@ export const UserDelete = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonUserDelete = () => {
     return (
-      <button className="btn btn-sm btn-primary" type="button" onClick={flowUserDelete}>
+      <button className={"btn btn-sm btn-primary"} type={"button"} onClick={flowUserDelete}>
         Delete
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
@@ -130,14 +130,14 @@ export const UserDelete = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-      <div className="row d-center mt-5">
+      <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
+          <h1 className={"mb-3 fw-7"}>{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-center mt-5">
+      <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <form className="form-inline">
+          <form className={"form-inline"}>
             {tableUserDelete()}
             <br/>
             {buttonUserDelete()}

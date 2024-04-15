@@ -118,7 +118,7 @@ export const FoodPlanList = () => {
           {FOOD_PLAN?.map((item) => (
             <React.Fragment key={item._id}>
               <tr>
-                <td className="pointer" onClick={() => {
+                <td className={"pointer"} onClick={() => {
                   SEND.id = item._id;
                   SEND.startDt = item.food_plan_startDt;
                   SEND.endDt = item.food_plan_endDt;
@@ -182,20 +182,20 @@ export const FoodPlanList = () => {
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
         <div className={"row d-center"}>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             <h1>List</h1>
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {calendarNode()}
             {tableNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {filterNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {pagingNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

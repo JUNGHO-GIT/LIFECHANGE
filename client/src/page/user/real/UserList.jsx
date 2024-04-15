@@ -42,8 +42,8 @@ export const UserList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableUserList = () => {
     return (
-      <table className="table table-bordered table-hover">
-        <thead className="table-dark">
+      <table className={"table table-bordered table-hover"}>
+        <thead className={"table-dark"}>
           <tr>
             <th>User location_id</th>
             <th>User PW</th>
@@ -64,7 +64,7 @@ export const UserList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
@@ -76,14 +76,14 @@ export const UserList = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-      <div className="row d-center mt-5">
+      <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
+          <h1 className={"mb-3 fw-7"}>{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-center mt-5">
+      <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <form className="form-inline">
+          <form className={"form-inline"}>
             {tableUserList()}
             <br/>
             {buttonRefreshPage()}

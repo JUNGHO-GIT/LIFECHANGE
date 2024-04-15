@@ -148,28 +148,28 @@ export const MoneyDetail = () => {
         </thead>
         <tbody>
           {MONEY?.money_section?.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
                 <React.Fragment>
-                  <td className="fs-20 pt-20" rowSpan={MONEY?.money_section?.length}>
+                  <td rowSpan={MONEY?.money_section?.length}>
                     {MONEY?.money_startDt}
                   </td>
                 </React.Fragment>
               )}
-              <td className="fs-20 pt-20">
+              <td>
                 {item.money_part_val}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.money_title_val}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.money_amount}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.money_content}
               </td>
-              <td className="fs-20 pt-20">
-                <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+              <td>
+                <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
                   flowDelete(item._id)
                 )}>
                   X
@@ -196,14 +196,14 @@ export const MoneyDetail = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>Detail</h1>
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

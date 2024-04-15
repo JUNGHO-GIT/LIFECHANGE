@@ -232,7 +232,7 @@ export const CalendarNode = ({
   return (
     <Draggable>
       <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
-        <span className="d-right fw-700 pointer"
+        <span className={"d-right fw-700 pointer"}
           style={{position: "absolute", right: "15px", top: "10px"}}
           onClick={() => (
             setCALENDAR((prev) => ({
@@ -243,7 +243,7 @@ export const CalendarNode = ({
         >
           X
         </span>
-        <div className="h-2"></div>
+        <div className={"h-2"}></div>
         <div>{calendarType()}</div>
       </div>
     </Draggable>

@@ -14,7 +14,7 @@ export const ButtonNode = ({
   // 9. button ------------------------------------------------------------------------------------>
   function buttonCalendar () {
     return (
-      <button type="button" className={`btn btn-sm ${CALENDAR.calOpen ? "btn-danger" : "btn-primary"} m-5`} onClick={() => {
+      <button type={"button"} className={`btn btn-sm ${CALENDAR.calOpen ? "btn-danger" : "btn-primary"} m-5`} onClick={() => {
         setCALENDAR((prev) => ({
           ...prev,
           calOpen: !prev.calOpen,
@@ -26,7 +26,7 @@ export const ButtonNode = ({
   };
   function buttonToday () {
     return (
-      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-success me-2"} onClick={() => {
         localStorage.clear();
         setDATE((prev) => ({
           ...prev,
@@ -40,7 +40,7 @@ export const ButtonNode = ({
   };
   function buttonSave () {
     return (
-      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-primary me-2"} onClick={() => {
         localStorage.clear();
         flowSave();
       }}>
@@ -50,7 +50,7 @@ export const ButtonNode = ({
   };
   function buttonUpdate () {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={() => {
         localStorage.clear();
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
@@ -64,7 +64,7 @@ export const ButtonNode = ({
   };
   function buttonRefresh () {
     return (
-      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-success me-2"} onClick={() => {
         navParam(SEND.refresh);
       }}>
         Refresh
@@ -73,7 +73,7 @@ export const ButtonNode = ({
   };
   function buttonList () {
     return (
-      <button type="button" className="btn btn-sm btn-secondary me-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-secondary me-2"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toList, {
@@ -86,7 +86,7 @@ export const ButtonNode = ({
   };
   function buttonSearch () {
     return (
-      <button type="button" className="btn btn-sm btn-secondary me-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-secondary me-2"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toSearch, {
@@ -100,37 +100,37 @@ export const ButtonNode = ({
 
   return (
     part === "food" && type === "list" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}
         {buttonRefresh()}
       </div>
     ) : part === "food" && type === "detail" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {buttonUpdate()}
         {buttonList()}
         {buttonRefresh()}
       </div>
     ) : part === "food" && type === "save" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {buttonSave()}
         {buttonSearch()}
         {buttonRefresh()}
       </div>
     ) : part !== "food" && type === "list" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}
         {buttonRefresh()}
       </div>
     ) : part !== "food" && type === "detail" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {buttonUpdate()}
         {buttonList()}
         {buttonRefresh()}
       </div>
     ) : part !== "food" && type === "save" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {buttonSave()}
         {buttonList()}
         {buttonRefresh()}

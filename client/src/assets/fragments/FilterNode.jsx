@@ -10,8 +10,8 @@ export const FilterNode = ({
 }) => {
   function selectType() {
     return (
-      <div className="mb-3">
-        <select className="form-select" id="type" onChange={(e) => (
+      <div className={"mb-3"}>
+        <select className={"form-select"} id={"type"} onChange={(e) => (
           setFILTER((prev) => ({
             ...prev,
             type: e.target.value
@@ -28,8 +28,8 @@ export const FilterNode = ({
   };
   function selectOrder() {
     return (
-      <div className="mb-3">
-        <select className="form-select" id="order" onChange={(e) => (
+      <div className={"mb-3"}>
+        <select className={"form-select"} id={"order"} onChange={(e) => (
           setFILTER((prev) => ({
             ...prev,
             order: e.target.value
@@ -43,8 +43,8 @@ export const FilterNode = ({
   };
   function selectLimit() {
     return (
-      <div className="mb-3">
-        <select className="form-select" id="limit" onChange={(e) => (
+      <div className={"mb-3"}>
+        <select className={"form-select"} id={"limit"} onChange={(e) => (
           setPAGING((prev) => ({
             ...prev,
             limit: parseInt(e.target.value)
@@ -62,8 +62,8 @@ export const FilterNode = ({
   };
   function selectPartFood () {
     return (
-      <div className="mb-3">
-        <select className="form-select" id="foodPart" onChange={(e) => {
+      <div className={"mb-3"}>
+        <select className={"form-select"} id={"foodPart"} onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
             part: e.target.value
@@ -80,8 +80,8 @@ export const FilterNode = ({
   };
   function selectPartMoney () {
     return (
-      <div className="mb-3">
-        <select className={"form-control"} id="part" value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
+      <div className={"mb-3"}>
+        <select className={"form-control"} id={"part"} value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
           const selectedOption = e.target.options[e.target.selectedIndex];
           const idxValue = selectedOption.getAttribute("data-idx");
           const newPartIndex = Number(idxValue);
@@ -105,8 +105,8 @@ export const FilterNode = ({
   };
   function selectTitleMoney () {
     return (
-      <div className="mb-3">
-        <select className={"form-control"} id="title" value={FILTER.title} onChange={(e) => {
+      <div className={"mb-3"}>
+        <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
             title: e.target.value
@@ -123,8 +123,8 @@ export const FilterNode = ({
   };
   function selectPartWork () {
     return (
-      <div className="mb-3">
-        <select className={"form-control"} id="part" value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
+      <div className={"mb-3"}>
+        <select className={"form-control"} id={"part"} value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
           const selectedOption = e.target.options[e.target.selectedIndex];
           const idxValue = selectedOption.getAttribute("data-idx");
           const newPartIndex = Number(idxValue);
@@ -148,8 +148,8 @@ export const FilterNode = ({
   };
   function selectTitleWork () {
     return (
-      <div className="mb-3">
-        <select className={"form-control"} id="title" value={FILTER.title} onChange={(e) => {
+      <div className={"mb-3"}>
+        <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
             title: e.target.value
@@ -166,20 +166,20 @@ export const FilterNode = ({
   };
   return (
     part === "food" && plan === "" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}
         {selectPartFood()}
       </div>
     ) : part === "food" && plan === "plan" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
     ) : part === "money" && plan === "" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}
@@ -187,25 +187,25 @@ export const FilterNode = ({
         {selectTitleMoney()}
       </div>
     ) : part === "money" && plan === "plan" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
     ) : part === "sleep" && plan === "" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
     ) : part === "sleep" && plan === "plan" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}
       </div>
     ) : part === "work" && plan === "" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}
@@ -213,7 +213,7 @@ export const FilterNode = ({
         {selectTitleWork()}
       </div>
     ) : part === "work" && plan === "plan" ? (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {selectType()}
         {selectOrder()}
         {selectLimit()}

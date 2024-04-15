@@ -22,11 +22,11 @@ export const DateNode = ({
 
   function picker () {
     return (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
 
         {type === "save" ? (
           <div onClick={() => (calcDate(-1))}>
-            <BiCaretLeft className="me-10 mt-10 fs-20 pointer" />
+            <BiCaretLeft className={"me-10 mt-10 fs-20 pointer"} />
           </div>
         ) : null}
 
@@ -46,7 +46,7 @@ export const DateNode = ({
 
         {type === "save" ? (
           <div onClick={() => (calcDate(1))}>
-            <BiCaretRight className="ms-10 mt-10 fs-20 pointer" />
+            <BiCaretRight className={"ms-10 mt-10 fs-20 pointer"} />
           </div>
         ) : null}
 

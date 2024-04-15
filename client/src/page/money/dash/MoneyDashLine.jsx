@@ -73,10 +73,10 @@ export const MoneyDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="category" dataKey="name" />
+          <XAxis type={"category"} dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
@@ -84,10 +84,10 @@ export const MoneyDashLine = () => {
             tickFormatter={tickFormatter}
           />
           {activeLine.includes("수입")
-            && <Line type="monotone" dataKey="수입" stroke="#8884d8" activeDot={{r: 8}} />
+            && <Line type={"monotone"} dataKey={"수입"} stroke="#8884d8" activeDot={{r: 8}} />
           }
           {activeLine.includes("지출")
-            && <Line type="monotone" dataKey="지출" stroke="#82ca9d" activeDot={{r: 8}} />
+            && <Line type={"monotone"} dataKey={"지출"} stroke="#82ca9d" activeDot={{r: 8}} />
           }
           <Tooltip />
           <Legend />
@@ -99,13 +99,13 @@ export const MoneyDashLine = () => {
   // 5-3. table ----------------------------------------------------------------------------------->
   const tableMoneyLine = () => {
     return (
-      <table className="table bg-white border">
+      <table className={"table bg-white border"}>
         <tbody>
-          <div className="mt-10 mb-10">
+          <div className={"mt-10 mb-10"}>
             {["수입", "지출"]?.map((key, index) => (
               <div key={index}>
                 <input
-                  type="checkbox"
+                  type={"checkbox"}
                   checked={activeLine.includes(key)}
                   onChange={() => {
                     if (activeLine.includes(key)) {

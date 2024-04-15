@@ -141,24 +141,24 @@ export const SleepPlanDetail = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="fs-20 pt-20">
+          <tr className={"fs-20 pt-20"}>
+            <td>
               {SLEEP_PLAN?.sleep_plan_startDt}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {SLEEP_PLAN?.sleep_plan_endDt}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {SLEEP_PLAN?.sleep_plan_night}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {SLEEP_PLAN?.sleep_plan_morning}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {SLEEP_PLAN?.sleep_plan_time}
             </td>
-            <td className="fs-20 pt-20">
-              <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+            <td>
+              <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
                 flowDelete(SLEEP_PLAN?._id)
               )}>
                 X
@@ -184,14 +184,14 @@ export const SleepPlanDetail = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>Detail</h1>
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

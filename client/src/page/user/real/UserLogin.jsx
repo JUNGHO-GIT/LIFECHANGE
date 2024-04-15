@@ -52,7 +52,7 @@ export const UserLogin = () => {
   const tableUserLogin = () => {
     return (
       <div>
-        <div className="input-group mb-10">
+        <div className={"input-group mb-10"}>
           <input
             type={"text"}
             className={"form-control"}
@@ -60,7 +60,7 @@ export const UserLogin = () => {
             onChange={(e) => {setUserId(e.target.value);}}
           />
         </div>
-        <div className="input-group mb-10">
+        <div className={"input-group mb-10"}>
           <input
             type={"text"}
             className={"form-control"}
@@ -75,14 +75,14 @@ export const UserLogin = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonUserLogin = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserLogin}>
+      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={flowUserLogin}>
         Log In
       </button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
@@ -93,16 +93,16 @@ export const UserLogin = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className={"root-wrapper"}>
-      <div className="container">
-        <div className="container-wrapper mb-30">
-          <div className="row d-center mt-5">
+      <div className={"container"}>
+        <div className={"container-wrapper mb-30"}>
+          <div className={"row d-center mt-5"}>
             <div className={"col-12"}>
-              <h1 className="mb-3 fw-7">{TITLE}</h1>
+              <h1 className={"mb-3 fw-7"}>{TITLE}</h1>
             </div>
           </div>
-          <div className="row d-center mt-5 mb-20">
+          <div className={"row d-center mt-5 mb-20"}>
             <div className={"col-12"}>
-              <form className="form-inline">
+              <form className={"form-inline"}>
                 {tableUserLogin()}
                 <br/>
                 {buttonUserLogin()}

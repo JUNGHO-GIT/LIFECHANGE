@@ -87,17 +87,17 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
 
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="category" dataKey="name" />
+          <XAxis type={"category"} dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          <Line type="monotone" dataKey="칼로리" stroke="#8884d8" activeDot={{r: 8}} />
+          <Line type={"monotone"} dataKey={"칼로리"} stroke="#8884d8" activeDot={{r: 8}} />
           <Tooltip />
           <Legend />
         </LineChart>
@@ -111,10 +111,10 @@ export const FoodDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
 
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="category" dataKey="name" />
+          <XAxis type={"category"} dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
@@ -122,13 +122,13 @@ export const FoodDashLine = () => {
             tickFormatter={tickFormatter}
           />
           {activeLine.includes("탄수화물")
-            && <Line type="monotone" dataKey="탄수화물" stroke="#82ca9d" activeDot={{r: 8}} />
+            && <Line type={"monotone"} dataKey={"탄수화물"} stroke="#82ca9d" activeDot={{r: 8}} />
           }
           {activeLine.includes("단백질")
-            && <Line type="monotone" dataKey="단백질" stroke="#ff7300" activeDot={{r: 8}} />
+            && <Line type={"monotone"} dataKey={"단백질"} stroke="#ff7300" activeDot={{r: 8}} />
           }
           {activeLine.includes("지방")
-            && <Line type="monotone" dataKey="지방" stroke="#ffc658" activeDot={{r: 8}} />
+            && <Line type={"monotone"} dataKey={"지방"} stroke="#ffc658" activeDot={{r: 8}} />
           }
           <Tooltip />
           <Legend />
@@ -140,7 +140,7 @@ export const FoodDashLine = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableFoodLine = () => {
     return (
-      <table className="table bg-white border">
+      <table className={"table bg-white border"}>
         <tbody>
           <button
             className={`btn ${activePart === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
@@ -154,11 +154,11 @@ export const FoodDashLine = () => {
           >
             영양소
           </button>
-          <div className="mt-10 mb-10">
+          <div className={"mt-10 mb-10"}>
             {["탄수화물", "단백질", "지방"]?.map((key, index) => (
               <div key={index}>
                 <input
-                  type="checkbox"
+                  type={"checkbox"}
                   checked={activeLine.includes(key)}
                   onChange={() => {
                     if (activeLine.includes(key)) {

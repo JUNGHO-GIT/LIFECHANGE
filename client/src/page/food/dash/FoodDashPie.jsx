@@ -42,7 +42,8 @@ export const FoodDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="black" textAnchor="middle" dominantBaseline="central" fontSize="12">
+      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      fontSize={"12"}>
         {`${DASH_KCAL[index]?.name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -58,7 +59,8 @@ export const FoodDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="black" textAnchor="middle" dominantBaseline="central" fontSize="12">
+      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      fontSize={"12"}>
         {`${DASH_NUT[index]?.name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -68,17 +70,17 @@ export const FoodDashPie = () => {
   const chartPieKcal = () => {
     const COLORS_KCAL = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <PieChart>
           <Pie
             data={DASH_KCAL}
-            cx="50%"
-            cy="50%"
+            cx={"50%"}
+            cy={"50%"}
             labelLine={false}
             label={renderKcal}
             outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
+            fill={"#8884d8"}
+            dataKey={"value"}
             minAngle={10}
             onMouseEnter={(data, index) => {
               data.payload.opacity = 0.5;
@@ -101,17 +103,17 @@ export const FoodDashPie = () => {
   const chartPieNut = () => {
     const COLORS_NUT = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <PieChart>
           <Pie
             data={DASH_NUT}
-            cx="50%"
-            cy="50%"
+            cx={"50%"}
+            cy={"50%"}
             labelLine={false}
             label={renderNut}
             outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
+            fill={"#8884d8"}
+            dataKey={"value"}
             minAngle={10}
             onMouseEnter={(data, index) => {
               data.payload.opacity = 0.5;

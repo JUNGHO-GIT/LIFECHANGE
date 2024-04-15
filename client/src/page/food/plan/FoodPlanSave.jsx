@@ -189,7 +189,7 @@ export const FoodPlanSave = () => {
     // 3. foodNode
     function foodNode () {
       return (
-        <div className="row d-center mb-20">
+        <div className={"row d-center mb-20"}>
           <div className={"col-6"}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>칼로리(하루섭취량)</span>
@@ -260,13 +260,13 @@ export const FoodPlanSave = () => {
     // 5. return
     return (
       <div className={"row d-center"}>
-        <div className="col-4 mb-20">
+        <div className={"col-4 mb-20"}>
           {startNode()}
         </div>
-        <div className="col-4 mb-20">
+        <div className={"col-4 mb-20"}>
           {endNode()}
         </div>
-        <div className="col-8 mb-20">
+        <div className={"col-8 mb-20"}>
           {foodNode()}
         </div>
       </div>
@@ -288,16 +288,16 @@ export const FoodPlanSave = () => {
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
         <div className={"row d-center"}>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             <h1>Save</h1>
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {dateNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
         </div>

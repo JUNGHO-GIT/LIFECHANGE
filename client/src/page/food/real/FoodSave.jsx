@@ -293,9 +293,9 @@ export const FoodSave = () => {
               <tr>
                 <td>
                   <select
-                    id="food_part_val"
-                    name="food_part_val"
-                    className="form-select"
+                    id={"food_part_val"}
+                    name={"food_part_val"}
+                    className={"form-select"}
                     value={item.food_part_val}
                     onChange={(e) => {
                       const newPart = e.target.value;
@@ -322,7 +322,7 @@ export const FoodSave = () => {
                 <td>{item.food_title_val}</td>
                 <td>{item.food_brand}</td>
                 <td>
-                  <div className="d-flex">
+                  <div className={"d-flex"}>
                     <input
                       type={"number"}
                       className={"form-control"}
@@ -340,7 +340,7 @@ export const FoodSave = () => {
                 <td>{item.food_carb}</td>
                 <td>{item.food_protein}</td>
                 <td>
-                  <span className="btn btn-sm btn-danger" onClick={() => (
+                  <span className={"btn btn-sm btn-danger"} onClick={() => (
                     handlerFoodDelete(index)
                   )}>
                     x
@@ -381,16 +381,16 @@ export const FoodSave = () => {
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
         <div className={"row d-center"}>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             <h1>Save</h1>
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {dateNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

@@ -164,49 +164,49 @@ export const WorkDetail = () => {
         </thead>
         <tbody>
           {WORK?.work_section?.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
                 <React.Fragment>
-                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                  <td rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_startDt}
                   </td>
-                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                  <td rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_start}
                   </td>
-                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                  <td rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_end}
                   </td>
-                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                  <td rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_time}
                   </td>
-                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                  <td rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_total_volume}
                   </td>
-                  <td className="fs-20 pt-20" rowSpan={WORK?.work_section?.length}>
+                  <td rowSpan={WORK?.work_section?.length}>
                     {WORK?.work_body_weight}
                   </td>
                 </React.Fragment>
               )}
-              <td className="fs-20 pt-20">
+              <td>
                 {item.work_part_val}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.work_title_val}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.work_set}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.work_rep}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.work_kg}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.work_rest}
               </td>
-              <td className="fs-20 pt-20">
-                <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+              <td>
+                <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
                   flowDelete(item._id)
                 )}>
                   X
@@ -233,14 +233,14 @@ export const WorkDetail = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>Detail</h1>
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

@@ -97,10 +97,10 @@ export const MoneyDashAvg = () => {
 
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={domain}
@@ -108,10 +108,10 @@ export const MoneyDashAvg = () => {
               tickFormatter={tickFormatter}
             />
             {activeAvg.includes("수입")
-              && <Bar type="monotone" dataKey="수입" fill="#8884d8" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
             }
             {activeAvg.includes("지출")
-              && <Bar type="monotone" dataKey="지출" fill="#ffc658" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
             }
             <Tooltip />
             <Legend />
@@ -128,10 +128,10 @@ export const MoneyDashAvg = () => {
 
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={domain}
@@ -139,10 +139,10 @@ export const MoneyDashAvg = () => {
               tickFormatter={tickFormatter}
             />
             {activeAvg.includes("수입")
-              && <Bar type="monotone" dataKey="수입" fill="#8884d8" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
             }
             {activeAvg.includes("지출")
-              && <Bar type="monotone" dataKey="지출" fill="#ffc658" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
             }
             <Tooltip />
             <Legend />
@@ -155,7 +155,7 @@ export const MoneyDashAvg = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableMoneyAvg = () => {
     return (
-      <table className="table bg-white border">
+      <table className={"table bg-white border"}>
         <tbody>
           <button
             className={`btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"} mt-10`}
@@ -163,18 +163,17 @@ export const MoneyDashAvg = () => {
           >
             주간
           </button>
-          &nbsp;&nbsp;
           <button
             className={`btn ${activeType === "month" ? "btn-primary" : "btn-outline-primary"} mt-10`}
             onClick={() => setActiveType("month")}
           >
             월간
           </button>
-          <div className="mt-10 mb-10">
+          <div className={"mt-10 mb-10"}>
             {["수입", "지출"]?.map((key, index) => (
               <div key={index}>
                 <input
-                  type="checkbox"
+                  type={"checkbox"}
                   checked={activeAvg.includes(key)}
                   onChange={() => {
                     if (activeAvg.includes(key)) {

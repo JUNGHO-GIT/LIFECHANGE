@@ -53,7 +53,7 @@ export const UserDetail = () => {
   const tableUserDetail = () => {
     return (
       <div>
-        <div className="form-floating">
+        <div className={"form-floating"}>
           <input type={"text"}
             className={"form-control"}
             placeholder="User location_id"
@@ -63,7 +63,7 @@ export const UserDetail = () => {
           />
           <label htmlFor="user_id">User location_id</label>
         </div>
-        <div className="form-floating">
+        <div className={"form-floating"}>
           <input type={"text"}
             className={"form-control"}
             placeholder="User PW"
@@ -80,7 +80,7 @@ export const UserDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
@@ -89,7 +89,7 @@ export const UserDetail = () => {
   };
   const buttonUserUpdate = () => {
     return (
-      <button type="button" className="btn btn-sm btn-warning ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-warning ms-2"} onClick={() => {
         navParam("/user/update");
       }}>
         Update
@@ -98,7 +98,7 @@ export const UserDetail = () => {
   };
   const buttonUserDelete = () => {
     return (
-      <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-danger ms-2"} onClick={() => {
         navParam("/user/delete");
       }}>
         Delete
@@ -107,7 +107,7 @@ export const UserDetail = () => {
   };
   const buttonUserList = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={() => {
         navParam("/user/list");
       }}>
         List
@@ -119,14 +119,14 @@ export const UserDetail = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-      <div className="row d-center mt-5">
+      <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <h1 className="mb-3 fw-7">{TITLE}</h1>
+          <h1 className={"mb-3 fw-7"}>{TITLE}</h1>
         </div>
       </div>
-      <div className="row d-center mt-5">
+      <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <form className="form-inline">
+          <form className={"form-inline"}>
             {tableUserDetail()}
             <br/>
             {buttonRefreshPage()}

@@ -122,17 +122,17 @@ export const FoodDashAvg = () => {
 
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_KCAL_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            <Bar type="monotone" dataKey="칼로리" fill="#8884d8" minPointSize={1} />
+            <Bar type={"monotone"} dataKey={"칼로리"} fill={"#8884d8"} minPointSize={1} />
             <Tooltip />
             <Legend />
           </BarChart>
@@ -148,10 +148,10 @@ export const FoodDashAvg = () => {
 
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_NUT_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={domain}
@@ -159,13 +159,13 @@ export const FoodDashAvg = () => {
               tickFormatter={tickFormatter}
             />
             {activeAvg.includes("탄수화물")
-              && <Bar type="monotone" dataKey="탄수화물" fill="#ffc658" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"탄수화물"} fill={"#ffc658"} minPointSize={1} />
             }
             {activeAvg.includes("단백질")
-              && <Bar type="monotone" dataKey="단백질" fill="#82ca9d" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"단백질"} fill={"#82ca9d"} minPointSize={1} />
             }
             {activeAvg.includes("지방")
-              && <Bar type="monotone" dataKey="지방" fill="#ff7300" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"지방"} fill={"#ff7300"} minPointSize={1} />
             }
             <Tooltip />
             <Legend />
@@ -182,17 +182,17 @@ export const FoodDashAvg = () => {
 
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_KCAL_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={domain}
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            <Bar type="monotone" dataKey="칼로리" fill="#8884d8" minPointSize={1} />
+            <Bar type={"monotone"} dataKey={"칼로리"} fill={"#8884d8"} minPointSize={1} />
             <Tooltip />
             <Legend />
           </BarChart>
@@ -208,10 +208,10 @@ export const FoodDashAvg = () => {
 
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_NUT_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={domain}
@@ -219,13 +219,13 @@ export const FoodDashAvg = () => {
               tickFormatter={tickFormatter}
             />
             {activeAvg.includes("탄수화물")
-              && <Bar type="monotone" dataKey="탄수화물" fill="#ffc658" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"탄수화물"} fill={"#ffc658"} minPointSize={1} />
             }
             {activeAvg.includes("단백질")
-              && <Bar type="monotone" dataKey="단백질" fill="#82ca9d" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"단백질"} fill={"#82ca9d"} minPointSize={1} />
             }
             {activeAvg.includes("지방")
-              && <Bar type="monotone" dataKey="지방" fill="#ff7300" minPointSize={1} />
+              && <Bar type={"monotone"} dataKey={"지방"} fill={"#ff7300"} minPointSize={1} />
             }
             <Tooltip />
             <Legend />
@@ -238,7 +238,7 @@ export const FoodDashAvg = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableFoodAvg = () => {
     return (
-      <table className="table bg-white border">
+      <table className={"table bg-white border"}>
         <tbody>
           <button
             className={`btn ${activeType === "week" ? "btn-primary" : "btn-outline-primary"} mt-10 me-5`}
@@ -265,11 +265,11 @@ export const FoodDashAvg = () => {
           >
             영양소
           </button>
-          <div className="mt-10 mb-10">
+          <div className={"mt-10 mb-10"}>
             {["탄수화물", "단백질", "지방"]?.map((key, index) => (
               <div key={index}>
                 <input
-                  type="checkbox"
+                  type={"checkbox"}
                   checked={activeAvg.includes(key)}
                   onChange={() => {
                     if (activeAvg.includes(key)) {

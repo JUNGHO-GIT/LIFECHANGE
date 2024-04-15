@@ -65,22 +65,22 @@ export const UserSave = () => {
   const tableUserSave = () => {
     return (
       <div>
-        <div className="form-floating">
+        <div className={"form-floating"}>
           <input type={"text"}
             className={"form-control"}
-            placeholder="location_id"
+            placeholder={"location_id"}
             value={user_id}
             onChange={(e) => {setUserId(e.target.value);}}
           />
           <label htmlFor="floatingId">location_id</label>
         </div>
-        <div className="form-floating">
+        <div className={"form-floating"}>
           <input
             className={"form-control"}
-            type="password"
-            placeholder="Password"
+            type={"password"}
+            placeholder={"Password"}
             value={user_pw}
-            id="floatingPassword"
+            id={"floatingPassword"}
             onChange={(e) => {
               setUserPw(e.target.value);
             }}
@@ -94,7 +94,7 @@ export const UserSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonRefreshPage = () => {
     return (
-      <button type="button" className="btn btn-sm btn-success ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
@@ -103,14 +103,14 @@ export const UserSave = () => {
   };
   const buttonUserSave = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={flowUserSave}>
+      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={flowUserSave}>
         Submit
       </button>
     );
   };
   const buttonUserList = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary ms-2" onClick={() => {
+      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={() => {
         navParam("/user/list");
       }}>
         List
@@ -122,9 +122,9 @@ export const UserSave = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className="row d-center mt-5">
+        <div className={"row d-center mt-5"}>
           <div className={"col-12"}>
-            <form className="form-inline">
+            <form className={"form-inline"}>
               {tableUserSave()}
               <br/>
               {buttonUserSave()}

@@ -60,7 +60,7 @@ export const Dash = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonDashToday = () => {
     return (
-      <button type="button" className="btn btn-sm btn-success me-2" onClick={() => {
+      <button type={"button"} className="btn btn-sm btn-success me-2" onClick={() => {
         setDashDay(koreanDate);
         localStorage.removeItem("dashboardDay(DAY)");
       }}>
@@ -70,7 +70,7 @@ export const Dash = () => {
   };
   const buttonDashReset = () => {
     return (
-      <button type="button" className="btn btn-sm btn-primary me-2" onClick={() => {
+      <button type={"button"} className="btn btn-sm btn-primary me-2" onClick={() => {
         setDashDay(koreanDate);
         localStorage.removeItem("dashboardDay(DAY)");
       }}>
@@ -82,8 +82,8 @@ export const Dash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className={"root-wrapper"}>
-      <div className="container-fluid">
-        <div className="row  mb-20">
+      <div className={"container-fluid"}>
+        <div className="row mb-20">
           <div className={"col-12"}>
             <div className="container-wrapper d-left">
               <div className="row d-center mt-5">

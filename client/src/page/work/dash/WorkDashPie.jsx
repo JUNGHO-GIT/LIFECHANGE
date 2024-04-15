@@ -42,7 +42,8 @@ export const WorkDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="black" textAnchor="middle" dominantBaseline="central" fontSize="12">
+      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      fontSize={"12"}>
         {`${DASH_PART[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -58,7 +59,8 @@ export const WorkDashPie = () => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-      <text x={x} y={y} fill="black" textAnchor="middle" dominantBaseline="central" fontSize="12">
+      <text x={x} y={y} fill={"black"} <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
+      fontSize={"12"}>
         {`${DASH_TITLE[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -68,17 +70,17 @@ export const WorkDashPie = () => {
   const chartPieIn = () => {
     const COLORS_PART = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <PieChart>
           <Pie
             data={DASH_PART}
-            cx="50%"
-            cy="50%"
+            cx={"50%"}
+            cy={"50%"}
             labelLine={false}
             label={renderIn}
             outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
+            fill={"#8884d8"}
+            dataKey={"value"}
             minAngle={10}
             onMouseEnter={(data, index) => {
               data.payload.opacity = 0.5;
@@ -101,17 +103,17 @@ export const WorkDashPie = () => {
   const chartPieOut = () => {
     const COLORS_TITLE = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <PieChart>
           <Pie
             data={DASH_TITLE}
-            cx="50%"
-            cy="50%"
+            cx={"50%"}
+            cy={"50%"}
             labelLine={false}
             label={renderOut}
             outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
+            fill={"#8884d8"}
+            dataKey={"value"}
             onMouseEnter={(data, index) => {
               data.payload.opacity = 0.5;
             }}

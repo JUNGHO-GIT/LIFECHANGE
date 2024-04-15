@@ -143,27 +143,27 @@ export const FoodPlanDetail = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="fs-20 pt-20">
+          <tr className={"fs-20 pt-20"}>
+            <td>
               {FOOD_PLAN?.food_plan_startDt}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {FOOD_PLAN?.food_plan_endDt}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {FOOD_PLAN?.food_plan_kcal}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {FOOD_PLAN?.food_plan_carb}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {FOOD_PLAN?.food_plan_protein}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {FOOD_PLAN?.food_plan_fat}
             </td>
-            <td className="fs-20 pt-20">
-              <button className="btn btn-danger btn-sm" onClick={() => {
+            <td>
+              <button className={"btn btn-sm btn-danger"} onClick={() => {
                 flowDelete(FOOD_PLAN?._id);
               }}>
                 X
@@ -190,13 +190,13 @@ export const FoodPlanDetail = () => {
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
         <div className={"row d-center"}>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             <h1>Detail</h1>
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

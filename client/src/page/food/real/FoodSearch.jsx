@@ -143,7 +143,7 @@ export const FoodSearch = () => {
         <tbody>
           {FOOD?.food_section?.map((item, index) => (
             <tr key={index}>
-              <td className="pointer" onClick={() => {
+              <td className={"pointer"} onClick={() => {
                 handleStorage(item);
               }}>
                 {item.food_title_val}
@@ -165,14 +165,14 @@ export const FoodSearch = () => {
   // 5-2. search ---------------------------------------------------------------------------------->
   const searchFood = () => {
     return (
-      <div className="d-flex">
+      <div className={"d-flex"}>
         <input type={"text"} className={"form-control"} value={FILTER.query} onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
             query: e.target.value
           }));
         }}/>
-        <button type="button" className="btn btn-sm btn-secondary ms-2" onClick={() => {
+        <button type={"button"} className={"btn btn-sm btn-secondary ms-2"} onClick={() => {
           setFILTER((prev) => ({
             ...prev,
             page: 0
@@ -236,7 +236,7 @@ export const FoodSearch = () => {
       );
     };
     return (
-      <div className="d-inline-flex">
+      <div className={"d-inline-flex"}>
         {prevButton()}
         {pageNumber()}
         {nextButton()}
@@ -248,8 +248,8 @@ export const FoodSearch = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>Search</h1>
           </div>
           <div className={"col-12"}>

@@ -229,7 +229,7 @@ export const WorkSave = () => {
   const tableNode = () => {
     function tableSection (i) {
       return (
-        <div key={i} className="mb-20">
+        <div key={i} className={"mb-20"}>
           <div className={"row d-center"}>
             <div className={"col-6"}>
               <div className={"input-group"}>
@@ -405,8 +405,8 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>시작시간</span>
                 <TimePicker
-                  id="work_start"
-                  name="work_start"
+                  id={"work_start"}
+                  name={"work_start"}
                   className={"form-control"}
                   disableClock={false}
                   clockIcon={null}
@@ -428,8 +428,8 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>종료시간</span>
                 <TimePicker
-                  id="work_end"
-                  name="work_end"
+                  id={"work_end"}
+                  name={"work_end"}
                   className={"form-control"}
                   disableClock={false}
                   clockIcon={null}
@@ -451,8 +451,8 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>운동시간</span>
                 <TimePicker
-                  id="work_time"
-                  name="work_time"
+                  id={"work_time"}
+                  name={"work_time"}
                   className={"form-control"}
                   disableClock={false}
                   disabled={true}
@@ -545,20 +545,20 @@ export const WorkSave = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>Save</h1>
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {dateNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {handlerSectionCount()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

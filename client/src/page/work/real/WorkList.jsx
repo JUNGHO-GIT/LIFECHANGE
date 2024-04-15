@@ -229,21 +229,21 @@ export const WorkList = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>List</h1>
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {calendarNode()}
             {tableNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {filterNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {pagingNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

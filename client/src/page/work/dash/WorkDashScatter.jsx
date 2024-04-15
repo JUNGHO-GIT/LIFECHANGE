@@ -58,18 +58,18 @@ export const WorkDashScatter = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <ComposedChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          <Scatter name="목표" dataKey="목표" fill="#8884d8" />
-          <Scatter name="실제" dataKey="실제" fill="#82ca9d" />
+          <Scatter name={"목표"} dataKey={"목표"} fill={"#8884d8"} />
+          <Scatter name={"실제"} dataKey={"실제"} fill={"#82ca9d"} />
           <Tooltip />
           <Legend />
         </ComposedChart>

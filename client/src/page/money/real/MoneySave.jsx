@@ -217,7 +217,7 @@ export const MoneySave = () => {
   const tableNode = () => {
     function tableSection (i) {
       return (
-        <div key={i} className="mb-20">
+        <div key={i} className={"mb-20"}>
           <div className={"row d-center"}>
             <div className={"col-6"}>
               <div className={"input-group"}>
@@ -393,20 +393,20 @@ export const MoneySave = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>Save</h1>
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {dateNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {handlerSectionCount()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

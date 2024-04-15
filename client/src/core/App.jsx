@@ -153,7 +153,7 @@ const Work = () => {
 // ------------------------------------------------------------------------------------------------>
 export const App = () => {
   return (
-    <div className="App">
+    <div className={"App"}>
       <DeveloperModeProvider>
         <Loader />
         <Header />

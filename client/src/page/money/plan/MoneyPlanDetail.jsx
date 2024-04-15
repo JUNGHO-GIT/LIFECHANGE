@@ -140,21 +140,21 @@ export const MoneyPlanDetail = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="fs-20 pt-20">
+          <tr className={"fs-20 pt-20"}>
+            <td>
               {MONEY_PLAN?.money_plan_startDt}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {MONEY_PLAN?.money_plan_endDt}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {MONEY_PLAN?.money_plan_in}
             </td>
-            <td className="fs-20 pt-20">
+            <td>
               {MONEY_PLAN?.money_plan_out}
             </td>
-            <td className="fs-20 pt-20">
-              <button className="btn btn-danger btn-sm" onClick={() => {
+            <td>
+              <button className={"btn btn-sm btn-danger"} onClick={() => {
                 flowDelete(MONEY_PLAN?._id);
               }}>
                 X
@@ -180,14 +180,14 @@ export const MoneyPlanDetail = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-        <div className={"row"}>
-          <div className={"col-12 mb-20 d-center"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
             <h1>Detail</h1>
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className={"col-12 mb-20 d-center"}>
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

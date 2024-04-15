@@ -73,10 +73,10 @@ export const WorkDashLine = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="category" dataKey="name" />
+          <XAxis type={"category"} dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
@@ -84,10 +84,10 @@ export const WorkDashLine = () => {
             tickFormatter={tickFormatter}
           />
           {activeLine.includes("볼륨")
-            && <Line type="monotone" dataKey="볼륨" stroke="#8884d8" activeDot={{r: 8}} />
+            && <Line type={"monotone"} dataKey={"볼륨"} stroke="#8884d8" activeDot={{r: 8}} />
           }
           {activeLine.includes("시간")
-            && <Line type="monotone" dataKey="시간" stroke="#82ca9d" />
+            && <Line type={"monotone"} dataKey={"시간"} stroke="#82ca9d" />
           }
           <Tooltip />
           <Legend />
@@ -99,13 +99,13 @@ export const WorkDashLine = () => {
   // 5-3. table ----------------------------------------------------------------------------------->
   const tableWorkLine = () => {
     return (
-      <table className="table bg-white border">
+      <table className={"table bg-white border"}>
         <tbody>
-          <div className="mt-10 mb-10">
+          <div className={"mt-10 mb-10"}>
             {["볼륨", "시간"].map((key, index) => (
               <div key={index}>
                 <input
-                  type="checkbox"
+                  type={"checkbox"}
                   checked={activeLine.includes(key)}
                   onChange={() => {
                     if (activeLine.includes(key)) {

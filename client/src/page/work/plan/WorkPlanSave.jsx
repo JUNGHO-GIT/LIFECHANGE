@@ -184,7 +184,7 @@ export const WorkPlanSave = () => {
     // 3. moneyNode
     function moneyNode () {
       return (
-        <div className="row d-center mb-20">
+        <div className={"row d-center mb-20"}>
           <div className={"col-12"}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>목표 운동 횟수</span>
@@ -248,13 +248,13 @@ export const WorkPlanSave = () => {
     // 5. return
     return (
       <div className={"row d-center"}>
-        <div className="col-4 mb-20">
+        <div className={"col-4 mb-20"}>
           {startNode()}
         </div>
-        <div className="col-4 mb-20">
+        <div className={"col-4 mb-20"}>
           {endNode()}
         </div>
-        <div className="col-8 mb-20">
+        <div className={"col-8 mb-20"}>
           {moneyNode()}
         </div>
       </div>
@@ -276,13 +276,13 @@ export const WorkPlanSave = () => {
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
         <div className={"row d-center"}>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             <h1>Save</h1>
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

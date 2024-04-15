@@ -46,10 +46,10 @@ export const SleepDashLine = () => {
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartLine = () => {
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="category" dataKey="name" />
+          <XAxis type={"category"} dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={[0, 30]}
@@ -64,13 +64,13 @@ export const SleepDashLine = () => {
             }}
           />
           {activeLine.includes("취침")
-            && <Line type="monotone" dataKey="취침" stroke="#8884d8" activeDot={{ r: 8 }} />
+            && <Line type={"monotone"} dataKey={"취침"} stroke="#8884d8" activeDot={{ r: 8 }} />
           }
           {activeLine.includes("기상")
-            && <Line type="monotone" dataKey="기상" stroke="#ffc658" />
+            && <Line type={"monotone"} dataKey={"기상"} stroke="#ffc658" />
           }
           {activeLine.includes("수면")
-            && <Line type="monotone" dataKey="수면" stroke="#82ca9d" />
+            && <Line type={"monotone"} dataKey={"수면"} stroke="#82ca9d" />
           }
           <Tooltip />
           <Legend />
@@ -82,13 +82,13 @@ export const SleepDashLine = () => {
   // 5-3. table ----------------------------------------------------------------------------------->
   const tableSleepLine = () => {
     return (
-      <table className="table bg-white border">
+      <table className={"table bg-white border"}>
         <tbody>
-          <div className="mt-10 mb-10">
+          <div className={"mt-10 mb-10"}>
             {["취침", "수면", "기상"]?.map((key, index) => (
               <div key={index}>
                 <input
-                  type="checkbox"
+                  type={"checkbox"}
                   checked={activeLine.includes(key)}
                   onChange={() => {
                     if (activeLine.includes(key)) {

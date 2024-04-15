@@ -70,10 +70,10 @@ export const SleepDashAvg = () => {
   const chartAvgWeek = () => {
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={[0, 30]}
@@ -83,13 +83,13 @@ export const SleepDashAvg = () => {
               }}
             />
             {activeAvg.includes("취침")
-              && <Bar type="monotone" dataKey="취침" fill="#8884d8" />
+              && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
             }
             {activeAvg.includes("기상")
-              && <Bar type="monotone" dataKey="기상" fill="#82ca9d" />
+              && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
             }
             {activeAvg.includes("수면")
-              && <Bar type="monotone" dataKey="수면" fill="#ffc658" />
+              && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
             <Tooltip />
             <Legend />
@@ -103,10 +103,10 @@ export const SleepDashAvg = () => {
   const chartAvgMonth = () => {
     return (
       <React.Fragment>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <BarChart data={DASH_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="category" dataKey="name" />
+            <XAxis type={"category"} dataKey={"name"} />
             <YAxis
               type={"number"}
               domain={[0, 30]}
@@ -116,13 +116,13 @@ export const SleepDashAvg = () => {
               }}
             />
             {activeAvg.includes("취침")
-              && <Bar type="monotone" dataKey="취침" fill="#8884d8" />
+              && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
             }
             {activeAvg.includes("기상")
-              && <Bar type="monotone" dataKey="기상" fill="#82ca9d" />
+              && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
             }
             {activeAvg.includes("수면")
-              && <Bar type="monotone" dataKey="수면" fill="#ffc658" />
+              && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
             <Tooltip />
             <Legend />
@@ -135,7 +135,7 @@ export const SleepDashAvg = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableSleepAvg = () => {
     return (
-      <table className="table bg-white border">
+      <table className={"table bg-white border"}>
         <tbody>
           <button
             className={`
@@ -156,11 +156,11 @@ export const SleepDashAvg = () => {
           >
             월간
           </button>
-          <div className="mt-10 mb-10">
+          <div className={"mt-10 mb-10"}>
             {["취침", "수면", "기상"]?.map((key, index) => (
               <div key={index}>
                 <input
-                  type="checkbox"
+                  type={"checkbox"}
                   checked={activeAvg.includes(key)}
                   onChange={() => {
                     if (activeAvg.includes(key)) {

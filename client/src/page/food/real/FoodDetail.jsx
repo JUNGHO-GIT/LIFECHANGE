@@ -158,40 +158,40 @@ export const FoodDetail = () => {
         </thead>
         <tbody>
           {FOOD?.food_section?.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
                 <React.Fragment>
-                  <td className="fs-20 pt-20" rowSpan={FOOD?.food_section?.length}>
+                  <td rowSpan={FOOD?.food_section?.length}>
                     {FOOD?.food_startDt}
                   </td>
                 </React.Fragment>
               )}
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_title_val}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_part_val}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_count}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_serv}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_kcal}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_carb}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_protein}
               </td>
-              <td className="fs-20 pt-20">
+              <td>
                 {item.food_fat}
               </td>
-              <td className="fs-20 pt-20">
-                <button type="button" className="btn btn-sm btn-danger" onClick={() => (
+              <td>
+                <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
                   flowDelete(item._id)
                 )}>
                   x
@@ -200,7 +200,7 @@ export const FoodDetail = () => {
             </tr>
           ))}
           <tr>
-            <td colSpan={5} className="text-center">합계</td>
+            <td colSpan={5}>합계</td>
             <td>{FOOD?.food_total_kcal}</td>
             <td>{FOOD?.food_total_carb}</td>
             <td>{FOOD?.food_total_protein}</td>
@@ -227,13 +227,13 @@ export const FoodDetail = () => {
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
         <div className={"row d-center"}>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             <h1>Detail</h1>
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

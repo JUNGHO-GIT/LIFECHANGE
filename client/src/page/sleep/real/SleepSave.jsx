@@ -141,13 +141,13 @@ export const SleepSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>취침</span>
               <TimePicker
-                id="sleep_night"
-                name="sleep_night"
+                id={"sleep_night"}
+                name={"sleep_night"}
                 className={"form-control"}
                 disableClock={false}
                 clockIcon={null}
-                format="HH:mm"
-                locale="ko"
+                format={"HH:mm"}
+                locale={"ko"}
                 value={SLEEP?.sleep_section[0]?.sleep_night}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
@@ -165,13 +165,13 @@ export const SleepSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>기상</span>
               <TimePicker
-                id="sleep_morning"
-                name="sleep_morning"
+                id={"sleep_morning"}
+                name={"sleep_morning"}
                 className={"form-control"}
                 disableClock={false}
                 clockIcon={null}
-                format="HH:mm"
-                locale="ko"
+                format={"HH:mm"}
+                locale={"ko"}
                 value={SLEEP?.sleep_section[0]?.sleep_morning}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
@@ -189,14 +189,14 @@ export const SleepSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>수면</span>
               <TimePicker
-                id="sleep_time"
-                name="sleep_time"
+                id={"sleep_time"}
+                name={"sleep_time"}
                 className={"form-control"}
                 disableClock={false}
                 disabled={true}
                 clockIcon={null}
-                format="HH:mm"
-                locale="ko"
+                format={"HH:mm"}
+                locale={"ko"}
                 value={SLEEP?.sleep_section[0]?.sleep_time}
               ></TimePicker>
             </div>
@@ -206,7 +206,7 @@ export const SleepSave = () => {
     };
     return (
       <div className={"row d-center"}>
-        <div className="col-8 mb-20">
+        <div className={"col-8 mb-20"}>
           {sleepNode()}
         </div>
       </div>
@@ -228,16 +228,16 @@ export const SleepSave = () => {
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
         <div className={"row d-center"}>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             <h1>Save</h1>
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {dateNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {tableNode()}
           </div>
-          <div className="col-12 mb-20">
+          <div className={"col-12 mb-20"}>
             {buttonNode()}
           </div>
         </div>

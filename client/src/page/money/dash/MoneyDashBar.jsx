@@ -59,18 +59,18 @@ export const MoneyDashBar = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
 
     return (
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={"100%"} height={300}>
         <ComposedChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey={"name"} />
           <YAxis
             type={"number"}
             domain={domain}
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          <Line dataKey="목표" type="monotone" stroke="#ff7300" />
-          <Bar dataKey="실제" type="monotone" fill="#8884d8" barSize={30} minPointSize={1} />
+          <Line dataKey={"목표"} type={"monotone"} stroke="#ff7300" />
+          <Bar dataKey={"실제"} type={"monotone"} fill={"#8884d8"} barSize={30} minPointSize={1} />
           <Tooltip />
           <Legend />
         </ComposedChart>

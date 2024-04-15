@@ -57,7 +57,7 @@ export const PagingNode = ({
     );
   };
   return (
-    <div className="d-inline-flex">
+    <div className={"d-inline-flex"}>
       {prevButton()}
       {pageNumber()}
       {nextButton()}
