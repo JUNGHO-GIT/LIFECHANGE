@@ -26,22 +26,17 @@ export const UserSignup = () => {
       user_pw: user_pw,
     });
 
-    if (response.data === "success") {
-      alert("Signup successful");
+    if (response.data.status === "success") {
+      alert(response.data.msg);
       navParam("/user/login");
     }
-    else if (response.data === "duplicate") {
-      alert("This location_id already exists");
-      setUserId("");
-      setUserPw("");
-    }
-    else if (response.data === "fail") {
-      alert("Incorrect Id or Pw");
+    else if (response.data.status === "fail") {
+      alert(response.data.msg);
       setUserId("");
       setUserPw("");
     }
     else {
-      alert(`${response.data}error`);
+      alert(response.data.msg);
     }
   };
   // 5. table ------------------------------------------------------------------------------------->

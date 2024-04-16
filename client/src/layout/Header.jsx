@@ -182,7 +182,7 @@ export const Header = () => {
       );
     };
     return (
-      user_id === "false" ? (
+      (!user_id || user_id === "false") ? (
         <div>
           {btnDevMode()}
           {btnLogIn()}

@@ -41,11 +41,11 @@ userRouter.post("/login", async (req, res) => {
       req.body.user_id,
       req.body.user_pw
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "로그인 성공",
-        result: result
+        result: result.result,
       });
     }
     else {

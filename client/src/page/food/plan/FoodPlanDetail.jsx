@@ -93,7 +93,7 @@ export const FoodPlanDetail = () => {
         food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
-    if (response.data === "success") {
+    if (response.data.status === "success") {
       const updatedData = await axios.get(`${URL_FOOD_PLAN}/detail`, {
         params: {
           _id: location_id,
@@ -101,12 +101,12 @@ export const FoodPlanDetail = () => {
           food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert("삭제되었습니다.");
+      alert(response.data.msg);
       setFOOD_PLAN(updatedData.data.result || FOOD_PLAN_DEFAULT);
       updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
-      alert(`${response.data}`);
+      alert(response.data.msg);
     }
   };
 

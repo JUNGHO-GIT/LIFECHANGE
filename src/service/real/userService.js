@@ -1,6 +1,7 @@
 // userService.js
 
 import * as repository from "../../repository/real/userRepository.js";
+import bcrypt from "bcrypt";
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = async (
@@ -35,7 +36,9 @@ export const login = async (
     user_id_param, user_pw_param
   );
 
-  return findResult;
+  return {
+    result: findResult
+  }
 };
 
 // 0-2. checkId ----------------------------------------------------------------------------------->

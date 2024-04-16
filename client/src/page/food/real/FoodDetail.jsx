@@ -104,7 +104,7 @@ export const FoodDetail = () => {
         food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data === "success") {
+    if (response.data.status === "success") {
       const updatedData = await axios.get(`${URL_FOOD}/detail`, {
         params: {
           _id: location_id,
@@ -112,12 +112,12 @@ export const FoodDetail = () => {
           food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert("삭제되었습니다.");
+      alert(response.data.msg);
       setFOOD(updatedData.data.result || FOOD_DEFAULT);
       updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
-      alert(`${response.data}`);
+      alert(response.data.msg);
     }
   };
 

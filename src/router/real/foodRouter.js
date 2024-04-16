@@ -11,7 +11,7 @@ foodRouter.get("/search", async (req, res) => {
       req.query.user_id,
       req.query.FILTER
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
@@ -44,7 +44,7 @@ foodRouter.get("/list", async (req, res) => {
       req.query.FILTER,
       req.query.PAGING
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
@@ -76,11 +76,11 @@ foodRouter.get("/detail", async (req, res) => {
       req.query.user_id,
       req.query.food_dur
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
+        sectionCnt: result.sectionCnt,
         result: result.result
       });
     }

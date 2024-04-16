@@ -54,13 +54,13 @@ export const UserDelete = () => {
           alert("Incorrect password");
           return;
         }
-        if (response.data === "success") {
+        if (response.data.status === "success") {
           const response = await axios.delete (`${URL_USER}/userDelete`, {
             params: {
               user_id : user_id,
             }
           });
-          if (response.data === "success") {
+          if (response.data.status === "success") {
             alert("User Delete Success");
             window.sessionStorage.clear();
             navParam("/");

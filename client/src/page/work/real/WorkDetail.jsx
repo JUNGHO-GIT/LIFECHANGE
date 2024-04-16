@@ -177,7 +177,7 @@ export const WorkDetail = () => {
         work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data === "success") {
+    if (response.data.status === "success") {
       const updatedData = await axios.get(`${URL_WORK}/detail`, {
         params: {
           _id: location_id,
@@ -185,12 +185,12 @@ export const WorkDetail = () => {
           work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert("삭제되었습니다.");
+      alert(response.data.msg);
       setWORK(updatedData.data.result || WORK_DEFAULT);
       updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
-      alert(`${response.data}`);
+      alert(response.data.msg);
     }
   };
 

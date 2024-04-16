@@ -34,6 +34,7 @@ export const login = async (
     user_id: user_id_param,
     user_pw: user_pw_param
   })
+  .lean();
 
   return finalResult;
 };

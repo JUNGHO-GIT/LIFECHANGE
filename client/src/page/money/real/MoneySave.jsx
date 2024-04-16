@@ -116,8 +116,8 @@ export const MoneySave = () => {
       MONEY: MONEY,
       money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
-    if (response.data === "success") {
-      alert("Save successfully");
+    if (response.data.status === "success") {
+      alert(response.data.msg);
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
       navParam(SEND.toList, {
@@ -125,7 +125,7 @@ export const MoneySave = () => {
       });
     }
     else {
-      alert(`${response.data}error`);
+      alert(response.data.msg);
     }
   };
 

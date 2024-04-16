@@ -18,10 +18,10 @@ export const totalCnt = async (
   const finalResult = await SleepPlan.countDocuments({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $lte: startDt_param,
+      $lte: endDt_param,
     },
     sleep_plan_endDt: {
-      $gte: endDt_param,
+      $gte: startDt_param,
     },
   });
 
@@ -41,10 +41,10 @@ export const findPlan = async (
   const finalResult = await SleepPlan.find({
     user_id: user_id_param,
     sleep_plan_startDt: {
-      $lte: startDt_param,
+      $lte: endDt_param,
     },
     sleep_plan_endDt: {
-      $gte: endDt_param,
+      $gte: startDt_param,
     },
   })
   .sort({sleep_plan_startDt: sort_param})

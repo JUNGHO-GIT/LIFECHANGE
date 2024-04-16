@@ -18,10 +18,10 @@ export const totalCnt = async (
   const finalResult = await MoneyPlan.countDocuments({
     user_id: user_id_param,
     money_plan_startDt: {
-      $lte: startDt_param,
+      $lte: endDt_param,
     },
     money_plan_endDt: {
-      $gte: endDt_param,
+      $gte: startDt_param,
     },
   });
 
@@ -41,10 +41,10 @@ export const findPlan = async (
   const finalResult = await MoneyPlan.find({
     user_id: user_id_param,
     money_plan_startDt: {
-      $lte: startDt_param,
+      $lte: endDt_param,
     },
     money_plan_endDt: {
-      $gte: endDt_param,
+      $gte: startDt_param,
     },
   })
   .sort({money_plan_startDt: sort_param})

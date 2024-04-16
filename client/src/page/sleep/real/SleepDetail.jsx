@@ -94,7 +94,7 @@ export const SleepDetail = () => {
         sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data === "success") {
+    if (response.data.status === "success") {
       const updatedData = await axios.get(`${URL_SLEEP}/detail`, {
         params: {
           _id: location_id,
@@ -102,12 +102,12 @@ export const SleepDetail = () => {
           sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert("삭제되었습니다.");
+      alert(response.data.msg);
       setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
       updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
-      alert(`${response.data}`);
+      alert(response.data.msg);
     }
   };
 

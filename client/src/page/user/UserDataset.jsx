@@ -67,11 +67,6 @@ export const UserDataset = () => {
   const [USER, setUSER] = useState(USER_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    alert(JSON.stringify(idx));
-  }, [idx]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_USER}/dataset`, {
       params: {

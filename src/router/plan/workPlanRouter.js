@@ -14,7 +14,7 @@ workPlanRouter.get("/compare", async (req, res) => {
       req.query.FILTER,
       req.query.PAGING
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
@@ -47,7 +47,7 @@ workPlanRouter.get("/list", async (req, res) => {
       req.query.FILTER,
       req.query.PAGING
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",

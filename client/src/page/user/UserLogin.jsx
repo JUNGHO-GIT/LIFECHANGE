@@ -8,7 +8,6 @@ import axios from "axios";
 export const UserLogin = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "User Login";
   const URL_USER = process.env.REACT_APP_URL_USER;
   const navParam = useNavigate();
 
@@ -79,20 +78,16 @@ export const UserLogin = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <div className={"root-wrapper"}>
-      <div className={"container"}>
-        <div className={"container-wrapper mb-30"}>
-          <div className={"row d-center mt-5"}>
-            <div className={"col-12"}>
-              <h1 className={"mb-3 fw-7"}>{TITLE}</h1>
-            </div>
+      <div className={"container-wrapper"}>
+        <div className={"row d-center"}>
+          <div className={"col-12 mb-20"}>
+            <h1>Login</h1>
           </div>
-          <div className={"row d-center mt-5 mb-20"}>
-            <div className={"col-12"}>
-              {tableUserLogin()}
-              <br/>
-              {buttonUserLogin()}
-              {buttonRefreshPage()}
-            </div>
+          <div className={"col-12"}>
+            {tableUserLogin()}
+            <br/>
+            {buttonUserLogin()}
+            {buttonRefreshPage()}
           </div>
         </div>
       </div>

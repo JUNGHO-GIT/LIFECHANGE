@@ -92,7 +92,7 @@ export const SleepPlanDetail = () => {
         sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data === "success") {
+    if (response.data.status === "success") {
       const updatedData = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
         params: {
           _id: location_id,
@@ -101,11 +101,11 @@ export const SleepPlanDetail = () => {
         },
       });
       setSLEEP_PLAN(updatedData.data.result || SLEEP_PLAN_DEFAULT);
-      alert("삭제되었습니다.");
+      alert(response.data.msg);
       updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
-      alert(`${response.data}`);
+      alert(response.data.msg);
     }
   };
 

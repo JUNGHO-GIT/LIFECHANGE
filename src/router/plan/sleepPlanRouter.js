@@ -14,7 +14,7 @@ sleepPlanRouter.get("/compare", async (req, res) => {
       req.query.FILTER,
       req.query.PAGING
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
@@ -47,7 +47,7 @@ sleepPlanRouter.get("/list", async (req, res) => {
       req.query.FILTER,
       req.query.PAGING
     );
-    if (result) {
+    if (result && result.result) {
       res.json({
         status: "success",
         msg: "조회 성공",
@@ -83,8 +83,7 @@ sleepPlanRouter.get("/detail", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {

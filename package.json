@@ -10,6 +10,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@types/mocha": "^10.0.6",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.3.3",
     "bcryptjs-react": "^2.4.6",
     "body-parser": "^1.20.2",

@@ -102,9 +102,7 @@ export const detail = async (
     _id_param, user_id_param, startDt, endDt
   );
 
-  return {
-    result: finalResult,
-  };
+  return finalResult
 };
 
 // 3. save ---------------------------------------------------------------------------------------->

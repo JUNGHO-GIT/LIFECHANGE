@@ -98,7 +98,7 @@ export const MoneyDetail = () => {
         money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data === "success") {
+    if (response.data.status === "success") {
       const updatedData = await axios.get(`${URL_MONEY}/detail`, {
         params: {
           _id: location_id,
@@ -106,12 +106,12 @@ export const MoneyDetail = () => {
           money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert("삭제되었습니다.");
+      alert(response.data.msg);
       setMONEY(updatedData.data.result || MONEY_DEFAULT);
       updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
-      alert(`${response.data}`);
+      alert(response.data.msg);
     }
   };
 
