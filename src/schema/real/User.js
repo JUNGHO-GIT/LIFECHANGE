@@ -18,32 +18,39 @@ const schema = new mongoose.Schema({
   },
   user_pw : {
     type : String,
+    default: "",
     required : false
   },
 
   user_email: {
     type : String,
+    default: "",
     required : false
   },
   user_phone: {
     type : String,
+    default: "",
     required : false
   },
 
   user_sex: {
     type : String,
+    default: "",
     required : false
   },
   user_age: {
     type : String,
+    default: "",
     required : false
   },
   user_height: {
     type : String,
+    default: "",
     required : false
   },
   user_weight: {
     type : String,
+    default: "",
     required : false
   },
 

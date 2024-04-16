@@ -9,7 +9,9 @@ export const linkArray = [
   {
     label: "User",
     items: [
-      {to: "/user/list", label: "UserList"},
+      {to: "/user/login", label: "UserLogin"},
+      {to: "/user/save", label: "UserSave"},
+      {to: "/user/dataset", label: "UserDataset"},
     ]
   },
   {

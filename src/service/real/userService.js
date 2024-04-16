@@ -1,7 +1,31 @@
 // userService.js
 
-import mongoose from "mongoose";
-import {User} from "../../schema/real/User.js";
+import * as repo from "../../repository/real/userRepo.js";
+
+// 0-1. login ------------------------------------------------------------------------------------->
+export const login = async (
+  user_id_param,
+  user_pw_param
+) => {
+
+  const findResult = await repo.detail(
+    "", user_id_param, user_pw_param
+  );
+
+  return findResult;
+};
+
+// 0-2. checkId ----------------------------------------------------------------------------------->
+export const checkId = async (
+  user_id_param,
+) => {
+
+  const findResult = await repo.checkId(
+    user_id_param
+  );
+
+  return findResult;
+};
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = async (
@@ -9,182 +33,85 @@ export const dataset = async (
   user_pw_param
 ) => {
 
-  const findResult = await User.aggregate([
-    {
-      $match: {
-        user_id: user_id_param,
-        user_pw: user_pw_param
-      }
-    },
-    {
-      $project: {
-        _id: 0,
-        user_dataset: {
-          money: 1,
-          work: 1
-        }
-      }
-    }
-  ]);
+  const findResult = await repo.aggregateDataset (
+    user_id_param, user_pw_param
+  );
 
-  const workSet = findResult[0]?.user_dataset.work;
-  const moneySet = findResult[0]?.user_dataset.money;
-
-  return {
-    result: {
-      work: workSet,
-      money: moneySet
-    }
-  };
+  return findResult;
 };
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
+  user_id_param,
+  sort_param,
+  limit_param,
+  page_param
 ) => {
 
-  let findQuery;
-  let findResult;
-  let finalResult;
+  const finalResult = await repo.find(
+    user_id_param, sort_param, limit_param, page_param
+  );
 
-  findQuery = {
+  return {
+    result: finalResult
   };
-
-  findResult = await User.find(findQuery).sort({ _id: -1 })
-    .lean();
-
-  return findResult;
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  user_id_param
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  findQuery = {
-    user_id : user_id_param
-  };
-
-  findResult = await User.findOne(findQuery).lean();
-
-  return findResult;
-};
-
-// 3-1. checkId ----------------------------------------------------------------------------------->
-export const checkId = async (
-  user_id_param
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  findQuery = {
-    user_id : user_id_param
-  };
-
-  findResult = await User.findOne(findQuery).lean();
-
-  return findResult;
-};
-
-// 3-2. insert ------------------------------------------------------------------------------------>
-export const insert = async (
+  _id_param,
   user_id_param,
   user_pw_param
 ) => {
 
-  let createQuery;
-  let createResult;
+  const finalResult = await repo.detail(
+    _id_param, user_id_param, user_pw_param
+  );
 
-  createQuery = {
-    _id : new mongoose.Types.ObjectId(),
-    user_id : user_id_param,
-    user_pw : user_pw_param
+  return {
+    result: finalResult,
   };
-
-  createResult = await User.create(createQuery);
-
-  return createResult;
 };
 
-// 3-3. checkIdPw --------------------------------------------------------------------------------->
-export const checkIdPw = async (
+// 3. save ---------------------------------------------------------------------------------------->
+export const save = async (
   user_id_param,
-  user_pw_param
+  user_pw_param,
+  USER_param
 ) => {
 
-  let findQuery;
-  let findResult;
+  const findResult = await repo.detail(
+    "", user_id_param, user_pw_param
+  );
+
   let finalResult;
+  if (!findResult) {
+    finalResult = await repo.create(
+      user_id_param, USER_param
+    );
+  }
+  else {
+    finalResult = await repo.update(
+      findResult._id, USER_param
+    );
+  }
 
-  findQuery = {
-    user_id : user_id_param,
-    user_pw : user_pw_param
+  return {
+    result: finalResult
   };
-
-  findResult = await User.findOne(findQuery).lean();
-
-  return findResult;
 };
 
-// 3-4. login ------------------------------------------------------------------------------------->
-export const login = async (
-  user_id_param,
-  user_pw_param
-) => {
-
-  let findQuery;
-  let findResult;
-  let finalResult;
-
-  findQuery = {
-    user_id : user_id_param,
-    user_pw : user_pw_param
-  };
-
-  findResult = await User.findOne(findQuery).lean();
-
-  return findResult;
-};
-
-// 4. update -------------------------------------------------------------------------------------->
-export const update = async (
-  user_id_param,
-  update_pw_param
-) => {
-
-  let updateQuery;
-  let updateResult;
-  let finalResult;
-
-  updateQuery = {
-    user_id : user_id_param,
-    user_pw : update_pw_param
-  };
-
-  updateResult = await User.findOneAndUpdate(updateQuery).lean();
-
-  return updateResult;
-};
-
-// 5. deletes ------------------------------------------------------------------------------------->
+// 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param
+  _id_param,
+  user_id_param
 ) => {
 
-  let deleteQuery;
-  let deleteResult;
-  let finalResult;
+  const finalResult = await repo.deletes(
+    _id_param, user_id_param
+  );
 
-  deleteQuery = {
-    _id : _id_param
+  return {
+    result: finalResult
   };
-
-  deleteResult = await User.deleteOne(deleteQuery).lean();
-
-  return deleteResult;
 };

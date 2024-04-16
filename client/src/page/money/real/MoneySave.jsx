@@ -225,10 +225,7 @@ export const MoneySave = () => {
                   }}
                 >
                   {moneyArray?.map((item, idx) => (
-                    <option
-                      key={idx}
-                      value={idx}
-                    >
+                    <option key={idx} value={idx}>
                       {item.money_part}
                     </option>
                   ))}

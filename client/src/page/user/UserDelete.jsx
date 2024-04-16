@@ -1,15 +1,15 @@
-// UserDetail.jsx
+// UserDelete.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useDeveloperMode} from "../../../assets/hooks/useDeveloperMode.jsx";
+import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserDetail = () => {
+export const UserDelete = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const TITLE = "User Detail";
+  const TITLE = "User Delete";
   const URL_USER = process.env.REACT_APP_URL_USER;
   const navParam = useNavigate();
   const {log} = useDeveloperMode();
@@ -22,35 +22,67 @@ export const UserDetail = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const fetchUserDetail = async () => {
+    const fetchUserDelete = async () => {
       const user_id = window.sessionStorage.getItem("user_id");
       try {
         const response = await axios.post (`${URL_USER}/detail`, {
           user_id: user_id,
         });
-        if (response.status === 200) {
-          const {user_id, user_pw} = response.data;
-          setUserId(user_id);
-          setUserPw(user_pw);
-          log("USER : " + JSON.stringify(response.data));
-        }
-        else {
-          throw new Error("Server responded with an error");
-        }
+        setUserId(response.data.user_id);
+        log("USER : " + JSON.stringify(response.data));
       }
       catch (e) {
         alert(`Error fetching user data: ${e.message}`);
       }
     };
-    fetchUserDetail();
+    fetchUserDelete();
   }, []);
 
   // 3. flow -------------------------------------------------------------------------------------->
+  const flowUserDelete = async () => {
+    try {
+      if (user_pw === "" || user_pw === null) {
+        alert("Please enter your password");
+        return;
+      }
+      else {
+        const response = await axios.post(`${URL_USER}/userCheckIdPw`, {
+          user_id: user_id,
+          user_pw: user_pw,
+        });
+        if (response.data === "fail") {
+          alert("Incorrect password");
+          return;
+        }
+        if (response.data === "success") {
+          const response = await axios.delete (`${URL_USER}/userDelete`, {
+            params: {
+              user_id : user_id,
+            }
+          });
+          if (response.data === "success") {
+            alert("User Delete Success");
+            window.sessionStorage.clear();
+            navParam("/");
+          }
+          else if (response.data === "fail") {
+            alert("User Delete Fail");
+          }
+          else {
+            alert("Error Ocurred in User Delete");
+          }
+        }
+      }
+    }
+    catch (e) {
+      alert(`Error fetching user data: ${e.message}`);
+    }
+  };
 
   // 4. date -------------------------------------------------------------------------------------->
 
   // 5. table ------------------------------------------------------------------------------------->
-  const tableUserDetail = () => {
+  const tableUserDelete = () => {
     return (
       <div>
         <div className={"form-floating"}>
@@ -58,7 +90,7 @@ export const UserDetail = () => {
             className={"form-control"}
             placeholder="User location_id"
             value={user_id}
-            onChange={(e) => {setUserId(e.target.value);}}
+            onChange={(e) => setUserId(e.target.value)}
             readOnly
           />
           <label htmlFor="user_id">User location_id</label>
@@ -68,8 +100,7 @@ export const UserDetail = () => {
             className={"form-control"}
             placeholder="User PW"
             value={user_pw}
-            onChange={(e) => {setUserPw(e.target.value);}}
-            readOnly
+            onChange={(e) => setUserPw(e.target.value)}
           />
           <label htmlFor="user_pw">User PW</label>
         </div>
@@ -78,39 +109,19 @@ export const UserDetail = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
+  const buttonUserDelete = () => {
+    return (
+      <button className={"btn btn-sm btn-primary"} type={"button"} onClick={flowUserDelete}>
+        Delete
+      </button>
+    );
+  };
   const buttonRefreshPage = () => {
     return (
       <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
-      </button>
-    );
-  };
-  const buttonUserUpdate = () => {
-    return (
-      <button type={"button"} className={"btn btn-sm btn-warning ms-2"} onClick={() => {
-        navParam("/user/update");
-      }}>
-        Update
-      </button>
-    );
-  };
-  const buttonUserDelete = () => {
-    return (
-      <button type={"button"} className={"btn btn-sm btn-danger ms-2"} onClick={() => {
-        navParam("/user/delete");
-      }}>
-        Delete
-      </button>
-    );
-  };
-  const buttonUserList = () => {
-    return (
-      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={() => {
-        navParam("/user/list");
-      }}>
-        List
       </button>
     );
   };
@@ -127,12 +138,10 @@ export const UserDetail = () => {
       <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
           <form className={"form-inline"}>
-            {tableUserDetail()}
+            {tableUserDelete()}
             <br/>
-            {buttonRefreshPage()}
-            {buttonUserUpdate()}
             {buttonUserDelete()}
-            {buttonUserList()}
+            {buttonRefreshPage()}
           </form>
         </div>
         </div>

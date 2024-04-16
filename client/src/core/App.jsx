@@ -53,11 +53,12 @@ import {SleepList} from "../page/sleep/real/SleepList.jsx";
 import {SleepDetail} from "../page/sleep/real/SleepDetail.jsx";
 import {SleepSave} from "../page/sleep/real/SleepSave.jsx";
 
-import {UserLogin} from "../page/user/real/UserLogin.jsx";
-import {UserSave} from "../page/user/real/UserSave.jsx";
-import {UserDetail} from "../page/user/real/UserDetail.jsx";
-import {UserDelete} from "../page/user/real/UserDelete.jsx";
-import {UserList} from "../page/user/real/UserList";
+import {UserList} from "../page/user/UserList";
+import {UserDetail} from "../page/user/UserDetail.jsx";
+import {UserSave} from "../page/user/UserSave.jsx";
+import {UserDelete} from "../page/user/UserDelete.jsx";
+import {UserLogin} from "../page/user/UserLogin.jsx";
+import {UserDataset} from "../page/user/UserDataset.jsx";
 
 import {WorkPlanList} from "../page/work/plan/WorkPlanList.jsx";
 import {WorkPlanCompare} from "../page/work/plan/WorkPlanCompare.jsx";
@@ -127,10 +128,11 @@ const User = () => {
   return (
     <Routes>
       <Route path="/list" element={<UserList />} />
-      <Route path="/login" element={<UserLogin />} />
-      <Route path="/save" element={<UserSave />} />
       <Route path="/detail" element={<UserDetail />} />
+      <Route path="/save" element={<UserSave />} />
       <Route path="/delete" element={<UserDelete />} />
+      <Route path="/login" element={<UserLogin />} />
+      <Route path="/dataset" element={<UserDataset />} />
     </Routes>
   );
 };
