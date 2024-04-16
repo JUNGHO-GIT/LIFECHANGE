@@ -17,8 +17,8 @@ export const DashBarToday = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (bar-today) (${PATH})`, "kcal"
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (bar-today) (${PATH})`, "kcal"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -69,7 +69,6 @@ export const DashBarToday = () => {
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeKcal = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
-
     return (
       <ResponsiveContainer width={"100%"} height={300}>
         <ComposedChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -93,7 +92,6 @@ export const DashBarToday = () => {
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNodeNut = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
-
     return (
       <ResponsiveContainer width={"100%"} height={300}>
         <ComposedChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -120,14 +118,14 @@ export const DashBarToday = () => {
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activeLine === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveLine("kcal"))}
+            className={`btn ${LINE === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setLINE("kcal"))}
           >
             칼로리
           </button>
           <button
-            className={`btn ${activeLine === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveLine("nut"))}
+            className={`btn ${LINE === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setLINE("nut"))}
           >
             영양소
           </button>
@@ -140,7 +138,7 @@ export const DashBarToday = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activeLine === "kcal" ? chartNodeKcal() : chartNodeNut()}
+        {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
       </div>
       <div className={"col-3"}>
         {tableNode()}

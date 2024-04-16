@@ -17,8 +17,8 @@ export const DashAvgMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (avg-month) (${PATH})`, ["취침", "수면", "기상"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (avg-month) (${PATH})`, ["취침", "수면", "기상"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -53,13 +53,13 @@ export const DashAvgMonth = () => {
                 return tick > 24 ? tick -= 24 : tick;
               }}
             />
-            {activeLine.includes("취침")
+            {LINE.includes("취침")
               && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
             }
-            {activeLine.includes("기상")
+            {LINE.includes("기상")
               && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
             }
-            {activeLine.includes("수면")
+            {LINE.includes("수면")
               && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
             <Tooltip />
@@ -80,13 +80,13 @@ export const DashAvgMonth = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeLine.includes(key)}
+                  checked={LINE.includes(key)}
                   onChange={() => {
-                    if (activeLine.includes(key)) {
-                      setActiveLine(activeLine?.filter((item) => item !== key));
+                    if (LINE.includes(key)) {
+                      setLINE(LINE?.filter((item) => item !== key));
                     }
                     else {
-                      setActiveLine([...activeLine, key]);
+                      setLINE([...LINE, key]);
                     }
                   }}
                 />

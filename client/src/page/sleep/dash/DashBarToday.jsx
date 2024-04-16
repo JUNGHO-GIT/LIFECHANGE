@@ -17,8 +17,8 @@ export const DashBarToday = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (bar-today) (${PATH})`, ["취침", "수면", "기상"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (bar-today) (${PATH})`, ["취침", "수면", "기상"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->

@@ -17,8 +17,8 @@ export const DashLineWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (line-week) (${PATH})`, ["취침", "수면", "기상"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (line-week) (${PATH})`, ["취침", "수면", "기상"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -57,13 +57,13 @@ export const DashLineWeek = () => {
               }
             }}
           />
-          {activeLine.includes("취침")
+          {LINE.includes("취침")
             && <Line type={"monotone"} dataKey={"취침"} stroke="#8884d8" activeDot={{ r: 8 }} />
           }
-          {activeLine.includes("기상")
+          {LINE.includes("기상")
             && <Line type={"monotone"} dataKey={"기상"} stroke="#ffc658" />
           }
-          {activeLine.includes("수면")
+          {LINE.includes("수면")
             && <Line type={"monotone"} dataKey={"수면"} stroke="#82ca9d" />
           }
           <Tooltip />
@@ -83,13 +83,13 @@ export const DashLineWeek = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeLine.includes(key)}
+                  checked={LINE.includes(key)}
                   onChange={() => {
-                    if (activeLine.includes(key)) {
-                      setActiveLine(activeLine?.filter((item) => item !== key));
+                    if (LINE.includes(key)) {
+                      setLINE(LINE?.filter((item) => item !== key));
                     }
                     else {
-                      setActiveLine([...activeLine, key]);
+                      setLINE([...LINE, key]);
                     }
                   }}
                 />

@@ -188,7 +188,7 @@ export const SleepPlanList = () => {
           <div className={"col-12 mb-20"}>
             {filterNode()}
           </div>
-          <div className={"col-12"}>
+          <div className={"col-12 mb-20"}>
             {pagingNode()}
           </div>
           <div className={"col-12 mb-20"}>

@@ -16,8 +16,8 @@ export const DashPieToday = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (bar-today) (${PATH})`, "kcal"
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (bar-today) (${PATH})`, "kcal"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->

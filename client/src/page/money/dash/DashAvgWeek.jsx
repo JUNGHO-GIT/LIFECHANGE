@@ -17,8 +17,8 @@ export const DashAvgWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (avg-week) (${PATH})`, ["수입", "지출"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (avg-week) (${PATH})`, ["수입", "지출"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -77,10 +77,10 @@ export const DashAvgWeek = () => {
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            {activeLine.includes("수입")
+            {LINE.includes("수입")
               && <Bar type={"monotone"} dataKey={"수입"} fill={"#8884d8"} minPointSize={1} />
             }
-            {activeLine.includes("지출")
+            {LINE.includes("지출")
               && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
             }
             <Tooltip />
@@ -101,13 +101,13 @@ export const DashAvgWeek = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeLine.includes(key)}
+                  checked={LINE.includes(key)}
                   onChange={() => {
-                    if (activeLine.includes(key)) {
-                      setActiveLine(activeLine?.filter((item) => item !== key));
+                    if (LINE.includes(key)) {
+                      setLINE(LINE?.filter((item) => item !== key));
                     }
                     else {
-                      setActiveLine([...activeLine, key]);
+                      setLINE([...LINE, key]);
                     }
                   }}
                 />

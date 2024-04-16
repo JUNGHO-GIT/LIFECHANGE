@@ -14,8 +14,7 @@ moneyDashRouter.get("/bar/today", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -44,8 +43,7 @@ moneyDashRouter.get("/pie/today", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -74,8 +72,7 @@ moneyDashRouter.get("/pie/week", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -104,8 +101,7 @@ moneyDashRouter.get("/pie/month", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -134,8 +130,7 @@ moneyDashRouter.get("/line/week", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -164,8 +159,7 @@ moneyDashRouter.get("/line/month", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -194,8 +188,7 @@ moneyDashRouter.get("/avg/week", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -224,8 +217,7 @@ moneyDashRouter.get("/avg/month", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {

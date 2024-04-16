@@ -17,11 +17,11 @@ export const DashAvgMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (avg-month) (${PATH})`, ["탄수화물", "단백질", "지방"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (avg-month) (${PATH})`, ["탄수화물", "단백질", "지방"]
   );
-  const {val:activePart, set:setActivePart} = useStorage(
-    `activePart (avg-month) (${PATH})`, "kcal"
+  const {val:PART, set:setPART} = useStorage(
+    `PART (avg-month) (${PATH})`, "kcal"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -108,13 +108,13 @@ export const DashAvgMonth = () => {
               ticks={ticks}
               tickFormatter={tickFormatter}
             />
-            {activeLine.includes("탄수화물")
+            {LINE.includes("탄수화물")
               && <Bar type={"monotone"} dataKey={"탄수화물"} fill={"#ffc658"} minPointSize={1} />
             }
-            {activeLine.includes("단백질")
+            {LINE.includes("단백질")
               && <Bar type={"monotone"} dataKey={"단백질"} fill={"#82ca9d"} minPointSize={1} />
             }
-            {activeLine.includes("지방")
+            {LINE.includes("지방")
               && <Bar type={"monotone"} dataKey={"지방"} fill={"#ff7300"} minPointSize={1} />
             }
             <Tooltip />
@@ -131,14 +131,14 @@ export const DashAvgMonth = () => {
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activePart === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10 me-5`}
-            onClick={() => (setActivePart("kcal"))}
+            className={`btn ${PART === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10 me-5`}
+            onClick={() => (setPART("kcal"))}
           >
             칼로리
           </button>
           <button
-            className={`btn ${activePart === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10 ms-5`}
-            onClick={() => (setActivePart("nut"))}
+            className={`btn ${PART === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10 ms-5`}
+            onClick={() => (setPART("nut"))}
           >
             영양소
           </button>
@@ -147,13 +147,13 @@ export const DashAvgMonth = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeLine.includes(key)}
+                  checked={LINE.includes(key)}
                   onChange={() => {
-                    if (activeLine.includes(key)) {
-                      setActiveLine(activeLine?.filter((item) => item !== key));
+                    if (LINE.includes(key)) {
+                      setLINE(LINE?.filter((item) => item !== key));
                     }
                     else {
-                      setActiveLine([...activeLine, key]);
+                      setLINE([...LINE, key]);
                     }
                   }}
                 />
@@ -170,7 +170,7 @@ export const DashAvgMonth = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "kcal" ? chartNodeKcal() : chartNodeNut()}
+        {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
       </div>
       <div className={"col-3"}>
         {tableNode()}

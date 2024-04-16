@@ -79,10 +79,8 @@ export const barToday = async (
   };
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };
 
@@ -113,10 +111,8 @@ export const pieToday = async (
   ]).flat();
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };
 
@@ -147,10 +143,8 @@ export const pieWeek = async (
   ]).flat();
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };
 
@@ -181,10 +175,8 @@ export const pieMonth = async (
   ]).flat();
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };
 
@@ -223,10 +215,8 @@ export const lineWeek = async (
   };
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };
 
@@ -270,10 +260,8 @@ export const lineMonth = async (
   }
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };
 
@@ -334,10 +322,8 @@ export const avgWeek = async (
   };
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };
 
@@ -396,9 +382,7 @@ export const avgMonth = async (
   };
 
   return {
-    result: {
-      kcal: finalResultKcal,
-      nut: finalResultNut
-    }
+    kcal: finalResultKcal,
+    nut: finalResultNut
   };
 };

@@ -16,8 +16,8 @@ export const DashPieMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (bar-month) (${PATH})`, "kcal"
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (bar-month) (${PATH})`, "kcal"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->

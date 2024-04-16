@@ -17,8 +17,8 @@ export const DashScatterMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (scatter-month) (${PATH})`, ["목표", "실제"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (scatter-month) (${PATH})`, ["목표", "실제"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->

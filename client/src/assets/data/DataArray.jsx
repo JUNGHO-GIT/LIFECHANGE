@@ -9,7 +9,6 @@ export const dataArray = [
   {
     label: "User",
     items: [
-      {to: "/user/login", label: "UserLogin"},
       {to: "/user/dataset", label: "UserDataset"},
     ]
   },

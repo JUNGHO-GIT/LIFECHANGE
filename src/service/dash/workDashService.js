@@ -61,9 +61,7 @@ export const scatterWeek = async (
     };
   };
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 1-2. dash (scatter - month) -------------------------------------------------------------------->
@@ -103,9 +101,7 @@ export const scatterMonth = async (
     };
   };
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 2-1. dash (pie - week) ------------------------------------------------------------------------->
@@ -141,10 +137,8 @@ export const pieWeek = async (
   }
 
   return {
-    result: {
-      part: finalResultPart,
-      title: finalResultTitle
-    }
+    part: finalResultPart,
+    title: finalResultTitle
   };
 };
 
@@ -181,10 +175,8 @@ export const pieMonth = async (
   }
 
   return {
-    result: {
-      part: finalResultPart,
-      title: finalResultTitle
-    }
+    part: finalResultPart,
+    title: finalResultTitle
   };
 };
 
@@ -212,9 +204,7 @@ export const lineWeek = async (
     });
   };
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
@@ -243,9 +233,7 @@ export const lineMonth = async (
     });
   }
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
@@ -299,10 +287,8 @@ export const avgWeek = async (
   };
 
   return {
-    result: {
-      volume: finalResultVolume,
-      cardio: finalResultCardio
-    }
+    volume: finalResultVolume,
+    cardio: finalResultCardio
   };
 };
 
@@ -355,9 +341,7 @@ export const avgMonth = async (
   };
 
   return {
-    result: {
-      volume: finalResultVolume,
-      cardio: finalResultCardio
-    }
+    volume: finalResultVolume,
+    cardio: finalResultCardio
   };
 };

@@ -14,8 +14,7 @@ workDashRouter.get("/scatter/week", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -44,8 +43,7 @@ workDashRouter.get("/scatter/month", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -74,8 +72,7 @@ workDashRouter.get("/pie/week", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -104,8 +101,7 @@ workDashRouter.get("/pie/month", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -134,8 +130,7 @@ workDashRouter.get("/line/week", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -164,8 +159,7 @@ workDashRouter.get("/line/month", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -194,8 +188,7 @@ workDashRouter.get("/avg/week", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {
@@ -224,8 +217,7 @@ workDashRouter.get("/avg/month", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
+        result: result
       });
     }
     else {

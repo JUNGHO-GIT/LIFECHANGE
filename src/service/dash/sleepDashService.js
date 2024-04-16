@@ -68,9 +68,7 @@ export const barToday = async (
     });
   };
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
@@ -98,9 +96,7 @@ export const lineWeek = async (
     });
   };
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
@@ -130,9 +126,7 @@ export const lineMonth = async (
     });
   }
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
@@ -181,9 +175,7 @@ export const avgWeek = async (
     });
   };
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
@@ -230,7 +222,5 @@ export const avgMonth = async (
     });
   };
 
-  return {
-    result: finalResult,
-  };
+  return finalResult;
 };

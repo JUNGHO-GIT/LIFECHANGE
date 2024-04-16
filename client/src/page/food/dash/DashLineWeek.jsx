@@ -17,11 +17,11 @@ export const DashLineWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (line-week) (${PATH})`, ["탄수화물", "단백질", "지방"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (line-week) (${PATH})`, ["탄수화물", "단백질", "지방"]
   );
-  const {val:activePart, set:setActivePart} = useStorage(
-    `activePart (line-week) (${PATH})`, "kcal"
+  const {val:PART, set:setPART} = useStorage(
+    `PART (line-week) (${PATH})`, "kcal"
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -107,13 +107,13 @@ export const DashLineWeek = () => {
             ticks={ticks}
             tickFormatter={tickFormatter}
           />
-          {activeLine.includes("탄수화물")
+          {LINE.includes("탄수화물")
             && <Line type={"monotone"} dataKey={"탄수화물"} stroke="#82ca9d" activeDot={{r: 8}} />
           }
-          {activeLine.includes("단백질")
+          {LINE.includes("단백질")
             && <Line type={"monotone"} dataKey={"단백질"} stroke="#ff7300" activeDot={{r: 8}} />
           }
-          {activeLine.includes("지방")
+          {LINE.includes("지방")
             && <Line type={"monotone"} dataKey={"지방"} stroke="#ffc658" activeDot={{r: 8}} />
           }
           <Tooltip />
@@ -129,14 +129,14 @@ export const DashLineWeek = () => {
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activePart === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActivePart("kcal"))}
+            className={`btn ${PART === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setPART("kcal"))}
           >
             칼로리
           </button>
           <button
-            className={`btn ${activePart === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActivePart("nut"))}
+            className={`btn ${PART === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setPART("nut"))}
           >
             영양소
           </button>
@@ -145,13 +145,13 @@ export const DashLineWeek = () => {
               <div key={index}>
                 <input
                   type={"checkbox"}
-                  checked={activeLine.includes(key)}
+                  checked={LINE.includes(key)}
                   onChange={() => {
-                    if (activeLine.includes(key)) {
-                      setActiveLine(activeLine?.filter((item) => (item !== key)));
+                    if (LINE.includes(key)) {
+                      setLINE(LINE?.filter((item) => (item !== key)));
                     }
                     else {
-                      setActiveLine([...activeLine, key]);
+                      setLINE([...LINE, key]);
                     }
                   }}
                 />
@@ -168,7 +168,7 @@ export const DashLineWeek = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activePart === "kcal" ? chartNodeKcal() : chartNodeNut()}
+        {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
       </div>
       <div className={"col-3"}>
         {tableNode()}

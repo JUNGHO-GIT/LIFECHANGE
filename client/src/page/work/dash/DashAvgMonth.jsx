@@ -17,8 +17,8 @@ export const DashAvgMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (avg-month) (${PATH})`, ["볼륨", "시간"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (avg-month) (${PATH})`, ["볼륨", "시간"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -120,14 +120,14 @@ export const DashAvgMonth = () => {
       <table className={"table bg-white border"}>
         <tbody>
           <button
-            className={`btn ${activeLine === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveLine("볼륨"))}
+            className={`btn ${LINE === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setLINE("볼륨"))}
           >
             볼륨
           </button>
           <button
-            className={`btn ${activeLine === "시간" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setActiveLine("시간"))}
+            className={`btn ${LINE === "시간" ? "btn-primary" : "btn-outline-primary"} mt-10`}
+            onClick={() => (setLINE("시간"))}
           >
             시간
           </button>
@@ -140,7 +140,7 @@ export const DashAvgMonth = () => {
   return (
     <div className={"row d-center"}>
       <div className={"col-9"}>
-        {activeLine === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
+        {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
       </div>
       <div className={"col-3"}>
         {tableNode()}

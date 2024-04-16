@@ -16,8 +16,8 @@ export const DashPieWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (pie-week) (${PATH})`, ["파트", "타이틀"]
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (pie-week) (${PATH})`, ["파트", "타이틀"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
