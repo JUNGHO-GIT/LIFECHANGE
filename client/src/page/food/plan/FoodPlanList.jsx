@@ -70,10 +70,14 @@ export const FoodPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const FOOD_PLAN_DEFAULT = [{
-    _id: "",
-    food_plan_number: 0,
+    food_startDt: "",
+    food_endDt: "",
     food_plan_startDt: "",
     food_plan_endDt: "",
+    food_kcal: 0,
+    food_carb: 0,
+    food_protein: 0,
+    food_fat: 0,
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
@@ -86,6 +90,7 @@ export const FoodPlanList = () => {
     const response = await axios.get(`${URL_FOOD_PLAN}/list`, {
       params: {
         user_id: user_id,
+        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
@@ -95,48 +100,92 @@ export const FoodPlanList = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0
+      sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [user_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real) {
+      // 절댓값 구하기
+      const abs = Math.abs(plan - real);
+      if (real < plan) {
+        return (
+          <span className={"text-success"}>{abs}</span>
+        );
+      }
+      else if (real === plan) {
+        return (
+          <span className={"text-primary"}>{abs}</span>
+        );
+      }
+      else if (real > plan) {
+        return (
+          <span className={"text-danger"}>{abs}</span>
+        );
+      }
+    };
+    function tableFragment () {
+      return (
+        <table className={"table bg-white table-hover"}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th>기간</th>
+              <th>분류</th>
+              <th>목표</th>
+              <th>실제</th>
+              <th>비교</th>
+            </tr>
+          </thead>
+          <tbody>
+            {FOOD_PLAN?.map((item, index) => (
+              <React.Fragment key={item._id}>
+                <tr>
+                  <td rowSpan={5} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.food_plan_startDt;
+                    SEND.endDt = item.food_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
+                    {item.food_plan_startDt} ~ {item.food_plan_endDt}
+                  </td>
+                </tr>
+                <tr>
+                  <td>칼로리</td>
+                  <td>{item.food_plan_kcal}</td>
+                  <td>{item.food_kcal}</td>
+                  <td>{successOrNot(item.food_plan_kcal, item.food_kcal)}</td>
+                </tr>
+                <tr>
+                  <td>탄수화물</td>
+                  <td>{item.food_plan_carb}</td>
+                  <td>{item.food_carb}</td>
+                  <td>{successOrNot(item.food_plan_carb, item.food_carb)}</td>
+                </tr>
+                <tr>
+                  <td>단백질</td>
+                  <td>{item.food_plan_protein}</td>
+                  <td>{item.food_protein}</td>
+                  <td>{successOrNot(item.food_plan_protein, item.food_protein)}</td>
+                </tr>
+                <tr>
+                  <td>지방</td>
+                  <td>{item.food_plan_fat}</td>
+                  <td>{item.food_fat}</td>
+                  <td>{successOrNot(item.food_plan_fat, item.food_fat)}</td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      );
+    };
     return (
-      <table className={"table bg-white table-hover"}>
-        <thead className={"table-primary"}>
-          <tr>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>칼로리</th>
-            <th>탄수화물</th>
-            <th>단백질</th>
-            <th>지방</th>
-          </tr>
-        </thead>
-        <tbody>
-          {FOOD_PLAN?.map((item) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.food_plan_startDt;
-                  SEND.endDt = item.food_plan_endDt;
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
-                  {item.food_plan_startDt}
-                </td>
-                <td>{item.food_plan_endDt}</td>
-                <td>{item.food_plan_kcal}</td>
-                <td>{item.food_plan_carb}</td>
-                <td>{item.food_plan_protein}</td>
-                <td>{item.food_plan_fat}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+      <div className={"d-flex"}>
+        {tableFragment()}
+      </div>
     );
   };
 

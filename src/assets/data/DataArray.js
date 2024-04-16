@@ -20,7 +20,6 @@ export const dataArray = [
       {to: "/food/list", label: "FoodList"},
       {to: "/food/save", label: "FoodSave"},
       {to: "/food/plan/list", label: "FoodPlanList"},
-      {to: "/food/plan/compare", label: "FoodPlanCompare"},
       {to: "/food/plan/save", label: "FoodPlanSave"},
     ]
   },
@@ -31,7 +30,6 @@ export const dataArray = [
       {to: "/money/list", label: "MoneyList"},
       {to: "/money/save", label: "MoneySave"},
       {to: "/money/plan/list", label: "MoneyPlanList"},
-      {to: "/money/plan/compare", label: "MoneyPlanCompare"},
       {to: "/money/plan/save", label: "MoneyPlanSave"},
     ]
   },
@@ -42,7 +40,6 @@ export const dataArray = [
       {to: "/sleep/list", label: "SleepList"},
       {to: "/sleep/save", label: "SleepSave"},
       {to: "/sleep/plan/list", label: "SleepPlanList"},
-      {to: "/sleep/plan/compare", label: "SleepPlanCompare"},
       {to: "/sleep/plan/save", label: "SleepPlanSave"},
     ]
   },
@@ -53,7 +50,6 @@ export const dataArray = [
       {to: "/work/list", label: "WorkList"},
       {to: "/work/save", label: "WorkSave"},
       {to: "/work/plan/list", label: "WorkPlanList"},
-      {to: "/work/plan/compare", label: "WorkPlanCompare"},
       {to: "/work/plan/save", label: "WorkPlanSave"},
     ]
   }

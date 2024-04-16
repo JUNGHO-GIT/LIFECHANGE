@@ -2,8 +2,8 @@
 
 import * as repository from "../../repository/plan/moneyPlanRepository.js";
 
-// 1-1. compare ----------------------------------------------------------------------------------->
-export const compare = async (
+// 1-1. list -------------------------------------------------------------------------------------->
+export const list = async (
   user_id_param,
   money_dur_param,
   money_plan_dur_param,
@@ -59,34 +59,6 @@ export const compare = async (
   return {
     totalCnt: totalCnt,
     result: finalResult
-  };
-};
-
-// 1-2. list -------------------------------------------------------------------------------------->
-export const list = async (
-  user_id_param,
-  money_plan_dur_param,
-  FILTER_param,
-  PAGING_param
-) => {
-
-  const [startDt, endDt] = money_plan_dur_param.split(` ~ `);
-
-  const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
-  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
-
-  const totalCnt = await repository.totalCnt(
-    user_id_param, startDt, endDt
-  );
-
-  const findResult = await repository.findPlan(
-    user_id_param, sort, limit, page, startDt, endDt
-  );
-
-  return {
-    totalCnt: totalCnt,
-    result: findResult,
   };
 };
 

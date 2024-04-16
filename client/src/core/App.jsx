@@ -26,7 +26,6 @@ import {Footer} from "../layout/Footer";
 import {Dash} from "../page/common/Dash.jsx";
 
 import {FoodPlanList} from "../page/food/plan/FoodPlanList.jsx";
-import {FoodPlanCompare} from "../page/food/plan/FoodPlanCompare.jsx";
 import {FoodPlanDetail} from "../page/food/plan/FoodPlanDetail.jsx";
 import {FoodPlanSave} from "../page/food/plan/FoodPlanSave.jsx";
 import {FoodDash} from "../page/food/dash/FoodDash.jsx";
@@ -36,7 +35,6 @@ import {FoodDetail} from "../page/food/real/FoodDetail.jsx";
 import {FoodSave} from "../page/food/real/FoodSave.jsx";
 
 import {MoneyPlanList} from "../page/money/plan/MoneyPlanList.jsx";
-import {MoneyPlanCompare} from "../page/money/plan/MoneyPlanCompare.jsx";
 import {MoneyPlanDetail} from "../page/money/plan/MoneyPlanDetail.jsx";
 import {MoneyPlanSave} from "../page/money/plan/MoneyPlanSave.jsx";
 import {MoneyDash} from "../page/money/dash/MoneyDash.jsx";
@@ -45,7 +43,6 @@ import {MoneyDetail} from "../page/money/real/MoneyDetail.jsx";
 import {MoneySave} from "../page/money/real/MoneySave.jsx";
 
 import {SleepPlanList} from "../page/sleep/plan/SleepPlanList.jsx";
-import {SleepPlanCompare} from "../page/sleep/plan/SleepPlanCompare.jsx";
 import {SleepPlanDetail} from "../page/sleep/plan/SleepPlanDetail.jsx";
 import {SleepPlanSave} from "../page/sleep/plan/SleepPlanSave.jsx";
 import {SleepDash} from "../page/sleep/dash/SleepDash.jsx";
@@ -61,7 +58,6 @@ import {UserDelete} from "../page/user/UserDelete.jsx";
 import {UserDataset} from "../page/user/UserDataset.jsx";
 
 import {WorkPlanList} from "../page/work/plan/WorkPlanList.jsx";
-import {WorkPlanCompare} from "../page/work/plan/WorkPlanCompare.jsx";
 import {WorkPlanDetail} from "../page/work/plan/WorkPlanDetail.jsx";
 import {WorkPlanSave} from "../page/work/plan/WorkPlanSave.jsx";
 import {WorkDash} from "../page/work/dash/WorkDash.jsx";
@@ -82,7 +78,6 @@ const Food = () => {
   return (
     <Routes>
       <Route path="/plan/list" element={<FoodPlanList />} />
-      <Route path="/plan/compare" element={<FoodPlanCompare />} />
       <Route path="/plan/detail" element={<FoodPlanDetail />} />
       <Route path="/plan/save" element={<FoodPlanSave />} />
       <Route path="/dash" element={<FoodDash />} />
@@ -98,7 +93,6 @@ const Money = () => {
   return (
     <Routes>
       <Route path="/plan/list" element={<MoneyPlanList />} />
-      <Route path="/plan/compare" element={<MoneyPlanCompare />} />
       <Route path="/plan/detail" element={<MoneyPlanDetail />} />
       <Route path="/plan/save" element={<MoneyPlanSave />} />
       <Route path="/dash" element={<MoneyDash />} />
@@ -113,7 +107,6 @@ const Sleep = () => {
   return (
     <Routes>
       <Route path="/plan/list" element={<SleepPlanList />} />
-      <Route path="/plan/compare" element={<SleepPlanCompare />} />
       <Route path="/plan/detail" element={<SleepPlanDetail />} />
       <Route path="/plan/save" element={<SleepPlanSave />} />
       <Route path="/dash" element={<SleepDash />} />
@@ -141,7 +134,6 @@ const Work = () => {
   return (
     <Routes>
       <Route path="/plan/list" element={<WorkPlanList />} />
-      <Route path="/plan/compare" element={<WorkPlanCompare />} />
       <Route path="/plan/detail" element={<WorkPlanDetail />} />
       <Route path="/plan/save" element={<WorkPlanSave />} />
       <Route path="/dash" element={<WorkDash />} />

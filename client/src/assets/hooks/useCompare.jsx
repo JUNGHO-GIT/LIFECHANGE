@@ -1,7 +1,7 @@
-// useCompare.jsx
+// useList.jsx
 
 // ------------------------------------------------------------------------------------------------>
-export const useCompare = (
+export const useList = (
   plan, real, part
 ) => {
 

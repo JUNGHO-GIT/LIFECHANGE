@@ -19,7 +19,7 @@ export const WorkPlanList = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -27,8 +27,8 @@ export const WorkPlanList = () => {
       id: "",
       startDt: "",
       endDt: "",
-      refresh:0,
-      toDetail:"/work/plan/detail"
+      refresh: 0,
+      toDetail: "/work/plan/detail",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -70,16 +70,18 @@ export const WorkPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const WORK_PLAN_DEFAULT = [{
-    _id: "",
-    work_plan_number: 0,
+    work_startDt: "",
+    work_endDt: "",
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total_count: "",
+    work_total_count: 0,
+    work_total_volume: 0,
+    work_total_cardio: "",
+    work_body_weight: 0,
+    work_plan_total_count: 0,
     work_plan_cardio_time: "",
-    work_plan_total_volume: "",
-    work_plan_body_weight: "",
-    work_plan_regdate: "",
-    work_plan_update: "",
+    work_plan_total_volume: 0,
+    work_plan_body_weight: 0,
   }];
   const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
 
@@ -88,6 +90,7 @@ export const WorkPlanList = () => {
     const response = await axios.get(`${URL_WORK_PLAN}/list`, {
       params: {
         user_id: user_id,
+        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
@@ -97,48 +100,69 @@ export const WorkPlanList = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0
+      sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [user_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real) {
+      if (plan === real) {
+        return "일치";
+      }
+      else {
+        return plan > real ? "미달" : "초과";
+      }
+    };
+    function tableFragment () {
+      return (
+        <table className={"table bg-white table-hover"}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th>기간</th>
+              <th>분류</th>
+              <th>목표</th>
+              <th>실제</th>
+              <th>비교</th>
+            </tr>
+          </thead>
+          <tbody>
+            {WORK_PLAN?.map((item, index) => (
+              <React.Fragment key={item._id}>
+                <tr>
+                  <td rowSpan={3} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.work_plan_startDt;
+                    SEND.endDt = item.work_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
+                    {item.work_plan_startDt} ~ {item.work_plan_endDt}
+                  </td>
+                </tr>
+                <tr>
+                  <td>총 운동횟수</td>
+                  <td>{item.work_plan_total_count || "0"}</td>
+                  <td>{item.work_total_count || "0"}</td>
+                  <td>{successOrNot(item.work_plan_total_count, item.work_total_count)}</td>
+                </tr>
+                <tr>
+                  <td>유산소 시간</td>
+                  <td>{item.work_plan_cardio_time || "0"}</td>
+                  <td>{item.work_total_cardio || "0"}</td>
+                  <td>{successOrNot(item.work_plan_cardio_time, item.work_total_cardio)}</td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      );
+    };
     return (
-      <table className={"table bg-white table-hover"}>
-        <thead className={"table-primary"}>
-          <tr>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>목표 운동 횟수</th>
-            <th>목표 유산소 시간</th>
-            <th>목표 총 운동량</th>
-            <th>목표 체중</th>
-          </tr>
-        </thead>
-        <tbody>
-          {WORK_PLAN?.map((item) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.work_plan_startDt;
-                  SEND.endDt = item.work_plan_endDt;
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
-                  {item.work_plan_startDt}
-                </td>
-                <td>{item.work_plan_endDt}</td>
-                <td>{item.work_plan_total_count}</td>
-                <td>{item.work_plan_cardio_time}</td>
-                <td>{item.work_plan_total_volume}</td>
-                <td>{item.work_plan_body_weight}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+      <div className={"d-flex"}>
+        {tableFragment()}
+      </div>
     );
   };
 

@@ -27,7 +27,7 @@ export const SleepPlanList = () => {
       id: "",
       startDt: "",
       endDt: "",
-      refresh:0,
+      refresh: 0,
       toDetail:"/sleep/plan/detail"
     }
   );
@@ -70,10 +70,13 @@ export const SleepPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const SLEEP_PLAN_DEFAULT = [{
-    _id: "",
-    sleep_plan_number: 0,
+    sleep_startDt: "",
+    sleep_endDt: "",
     sleep_plan_startDt: "",
     sleep_plan_endDt: "",
+    sleep_night: "",
+    sleep_morning: "",
+    sleep_time: "",
     sleep_plan_night: "",
     sleep_plan_morning: "",
     sleep_plan_time: "",
@@ -85,6 +88,7 @@ export const SleepPlanList = () => {
     const response = await axios.get(`${URL_SLEEP_PLAN}/list`, {
       params: {
         user_id: user_id,
+        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
@@ -100,40 +104,91 @@ export const SleepPlanList = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real) {
+      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
+      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
+      if (realDate < planDate) {
+        realDate.setHours(realDate.getHours() + 24);
+      }
+      const diff = Math.abs(realDate.getTime() - planDate.getTime());
+      const diffMinutes = Math.floor(diff / 60000);
+
+      let textColor = "text-muted";
+      if (0 <= diffMinutes && diffMinutes <= 10) {
+        textColor = "text-primary";
+      }
+      if (10 < diffMinutes && diffMinutes <= 20) {
+        textColor = "text-success";
+      }
+      if (20 < diffMinutes && diffMinutes <= 30) {
+        textColor = "text-warning";
+      }
+      if (30 < diffMinutes) {
+        textColor = "text-danger";
+      }
+      return textColor;
+    };
+    function tableFragment () {
+      return (
+        <table className={"table bg-white table-hover"}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th>날짜</th>
+              <th>분류</th>
+              <th>목표</th>
+              <th>실제</th>
+              <th>비교</th>
+            </tr>
+          </thead>
+          <tbody>
+            {SLEEP_PLAN?.map((item, index) => (
+              <React.Fragment key={item._id}>
+                <tr>
+                  <td rowSpan={4} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.sleep_plan_startDt;
+                    SEND.endDt = item.sleep_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
+                    {item.sleep_plan_startDt}
+                  </td>
+                </tr>
+                <tr>
+                  <td>취침</td>
+                  <td>{item.sleep_plan_night}</td>
+                  <td>{item.sleep_night}</td>
+                  <td className={successOrNot(item.sleep_night, item.sleep_plan_night)}>
+                    ●
+                  </td>
+                </tr>
+                <tr>
+                  <td>기상</td>
+                  <td>{item.sleep_plan_morning}</td>
+                  <td>{item.sleep_morning}</td>
+                  <td className={successOrNot(item.sleep_morning, item.sleep_plan_morning)}>
+                    ●
+                  </td>
+                </tr>
+                <tr>
+                  <td>수면</td>
+                  <td>{item.sleep_plan_time}</td>
+                  <td>{item.sleep_time}</td>
+                  <td className={successOrNot(item.sleep_time, item.sleep_plan_time)}>
+                    ●
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      );
+    };
     return (
-      <table className={"table bg-white table-hover"}>
-        <thead className={"table-primary"}>
-          <tr>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
-          </tr>
-        </thead>
-        <tbody>
-          {SLEEP_PLAN?.map((item) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.sleep_plan_startDt;
-                  SEND.endDt = item.sleep_plan_endDt;
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
-                  {item.sleep_plan_startDt}
-                </td>
-                <td>{item.sleep_plan_endDt}</td>
-                <td>{item.sleep_plan_night}</td>
-                <td>{item.sleep_plan_morning}</td>
-                <td>{item.sleep_plan_time}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+      <div className={"d-flex"}>
+        {tableFragment()}
+      </div>
     );
   };
 

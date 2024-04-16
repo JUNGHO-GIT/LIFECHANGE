@@ -115,7 +115,7 @@ export const ButtonNode = ({
         {buttonSearch()}
         {buttonRefresh()}
       </div>
-    ) : part === "food" && type === "compare" ? (
+    ) : part === "food" && type === "list" ? (
       <div className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}
@@ -139,7 +139,7 @@ export const ButtonNode = ({
         {buttonList()}
         {buttonRefresh()}
       </div>
-    ) : part !== "food" && type === "compare" ? (
+    ) : part !== "food" && type === "list" ? (
       <div className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}

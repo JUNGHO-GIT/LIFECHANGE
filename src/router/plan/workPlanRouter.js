@@ -4,45 +4,12 @@ import express from "express";
 import * as service from "../../service/plan/workPlanService.js";
 export const workPlanRouter = express.Router();
 
-// 1-1. compare ----------------------------------------------------------------------------------->
-workPlanRouter.get("/compare", async (req, res) => {
-  try {
-    const result = await service.compare (
-      req.query.user_id,
-      req.query.work_dur,
-      req.query.work_plan_dur,
-      req.query.FILTER,
-      req.query.PAGING
-    );
-    if (result && result.result) {
-      res.json({
-        status: "success",
-        msg: "조회 성공",
-        totalCnt: result.totalCnt,
-        result: result.result
-      });
-    }
-    else {
-      res.json({
-        status: "fail",
-        msg: "조회 실패"
-      });
-    }
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      error: err.toString()
-    });
-  }
-});
-
-// 1-2. list -------------------------------------------------------------------------------------->
+// 1-1. list -------------------------------------------------------------------------------------->
 workPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
+      req.query.work_dur,
       req.query.work_plan_dur,
       req.query.FILTER,
       req.query.PAGING

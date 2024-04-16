@@ -28,7 +28,7 @@ export const MoneyPlanList = () => {
       startDt: "",
       endDt: "",
       refresh: 0,
-      toDetail:"/money/plan/detail"
+      toDetail: "/money/plan/detail",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -70,10 +70,12 @@ export const MoneyPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const MONEY_PLAN_DEFAULT = [{
-    _id: "",
-    money_plan_number: 0,
+    money_startDt: "",
+    money_endDt: "",
     money_plan_startDt: "",
     money_plan_endDt: "",
+    money_in: 0,
+    money_out: 0,
     money_plan_in: 0,
     money_plan_out: 0
   }];
@@ -84,6 +86,7 @@ export const MoneyPlanList = () => {
     const response = await axios.get(`${URL_MONEY_PLAN}/list`, {
       params: {
         user_id: user_id,
+        money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
@@ -93,44 +96,102 @@ export const MoneyPlanList = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0
+      sectionCnt: response.data.sectionCnt || 0,
     }));
   })()}, [user_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function successOrNot (plan, real, type) {
+      // 절댓값 구하기
+      const abs = Math.abs(plan - real);
+      // 1. 수입 항목인 경우
+      if (type === "in") {
+        if (real < plan) {
+          return (
+            <span className={"text-danger"}>{abs}</span>
+          );
+        }
+        else if (real === plan) {
+          return (
+            <span className={"text-primary"}>{abs}</span>
+          );
+        }
+        else if (real > plan) {
+          return (
+            <span className={"text-success"}>{abs}</span>
+          );
+        }
+      }
+      // 2. 지출 항목인 경우
+      else if (type === "out") {
+        if (real < plan) {
+          return (
+            <span className={"text-success"}>{abs}</span>
+          );
+        }
+        else if (real === plan) {
+          return (
+            <span className={"text-primary"}>{abs}</span>
+          );
+        }
+        else if (real > plan) {
+          return (
+            <span className={"text-danger"}>{abs}</span>
+          );
+        }
+      }
+    };
+
+    function tableFragment () {
+      return (
+        <table className={"table bg-white table-hover"}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th>기간</th>
+              <th>분류</th>
+              <th>목표</th>
+              <th>실제</th>
+              <th>비교</th>
+            </tr>
+          </thead>
+          <tbody>
+            {MONEY_PLAN?.map((item, index) => (
+              <React.Fragment key={item._id}>
+                <tr>
+                  <td rowSpan={3} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.money_plan_startDt;
+                    SEND.endDt = item.money_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
+                    {item.money_plan_startDt} ~ {item.money_plan_endDt}
+                  </td>
+                </tr>
+                <tr>
+                  <td>수입</td>
+                  <td>{item.money_plan_in}</td>
+                  <td>{item.money_in}</td>
+                  <td>{successOrNot(item.money_plan_in, item.money_in, "in")}</td>
+                </tr>
+                <tr>
+                  <td>지출</td>
+                  <td>{item.money_plan_out}</td>
+                  <td>{item.money_out}</td>
+                  <td>{successOrNot(item.money_plan_out, item.money_out, "out")}</td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      );
+    };
     return (
-      <table className={"table bg-white table-hover"}>
-        <thead className={"table-primary"}>
-          <tr>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>수입</th>
-            <th>지출</th>
-          </tr>
-        </thead>
-        <tbody>
-          {MONEY_PLAN?.map((item) => (
-            <React.Fragment key={item._id}>
-              <tr>
-                <td className={"pointer"} onClick={() => {
-                  SEND.id = item._id;
-                  SEND.startDt = item.money_plan_startDt;
-                  SEND.endDt = item.money_plan_endDt;
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
-                  {item.money_plan_startDt}
-                </td>
-                <td>{item.money_plan_endDt}</td>
-                <td>{item.money_plan_in}</td>
-                <td>{item.money_plan_out}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+      <div className={"d-flex"}>
+        {tableFragment()}
+      </div>
     );
   };
 
