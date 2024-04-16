@@ -4,9 +4,8 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
-import DatePicker from "react-datepicker";
 import axios from "axios";
-import moment from "moment-timezone";
+import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -22,6 +21,7 @@ export const MoneyPlanSave = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  // @ts-ignore
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
@@ -37,6 +37,7 @@ export const MoneyPlanSave = () => {
       endDt: location_endDt
     }
   );
+  // @ts-ignore
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
@@ -102,113 +103,48 @@ export const MoneyPlanSave = () => {
     }
   };
 
+  // 4. date -------------------------------------------------------------------------------------->
+  const dateNode = () => {
+    return (
+      <DateNode DATE={DATE} setDATE={setDATE} part={"money"} plan={"plan"} type={"save"} />
+    );
+  };
+
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
-    // 1. startNode
-    function startNode () {
-      return (
-        <div className={"row d-center"}>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>시작일</span>
-              <DatePicker
-                timeFormat={"yyyy-MM-dd"}
-                popperPlacement={"bottom"}
-                className={"form-control"}
-                selected={new Date(DATE.startDt)}
-                disabled={false}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-                  }));
-                }}
-              >
-              </DatePicker>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // 2. endNode
-    function endNode () {
-      return (
-        <div className={"row d-center"}>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>종료일</span>
-              <DatePicker
-                timeFormat={"yyyy-MM-dd"}
-                popperPlacement={"bottom"}
-                className={"form-control"}
-                selected={new Date(DATE.endDt)}
-                disabled={false}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-                  }));
-                }}
-              ></DatePicker>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // 3. moneyNode
-    function moneyNode () {
-      return (
-        <div className={"row d-center mb-20"}>
-          <div className={"col-6"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>목표 수입</span>
-              <input
-                type={"number"}
-                className={"form-control"}
-                value={MONEY_PLAN?.money_plan_in}
-                onChange={(e) => {
-                  setMONEY_PLAN((prev) => ({
-                    ...prev,
-                    money_plan_in: Number(e.target.value)
-                  }));
-                }}
-              />
-            </div>
-          </div>
-          <div className={"col-6"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>목표 지출</span>
-              <input
-                type={"number"}
-                className={"form-control"}
-                value={MONEY_PLAN?.money_plan_out}
-                onChange={(e) => {
-                  setMONEY_PLAN((prev) => ({
-                    ...prev,
-                    money_plan_out: Number(e.target.value)
-                  }));
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // 5. return
     return (
-      <div className={"row d-center"}>
-        <div className={"col-4 mb-20"}>
-          {startNode()}
+      <div className={"row d-center mb-20"}>
+        <div className={"col-6"}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>목표 수입</span>
+            <input
+              type={"number"}
+              className={"form-control"}
+              value={MONEY_PLAN?.money_plan_in}
+              onChange={(e) => {
+                setMONEY_PLAN((prev) => ({
+                  ...prev,
+                  money_plan_in: Number(e.target.value)
+                }));
+              }}
+            />
+          </div>
         </div>
-        <div className={"col-4 mb-20"}>
-          {endNode()}
-        </div>
-        <div className={"col-8 mb-20"}>
-          {moneyNode()}
+        <div className={"col-6"}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>목표 지출</span>
+            <input
+              type={"number"}
+              className={"form-control"}
+              value={MONEY_PLAN?.money_plan_out}
+              onChange={(e) => {
+                setMONEY_PLAN((prev) => ({
+                  ...prev,
+                  money_plan_out: Number(e.target.value)
+                }));
+              }}
+            />
+          </div>
         </div>
       </div>
     );
@@ -231,6 +167,9 @@ export const MoneyPlanSave = () => {
         <div className={"row d-center"}>
           <div className={"col-12 mb-20"}>
             <h1>Save</h1>
+          </div>
+          <div className={"col-12 mb-20"}>
+            {dateNode()}
           </div>
           <div className={"col-12 mb-20"}>
             {tableNode()}

@@ -71,13 +71,13 @@ export const compare = (
     if (0 <= diffMinutes && diffMinutes <= 10) {
       finalResult = (<span className={"text-primary"}>{diffMinutes}</span>);
     }
-    if (10 < diffMinutes && diffMinutes <= 20) {
+    else if (10 < diffMinutes && diffMinutes <= 20) {
       finalResult = (<span className={"text-success"}>{diffMinutes}</span>);
     }
-    if (20 < diffMinutes && diffMinutes <= 30) {
+    else if (20 < diffMinutes && diffMinutes <= 30) {
       finalResult = (<span className={"text-warning"}>{diffMinutes}</span>);
     }
-    if (30 < diffMinutes) {
+    else if (30 < diffMinutes) {
       finalResult = (<span className={"text-danger"}>{diffMinutes}</span>);
     }
 

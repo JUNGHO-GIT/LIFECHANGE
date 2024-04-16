@@ -4,9 +4,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
-import DatePicker from "react-datepicker";
 import axios from "axios";
-import moment from "moment-timezone";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
@@ -107,137 +105,72 @@ export const WorkPlanSave = () => {
     }
   };
 
+  // 4. date -------------------------------------------------------------------------------------->
+  const dateNode = () => {
+    return (
+      <DateNode DATE={DATE} setDATE={setDATE} part={"work"} plan={"plan"} type={"save"} />
+    );
+  };
+
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
-    // 1. startNode
-    function startNode () {
-      return (
-        <div className={"row d-center"}>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>시작일</span>
-              <DatePicker
-                timeFormat={"yyyy-MM-dd"}
-                popperPlacement={"bottom"}
-                className={"form-control"}
-                selected={new Date(DATE.startDt)}
-                disabled={false}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-                  }));
-                }}
-              >
-              </DatePicker>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // 2. endNode
-    function endNode () {
-      return (
-        <div className={"row d-center"}>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>종료일</span>
-              <DatePicker
-                timeFormat={"yyyy-MM-dd"}
-                popperPlacement={"bottom"}
-                className={"form-control"}
-                selected={new Date(DATE.endDt)}
-                disabled={false}
-                onChange={(date) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-                  }));
-                }}
-              ></DatePicker>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // 3. moneyNode
-    function moneyNode () {
-      return (
-        <div className={"row d-center mb-20"}>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>목표 운동 횟수</span>
-              <input type={"text"} className={"form-control"}
-                value={WORK_PLAN?.work_plan_total_count}
-                onChange={(e) => {
-                  setWORK_PLAN((prev) => ({
-                    ...prev,
-                    work_plan_total_count: e.target.value
-                  }));
-                }}
-              />
-            </div>
-          </div>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>목표 유산소 시간</span>
-              <input type={"text"} className={"form-control"}
-                value={WORK_PLAN?.work_plan_cardio_time}
-                onChange={(e) => {
-                  setWORK_PLAN((prev) => ({
-                    ...prev,
-                    work_plan_cardio_time: e.target.value
-                  }));
-                }}
-              />
-            </div>
-          </div>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>목표 총 볼륨</span>
-              <input type={"text"} className={"form-control"}
-                value={WORK_PLAN?.work_plan_total_volume}
-                onChange={(e) => {
-                  setWORK_PLAN((prev) => ({
-                    ...prev,
-                    work_plan_total_volume: e.target.value
-                  }));
-                }}
-              />
-            </div>
-          </div>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>목표 체중</span>
-              <input type={"text"} className={"form-control"}
-                value={WORK_PLAN?.work_plan_body_weight}
-                onChange={(e) => {
-                  setWORK_PLAN((prev) => ({
-                    ...prev,
-                    work_plan_body_weight: e.target.value
-                  }));
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // 5. return
     return (
-      <div className={"row d-center"}>
-        <div className={"col-4 mb-20"}>
-          {startNode()}
+      <div className={"row d-center mb-20"}>
+        <div className={"col-12"}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>목표 운동 횟수</span>
+            <input type={"text"} className={"form-control"}
+              value={WORK_PLAN?.work_plan_total_count}
+              onChange={(e) => {
+                setWORK_PLAN((prev) => ({
+                  ...prev,
+                  work_plan_total_count: e.target.value
+                }));
+              }}
+            />
+          </div>
         </div>
-        <div className={"col-4 mb-20"}>
-          {endNode()}
+        <div className={"col-12"}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>목표 유산소 시간</span>
+            <input type={"text"} className={"form-control"}
+              value={WORK_PLAN?.work_plan_cardio_time}
+              onChange={(e) => {
+                setWORK_PLAN((prev) => ({
+                  ...prev,
+                  work_plan_cardio_time: e.target.value
+                }));
+              }}
+            />
+          </div>
         </div>
-        <div className={"col-8 mb-20"}>
-          {moneyNode()}
+        <div className={"col-12"}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>목표 총 볼륨</span>
+            <input type={"text"} className={"form-control"}
+              value={WORK_PLAN?.work_plan_total_volume}
+              onChange={(e) => {
+                setWORK_PLAN((prev) => ({
+                  ...prev,
+                  work_plan_total_volume: e.target.value
+                }));
+              }}
+            />
+          </div>
+        </div>
+        <div className={"col-12"}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>목표 체중</span>
+            <input type={"text"} className={"form-control"}
+              value={WORK_PLAN?.work_plan_body_weight}
+              onChange={(e) => {
+                setWORK_PLAN((prev) => ({
+                  ...prev,
+                  work_plan_body_weight: e.target.value
+                }));
+              }}
+            />
+          </div>
         </div>
       </div>
     );
@@ -260,6 +193,9 @@ export const WorkPlanSave = () => {
         <div className={"row d-center"}>
           <div className={"col-12 mb-20"}>
             <h1>Save</h1>
+          </div>
+          <div className={"col-12 mb-20"}>
+            {dateNode()}
           </div>
           <div className={"col-12 mb-20"}>
             {tableNode()}

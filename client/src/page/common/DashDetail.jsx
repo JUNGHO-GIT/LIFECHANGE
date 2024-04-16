@@ -153,7 +153,7 @@ export const DashDetail = () => {
           &#8592;
         </div>
         <DatePicker
-          timeFormat={"yyyy-MM-dd"}
+          dateFormat={"yyyy-MM-dd"}
           popperPlacement={"bottom"}
           selected={calendarDay}
           onChange={(date) => {
