@@ -131,8 +131,7 @@ export const UserDataset = () => {
         user_dataset: {
           ...prev.user_dataset,
           [dataType]: [
-            ...prev.user_dataset[dataType],
-            {
+            ...prev.user_dataset[dataType], {
               [`${dataType}_part`]: "",
               [`${dataType}_title`]: [""]
             }

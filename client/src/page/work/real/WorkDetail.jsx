@@ -5,7 +5,6 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 // ------------------------------------------------------------------------------------------------>
 export const WorkDetail = () => {
@@ -262,19 +261,19 @@ export const WorkDetail = () => {
           <React.Fragment>
             <tr>
               <td colSpan={4}>총 볼륨</td>
-              <td colSpan={2}></td>
+              <td colSpan={3}></td>
               <td colSpan={4}>{WORK?.work_total_volume}</td>
               <td></td>
             </tr>
             <tr>
               <td colSpan={4}>총 유산소 시간</td>
-              <td colSpan={2}></td>
+              <td colSpan={3}></td>
               <td colSpan={4}>{WORK?.work_total_cardio}</td>
               <td></td>
             </tr>
             <tr>
               <td colSpan={4}>체중</td>
-              <td colSpan={2}></td>
+              <td colSpan={3}></td>
               <td colSpan={4}>{WORK?.work_body_weight}</td>
               <td></td>
             </tr>

@@ -8,21 +8,21 @@ export const foodArray = [
   // 1
   {
     food_part: "아침",
-    food_title: [""]
+    food_title: ["전체"]
   },
   // 2
   {
     food_part: "점심",
-    food_title: [""]
+    food_title: ["전체"]
   },
   // 3
   {
     food_part: "저녁",
-    food_title: [""]
+    food_title: ["전체"]
   },
   // 4
   {
     food_part: "간식",
-    food_title: [""]
+    food_title: ["전체"]
   },
 ];
