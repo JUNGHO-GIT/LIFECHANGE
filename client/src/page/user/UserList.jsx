@@ -83,11 +83,9 @@ export const UserList = () => {
       </div>
       <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <form className={"form-inline"}>
-            {tableUserList()}
-            <br/>
-            {buttonRefreshPage()}
-          </form>
+          {tableUserList()}
+          <br/>
+          {buttonRefreshPage()}
         </div>
         </div>
       </div>

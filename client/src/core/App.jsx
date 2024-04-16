@@ -159,14 +159,14 @@ export const App = () => {
       <DeveloperModeProvider>
         <Loader />
         <Header />
-          <Routes>
-            <Route path="/*" element={<Common />} />
-            <Route path="/food/*" element={<Food />} />
-            <Route path="/money/*" element={<Money />} />
-            <Route path="/sleep/*" element={<Sleep />} />
-            <Route path="/user/*" element={<User />} />
-            <Route path="/work/*" element={<Work />} />
-          </Routes>
+        <Routes>
+          <Route path="/*" element={<Common />} />
+          <Route path="/food/*" element={<Food />} />
+          <Route path="/money/*" element={<Money />} />
+          <Route path="/sleep/*" element={<Sleep />} />
+          <Route path="/user/*" element={<User />} />
+          <Route path="/work/*" element={<Work />} />
+        </Routes>
         <Footer />
       </DeveloperModeProvider>
     </div>

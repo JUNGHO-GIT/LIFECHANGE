@@ -44,8 +44,8 @@ export const Header = () => {
     setIsExpended(isExpended === menuLabel ? null : menuLabel);
   };
 
-  // 4. sidebar ----------------------------------------------------------------------------------->
-  const Sidebar = () => {
+  // 4. sideBar ----------------------------------------------------------------------------------->
+  const sideBarNode = () => {
 
     let preFix;
     let lowFix;
@@ -57,34 +57,36 @@ export const Header = () => {
       }
     });
 
-    const SidebarItem = ({label, items}) => (
-      <li className={"text-start pointer mt-30 ps-20"}>
-        <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
-          toggleExpand(label)
-        )}>
-          {label}
-        </div>
-        <Collapse in={isExpended === label}>
-          <ul>
-            {items?.map(({ to, label }) => (
-              <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
-                <div className={"pointer"} onClick={() => {
-                  SEND.startDt = koreanDate;
-                  SEND.endDt = koreanDate;
-                  navParam(to, {
-                    state: SEND
-                  });
-                  setIsSidebar(false)
-                  setIsActive(to);
-                }}>
-                  {label}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Collapse>
-      </li>
-    );
+    function sidBarItem (label, items) {
+      return (
+        <li className={"text-start pointer mt-30 ps-20"}>
+          <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
+            toggleExpand(label)
+          )}>
+            {label}
+          </div>
+          <Collapse in={isExpended === label}>
+            <ul>
+              {items?.map(({ to, label }) => (
+                <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
+                  <div className={"pointer"} onClick={() => {
+                    SEND.startDt = koreanDate;
+                    SEND.endDt = koreanDate;
+                    navParam(to, {
+                      state: SEND
+                    });
+                    setIsSidebar(false)
+                    setIsActive(to);
+                  }}>
+                    {label}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Collapse>
+        </li>
+      );
+    };
 
     return (
       <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
@@ -95,9 +97,7 @@ export const Header = () => {
         <div className={"d-flex flex-column p-3"}>
           <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>
             {dataArray?.map((menu) => (
-              <SidebarItem key={menu.label}
-                {...menu}
-              />
+              sidBarItem(menu.label, menu.items)
             ))}
           </ul>
         </div>
@@ -106,7 +106,7 @@ export const Header = () => {
   };
 
   // 4-3. view ------------------------------------------------------------------------------------>
-  const Navbar = () => {
+  const navBarNode = () => {
 
     let preFix;
     let subFix = isActive.split("/")[1];
@@ -142,60 +142,58 @@ export const Header = () => {
   };
 
   // 6-1. button ---------------------------------------------------------------------------------->
-  const loginFalse = () => {
-    const buttonLogin = () => {
+  const loginNode = () => {
+    function btnDevMode () {
+      const buttonClass = isDeveloperMode ? "btn btn-sm btn-secondary ms-2" : "btn btn-sm ms-2";
+      return (
+        <button type={"button"} className={buttonClass} onClick={() => {
+          toggleDeveloperMode();
+        }}>
+          Dev
+        </button>
+      );
+    };
+    function btnLogIn () {
       return (
         <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
-          navParam(SEND.toLogin);
+          navParam("/user/login");
         }}>
           Login
         </button>
       );
     };
-    const buttonSignup = () => {
+    function btnSignUp () {
       return (
         <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
-          navParam(SEND.toSignup);
+          navParam("/user/signup");
         }}>
           Signup
         </button>
       );
     };
-    if (!user_id || user_id === "false") {
+    function btnLogOut () {
       return (
-        <form className={"form-group d-right"}>
-          {buttonLogin()}
-          {buttonSignup()}
-        </form>
+        <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
+          sessionStorage.setItem("user_id", "false");
+          window.location.reload();
+        }}>
+          Logout
+        </button>
       );
-    }
-  };
-
-  // 6-2. button ---------------------------------------------------------------------------------->
-  const loginTrue = () => {
-    if (user_id && user_id !== "false") {
-      return (
-        <form className={"form-group d-right"}>
-          <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
-            sessionStorage.setItem("user_id", "false");
-            window.location.reload();
-          }}>
-            Logout
-          </button>
-        </form>
-      );
-    }
-  };
-
-  // 6-3. button ---------------------------------------------------------------------------------->
-  const buttonDeveloperMode = () => {
-    const buttonClass = isDeveloperMode ? "btn btn-sm btn-secondary ms-2" : "btn btn-sm ms-2";
+    };
     return (
-      <button type={"button"} className={buttonClass} onClick={() => {
-        toggleDeveloperMode();
-      }}>
-        Dev
-      </button>
+      user_id === "false" ? (
+        <div>
+          {btnDevMode()}
+          {btnLogIn()}
+          {btnSignUp()}
+        </div>
+      ) : (
+        <div>
+          {btnDevMode()}
+          {btnLogOut()}
+        </div>
+      )
     );
   };
 
@@ -205,22 +203,16 @@ export const Header = () => {
       <div className={"container-fluid bg-white box-bottom"}>
         <div className={"row d-center pt-15 pb-15"}>
           <div className={"col-1"}>
-            {Sidebar()}
+            {sideBarNode()}
             <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
               setIsSidebar(!isSidebar);
             }}>
               Sidebar
             </button>
           </div>
-          <div className={"col-7"}>
-            &nbsp;
-          </div>
-          <div className={"col-1"}>
-            {buttonDeveloperMode()}
-          </div>
-          <div className={"col-2"}>
-            {loginFalse()}
-            {loginTrue()}
+          <div className={"col-7"}></div>
+          <div className={"col-3"}>
+            {loginNode()}
           </div>
         </div>
       </div>
@@ -228,7 +220,7 @@ export const Header = () => {
         <div className={"container-fluid"}>
           <div className={"row d-center pt-15 pb-15"}>
             <div className={"col-12"}>
-              {Navbar()}
+              {navBarNode()}
             </div>
           </div>
         </div>

@@ -32,15 +32,25 @@ userRouter.post("/login", async (req, res) => {
       req.body.user_pw
     );
     if (result) {
-      res.send("success");
+      res.json({
+        status: "success",
+        msg: "로그인 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "error",
+        msg: "로그인 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "fail",
+      error: err.toString()
+    });
   }
 });
 

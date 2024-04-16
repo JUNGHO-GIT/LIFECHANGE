@@ -3,7 +3,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -12,39 +11,28 @@ export const UserLogin = () => {
   const TITLE = "User Login";
   const URL_USER = process.env.REACT_APP_URL_USER;
   const navParam = useNavigate();
-  const {log} = useDeveloperMode();
-
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserLogin = async () => {
-    try {
-      const response = await axios.post (`${URL_USER}/login`, {
-        user_id: user_id,
-        user_pw: user_pw,
-      });
-      log("USER : " + JSON.stringify(response.data));
-
-      if (response.data === "success") {
-        alert("Login successful");
-        window.sessionStorage.setItem("user_id", user_id);
-        navParam("/");
-      }
-      else {
-        alert("Incorrect location_id or PW");
-        window.sessionStorage.setItem("user_id", "false");
-      }
+    const response = await axios.post (`${URL_USER}/login`, {
+      user_id: user_id,
+      user_pw: user_pw,
+    });
+    if (response.data.status === "success") {
+      alert(response.data.msg);
+      window.sessionStorage.setItem("user_id", user_id);
+      window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result));
+      navParam("/");
     }
-    catch (e) {
-      alert(`Error fetching user data: ${e.message}`);
+    else {
+      alert(response.data.msg);
+      window.sessionStorage.setItem("user_id", "false");
     }
   };
-
-  // 4. date -------------------------------------------------------------------------------------->
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableUserLogin = () => {
@@ -100,12 +88,10 @@ export const UserLogin = () => {
           </div>
           <div className={"row d-center mt-5 mb-20"}>
             <div className={"col-12"}>
-              <form className={"form-inline"}>
-                {tableUserLogin()}
-                <br/>
-                {buttonUserLogin()}
-                {buttonRefreshPage()}
-              </form>
+              {tableUserLogin()}
+              <br/>
+              {buttonUserLogin()}
+              {buttonRefreshPage()}
             </div>
           </div>
         </div>

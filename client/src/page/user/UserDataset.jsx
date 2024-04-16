@@ -5,6 +5,9 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {foodArray} from "../../assets/data/FoodArray.jsx";
+import {moneyArray} from "../../assets/data/MoneyArray.jsx";
+import {workArray} from "../../assets/data/WorkArray.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
@@ -65,12 +68,6 @@ export const UserDataset = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    alert(JSON.stringify(dataType));
-    console.log("dataType : " + JSON.stringify(dataType));
-  }, [dataType]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
     alert(JSON.stringify(idx));
   }, [idx]);
 
@@ -103,6 +100,32 @@ export const UserDataset = () => {
     }
   };
 
+  // 4. handler ----------------------------------------------------------------------------------->
+  const handlerSetDefault = () => {
+    const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
+
+    let defaultArray = [];
+    if (dataType === "food") {
+      defaultArray = foodArray;
+    }
+    else if (dataType === "money") {
+      defaultArray = moneyArray;
+    }
+    else if (dataType === "work") {
+      defaultArray = workArray;
+    }
+
+    if (confirm) {
+      setUSER((prev) => ({
+        ...prev,
+        user_dataset: {
+          ...prev.user_dataset,
+          [dataType]: defaultArray
+        }
+      }));
+    }
+  };
+
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function addPart() {
@@ -128,14 +151,14 @@ export const UserDataset = () => {
           user_dataset: {
             ...prev.user_dataset,
             [dataType]: [
-              ...prev.user_dataset[dataType].slice(0, index), {
-                ...prev.user_dataset[dataType][index],
+              ...prev.user_dataset[dataType]?.slice(0, index), {
+                ...prev.user_dataset[dataType]?.[index],
                 [`${dataType}_title`]: [
-                  ...prev.user_dataset[dataType][index][`${dataType}_title`],
+                  ...prev.user_dataset[dataType]?.[index]?.[`${dataType}_title`],
                   ""
                 ]
               },
-              ...prev.user_dataset[dataType].slice(index + 1)
+              ...prev.user_dataset[dataType]?.slice(index + 1)
             ]
           }
         }));
@@ -150,11 +173,11 @@ export const UserDataset = () => {
             user_dataset: {
               ...prev.user_dataset,
               [dataType]: [
-                ...prev.user_dataset[dataType].slice(0, index), {
-                  ...prev.user_dataset[dataType][index],
+                ...prev.user_dataset[dataType]?.slice(0, index), {
+                  ...prev.user_dataset[dataType]?.[index],
                   [`${dataType}_part`]: newPart
                 },
-                ...prev.user_dataset[dataType].slice(index + 1)
+                ...prev.user_dataset[dataType]?.slice(index + 1)
               ]
             }
           }));
@@ -170,15 +193,15 @@ export const UserDataset = () => {
             user_dataset: {
               ...prev.user_dataset,
               [dataType]: [
-                ...prev.user_dataset[dataType].slice(0, idx.partIdx), {
-                  ...prev.user_dataset[dataType][idx.partIdx],
+                ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
+                  ...prev.user_dataset[dataType]?.[idx.partIdx],
                   [`${dataType}_title`]: [
-                    ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(0, index),
+                    ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
                     newTitle,
-                    ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(index + 1)
+                    ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
                   ]
                 },
-                ...prev.user_dataset[dataType].slice(idx.partIdx + 1)
+                ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
               ]
             }
           }));
@@ -206,14 +229,14 @@ export const UserDataset = () => {
           user_dataset: {
             ...prev.user_dataset,
             [dataType]: [
-              ...prev.user_dataset[dataType].slice(0, idx.partIdx), {
-                ...prev.user_dataset[dataType][idx.partIdx],
+              ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
+                ...prev.user_dataset[dataType]?.[idx.partIdx],
                 [`${dataType}_title`]: [
-                  ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(0, index),
-                  ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(index + 1)
+                  ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                  ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
                 ]
               },
-              ...prev.user_dataset[dataType].slice(idx.partIdx + 1)
+              ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
             ]
           }
         }));
@@ -239,29 +262,53 @@ export const UserDataset = () => {
           </tr>
         </thead>
         <tbody>
-          {USER?.user_dataset[dataType]?.map((item, index) => (
-            <React.Fragment key={index}>
-              <tr>
-                <td colSpan={3}>
-                  <div className={"pointer"} onClick={() => {
-                    setIdx((prev) => ({
-                      ...prev,
-                      partIdx: index,
-                      titleIdx: 0
-                    }));
-                  }}>
-                    {item.food_part}
-                  </div>
-                  <span className={"pointer"} onClick={rmPart(index)}>
-                    x
-                  </span>
-                  <span className={"pointer"} onClick={renamePart(index)}>
-                    rename
-                  </span>
-                </td>
-              </tr>
-            </React.Fragment>
-          ))}
+          <tr>
+            <td colSpan={3}>
+              {USER?.user_dataset[dataType]?.map((item, index) => (
+                (index > 0) && (
+                  <React.Fragment key={index}>
+                    <div className={"pointer"} onClick={() => {
+                      setIdx((prev) => ({
+                        ...prev,
+                        partIdx: index,
+                        titleIdx: 0
+                      }));
+                    }}>
+                      {item[`${dataType}_part`]}
+                    </div>
+                    <span className={"pointer"} onClick={rmPart(index)}>
+                      x
+                    </span>
+                    <span className={"pointer"} onClick={renamePart(index)}>
+                      rename
+                    </span>
+                  </React.Fragment>
+                )
+              ))}
+            </td>
+            <td colSpan={3}>
+              {USER?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (
+                (index > 0) && (
+                  <React.Fragment key={index}>
+                    <div className={"pointer"} onClick={() => {
+                      setIdx((prev) => ({
+                        ...prev,
+                        titleIdx: index
+                      }));
+                    }}>
+                      {item}
+                    </div>
+                    <span className={"pointer"} onClick={rmTitle(index)}>
+                      x
+                    </span>
+                    <span className={"pointer"} onClick={renameTitle(index)}>
+                      rename
+                    </span>
+                  </React.Fragment>
+                )
+              ))}
+            </td>
+          </tr>
           <tr>
             <td colSpan={3} className={"pointer"} onClick={addPart}>
               추가
@@ -292,6 +339,7 @@ export const UserDataset = () => {
         <div className={"row d-center"}>
           <div className={"col-12 mb-20"}>
             <h1>List</h1>
+            <button onClick={handlerSetDefault}>기본값으로 초기화</button>
           </div>
           <div className={"col-12 mb-20"}>
             {tableNode()}

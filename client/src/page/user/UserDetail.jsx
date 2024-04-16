@@ -119,22 +119,20 @@ export const UserDetail = () => {
   return (
     <div className={"root-wrapper"}>
       <div className={"container-wrapper"}>
-      <div className={"row d-center mt-5"}>
-        <div className={"col-12"}>
-          <h1 className={"mb-3 fw-7"}>{TITLE}</h1>
+        <div className={"row d-center mt-5"}>
+          <div className={"col-12"}>
+            <h1 className={"mb-3 fw-7"}>{TITLE}</h1>
+          </div>
         </div>
-      </div>
-      <div className={"row d-center mt-5"}>
-        <div className={"col-12"}>
-          <form className={"form-inline"}>
+        <div className={"row d-center mt-5"}>
+          <div className={"col-12"}>
             {tableUserDetail()}
             <br/>
             {buttonRefreshPage()}
             {buttonUserUpdate()}
             {buttonUserDelete()}
             {buttonUserList()}
-          </form>
-        </div>
+          </div>
         </div>
       </div>
     </div>

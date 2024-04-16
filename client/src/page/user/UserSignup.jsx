@@ -105,13 +105,11 @@ export const UserSignup = () => {
       <div className={"container-wrapper"}>
         <div className={"row d-center mt-5"}>
           <div className={"col-12"}>
-            <form className={"form-inline"}>
-              {tableUserSave()}
-              <br/>
-              {buttonUserSave()}
-              {buttonRefreshPage()}
-              {buttonUserList()}
-            </form>
+            {tableUserSave()}
+            <br/>
+            {buttonUserSave()}
+            {buttonRefreshPage()}
+            {buttonUserList()}
           </div>
         </div>
       </div>

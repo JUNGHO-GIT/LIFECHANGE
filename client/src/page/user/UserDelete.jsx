@@ -137,12 +137,10 @@ export const UserDelete = () => {
       </div>
       <div className={"row d-center mt-5"}>
         <div className={"col-12"}>
-          <form className={"form-inline"}>
-            {tableUserDelete()}
-            <br/>
-            {buttonUserDelete()}
-            {buttonRefreshPage()}
-          </form>
+          {tableUserDelete()}
+          <br/>
+          {buttonUserDelete()}
+          {buttonRefreshPage()}
         </div>
         </div>
       </div>
