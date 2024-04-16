@@ -78,9 +78,7 @@ export const save = async (
     );
   }
 
-  return {
-    result: finalResult
-  };
+  return finalResult
 };
 
 // 4. deletes ------------------------------------------------------------------------------------->
@@ -96,7 +94,5 @@ export const deletes = async (
     _id_param, user_id_param, startDt, endDt
   );
 
-  return {
-    result: finalResult
-  };
+  return finalResult
 };

@@ -74,9 +74,7 @@ export const list = async (
     user_id_param, sort_param, limit_param, page_param
   );
 
-  return {
-    result: finalResult
-  };
+  return finalResult
 };
 
 // 2. detail -------------------------------------------------------------------------------------->
@@ -89,9 +87,7 @@ export const detail = async (
     _id_param, user_id_param
   );
 
-  return {
-    result: finalResult,
-  };
+  return finalResult
 };
 
 // 3. save ---------------------------------------------------------------------------------------->
@@ -116,9 +112,7 @@ export const save = async (
     );
   }
 
-  return {
-    result: finalResult
-  };
+  return finalResult
 };
 
 // 4. deletes ------------------------------------------------------------------------------------->
@@ -131,7 +125,5 @@ export const deletes = async (
     _id_param, user_id_param
   );
 
-  return {
-    result: finalResult
-  };
+  return finalResult
 };

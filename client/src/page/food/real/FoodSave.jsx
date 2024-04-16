@@ -14,6 +14,8 @@ export const FoodSave = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL_FOOD = process.env.REACT_APP_URL_FOOD;
   const user_id = window.sessionStorage.getItem("user_id");
+  const session = window.sessionStorage.getItem("dataset") || "";
+  const foodArray = JSON.parse(session)?.food || [];
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -280,12 +282,12 @@ export const FoodSave = () => {
                     className={"form-select"}
                     value={item.food_part_val}
                     onChange={(e) => {
-                      const newPart = e.target.value;
+                      const newVal = parseInt(e.target.value);
                       setFOOD((prev) => {
                         const newFoodSection = [...prev.food_section];
                         newFoodSection[index] = {
                           ...item,
-                          food_part_val: newPart,
+                          food_part_val: newVal
                         };
                         return {
                           ...prev,
@@ -294,11 +296,11 @@ export const FoodSave = () => {
                       });
                     }}
                   >
-                    <option value="">선택</option>
-                    <option value="아침">아침</option>
-                    <option value="점심">점심</option>
-                    <option value="저녁">저녁</option>
-                    <option value="간식">간식</option>
+                    {foodArray?.map((item, idx) => (
+                      <option key={idx} value={idx}>
+                        {item.food_part}
+                      </option>
+                    ))}
                   </select>
                 </td>
                 <td>{item.food_title_val}</td>

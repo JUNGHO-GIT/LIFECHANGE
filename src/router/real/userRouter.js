@@ -12,15 +12,25 @@ userRouter.post("/signup", async (req, res) => {
       req.body.user_pw
     );
     if (result) {
-      res.send("success");
+      res.json({
+        status: "success",
+        msg: "회원가입 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "회원가입 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -40,7 +50,7 @@ userRouter.post("/login", async (req, res) => {
     }
     else {
       res.json({
-        status: "error",
+        status: "fail",
         msg: "로그인 실패"
       });
     }
@@ -48,7 +58,7 @@ userRouter.post("/login", async (req, res) => {
   catch (err) {
     console.error(err);
     res.status(500).json({
-      status: "fail",
+      status: "error",
       error: err.toString()
     });
   }
@@ -61,15 +71,25 @@ userRouter.post("/checkId", async (req, res) => {
       req.body.user_id
     );
     if (result) {
-      res.send("success");
+      res.json({
+        status: "success",
+        msg: "아이디 중복 확인 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "아이디 중복 확인 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -80,15 +100,25 @@ userRouter.get("/dataset", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "데이터셋 조회 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "데이터셋 조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -102,15 +132,25 @@ userRouter.get("/list", async (req, res) => {
       req.query.page
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -122,15 +162,25 @@ userRouter.get("/detail", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -142,15 +192,25 @@ userRouter.post("/save", async (req, res) => {
       req.body.USER
     );
     if (result) {
-      res.send("success");
+      res.json({
+        status: "success",
+        msg: "저장 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "저장 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -162,14 +222,23 @@ userRouter.delete("/delete", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send("success");
+      res.json({
+        status: "success",
+        msg: "삭제 성공"
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "삭제 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });

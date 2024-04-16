@@ -1,14 +1,13 @@
 // FilterNode.jsx
 
 import React from "react";
-import {foodArray} from "../data/FoodArray.jsx";
-import {moneyArray} from "../data/MoneyArray.jsx";
-import {workArray} from "../data/WorkArray.jsx";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
   FILTER, setFILTER, PAGING, setPAGING, part, plan, type
 }) => {
+
+  // 1. default
   const defaultNode = () => {
     function selectType() {
       return (
@@ -70,7 +69,11 @@ export const FilterNode = ({
       </React.Fragment>
     );
   };
+
+  // 2. food
   const foodNode = () => {
+    const session = window.sessionStorage.getItem("dataset") || "";
+    const foodArray = JSON.parse(session).food;
     function selectPartFood () {
       return (
         <div className={"mb-3"}>
@@ -102,7 +105,11 @@ export const FilterNode = ({
       </React.Fragment>
     );
   };
+
+  // 3. money
   const moneyNode = () => {
+    const session = window.sessionStorage.getItem("dataset") || "";
+    const moneyArray = JSON.parse(session).money;
     function selectPartMoney () {
       return (
         <div className={"mb-3"}>
@@ -153,7 +160,11 @@ export const FilterNode = ({
       </React.Fragment>
     );
   };
+
+  // 4. work
   const workNode = () => {
+    const session = window.sessionStorage.getItem("dataset") || "";
+    const workArray = JSON.parse(session).work;
     function selectPartWork () {
       return (
         <div className={"mb-3"}>
@@ -204,6 +215,8 @@ export const FilterNode = ({
       </React.Fragment>
     );
   };
+
+  // 5. return
   return (
     part === "food" && plan === "" ? (
       <div className={"d-inline-flex"}>

@@ -7,7 +7,6 @@ import {useTime} from "../../../assets/hooks/useTime.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {TimePicker} from "react-time-picker";
 import axios from "axios";
-import {workArray} from "../../../assets/data/WorkArray.jsx";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
@@ -17,9 +16,10 @@ export const WorkSave = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL_WORK = process.env.REACT_APP_URL_WORK;
   const user_id = window.sessionStorage.getItem("user_id");
+  const session = window.sessionStorage.getItem("dataset") || "";
+  const workArray = JSON.parse(session)?.work || [];
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();

@@ -25,7 +25,7 @@ export const UserLogin = () => {
     if (response.data.status === "success") {
       alert(response.data.msg);
       window.sessionStorage.setItem("user_id", user_id);
-      window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result));
+      window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
       navParam("/");
     }
     else {

@@ -87,8 +87,9 @@ export const UserDataset = () => {
       user_id: user_id,
       USER: USER
     });
-    if (response.data === "success") {
-      alert("Save successfully");
+    if (response.data.status === "success") {
+      alert(response.data.msg);
+      window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
       navParam(SEND.toList, {
@@ -96,7 +97,8 @@ export const UserDataset = () => {
       });
     }
     else {
-      alert(`${response.data}error`);
+      alert(response.data.msg);
+      window.sessionStorage.setItem("user_id", "false");
     }
   };
 

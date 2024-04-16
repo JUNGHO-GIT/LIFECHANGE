@@ -5,7 +5,6 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import axios from "axios";
-import {moneyArray} from "../../../assets/data/MoneyArray.jsx";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 
@@ -15,6 +14,8 @@ export const MoneySave = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL_MONEY = process.env.REACT_APP_URL_MONEY;
   const user_id = window.sessionStorage.getItem("user_id");
+  const session = window.sessionStorage.getItem("dataset") || "";
+  const moneyArray = JSON.parse(session)?.money || [];
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();

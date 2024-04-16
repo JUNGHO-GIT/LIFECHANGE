@@ -11,15 +11,26 @@ workDashRouter.get("/scatter/week", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -30,15 +41,26 @@ workDashRouter.get("/scatter/month", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -49,15 +71,26 @@ workDashRouter.get("/pie/week", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -68,15 +101,26 @@ workDashRouter.get("/pie/month", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -87,15 +131,26 @@ workDashRouter.get("/line/week", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -106,15 +161,26 @@ workDashRouter.get("/line/month", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -125,15 +191,26 @@ workDashRouter.get("/avg/week", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -144,14 +221,25 @@ workDashRouter.get("/avg/month", async (req, res) => {
       req.query.user_id
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });

@@ -89,19 +89,7 @@ export const aggregateDataset = async (
     }}
   ]);
 
-  const foodSet = finalResult[0]?.user_dataset.food;
-  const moneySet = finalResult[0]?.user_dataset.money;
-  const workSet = finalResult[0]?.user_dataset.work;
-
-  return {
-    result: {
-      user_dataset: {
-        food: foodSet,
-        money: moneySet,
-        work: workSet
-      }
-    }
-  };
+  return finalResult[0];
 };
 
 // 2-1. detail ------------------------------------------------------------------------------------>

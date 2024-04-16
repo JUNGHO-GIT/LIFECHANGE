@@ -14,15 +14,26 @@ sleepRouter.get("/list", async (req, res) => {
       req.query.PAGING
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -35,15 +46,26 @@ sleepRouter.get("/detail", async (req, res) => {
       req.query.sleep_dur
     );
     if (result) {
-      res.send(result);
+      res.json({
+        status: "success",
+        msg: "조회 성공",
+        totalCnt: result.totalCnt,
+        result: result.result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "조회 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -56,15 +78,25 @@ sleepRouter.post("/save", async (req, res) => {
       req.body.sleep_dur
     );
     if (result) {
-      res.send("success");
+      res.json({
+        status: "success",
+        msg: "저장 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "저장 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
 
@@ -77,14 +109,24 @@ sleepRouter.delete("/delete", async (req, res) => {
       req.query.sleep_dur
     );
     if (result) {
-      res.send("success");
+      res.json({
+        status: "success",
+        msg: "삭제 성공",
+        result: result
+      });
     }
     else {
-      res.send("fail");
+      res.json({
+        status: "fail",
+        msg: "삭제 실패"
+      });
     }
   }
   catch (err) {
     console.error(err);
-    res.status(500).send(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
   }
 });
