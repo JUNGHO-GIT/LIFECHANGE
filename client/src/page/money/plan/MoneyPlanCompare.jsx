@@ -28,7 +28,7 @@ export const MoneyPlanCompare = () => {
       startDt: "",
       endDt: "",
       refresh: 0,
-      toDetail: "/money/detail",
+      toDetail: "/money/plan/detail",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -159,7 +159,14 @@ export const MoneyPlanCompare = () => {
             {MONEY_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={3}>
+                  <td rowSpan={3} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.money_plan_startDt;
+                    SEND.endDt = item.money_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
                     {item.money_plan_startDt} ~ {item.money_plan_endDt}
                   </td>
                 </tr>

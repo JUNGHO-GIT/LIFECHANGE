@@ -28,7 +28,7 @@ export const FoodPlanCompare = () => {
       startDt: "",
       endDt: "",
       refresh: 0,
-      toDetail: "/food/detail",
+      toDetail:"/food/plan/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -141,7 +141,14 @@ export const FoodPlanCompare = () => {
             {FOOD_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={5}>
+                  <td rowSpan={5} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.food_plan_startDt;
+                    SEND.endDt = item.food_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
                     {item.food_plan_startDt} ~ {item.food_plan_endDt}
                   </td>
                 </tr>

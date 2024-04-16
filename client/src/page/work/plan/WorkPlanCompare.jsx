@@ -28,7 +28,7 @@ export const WorkPlanCompare = () => {
       startDt: "",
       endDt: "",
       refresh: 0,
-      toDetail: "/work/detail",
+      toDetail: "/work/plan/detail",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -109,7 +109,8 @@ export const WorkPlanCompare = () => {
     function successOrNot (plan, real) {
       if (plan === real) {
         return "일치";
-      } else {
+      }
+      else {
         return plan > real ? "미달" : "초과";
       }
     };
@@ -129,7 +130,14 @@ export const WorkPlanCompare = () => {
             {WORK_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={3}>
+                  <td rowSpan={3} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.work_plan_startDt;
+                    SEND.endDt = item.work_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
                     {item.work_plan_startDt} ~ {item.work_plan_endDt}
                   </td>
                 </tr>

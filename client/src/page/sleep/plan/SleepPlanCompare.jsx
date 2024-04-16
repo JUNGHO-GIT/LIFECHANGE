@@ -28,7 +28,7 @@ export const SleepPlanCompare = () => {
       startDt: "",
       endDt: "",
       refresh: 0,
-      toDetail:"/sleep/detail"
+      toDetail:"/sleep/plan/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -144,7 +144,14 @@ export const SleepPlanCompare = () => {
             {SLEEP_COMPARE?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={4}>
+                  <td rowSpan={4} className={"pointer"} onClick={() => {
+                    SEND.id = item._id;
+                    SEND.startDt = item.sleep_plan_startDt;
+                    SEND.endDt = item.sleep_plan_endDt;
+                    navParam(SEND.toDetail, {
+                      state: SEND
+                    });
+                  }}>
                     {item.sleep_plan_startDt}
                   </td>
                 </tr>
