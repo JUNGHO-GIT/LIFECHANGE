@@ -41,7 +41,6 @@ export const ButtonNode = ({
   function buttonSave () {
     return (
       <button type={"button"} className={"btn btn-sm btn-primary me-2"} onClick={() => {
-        localStorage.clear();
         flowSave();
       }}>
         Save
@@ -51,7 +50,6 @@ export const ButtonNode = ({
   function buttonUpdate () {
     return (
       <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={() => {
-        localStorage.clear();
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toSave, {

@@ -28,7 +28,7 @@ export const detailPlan = async (
   return finalResult;
 };
 
-// 2-2. detail (real) ---------------------------------------------------------------------------->
+// 2-2. detail (real) -----------/----------------------------------------------------------------->
 export const detailReal = async (
   _id_param,
   user_id_param,

@@ -135,7 +135,7 @@ export const list = async (
     user_id_param, part, title, startDt, endDt
   );
 
-  const finalResult = await repository.findReal(
+  const finalResult = await repository.find(
     user_id_param, part, title, sort, limit, page, startDt, endDt
   );
 

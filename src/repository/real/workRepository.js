@@ -36,8 +36,8 @@ export const totalCnt = async (
   return finalResult;
 }
 
-// 1-1. find (real) ------------------------------------------------------------------------------->
-export const findReal = async (
+// 1-1. find -------------------------------------------------------------------------------------->
+export const find = async (
   user_id_param,
   part_param,
   title_param,
@@ -90,33 +90,6 @@ export const findReal = async (
     {$skip: (page_param - 1) * limit_param},
     {$limit: limit_param}
   ]);
-
-  return finalResult;
-};
-
-// 1-2. find (plan) ------------------------------------------------------------------------------->
-export const findPlan = async (
-  user_id_param,
-  sort_param,
-  limit_param,
-  page_param,
-  startDt_param,
-  endDt_param,
-) => {
-
-  const finalResult = await WorkPlan.find({
-    user_id: user_id_param,
-    work_plan_startDt: {
-      $gte: startDt_param,
-    },
-    work_plan_endDt: {
-      $lte: endDt_param,
-    },
-  })
-  .sort({work_plan_startDt: sort_param})
-  .skip((page_param - 1) * limit_param)
-  .limit(limit_param)
-  .lean();
 
   return finalResult;
 };
