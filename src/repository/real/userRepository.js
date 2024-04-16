@@ -95,9 +95,11 @@ export const aggregateDataset = async (
 
   return {
     result: {
-      food: foodSet,
-      money: moneySet,
-      work: workSet
+      user_dataset: {
+        food: foodSet,
+        money: moneySet,
+        work: workSet
+      }
     }
   };
 };

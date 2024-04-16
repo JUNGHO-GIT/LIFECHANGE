@@ -1,422 +1,158 @@
-===================================
-[
-  {
-    "_id": "661a3a5d169f2a35aa536448",
-    "user_id": "123",
-    "food_startDt": "2024-04-01",
-    "food_endDt": "2024-04-01",
-    "food_total_kcal": "0.0",
-    "food_total_carb": "0.0",
-    "food_total_protein": "0.0",
-    "food_total_fat": "0.0",
-    "food_section": [],
-    "food_regdate": "2024-04-13 / 16:55:09",
-    "food_update": "2024-04-13 / 18:09:32",
-    "food_number": "3",
-    "__v": 0
-  },
-  {
-    "_id": "661a4bb7275e0c64a961e9a4",
-    "user_id": "123",
-    "food_startDt": "2024-04-12",
-    "food_endDt": "2024-04-12",
-    "food_total_kcal": "225.0",
-    "food_total_carb": "1.0",
-    "food_total_protein": "23.0",
-    "food_total_fat": "2.3",
-    "food_section": [
-      {
-        "food_part_val": "간식",
-        "food_title_val": "황금 올리브 치킨",
-        "food_brand": "(BBQ치킨)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "225",
-        "food_carb": "1.00",
-        "food_protein": "23.00",
-        "food_fat": "2.30",
-        "_id": "661a4bb7275e0c64a961e9a6"
-      },
-      {
-        "food_part_val": "간식",
-        "food_title_val": "치킨",
-        "food_brand": "-",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "85",
-        "food_kcal": "249",
-        "food_carb": "8.58",
-        "food_protein": "19.19",
-        "food_fat": "14.85",
-        "_id": "661a4bd6275e0c64a961e9ca"
-      }
-    ],
-    "food_regdate": "2024-04-13 / 18:09:11",
-    "food_update": "2024-04-13 / 18:36:20",
-    "food_number": "4",
-    "__v": 0
-  },
-  {
-    "_id": "661a328c9f94e8a20329bf22",
-    "user_id": "123",
-    "food_startDt": "2024-04-13",
-    "food_endDt": "2024-04-13",
-    "food_total_kcal": "418.0",
-    "food_total_carb": "90.7",
-    "food_total_protein": "22.1",
-    "food_total_fat": "3.8",
-    "food_section": [
-      {
-        "food_part_val": "점심",
-        "food_title_val": "총각 김치",
-        "food_brand": "-",
-        "food_count": "6",
-        "food_serv": "인분",
-        "food_gram": "NaN",
-        "food_kcal": "66.0",
-        "food_carb": "14.3",
-        "food_protein": "2.9",
-        "food_fat": "0.6",
-        "_id": "661a328c9f94e8a20329bf24"
-      },
-      {
-        "food_part_val": "저녁",
-        "food_title_val": "백김 치",
-        "food_brand": "-",
-        "food_count": "3",
-        "food_serv": "회",
-        "food_gram": "300.0",
-        "food_kcal": "66.0",
-        "food_carb": "14.3",
-        "food_protein": "3.6",
-        "food_fat": "0.6",
-        "_id": "661a328c9f94e8a20329bf27"
-      },
-      {
-        "food_part_val": "아침",
-        "food_title_val": "후라 이드 치킨",
-        "food_brand": "(맘스터치)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "319",
-        "food_carb": "0.00",
-        "food_protein": "23.00",
-        "food_fat": "4.00",
-        "_id": "661a423e169f2a35aa53649e"
-      },
-      {
-        "food_part_val": "점심",
-        "food_title_val": "후라 이드 치킨",
-        "food_brand": "(맘스터치)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "319",
-        "food_carb": "0.00",
-        "food_protein": "23.00",
-        "food_fat": "4.00",
-        "_id": "661a486b169f2a35aa536516"
-      },
-      {
-        "food_part_val": "점심",
-        "food_title_val": "치킨 시저 랩",
-        "food_brand": "(스타벅스 (Starbucks))",
-        "food_count": "1",
-        "food_serv": "개",
-        "food_gram": "180",
-        "food_kcal": "347",
-        "food_carb": "32.00",
-        "food_protein": "18.00",
-        "food_fat": "16.00",
-        "_id": "661a486b169f2a35aa536519"
-      }
-    ],
-    "food_regdate": "2024-04-13 / 16:21:48",
-    "food_update": "2024-04-13 / 18:18:50",
-    "food_number": "2",
-    "__v": 0
-  }
-]
-===================================
-[
-  {
-    "_id": "661a3a5d169f2a35aa536448",
-    "user_id": "123",
-    "food_startDt": "2024-04-01",
-    "food_endDt": "2024-04-01",
-    "food_total_kcal": "0.0",
-    "food_total_carb": "0.0",
-    "food_total_protein": "0.0",
-    "food_total_fat": "0.0",
-    "food_section": [],
-    "food_regdate": "2024-04-13 / 16:55:09",
-    "food_update": "2024-04-13 / 18:09:32",
-    "food_number": "3",
-    "__v": 0
-  },
-  {
-    "_id": "661a4bb7275e0c64a961e9a4",
-    "user_id": "123",
-    "food_startDt": "2024-04-12",
-    "food_endDt": "2024-04-12",
-    "food_total_kcal": "225.0",
-    "food_total_carb": "1.0",
-    "food_total_protein": "23.0",
-    "food_total_fat": "2.3",
-    "food_section": [
-      {
-        "food_part_val": "간식",
-        "food_title_val": "황금 올리브 치킨",
-        "food_brand": "(BBQ치킨)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "225",
-        "food_carb": "1.00",
-        "food_protein": "23.00",
-        "food_fat": "2.30",
-        "_id": "661a4bb7275e0c64a961e9a6"
-      },
-      {
-        "food_part_val": "간식",
-        "food_title_val": "치킨",
-        "food_brand": "-",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "85",
-        "food_kcal": "249",
-        "food_carb": "8.58",
-        "food_protein": "19.19",
-        "food_fat": "14.85",
-        "_id": "661a4bd6275e0c64a961e9ca"
-      }
-    ],
-    "food_regdate": "2024-04-13 / 18:09:11",
-    "food_update": "2024-04-13 / 18:36:20",
-    "food_number": "4",
-    "__v": 0
-  },
-  {
-    "_id": "661a328c9f94e8a20329bf22",
-    "user_id": "123",
-    "food_startDt": "2024-04-13",
-    "food_endDt": "2024-04-13",
-    "food_total_kcal": "418.0",
-    "food_total_carb": "90.7",
-    "food_total_protein": "22.1",
-    "food_total_fat": "3.8",
-    "food_section": [
-      {
-        "food_part_val": "점심",
-        "food_title_val": "총각 김치",
-        "food_brand": "-",
-        "food_count": "6",
-        "food_serv": "인분",
-        "food_gram": "NaN",
-        "food_kcal": "66.0",
-        "food_carb": "14.3",
-        "food_protein": "2.9",
-        "food_fat": "0.6",
-        "_id": "661a328c9f94e8a20329bf24"
-      },
-      {
-        "food_part_val": "저녁",
-        "food_title_val": "백김 치",
-        "food_brand": "-",
-        "food_count": "3",
-        "food_serv": "회",
-        "food_gram": "300.0",
-        "food_kcal": "66.0",
-        "food_carb": "14.3",
-        "food_protein": "3.6",
-        "food_fat": "0.6",
-        "_id": "661a328c9f94e8a20329bf27"
-      },
-      {
-        "food_part_val": "아침",
-        "food_title_val": "후라 이드 치킨",
-        "food_brand": "(맘스터치)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "319",
-        "food_carb": "0.00",
-        "food_protein": "23.00",
-        "food_fat": "4.00",
-        "_id": "661a423e169f2a35aa53649e"
-      },
-      {
-        "food_part_val": "점심",
-        "food_title_val": "후라 이드 치킨",
-        "food_brand": "(맘스터치)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "319",
-        "food_carb": "0.00",
-        "food_protein": "23.00",
-        "food_fat": "4.00",
-        "_id": "661a486b169f2a35aa536516"
-      },
-      {
-        "food_part_val": "점심",
-        "food_title_val": "치킨 시저 랩",
-        "food_brand": "(스타벅스 (Starbucks))",
-        "food_count": "1",
-        "food_serv": "개",
-        "food_gram": "180",
-        "food_kcal": "347",
-        "food_carb": "32.00",
-        "food_protein": "18.00",
-        "food_fat": "16.00",
-        "_id": "661a486b169f2a35aa536519"
-      }
-    ],
-    "food_regdate": "2024-04-13 / 16:21:48",
-    "food_update": "2024-04-13 / 18:18:50",
-    "food_number": "2",
-    "__v": 0
-  },
-  {
-    "_id": "661ac05acb5990692151cb27",
-    "user_id": "123",
-    "food_startDt": "2024-04-14",
-    "food_endDt": "2024-04-14",
-    "food_total_kcal": "2443.0",
-    "food_total_carb": "51.4",
-    "food_total_protein": "174.2",
-    "food_total_fat": "81.4",
-    "food_section": [
-      {
-        "food_part_val": "아침",
-        "food_title_val": "양념 치킨",
-        "food_brand": "-",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "21",
-        "food_kcal": "259",
-        "food_carb": "12.35",
-        "food_protein": "14.79",
-        "food_fat": "16.21",
-        "_id": "661b83d5c3779ea07506ad60"
-      },
-      {
-        "food_title_val": "황금 올리브 치킨",
-        "food_brand": "(BBQ치킨)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "225",
-        "food_carb": "1.00",
-        "food_protein": "23.00",
-        "food_fat": "2.30",
-        "_id": "661b83e6c3779ea07506ad71"
-      }
-    ],
-    "food_regdate": "2024-04-14 / 02:26:50",
-    "food_update": "2024-04-14 / 16:21:10",
-    "food_number": "5",
-    "__v": 0
-  },
-  {
-    "_id": "661ac153cb5990692151cb4f",
-    "user_id": "123",
-    "food_startDt": "2024-04-15",
-    "food_endDt": "2024-04-15",
-    "food_total_kcal": 2379,
-    "food_total_carb": 28.8,
-    "food_total_protein": 195.6,
-    "food_total_fat": 63.4,
-    "food_section": [
-      {
-        "food_part_val": "아침",
-        "food_title_val": "황금 올리브 치킨",
-        "food_brand": "(BBQ치킨)",
-        "food_count": 3,
-        "food_serv": "회",
-        "food_gram": 300,
-        "food_kcal": 675,
-        "food_carb": 3,
-        "food_protein": 69,
-        "food_fat": 6.9,
-        "_id": "661ac153cb5990692151cb51"
-      },
-      {
-        "food_part_val": "아침",
-        "food_title_val": "치킨",
-        "food_brand": "-",
-        "food_count": 3,
-        "food_serv": "회",
-        "food_gram": 255,
-        "food_kcal": 747,
-        "food_carb": 25.8,
-        "food_protein": 57.6,
-        "food_fat": 44.5,
-        "_id": "661ac153cb5990692151cb52"
-      },
-      {
-        "food_part_val": "저녁",
-        "food_title_val": "후라 이드 치킨",
-        "food_brand": "(맘스터치)",
-        "food_count": 3,
-        "food_serv": "회",
-        "food_gram": 300,
-        "food_kcal": 957,
-        "food_carb": 0,
-        "food_protein": 69,
-        "food_fat": 12,
-        "_id": "661d30ef54db9dd61cb6e384"
-      }
-    ],
-    "food_regdate": "2024-04-14 / 02:30:59",
-    "food_update": "2024-04-15 / 22:46:00",
-    "food_number": "6",
-    "__v": 0
-  }
-]
-===================================
-[
-  {
-    "_id": "661ac05acb5990692151cb27",
-    "user_id": "123",
-    "food_startDt": "2024-04-14",
-    "food_endDt": "2024-04-14",
-    "food_total_kcal": "2443.0",
-    "food_total_carb": "51.4",
-    "food_total_protein": "174.2",
-    "food_total_fat": "81.4",
-    "food_section": [
-      {
-        "food_part_val": "아침",
-        "food_title_val": "양념 치킨",
-        "food_brand": "-",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "21",
-        "food_kcal": "259",
-        "food_carb": "12.35",
-        "food_protein": "14.79",
-        "food_fat": "16.21",
-        "_id": "661b83d5c3779ea07506ad60"
-      },
-      {
-        "food_title_val": "황금 올리브 치킨",
-        "food_brand": "(BBQ치킨)",
-        "food_count": "1",
-        "food_serv": "회",
-        "food_gram": "100",
-        "food_kcal": "225",
-        "food_carb": "1.00",
-        "food_protein": "23.00",
-        "food_fat": "2.30",
-        "_id": "661b83e6c3779ea07506ad71"
-      }
-    ],
-    "food_regdate": "2024-04-14 / 02:26:50",
-    "food_update": "2024-04-14 / 16:21:10",
-    "food_number": "5",
-    "__v": 0
-  }
-]
+USER : {
+  "food": [
+    {
+      "food_part": "전체",
+      "food_title": [
+        "전체"
+      ]
+    },
+    {
+      "food_part": "아침",
+      "food_title": [
+        ""
+      ]
+    },
+    {
+      "food_part": "점심",
+      "food_title": [
+        ""
+      ]
+    },
+    {
+      "food_part": "저녁",
+      "food_title": [
+        ""
+      ]
+    },
+    {
+      "food_part": "간식",
+      "food_title": [
+        ""
+      ]
+    }
+  ],
+  "money": [
+    {
+      "money_part": "전체",
+      "money_title": [
+        "전체"
+      ]
+    },
+    {
+      "money_part": "수입",
+      "money_title": [
+        "전체",
+        "근로",
+        "금융",
+        "기타"
+      ]
+    },
+    {
+      "money_part": "지출",
+      "money_title": [
+        "전체",
+        "식비",
+        "문화",
+        "주거",
+        "건강",
+        "교통",
+        "유흥",
+        "품위",
+        "저축",
+        "금융",
+        "기타"
+      ]
+    }
+  ],
+  "work": [
+    {
+      "work_part": "전체",
+      "work_title": [
+        "전체"
+      ]
+    },
+    {
+      "work_part": "등",
+      "work_title": [
+        "전체",
+        "데드리프트",
+        "바벨로우",
+        "덤벨로우",
+        "시티드로우",
+        "랫풀다운",
+        "풀업"
+      ]
+    },
+    {
+      "work_part": "하체",
+      "work_title": [
+        "전체",
+        "백스쿼트",
+        "프론트스쿼트",
+        "핵스쿼트",
+        "바벨런지",
+        "덤벨런지",
+        "레그프레스",
+        "레그익스텐션",
+        "레그컬"
+      ]
+    },
+    {
+      "work_part": "가슴",
+      "work_title": [
+        "전체",
+        "바벨벤치프레스",
+        "덤벨벤치프레스",
+        "머신벤치프레스",
+        "인클라인벤치프레스",
+        "디클라인벤치프레스",
+        "덤벨플라이",
+        "케이블플라이",
+        "케이블크로스오버",
+        "딥스",
+        "푸쉬업"
+      ]
+    },
+    {
+      "work_part": "어깨",
+      "work_title": [
+        "전체",
+        "밀리터리프레스",
+        "바벨프레스",
+        "덤벨프레스",
+        "머신프레스",
+        "비하인드넥프레스",
+        "프론트레터럴레이즈",
+        "사이드레터럴레이즈",
+        "벤트오버레터럴레이즈",
+        "페이스풀"
+      ]
+    },
+    {
+      "work_part": "삼두",
+      "work_title": [
+        "전체",
+        "라잉트라이셉스익스텐션",
+        "덤벨트라이셉스익스텐션",
+        "오버헤드트라이셉스익스텐션",
+        "클로즈그립벤치프레스",
+        "케이블트라이셉스푸쉬다운",
+        "케이블트라이셉스로프다운",
+        "킥백"
+      ]
+    },
+    {
+      "work_part": "이두",
+      "work_title": [
+        "전체",
+        "바벨컬",
+        "덤벨컬",
+        "해머컬",
+        "머신컬",
+        "케이블컬",
+        "바벨프리처컬",
+        "덤벨프리처컬"
+      ]
+    }
+  ]
+}

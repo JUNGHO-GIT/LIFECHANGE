@@ -1,52 +1,50 @@
-// useStorage.jsx
-
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {parseISO, formatISO} from "date-fns";
 
+// ---------------------------------------------------------------------------------------------->
 export const useStorage = (key, initialVal) => {
-  const datePattern = new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}");
-
-  // ---------------------------------------------------------------------------------------------->
-  const getInitialValue = () => {
+  const [value, setValue] = useState(() => {
     const item = localStorage.getItem(key);
-    if (item === null) {
-      return initialVal;
-    }
-    else if (datePattern.test(item.trim())) {
-      const parsedDate = parseISO(item);
-      return isNaN(parsedDate.getTime()) ? initialVal : parsedDate;
-    }
-    else {
+    if (item) {
       try {
-        const parsed = JSON.parse(item);
-        return parsed !== undefined ? parsed : initialVal;
+        const datePattern = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/;
+        if (datePattern.test(item)) {
+          const parsedDate = parseISO(item);
+          return isNaN(parsedDate.getTime()) ? initialVal : parsedDate;
+        }
+        return JSON.parse(item);
       }
       catch {
-        return initialVal;
+        return item;
       }
     }
-  };
-
-  const [storedVal, setStoredVal] = useState(getInitialValue);
+    return initialVal;
+  });
 
   // ---------------------------------------------------------------------------------------------->
   useEffect(() => {
+    try {
+      const isDate = value instanceof Date && !isNaN(value.getTime());
+      const saveValue = isDate ? formatISO(value) : JSON.stringify(value);
+      localStorage.setItem(key, saveValue);
+    }
+    catch (error) {
+      console.error("Failed to save to localStorage:", error);
+    }
+  }, [key, value]);
 
-    const saveToLocalStorage = () => {
-      try {
-        const valueToStore = storedVal instanceof Date && !isNaN(storedVal.getTime()) ? formatISO(storedVal) : JSON.stringify(storedVal);
-        localStorage.setItem(key, valueToStore);
-      }
-      catch (error) {
-        console.error("Failed to save to localStorage:", error);
-      }
-    };
-
-    saveToLocalStorage();
-  }, [key, storedVal]);
-
-  return {
-    val: storedVal,
-    set: setStoredVal,
+  // ---------------------------------------------------------------------------------------------->
+  const set = (newValue) => {
+    if (typeof newValue === "function") {
+      setValue((prev) => {
+        const updatedValue = newValue(prev);
+        return updatedValue;
+      });
+    }
+    else {
+      setValue(newValue);
+    }
   };
+
+  return {val: value, set: set};
 };

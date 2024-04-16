@@ -37,26 +37,37 @@ export const UserDataset = () => {
   const {val:idx, set:setIdx} = useStorage(
     `idx(${PATH})`, {
       partIdx: 0,
-      titleIdx: 0
+      titleIdx: 0,
     }
+  );
+  const {val:dataType, set:setDataType} = useStorage(
+    `dataType(${PATH})`, "food"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const USER_FOOD_DEFAULT = [{
-    food_part: "",
-    food_title: [""]
-  }];
-  const USER_MONEY_DEFAULT = [{
-    money_part: "",
-    money_title: [""]
-  }];
-  const USER_WORK_DEFAULT = [{
-    work_part: "",
-    work_title: [""]
-  }];
-  const [USER_FOOD, setUSER_FOOD] = useState(USER_FOOD_DEFAULT);
-  const [USER_MONEY, setUSER_MONEY] = useState(USER_MONEY_DEFAULT);
-  const [USER_WORK, setUSER_WORK] = useState(USER_WORK_DEFAULT);
+  const USER_DEFAULT = {
+    user_dataset: {
+      food: [{
+        food_part: "",
+        food_title: [""]
+      }],
+      money: [{
+        money_part: "",
+        money_title: [""]
+      }],
+      work: [{
+        work_part: "",
+        work_title: [""]
+      }]
+    }
+  };
+  const [USER, setUSER] = useState(USER_DEFAULT);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    alert(JSON.stringify(dataType));
+    console.log("dataType : " + JSON.stringify(dataType));
+  }, [dataType]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -70,23 +81,14 @@ export const UserDataset = () => {
         user_id: user_id
       }
     });
-    setUSER_FOOD(response.data.result.food || USER_FOOD_DEFAULT);
-    setUSER_MONEY(response.data.result.money || USER_MONEY_DEFAULT);
-    setUSER_WORK(response.data.result.work || USER_WORK_DEFAULT);
+    setUSER(response.data.result || USER_DEFAULT);
   })()}, [user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const dataset = {
-      user_dataset: {
-        food: USER_FOOD,
-        money: USER_MONEY,
-        work: USER_WORK
-      }
-    };
     const response = await axios.post(`${URL_USER}/save`, {
       user_id: user_id,
-      USER: dataset
+      USER: USER
     });
     if (response.data === "success") {
       alert("Save successfully");
@@ -104,101 +106,143 @@ export const UserDataset = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function addPart() {
-      const newPart = prompt("새로운 이름을 입력하세요.");
-      if (newPart) {
-        setUSER_WORK((prev) => ([
-          ...prev, {
-            work_part: newPart,
-            work_title: ["default"]
+      setUSER((prev) => ({
+        ...prev,
+        user_dataset: {
+          ...prev.user_dataset,
+          [dataType]: [
+            ...prev.user_dataset[dataType],
+            {
+              [`${dataType}_part`]: "",
+              [`${dataType}_title`]: [""]
+            }
+          ]
+        }
+      }));
+    };
+    function addTitle () {
+      const index = idx.partIdx;
+      return function() {
+        setUSER((prev) => ({
+          ...prev,
+          user_dataset: {
+            ...prev.user_dataset,
+            [dataType]: [
+              ...prev.user_dataset[dataType].slice(0, index), {
+                ...prev.user_dataset[dataType][index],
+                [`${dataType}_title`]: [
+                  ...prev.user_dataset[dataType][index][`${dataType}_title`],
+                  ""
+                ]
+              },
+              ...prev.user_dataset[dataType].slice(index + 1)
+            ]
           }
-        ]));
-      }
+        }));
+      };
     };
     function renamePart(index) {
       return function() {
         const newPart = prompt("새로운 이름을 입력하세요.");
         if (newPart) {
-          setUSER_WORK((prev) => ([
-            ...prev.slice(0, index), {
-              ...prev[index],
-              work_part: newPart
-            },
-            ...prev.slice(index + 1)
-          ]));
-        }
-      };
-    };
-    function removePart(index) {
-      return function() {
-        setUSER_WORK((prev) => ([
-          ...prev.slice(0, index),
-          ...prev.slice(index + 1)
-        ]));
-      };
-    };
-    function addTitle () {
-      const index = idx.partIdx;
-      return function() {
-        const newTitle = prompt("새로운 이름을 입력하세요.");
-        if (newTitle) {
-          setUSER_WORK((prev) => ([
-            ...prev.slice(0, index), {
-              ...prev[index],
-              work_title: [
-                ...prev[index].work_title,
-                newTitle
+          setUSER((prev) => ({
+            ...prev,
+            user_dataset: {
+              ...prev.user_dataset,
+              [dataType]: [
+                ...prev.user_dataset[dataType].slice(0, index), {
+                  ...prev.user_dataset[dataType][index],
+                  [`${dataType}_part`]: newPart
+                },
+                ...prev.user_dataset[dataType].slice(index + 1)
               ]
-            },
-            ...prev.slice(index + 1)
-          ]));
+            }
+          }));
         }
-      };
-    };
-    function removeTitle(index) {
-      return function() {
-        setUSER_WORK((prev) => ([
-          ...prev.slice(0, idx.partIdx), {
-            ...prev[idx.partIdx],
-            work_title: [
-              ...prev[idx.partIdx].work_title.slice(0, index),
-              ...prev[idx.partIdx].work_title.slice(index + 1)
-            ]
-          },
-          ...prev.slice(idx.partIdx + 1)
-        ]));
       };
     };
     function renameTitle(index) {
       return function() {
         const newTitle = prompt("새로운 이름을 입력하세요.");
         if (newTitle) {
-          setUSER_WORK((prev) => ([
-            ...prev.slice(0, idx.partIdx), {
-              ...prev[idx.partIdx],
-              work_title: [
-                ...prev[idx.partIdx].work_title.slice(0, index),
-                newTitle,
-                ...prev[idx.partIdx].work_title.slice(index + 1)
+          setUSER((prev) => ({
+            ...prev,
+            user_dataset: {
+              ...prev.user_dataset,
+              [dataType]: [
+                ...prev.user_dataset[dataType].slice(0, idx.partIdx), {
+                  ...prev.user_dataset[dataType][idx.partIdx],
+                  [`${dataType}_title`]: [
+                    ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(0, index),
+                    newTitle,
+                    ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(index + 1)
+                  ]
+                },
+                ...prev.user_dataset[dataType].slice(idx.partIdx + 1)
               ]
-            },
-            ...prev.slice(idx.partIdx + 1)
-          ]));
+            }
+          }));
         }
       };
     };
+    function rmPart(index) {
+      return function() {
+        setUSER((prev) => ({
+          ...prev,
+          user_dataset: {
+            ...prev.user_dataset,
+            [dataType]: [
+              ...prev.user_dataset[dataType].slice(0, index),
+              ...prev.user_dataset[dataType].slice(index + 1)
+            ]
+          }
+        }));
+      };
+    };
+    function rmTitle(index) {
+      return function() {
+        setUSER((prev) => ({
+          ...prev,
+          user_dataset: {
+            ...prev.user_dataset,
+            [dataType]: [
+              ...prev.user_dataset[dataType].slice(0, idx.partIdx), {
+                ...prev.user_dataset[dataType][idx.partIdx],
+                [`${dataType}_title`]: [
+                  ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(0, index),
+                  ...prev.user_dataset[dataType][idx.partIdx][`${dataType}_title`].slice(index + 1)
+                ]
+              },
+              ...prev.user_dataset[dataType].slice(idx.partIdx + 1)
+            ]
+          }
+        }));
+      };
+    };
     return (
-      <table className={"table bg-white table-hover"}>
+      <table className={"table bg-white table-hover table-bordered"}>
         <thead className={"table-primary"}>
           <tr>
-            <th>part</th>
-            <th>title</th>
+            <th colSpan={2} className={"pointer"} onClick={() => setDataType("food")}>
+              food
+            </th>
+            <th colSpan={2} className={"pointer"} onClick={() => setDataType("money")}>
+              money
+            </th>
+            <th colSpan={2} className={"pointer"} onClick={() => setDataType("work")}>
+              work
+            </th>
+          </tr>
+          <tr>
+            <th colSpan={3}>part</th>
+            <th colSpan={3}>title</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              {USER_WORK.map((item, index) => (
-                <React.Fragment key={index}>
+          {USER?.user_dataset[dataType]?.map((item, index) => (
+            <React.Fragment key={index}>
+              <tr>
+                <td colSpan={3}>
                   <div className={"pointer"} onClick={() => {
                     setIdx((prev) => ({
                       ...prev,
@@ -206,43 +250,23 @@ export const UserDataset = () => {
                       titleIdx: 0
                     }));
                   }}>
-                    {item.work_part}
+                    {item.food_part}
                   </div>
-                  <span className={"pointer"} onClick={removePart(index)}>
+                  <span className={"pointer"} onClick={rmPart(index)}>
                     x
                   </span>
                   <span className={"pointer"} onClick={renamePart(index)}>
                     rename
                   </span>
-                </React.Fragment>
-              ))}
-            </td>
-            <td>
-              {USER_WORK[idx.partIdx]?.work_title.map((item, index) => (
-                <React.Fragment key={index}>
-                  <div className={"pointer"} onClick={() => {
-                    setIdx((prev) => ({
-                      ...prev,
-                      titleIdx: index
-                    }));
-                  }}>
-                    {item}
-                  </div>
-                  <span className={"pointer"} onClick={removeTitle(index)}>
-                    x
-                  </span>
-                  <span className={"pointer"} onClick={renameTitle(index)}>
-                    rename
-                  </span>
-                </React.Fragment>
-              ))}
-            </td>
-          </tr>
+                </td>
+              </tr>
+            </React.Fragment>
+          ))}
           <tr>
-            <td className={"pointer"} onClick={addPart}>
+            <td colSpan={3} className={"pointer"} onClick={addPart}>
               추가
             </td>
-            <td className={"pointer"} onClick={addTitle()}>
+            <td colSpan={3} className={"pointer"} onClick={addTitle()}>
               추가
             </td>
           </tr>
