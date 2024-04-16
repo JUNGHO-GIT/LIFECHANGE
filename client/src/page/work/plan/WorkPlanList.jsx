@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {compare} from "../../../assets/jsx/compare.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -106,14 +107,6 @@ export const WorkPlanList = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function successOrNot (plan, real) {
-      if (plan === real) {
-        return "일치";
-      }
-      else {
-        return plan > real ? "미달" : "초과";
-      }
-    };
     function tableFragment () {
       return (
         <table className={"table bg-white table-hover"}>
@@ -145,13 +138,13 @@ export const WorkPlanList = () => {
                   <td>총 운동횟수</td>
                   <td>{item.work_plan_total_count || "0"}</td>
                   <td>{item.work_total_count || "0"}</td>
-                  <td>{successOrNot(item.work_plan_total_count, item.work_total_count)}</td>
+                  <td>{compare(item.work_plan_total_count, item.work_total_count, "work", "")}</td>
                 </tr>
                 <tr>
                   <td>유산소 시간</td>
                   <td>{item.work_plan_cardio_time || "0"}</td>
                   <td>{item.work_total_cardio || "0"}</td>
-                  <td>{successOrNot(item.work_plan_cardio_time, item.work_total_cardio)}</td>
+                  <td>{compare(item.work_plan_cardio_time, item.work_total_cardio, "work", "")}</td>
                 </tr>
               </React.Fragment>
             ))}

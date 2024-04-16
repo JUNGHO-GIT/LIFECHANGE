@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {compare} from "../../../assets/jsx/compare.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -104,30 +105,6 @@ export const SleepPlanList = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function successOrNot (plan, real) {
-      const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
-      const realDate = new Date(`1970-01-01T${real}:00.000Z`);
-      if (realDate < planDate) {
-        realDate.setHours(realDate.getHours() + 24);
-      }
-      const diff = Math.abs(realDate.getTime() - planDate.getTime());
-      const diffMinutes = Math.floor(diff / 60000);
-
-      let textColor = "text-muted";
-      if (0 <= diffMinutes && diffMinutes <= 10) {
-        textColor = "text-primary";
-      }
-      if (10 < diffMinutes && diffMinutes <= 20) {
-        textColor = "text-success";
-      }
-      if (20 < diffMinutes && diffMinutes <= 30) {
-        textColor = "text-warning";
-      }
-      if (30 < diffMinutes) {
-        textColor = "text-danger";
-      }
-      return textColor;
-    };
     function tableFragment () {
       return (
         <table className={"table bg-white table-hover"}>
@@ -159,25 +136,19 @@ export const SleepPlanList = () => {
                   <td>취침</td>
                   <td>{item.sleep_plan_night}</td>
                   <td>{item.sleep_night}</td>
-                  <td className={successOrNot(item.sleep_night, item.sleep_plan_night)}>
-                    ●
-                  </td>
+                  <td>{compare(item.sleep_night, item.sleep_plan_night, "sleep", "")}</td>
                 </tr>
                 <tr>
                   <td>기상</td>
                   <td>{item.sleep_plan_morning}</td>
                   <td>{item.sleep_morning}</td>
-                  <td className={successOrNot(item.sleep_morning, item.sleep_plan_morning)}>
-                    ●
-                  </td>
+                  <td>{compare(item.sleep_morning, item.sleep_plan_morning, "sleep", "")}</td>
                 </tr>
                 <tr>
                   <td>수면</td>
                   <td>{item.sleep_plan_time}</td>
                   <td>{item.sleep_time}</td>
-                  <td className={successOrNot(item.sleep_time, item.sleep_plan_time)}>
-                    ●
-                  </td>
+                  <td>{compare(item.sleep_time, item.sleep_plan_time, "sleep", "")}</td>
                 </tr>
               </React.Fragment>
             ))}

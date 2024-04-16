@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {compare} from "../../../assets/jsx/compare.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../../assets/fragments/PagingNode.jsx";
@@ -106,25 +107,6 @@ export const FoodPlanList = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function successOrNot (plan, real) {
-      // 절댓값 구하기
-      const abs = Math.abs(plan - real);
-      if (real < plan) {
-        return (
-          <span className={"text-success"}>{abs}</span>
-        );
-      }
-      else if (real === plan) {
-        return (
-          <span className={"text-primary"}>{abs}</span>
-        );
-      }
-      else if (real > plan) {
-        return (
-          <span className={"text-danger"}>{abs}</span>
-        );
-      }
-    };
     function tableFragment () {
       return (
         <table className={"table bg-white table-hover"}>
@@ -156,25 +138,25 @@ export const FoodPlanList = () => {
                   <td>칼로리</td>
                   <td>{item.food_plan_kcal}</td>
                   <td>{item.food_kcal}</td>
-                  <td>{successOrNot(item.food_plan_kcal, item.food_kcal)}</td>
+                  <td>{compare(item.food_plan_kcal, item.food_kcal, "food", "")}</td>
                 </tr>
                 <tr>
                   <td>탄수화물</td>
                   <td>{item.food_plan_carb}</td>
                   <td>{item.food_carb}</td>
-                  <td>{successOrNot(item.food_plan_carb, item.food_carb)}</td>
+                  <td>{compare(item.food_plan_carb, item.food_carb, "food", "")}</td>
                 </tr>
                 <tr>
                   <td>단백질</td>
                   <td>{item.food_plan_protein}</td>
                   <td>{item.food_protein}</td>
-                  <td>{successOrNot(item.food_plan_protein, item.food_protein)}</td>
+                  <td>{compare(item.food_plan_protein, item.food_protein, "food", "")}</td>
                 </tr>
                 <tr>
                   <td>지방</td>
                   <td>{item.food_plan_fat}</td>
                   <td>{item.food_fat}</td>
-                  <td>{successOrNot(item.food_plan_fat, item.food_fat)}</td>
+                  <td>{compare(item.food_plan_fat, item.food_fat, "food", "")}</td>
                 </tr>
               </React.Fragment>
             ))}
