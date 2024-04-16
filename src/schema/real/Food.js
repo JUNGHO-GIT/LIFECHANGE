@@ -8,10 +8,12 @@ import {incrementSeq} from "./Counter.js";
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
+    default: "",
     required: true
   },
   food_number: {
     type : String,
+    default : "",
     unique : true
   },
 
@@ -60,34 +62,42 @@ const schema = new mongoose.Schema({
     },
     food_brand : {
       type : String,
+      default : "",
       required : false
     },
     food_count : {
       type: Number,
+      default: 0,
       required: false
     },
     food_serv : {
       type : String,
+      default : "",
       required : false
     },
     food_gram : {
       type: Number,
+      default: 0,
       required: false
     },
     food_kcal : {
       type: Number,
+      default: 0,
       required: false
     },
     food_carb : {
       type: Number,
+      default: 0,
       required: false
     },
     food_protein : {
       type: Number,
+      default: 0,
       required: false
     },
     food_fat : {
       type: Number,
+      default: 0,
       required: false
     },
   }],

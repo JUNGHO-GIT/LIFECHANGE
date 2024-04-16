@@ -7,6 +7,7 @@ import {incrementSeq} from "./Counter.js";
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
+    default: "",
     required: true
   },
   money_number: {
@@ -43,6 +44,7 @@ const schema = new mongoose.Schema({
     },
     money_part_val : {
       type : String,
+      default : "",
       required : false
     },
     money_title_idx : {
@@ -51,6 +53,7 @@ const schema = new mongoose.Schema({
     },
     money_title_val : {
       type : String,
+      default : "",
       required : false
     },
     money_amount : {
@@ -59,6 +62,7 @@ const schema = new mongoose.Schema({
     },
     money_content :{
       type : String,
+      default : "",
       required : false
     },
   }],

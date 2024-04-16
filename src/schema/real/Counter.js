@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 const schema = new mongoose.Schema({
   _id: {
     type: String,
+    default: "",
     required: true
   },
   seq: {

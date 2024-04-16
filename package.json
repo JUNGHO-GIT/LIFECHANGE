@@ -4,9 +4,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "cache": "npm cache clean -f"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/mocha": "^10.0.6",
     "bcryptjs": "^2.3.3",
     "bcryptjs-react": "^2.4.6",

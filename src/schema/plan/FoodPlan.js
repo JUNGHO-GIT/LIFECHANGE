@@ -7,6 +7,7 @@ import {incrementSeq} from "./CounterPlan.js";
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
+    default: "",
     required: true
   },
   food_plan_number: {

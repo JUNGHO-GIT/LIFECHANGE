@@ -82,6 +82,7 @@ textarea.form-control {
 
 /**************************************************************************************************/
 .root-wrapper {
+  width: 80%;
   margin: 0 auto;
   position: relative;
 }

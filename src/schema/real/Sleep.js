@@ -7,6 +7,7 @@ import {incrementSeq} from "./Counter.js";
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
+    default: "",
     required: true
   },
   sleep_number: {

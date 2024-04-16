@@ -7,6 +7,7 @@ import {incrementSeq} from "./CounterPlan.js";
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
+    default: "",
     required: true
   },
   work_plan_number: {

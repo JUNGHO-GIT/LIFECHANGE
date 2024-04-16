@@ -9,6 +9,7 @@ import {moneyArray} from "../../assets/data/MoneyArray.js";
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
+    default: "",
     required: true
   },
   user_number : {
