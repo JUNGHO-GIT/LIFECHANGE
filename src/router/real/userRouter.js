@@ -4,6 +4,26 @@ import express from "express";
 import * as service from "../../service/real/userService.js";
 export const userRouter = express.Router();
 
+// 0-0. signup ------------------------------------------------------------------------------------>
+userRouter.post("/signup", async (req, res) => {
+  try {
+    const result = await service.signup (
+      req.body.user_id,
+      req.body.user_pw
+    );
+    if (result) {
+      res.send("success");
+    }
+    else {
+      res.send("fail");
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
 // 0-1. login ------------------------------------------------------------------------------------->
 userRouter.post("/login", async (req, res) => {
   try {
@@ -47,8 +67,7 @@ userRouter.post("/checkId", async (req, res) => {
 userRouter.get("/dataset", async (req, res) => {
   try {
     const result = await service.dataset (
-      req.query.user_id,
-      req.query.user_pw
+      req.query.user_id
     );
     if (result) {
       res.send(result);
@@ -90,8 +109,7 @@ userRouter.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
-      req.query.user_id,
-      req.query.user_pw
+      req.query.user_id
     );
     if (result) {
       res.send(result);
@@ -111,7 +129,6 @@ userRouter.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
-      req.body.user_pw,
       req.body.USER
     );
     if (result) {

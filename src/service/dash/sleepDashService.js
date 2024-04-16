@@ -1,7 +1,7 @@
 // sleepDashService.js
 
 import moment from "moment";
-import * as repo from "../../repository/dash/sleepDashRepo.js";
+import * as repository from "../../repository/dash/sleepDashRepository.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -54,10 +54,10 @@ export const barToday = async (
   let finalResult = [];
 
   for (let key in data) {
-    const findResultPlan = await repo.detailPlan(
+    const findResultPlan = await repository.detailPlan(
       "", user_id_param, koreanDate, koreanDate
     );
-    const findResultReal = await repo.detailReal(
+    const findResultReal = await repository.detailReal(
       "", user_id_param, koreanDate, koreanDate
     );
 
@@ -86,7 +86,7 @@ export const lineWeek = async (
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().add(i, "days");
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -118,7 +118,7 @@ export const lineMonth = async (
 
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -159,7 +159,7 @@ export const avgWeek = async (
     const weekNum = week.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repo.detailReal(
+      const findResult = await repository.detailReal(
         "", user_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
@@ -209,7 +209,7 @@ export const avgMonth = async (
   ) {
     const monthNum = month.month();
 
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 

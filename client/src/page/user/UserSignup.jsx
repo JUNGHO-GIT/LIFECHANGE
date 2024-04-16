@@ -1,66 +1,49 @@
-// UserSave.jsx
+// UserSignup.jsx
 
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const UserSave = () => {
+export const UserSignup = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_USER = process.env.REACT_APP_URL_USER;
   const navParam = useNavigate();
-  const {log} = useDeveloperMode();
-
-  // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserSave = async () => {
-    try {
-      if (user_id === "" || user_pw === "") {
-        alert("Please enter both Id and Pw");
-        return;
-      }
-
-      const response = await axios.post (`${URL_USER}/save`, {
-        user_id: user_id,
-        user_pw: user_pw,
-      });
-      log("USER : " + JSON.stringify(response.data));
-
-
-      if (response.data === "success") {
-        alert("Signup successful");
-        navParam("/user/login");
-      }
-      else if (response.data === "duplicate") {
-        alert("This location_id already exists");
-        setUserId("");
-        setUserPw("");
-      }
-      else if (response.data === "fail") {
-        alert("Incorrect Id or Pw");
-        setUserId("");
-        setUserPw("");
-      }
-      else {
-        alert(`${response.data}error`);
-      }
+    if (user_id === "" || user_pw === "") {
+      alert("Please enter both Id and Pw");
+      return;
     }
-    catch (e) {
-      alert(`Error inserting user data: ${e.message}`);
+    const response = await axios.post (`${URL_USER}/signup`, {
+      user_id: user_id,
+      user_pw: user_pw,
+    });
+
+    if (response.data === "success") {
+      alert("Signup successful");
+      navParam("/user/login");
+    }
+    else if (response.data === "duplicate") {
+      alert("This location_id already exists");
+      setUserId("");
+      setUserPw("");
+    }
+    else if (response.data === "fail") {
+      alert("Incorrect Id or Pw");
+      setUserId("");
+      setUserPw("");
+    }
+    else {
+      alert(`${response.data}error`);
     }
   };
-
-  // 4. date -------------------------------------------------------------------------------------->
-
   // 5. table ------------------------------------------------------------------------------------->
   const tableUserSave = () => {
     return (
@@ -72,7 +55,6 @@ export const UserSave = () => {
             value={user_id}
             onChange={(e) => {setUserId(e.target.value);}}
           />
-          <label htmlFor="floatingId">location_id</label>
         </div>
         <div className={"form-floating"}>
           <input
@@ -85,7 +67,6 @@ export const UserSave = () => {
               setUserPw(e.target.value);
             }}
           />
-          <label htmlFor="floatingPassword">Password</label>
         </div>
       </div>
     );

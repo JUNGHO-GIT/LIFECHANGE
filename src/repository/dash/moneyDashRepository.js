@@ -1,75 +1,77 @@
-// foodDashRepository.js
+// moneyDashRepository.js
 
-import {Food} from "../../schema/real/Food.js";
-import {FoodPlan} from "../../schema/plan/FoodPlan.js";
+import {Money} from "../../schema/real/Money.js";
+import {MoneyPlan} from "../../schema/plan/MoneyPlan.js";
 
-// 1-1. aggregate (kcal) -------------------------------------------------------------------------->
-export const aggregateKcal = async (
+// 1-1. aggregate (in) ---------------------------------------------------------------------------->
+export const aggregateIn = async (
   user_id_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await Food.aggregate([
+  const finalResult = await Money.aggregate([
     {$match: {
       user_id: user_id_param,
-      food_startDt: {
+      money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param
       },
-      food_endDt: {
+      money_endDt: {
         $gte: startDt_param,
         $lte: endDt_param
       },
     }},
-    {$unwind: "$food_section"
+    {$unwind: "$money_section"
     },
+    {$match: {
+      "money_section.money_part_val": "수입"
+    }},
     {$group: {
-      _id: "$food_section.food_title_val",
+      _id: "$money_section.money_title_val",
       value: {
-        $sum: {
-          $toDouble: "$food_section.food_kcal"
-        }
+        $sum: "$money_section.money_amount"
       }
     }},
     {$sort: {value: -1}},
-    {$limit: 10}
+    {$limit: 5}
   ]);
 
   return finalResult;
 };
 
-// 1-2. aggregate (nut) --------------------------------------------------------------------------->
-export const aggregateNut = async (
+// 1-2. aggregate (out) --------------------------------------------------------------------------->
+export const aggregateOut = async (
   user_id_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await Food.aggregate([
+  const finalResult = await Money.aggregate([
     {$match: {
       user_id: user_id_param,
-      food_startDt: {
+      money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param
       },
-      food_endDt: {
+      money_endDt: {
         $gte: startDt_param,
         $lte: endDt_param
       },
+    }},
+    {$unwind: "$money_section"
+    },
+    {$match: {
+      "money_section.money_part_val": "지출"
     }},
     {$group: {
-      _id: null,
-      total_carb: {$sum: "$food_total_carb"},
-      total_protein: {$sum: "$food_total_protein"},
-      total_fat: {$sum: "$food_total_fat"}
+      _id: "$money_section.money_title_val",
+      value: {
+        $sum: "$money_section.money_amount"
+      }
     }},
-    {$project: {
-      _id: 0,
-      food_total_carb: "$total_carb",
-      food_total_protein: "$total_protein",
-      food_total_fat: "$total_fat"
-    }},
+    {$sort: {value: -1}},
+    {$limit: 10}
   ]);
 
   return finalResult;
@@ -83,14 +85,14 @@ export const detailPlan = async (
   endDt_param
 ) => {
 
-  const finalResult = await FoodPlan.findOne({
+  const finalResult = await MoneyPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    food_plan_startDt: {
+    money_plan_startDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     },
-    food_plan_endDt: {
+    money_plan_endDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     }
@@ -100,7 +102,7 @@ export const detailPlan = async (
   return finalResult;
 };
 
-// 2-2. detail (real) ----------------------------------------------------------------------------->
+// 2-2. detail (real) ---------------------------------------------------------------------------->
 export const detailReal = async (
   _id_param,
   user_id_param,
@@ -108,14 +110,14 @@ export const detailReal = async (
   endDt_param
 ) => {
 
-  const finalResult = await Food.findOne({
+  const finalResult = await Money.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    food_startDt: {
+    money_startDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     },
-    food_endDt: {
+    money_endDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     }

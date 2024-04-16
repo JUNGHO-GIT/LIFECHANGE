@@ -6,7 +6,7 @@ import {Collapse} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
-import {linkArray} from "../assets/data/LinkArray.jsx";
+import {dataArray} from "../assets/data/DataArray.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -25,6 +25,8 @@ export const Header = () => {
       id: "",
       date: koreanDate,
       refresh: 0,
+      toLogin: "/user/login",
+      toSignup: "/user/signup",
     }
   );
 
@@ -48,7 +50,7 @@ export const Header = () => {
     let preFix;
     let lowFix;
 
-    linkArray.forEach((menu) => {
+    dataArray.forEach((menu) => {
       if (isActive.includes(menu.label.toLowerCase())) {
         preFix = menu.label;
         lowFix = preFix.toLowerCase()
@@ -92,7 +94,7 @@ export const Header = () => {
         </div>
         <div className={"d-flex flex-column p-3"}>
           <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>
-            {linkArray?.map((menu) => (
+            {dataArray?.map((menu) => (
               <SidebarItem key={menu.label}
                 {...menu}
               />
@@ -110,7 +112,7 @@ export const Header = () => {
     let subFix = isActive.split("/")[1];
     let lowFix;
 
-    linkArray.forEach((menu) => {
+    dataArray.forEach((menu) => {
       if (isActive.includes(menu.label.toLowerCase())) {
         preFix = menu.label;
         lowFix = preFix.toLowerCase()
@@ -144,7 +146,7 @@ export const Header = () => {
     const buttonLogin = () => {
       return (
         <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
-          navParam("/user/login");
+          navParam(SEND.toLogin);
         }}>
           Login
         </button>
@@ -153,7 +155,7 @@ export const Header = () => {
     const buttonSignup = () => {
       return (
         <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
-          navParam("/user/save");
+          navParam(SEND.toSignup);
         }}>
           Signup
         </button>

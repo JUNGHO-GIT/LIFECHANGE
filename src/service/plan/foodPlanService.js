@@ -1,6 +1,6 @@
 // foodPlanService.js
 
-import * as repo from "../../repository/plan/foodPlanRepo.js";
+import * as repository from "../../repository/plan/foodPlanRepository.js";
 
 // 1-1. compare ----------------------------------------------------------------------------------->
 export const compare = async (
@@ -18,15 +18,15 @@ export const compare = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repo.totalCnt(
+  const totalCnt = await repository.totalCnt(
     user_id_param, startDtReal, endDtReal
   );
 
-  const findResultPlan = await repo.findPlan(
+  const findResultPlan = await repository.findPlan(
     user_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
 
-  const findResultReal = await repo.findReal(
+  const findResultReal = await repository.findReal(
     user_id_param, sort, limit, page, startDtReal, endDtReal
   );
 
@@ -80,11 +80,11 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repo.totalCnt(
+  const totalCnt = await repository.totalCnt(
     user_id_param, startDt, endDt
   );
 
-  const findResult = await repo.findPlan(
+  const findResult = await repository.findPlan(
     user_id_param, sort, limit, page, startDt, endDt
   );
 
@@ -103,7 +103,7 @@ export const detail = async (
 
   const [startDt, endDt] = food_plan_dur_param.split(` ~ `);
 
-  const finalResult = await repo.detail(
+  const finalResult = await repository.detail(
     _id_param, user_id_param, startDt, endDt
   );
 
@@ -121,18 +121,18 @@ export const save = async (
 
   const [startDt, endDt] = food_plan_dur_param.split(` ~ `);
 
-  const findResult = await repo.detail(
+  const findResult = await repository.detail(
     "", user_id_param, startDt, endDt
   );
 
   let finalResult;
   if (!findResult) {
-    finalResult = await repo.create(
+    finalResult = await repository.create(
       user_id_param, FOOD_PLAN_param, startDt, endDt
     );
   }
   else {
-    finalResult = await repo.update(
+    finalResult = await repository.update(
       findResult._id, FOOD_PLAN_param
     );
   }
@@ -151,7 +151,7 @@ export const deletes = async (
 
   const [startDt, endDt] = food_plan_dur_param.split(` ~ `);
 
-  const finalResult = await repo.deletes(
+  const finalResult = await repository.deletes(
     _id_param, user_id_param, startDt, endDt
   );
 

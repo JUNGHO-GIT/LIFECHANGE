@@ -1,7 +1,7 @@
 // foodDashService.js
 
 import moment from "moment";
-import * as repo from "../../repository/dash/foodDashRepo.js";
+import * as repository from "../../repository/dash/foodDashRepository.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -56,10 +56,10 @@ export const barToday = async (
   // carb, protein, fat
   let finalResultNut = [];
 
-  const findResultPlan = await repo.detailPlan(
+  const findResultPlan = await repository.detailPlan(
     "", user_id_param, koreanDate, koreanDate
   );
-  const findResultReal = await repo.detailReal(
+  const findResultReal = await repository.detailReal(
     "", user_id_param, koreanDate, koreanDate
   );
 
@@ -92,12 +92,12 @@ export const pieToday = async (
 ) => {
 
   // kcal
-  const findResultKcal = await repo.aggregateKcal(
+  const findResultKcal = await repository.aggregateKcal(
     user_id_param, koreanDate, koreanDate
   );
 
   // carb, protein, fat
-  const findResultNut = await repo.aggregateNut(
+  const findResultNut = await repository.aggregateNut(
     user_id_param, koreanDate, koreanDate
   );
 
@@ -126,12 +126,12 @@ export const pieWeek = async (
 ) => {
 
   // kcal
-  const findResultKcal = await repo.aggregateKcal(
+  const findResultKcal = await repository.aggregateKcal(
     user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
 
   // carb, protein, fat
-  const findResultNut = await repo.aggregateNut(
+  const findResultNut = await repository.aggregateNut(
     user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
 
@@ -160,12 +160,12 @@ export const pieMonth = async (
 ) => {
 
   // kcal
-  const findResultKcal = await repo.aggregateKcal(
+  const findResultKcal = await repository.aggregateKcal(
     user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
 
   // carb, protein, fat
-  const findResultNut = await repo.aggregateNut(
+  const findResultNut = await repository.aggregateNut(
     user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
 
@@ -205,7 +205,7 @@ export const lineWeek = async (
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -252,7 +252,7 @@ export const lineMonth = async (
     day.isBefore(curMonthEnd);
     day.add(1, "days")
   ) {
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
@@ -306,7 +306,7 @@ export const avgWeek = async (
     const weekNum = week.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repo.detailReal(
+      const findResult = await repository.detailReal(
         "", user_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
@@ -369,7 +369,7 @@ export const avgMonth = async (
   ) {
     const monthNum = month.month();
 
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 

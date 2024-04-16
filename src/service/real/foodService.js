@@ -2,7 +2,7 @@
 
 import {JSDOM} from "jsdom";
 import axios from "axios";
-import * as repo from "../../repository/real/foodRepo.js";
+import * as repository from "../../repository/real/foodRepository.js";
 
 // 1-0. search ------------------------------------------------------------------------------------>
 export const search = async (
@@ -131,11 +131,11 @@ export const list = async (
   const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
   const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
-  const totalCnt = await repo.totalCnt(
+  const totalCnt = await repository.totalCnt(
     user_id_param, part, title, startDt, endDt
   );
 
-  const finalResult = await repo.findReal(
+  const finalResult = await repository.findReal(
     user_id_param, part, title, sort, limit, page, startDt, endDt
   );
 
@@ -154,7 +154,7 @@ export const detail = async (
 
   const [startDt, endDt] = food_dur_param.split(` ~ `);
 
-  const finalResult = await repo.detail(
+  const finalResult = await repository.detail(
     _id_param, user_id_param, startDt, endDt
   );
 
@@ -175,18 +175,18 @@ export const save = async (
 
   const [startDt, endDt] = food_dur_param.split(` ~ `);
 
-  const findResult = await repo.detail(
+  const findResult = await repository.detail(
     "", user_id_param, startDt, endDt
   );
 
   let finalResult;
   if (!findResult) {
-    finalResult = await repo.create(
+    finalResult = await repository.create(
       user_id_param, FOOD_param, startDt, endDt
     );
   }
   else {
-    finalResult = await repo.update(
+    finalResult = await repository.update(
       findResult._id, FOOD_param
     );
   }
@@ -205,7 +205,7 @@ export const deletes = async (
 
   const [startDt, endDt] = food_dur_param.split(` ~ `);
 
-  const finalResult = await repo.deletes(
+  const finalResult = await repository.deletes(
     _id_param, user_id_param, startDt, endDt
   );
 

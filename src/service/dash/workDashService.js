@@ -1,7 +1,7 @@
 // workDashService.js
 
 import moment from "moment";
-import * as repo from "../../repository/dash/workDashRepo.js";
+import * as repository from "../../repository/dash/workDashRepository.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -44,11 +44,11 @@ export const scatterWeek = async (
     day.add(1, "days")
   ) {
 
-    const findResultPlan = await repo.aggregateWeightPlan(
+    const findResultPlan = await repository.aggregateWeightPlan(
       user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
-    const findResultReal = await repo.aggregateWeightReal(
+    const findResultReal = await repository.aggregateWeightReal(
       user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
@@ -86,11 +86,11 @@ export const scatterMonth = async (
     day.add(1, "days")
   ) {
 
-    const findResultPlan = await repo.aggregateWeightPlan(
+    const findResultPlan = await repository.aggregateWeightPlan(
       user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
-    const findResultReal = await repo.aggregateWeightReal(
+    const findResultReal = await repository.aggregateWeightReal(
       user_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
@@ -119,10 +119,10 @@ export const pieWeek = async (
   // top title
   let finalResultTitle = [];
 
-  const findResultPart = await repo.aggregateTopPart(
+  const findResultPart = await repository.aggregateTopPart(
     user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
-  const findResultTitle = await repo.aggregateTopTitle(
+  const findResultTitle = await repository.aggregateTopTitle(
     user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
 
@@ -159,10 +159,10 @@ export const pieMonth = async (
   // top title
   let finalResultTitle = [];
 
-  const findResultPart = await repo.aggregateTopPart(
+  const findResultPart = await repository.aggregateTopPart(
     user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
-  const findResultTitle = await repo.aggregateTopTitle(
+  const findResultTitle = await repository.aggregateTopTitle(
     user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
 
@@ -201,7 +201,7 @@ export const lineWeek = async (
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().add(i, "days");
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -232,7 +232,7 @@ export const lineMonth = async (
 
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -275,7 +275,7 @@ export const avgWeek = async (
     const weekNum = week.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repo.detailReal(
+      const findResult = await repository.detailReal(
         "", user_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
@@ -332,7 +332,7 @@ export const avgMonth = async (
   ) {
     const monthNum = month.month();
 
-    const findResult = await repo.detailReal(
+    const findResult = await repository.detailReal(
       "", user_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 

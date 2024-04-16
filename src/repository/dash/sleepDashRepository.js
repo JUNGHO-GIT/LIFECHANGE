@@ -1,4 +1,4 @@
-// sleepDashRepo.js
+// sleepDashRepository.js
 
 import {Sleep} from "../../schema/real/Sleep.js";
 import {SleepPlan} from "../../schema/plan/SleepPlan.js";

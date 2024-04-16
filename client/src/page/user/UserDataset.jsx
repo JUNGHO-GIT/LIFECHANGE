@@ -42,16 +42,21 @@ export const UserDataset = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const USER_WORK_DEFAULT = [{
-    work_part: "",
-    work_title: [""]
+  const USER_FOOD_DEFAULT = [{
+    food_part: "",
+    food_title: [""]
   }];
   const USER_MONEY_DEFAULT = [{
     money_part: "",
     money_title: [""]
   }];
-  const [USER_WORK, setUSER_WORK] = useState(USER_WORK_DEFAULT);
+  const USER_WORK_DEFAULT = [{
+    work_part: "",
+    work_title: [""]
+  }];
+  const [USER_FOOD, setUSER_FOOD] = useState(USER_FOOD_DEFAULT);
   const [USER_MONEY, setUSER_MONEY] = useState(USER_MONEY_DEFAULT);
+  const [USER_WORK, setUSER_WORK] = useState(USER_WORK_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -62,19 +67,26 @@ export const UserDataset = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_USER}/dataset`, {
       params: {
-        user_id: user_id,
-        user_pw: "123"
+        user_id: user_id
       }
     });
-    setUSER_WORK(response.data.result.work || USER_WORK_DEFAULT);
+    setUSER_FOOD(response.data.result.food || USER_FOOD_DEFAULT);
     setUSER_MONEY(response.data.result.money || USER_MONEY_DEFAULT);
+    setUSER_WORK(response.data.result.work || USER_WORK_DEFAULT);
   })()}, [user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
+    const dataset = {
+      user_dataset: {
+        food: USER_FOOD,
+        money: USER_MONEY,
+        work: USER_WORK
+      }
+    };
     const response = await axios.post(`${URL_USER}/save`, {
       user_id: user_id,
-      USER: USER_WORK
+      USER: dataset
     });
     if (response.data === "success") {
       alert("Save successfully");
@@ -243,8 +255,8 @@ export const UserDataset = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} flowSave={""} navParam={navParam}
-        part={"user"} plan={""} type={"detail"}
+        SEND={SEND} flowSave={flowSave} navParam={navParam}
+        part={"user"} plan={""} type={"save"}
       />
     );
   };

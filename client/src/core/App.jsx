@@ -53,11 +53,11 @@ import {SleepList} from "../page/sleep/real/SleepList.jsx";
 import {SleepDetail} from "../page/sleep/real/SleepDetail.jsx";
 import {SleepSave} from "../page/sleep/real/SleepSave.jsx";
 
+import {UserSignup} from "../page/user/UserSignup.jsx";
+import {UserLogin} from "../page/user/UserLogin.jsx";
 import {UserList} from "../page/user/UserList";
 import {UserDetail} from "../page/user/UserDetail.jsx";
-import {UserSave} from "../page/user/UserSave.jsx";
 import {UserDelete} from "../page/user/UserDelete.jsx";
-import {UserLogin} from "../page/user/UserLogin.jsx";
 import {UserDataset} from "../page/user/UserDataset.jsx";
 
 import {WorkPlanList} from "../page/work/plan/WorkPlanList.jsx";
@@ -127,11 +127,11 @@ const Sleep = () => {
 const User = () => {
   return (
     <Routes>
+      <Route path="/signup" element={<UserSignup />} />
+      <Route path="/login" element={<UserLogin />} />
       <Route path="/list" element={<UserList />} />
       <Route path="/detail" element={<UserDetail />} />
-      <Route path="/save" element={<UserSave />} />
       <Route path="/delete" element={<UserDelete />} />
-      <Route path="/login" element={<UserLogin />} />
       <Route path="/dataset" element={<UserDataset />} />
     </Routes>
   );

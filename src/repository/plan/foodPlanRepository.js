@@ -1,9 +1,9 @@
-// moneyPlanRepo.js
+// foodPlanRepository.js
 
 import mongoose from "mongoose";
 import moment from "moment";
-import {Money} from "../../schema/real/Money.js";
-import {MoneyPlan} from "../../schema/plan/MoneyPlan.js";
+import {Food} from "../../schema/real/Food.js";
+import {FoodPlan} from "../../schema/plan/FoodPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
@@ -15,12 +15,12 @@ export const totalCnt = async (
   endDt_param
 ) => {
 
-  const finalResult = await MoneyPlan.countDocuments({
+  const finalResult = await FoodPlan.countDocuments({
     user_id: user_id_param,
-    money_plan_startDt: {
+    food_plan_startDt: {
       $lte: startDt_param,
     },
-    money_plan_endDt: {
+    food_plan_endDt: {
       $gte: endDt_param,
     },
   });
@@ -38,16 +38,16 @@ export const findPlan = async (
   endDt_param,
 ) => {
 
-  const finalResult = await MoneyPlan.find({
+  const finalResult = await FoodPlan.find({
     user_id: user_id_param,
-    money_plan_startDt: {
+    food_plan_startDt: {
       $lte: startDt_param,
     },
-    money_plan_endDt: {
+    food_plan_endDt: {
       $gte: endDt_param,
     },
   })
-  .sort({money_plan_startDt: sort_param})
+  .sort({food_plan_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
   .limit(limit_param)
   .lean();
@@ -65,18 +65,12 @@ export const findReal = async (
   endDt_param,
 ) => {
 
-  const finalResult = await Money.find({
+  const finalResult = await Food.find({
     user_id: user_id_param,
-    money_startDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    },
-    money_endDt: {
-      $gte: startDt_param,
-      $lte: endDt_param,
-    }
+    food_startDt: startDt_param,
+    food_endDt: endDt_param,
   })
-  .sort({money_startDt: sort_param})
+  .sort({food_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
   .limit(limit_param)
   .lean();
@@ -92,11 +86,11 @@ export const detail = async (
   endDt_param
 ) => {
 
-  const finalResult = await MoneyPlan.findOne({
+  const finalResult = await FoodPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    money_plan_startDt: startDt_param,
-    money_plan_endDt: endDt_param,
+    food_plan_startDt: startDt_param,
+    food_plan_endDt: endDt_param,
   })
   .lean();
 
@@ -106,20 +100,22 @@ export const detail = async (
 // 3-1. create ------------------------------------------------------------------------------------>
 export const create = async (
   user_id_param,
-  MONEY_PLAN_param,
+  FOOD_PLAN_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await MoneyPlan.create({
+  const finalResult = await FoodPlan.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
-    money_plan_startDt: startDt_param,
-    money_plan_endDt: endDt_param,
-    money_plan_in: MONEY_PLAN_param.money_plan_in,
-    money_plan_out: MONEY_PLAN_param.money_plan_out,
-    money_plan_regdate: fmtDate,
-    money_plan_update: "",
+    food_plan_startDt: startDt_param,
+    food_plan_endDt: endDt_param,
+    food_plan_kcal: FOOD_PLAN_param.food_plan_kcal,
+    food_plan_carb: FOOD_PLAN_param.food_plan_carb,
+    food_plan_protein: FOOD_PLAN_param.food_plan_protein,
+    food_plan_fat: FOOD_PLAN_param.food_plan_fat,
+    food_plan_regdate: fmtDate,
+    food_plan_update: "",
   });
 
   return finalResult;
@@ -128,15 +124,15 @@ export const create = async (
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
   _id_param,
-  MONEY_PLAN_param
+  FOOD_PLAN_param
 ) => {
 
-  const finalResult = await MoneyPlan.findOneAndUpdate(
+  const finalResult = await FoodPlan.findOneAndUpdate(
     {_id: _id_param
     },
     {$set: {
-      ...MONEY_PLAN_param,
-      money_plan_update: fmtDate,
+      ...FOOD_PLAN_param,
+      food_plan_update: fmtDate,
     }},
     {upsert: true,
       new: true
@@ -155,14 +151,14 @@ export const deletes = async (
   endDt_param
 ) => {
 
-  const updateResult = await MoneyPlan.updateOne(
+  const updateResult = await FoodPlan.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      money_plan_startDt: startDt_param,
-      money_plan_endDt: endDt_param,
+      food_plan_startDt: startDt_param,
+      food_plan_endDt: endDt_param,
     },
     {$set: {
-      money_plan_update: fmtDate,
+      food_plan_update: fmtDate,
     }},
     {arrayFilters: [{
       "elem._id": _id_param
@@ -173,15 +169,15 @@ export const deletes = async (
   let finalResult;
 
   if (updateResult.modifiedCount > 0) {
-    const doc = await MoneyPlan.findOne({
+    const doc = await FoodPlan.findOne({
       user_id: user_id_param,
-      money_plan_startDt: startDt_param,
-      money_plan_endDt: endDt_param,
+      food_plan_startDt: startDt_param,
+      food_plan_endDt: endDt_param,
     })
     .lean();
 
     if (doc) {
-      finalResult = await MoneyPlan.deleteOne({
+      finalResult = await FoodPlan.deleteOne({
         _id: doc._id
       })
       .lean();

@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
 import {workArray} from "../../assets/data/WorkArray.js";
 import {moneyArray} from "../../assets/data/MoneyArray.js";
+import {foodArray} from "../../assets/data/FoodArray.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
@@ -55,6 +56,11 @@ const schema = new mongoose.Schema({
   },
 
   user_dataset: {
+    food: {
+      type: Array,
+      default: foodArray,
+      required: false
+    },
     money: {
       type: Array,
       default: moneyArray,

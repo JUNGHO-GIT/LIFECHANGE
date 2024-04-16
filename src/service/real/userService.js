@@ -1,6 +1,29 @@
 // userService.js
 
-import * as repo from "../../repository/real/userRepo.js";
+import * as repository from "../../repository/real/userRepository.js";
+
+// 0-0. signup ------------------------------------------------------------------------------------>
+export const signup = async (
+  user_id_param,
+  user_pw_param
+) => {
+
+  const findResult = await repository.checkId(
+    user_id_param
+  );
+
+  let finalResult;
+  if (findResult.length === 0) {
+    finalResult = await repository.signup(
+      user_id_param, user_pw_param
+    );
+  }
+  else {
+    finalResult = null;
+  }
+
+  return finalResult;
+};
 
 // 0-1. login ------------------------------------------------------------------------------------->
 export const login = async (
@@ -8,8 +31,8 @@ export const login = async (
   user_pw_param
 ) => {
 
-  const findResult = await repo.detail(
-    "", user_id_param, user_pw_param
+  const findResult = await repository.login(
+    user_id_param, user_pw_param
   );
 
   return findResult;
@@ -20,7 +43,7 @@ export const checkId = async (
   user_id_param,
 ) => {
 
-  const findResult = await repo.checkId(
+  const findResult = await repository.checkId(
     user_id_param
   );
 
@@ -29,12 +52,11 @@ export const checkId = async (
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = async (
-  user_id_param,
-  user_pw_param
+  user_id_param
 ) => {
 
-  const findResult = await repo.aggregateDataset (
-    user_id_param, user_pw_param
+  const findResult = await repository.aggregateDataset (
+    user_id_param
   );
 
   return findResult;
@@ -48,7 +70,7 @@ export const list = async (
   page_param
 ) => {
 
-  const finalResult = await repo.find(
+  const finalResult = await repository.find(
     user_id_param, sort_param, limit_param, page_param
   );
 
@@ -60,12 +82,11 @@ export const list = async (
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
   _id_param,
-  user_id_param,
-  user_pw_param
+  user_id_param
 ) => {
 
-  const finalResult = await repo.detail(
-    _id_param, user_id_param, user_pw_param
+  const finalResult = await repository.detail(
+    _id_param, user_id_param
   );
 
   return {
@@ -76,22 +97,21 @@ export const detail = async (
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
   user_id_param,
-  user_pw_param,
   USER_param
 ) => {
 
-  const findResult = await repo.detail(
-    "", user_id_param, user_pw_param
+  const findResult = await repository.detail(
+    "", user_id_param
   );
 
   let finalResult;
   if (!findResult) {
-    finalResult = await repo.create(
+    finalResult = await repository.create(
       user_id_param, USER_param
     );
   }
   else {
-    finalResult = await repo.update(
+    finalResult = await repository.update(
       findResult._id, USER_param
     );
   }
@@ -107,7 +127,7 @@ export const deletes = async (
   user_id_param
 ) => {
 
-  const finalResult = await repo.deletes(
+  const finalResult = await repository.deletes(
     _id_param, user_id_param
   );
 

@@ -1,5 +1,5 @@
-// 1. linkArray ---------------------------------------------------------------------------------->
-export const linkArray = [
+// 1. dataArray ---------------------------------------------------------------------------------->
+export const dataArray = [
   {
     label: "Main",
     items: [
@@ -9,9 +9,7 @@ export const linkArray = [
   {
     label: "User",
     items: [
-      {to: "/user/login", label: "UserLogin"},
-      {to: "/user/save", label: "UserSave"},
-      {to: "/user/dataset", label: "UserDataset"},
+      {to: "/user/list", label: "UserList"},
     ]
   },
   {

@@ -1,6 +1,6 @@
 // UserLogin.jsx
 
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
@@ -14,13 +14,11 @@ export const UserLogin = () => {
   const navParam = useNavigate();
   const {log} = useDeveloperMode();
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
-  // 2-3. useEffect -------------------------------------------------------------------------------
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserLogin = async () => {

@@ -1,8 +1,8 @@
 // FilterNode.jsx
 
 import React from "react";
-import {moneyArray} from "../data/DataArray.jsx";
-import {workArray} from "../data/DataArray.jsx";
+import {moneyArray} from "../data/MoneyArray.jsx";
+import {workArray} from "../data/WorkArray.jsx";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({

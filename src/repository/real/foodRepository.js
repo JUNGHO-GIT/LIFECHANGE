@@ -1,4 +1,4 @@
-// foodPlanRepo.js
+// foodPlanRepository.js
 
 import mongoose from "mongoose";
 import moment from "moment";

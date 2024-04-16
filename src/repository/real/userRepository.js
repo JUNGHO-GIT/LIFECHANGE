@@ -1,4 +1,4 @@
-// userRepo.js
+// userRepository.js
 
 import mongoose from "mongoose";
 import moment from "moment";
@@ -6,6 +6,37 @@ import {User} from "../../schema/real/User.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
+
+// 0-0. signup ------------------------------------------------------------------------------------>
+export const signup = async (
+  user_id_param,
+  user_pw_param
+) => {
+
+  const finalResult = await User.create({
+    _id: new mongoose.Types.ObjectId(),
+    user_id: user_id_param,
+    user_pw: user_pw_param,
+    user_regdate: fmtDate,
+    user_update: "",
+  });
+
+  return finalResult;
+};
+
+// 0.1. login ------------------------------------------------------------------------------------>
+export const login = async (
+  user_id_param,
+  user_pw_param
+) => {
+
+  const finalResult = await User.findOne({
+    user_id: user_id_param,
+    user_pw: user_pw_param
+  })
+
+  return finalResult;
+};
 
 // 0-1. find (checkId) ---------------------------------------------------------------------------->
 export const checkId = async (
@@ -41,31 +72,32 @@ export const find = async (
 
 // 1-2. aggregate (dataset) ----------------------------------------------------------------------->
 export const aggregateDataset = async (
-  user_id_param,
-  user_pw_param
+  user_id_param
 ) => {
 
   const finalResult = await User.aggregate([
     {$match: {
       user_id: user_id_param,
-      user_pw: user_pw_param
     }},
     {$project: {
       _id: 0,
       user_dataset: {
-        work: 1,
-        money: 1
+        food: 1,
+        money: 1,
+        work: 1
       }
     }}
   ]);
 
-  const workSet = finalResult[0]?.user_dataset.work;
+  const foodSet = finalResult[0]?.user_dataset.food;
   const moneySet = finalResult[0]?.user_dataset.money;
+  const workSet = finalResult[0]?.user_dataset.work;
 
   return {
     result: {
-      work: workSet,
-      money: moneySet
+      food: foodSet,
+      money: moneySet,
+      work: workSet
     }
   };
 };
@@ -73,14 +105,12 @@ export const aggregateDataset = async (
 // 2-1. detail ------------------------------------------------------------------------------------>
 export const detail = async (
   _id_param,
-  user_id_param,
-  user_pw_param
+  user_id_param
 ) => {
 
   const finalResult = await User.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    user_pw: user_pw_param
   })
   .lean();
 

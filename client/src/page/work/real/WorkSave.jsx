@@ -7,7 +7,7 @@ import {useTime} from "../../../assets/hooks/useTime.jsx";
 import {useDate} from "../../../assets/hooks/useDate.jsx";
 import {TimePicker} from "react-time-picker";
 import axios from "axios";
-import {workArray} from "../../../assets/data/DataArray.jsx";
+import {workArray} from "../../../assets/data/WorkArray.jsx";
 import {DateNode} from "../../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../../assets/fragments/ButtonNode.jsx";
 

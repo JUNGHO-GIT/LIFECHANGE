@@ -1,4 +1,4 @@
-// workDashRepo.js
+// workDashRepository.js
 
 import {Work} from "../../schema/real/Work.js";
 import {WorkPlan} from "../../schema/plan/WorkPlan.js";

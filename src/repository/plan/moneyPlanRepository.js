@@ -1,9 +1,9 @@
-// workPlanRepo.js
+// moneyPlanRepository.js
 
 import mongoose from "mongoose";
 import moment from "moment";
-import {Work} from "../../schema/real/Work.js";
-import {WorkPlan} from "../../schema/plan/WorkPlan.js";
+import {Money} from "../../schema/real/Money.js";
+import {MoneyPlan} from "../../schema/plan/MoneyPlan.js";
 
 // 0. common -------------------------------------------------------------------------------------->
 const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");
@@ -15,13 +15,13 @@ export const totalCnt = async (
   endDt_param
 ) => {
 
-  const finalResult = await WorkPlan.countDocuments({
+  const finalResult = await MoneyPlan.countDocuments({
     user_id: user_id_param,
-    work_plan_startDt: {
-      $lte: endDt_param,
+    money_plan_startDt: {
+      $lte: startDt_param,
     },
-    work_plan_endDt: {
-      $gte: startDt_param,
+    money_plan_endDt: {
+      $gte: endDt_param,
     },
   });
 
@@ -38,16 +38,16 @@ export const findPlan = async (
   endDt_param,
 ) => {
 
-  const finalResult = await WorkPlan.find({
+  const finalResult = await MoneyPlan.find({
     user_id: user_id_param,
-    work_plan_startDt: {
-      $lte: endDt_param,
+    money_plan_startDt: {
+      $lte: startDt_param,
     },
-    work_plan_endDt: {
-      $gte: startDt_param,
+    money_plan_endDt: {
+      $gte: endDt_param,
     },
   })
-  .sort({work_plan_startDt: sort_param})
+  .sort({money_plan_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
   .limit(limit_param)
   .lean();
@@ -65,18 +65,18 @@ export const findReal = async (
   endDt_param,
 ) => {
 
-  const finalResult = await Work.find({
+  const finalResult = await Money.find({
     user_id: user_id_param,
-    work_startDt: {
+    money_startDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     },
-    work_endDt: {
+    money_endDt: {
       $gte: startDt_param,
       $lte: endDt_param,
     }
   })
-  .sort({work_startDt: sort_param})
+  .sort({money_startDt: sort_param})
   .skip((page_param - 1) * limit_param)
   .limit(limit_param)
   .lean();
@@ -92,11 +92,11 @@ export const detail = async (
   endDt_param
 ) => {
 
-  const finalResult = await WorkPlan.findOne({
+  const finalResult = await MoneyPlan.findOne({
     _id: _id_param === "" ? {$exists:true} : _id_param,
     user_id: user_id_param,
-    work_plan_startDt: startDt_param,
-    work_plan_endDt: endDt_param,
+    money_plan_startDt: startDt_param,
+    money_plan_endDt: endDt_param,
   })
   .lean();
 
@@ -106,22 +106,20 @@ export const detail = async (
 // 3-1. create ------------------------------------------------------------------------------------>
 export const create = async (
   user_id_param,
-  WORK_PLAN_param,
+  MONEY_PLAN_param,
   startDt_param,
   endDt_param
 ) => {
 
-  const finalResult = await WorkPlan.create({
+  const finalResult = await MoneyPlan.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
-    work_plan_startDt: startDt_param,
-    work_plan_endDt: endDt_param,
-    work_plan_total_count: WORK_PLAN_param.work_plan_total_count,
-    work_plan_total_volume: WORK_PLAN_param.work_plan_total_volume,
-    work_plan_cardio_time: WORK_PLAN_param.work_plan_cardio_time,
-    work_plan_body_weight: WORK_PLAN_param.work_plan_body_weight,
-    work_plan_regdate: fmtDate,
-    work_plan_update: "",
+    money_plan_startDt: startDt_param,
+    money_plan_endDt: endDt_param,
+    money_plan_in: MONEY_PLAN_param.money_plan_in,
+    money_plan_out: MONEY_PLAN_param.money_plan_out,
+    money_plan_regdate: fmtDate,
+    money_plan_update: "",
   });
 
   return finalResult;
@@ -130,15 +128,15 @@ export const create = async (
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
   _id_param,
-  WORK_PLAN_param
+  MONEY_PLAN_param
 ) => {
 
-  const finalResult = await WorkPlan.findOneAndUpdate(
+  const finalResult = await MoneyPlan.findOneAndUpdate(
     {_id: _id_param
     },
     {$set: {
-      ...WORK_PLAN_param,
-      work_plan_update: fmtDate,
+      ...MONEY_PLAN_param,
+      money_plan_update: fmtDate,
     }},
     {upsert: true,
       new: true
@@ -157,14 +155,14 @@ export const deletes = async (
   endDt_param
 ) => {
 
-  const updateResult = await WorkPlan.updateOne(
+  const updateResult = await MoneyPlan.updateOne(
     {_id: _id_param,
       user_id: user_id_param,
-      work_plan_startDt: startDt_param,
-      work_plan_endDt: endDt_param,
+      money_plan_startDt: startDt_param,
+      money_plan_endDt: endDt_param,
     },
     {$set: {
-      work_plan_update: fmtDate,
+      money_plan_update: fmtDate,
     }},
     {arrayFilters: [{
       "elem._id": _id_param
@@ -175,15 +173,15 @@ export const deletes = async (
   let finalResult;
 
   if (updateResult.modifiedCount > 0) {
-    const doc = await WorkPlan.findOne({
+    const doc = await MoneyPlan.findOne({
       user_id: user_id_param,
-      work_plan_startDt: startDt_param,
-      work_plan_endDt: endDt_param,
+      money_plan_startDt: startDt_param,
+      money_plan_endDt: endDt_param,
     })
     .lean();
 
     if (doc) {
-      finalResult = await WorkPlan.deleteOne({
+      finalResult = await MoneyPlan.deleteOne({
         _id: doc._id
       })
       .lean();
@@ -192,4 +190,3 @@ export const deletes = async (
 
   return finalResult;
 };
-
