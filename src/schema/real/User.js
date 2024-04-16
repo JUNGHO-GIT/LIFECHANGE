@@ -2,8 +2,8 @@
 
 import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
-import {workArray} from "../../assets/data/workArray.js";
-import {moneyArray} from "../../assets/data/moneyArray.js";
+import {workArray} from "../../assets/data/WorkArray.js";
+import {moneyArray} from "../../assets/data/MoneyArray.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({

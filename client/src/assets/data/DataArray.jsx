@@ -9,8 +9,8 @@ const user_id = window.sessionStorage.getItem("user_id");
 // 1. axios --------------------------------------------------------------------------------------->
 const response = await axios.get(`${URL_USER}/dataset`, {
   params: {
-    user_id: user_id,
-    user_pw: "123"
+    user_id: "12345",
+    user_pw: "12345"
   },
 });
 

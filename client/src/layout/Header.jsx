@@ -72,6 +72,7 @@ export const Header = () => {
                   navParam(to, {
                     state: SEND
                   });
+                  setIsSidebar(false)
                   setIsActive(to);
                 }}>
                   {label}
