@@ -1,6 +1,8 @@
 // DashBarToday.jsx
 
 import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import axios from "axios";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Bar, Line, ComposedChart} from "recharts";
@@ -10,7 +12,14 @@ export const DashBarToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
+  const PATH = location.pathname?.trim()?.toString();
+
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:activeLine, set:setActiveLine} = useStorage(
+    `activeLine (bar-today) (${PATH})`, ["취침", "수면", "기상"]
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const DASH_DEFAULT = [

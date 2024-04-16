@@ -18,7 +18,7 @@ export const DashAvgWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (avg-week) (${PATH})`, "탄수화물"
+    `activeLine (avg-week) (${PATH})`, ["탄수화물", "단백질", "지방"]
   );
   const {val:activePart, set:setActivePart} = useStorage(
     `activePart (avg-week) (${PATH})`, "kcal"

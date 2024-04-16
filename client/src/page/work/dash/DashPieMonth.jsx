@@ -17,7 +17,7 @@ export const DashPieMonth = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (pie-month) (${PATH})`, "파트"
+    `activeLine (pie-month) (${PATH})`, ["파트", "타이틀"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->

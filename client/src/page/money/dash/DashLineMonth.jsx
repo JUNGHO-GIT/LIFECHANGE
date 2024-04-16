@@ -18,7 +18,7 @@ export const DashLineMonth = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (line-month) (${PATH})`, "수입"
+    `activeLine (line-month) (${PATH})`, ["수입", "지출"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->

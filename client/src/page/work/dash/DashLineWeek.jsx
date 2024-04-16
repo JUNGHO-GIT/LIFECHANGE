@@ -18,7 +18,7 @@ export const DashLineWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (line-week) (${PATH})`, "볼륨"
+    `activeLine (line-week) (${PATH})`, ["볼륨", "시간"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->

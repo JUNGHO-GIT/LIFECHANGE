@@ -18,7 +18,7 @@ export const DashAvgMonth = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (avg-month) (${PATH})`, "수입"
+    `activeLine (avg-month) (${PATH})`, ["수입", "지출"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->

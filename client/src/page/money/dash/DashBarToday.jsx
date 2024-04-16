@@ -18,7 +18,7 @@ export const DashBarToday = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:activeLine, set:setActiveLine} = useStorage(
-    `activeLine (bar-today) (${PATH})`, "목표"
+    `activeLine (bar-today) (${PATH})`, ["목표", "실제"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
