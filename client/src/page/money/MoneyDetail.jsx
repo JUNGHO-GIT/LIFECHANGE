@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -118,7 +119,7 @@ export const MoneyDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white table-hover"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th>날짜</th>
@@ -139,29 +140,17 @@ export const MoneyDetail = () => {
                   </td>
                 </React.Fragment>
               )}
-              <td>
-                {section.money_part_val}
-              </td>
-              <td>
-                {section.money_title_val}
-              </td>
-              <td>
-                {section.money_amount}
-              </td>
-              <td>
-                {section.money_content}
-              </td>
-              <td>
-                <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                  flowDelete(section._id)
-                )}>
-                  X
-                </button>
-              </td>
+              <td>{section.money_part_val}</td>
+              <td>{section.money_title_val}</td>
+              <td>{section.money_amount}</td>
+              <td>{section.money_content}</td>
+              <td><Button variant={"danger"} size={"sm"} onClick={() => (
+                flowDelete(section._id)
+              )}>X</Button></td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     );
   };
 

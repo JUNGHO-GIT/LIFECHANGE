@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgMonth = () => {
@@ -73,29 +74,30 @@ export const DashAvgMonth = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white border"}>
+      <Table hover responsive variant={"light"}>
         <tbody>
           <div className={"mt-10 mb-10"}>
             {["취침", "수면", "기상"]?.map((key, index) => (
-              <div key={index}>
-                <input
-                  type={"checkbox"}
+              <div key={index} className={"fw-bold mb-10"}>
+                <Form.Check
+                  inline
+                  type={"switch"}
                   checked={LINE.includes(key)}
                   onChange={() => {
                     if (LINE.includes(key)) {
-                      setLINE(LINE?.filter((item) => item !== key));
+                      setLINE(LINE?.filter((item) => (item !== key)));
                     }
                     else {
                       setLINE([...LINE, key]);
                     }
                   }}
-                />
-                {key}
+                ></Form.Check>
+                <span>{key}</span>
               </div>
             ))}
           </div>
         </tbody>
-      </table>
+      </Table>
     );
   };
 

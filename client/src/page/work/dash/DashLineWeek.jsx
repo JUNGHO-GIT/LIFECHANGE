@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Form, Table} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashLineWeek = () => {
@@ -91,13 +92,14 @@ export const DashLineWeek = () => {
   // 5-3. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white border"}>
+      <Table hover responsive variant={"light"}>
         <tbody>
           <div className={"mt-10 mb-10"}>
-            {["볼륨", "시간"].map((key, index) => (
-              <div key={index}>
-                <input
-                  type={"checkbox"}
+            {["볼륨", "시간"]?.map((key, index) => (
+              <div key={index} className={"fw-bold mb-10"}>
+                <Form.Check
+                  inline
+                  type={"switch"}
                   checked={LINE.includes(key)}
                   onChange={() => {
                     if (LINE.includes(key)) {
@@ -107,13 +109,13 @@ export const DashLineWeek = () => {
                       setLINE([...LINE, key]);
                     }
                   }}
-                />
-                {key}
+                ></Form.Check>
+                <span>{key}</span>
               </div>
             ))}
           </div>
         </tbody>
-      </table>
+      </Table>
     );
   };
 

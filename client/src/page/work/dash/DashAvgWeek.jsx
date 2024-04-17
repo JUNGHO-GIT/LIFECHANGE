@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Button, ButtonGroup, Table} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -117,22 +118,16 @@ export const DashAvgWeek = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white border"}>
-        <tbody>
-          <button
-            className={`btn ${LINE === "볼륨" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setLINE("볼륨")}
-          >
-            볼륨
-          </button>
-          <button
-            className={`btn ${LINE === "시간" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => setLINE("시간")}
-          >
-            시간
-          </button>
-        </tbody>
-      </table>
+      <ButtonGroup>
+        <Button variant={`${LINE === "볼륨" ? "primary" : "outline-primary"}`} className={"me-5"}
+          onClick={() => setLINE("볼륨")}>
+          볼륨
+        </Button>
+        <Button variant={`${LINE === "시간" ? "primary" : "outline-primary"}`} className={"ms-5"}
+          onClick={() => setLINE("시간")}>
+          시간
+        </Button>
+      </ButtonGroup>
     );
   };
 

@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
@@ -114,7 +115,7 @@ export const SleepDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white table-hover"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th>날짜</th>
@@ -126,32 +127,20 @@ export const SleepDetail = () => {
         </thead>
         <tbody>
           <tr className={"fs-20 pt-20"}>
-            <td>
-              {SLEEP?.sleep_startDt}
-            </td>
+            <td>{SLEEP?.sleep_startDt}</td>
             {SLEEP?.sleep_section?.map((section, index) => (
               <React.Fragment key={index}>
-                <td>
-                  {section.sleep_night}
-                </td>
-                <td>
-                  {section.sleep_morning}
-                </td>
-                <td>
-                  {section.sleep_time}
-                </td>
-                <td>
-                  <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                    flowDelete(section._id)
-                  )}>
-                    X
-                  </button>
-                </td>
+                <td>{section.sleep_night}</td>
+                <td>{section.sleep_morning}</td>
+                <td>{section.sleep_time}</td>
+                <td><Button variant={"danger"} size={"sm"} onClick={() => (
+                  flowDelete(section._id)
+                )}>X</Button></td>
               </React.Fragment>
             ))}
           </tr>
         </tbody>
-      </table>
+      </Table>
     );
   };
 

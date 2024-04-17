@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
@@ -115,22 +116,16 @@ export const DashBarToday = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white border"}>
-        <tbody>
-          <button
-            className={`btn ${LINE === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setLINE("kcal"))}
-          >
-            칼로리
-          </button>
-          <button
-            className={`btn ${LINE === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setLINE("nut"))}
-          >
-            영양소
-          </button>
-        </tbody>
-      </table>
+      <React.Fragment>
+        <Button variant={`${LINE === "kcal" ? "primary" : "outline-primary"}`} className={"me-5"}
+          onClick={() => (setLINE("kcal"))}>
+          칼로리
+        </Button>
+        <Button variant={`${LINE === "nut" ? "primary" : "outline-primary"}`} className={"ms-5"}
+          onClick={() => (setLINE("nut"))}>
+          영양소
+        </Button>
+      </React.Fragment>
     );
   };
 

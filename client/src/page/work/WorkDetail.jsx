@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkDetail = () => {
@@ -180,7 +181,7 @@ export const WorkDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white table-hover"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th>날짜</th>
@@ -233,37 +234,29 @@ export const WorkDetail = () => {
                   <td colSpan={5}>{section.work_cardio}</td>
                 </React.Fragment>
               )}
-              <td>
-                <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                  flowDelete(section._id)
-                )}>
-                  X
-                </button>
-              </td>
+              <td><Button variant={"danger"} size={"sm"} onClick={() => (flowDelete(section._id))}>X</Button></td>
             </tr>
           ))}
-          <React.Fragment>
-            <tr>
-              <td colSpan={4}>총 볼륨</td>
-              <td colSpan={3}></td>
-              <td colSpan={4}>{WORK?.work_total_volume}</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colSpan={4}>총 유산소 시간</td>
-              <td colSpan={3}></td>
-              <td colSpan={4}>{WORK?.work_total_cardio}</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colSpan={4}>체중</td>
-              <td colSpan={3}></td>
-              <td colSpan={4}>{WORK?.work_body_weight}</td>
-              <td></td>
-            </tr>
-          </React.Fragment>
+          <tr>
+            <td colSpan={4}>총 볼륨</td>
+            <td colSpan={3}></td>
+            <td colSpan={4}>{WORK?.work_total_volume}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colSpan={4}>총 유산소 시간</td>
+            <td colSpan={3}></td>
+            <td colSpan={4}>{WORK?.work_total_cardio}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colSpan={4}>체중</td>
+            <td colSpan={3}></td>
+            <td colSpan={4}>{WORK?.work_body_weight}</td>
+            <td></td>
+          </tr>
         </tbody>
-      </table>
+      </Table>
     );
   };
 

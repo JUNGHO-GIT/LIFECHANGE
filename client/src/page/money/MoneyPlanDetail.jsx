@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanDetail = () => {
@@ -112,7 +113,7 @@ export const MoneyPlanDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white table-hover"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th>시작일</th>
@@ -124,28 +125,16 @@ export const MoneyPlanDetail = () => {
         </thead>
         <tbody>
           <tr className={"fs-20 pt-20"}>
-            <td>
-              {MONEY_PLAN?.money_plan_startDt}
-            </td>
-            <td>
-              {MONEY_PLAN?.money_plan_endDt}
-            </td>
-            <td>
-              {MONEY_PLAN?.money_plan_in}
-            </td>
-            <td>
-              {MONEY_PLAN?.money_plan_out}
-            </td>
-            <td>
-              <button className={"btn btn-sm btn-danger"} onClick={() => {
-                flowDelete(MONEY_PLAN?._id);
-              }}>
-                X
-              </button>
-            </td>
+            <td>{MONEY_PLAN?.money_plan_startDt}</td>
+            <td>{MONEY_PLAN?.money_plan_endDt}</td>
+            <td>{MONEY_PLAN?.money_plan_in}</td>
+            <td>{MONEY_PLAN?.money_plan_out}</td>
+            <td><Button variant={"danger"} size={"sm"} onClick={() => {
+              flowDelete(MONEY_PLAN?._id);
+            }}>X</Button></td>
           </tr>
         </tbody>
-      </table>
+      </Table>
     );
   };
 

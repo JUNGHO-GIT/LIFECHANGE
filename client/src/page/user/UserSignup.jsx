@@ -4,6 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {
@@ -40,6 +41,7 @@ export const UserSignup = () => {
       alert(response.data.msg);
     }
   };
+
   // 5. table ------------------------------------------------------------------------------------->
   const tableUserSave = () => {
     return (
@@ -75,29 +77,29 @@ export const UserSignup = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonRefreshPage = () => {
+  const btnRefresh = () => {
     return (
-      <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
+      <Button type={"button"} variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
-      </button>
+      </Button>
     );
   };
-  const buttonUserSave = () => {
+  const btnSignUp = () => {
     return (
-      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={flowUserSave}>
+      <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowUserSave}>
         Submit
-      </button>
+      </Button>
     );
   };
-  const buttonUserList = () => {
+  const btnUserList = () => {
     return (
-      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={() => {
+      <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={() => {
         navParam("/user/list");
       }}>
         List
-      </button>
+      </Button>
     );
   };
 
@@ -109,9 +111,9 @@ export const UserSignup = () => {
           <div className={"col-12"}>
             {tableUserSave()}
             <br/>
-            {buttonUserSave()}
-            {buttonRefreshPage()}
-            {buttonUserList()}
+            {btnSignUp()}
+            {btnUserList()}
+            {btnRefresh()}
           </div>
         </div>
       </div>

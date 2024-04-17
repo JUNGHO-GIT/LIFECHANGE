@@ -4,6 +4,7 @@ export const dataArray = [
     label: "Main",
     items: [
       {to: "/", label: "Home"},
+      {to: "/test", label: "Test"},
     ]
   },
   {

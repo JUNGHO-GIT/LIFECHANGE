@@ -8,6 +8,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSave = () => {
@@ -257,7 +258,7 @@ export const FoodSave = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white table-hover"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th>part</th>
@@ -357,7 +358,7 @@ export const FoodSave = () => {
             <td></td>
           </tr>
         </tbody>
-      </table>
+      </Table>
     );
   };
 

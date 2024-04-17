@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanDetail = () => {
@@ -112,7 +113,7 @@ export const SleepPlanDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white table-hover"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th>시작일</th>
@@ -125,31 +126,17 @@ export const SleepPlanDetail = () => {
         </thead>
         <tbody>
           <tr className={"fs-20 pt-20"}>
-            <td>
-              {SLEEP_PLAN?.sleep_plan_startDt}
-            </td>
-            <td>
-              {SLEEP_PLAN?.sleep_plan_endDt}
-            </td>
-            <td>
-              {SLEEP_PLAN?.sleep_plan_night}
-            </td>
-            <td>
-              {SLEEP_PLAN?.sleep_plan_morning}
-            </td>
-            <td>
-              {SLEEP_PLAN?.sleep_plan_time}
-            </td>
-            <td>
-              <button type={"button"} className={"btn btn-sm btn-danger"} onClick={() => (
-                flowDelete(SLEEP_PLAN?._id)
-              )}>
-                X
-              </button>
-            </td>
+            <td>{SLEEP_PLAN?.sleep_plan_startDt}</td>
+            <td>{SLEEP_PLAN?.sleep_plan_endDt}</td>
+            <td>{SLEEP_PLAN?.sleep_plan_night}</td>
+            <td>{SLEEP_PLAN?.sleep_plan_morning}</td>
+            <td>{SLEEP_PLAN?.sleep_plan_time}</td>
+            <td><Button variant={"danger"} size={"sm"} onClick={() => (
+              flowDelete(SLEEP_PLAN?._id)
+            )}>X</Button></td>
           </tr>
         </tbody>
-      </table>
+      </Table>
     );
   };
 

@@ -1,6 +1,7 @@
 // PagingNode.jsx
 
 import React from "react";
+import Button from "react-bootstrap/Button";
 
 // 7. paging -------------------------------------------------------------------------------------->
 export const PagingNode = ({
@@ -13,54 +14,59 @@ export const PagingNode = ({
   let endPage = Math.min(startPage + 4, totalPages);
   startPage = Math.max(endPage - 4, 1);
 
-  function prevButton() {
+  // prev
+  function btnPrev() {
     return (
-      <button className={`btn btn-sm btn-primary ms-10 me-10`} disabled={PAGING.page <= 1}
-      onClick={() => (
-        setPAGING((prev) => ({
-          ...prev,
-          page: Math.max(1, PAGING.page - 1)
-        })
-      ))}>
-        이전
-      </button>
-    );
-  };
-  function pageNumber() {
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(
-        <button key={i} className={`btn btn-sm btn-primary me-2`} disabled={PAGING.page === i}
+      <Button size={"sm"} variant={"primary"} className={"me-5"} disabled={PAGING.page <= 1}
         onClick={() => (
           setPAGING((prev) => ({
             ...prev,
-            page: i
-          }))
-        )}>
-          {i}
-        </button>
+            page: Math.max(1, PAGING.page - 1)
+          })
+        ))}>
+          <i className={"bi bi-chevron-left"}></i>
+      </Button>
+    );
+  };
+
+  // number
+  function btnNumber() {
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <Button key={i} size={"sm"} variant={"primary"} className={"me-2"}
+          disabled={PAGING.page === i} onClick={() => (
+            setPAGING((prev) => ({
+              ...prev,
+              page: i
+            })
+          ))}>
+            {i}
+        </Button>
       );
     }
     return pages;
   };
-  function nextButton() {
+
+  // next
+  function btnNext() {
     return (
-      <button className={`btn btn-sm btn-primary ms-10 me-10`}
-      disabled={PAGING.page >= Math.ceil(COUNT.totalCnt / PAGING.limit)}
-      onClick={() => (
-        setPAGING((prev) => ({
-          ...prev,
-          page: Math.min(Math.ceil(COUNT.totalCnt / PAGING.limit), PAGING.page + 1)
-        }))
-      )}>
-        다음
-      </button>
+      <Button size={"sm"} variant={"primary"} className={"ms-5"} disabled={PAGING.page >= totalPages}
+        onClick={() => (
+          setPAGING((prev) => ({
+            ...prev,
+            page: Math.min(totalPages, PAGING.page + 1)
+          })
+        ))}>
+          <i className={"bi bi-chevron-right"}></i>
+      </Button>
     );
   };
+
   return (
     <div className={"d-inline-flex"}>
-      {prevButton()}
-      {pageNumber()}
-      {nextButton()}
+      {btnPrev()}
+      {btnNumber()}
+      {btnNext()}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -69,18 +70,18 @@ export const UserLogin = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonUserLogin = () => {
     return (
-      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={flowUserLogin}>
+      <Button variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowUserLogin}>
         Log In
-      </button>
+      </Button>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <button type={"button"} className={"btn btn-sm btn-success ms-2"} onClick={() => {
+      <Button variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
-      </button>
+      </Button>
     );
   };
 

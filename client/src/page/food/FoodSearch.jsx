@@ -2,10 +2,12 @@
 
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import InputMask from "react-input-mask";
 import {useNavigate, useLocation} from "react-router-dom";
+import InputMask from "react-input-mask";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
@@ -125,7 +127,7 @@ export const FoodSearch = () => {
       });
     };
     return (
-      <table className={"table bg-white table-hover"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th>Title</th>
@@ -156,7 +158,7 @@ export const FoodSearch = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     );
   };
 
@@ -179,7 +181,7 @@ export const FoodSearch = () => {
             }));
           }}
         ></InputMask>
-        <button type={"button"} className={"btn btn-sm btn-secondary ms-2"} onClick={() => {
+        <Button variant={"secondary"} className={"ms-2"} size={"sm"} onClick={() => {
           setFILTER((prev) => ({
             ...prev,
             page: 0
@@ -187,67 +189,16 @@ export const FoodSearch = () => {
           flowSearch();
         }}>
           Search
-        </button>
+        </Button>
       </div>
     );
   };
 
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
-    function prevButton() {
-      return (
-        <button className={`btn btn-sm btn-primary ms-10 me-10`} disabled={FILTER.page <= 1}
-        onClick={() => (
-          setFILTER((prev) => ({
-            ...prev,
-            page: Math.max(1, FILTER.page - 1)
-          }))
-        )}>
-          이전
-        </button>
-      );
-    };
-    function pageNumber() {
-      const pages = [];
-      const totalPages = Math.ceil(COUNT.totalCnt / FILTER.limit);
-      let startPage = Math.max(1, FILTER.page - 2);
-      let endPage = Math.min(startPage + 4, totalPages);
-      startPage = Math.max(endPage - 4, 1);
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(
-          <button key={i} className={`btn btn-sm btn-primary me-2`} disabled={FILTER.page === i}
-          onClick={() => (
-            setFILTER((prev) => ({
-              ...prev,
-              page: i
-            }))
-          )}>
-            {i}
-          </button>
-        );
-      }
-      return pages;
-    };
-    function nextButton() {
-      return (
-        <button className={`btn btn-sm btn-primary ms-10 me-10`}
-        disabled={FILTER.page >= Math.ceil(COUNT.totalCnt / FILTER.limit)}
-        onClick={() => (
-          setFILTER((prev) => ({
-            ...prev,
-            page: Math.min(Math.ceil(COUNT.totalCnt / FILTER.limit), FILTER.page + 1)
-          }))
-        )}>
-          다음
-        </button>
-      );
-    };
     return (
-      <div className={"d-inline-flex"}>
-        {prevButton()}
-        {pageNumber()}
-        {nextButton()}
-      </div>
+      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+      />
     );
   };
 

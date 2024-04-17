@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
@@ -13,9 +14,9 @@ export const DateNode = ({
 
   // @ts-ignore
   const CustomInput = forwardRef(({value, onClick}, ref) => (
-    <button className={"form-control pointer fw-bold"} onClick={onClick} ref={ref}>
+    <Button className={"form-control pointer fw-bold"} onClick={onClick} ref={ref}>
       {value}
-    </button>
+    </Button>
   ));
 
   function calcDate (days) {

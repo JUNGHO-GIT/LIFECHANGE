@@ -8,6 +8,7 @@ import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 import {workArray} from "../../assets/data/WorkArray.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
@@ -239,7 +240,7 @@ export const UserDataset = () => {
       };
     };
     return (
-      <table className={"table bg-white table-hover table-bordered"}>
+      <Table hover responsive variant={"light"}>
         <thead className={"table-primary"}>
           <tr>
             <th colSpan={2} className={"pointer"} onClick={() => setDataType("food")}>
@@ -314,7 +315,7 @@ export const UserDataset = () => {
             </td>
           </tr>
         </tbody>
-      </table>
+      </Table>
     );
   };
 
@@ -335,7 +336,12 @@ export const UserDataset = () => {
         <div className={"row d-center"}>
           <div className={"col-12 mb-20"}>
             <h1>List</h1>
-            <button onClick={handlerSetDefault}>기본값으로 초기화</button>
+          </div>
+          <div className={"col-12 mb-20"}>
+            <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"}
+              onClick={() => (handlerSetDefault())}>
+                기본값
+            </Button>
           </div>
           <div className={"col-12 mb-20"}>
             {tableNode()}

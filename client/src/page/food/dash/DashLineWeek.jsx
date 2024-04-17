@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashLineWeek = () => {
@@ -72,7 +73,6 @@ export const DashLineWeek = () => {
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeKcal = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
-
     return (
       <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -95,7 +95,6 @@ export const DashLineWeek = () => {
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNodeNut = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
-
     return (
       <ResponsiveContainer width={"100%"} height={300}>
         <LineChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -126,41 +125,36 @@ export const DashLineWeek = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <table className={"table bg-white border"}>
-        <tbody>
-          <button
-            className={`btn ${PART === "kcal" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setPART("kcal"))}
-          >
-            칼로리
-          </button>
-          <button
-            className={`btn ${PART === "nut" ? "btn-primary" : "btn-outline-primary"} mt-10`}
-            onClick={() => (setPART("nut"))}
-          >
-            영양소
-          </button>
-          <div className={"mt-10 mb-10"}>
-            {["탄수화물", "단백질", "지방"]?.map((key, index) => (
-              <div key={index}>
-                <input
-                  type={"checkbox"}
-                  checked={LINE.includes(key)}
-                  onChange={() => {
-                    if (LINE.includes(key)) {
-                      setLINE(LINE?.filter((item) => (item !== key)));
-                    }
-                    else {
-                      setLINE([...LINE, key]);
-                    }
-                  }}
-                />
-                {key}
-              </div>
-            ))}
-          </div>
-        </tbody>
-      </table>
+      <React.Fragment>
+        <Button variant={`${PART === "kcal" ? "primary" : "outline-primary"}`} className={"me-5"}
+          onClick={() => (setPART("kcal"))}>
+          칼로리
+        </Button>
+        <Button variant={`${PART === "nut" ? "primary" : "outline-primary"}`} className={"ms-5"}
+          onClick={() => (setPART("nut"))}>
+          영양소
+        </Button>
+        <div className={"mt-10 mb-10"}>
+          {["탄수화물", "단백질", "지방"]?.map((key, index) => (
+            <div key={index} className={"fw-bold mb-10"}>
+              <Form.Check
+                inline
+                type={"switch"}
+                checked={LINE.includes(key)}
+                onChange={() => {
+                  if (LINE.includes(key)) {
+                    setLINE(LINE?.filter((item) => (item !== key)));
+                  }
+                  else {
+                    setLINE([...LINE, key]);
+                  }
+                }}
+              ></Form.Check>
+              <span>{key}</span>
+            </div>
+          ))}
+        </div>
+      </React.Fragment>
     );
   };
 

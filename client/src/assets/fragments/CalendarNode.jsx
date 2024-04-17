@@ -220,6 +220,7 @@ export const CalendarNode = ({
         modifiersClassNames={{
           selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
         }}
+        // @ts-ignore
         mode={mode}
         selected={selected}
         month={month}

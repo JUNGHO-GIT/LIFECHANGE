@@ -2,6 +2,7 @@
 
 import React from "react";
 import moment from "moment-timezone";
+import Button from "react-bootstrap/Button";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
@@ -14,85 +15,98 @@ export const ButtonNode = ({
   // 9. button ------------------------------------------------------------------------------------>
   function buttonCalendar () {
     return (
-      <button type={"button"} className={`btn btn-sm ${CALENDAR.calOpen ? "btn-danger" : "btn-primary"} m-5`} onClick={() => {
-        setCALENDAR((prev) => ({
-          ...prev,
-          calOpen: !prev.calOpen,
-        }));
-      }}>
-        {CALENDAR.calOpen ? "x" : "o"}
-      </button>
+      <Button size={"sm"} variant={"primary"} className={"me-2"} type={"button"}
+        onClick={() => {
+          setCALENDAR((prev) => ({
+            ...prev,
+            calOpen: !prev.calOpen,
+          }));
+        }}
+      >
+        {CALENDAR.calOpen ? "o" : "x"}
+      </Button>
     );
   };
   function buttonToday () {
     return (
-      <button type={"button"} className={"btn btn-sm btn-success me-2"} onClick={() => {
-        localStorage.clear();
-        setDATE((prev) => ({
-          ...prev,
-          startDt: koreanDate,
-          endDt: koreanDate,
-        }));
-      }}>
+      <Button size={"sm"} variant={"success"} className={"me-2"} type={"button"}
+        onClick={() => {
+          setDATE((prev) => ({
+            ...prev,
+            startDt: koreanDate,
+            endDt: koreanDate,
+          }));
+        }}
+      >
         Today
-      </button>
+      </Button>
     );
   };
   function buttonSave () {
     return (
-      <button type={"button"} className={"btn btn-sm btn-primary me-2"} onClick={() => {
-        flowSave();
-      }}>
+      <Button size={"sm"} variant={"primary"} className={"me-2"} type={"button"}
+        onClick={() => {
+          flowSave();
+        }}
+      >
         Save
-      </button>
+      </Button>
     );
   };
   function buttonUpdate () {
     return (
-      <button type={"button"} className={"btn btn-sm btn-primary ms-2"} onClick={() => {
-        SEND.startDt = DATE.startDt;
-        SEND.endDt = DATE.endDt;
-        navParam(SEND.toSave, {
-          state: SEND,
-        });
-      }}>
+      <Button size={"sm"} variant={"primary"} className={"me-2"} type={"button"}
+        onClick={() => {
+          SEND.startDt = DATE.startDt;
+          SEND.endDt = DATE.endDt;
+          navParam(SEND.toUpdate, {
+            state: SEND,
+          });
+        }}
+      >
         Update
-      </button>
+      </Button>
     );
   };
   function buttonRefresh () {
     return (
-      <button type={"button"} className={"btn btn-sm btn-success me-2"} onClick={() => {
-        navParam(SEND.refresh);
-      }}>
+      <Button size={"sm"} variant={"success"} className={"me-2"} type={"button"}
+        onClick={() => {
+          navParam(SEND.refresh);
+        }}
+      >
         Refresh
-      </button>
+      </Button>
     );
   };
   function buttonList () {
     return (
-      <button type={"button"} className={"btn btn-sm btn-secondary me-2"} onClick={() => {
-        SEND.startDt = DATE.startDt;
-        SEND.endDt = DATE.endDt;
-        navParam(SEND.toList, {
-          state: SEND,
-        });
-      }}>
+      <Button size={"sm"} variant={"secondary"} className={"me-2"} type={"button"}
+        onClick={() => {
+          SEND.startDt = DATE.startDt;
+          SEND.endDt = DATE.endDt;
+          navParam(SEND.toList, {
+            state: SEND,
+          });
+        }}
+      >
         List
-      </button>
+      </Button>
     );
   };
   function buttonSearch () {
     return (
-      <button type={"button"} className={"btn btn-sm btn-secondary me-2"} onClick={() => {
-        SEND.startDt = DATE.startDt;
-        SEND.endDt = DATE.endDt;
-        navParam(SEND.toSearch, {
-          state: SEND,
-        });
-      }}>
+      <Button size={"sm"} variant={"secondary"} className={"me-2"} type={"button"}
+        onClick={() => {
+          SEND.startDt = DATE.startDt;
+          SEND.endDt = DATE.endDt;
+          navParam(SEND.toSearch, {
+            state: SEND,
+          });
+        }}
+      >
         Search
-      </button>
+      </Button>
     );
   };
 

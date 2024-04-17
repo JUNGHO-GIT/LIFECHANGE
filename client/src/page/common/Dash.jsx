@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
+import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const Dash = () => {
@@ -14,18 +15,11 @@ export const Dash = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const TITLE = "Dash";
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
-  const navParam = useNavigate();
-  const user_id = window.sessionStorage.getItem("user_id");
-  const {log} = useDeveloperMode();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:dashboardDay, set:setDashDay} = useStorage(
     "dashboardDay(DAY)", undefined
   );
-
-  // 2-2. useState -------------------------------------------------------------------------------->
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDayClick = (day) => {
@@ -55,27 +49,25 @@ export const Dash = () => {
     );
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonDashToday = () => {
+  const btnToday = () => {
     return (
-      <button type={"button"} className="btn btn-sm btn-success me-2" onClick={() => {
-        setDashDay(koreanDate);
-        localStorage.removeItem("dashboardDay(DAY)");
-      }}>
+      <Button variant={"success"} size={"sm"} className={"me-2"} onClick={() => (
+        setDashDay(koreanDate),
+        localStorage.removeItem("dashboardDay(DAY)")
+      )}>
         Today
-      </button>
+      </Button>
     );
   };
-  const buttonDashReset = () => {
+  const btnReset = () => {
     return (
-      <button type={"button"} className="btn btn-sm btn-primary me-2" onClick={() => {
-        setDashDay(koreanDate);
-        localStorage.removeItem("dashboardDay(DAY)");
-      }}>
+      <Button variant={"primary"} size={"sm"} className={"me-2"} onClick={() => (
+        setDashDay(koreanDate),
+        localStorage.removeItem("dashboardDay(DAY)")
+      )}>
         Reset
-      </button>
+      </Button>
     );
   };
 
@@ -99,8 +91,8 @@ export const Dash = () => {
               </div>
               <div className="row mb-20">
                 <div className="col-12 d-center">
-                  {buttonDashToday()}
-                  {buttonDashReset()}
+                  {btnToday()}
+                  {btnReset()}
                 </div>
               </div>
             </div>
@@ -122,8 +114,8 @@ export const Dash = () => {
               </div>
               <div className="row mb-20">
                 <div className="col-12 d-center">
-                  {buttonDashToday()}
-                  {buttonDashReset()}
+                  {btnToday()}
+                  {btnReset()}
                 </div>
               </div>
             </div>
@@ -143,8 +135,8 @@ export const Dash = () => {
               </div>
               <div className="row mb-20">
                 <div className="col-12 d-center">
-                  {buttonDashToday()}
-                  {buttonDashReset()}
+                  {btnToday()}
+                  {btnReset()}
                 </div>
               </div>
             </div>

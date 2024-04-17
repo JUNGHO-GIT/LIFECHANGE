@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
-import {Collapse} from "react-bootstrap";
+import {Collapse, Button} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
@@ -110,12 +110,10 @@ export const Header = () => {
 
     let preFix;
     let subFix = isActive.split("/")[1];
-    let lowFix;
 
     dataArray.forEach((menu) => {
       if (isActive.includes(menu.label.toLowerCase())) {
         preFix = menu.label;
-        lowFix = preFix.toLowerCase()
       }
     });
 
@@ -143,42 +141,42 @@ export const Header = () => {
 
   // 6-1. button ---------------------------------------------------------------------------------->
   const loginNode = () => {
-    function btnDevMode () {
-      const buttonClass = isDeveloperMode ? "btn btn-sm btn-secondary ms-2" : "btn btn-sm ms-2";
+    function btnDevMode() {
       return (
-        <button type={"button"} className={buttonClass} onClick={() => {
+        <Button variant={isDeveloperMode ? "secondary" : ""} size={"sm"} className={"me-2"}
+        onClick={() => {
           toggleDeveloperMode();
         }}>
           Dev
-        </button>
+        </Button>
       );
     };
     function btnLogIn () {
       return (
-        <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
+        <Button variant={""} size={"sm"} className={"me-5"} onClick={() => {
           navParam("/user/login");
         }}>
           Login
-        </button>
+        </Button>
       );
     };
     function btnSignUp () {
       return (
-        <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
+        <Button variant={""} size={"sm"} className={"me-2"} onClick={() => {
           navParam("/user/signup");
         }}>
           Signup
-        </button>
+        </Button>
       );
     };
     function btnLogOut () {
       return (
-        <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
+        <Button variant={""} size={"sm"} className={"me-5"} onClick={() => {
           sessionStorage.setItem("user_id", "false");
           window.location.reload();
         }}>
           Logout
-        </button>
+        </Button>
       );
     };
     return (
@@ -204,11 +202,11 @@ export const Header = () => {
         <div className={"row d-center pt-15 pb-15"}>
           <div className={"col-1"}>
             {sideBarNode()}
-            <button type={"button"} className={"btn btn-sm ms-2"} onClick={() => {
+            <Button variant={""} size={"sm"} onClick={() => {
               setIsSidebar(!isSidebar);
             }}>
               Sidebar
-            </button>
+            </Button>
           </div>
           <div className={"col-7"}></div>
           <div className={"col-3"}>
