@@ -94,7 +94,7 @@ export const FoodPlanDetail = () => {
       },
     });
     if (response.data.status === "success") {
-      const upDtdData = await axios.get(`${URL_FOOD_PLAN}/detail`, {
+      const updatedData = await axios.get(`${URL_FOOD_PLAN}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
@@ -102,8 +102,8 @@ export const FoodPlanDetail = () => {
         },
       });
       alert(response.data.msg);
-      setFOOD_PLAN(upDtdData.data.result || FOOD_PLAN_DEFAULT);
-      upDtdData.data.result === null && navParam(SEND.toList);
+      setFOOD_PLAN(updatedData.data.result || FOOD_PLAN_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

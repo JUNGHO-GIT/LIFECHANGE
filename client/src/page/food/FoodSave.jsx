@@ -3,6 +3,7 @@
 import axios from "axios";
 import React, {useState, useEffect, forwardRef} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {NumericFormat} from "react-number-format";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
@@ -307,14 +308,26 @@ export const FoodSave = () => {
                 <td>{item.food_brand}</td>
                 <td>
                   <div className={"d-flex"}>
-                    <input
-                      type={"number"}
+                    <NumericFormat
+                      min={0}
+                      max={99}
+                      minLength={1}
+                      maxLength={3}
+                      id={"food_plan_count"}
+                      name={"food_plan_count"}
+                      datatype={"number"}
+                      displayType={"input"}
                       className={"form-control"}
-                      value={item.food_count}
-                      min="1"
-                      max="100"
-                      onChange={(e) => handleCountChange(index, e.target.value)}
-                    />
+                      disabled={false}
+                      allowNegative={false}
+                      fixedDecimalScale={true}
+                      thousandSeparator={true}
+                      value={Math.min(99, parseInt(item.food_count))}
+                      onValueChange={(values) => {
+                        const limitedValue = Math.min(999, parseInt(values.value));
+                        handleCountChange(index, limitedValue);
+                      }}
+                    ></NumericFormat>
                     <span>{item.food_serv}</span>
                   </div>
                 </td>
@@ -323,13 +336,11 @@ export const FoodSave = () => {
                 <td>{item.food_fat}</td>
                 <td>{item.food_carb}</td>
                 <td>{item.food_protein}</td>
-                <td>
-                  <span className={"btn btn-sm btn-danger"} onClick={() => (
+                <td><span className={"btn btn-sm btn-danger"} onClick={() => (
                     handlerFoodDelete(index)
                   )}>
                     x
-                  </span>
-                </td>
+                  </span></td>
               </tr>
             </React.Fragment>
           ))}

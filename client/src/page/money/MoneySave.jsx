@@ -3,8 +3,10 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {NumericFormat} from "react-number-format";
+import InputMask from "react-input-mask";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
@@ -155,12 +157,12 @@ export const MoneySave = () => {
       }));
 
       if (newCount > 0) {
-        let upDtdSections = Array(newCount).fill(null).map((_, idx) => (
+        let updatedSections = Array(newCount).fill(null).map((_, idx) => (
           idx < MONEY.money_section.length ? MONEY.money_section[idx] : defaultSection
         ));
         setMONEY((prev) => ({
           ...prev,
-          money_section: upDtdSections
+          money_section: updatedSections
         }));
       }
       else {
@@ -174,15 +176,25 @@ export const MoneySave = () => {
       return (
         <div className={"row d-center"}>
           <div className={"col-4"}>
-            <input
-              type={"number"}
-              value={COUNT.sectionCnt}
+            <NumericFormat
               min={0}
+              max={10}
+              minLength={1}
+              maxLength={2}
+              datatype={"number"}
+              displayType={"input"}
+              id={"sectionCnt"}
+              name={"sectionCnt"}
               className={"form-control mb-30"}
-              onChange={(e) => (
-                handlerCount(e.target.value)
-              )}
-            />
+              disabled={false}
+              thousandSeparator={false}
+              fixedDecimalScale={true}
+              value={Math.min(10, COUNT?.sectionCnt)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(10, parseInt(values?.value));
+                handlerCount(limitedValue.toString());
+              }}
+            ></NumericFormat>
           </div>
         </div>
       );
@@ -204,23 +216,23 @@ export const MoneySave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
                 <select
-                  className={"form-control"}
                   id={`money_part_idx-${i}`}
+                  className={"form-control"}
                   value={MONEY?.money_section[i]?.money_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setMONEY((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.money_section];
-                      upDtdSection[i] = {
-                        ...upDtdSection[i],
+                      let updated = {...prev};
+                      let updatedSection = [...updated.money_section];
+                      updatedSection[i] = {
+                        ...updatedSection[i],
                         money_part_idx: newIndex,
                         money_part_val: moneyArray[newIndex].money_part,
                         money_title_idx: 0,
                         money_title_val: moneyArray[newIndex].money_title[0],
                       };
-                      upDtd.money_section = upDtdSection;
-                      return upDtd;
+                      updated.money_section = updatedSection;
+                      return updated;
                     });
                   }}
                 >
@@ -236,23 +248,23 @@ export const MoneySave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>타이틀</span>
                 <select
-                  className={"form-control"}
                   id={`money_title_idx-${i}`}
+                  className={"form-control"}
                   value={MONEY?.money_section[i]?.money_title_idx}
                   onChange={(e) => {
                     const newTitleIdx = parseInt(e.target.value);
                     const newTitleVal = moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
                       setMONEY((prev) => {
-                        let upDtd = {...prev};
-                        let upDtdSection = [...upDtd.money_section];
-                        upDtdSection[i] = {
-                          ...upDtdSection[i],
+                        let updated = {...prev};
+                        let updatedSection = [...updated.money_section];
+                        updatedSection[i] = {
+                          ...updatedSection[i],
                           money_title_idx: newTitleIdx,
                           money_title_val: newTitleVal,
                         };
-                        upDtd.money_section = upDtdSection;
-                        return upDtd;
+                        updated.money_section = updatedSection;
+                        return updated;
                       });
                     }
                   }}
@@ -270,40 +282,56 @@ export const MoneySave = () => {
             <div className={"col-6"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>금액</span>
-                <input
-                  type={"number"}
+                <NumericFormat
+                  min={0}
+                  max={99999999999999}
+                  minLength={1}
+                  maxLength={17}
+                  prefix={"₩  "}
+                  datatype={"number"}
+                  displayType={"input"}
+                  id={`money_amount-${i}`}
+                  name={`money_amount-${i}`}
                   className={"form-control"}
+                  disabled={false}
+                  allowNegative={false}
+                  thousandSeparator={true}
+                  fixedDecimalScale={true}
                   value={MONEY?.money_section[i]?.money_amount}
-                  onChange={(e) => {
-                    const newAmount = parseInt(e.target.value, 10);
+                  onValueChange={(values) => {
+                    const limitedValue = Math.min(99999999999999, parseInt(values?.value));
                     setMONEY((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.money_section];
-                      upDtdSection[i].money_amount = isNaN(newAmount) ? 0 : newAmount;
-                      upDtd.money_section = upDtdSection;
-                      return upDtd;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.money_section];
+                      updatedSection[i].money_amount = limitedValue;
+                      updated.money_section = updatedSection;
+                      return updated;
                     });
                   }}
-                />
+                ></NumericFormat>
               </div>
             </div>
             <div className={"col-6"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>메모</span>
-                <input
-                  type={"text"}
+                <InputMask
+                  mask={""}
+                  placeholder={"메모"}
+                  id={`money_content-${i}`}
+                  name={`money_content-${i}`}
                   className={"form-control"}
+                  maskChar={null}
                   value={MONEY?.money_section[i]?.money_content}
                   onChange={(e) => {
-                    const newContent = e.target.value;
+                    const limitedContent = e.target.value.slice(0, 100);
                     setMONEY((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.money_section];
-                      upDtdSection[i].money_content = newContent;
-                      return upDtd;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.money_section];
+                      updatedSection[i].money_content = limitedContent;
+                      return updated;
                     });
                   }}
-                />
+                ></InputMask>
               </div>
             </div>
           </div>
@@ -325,25 +353,47 @@ export const MoneySave = () => {
           <div className={"col-6"}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총수입</span>
-              <input
-                type={"number"}
+              <NumericFormat
+                min={0}
+                max={99999999999999}
+                minLength={1}
+                maxLength={17}
+                prefix={"₩  "}
+                datatype={"number"}
+                displayType={"input"}
+                id={"money_total_in"}
+                name={"money_total_in"}
                 className={"form-control"}
-                value={MONEY?.money_total_in}
-                disabled
-                readOnly
-              />
+                readOnly={true}
+                disabled={true}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={Math.min(99999999999999, MONEY?.money_total_in)}
+              ></NumericFormat>
             </div>
           </div>
           <div className={"col-6"}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총지출</span>
-              <input
-                type={"number"}
+              <NumericFormat
+                min={0}
+                max={99999999999999}
+                minLength={1}
+                maxLength={17}
+                prefix={"₩  "}
+                datatype={"number"}
+                displayType={"input"}
+                id={"money_total_out"}
+                name={"money_total_out"}
                 className={"form-control"}
-                value={MONEY?.money_total_out}
-                disabled
-                readOnly
-              />
+                readOnly={true}
+                disabled={true}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={Math.min(99999999999999, MONEY?.money_total_out)}
+              ></NumericFormat>
             </div>
           </div>
         </div>

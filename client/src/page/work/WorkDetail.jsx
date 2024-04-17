@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -62,7 +62,7 @@ export const WorkDetail = () => {
     work_time: "",
     work_total_volume: 0,
     work_total_cardio: "",
-    work_body_weight: "",
+    work_body_weight: 0,
     work_section: [{
       work_part_idx: 0,
       work_part_val: "전체",
@@ -107,7 +107,7 @@ export const WorkDetail = () => {
       }
     };
 
-    const upDtdSections = WORK.work_section.map((section) => {
+    const updatedSections = WORK.work_section.map((section) => {
       sectionVolume = section.work_set * section.work_rep * section.work_kg;
       totalVolume += sectionVolume;
       totalMinutes += timeFormat(section.work_cardio);
@@ -127,7 +127,7 @@ export const WorkDetail = () => {
         ...prev,
         work_total_volume: totalVolume,
         work_total_cardio: cardioTime,
-        work_section: upDtdSections,
+        work_section: updatedSections,
       }));
     }
   }, [WORK.work_section]);
@@ -161,7 +161,7 @@ export const WorkDetail = () => {
       },
     });
     if (response.data.status === "success") {
-      const upDtdData = await axios.get(`${URL_WORK}/detail`, {
+      const updatedData = await axios.get(`${URL_WORK}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
@@ -169,8 +169,8 @@ export const WorkDetail = () => {
         },
       });
       alert(response.data.msg);
-      setWORK(upDtdData.data.result || WORK_DEFAULT);
-      upDtdData.data.result === null && navParam(SEND.toList);
+      setWORK(updatedData.data.result || WORK_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

@@ -3,8 +3,9 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {NumericFormat} from "react-number-format";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
@@ -21,7 +22,6 @@ export const MoneyPlanSave = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  // @ts-ignore
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
@@ -37,7 +37,6 @@ export const MoneyPlanSave = () => {
       endDt: location_endDt
     }
   );
-  // @ts-ignore
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
@@ -117,34 +116,61 @@ export const MoneyPlanSave = () => {
         <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 수입</span>
-            <input
-              type={"number"}
+            <NumericFormat
+              min={0}
+              max={99999999999999}
+              minLength={1}
+              maxLength={17}
+              prefix={"₩  "}
+              datatype={"number"}
+              displayType={"input"}
+              id={"money_plan_in"}
+              name={"money_plan_in"}
               className={"form-control"}
-              datatype={"money"}
-              value={MONEY_PLAN?.money_plan_in}
-              onChange={(e) => {
+              readOnly={false}
+              disabled={false}
+              allowNegative={false}
+              thousandSeparator={true}
+              fixedDecimalScale={true}
+              value={Math.min(99999999999999, MONEY_PLAN?.money_plan_in)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(99999999999999, parseInt(values?.value));
                 setMONEY_PLAN((prev) => ({
                   ...prev,
-                  money_plan_in: Number(e.target.value)
+                  money_plan_in: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
         <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 지출</span>
-            <input
-              type={"number"}
+            <NumericFormat
+              min={0}
+              max={99999999999999}
+              minLength={1}
+              maxLength={17}
+              prefix={"₩  "}
+              datatype={"number"}
+              displayType={"input"}
+              id={"money_plan_out"}
+              name={"money_plan_out"}
               className={"form-control"}
-              value={MONEY_PLAN?.money_plan_out}
-              onChange={(e) => {
+              readOnly={false}
+              disabled={false}
+              allowNegative={false}
+              thousandSeparator={true}
+              fixedDecimalScale={true}
+              value={Math.min(99999999999999, MONEY_PLAN?.money_plan_out)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(99999999999999, parseInt(values?.value));
                 setMONEY_PLAN((prev) => ({
                   ...prev,
-                  money_plan_out: Number(e.target.value)
+                  money_plan_out: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
       </div>

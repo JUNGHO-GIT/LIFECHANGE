@@ -123,13 +123,14 @@ export const SleepSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>취침</span>
               <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
                 id={"sleep_night"}
                 name={"sleep_night"}
                 className={"form-control"}
-                disableClock={false}
                 clockIcon={null}
-                format={"HH:mm"}
-                locale={"ko"}
+                disabled={false}
+                disableClock={false}
                 value={SLEEP?.sleep_section[0]?.sleep_night}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
@@ -147,13 +148,14 @@ export const SleepSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>기상</span>
               <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
                 id={"sleep_morning"}
                 name={"sleep_morning"}
                 className={"form-control"}
-                disableClock={false}
                 clockIcon={null}
-                format={"HH:mm"}
-                locale={"ko"}
+                disabled={false}
+                disableClock={false}
                 value={SLEEP?.sleep_section[0]?.sleep_morning}
                 onChange={(e) => {
                   setSLEEP((prev) => ({
@@ -171,14 +173,14 @@ export const SleepSave = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>수면</span>
               <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
                 id={"sleep_time"}
                 name={"sleep_time"}
                 className={"form-control"}
-                disableClock={false}
                 disabled={true}
                 clockIcon={null}
-                format={"HH:mm"}
-                locale={"ko"}
+                disableClock={false}
                 value={SLEEP?.sleep_section[0]?.sleep_time}
               ></TimePicker>
             </div>

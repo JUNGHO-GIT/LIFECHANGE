@@ -1,8 +1,9 @@
 // UserLogin.jsx
 
-import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import React, {useState} from "react";
+import InputMask from "react-input-mask";
+import {useNavigate} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -38,20 +39,28 @@ export const UserLogin = () => {
     return (
       <div>
         <div className={"input-group mb-10"}>
-          <input
+          <span className={"input-group-text"}>User ID</span>
+          <InputMask
+            mask={""}
             type={"text"}
             className={"form-control"}
             value={user_id}
-            onChange={(e) => {setUserId(e.target.value);}}
-          />
+            onChange={(e) => (
+              setUserId(e.target.value)
+            )}
+          ></InputMask>
         </div>
         <div className={"input-group mb-10"}>
-          <input
+          <span className={"input-group-text"}>Password</span>
+          <InputMask
+            mask={""}
             type={"text"}
             className={"form-control"}
             value={user_pw}
-            onChange={(e) => {setUserPw(e.target.value);}}
-          />
+            onChange={(e) => (
+              setUserPw(e.target.value)
+            )}
+          ></InputMask>
         </div>
       </div>
     );

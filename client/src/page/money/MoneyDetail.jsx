@@ -99,7 +99,7 @@ export const MoneyDetail = () => {
       },
     });
     if (response.data.status === "success") {
-      const upDtdData = await axios.get(`${URL_MONEY}/detail`, {
+      const updatedData = await axios.get(`${URL_MONEY}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
@@ -107,8 +107,8 @@ export const MoneyDetail = () => {
         },
       });
       alert(response.data.msg);
-      setMONEY(upDtdData.data.result || MONEY_DEFAULT);
-      upDtdData.data.result === null && navParam(SEND.toList);
+      setMONEY(updatedData.data.result || MONEY_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

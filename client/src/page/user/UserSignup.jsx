@@ -1,8 +1,9 @@
 // UserSignup.jsx
 
-import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import React, {useState} from "react";
+import InputMask from "react-input-mask";
+import {useNavigate} from "react-router-dom";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {
@@ -44,24 +45,30 @@ export const UserSignup = () => {
     return (
       <div>
         <div className={"form-floating"}>
-          <input type={"text"}
+          <span className={"input-group-text"}>User ID</span>
+          <InputMask
+            mask={""}
+            type={"text"}
             className={"form-control"}
             placeholder={"location_id"}
             value={user_id}
-            onChange={(e) => {setUserId(e.target.value);}}
-          />
+            onChange={(e) => (
+              setUserId(e.target.value)
+            )}
+          ></InputMask>
         </div>
         <div className={"form-floating"}>
-          <input
-            className={"form-control"}
+          <span className={"input-group-text"}>Password</span>
+          <InputMask
+            mask={""}
             type={"password"}
+            className={"form-control"}
             placeholder={"Password"}
             value={user_pw}
-            id={"floatingPassword"}
-            onChange={(e) => {
-              setUserPw(e.target.value);
-            }}
-          />
+            onChange={(e) => (
+              setUserPw(e.target.value)
+            )}
+          ></InputMask>
         </div>
       </div>
     );

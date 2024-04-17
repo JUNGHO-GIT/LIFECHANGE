@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -105,7 +105,7 @@ export const FoodDetail = () => {
       },
     });
     if (response.data.status === "success") {
-      const upDtdData = await axios.get(`${URL_FOOD}/detail`, {
+      const updatedData = await axios.get(`${URL_FOOD}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
@@ -113,8 +113,8 @@ export const FoodDetail = () => {
         },
       });
       alert(response.data.msg);
-      setFOOD(upDtdData.data.result || FOOD_DEFAULT);
-      upDtdData.data.result === null && navParam(SEND.toList);
+      setFOOD(updatedData.data.result || FOOD_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

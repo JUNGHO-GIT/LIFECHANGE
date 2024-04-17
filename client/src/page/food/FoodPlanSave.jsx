@@ -3,6 +3,7 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {NumericFormat} from "react-number-format";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
@@ -117,65 +118,117 @@ export const FoodPlanSave = () => {
         <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>칼로리</span>
-            <input
-              type={"number"}
+            <NumericFormat
+              min={1}
+              max={9999}
+              minLength={1}
+              maxLength={9}
+              suffix={" kcal"}
+              id={"food_plan_kcal"}
+              name={"food_plan_kcal"}
+              datatype={"number"}
+              displayType={"input"}
               className={"form-control"}
-              value={FOOD_PLAN?.food_plan_kcal}
-              onChange={(e) => {
+              disabled={false}
+              allowNegative={false}
+              fixedDecimalScale={true}
+              thousandSeparator={true}
+              value={Math.min(9999, FOOD_PLAN?.food_plan_kcal)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(9999, parseInt(values.value));
                 setFOOD_PLAN((prev) => ({
                   ...prev,
-                  food_plan_kcal: Number(e.target.value)
+                  food_plan_kcal: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
         <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>탄수화물</span>
-            <input
-              type={"number"}
+            <NumericFormat
+              min={0}
+              max={9999}
+              minLength={1}
+              maxLength={6}
+              suffix={" g"}
+              id={"food_plan_carb"}
+              name={"food_plan_carb"}
+              datatype={"number"}
+              displayType={"input"}
               className={"form-control"}
-              value={FOOD_PLAN?.food_plan_carb}
-              onChange={(e) => {
+              disabled={false}
+              allowNegative={false}
+              fixedDecimalScale={true}
+              thousandSeparator={true}
+              value={Math.min(999, FOOD_PLAN?.food_plan_carb)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(999, parseInt(values.value));
                 setFOOD_PLAN((prev) => ({
                   ...prev,
-                  food_plan_carb: Number(e.target.value)
+                  food_plan_carb: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
         <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>단백질</span>
-            <input
-              type={"number"}
+            <NumericFormat
+              min={0}
+              max={9999}
+              minLength={1}
+              maxLength={6}
+              suffix={" g"}
+              id={"food_plan_protein"}
+              name={"food_plan_protein"}
+              datatype={"number"}
+              displayType={"input"}
               className={"form-control"}
-              value={FOOD_PLAN?.food_plan_protein}
-              onChange={(e) => {
+              disabled={false}
+              allowNegative={false}
+              fixedDecimalScale={true}
+              thousandSeparator={true}
+              value={Math.min(999, FOOD_PLAN?.food_plan_protein)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(999, parseInt(values.value));
                 setFOOD_PLAN((prev) => ({
                   ...prev,
-                  food_plan_protein: Number(e.target.value)
+                  food_plan_protein: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
         <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>지방</span>
-            <input
-              type={"number"}
+            <NumericFormat
+              min={0}
+              max={9999}
+              minLength={1}
+              maxLength={6}
+              suffix={" g"}
+              id={"food_plan_fat"}
+              name={"food_plan_fat"}
+              datatype={"number"}
+              displayType={"input"}
               className={"form-control"}
-              value={FOOD_PLAN?.food_plan_fat}
-              onChange={(e) => {
+              disabled={false}
+              allowNegative={false}
+              fixedDecimalScale={true}
+              thousandSeparator={true}
+              value={Math.min(999, FOOD_PLAN?.food_plan_fat)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(999, parseInt(values.value));
                 setFOOD_PLAN((prev) => ({
                   ...prev,
-                  food_plan_fat: Number(e.target.value)
+                  food_plan_fat: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
       </div>

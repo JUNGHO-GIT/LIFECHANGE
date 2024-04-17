@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -95,7 +95,7 @@ export const SleepDetail = () => {
       },
     });
     if (response.data.status === "success") {
-      const upDtdData = await axios.get(`${URL_SLEEP}/detail`, {
+      const updatedData = await axios.get(`${URL_SLEEP}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
@@ -103,8 +103,8 @@ export const SleepDetail = () => {
         },
       });
       alert(response.data.msg);
-      setSLEEP(upDtdData.data.result || SLEEP_DEFAULT);
-      upDtdData.data.result === null && navParam(SEND.toList);
+      setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

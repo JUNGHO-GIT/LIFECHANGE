@@ -3,10 +3,11 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {TimePicker} from "react-time-picker";
+import {NumericFormat} from "react-number-format";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
-import {TimePicker} from "react-time-picker";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
@@ -40,23 +41,6 @@ export const WorkSave = () => {
       endDt: location_endDt
     }
   );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      type: "day",
-      limit: 5,
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
-    }
-  );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 5
-    }
-  );
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
@@ -82,7 +66,7 @@ export const WorkSave = () => {
     work_time: "",
     work_total_volume: 0,
     work_total_cardio: "",
-    work_body_weight: "",
+    work_body_weight: 0,
     work_section: [{
       work_part_idx: 0,
       work_part_val: "전체",
@@ -146,7 +130,7 @@ export const WorkSave = () => {
       }
     };
 
-    const upDtdSections = WORK.work_section.map((item) => {
+    const updatedSections = WORK.work_section.map((item) => {
       sectionVolume = item.work_set * item.work_rep * item.work_kg;
       totalVolume += sectionVolume;
       totalMinutes += timeFormat(item.work_cardio);
@@ -166,7 +150,7 @@ export const WorkSave = () => {
         ...WORK,
         work_total_volume: totalVolume,
         work_total_cardio: cardioTime,
-        work_section: upDtdSections,
+        work_section: updatedSections,
       });
     }
   }, [WORK?.work_section]);
@@ -221,12 +205,12 @@ export const WorkSave = () => {
       }));
 
       if (newCount > 0) {
-        let upDtdSections = Array(newCount).fill(null).map((_, idx) =>
+        let updatedSections = Array(newCount).fill(null).map((_, idx) =>
           idx < WORK.work_section.length ? WORK.work_section[idx] : defaultSection
         );
         setWORK((prev) => ({
           ...prev,
-          work_section: upDtdSections
+          work_section: updatedSections
         }));
       }
       else {
@@ -236,20 +220,29 @@ export const WorkSave = () => {
         }));
       }
     }
-
     function inputFragment () {
       return (
         <div className={"row d-center"}>
           <div className={"col-4"}>
-            <input
-              type={"number"}
-              className={"form-control mb-30"}
-              value={COUNT?.sectionCnt}
+            <NumericFormat
               min={0}
-              onChange={(e) => (
-                handlerCount(e.target.value)
-              )}
-            />
+              max={10}
+              minLength={1}
+              maxLength={2}
+              datatype={"number"}
+              displayType={"input"}
+              className={"form-control mb-30"}
+              id={"sectionCnt"}
+              name={"sectionCnt"}
+              disabled={false}
+              thousandSeparator={false}
+              fixedDecimalScale={true}
+              value={Math.min(10, COUNT?.sectionCnt)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(10, parseInt(values?.value));
+                handlerCount(limitedValue.toString());
+              }}
+            ></NumericFormat>
           </div>
         </div>
       );
@@ -271,23 +264,24 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
                 <select
-                  className={"form-control"}
                   id={`work_part_idx-${i}`}
+                  name={`work_part_idx-${i}`}
+                  className={"form-control"}
                   value={WORK?.work_section[i]?.work_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setWORK((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.work_section];
-                      upDtdSection[i] = {
-                        ...upDtdSection[i],
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i] = {
+                        ...updatedSection[i],
                         work_part_idx: newIndex,
                         work_part_val: workArray[newIndex].work_part,
                         work_title_idx: 0,
                         work_title_val: workArray[newIndex].work_title[0],
                       };
-                      upDtd.work_section = upDtdSection;
-                      return upDtd;
+                      updated.work_section = updatedSection;
+                      return updated;
                     });
                   }}
                 >
@@ -303,23 +297,24 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>타이틀</span>
                 <select
-                  className={"form-control"}
                   id={`work_title_idx-${i}`}
+                  name={`work_title_idx-${i}`}
+                  className={"form-control"}
                   value={WORK?.work_section[i]?.work_title_idx}
                   onChange={(e) => {
                     const newTitleIdx = parseInt(e.target.value);
                     const newTitleVal = workArray[WORK?.work_section[i]?.work_part_idx]?.work_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
                       setWORK((prev) => {
-                        let upDtd = {...prev};
-                        let upDtdSection = [...upDtd.work_section];
-                        upDtdSection[i] = {
-                          ...upDtdSection[i],
+                        let updated = {...prev};
+                        let updatedSection = [...updated.work_section];
+                        updatedSection[i] = {
+                          ...updatedSection[i],
                           work_title_idx: newTitleIdx,
                           work_title_val: newTitleVal,
                         };
-                        upDtd.work_section = upDtdSection;
-                        return upDtd;
+                        updated.work_section = updatedSection;
+                        return updated;
                       });
                     }
                   }}
@@ -337,109 +332,150 @@ export const WorkSave = () => {
             <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>세트</span>
-                <input
-                  type={"number"}
+                <NumericFormat
                   min={1}
+                  max={99}
+                  minLength={1}
+                  maxLength={6}
+                  suffix={" set"}
+                  datatype={"number"}
+                  displayType={"input"}
                   className={"form-control"}
+                  id={`work_set-${i}`}
+                  name={`work_set-${i}`}
+                  allowNegative={false}
+                  thousandSeparator={true}
+                  fixedDecimalScale={false}
                   disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={WORK?.work_section[i]?.work_set}
-                  onChange={(e) => {
-                    const newVal = parseInt(e.target.value, 10);
+                  value={Math.min(99, WORK?.work_section[i]?.work_set)}
+                  onValueChange={(values) => {
+                    const limitedValue = Math.min(99, parseInt(values?.value));
                     setWORK((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.work_section];
-                      upDtdSection[i].work_set = isNaN(newVal) ? 0 : newVal;
-                      upDtd.work_section = upDtdSection;
-                      return upDtd;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_set = limitedValue;
+                      updated.work_section = updatedSection;
+                      return updated;
                     });
                   }}
-                />
+                ></NumericFormat>
               </div>
             </div>
             <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>횟수</span>
-                <input
-                  type={"number"}
+                <NumericFormat
                   min={1}
+                  max={99}
+                  minLength={1}
+                  maxLength={4}
+                  suffix={" 회"}
+                  datatype={"number"}
+                  displayType={"input"}
                   className={"form-control"}
+                  id={`work_rep-${i}`}
+                  name={`work_rep-${i}`}
+                  allowNegative={false}
+                  thousandSeparator={true}
+                  fixedDecimalScale={false}
                   disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={WORK?.work_section[i]?.work_rep}
-                  onChange={(e) => {
-                    const newVal = parseInt(e.target.value, 10);
+                  value={Math.min(99, WORK?.work_section[i]?.work_rep)}
+                  onValueChange={(values) => {
+                    const limitedValue = Math.min(99, parseInt(values?.value));
                     setWORK((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.work_section];
-                      upDtdSection[i].work_rep = isNaN(newVal) ? 0 : newVal;
-                      upDtd.work_section = upDtdSection;
-                      return upDtd;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_rep = limitedValue;
+                      updated.work_section = updatedSection;
+                      return updated;
                     });
                   }}
-                />
+                ></NumericFormat>
               </div>
             </div>
             <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>무게</span>
-                <input
-                  type={"number"}
+                <NumericFormat
                   min={1}
+                  max={999}
+                  minLength={1}
+                  maxLength={6}
+                  suffix={" kg"}
+                  datatype={"number"}
+                  displayType={"input"}
                   className={"form-control"}
+                  id={`work_kg-${i}`}
+                  name={`work_kg-${i}`}
+                  allowNegative={false}
+                  thousandSeparator={true}
+                  fixedDecimalScale={true}
                   disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={WORK?.work_section[i]?.work_kg}
-                  onChange={(e) => {
-                    const newVal = parseInt(e.target.value, 10);
+                  value={Math.min(999, WORK?.work_section[i]?.work_kg)}
+                  onValueChange={(values) => {
+                    const limitedValue = Math.min(999, parseInt(values?.value));
                     setWORK((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.work_section];
-                      upDtdSection[i].work_kg = isNaN(newVal) ? 0 : newVal;
-                      upDtd.work_section = upDtdSection;
-                      return upDtd;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_kg = limitedValue;
+                      updated.work_section = updatedSection;
+                      return updated;
                     });
                   }}
-                />
+                ></NumericFormat>
               </div>
             </div>
             <div className={"col-3"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>휴식</span>
-                <input
-                  type={"number"}
+                <NumericFormat
                   min={1}
+                  max={999}
+                  minLength={1}
+                  maxLength={7}
+                  suffix={" min"}
+                  datatype={"number"}
+                  displayType={"input"}
                   className={"form-control"}
+                  id={`work_rest-${i}`}
+                  name={`work_rest-${i}`}
+                  allowNegative={false}
+                  thousandSeparator={true}
                   disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={WORK?.work_section[i]?.work_rest}
-                  onChange={(e) => {
-                    const newVal = parseInt(e.target.value, 10);
+                  value={Math.min(999, WORK?.work_section[i]?.work_rest)}
+                  onValueChange={(values) => {
+                    const limitedValue = Math.min(999, parseInt(values?.value));
                     setWORK((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.work_section];
-                      upDtdSection[i].work_rest = isNaN(newVal) ? 0 : newVal;
-                      upDtd.work_section = upDtdSection;
-                      return upDtd;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_rest = limitedValue;
+                      updated.work_section = updatedSection;
+                      return updated;
                     });
                   }}
-                />
+                ></NumericFormat>
               </div>
             </div>
             <div className={"col-12"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>볼륨</span>
-                <input
-                  type={"number"}
-                  disabled={true}
+                <NumericFormat
+                  min={1}
+                  max={999999999}
+                  minLength={1}
+                  maxLength={13}
+                  suffix={" vol"}
+                  datatype={"number"}
+                  displayType={"input"}
                   className={"form-control"}
-                  value={WORK?.work_section[i]?.work_volume}
-                  onChange={(e) => {
-                    setWORK((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.work_section];
-                      upDtdSection[i].work_volume = Number(e.target.value);
-                      upDtd.work_section = upDtdSection;
-                      return upDtd;
-                    });
-                  }}
-                />
+                  id={`work_volume-${i}`}
+                  name={`work_volume-${i}`}
+                  disabled={true}
+                  allowNegative={false}
+                  fixedDecimalScale={true}
+                  thousandSeparator={true}
+                  value={Math.min(999999999, WORK?.work_section[i]?.work_volume)}
+                ></NumericFormat>
               </div>
             </div>
           </div>
@@ -448,25 +484,25 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>유산소</span>
                 <TimePicker
+                  locale={"ko"}
+                  format={"HH:mm"}
+                  className={"form-control"}
                   id={"work_cardio"}
                   name={"work_cardio"}
-                  className={"form-control"}
-                  disableClock={false}
                   clockIcon={null}
-                  format="HH:mm"
-                  locale="ko"
+                  disableClock={false}
                   disabled={WORK?.work_section[i]?.work_part_val !== "유산소"}
                   value={WORK?.work_section[i]?.work_cardio}
                   onChange={(e) => {
                     setWORK((prev) => {
-                      let upDtd = {...prev};
-                      let upDtdSection = [...upDtd.work_section];
-                      upDtdSection[i].work_cardio  = e ? e.toString() : "";
-                      upDtd.work_section = upDtdSection;
-                      return upDtd;
+                      let updated = {...prev};
+                      let updatedSection = [...updated.work_section];
+                      updatedSection[i].work_cardio  = e ? e.toString() : "";
+                      updated.work_section = updatedSection;
+                      return updated;
                     });
                   }}
-                />
+                ></TimePicker>
               </div>
             </div>
           </div>
@@ -490,13 +526,14 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>시작시간</span>
                 <TimePicker
+                  locale={"ko"}
+                  format={"HH:mm"}
                   id={"work_start"}
                   name={"work_start"}
                   className={"form-control"}
-                  disableClock={false}
+                  disabled={false}
                   clockIcon={null}
-                  format="HH:mm"
-                  locale="ko"
+                  disableClock={false}
                   value={WORK?.work_start}
                   onChange={(e) => {
                     setWORK((prev) => ({
@@ -504,7 +541,7 @@ export const WorkSave = () => {
                       work_start: e ? e.toString() : "",
                     }));
                   }}
-                />
+                ></TimePicker>
               </div>
             </div>
           </div>
@@ -513,13 +550,14 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>종료시간</span>
                 <TimePicker
+                  locale={"ko"}
+                  format={"HH:mm"}
                   id={"work_end"}
                   name={"work_end"}
                   className={"form-control"}
-                  disableClock={false}
+                  disabled={false}
                   clockIcon={null}
-                  format="HH:mm"
-                  locale="ko"
+                  disableClock={false}
                   value={WORK?.work_end}
                   onChange={(e) => {
                     setWORK((prev) => ({
@@ -527,7 +565,7 @@ export const WorkSave = () => {
                       work_end: e ? e.toString() : "",
                     }));
                   }}
-                />
+                ></TimePicker>
               </div>
             </div>
           </div>
@@ -536,16 +574,16 @@ export const WorkSave = () => {
               <div className={"input-group"}>
                 <span className={"input-group-text"}>운동시간</span>
                 <TimePicker
+                  locale={"ko"}
+                  format={"HH:mm"}
                   id={"work_time"}
                   name={"work_time"}
                   className={"form-control"}
-                  disableClock={false}
                   disabled={true}
                   clockIcon={null}
-                  format="HH:mm"
-                  locale="ko"
+                  disableClock={false}
                   value={WORK?.work_time}
-                />
+                ></TimePicker>
               </div>
             </div>
           </div>
@@ -560,19 +598,23 @@ export const WorkSave = () => {
             <div className={"col-6"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>총 볼륨</span>
-                <input
-                  type={"number"}
-                  disabled={true}
-                  className={"form-control"}
-                  min={0}
-                  value={WORK?.work_total_volume}
-                  onChange={(e) => {
-                    setWORK((prev) => ({
-                      ...prev,
-                      work_total_volume: Number(e.target.value),
-                    }));
-                  }}
-                />
+                  <NumericFormat
+                    min={1}
+                    max={99999999999999}
+                    minLength={1}
+                    maxLength={18}
+                    suffix={" vol"}
+                    datatype={"number"}
+                    displayType={"input"}
+                    id={"work_total_volume"}
+                    name={"work_total_volume"}
+                    className={"form-control"}
+                    disabled={true}
+                    allowNegative={false}
+                    thousandSeparator={true}
+                    fixedDecimalScale={true}
+                    value={Math.min(99999999999999, WORK?.work_total_volume)}
+                  ></NumericFormat>
               </div>
             </div>
           </div>
@@ -580,18 +622,17 @@ export const WorkSave = () => {
             <div className={"col-6"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>총 유산소 시간</span>
-                <input
-                  type={"text"}
-                  disabled={true}
+                <TimePicker
+                  locale={"ko"}
+                  format={"HH:mm"}
+                  id={"work_total_cardio"}
+                  name={"work_total_cardio"}
                   className={"form-control"}
+                  disabled={true}
+                  clockIcon={null}
+                  disableClock={false}
                   value={WORK?.work_total_cardio}
-                  onChange={(e) => {
-                    setWORK((prev) => ({
-                      ...prev,
-                      work_total_cardio: e.target.value,
-                    }));
-                  }}
-                />
+                ></TimePicker>
               </div>
             </div>
           </div>
@@ -599,17 +640,29 @@ export const WorkSave = () => {
             <div className={"col-6"}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>체중</span>
-                <input
-                  type={"text"}
+                <NumericFormat
+                  min={1}
+                  max={9999}
+                  minLength={1}
+                  maxLength={7}
+                  suffix={" kg"}
+                  datatype={"number"}
+                  displayType={"input"}
+                  id={"work_body_weight"}
+                  name={"work_body_weight"}
                   className={"form-control"}
+                  disabled={false}
+                  allowNegative={false}
+                  thousandSeparator={true}
                   value={WORK?.work_body_weight}
-                  onChange={(e) => {
+                  onValueChange={(values) => {
+                    const limitedValue = Math.min(9999, parseInt(values?.value));
                     setWORK((prev) => ({
                       ...prev,
-                      work_body_weight: e.target.value,
+                      work_body_weight: limitedValue
                     }));
                   }}
-                />
+                ></NumericFormat>
               </div>
             </div>
           </div>

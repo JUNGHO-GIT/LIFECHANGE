@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -93,7 +93,7 @@ export const MoneyPlanDetail = () => {
       },
     });
     if (response.data.status === "success") {
-      const upDtdData = await axios.get(`${URL_MONEY_PLAN}/detail`, {
+      const updatedData = await axios.get(`${URL_MONEY_PLAN}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
@@ -101,8 +101,8 @@ export const MoneyPlanDetail = () => {
         },
       });
       alert(response.data.msg);
-      setMONEY_PLAN(upDtdData.data.result || MONEY_PLAN_DEFAULT);
-      upDtdData.data.result === null && navParam(SEND.toList);
+      setMONEY_PLAN(updatedData.data.result || MONEY_PLAN_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

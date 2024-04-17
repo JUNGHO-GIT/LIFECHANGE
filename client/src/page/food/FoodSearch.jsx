@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import React, {useState, useEffect} from "react";
+import InputMask from "react-input-mask";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -163,12 +164,21 @@ export const FoodSearch = () => {
   const searchFood = () => {
     return (
       <div className={"d-flex"}>
-        <input type={"text"} className={"form-control"} value={FILTER.query} onChange={(e) => {
-          setFILTER((prev) => ({
-            ...prev,
-            query: e.target.value
-          }));
-        }}/>
+        <InputMask
+          mask={""}
+          id={"food_content"}
+          name={"food_content"}
+          className={"form-control"}
+          readOnly={false}
+          disabled={false}
+          value={FILTER.query}
+          onChange={(e) => {
+            setFILTER((prev) => ({
+              ...prev,
+              query: e.target.value
+            }));
+          }}
+        ></InputMask>
         <button type={"button"} className={"btn btn-sm btn-secondary ms-2"} onClick={() => {
           setFILTER((prev) => ({
             ...prev,

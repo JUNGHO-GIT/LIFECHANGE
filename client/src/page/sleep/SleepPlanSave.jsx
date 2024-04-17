@@ -4,8 +4,8 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {TimePicker} from "react-time-picker";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
@@ -120,18 +120,19 @@ export const SleepPlanSave = () => {
           <div className={"input-group"}>
             <span className={"input-group-text"}>취침</span>
             <TimePicker
+              locale={"ko"}
+              format={"HH:mm"}
               id={"sleep_plan_night"}
               name={"sleep_plan_night"}
               className={"form-control"}
-              disableClock={false}
               clockIcon={null}
-              format={"HH:mm"}
-              locale={"ko"}
+              disabled={false}
+              disableClock={false}
               value={SLEEP_PLAN?.sleep_plan_night}
               onChange={(e) => {
                 setSLEEP_PLAN((prev) => ({
                   ...prev,
-                  sleep_plan_night: e || ""
+                  sleep_plan_night: e ? e.toString() : "",
                 }));
               }}
             ></TimePicker>
@@ -141,18 +142,19 @@ export const SleepPlanSave = () => {
           <div className={"input-group"}>
             <span className={"input-group-text"}>기상</span>
             <TimePicker
+              locale={"ko"}
+              format={"HH:mm"}
               id={"sleep_plan_morning"}
               name={"sleep_plan_morning"}
               className={"form-control"}
-              disableClock={false}
               clockIcon={null}
-              format={"HH:mm"}
-              locale={"ko"}
+              disabled={false}
+              disableClock={false}
               value={SLEEP_PLAN?.sleep_plan_morning}
               onChange={(e) => {
                 setSLEEP_PLAN((prev) => ({
                   ...prev,
-                  sleep_plan_morning: e || ""
+                  sleep_plan_morning: e ? e.toString() : "",
                 }));
               }}
             ></TimePicker>
@@ -162,14 +164,14 @@ export const SleepPlanSave = () => {
           <div className={"input-group"}>
             <span className={"input-group-text"}>수면</span>
             <TimePicker
+              locale={"ko"}
+              format={"HH:mm"}
               id={"sleep_plan_time"}
               name={"sleep_plan_time"}
               className={"form-control"}
-              disableClock={false}
               disabled={true}
               clockIcon={null}
-              format={"HH:mm"}
-              locale={"ko"}
+              disableClock={false}
               value={SLEEP_PLAN?.sleep_plan_time}
             ></TimePicker>
           </div>

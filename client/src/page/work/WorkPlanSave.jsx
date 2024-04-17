@@ -3,8 +3,10 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {TimePicker} from "react-time-picker";
+import {NumericFormat} from "react-number-format";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
@@ -56,12 +58,10 @@ export const WorkPlanSave = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total_count: "",
+    work_plan_total_count: 0,
     work_plan_total_cardio: "",
-    work_plan_total_volume: "",
-    work_plan_body_weight: "",
-    work_plan_regDt: "",
-    work_plan_upDt: "",
+    work_plan_total_volume: 0,
+    work_plan_body_weight: 0,
   };
   const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
 
@@ -116,60 +116,113 @@ export const WorkPlanSave = () => {
   const tableNode = () => {
     return (
       <div className={"row d-center mb-20"}>
-        <div className={"col-12"}>
+        <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 운동 횟수</span>
-            <input type={"text"} className={"form-control"}
-              value={WORK_PLAN?.work_plan_total_count}
-              onChange={(e) => {
+            <NumericFormat
+              min={0}
+              max={999}
+              minLength={1}
+              maxLength={5}
+              id={"work_count"}
+              name={"work_count"}
+              suffix={" 회"}
+              datatype={"number"}
+              displayType={"input"}
+              className={"form-control"}
+              disabled={false}
+              allowNegative={false}
+              thousandSeparator={true}
+              fixedDecimalScale={true}
+              value={Math.min(999, WORK_PLAN?.work_plan_total_count)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(999, parseInt(values?.value));
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_total_count: e.target.value
+                  work_plan_total_count: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
-        <div className={"col-12"}>
+        <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 유산소 시간</span>
-            <input type={"text"} className={"form-control"}
+            <TimePicker
+              locale={"ko"}
+              format={"HH:mm"}
+              id={"work_cardio"}
+              name={"work_cardio"}
+              className={"form-control"}
+              disabled={false}
+              clockIcon={null}
+              disableClock={false}
               value={WORK_PLAN?.work_plan_total_cardio}
               onChange={(e) => {
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_total_cardio: e.target.value
+                  work_plan_total_cardio: e ? e.toString() : ""
                 }));
               }}
             />
           </div>
         </div>
-        <div className={"col-12"}>
+        <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 총 볼륨</span>
-            <input type={"text"} className={"form-control"}
-              value={WORK_PLAN?.work_plan_total_volume}
-              onChange={(e) => {
+            <NumericFormat
+              min={0}
+              max={999999}
+              minLength={1}
+              maxLength={12}
+              suffix={" vol"}
+              datatype={"number"}
+              displayType={"input"}
+              id={"work_volume"}
+              name={"work_volume"}
+              className={"form-control"}
+              allowNegative={false}
+              fixedDecimalScale={true}
+              thousandSeparator={true}
+              allowLeadingZeros={false}
+              value={Math.min(999999, WORK_PLAN?.work_plan_total_volume)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(999999, parseInt(values?.value));
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_total_volume: e.target.value
+                  work_plan_total_volume: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
-        <div className={"col-12"}>
+        <div className={"col-6"}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 체중</span>
-            <input type={"text"} className={"form-control"}
-              value={WORK_PLAN?.work_plan_body_weight}
-              onChange={(e) => {
+            <NumericFormat
+              min={0}
+              max={999}
+              minLength={1}
+              maxLength={6}
+              suffix={" kg"}
+              datatype={"number"}
+              displayType={"input"}
+              id={"work_weight"}
+              name={"work_weight"}
+              className={"form-control"}
+              allowNegative={false}
+              thousandSeparator={true}
+              fixedDecimalScale={true}
+              allowLeadingZeros={false}
+              value={Math.min(999, WORK_PLAN?.work_plan_body_weight)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(999, parseInt(values?.value));
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_body_weight: e.target.value
+                  work_plan_body_weight: limitedValue
                 }));
               }}
-            />
+            ></NumericFormat>
           </div>
         </div>
       </div>

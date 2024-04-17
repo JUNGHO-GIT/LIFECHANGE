@@ -47,7 +47,7 @@ export const DateNode = ({
     <div className="d-inline-flex flex-wrap">
       {type === "save" && (
         <div onClick={() => calcDate(-1)}>
-          <BiCaretLeft className="me-2 mt-1 fs-5 pointer" />
+          <BiCaretLeft className="me-2 mt-10 fs-15 pointer" />
         </div>
       )}
       {datePickerNode("날짜", DATE.startDt, (date) => {
@@ -59,7 +59,7 @@ export const DateNode = ({
       }, "bottom")}
       {type === "save" && (
         <div onClick={() => calcDate(1)}>
-          <BiCaretRight className="ms-2 mt-1 fs-5 pointer" />
+          <BiCaretRight className="ms-2 mt-10 fs-15 pointer" />
         </div>
       )}
     </div>

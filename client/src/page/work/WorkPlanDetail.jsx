@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
@@ -58,12 +58,10 @@ export const WorkPlanDetail = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total_count: "",
-    work_plan_total_volume: "",
+    work_plan_total_count: 0,
+    work_plan_total_volume: 0,
     work_plan_total_cardio: "",
-    work_plan_body_weight: "",
-    work_plan_regDt: "",
-    work_plan_upDt: "",
+    work_plan_body_weight: 0,
   };
   const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
 
@@ -97,7 +95,7 @@ export const WorkPlanDetail = () => {
       },
     });
     if (response.data.status === "success") {
-      const upDtdData = await axios.get(`${URL_WORK_PLAN}/detail`, {
+      const updatedData = await axios.get(`${URL_WORK_PLAN}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
@@ -105,8 +103,8 @@ export const WorkPlanDetail = () => {
         },
       });
       alert(response.data.msg);
-      setWORK_PLAN(upDtdData.data.result || WORK_PLAN_DEFAULT);
-      upDtdData.data.result === null && navParam(SEND.toList);
+      setWORK_PLAN(updatedData.data.result || WORK_PLAN_DEFAULT);
+      updatedData.data.result === null && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);
