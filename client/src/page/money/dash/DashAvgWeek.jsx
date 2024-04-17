@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Table, Form} from "react-bootstrap";
+import {Table, Form, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -43,16 +43,17 @@ export const DashAvgWeek = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 10) * 10;
+    let topValue = Math.ceil(maxValue / 1000) * 1000;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 10;
-    if (topValue > 50) {
-      tickInterval = 50;
+    let tickInterval = 1000;
+    if (topValue > 5000) {
+      tickInterval = 5000;
     }
-    else if (topValue > 10) {
-      tickInterval = 10;
+    else if (topValue > 1000) {
+      tickInterval = 1000;
     }
+    if (tickInterval <= 0) tickInterval = 1000;
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
     }
@@ -124,13 +125,13 @@ export const DashAvgWeek = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-9"}>
+    <Row className={"d-center"}>
+      <Col xs={9}>
         {chartNode()}
-      </div>
-      <div className={"col-3"}>
+      </Col>
+      <Col xs={3}>
         {tableNode()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

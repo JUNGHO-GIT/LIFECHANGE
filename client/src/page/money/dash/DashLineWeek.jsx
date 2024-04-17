@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Form, Table} from "react-bootstrap";
+import {Form, Table, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashLineWeek = () => {
@@ -40,27 +40,44 @@ export const DashLineWeek = () => {
 
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
-    const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 10) * 10;
+  if (!Array.isArray(value) || value.length === 0) {
+    return { domain: [0, 0], ticks: [], tickFormatter: (tick) => `${tick}` };
+  }
 
-    // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 10;
-    if (topValue > 50) {
-      tickInterval = 50;
-    }
-    else if (topValue > 10) {
-      tickInterval = 10;
-    }
-    for (let i = 0; i <= topValue; i += tickInterval) {
-      ticks.push(i);
-    }
-    return {
-      domain: [0, topValue],
-      ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
-    };
+  const ticks = [];
+  const maxValue = Math.max(...value.map((item) => Math.max(item?.수입 || 0, item?.지출 || 0)), 0);
+  let topValue = Math.ceil(maxValue / 1000) * 1000;
+
+  // topValue가 0 이하인 경우, 적절한 최소값 설정
+  if (topValue <= 0) {
+    topValue = 1000;
+  }
+
+  // 큰 값에 대응하기 위해 tickInterval을 조정
+  let tickInterval = 1000;  // 기본 tick 간격
+  if (topValue > 100000) {
+    tickInterval = 10000;
+  } else if (topValue > 10000) {
+    tickInterval = 5000;
+  }
+
+  // tickInterval을 0으로 나눌 위험이 있는 경우 기본값으로 설정
+  if (tickInterval <= 0) {
+    tickInterval = 1000;
+  }
+
+  // i가 topValue 이하일 동안 반복하며 ticks 배열에 i 값을 추가
+  for (let i = 0; i <= topValue; i += tickInterval) {
+    ticks.push(i);
+  }
+
+  return {
+    domain: [0, topValue],
+    ticks: ticks,
+    tickFormatter: (tick) => `${Number(tick).toFixed(1)}`
   };
+};
+
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNode = () => {
@@ -121,13 +138,13 @@ export const DashLineWeek = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-9"}>
+    <Row className={"d-center"}>
+      <Col xs={9}>
         {chartNode()}
-      </div>
-      <div className={"col-3"}>
+      </Col>
+      <Col xs={3}>
         {tableNode()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

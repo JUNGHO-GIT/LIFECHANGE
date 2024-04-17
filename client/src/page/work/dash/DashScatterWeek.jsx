@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Table, Form, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashScatterWeek = () => {
@@ -86,10 +87,10 @@ export const DashScatterWeek = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-12"}>
+    <Row className={"d-center"}>
+      <Col xs={12}>
         {chartNode()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

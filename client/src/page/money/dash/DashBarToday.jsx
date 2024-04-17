@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Table, Form, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
@@ -41,15 +42,15 @@ export const DashBarToday = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.목표, item?.실제)));
-    let topValue = Math.ceil(maxValue / 10) * 10;
+    let topValue = Math.ceil(maxValue / 1000) * 1000;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 10;
-    if (topValue > 50) {
-      tickInterval = 50;
+    let tickInterval = 1000;
+    if (topValue > 5000) {
+      tickInterval = 5000;
     }
-    else if (topValue > 10) {
-      tickInterval = 10;
+    else if (topValue > 1000) {
+      tickInterval = 1000;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -86,10 +87,10 @@ export const DashBarToday = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-12"}>
+    <Row className={"d-center"}>
+      <Col xs={12}>
         {chartNode()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

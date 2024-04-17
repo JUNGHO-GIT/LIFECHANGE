@@ -25,15 +25,9 @@
     "cache": "npm cache clean -f"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@faker-js/faker": "^8.4.1",
     "@fullcalendar/core": "^6.1.8",
     "@fullcalendar/daygrid": "^6.1.8",
     "@fullcalendar/react": "^6.1.8",
-    "@iconify/react": "^4.1.1",
-    "@mui/lab": "^5.0.0-alpha.170",
-    "@mui/material": "^5.15.15",
     "@react-hooks-library/core": "^0.5.1",
     "@srexi/purecounterjs": "^1.5.0",
     "@testing-library/jest-dom": "^5.16.5",

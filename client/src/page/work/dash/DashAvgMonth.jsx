@@ -47,15 +47,15 @@ export const DashAvgMonth = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.횟수, item?.볼륨, item?.시간)));
-    let topValue = Math.ceil(maxValue / 10) * 10;
+    let topValue = Math.ceil(maxValue / 100) * 100;
 
     // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 10;
-    if (topValue > 50) {
-      tickInterval = 50;
+    let tickInterval = 100;
+    if (topValue > 500) {
+      tickInterval = 500;
     }
-    else if (topValue > 10) {
-      tickInterval = 10;
+    else if (topValue > 100) {
+      tickInterval = 100;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
