@@ -1,7 +1,7 @@
 // foodDashService.js
 
 import * as repository from "../repository/foodDashRepository.js";
-import {intFormat, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, koreanDate} from "../assets/common/Common.js";
+import {intFormat, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, koreanDate} from "../assets/common/common.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (

@@ -1,10 +1,10 @@
 // MoneySave.jsx
 
-import React, {useState, useEffect, forwardRef} from "react";
+import axios from "axios";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
-import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
@@ -155,9 +155,9 @@ export const MoneySave = () => {
       }));
 
       if (newCount > 0) {
-        let upDtdSections = Array(newCount).fill(null).map((_, idx) =>
+        let upDtdSections = Array(newCount).fill(null).map((_, idx) => (
           idx < MONEY.money_section.length ? MONEY.money_section[idx] : defaultSection
-        );
+        ));
         setMONEY((prev) => ({
           ...prev,
           money_section: upDtdSections
@@ -170,7 +170,6 @@ export const MoneySave = () => {
         }));
       }
     };
-
     function inputFragment () {
       return (
         <div className={"row d-center"}>

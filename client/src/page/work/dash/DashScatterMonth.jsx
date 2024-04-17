@@ -1,11 +1,11 @@
 // DashScatterMonth.jsx
 
+import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import axios from "axios";
-import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Scatter, ComposedChart} from "recharts";
+import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashScatterMonth = () => {

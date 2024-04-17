@@ -1,11 +1,10 @@
 // FoodSearch.jsx
 
+import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import axios from "axios";
-import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {

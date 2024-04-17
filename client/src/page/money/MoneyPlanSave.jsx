@@ -1,10 +1,10 @@
 // MoneyPlanSave.jsx
 
+import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
-import axios from "axios";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 
@@ -120,6 +120,7 @@ export const MoneyPlanSave = () => {
             <input
               type={"number"}
               className={"form-control"}
+              datatype={"money"}
               value={MONEY_PLAN?.money_plan_in}
               onChange={(e) => {
                 setMONEY_PLAN((prev) => ({

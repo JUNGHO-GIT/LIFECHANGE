@@ -1,4 +1,4 @@
-// Common.js
+// common.js
 
 import moment from "moment-timezone";
 

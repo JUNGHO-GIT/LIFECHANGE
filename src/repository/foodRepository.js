@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Food} from "../schema/Food.js";
-import {fmtDate} from "../assets/common/Common.js";
+import {fmtDate} from "../assets/common/common.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (

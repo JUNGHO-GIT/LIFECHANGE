@@ -1,7 +1,7 @@
 // moneyDashService.js
 
 import * as repository from "../repository/moneyDashRepository.js";
-import {intFormat, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd} from "../assets/common/Common.js";
+import {intFormat, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd} from "../assets/common/common.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
