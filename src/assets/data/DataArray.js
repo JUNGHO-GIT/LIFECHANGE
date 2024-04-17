@@ -19,8 +19,8 @@ export const dataArray = [
       {to: "/food/search", label: "FoodSearch"},
       {to: "/food/list", label: "FoodList"},
       {to: "/food/save", label: "FoodSave"},
-      {to: "/food/plan/list", label: "FoodPlanList"},
-      {to: "/food/plan/save", label: "FoodPlanSave"},
+      {to: "/food/list", label: "FoodPlanList"},
+      {to: "/food/save", label: "FoodPlanSave"},
     ]
   },
   {
@@ -29,8 +29,8 @@ export const dataArray = [
       {to: "/money/dash", label: "MoneyDash"},
       {to: "/money/list", label: "MoneyList"},
       {to: "/money/save", label: "MoneySave"},
-      {to: "/money/plan/list", label: "MoneyPlanList"},
-      {to: "/money/plan/save", label: "MoneyPlanSave"},
+      {to: "/money/list", label: "MoneyPlanList"},
+      {to: "/money/save", label: "MoneyPlanSave"},
     ]
   },
   {
@@ -39,8 +39,8 @@ export const dataArray = [
       {to: "/sleep/dash", label: "SleepDash"},
       {to: "/sleep/list", label: "SleepList"},
       {to: "/sleep/save", label: "SleepSave"},
-      {to: "/sleep/plan/list", label: "SleepPlanList"},
-      {to: "/sleep/plan/save", label: "SleepPlanSave"},
+      {to: "/sleep/list", label: "SleepPlanList"},
+      {to: "/sleep/save", label: "SleepPlanSave"},
     ]
   },
   {
@@ -49,8 +49,8 @@ export const dataArray = [
       {to: "/work/dash", label: "WorkDash"},
       {to: "/work/list", label: "WorkList"},
       {to: "/work/save", label: "WorkSave"},
-      {to: "/work/plan/list", label: "WorkPlanList"},
-      {to: "/work/plan/save", label: "WorkPlanSave"},
+      {to: "/work/list", label: "WorkPlanList"},
+      {to: "/work/save", label: "WorkPlanSave"},
     ]
   }
 ];

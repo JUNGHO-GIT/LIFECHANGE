@@ -25,30 +25,30 @@ import {Header} from "../layout/Header.jsx";
 import {Footer} from "../layout/Footer";
 import {Dash} from "../page/common/Dash.jsx";
 
-import {FoodPlanList} from "../page/food/plan/FoodPlanList.jsx";
-import {FoodPlanDetail} from "../page/food/plan/FoodPlanDetail.jsx";
-import {FoodPlanSave} from "../page/food/plan/FoodPlanSave.jsx";
+import {FoodPlanList} from "../page/food/FoodPlanList.jsx";
+import {FoodPlanDetail} from "../page/food/FoodPlanDetail.jsx";
+import {FoodPlanSave} from "../page/food/FoodPlanSave.jsx";
 import {FoodDash} from "../page/food/dash/FoodDash.jsx";
-import {FoodSearch} from "../page/food/real/FoodSearch.jsx";
-import {FoodList} from "../page/food/real/FoodList.jsx";
-import {FoodDetail} from "../page/food/real/FoodDetail.jsx";
-import {FoodSave} from "../page/food/real/FoodSave.jsx";
+import {FoodSearch} from "../page/food/FoodSearch.jsx";
+import {FoodList} from "../page/food/FoodList.jsx";
+import {FoodDetail} from "../page/food/FoodDetail.jsx";
+import {FoodSave} from "../page/food/FoodSave.jsx";
 
-import {MoneyPlanList} from "../page/money/plan/MoneyPlanList.jsx";
-import {MoneyPlanDetail} from "../page/money/plan/MoneyPlanDetail.jsx";
-import {MoneyPlanSave} from "../page/money/plan/MoneyPlanSave.jsx";
+import {MoneyPlanList} from "../page/money/MoneyPlanList.jsx";
+import {MoneyPlanDetail} from "../page/money/MoneyPlanDetail.jsx";
+import {MoneyPlanSave} from "../page/money/MoneyPlanSave.jsx";
 import {MoneyDash} from "../page/money/dash/MoneyDash.jsx";
-import {MoneyList} from "../page/money/real/MoneyList.jsx";
-import {MoneyDetail} from "../page/money/real/MoneyDetail.jsx";
-import {MoneySave} from "../page/money/real/MoneySave.jsx";
+import {MoneyList} from "../page/money/MoneyList.jsx";
+import {MoneyDetail} from "../page/money/MoneyDetail.jsx";
+import {MoneySave} from "../page/money/MoneySave.jsx";
 
-import {SleepPlanList} from "../page/sleep/plan/SleepPlanList.jsx";
-import {SleepPlanDetail} from "../page/sleep/plan/SleepPlanDetail.jsx";
-import {SleepPlanSave} from "../page/sleep/plan/SleepPlanSave.jsx";
+import {SleepPlanList} from "../page/sleep/SleepPlanList.jsx";
+import {SleepPlanDetail} from "../page/sleep/SleepPlanDetail.jsx";
+import {SleepPlanSave} from "../page/sleep/SleepPlanSave.jsx";
 import {SleepDash} from "../page/sleep/dash/SleepDash.jsx";
-import {SleepList} from "../page/sleep/real/SleepList.jsx";
-import {SleepDetail} from "../page/sleep/real/SleepDetail.jsx";
-import {SleepSave} from "../page/sleep/real/SleepSave.jsx";
+import {SleepList} from "../page/sleep/SleepList.jsx";
+import {SleepDetail} from "../page/sleep/SleepDetail.jsx";
+import {SleepSave} from "../page/sleep/SleepSave.jsx";
 
 import {UserSignup} from "../page/user/UserSignup.jsx";
 import {UserLogin} from "../page/user/UserLogin.jsx";
@@ -57,13 +57,13 @@ import {UserDetail} from "../page/user/UserDetail.jsx";
 import {UserDelete} from "../page/user/UserDelete.jsx";
 import {UserDataset} from "../page/user/UserDataset.jsx";
 
-import {WorkPlanList} from "../page/work/plan/WorkPlanList.jsx";
-import {WorkPlanDetail} from "../page/work/plan/WorkPlanDetail.jsx";
-import {WorkPlanSave} from "../page/work/plan/WorkPlanSave.jsx";
+import {WorkPlanList} from "../page/work/WorkPlanList.jsx";
+import {WorkPlanDetail} from "../page/work/WorkPlanDetail.jsx";
+import {WorkPlanSave} from "../page/work/WorkPlanSave.jsx";
 import {WorkDash} from "../page/work/dash/WorkDash.jsx";
-import {WorkList} from "../page/work/real/WorkList.jsx";
-import {WorkDetail} from "../page/work/real/WorkDetail.jsx";
-import {WorkSave} from "../page/work/real/WorkSave.jsx";
+import {WorkList} from "../page/work/WorkList.jsx";
+import {WorkDetail} from "../page/work/WorkDetail.jsx";
+import {WorkSave} from "../page/work/WorkSave.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 const Common = () => {

@@ -7,96 +7,113 @@ export const compare = (
   plan, real, part, extra
 ) => {
 
-  let finalResult;
-
   // 1. food
-  if (part === "food") {
+  function foodCompare (plan, real, extra) {
     const abs = Math.abs(plan - real);
     if (real < plan) {
-      finalResult = (<span className={"text-danger"}>{abs}</span>);
+      return (<span className={"text-danger"}>{abs}</span>);
     }
     else if (real === plan) {
-      finalResult = (<span className={"text-primary"}>{abs}</span>);
+      return (<span className={"text-primary"}>{abs}</span>);
     }
     else if (real > plan) {
-      finalResult = (<span className={"text-success"}>{abs}</span>);
+      return (<span className={"text-success"}>{abs}</span>);
     }
-
-    return finalResult;
   }
 
   // 2. money
-  else if (part === "money") {
+  function moneyCompare (plan, real, extra) {
     const abs = Math.abs(plan - real);
     // 1. 수입 항목인 경우
     if (extra === "in") {
       if (real < plan) {
-        finalResult = (<span className={"text-danger"}>{abs}</span>);
+        return (<span className={"text-danger"}>{abs}</span>);
       }
       else if (real === plan) {
-        finalResult = (<span className={"text-primary"}>{abs}</span>);
+        return (<span className={"text-primary"}>{abs}</span>);
       }
       else if (real > plan) {
-        finalResult = (<span className={"text-success"}>{abs}</span>);
+        return (<span className={"text-success"}>{abs}</span>);
       }
     }
     // 2. 지출 항목인 경우
     else if (extra === "out") {
       if (real < plan) {
-        finalResult = (<span className={"text-success"}>{abs}</span>)
+        return (<span className={"text-success"}>{abs}</span>)
       }
       else if (real === plan) {
-        finalResult = (<span className={"text-primary"}>{abs}</span>)
+        return (<span className={"text-primary"}>{abs}</span>)
       }
       else if (real > plan) {
-        finalResult = (<span className={"text-danger"}>{abs}</span>)
+        return (<span className={"text-danger"}>{abs}</span>)
       }
     }
-
-    return finalResult;
   }
 
   // 3. sleep
-  else if (part === "sleep") {
-    const planDate = new Date(`1970-01-01T${plan}:00.000Z`);
-    const realDate = new Date(`1970-01-01T${real}:00.000Z`);
+  function sleepCompare (plan, real, extra) {
+    const planDate = new Date(`1970-01-01T${plan}Z`);
+    const realDate = new Date(`1970-01-01T${real}Z`);
 
+    let diff = 0;
     if (realDate < planDate) {
-      realDate.setHours(realDate.getHours() + 24);
+      diff = planDate.getTime() - realDate.getTime();
+    }
+    else {
+      diff = realDate.getTime() - planDate.getTime();
     }
 
-    const diff = Math.abs(realDate.getTime() - planDate.getTime());
-    const diffMinutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const diffTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 
-    if (0 <= diffMinutes && diffMinutes <= 10) {
-      finalResult = (<span className={"text-primary"}>{diffMinutes}</span>);
+    // 1. 10분이내
+    if (0 <= diff && diff <= 600000) {
+      return (<span className={"text-primary"}>{diffTime}</span>);
     }
-    else if (10 < diffMinutes && diffMinutes <= 20) {
-      finalResult = (<span className={"text-success"}>{diffMinutes}</span>);
+    // 2. 10분 ~ 20분
+    else if (600000 < diff && diff <= 1200000) {
+      return (<span className={"text-warning"}>{diffTime}</span>);
     }
-    else if (20 < diffMinutes && diffMinutes <= 30) {
-      finalResult = (<span className={"text-warning"}>{diffMinutes}</span>);
+    // 3. 20분 ~ 30분
+    else if (1200000 < diff && diff <= 1800000) {
+      return (<span className={"text-danger"}>{diffTime}</span>);
     }
-    else if (30 < diffMinutes) {
-      finalResult = (<span className={"text-danger"}>{diffMinutes}</span>);
+    // 4. 30분 ~ 40분
+    else if (1800000 < diff && diff <= 2400000) {
+      return (<span className={"text-danger"}>{diffTime}</span>);
     }
-
-    return finalResult;
+    // 5. 40분 초과
+    else if (2400000 < diff) {
+      return (<span className={"text-danger"}>{diffTime}</span>);
+    }
   }
 
   // 4. work
-  else if (part === "work") {
+  function workCompare (plan, real, extra) {
     const abs = Math.abs(plan - real);
     if (real < plan) {
-      finalResult = (<span className={"text-danger"}>{abs}</span>);
+      return (<span className={"text-danger"}>{abs}</span>);
     }
     else if (real === plan) {
-      finalResult = (<span className={"text-primary"}>{abs}</span>);
+      return (<span className={"text-primary"}>{abs}</span>);
     }
     else if (real > plan) {
-      finalResult = (<span className={"text-success"}>{abs}</span>);
+      return (<span className={"text-success"}>{abs}</span>);
     }
-
-    return finalResult;
   }
+
+  if (part === "food") {
+    return foodCompare(plan, real, extra);
+  }
+  else if (part === "money") {
+    return moneyCompare(plan, real, extra);
+  }
+  else if (part === "sleep") {
+    return sleepCompare(plan, real, extra);
+  }
+  else if (part === "work") {
+    return workCompare(plan, real, extra);
+  }
+
 };

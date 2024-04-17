@@ -90,7 +90,7 @@ export const UserDetail = () => {
   const buttonUserUpdate = () => {
     return (
       <button type={"button"} className={"btn btn-sm btn-warning ms-2"} onClick={() => {
-        navParam("/user/update");
+        navParam("/user/upDt");
       }}>
         Update
       </button>

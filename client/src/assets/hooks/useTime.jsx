@@ -21,8 +21,8 @@ export const useTime = (
       const endTime = OBJECT?.work_end;
 
       if (startTime && endTime) {
-        const startDate = new Date(`${koreanDate}T${startTime}`);
-        const endDate = new Date(`${koreanDate}T${endTime}`);
+        const startDate = new Date(`${koreanDate}T${startTime}Z`);
+        const endDate = new Date(`${koreanDate}T${endTime}Z`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
@@ -48,8 +48,8 @@ export const useTime = (
       const morningTime = OBJECT?.sleep_section[0]?.sleep_morning;
 
       if (nightTime && morningTime) {
-        const startDate = new Date(`${koreanDate}T${nightTime}`);
-        const endDate = new Date(`${koreanDate}T${morningTime}`);
+        const startDate = new Date(`${koreanDate}T${nightTime}Z`);
+        const endDate = new Date(`${koreanDate}T${morningTime}Z`);
 
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);

@@ -5,21 +5,21 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import {fileURLToPath} from "url";
 
-import {foodDashRouter} from "./src/router/dash/foodDashRouter.js";
-import {moneyDashRouter} from "./src/router/dash/moneyDashRouter.js";
-import {sleepDashRouter} from "./src/router/dash/sleepDashRouter.js";
-import {workDashRouter} from "./src/router/dash/workDashRouter.js";
+import {foodDashRouter} from "./src/router/foodDashRouter.js";
+import {moneyDashRouter} from "./src/router/moneyDashRouter.js";
+import {sleepDashRouter} from "./src/router/sleepDashRouter.js";
+import {workDashRouter} from "./src/router/workDashRouter.js";
 
-import {foodPlanRouter} from "./src/router/plan/foodPlanRouter.js";
-import {moneyPlanRouter} from "./src/router/plan/moneyPlanRouter.js";
-import {sleepPlanRouter} from "./src/router/plan/sleepPlanRouter.js";
-import {workPlanRouter} from "./src/router/plan/workPlanRouter.js";
+import {foodPlanRouter} from "./src/router/foodPlanRouter.js";
+import {moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
+import {sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
+import {workPlanRouter} from "./src/router/workPlanRouter.js";
 
-import {foodRouter} from "./src/router/real/foodRouter.js";
-import {moneyRouter} from "./src/router/real/moneyRouter.js";
-import {sleepRouter} from "./src/router/real/sleepRouter.js";
-import {userRouter} from "./src/router/real/userRouter.js";
-import {workRouter} from "./src/router/real/workRouter.js";
+import {foodRouter} from "./src/router/foodRouter.js";
+import {moneyRouter} from "./src/router/moneyRouter.js";
+import {sleepRouter} from "./src/router/sleepRouter.js";
+import {userRouter} from "./src/router/userRouter.js";
+import {workRouter} from "./src/router/workRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://127.0.0.1:27017");
