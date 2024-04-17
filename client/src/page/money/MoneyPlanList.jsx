@@ -75,10 +75,12 @@ export const MoneyPlanList = () => {
     money_endDt: "",
     money_plan_startDt: "",
     money_plan_endDt: "",
-    money_in: 0,
-    money_out: 0,
+    money_total_in: 0,
+    money_total_out: 0,
     money_plan_in: 0,
-    money_plan_out: 0
+    money_plan_out: 0,
+    money_diff_in: 0,
+    money_diff_out: 0,
   }];
   const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
 
@@ -133,14 +135,14 @@ export const MoneyPlanList = () => {
                 <tr>
                   <td>수입</td>
                   <td>{item.money_plan_in}</td>
-                  <td>{item.money_in}</td>
-                  <td>{compare(item.money_plan_in, item.money_in, "money", "in")}</td>
+                  <td>{item.money_total_in}</td>
+                  <td>{item.money_diff_in}</td>
                 </tr>
                 <tr>
                   <td>지출</td>
                   <td>{item.money_plan_out}</td>
-                  <td>{item.money_out}</td>
-                  <td>{compare(item.money_plan_out, item.money_out, "money", "out")}</td>
+                  <td>{item.money_total_out}</td>
+                  <td>{item.money_diff_out}</td>
                 </tr>
               </React.Fragment>
             ))}

@@ -1,32 +1,62 @@
-// 1-1. dash (scatter - week) --------------------------------------------------------------------->
-export const scatterWeek = {
-
-};
-// 1-2. dash (scatter - month) -------------------------------------------------------------------->
-export const scatterMonth = {
-
-};
-// 2-1. dash (pie - week) ------------------------------------------------------------------------->
-export const pieWeek = {
-
-};
-// 2-2. dash (pie - month) ------------------------------------------------------------------------>
-export const pieMonth = {
-
-};
-// 3-1. dash (line - week) ------------------------------------------------------------------------>
-export const lineWeek = {
-
-};
-// 3-2. dash (line - month) ----------------------------------------------------------------------->
-export const lineMonth = {
-
-};
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-export const avgWeek = {
-
-};
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
-export const avgMonth = {
-
-};
+findReal [
+  {
+    _id: new ObjectId("6619fae7576eb167c1095218"),
+    sleep_startDt: '2024-04-12',
+    sleep_endDt: '2024-04-12',
+    sleep_night: '02:30',
+    sleep_morning: '04:30',
+    sleep_time: '02:00'
+  }
+]
+sleepNight 002:30
+sleepMorning 004:30
+sleepTime 2
+findReal [
+  {
+    _id: new ObjectId("6619fa8c576eb167c109505e"),
+    sleep_startDt: '2024-04-13',
+    sleep_endDt: '2024-04-13',
+    sleep_night: '04:30',
+    sleep_morning: '06:30',
+    sleep_time: '02:00'
+  }
+]
+sleepNight 004:30
+sleepMorning 006:30
+sleepTime 2
+findReal [
+  {
+    _id: new ObjectId("661be5e03122b36783df16cc"),
+    sleep_startDt: '2024-04-14',
+    sleep_endDt: '2024-04-14',
+    sleep_night: '22:30',
+    sleep_morning: '04:40',
+    sleep_time: '06:10'
+  }
+]
+sleepNight 022:30
+sleepMorning 004:40
+sleepTime 6.2
+findReal [
+  {
+    _id: new ObjectId("661ab4cbf82769511986db1d"),
+    sleep_startDt: '2024-04-15',
+    sleep_endDt: '2024-04-15',
+    sleep_night: '20:30',
+    sleep_morning: '04:40',
+    sleep_time: '08:10'
+  }
+]
+sleepNight 020:30
+sleepMorning 004:40
+sleepTime 8.2
+findReal [
+  {
+    _id: new ObjectId("661ec0594dbabbd743abc647"),
+    sleep_startDt: '2024-04-17',
+    sleep_endDt: '2024-04-17',
+    sleep_night: '19:00',
+    sleep_morning: '12:01',
+    sleep_time: '17:01'
+  }
+]

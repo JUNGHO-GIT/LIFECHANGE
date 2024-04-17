@@ -47,23 +47,23 @@ export const list = async (
 
     return {
       ...plan,
-      work_plan_diff_total_count: compareCount(
-        plan.work_plan_total_count, workTotalCount
-      ),
-      work_plan_diff_total_volume: compareCount(
-        plan.work_plan_total_volume, workTotalVolume
-      ),
-      work_plan_diff_total_cardio: compareTime(
-        plan.work_plan_total_cardio, decimalToStr(workTotalCardio)
-      ),
-      work_plan_diff_body_weight: compareCount(
-        plan.work_plan_body_weight, workLessWeight
-      ),
       work_total_count: workTotalCount,
       work_total_volume: workTotalVolume,
       work_total_cardio: decimalToStr(workTotalCardio),
-      work_body_weight: workLessWeight
-    }
+      work_body_weight: workLessWeight,
+      work_diff_total_count: compareCount(
+        plan.work_plan_total_count, workTotalCount
+      ),
+      work_diff_total_volume: compareCount(
+        plan.work_plan_total_volume, workTotalVolume
+      ),
+      work_diff_total_cardio: compareTime(
+        plan.work_plan_total_cardio, decimalToStr(workTotalCardio)
+      ),
+      work_diff_body_weight: compareCount(
+        plan.work_plan_body_weight, workLessWeight
+      )
+    };
   }));
 
   return {

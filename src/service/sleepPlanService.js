@@ -1,18 +1,16 @@
 // sleepPlanService.js
 
 import * as repository from "../repository/sleepPlanRepository.js";
-import {compareTime} from "../assets/common/Common.js";
+import {compareTime, strToDecimal, decimalToStr} from "../assets/common/Common.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
-  sleep_dur_param,
   sleep_plan_dur_param,
   FILTER_param,
   PAGING_param
 ) => {
 
-  const [startDtReal, endDtReal] = sleep_dur_param.split(` ~ `);
   const [startDtPlan, endDtPlan] = sleep_plan_dur_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
@@ -20,40 +18,56 @@ export const list = async (
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const totalCnt = await repository.totalCnt(
-    user_id_param, startDtReal, endDtReal
+    user_id_param, startDtPlan, endDtPlan
   );
   const findPlan = await repository.list.findPlan(
     user_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
-  const findReal = await repository.list.findReal(
-    user_id_param, startDtReal, endDtReal
-  );
 
-  console.log("findPlan : " + JSON.stringify(findPlan));
-  console.log("findReal : " + JSON.stringify(findReal));
+  const finalResult = await Promise.all(findPlan.map(async (plan) => {
+    const startDt = plan.sleep_plan_startDt;
+    const endDt = plan.sleep_plan_endDt;
 
-  const finalResult = findPlan?.map((plan) => {
-    const match = findReal.find((real) => (
-      real && plan &&
-      real.sleep_startDt && real.sleep_endDt &&
-      plan.sleep_plan_startDt && plan.sleep_plan_endDt &&
-      real.sleep_startDt <= plan.sleep_plan_endDt &&
-      real.sleep_endDt >= plan.sleep_plan_startDt
-    ));
+    const findReal = await repository.list.findReal(
+      user_id_param, startDt, endDt
+    );
+
+    const sleepNight = findReal.reduce((acc, curr) => (
+      acc + strToDecimal(curr?.sleep_night ?? "00:00")
+    ), 0);
+    const sleepMorning = findReal.reduce((acc, curr) => (
+      acc + strToDecimal(curr?.sleep_morning ?? "00:00")
+    ), 0);
+    const sleepTime = findReal.reduce((acc, curr) => (
+      acc + strToDecimal(curr?.sleep_time ?? "00:00")
+    ), 0);
+
+    console.log("findReal", findReal);
+    console.log("sleepNight", sleepNight);
+    console.log("sleepMorning", sleepMorning);
+    console.log("sleepTime", sleepTime);
+
     return {
       ...plan,
-      sleep_startDt: match?.sleep_startDt,
-      sleep_endDt: match?.sleep_endDt,
-      sleep_night: match?.sleep_night,
-      sleep_morning: match?.sleep_morning,
-      sleep_time: match?.sleep_time,
-    }
-  });
+      sleep_night: decimalToStr(sleepNight),
+      sleep_morning: decimalToStr(sleepMorning),
+      sleep_time: decimalToStr(sleepTime),
+      sleep_diff_night: compareTime(
+        plan.sleep_plan_night, decimalToStr(sleepNight)
+      ),
+      sleep_diff_morning: compareTime(
+        plan.sleep_plan_morning, decimalToStr(sleepMorning)
+      ),
+      sleep_diff_time: compareTime(
+        plan.sleep_plan_time, decimalToStr(sleepTime)
+      )
+    };
+  }));
 
   return {
-    totalCnt: totalCnt,
-    result: finalResult,
-  };
+    totalCnt : totalCnt,
+    result : finalResult
+  }
 };
 
 // 2. detail -------------------------------------------------------------------------------------->

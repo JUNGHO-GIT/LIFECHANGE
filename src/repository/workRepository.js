@@ -89,8 +89,8 @@ export const list = {
         }
       }},
       {$sort: {work_startDt: sort_param}},
-      {$skip: (page_param - 1) * limit_param},
-      {$limit: limit_param}
+      {$skip: (Number(page_param) - 1) * Number(limit_param)},
+      {$limit: Number(limit_param)}
     ]);
 
     return finalResult;

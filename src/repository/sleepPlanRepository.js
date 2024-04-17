@@ -35,20 +35,23 @@ export const list = {
     startDt_param,
     endDt_param,
   ) => {
-    const finalResult = await SleepPlan.find({
-      user_id: user_id_param,
-      sleep_plan_startDt: {
-        $lte: endDt_param,
-      },
-      sleep_plan_endDt: {
-        $gte: startDt_param,
-      },
-    })
-    .sort({sleep_plan_startDt: sort_param})
-    .skip((page_param - 1) * limit_param)
-    .limit(limit_param)
-    .lean();
-
+    const finalResult = await SleepPlan.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        sleep_plan_startDt: {
+          $lte: endDt_param,
+        },
+        sleep_plan_endDt: {
+          $gte: startDt_param,
+        }
+      }},
+      {$sort: {
+        sleep_plan_startDt: sort_param,
+        sleep_plan_endDt: sort_param
+      }},
+      {$skip: Number(page_param - 1) * Number(limit_param)},
+      {$limit: Number(limit_param)},
+    ]);
     return finalResult;
   },
   findReal: async (
@@ -60,12 +63,10 @@ export const list = {
       {$match: {
         user_id: user_id_param,
         sleep_startDt: {
-          $gte: startDt_param,
           $lte: endDt_param,
         },
         sleep_endDt: {
           $gte: startDt_param,
-          $lte: endDt_param,
         },
       }},
       {$unwind: "$sleep_section"

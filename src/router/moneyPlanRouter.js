@@ -9,7 +9,6 @@ moneyPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.money_dur,
       req.query.money_plan_dur,
       req.query.FILTER,
       req.query.PAGING

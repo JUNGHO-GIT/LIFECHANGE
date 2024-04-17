@@ -9,7 +9,6 @@ foodPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.food_dur,
       req.query.food_plan_dur,
       req.query.FILTER,
       req.query.PAGING

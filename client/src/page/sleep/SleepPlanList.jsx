@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {compare} from "../../assets/jsx/compare.jsx";
 import axios from "axios";
 import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
@@ -81,9 +80,9 @@ export const SleepPlanList = () => {
     sleep_plan_night: "",
     sleep_plan_morning: "",
     sleep_plan_time: "",
-    sleep_plan_diff_night: "",
-    sleep_plan_diff_morning: "",
-    sleep_plan_diff_time: "",
+    sleep_diff_night: "",
+    sleep_diff_morning: "",
+    sleep_diff_time: "",
   }];
   const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_PLAN_DEFAULT);
 
@@ -92,7 +91,6 @@ export const SleepPlanList = () => {
     const response = await axios.get(`${URL_SLEEP_PLAN}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
@@ -139,19 +137,19 @@ export const SleepPlanList = () => {
                   <td>취침</td>
                   <td>{item.sleep_plan_night}</td>
                   <td>{item.sleep_night}</td>
-                  <td>{item.sleep_plan_diff_night}</td>
+                  <td>{item.sleep_diff_night}</td>
                 </tr>
                 <tr>
                   <td>기상</td>
                   <td>{item.sleep_plan_morning}</td>
                   <td>{item.sleep_morning}</td>
-                  <td>{item.sleep_plan_diff_morning}</td>
+                  <td>{item.sleep_diff_morning}</td>
                 </tr>
                 <tr>
                   <td>수면</td>
                   <td>{item.sleep_plan_time}</td>
                   <td>{item.sleep_time}</td>
-                  <td>{item.sleep_plan_diff_time}</td>
+                  <td>{item.sleep_diff_time}</td>
                 </tr>
               </React.Fragment>
             ))}

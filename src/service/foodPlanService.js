@@ -1,17 +1,16 @@
 // foodPlanService.js
 
 import * as repository from "../repository/foodPlanRepository.js";
+import {compareCount, compareTime, strToDecimal, decimalToStr} from "../assets/common/Common.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
-  food_dur_param,
   food_plan_dur_param,
   FILTER_param,
   PAGING_param
 ) => {
 
-  const [startDtReal, endDtReal] = food_dur_param.split(` ~ `);
   const [startDtPlan, endDtPlan] = food_plan_dur_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
@@ -19,46 +18,53 @@ export const list = async (
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const totalCnt = await repository.totalCnt(
-    user_id_param, startDtReal, endDtReal
+    user_id_param, startDtPlan, endDtPlan
   );
-
   const findPlan = await repository.list.findPlan(
     user_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
 
-  const findReal = await repository.list.findReal(
-    user_id_param, startDtReal, endDtReal
-  );
+  const finalResult = await Promise.all(findPlan.map(async (plan) => {
+    const startDt = plan.food_plan_startDt;
+    const endDt = plan.food_plan_endDt;
 
-  const finalResult = findPlan?.map((plan) => {
-    const matches = findReal?.filter((real) => (
-      real && plan &&
-      real.food_startDt && real.food_endDt &&
-      plan.food_plan_startDt && plan.food_plan_endDt &&
-      real.food_startDt <= plan.food_plan_endDt &&
-      real.food_endDt >= plan.food_plan_startDt
-    ));
-    const totalKcal = matches?.reduce((sum, curr) => (
-      sum + (curr?.food_total_kcal ?? 0)
+    const findReal = await repository.list.findReal(
+      user_id_param, startDt, endDt
+    );
+
+    const foodTotalKcal = findReal.reduce((acc, curr) => (
+      acc + (curr?.food_total_kcal ?? 0)
     ), 0);
-    const totalCarb = matches?.reduce((sum, curr) => (
-      sum + (curr?.food_total_carb ?? 0)
+    const foodTotalCarb = findReal.reduce((acc, curr) => (
+      acc + (curr?.food_total_carb ?? 0)
     ), 0);
-    const totalProtein = matches?.reduce((sum, curr) => (
-      sum + (curr?.food_total_protein ?? 0)
+    const foodTotalProtein = findReal.reduce((acc, curr) => (
+      acc + (curr?.food_total_protein ?? 0)
     ), 0);
-    const totalFat = matches?.reduce((sum, curr) => (
-      sum + (curr?.food_total_fat ?? 0)
+    const foodTotalFat = findReal.reduce((acc, curr) => (
+      acc + (curr?.food_total_fat ?? 0)
     ), 0);
 
     return {
       ...plan,
-      food_kcal: totalKcal,
-      food_carb: totalCarb,
-      food_protein: totalProtein,
-      food_fat: totalFat,
+      food_total_kcal: foodTotalKcal,
+      food_total_carb: foodTotalCarb,
+      food_total_protein: foodTotalProtein,
+      food_total_fat: foodTotalFat,
+      food_diff_kcal: compareCount(
+        plan.food_plan_kcal, foodTotalKcal
+      ),
+      food_diff_carb: compareCount(
+        plan.food_plan_carb, foodTotalCarb
+      ),
+      food_diff_protein: compareCount(
+        plan.food_plan_protein, foodTotalProtein
+      ),
+      food_diff_fat: compareCount(
+        plan.food_plan_fat, foodTotalFat
+      )
     };
-  });
+  }));
 
   return {
     totalCnt: totalCnt,

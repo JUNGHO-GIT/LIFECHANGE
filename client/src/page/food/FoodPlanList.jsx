@@ -75,14 +75,18 @@ export const FoodPlanList = () => {
     food_endDt: "",
     food_plan_startDt: "",
     food_plan_endDt: "",
-    food_kcal: 0,
-    food_carb: 0,
-    food_protein: 0,
-    food_fat: 0,
+    food_total_kcal: 0,
+    food_total_carb: 0,
+    food_total_protein: 0,
+    food_total_fat: 0,
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
     food_plan_fat: 0,
+    food_diff_kcal: 0,
+    food_diff_carb: 0,
+    food_diff_protein: 0,
+    food_diff_fat: 0,
   }];
   const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
 
@@ -137,26 +141,26 @@ export const FoodPlanList = () => {
                 <tr>
                   <td>칼로리</td>
                   <td>{item.food_plan_kcal}</td>
-                  <td>{item.food_kcal}</td>
-                  <td>{compare(item.food_plan_kcal, item.food_kcal, "food", "")}</td>
+                  <td>{item.food_total_kcal}</td>
+                  <td>{item.food_diff_kcal}</td>
                 </tr>
                 <tr>
                   <td>탄수화물</td>
                   <td>{item.food_plan_carb}</td>
-                  <td>{item.food_carb}</td>
-                  <td>{compare(item.food_plan_carb, item.food_carb, "food", "")}</td>
+                  <td>{item.food_total_carb}</td>
+                  <td>{item.food_diff_carb}</td>
                 </tr>
                 <tr>
                   <td>단백질</td>
                   <td>{item.food_plan_protein}</td>
-                  <td>{item.food_protein}</td>
-                  <td>{compare(item.food_plan_protein, item.food_protein, "food", "")}</td>
+                  <td>{item.food_total_protein}</td>
+                  <td>{item.food_diff_protein}</td>
                 </tr>
                 <tr>
                   <td>지방</td>
                   <td>{item.food_plan_fat}</td>
-                  <td>{item.food_fat}</td>
-                  <td>{compare(item.food_plan_fat, item.food_fat, "food", "")}</td>
+                  <td>{item.food_total_fat}</td>
+                  <td>{item.food_diff_fat}</td>
                 </tr>
               </React.Fragment>
             ))}

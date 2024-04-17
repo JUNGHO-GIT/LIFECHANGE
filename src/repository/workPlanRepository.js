@@ -44,7 +44,7 @@ export const list = {
         work_plan_startDt: sort_param,
         work_plan_endDt: sort_param
       }},
-      {$skip: (page_param - 1) * Number(limit_param)},
+      {$skip: Number(page_param - 1) * Number(limit_param)},
       {$limit: Number(limit_param)},
     ]);
     return finalResult;

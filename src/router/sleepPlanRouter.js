@@ -9,7 +9,6 @@ sleepPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.sleep_dur,
       req.query.sleep_plan_dur,
       req.query.FILTER,
       req.query.PAGING
