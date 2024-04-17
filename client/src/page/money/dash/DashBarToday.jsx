@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Table, Form, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
@@ -41,16 +41,19 @@ export const DashBarToday = () => {
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item?.목표, item?.실제)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
+    let topValue = Math.ceil(maxValue / 10000) * 10000;
 
     // topValue에 따른 동적 틱 간격 설정
     let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    if (tickInterval <= 0) {
+      tickInterval = 10000;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 10000) {
+      tickInterval = 10000;
+    }
+    else if (topValue > 50000) {
+      tickInterval = 50000;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -58,7 +61,7 @@ export const DashBarToday = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
+      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -78,7 +81,11 @@ export const DashBarToday = () => {
           />
           <Line dataKey={"목표"} type={"monotone"} stroke="#ff7300" />
           <Bar dataKey={"실제"} type={"monotone"} fill={"#8884d8"} barSize={30} minPointSize={1} />
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `₩  ${Number(value).toLocaleString()}`;
+            }}
+          />
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>

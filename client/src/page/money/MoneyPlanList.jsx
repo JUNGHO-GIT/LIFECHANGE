@@ -8,7 +8,7 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanList = () => {
@@ -151,9 +151,9 @@ export const MoneyPlanList = () => {
       );
     };
     return (
-      <div className={"d-flex"}>
+      <React.Fragment>
         {tableFragment()}
-      </div>
+      </React.Fragment>
     );
   };
 
@@ -195,27 +195,27 @@ export const MoneyPlanList = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>List</h1>
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {calendarNode()}
             {tableNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {filterNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {pagingNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {buttonNode()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

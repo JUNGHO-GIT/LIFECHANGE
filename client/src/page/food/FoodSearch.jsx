@@ -7,7 +7,7 @@ import InputMask from "react-input-mask";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
@@ -165,7 +165,7 @@ export const FoodSearch = () => {
   // 5-2. search ---------------------------------------------------------------------------------->
   const searchFood = () => {
     return (
-      <div className={"d-flex"}>
+      <FormGroup className={"d-flex"}>
         <InputMask
           mask={""}
           id={"food_content"}
@@ -190,7 +190,7 @@ export const FoodSearch = () => {
         }}>
           Search
         </Button>
-      </div>
+      </FormGroup>
     );
   };
 
@@ -204,23 +204,23 @@ export const FoodSearch = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>Search</h1>
-          </div>
-          <div className={"col-12"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {tableNode()}
-          </div>
-          <div className={"col-12"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {searchFood()}
-          </div>
-          <div className={"col-12"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {pagingNode()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

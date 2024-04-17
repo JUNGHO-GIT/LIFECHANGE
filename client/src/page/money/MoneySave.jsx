@@ -9,6 +9,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -174,8 +175,8 @@ export const MoneySave = () => {
     };
     function inputFragment () {
       return (
-        <div className={"row d-center"}>
-          <div className={"col-4"}>
+        <Row className={"d-center"}>
+          <Col xs={4}>
             <NumericFormat
               min={0}
               max={10}
@@ -195,8 +196,8 @@ export const MoneySave = () => {
                 handlerCount(limitedValue.toString());
               }}
             ></NumericFormat>
-          </div>
-        </div>
+          </Col>
+        </Row>
       );
     };
     return (
@@ -210,11 +211,11 @@ export const MoneySave = () => {
   const tableNode = () => {
     function tableSection (i) {
       return (
-        <div key={i} className={"mb-20"}>
-          <div className={"row d-center"}>
-            <div className={"col-6"}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>파트</span>
+        <FormGroup key={i} className={"mb-20"}>
+          <Row className={"d-center"}>
+            <Col xs={6}>
+              <FormGroup className={"input-group"}>
+                <Form.Label className={"input-group-text"}>파트</Form.Label>
                 <select
                   id={`money_part_idx-${i}`}
                   className={"form-control"}
@@ -242,11 +243,11 @@ export const MoneySave = () => {
                     </option>
                   ))}
                 </select>
-              </div>
-            </div>
-            <div className={"col-6"}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>타이틀</span>
+              </FormGroup>
+            </Col>
+            <Col xs={6}>
+              <FormGroup className={"input-group"}>
+                <Form.Label className={"input-group-text"}>타이틀</Form.Label>
                 <select
                   id={`money_title_idx-${i}`}
                   className={"form-control"}
@@ -275,18 +276,18 @@ export const MoneySave = () => {
                     </option>
                   ))}
                 </select>
-              </div>
-            </div>
-          </div>
-          <div className={"row d-center"}>
-            <div className={"col-6"}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>금액</span>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row className={"d-center"}>
+            <Col xs={6}>
+              <FormGroup className={"input-group"}>
+                <Form.Label className={"input-group-text"}>금액</Form.Label>
                 <NumericFormat
                   min={0}
-                  max={99999999999999}
+                  max={9999999999}
                   minLength={1}
-                  maxLength={17}
+                  maxLength={14}
                   prefix={"₩  "}
                   datatype={"number"}
                   displayType={"input"}
@@ -299,7 +300,7 @@ export const MoneySave = () => {
                   fixedDecimalScale={true}
                   value={MONEY?.money_section[i]?.money_amount}
                   onValueChange={(values) => {
-                    const limitedValue = Math.min(99999999999999, parseInt(values?.value));
+                    const limitedValue = Math.min(9999999999, parseInt(values?.value));
                     setMONEY((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.money_section];
@@ -309,11 +310,11 @@ export const MoneySave = () => {
                     });
                   }}
                 ></NumericFormat>
-              </div>
-            </div>
-            <div className={"col-6"}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>메모</span>
+              </FormGroup>
+            </Col>
+            <Col xs={6}>
+              <FormGroup className={"input-group"}>
+                <Form.Label className={"input-group-text"}>메모</Form.Label>
                 <InputMask
                   mask={""}
                   placeholder={"메모"}
@@ -332,32 +333,33 @@ export const MoneySave = () => {
                     });
                   }}
                 ></InputMask>
-              </div>
-            </div>
-          </div>
-        </div>
+              </FormGroup>
+            </Col>
+          </Row>
+        </FormGroup>
       );
     };
+
     function tableFragment () {
       return (
-        <div className={"row d-center"}>
-          <div className={"col-12"}>
+        <Row className={"d-center"}>
+          <Col xs={12}>
             {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
-          </div>
-        </div>
+          </Col>
+        </Row>
       );
     };
     function tableRemain () {
       return (
-        <div className={"row d-center"}>
-          <div className={"col-6"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>총수입</span>
+        <Row className={"d-center"}>
+          <Col xs={6}>
+            <FormGroup className={"input-group"}>
+              <Form.Label className={"input-group-text"}>총수입</Form.Label>
               <NumericFormat
                 min={0}
-                max={99999999999999}
+                max={9999999999}
                 minLength={1}
-                maxLength={17}
+                maxLength={14}
                 prefix={"₩  "}
                 datatype={"number"}
                 displayType={"input"}
@@ -369,18 +371,18 @@ export const MoneySave = () => {
                 allowNegative={false}
                 thousandSeparator={true}
                 fixedDecimalScale={true}
-                value={Math.min(99999999999999, MONEY?.money_total_in)}
+                value={Math.min(9999999999, MONEY?.money_total_in)}
               ></NumericFormat>
-            </div>
-          </div>
-          <div className={"col-6"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>총지출</span>
+            </FormGroup>
+          </Col>
+          <Col xs={6}>
+            <FormGroup className={"input-group"}>
+              <Form.Label className={"input-group-text"}>총지출</Form.Label>
               <NumericFormat
                 min={0}
-                max={99999999999999}
+                max={9999999999}
                 minLength={1}
-                maxLength={17}
+                maxLength={14}
                 prefix={"₩  "}
                 datatype={"number"}
                 displayType={"input"}
@@ -392,11 +394,11 @@ export const MoneySave = () => {
                 allowNegative={false}
                 thousandSeparator={true}
                 fixedDecimalScale={true}
-                value={Math.min(99999999999999, MONEY?.money_total_out)}
+                value={Math.min(9999999999, MONEY?.money_total_out)}
               ></NumericFormat>
-            </div>
-          </div>
-        </div>
+            </FormGroup>
+          </Col>
+        </Row>
       );
     };
     return (
@@ -419,26 +421,26 @@ export const MoneySave = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>Save</h1>
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {dateNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {handlerSectionCount()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {tableNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {buttonNode()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

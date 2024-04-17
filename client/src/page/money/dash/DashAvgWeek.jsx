@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Table, Form, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -43,24 +43,26 @@ export const DashAvgWeek = () => {
   const handlerCalcY = (value) => {
     const ticks = [];
     const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    let topValue = Math.ceil(maxValue / 10000) * 10000;
 
     // topValue에 따른 동적 틱 간격 설정
     let tickInterval = 1000;
-    if (topValue > 5000) {
-      tickInterval = 5000;
+    if (tickInterval <= 0) {
+      tickInterval = 10000;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
+    else if (topValue > 10000) {
+      tickInterval = 10000;
     }
-    if (tickInterval <= 0) tickInterval = 1000;
+    else if (topValue > 50000) {
+      tickInterval = 50000;
+    }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
     }
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
+      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -85,7 +87,11 @@ export const DashAvgWeek = () => {
             {LINE.includes("지출")
               && <Bar type={"monotone"} dataKey={"지출"} fill={"#ffc658"} minPointSize={1} />
             }
-            <Tooltip />
+            <Tooltip
+              formatter={(value) => {
+                return `₩  ${Number(value).toLocaleString()}`;
+              }}
+            />
             <Legend />
           </BarChart>
         </ResponsiveContainer>
@@ -98,9 +104,9 @@ export const DashAvgWeek = () => {
     return (
       <Table hover responsive variant={"light"}>
         <tbody>
-          <div className={"mt-10 mb-10"}>
+          <Form className={"mt-10 mb-10"}>
             {["수입", "지출"]?.map((key, index) => (
-              <div key={index} className={"fw-bold mb-10"}>
+              <Form key={index} className={"fw-bold mb-10"}>
                 <Form.Check
                   inline
                   type={"switch"}
@@ -115,9 +121,9 @@ export const DashAvgWeek = () => {
                   }}
                 ></Form.Check>
                 <span>{key}</span>
-              </div>
+              </Form>
             ))}
-          </div>
+          </Form>
         </tbody>
       </Table>
     );

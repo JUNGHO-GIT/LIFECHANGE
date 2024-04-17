@@ -79,9 +79,9 @@ export const DashLineMonth = () => {
     return (
       <Table hover responsive variant={"light"}>
         <tbody>
-          <div className={"mt-10 mb-10"}>
+          <Form className={"mt-10 mb-10"}>
             {["취침", "수면", "기상"]?.map((key, index) => (
-              <div key={index} className={"fw-bold mb-10"}>
+              <Form key={index} className={"fw-bold mb-10"}>
                 <Form.Check
                   inline
                   type={"switch"}
@@ -96,9 +96,9 @@ export const DashLineMonth = () => {
                   }}
                 ></Form.Check>
                 <span>{key}</span>
-              </div>
+              </Form>
             ))}
-          </div>
+          </Form>
         </tbody>
       </Table>
     );

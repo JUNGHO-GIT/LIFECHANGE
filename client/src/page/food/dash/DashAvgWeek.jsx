@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -66,7 +66,7 @@ export const DashAvgWeek = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
+      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -138,9 +138,9 @@ export const DashAvgWeek = () => {
           onClick={() => (setPART("nut"))}>
           영양소
         </Button>
-        <div className={"mt-10 mb-10"}>
+        <Form className={"mt-10 mb-10"}>
           {["탄수화물", "단백질", "지방"]?.map((key, index) => (
-            <div key={index} className={"fw-bold mb-10"}>
+            <Form key={index} className={"fw-bold mb-10"}>
               <Form.Check
                 inline
                 type={"switch"}
@@ -155,22 +155,22 @@ export const DashAvgWeek = () => {
                 }}
               ></Form.Check>
               <span>{key}</span>
-            </div>
+            </Form>
           ))}
-        </div>
+        </Form>
       </React.Fragment>
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-9"}>
+    <Row className={"d-center"}>
+      <Col xs={9}>
         {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
-      </div>
-      <div className={"col-3"}>
+      </Col>
+      <Col xs={3}>
         {tableNode()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

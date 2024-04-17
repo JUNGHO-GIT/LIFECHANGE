@@ -9,6 +9,7 @@ import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSave = () => {
@@ -118,10 +119,10 @@ export const SleepSave = () => {
   const tableNode = () => {
     function sleepNode () {
       return (
-        <div className={"row d-center"}>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>취침</span>
+        <Row className={"d-center"}>
+          <Col xs={12}>
+            <FormGroup className={"input-group"}>
+              <Form.Label className={"input-group-text"}>취침</Form.Label>
               <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
@@ -142,11 +143,11 @@ export const SleepSave = () => {
                   }));
                 }}
               ></TimePicker>
-            </div>
-          </div>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>기상</span>
+            </FormGroup>
+          </Col>
+          <Col xs={12}>
+            <FormGroup className={"input-group"}>
+              <Form.Label className={"input-group-text"}>기상</Form.Label>
               <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
@@ -167,11 +168,11 @@ export const SleepSave = () => {
                   }));
                 }}
               ></TimePicker>
-            </div>
-          </div>
-          <div className={"col-12"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>수면</span>
+            </FormGroup>
+          </Col>
+          <Col xs={12}>
+            <FormGroup className={"input-group"}>
+              <Form.Label className={"input-group-text"}>수면</Form.Label>
               <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
@@ -183,17 +184,17 @@ export const SleepSave = () => {
                 disableClock={false}
                 value={SLEEP?.sleep_section[0]?.sleep_time}
               ></TimePicker>
-            </div>
-          </div>
-        </div>
+            </FormGroup>
+          </Col>
+        </Row>
       );
     };
     return (
-      <div className={"row d-center"}>
-        <div className={"col-8 mb-20"}>
+      <Row className={"d-center"}>
+        <Col xs={8} className={"mb-20"}>
           {sleepNode()}
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   };
 
@@ -209,23 +210,23 @@ export const SleepSave = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>Save</h1>
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {dateNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {tableNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {buttonNode()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

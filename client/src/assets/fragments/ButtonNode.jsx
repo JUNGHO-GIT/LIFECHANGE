@@ -2,7 +2,7 @@
 
 import React from "react";
 import moment from "moment-timezone";
-import Button from "react-bootstrap/Button";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
@@ -112,53 +112,53 @@ export const ButtonNode = ({
 
   return (
     part === "food" && type === "list" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : part === "food" && type === "detail" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonUpdate()}
         {buttonList()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : part === "food" && type === "save" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonSave()}
         {buttonSearch()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : part === "food" && type === "list" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : part !== "food" && type === "list" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : part !== "food" && type === "detail" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonUpdate()}
         {buttonList()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : part !== "food" && type === "save" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonSave()}
         {buttonList()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : part !== "food" && type === "list" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {buttonCalendar()}
         {buttonToday()}
         {buttonRefresh()}
-      </div>
+      </FormGroup>
     ) : null
   );
 };

@@ -1,6 +1,7 @@
 // FilterNode.jsx
 
 import React from "react";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
@@ -11,7 +12,7 @@ export const FilterNode = ({
   const defaultNode = () => {
     function selectType() {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-select"} id={"type"} onChange={(e) => (
             setFILTER((prev) => ({
               ...prev,
@@ -24,12 +25,12 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </div>
+        </FormGroup>
       );
     };
     function selectOrder() {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-select"} id={"order"} onChange={(e) => (
             setFILTER((prev) => ({
               ...prev,
@@ -39,12 +40,12 @@ export const FilterNode = ({
             <option value="asc" selected>오름차순</option>
             <option value="desc">내림차순</option>
           </select>
-        </div>
+        </FormGroup>
       );
     };
     function selectLimit() {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-select"} id={"limit"} onChange={(e) => (
             setPAGING((prev) => ({
               ...prev,
@@ -58,7 +59,7 @@ export const FilterNode = ({
             <option value="5" selected>5</option>
             <option value="10">10</option>
           </select>
-        </div>
+        </FormGroup>
       );
     };
     return (
@@ -76,7 +77,7 @@ export const FilterNode = ({
     const foodArray = JSON.parse(session).food;
     function selectPartFood () {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-control"} id={"part"} value={foodArray[FILTER.partIdx].money_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
@@ -96,7 +97,7 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </div>
+        </FormGroup>
       );
     };
     return (
@@ -112,7 +113,7 @@ export const FilterNode = ({
     const moneyArray = JSON.parse(session).money;
     function selectPartMoney () {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-control"} id={"part"} value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
@@ -132,12 +133,12 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </div>
+        </FormGroup>
       );
     };
     function selectTitleMoney () {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
             setFILTER((prev) => ({
               ...prev,
@@ -150,7 +151,7 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </div>
+        </FormGroup>
       );
     };
     return (
@@ -167,7 +168,7 @@ export const FilterNode = ({
     const workArray = JSON.parse(session).work;
     function selectPartWork () {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-control"} id={"part"} value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
@@ -187,12 +188,12 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </div>
+        </FormGroup>
       );
     };
     function selectTitleWork () {
       return (
-        <div className={"mb-3"}>
+        <FormGroup className={"mb-3"}>
           <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
             setFILTER((prev) => ({
               ...prev,
@@ -205,7 +206,7 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </div>
+        </FormGroup>
       );
     };
     return (
@@ -219,40 +220,40 @@ export const FilterNode = ({
   // 5. return
   return (
     part === "food" && plan === "" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
         {foodNode()}
-      </div>
+      </FormGroup>
     ) : part === "food" && plan === "plan" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
-      </div>
+      </FormGroup>
     ) : part === "money" && plan === "" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
         {moneyNode()}
-      </div>
+      </FormGroup>
     ) : part === "money" && plan === "plan" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
-      </div>
+      </FormGroup>
     ) : part === "sleep" && plan === "" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
-      </div>
+      </FormGroup>
     ) : part === "sleep" && plan === "plan" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
-      </div>
+      </FormGroup>
     ) : part === "work" && plan === "" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
         {workNode()}
-      </div>
+      </FormGroup>
     ) : part === "work" && plan === "plan" ? (
-      <div className={"d-inline-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         {defaultNode()}
-      </div>
+      </FormGroup>
     ) : null
   );
 };

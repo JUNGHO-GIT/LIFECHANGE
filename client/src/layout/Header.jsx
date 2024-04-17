@@ -2,11 +2,11 @@
 
 import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
-import {Collapse, Button} from "react-bootstrap";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -60,16 +60,16 @@ export const Header = () => {
     function sidBarItem (label, items) {
       return (
         <li className={"text-start pointer mt-30 ps-20"}>
-          <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
+          <Form className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
             toggleExpand(label)
           )}>
             {label}
-          </div>
+          </Form>
           <Collapse in={isExpended === label}>
             <ul>
               {items?.map(({ to, label }) => (
                 <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
-                  <div className={"pointer"} onClick={() => {
+                  <Form className={"pointer"} onClick={() => {
                     SEND.startDt = koreanDate;
                     SEND.endDt = koreanDate;
                     navParam(to, {
@@ -79,7 +79,7 @@ export const Header = () => {
                     setIsActive(to);
                   }}>
                     {label}
-                  </div>
+                  </Form>
                 </li>
               ))}
             </ul>
@@ -89,19 +89,19 @@ export const Header = () => {
     };
 
     return (
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
-        <div className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
+      <Form className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
+        <Form className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
           <h3 className={"ps-20"}>Changer</h3>
           <p className={"pt-10 pe-10"} onClick={() => setIsSidebar(!isSidebar)}>X</p>
-        </div>
-        <div className={"d-flex flex-column p-3"}>
+        </Form>
+        <Form className={"d-flex flex-column p-3"}>
           <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>
             {dataArray?.map((menu) => (
               sidBarItem(menu.label, menu.items)
             ))}
           </ul>
-        </div>
-      </div>
+        </Form>
+      </Form>
     );
   };
 
@@ -128,14 +128,14 @@ export const Header = () => {
     };
 
     return (
-      <div className={"d-flex justify-content-between align-items-center"}>
-        <div className={"text-start"}>
+      <Form className={"d-flex justify-content-between align-items-center"}>
+        <Form className={"text-start"}>
           <h1 className={"fs-30 fw-500 ps-30"}>{preFix} / {subFix}</h1>
-        </div>
-        <div className={"text-end d-flex"}>
+        </Form>
+        <Form className={"text-end d-flex"}>
           {buttonClear()}
-        </div>
-      </div>
+        </Form>
+      </Form>
     );
   };
 
@@ -181,48 +181,49 @@ export const Header = () => {
     };
     return (
       (!user_id || user_id === "false") ? (
-        <div>
+        <React.Fragment>
           {btnDevMode()}
           {btnLogIn()}
           {btnSignUp()}
-        </div>
+        </React.Fragment>
       ) : (
-        <div>
+        <React.Fragment>
           {btnDevMode()}
           {btnLogOut()}
-        </div>
+        </React.Fragment>
       )
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div>
-      <div className={"container-fluid bg-white box-bottom"}>
-        <div className={"row d-center pt-15 pb-15"}>
-          <div className={"col-1"}>
+    <FormGroup>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"row d-center pt-15 pb-15"}>
+          <Col xs={1}>
             {sideBarNode()}
-            <Button variant={""} size={"sm"} onClick={() => {
+            <Button type={"button"} size={"sm"} variant={"secondary"} onClick={() => {
               setIsSidebar(!isSidebar);
             }}>
               Sidebar
             </Button>
-          </div>
-          <div className={"col-7"}></div>
-          <div className={"col-3"}>
+          </Col>
+          <Col xs={7}></Col>
+          <Col xs={3}>
             {loginNode()}
-          </div>
-        </div>
-      </div>
-      <div className={"root-wrapper"}>
-        <div className={"container-fluid"}>
-          <div className={"row d-center pt-15 pb-15"}>
-            <div className={"col-12"}>
+          </Col>
+        </Row>
+      </Container>
+      <Form className={"h-3"}></Form>
+      <Form className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"row d-center"}>
+            <Col xs={12}>
               {navBarNode()}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Col>
+          </Row>
+        </Container>
+      </Form>
+    </FormGroup>
   );
 };

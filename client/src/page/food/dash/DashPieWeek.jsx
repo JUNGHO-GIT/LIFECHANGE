@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Table, Form, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieWeek = () => {
@@ -144,13 +144,13 @@ export const DashPieWeek = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-6"}>
+    <Row className={"d-center"}>
+      <Col xs={6}>
         {chartNodeKcal()}
-      </div>
-      <div className={"col-6"}>
+      </Col>
+      <Col xs={6}>
         {chartNodeNut()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

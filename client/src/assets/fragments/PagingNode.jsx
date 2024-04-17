@@ -1,7 +1,7 @@
 // PagingNode.jsx
 
 import React from "react";
-import Button from "react-bootstrap/Button";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
 
 // 7. paging -------------------------------------------------------------------------------------->
 export const PagingNode = ({
@@ -63,10 +63,10 @@ export const PagingNode = ({
   };
 
   return (
-    <div className={"d-inline-flex"}>
+    <FormGroup className={"d-inline-flex"}>
       {btnPrev()}
       {btnNumber()}
       {btnNext()}
-    </div>
+    </FormGroup>
   );
 };

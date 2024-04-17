@@ -1,14 +1,14 @@
 // UserDataset.jsx
 
+import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import axios from "axios";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 import {workArray} from "../../assets/data/WorkArray.jsx";
-import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
@@ -264,7 +264,7 @@ export const UserDataset = () => {
               {USER?.user_dataset[dataType]?.map((item, index) => (
                 (index > 0) && (
                   <React.Fragment key={index}>
-                    <div className={"pointer"} onClick={() => {
+                    <Form className={"pointer"} onClick={() => {
                       setIdx((prev) => ({
                         ...prev,
                         partIdx: index,
@@ -272,7 +272,7 @@ export const UserDataset = () => {
                       }));
                     }}>
                       {item[`${dataType}_part`]}
-                    </div>
+                    </Form>
                     <span className={"pointer"} onClick={rmPart(index)}>
                       x
                     </span>
@@ -287,14 +287,14 @@ export const UserDataset = () => {
               {USER?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (
                 (index > 0) && (
                   <React.Fragment key={index}>
-                    <div className={"pointer"} onClick={() => {
+                    <Form className={"pointer"} onClick={() => {
                       setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
                       }));
                     }}>
                       {item}
-                    </div>
+                    </Form>
                     <span className={"pointer"} onClick={rmTitle(index)}>
                       x
                     </span>
@@ -331,26 +331,26 @@ export const UserDataset = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>List</h1>
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"}
               onClick={() => (handlerSetDefault())}>
                 기본값
             </Button>
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {tableNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {buttonNode()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

@@ -8,7 +8,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSave = () => {
@@ -180,10 +180,10 @@ export const FoodSave = () => {
 
     setFOOD(prev => ({
       ...prev,
-      food_total_kcal: totals.totalKcal.toFixed(1),
-      food_total_fat: totals.totalFat.toFixed(1),
-      food_total_carb: totals.totalCarb.toFixed(1),
-      food_total_protein: totals.totalProtein.toFixed(1),
+      food_total_kcal: Number(totals.totalKcal.toFixed(1)),
+      food_total_fat: Number(totals.totalFat.toFixed(1)),
+      food_total_carb: Number(totals.totalCarb.toFixed(1)),
+      food_total_protein: Number(totals.totalProtein.toFixed(1)),
     }));
   }, [FOOD?.food_section]);
 
@@ -228,14 +228,13 @@ export const FoodSave = () => {
         newFoodSection[index] = {
           ...section,
           food_count: newCountValue,
-          food_gram: (Number(defaultSection?.food_gram) * ratio).toFixed(1),
-          food_kcal: (Number(defaultSection?.food_kcal) * ratio).toFixed(1),
-          food_fat: (Number(defaultSection?.food_fat) * ratio).toFixed(1),
-          food_carb: (Number(defaultSection?.food_carb) * ratio).toFixed(1),
-          food_protein: (Number(defaultSection?.food_protein) * ratio).toFixed(1),
+          food_gram: Number(((defaultSection?.food_gram) * ratio).toFixed(1)),
+          food_kcal: Number(((defaultSection?.food_kcal) * ratio).toFixed(1)),
+          food_carb: Number(((defaultSection?.food_carb) * ratio).toFixed(1)),
+          food_protein: Number(((defaultSection?.food_protein) * ratio).toFixed(1)),
+          food_fat: Number(((defaultSection?.food_fat) * ratio).toFixed(1)),
         };
       }
-
       return {
         ...prev,
         food_section: newFoodSection,
@@ -308,12 +307,12 @@ export const FoodSave = () => {
                 <td>{item.food_title_val}</td>
                 <td>{item.food_brand}</td>
                 <td>
-                  <div className={"d-flex"}>
+                  <Form className={"d-flex"}>
                     <NumericFormat
                       min={0}
                       max={99}
                       minLength={1}
-                      maxLength={3}
+                      maxLength={2}
                       id={"food_plan_count"}
                       name={"food_plan_count"}
                       datatype={"number"}
@@ -325,12 +324,12 @@ export const FoodSave = () => {
                       thousandSeparator={true}
                       value={Math.min(99, parseInt(item.food_count))}
                       onValueChange={(values) => {
-                        const limitedValue = Math.min(999, parseInt(values.value));
+                        const limitedValue = Math.min(99, parseInt(values.value));
                         handleCountChange(index, limitedValue);
                       }}
                     ></NumericFormat>
                     <span>{item.food_serv}</span>
-                  </div>
+                  </Form>
                 </td>
                 <td>{item.food_gram}</td>
                 <td>{item.food_kcal}</td>
@@ -374,23 +373,23 @@ export const FoodSave = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>Save</h1>
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {dateNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {tableNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {buttonNode()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

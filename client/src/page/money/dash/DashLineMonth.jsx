@@ -40,41 +40,28 @@ export const DashLineMonth = () => {
 
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
-    if (!Array.isArray(value) || value.length === 0) {
-      return { domain: [0, 0], ticks: [], tickFormatter: (tick) => `${tick}` };
-    }
-
     const ticks = [];
-    const maxValue = Math.max(...value.map((item) => Math.max(item?.수입 || 0, item?.지출 || 0)), 0);
-    let topValue = Math.ceil(maxValue / 1000) * 1000;
+    const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
+    let topValue = Math.ceil(maxValue / 10000) * 10000;
 
-    // topValue가 0 이하인 경우, 적절한 최소값 설정
-    if (topValue <= 0) {
-      topValue = 1000;
-    }
-
-    // 큰 값에 대응하기 위해 tickInterval을 조정
-    let tickInterval = 1000;  // 기본 tick 간격
-    if (topValue > 100000) {
-      tickInterval = 10000;
-    } else if (topValue > 10000) {
-      tickInterval = 5000;
-    }
-
-    // tickInterval을 0으로 나눌 위험이 있는 경우 기본값으로 설정
+    // topValue에 따른 동적 틱 간격 설정
+    let tickInterval = 1000;
     if (tickInterval <= 0) {
-      tickInterval = 1000;
+      tickInterval = 10000;
     }
-
-    // i가 topValue 이하일 동안 반복하며 ticks 배열에 i 값을 추가
+    else if (topValue > 10000) {
+      tickInterval = 10000;
+    }
+    else if (topValue > 50000) {
+      tickInterval = 50000;
+    }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
     }
-
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => `${Number(tick).toFixed(1)}`
+      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -98,7 +85,11 @@ export const DashLineMonth = () => {
           {LINE.includes("지출")
             && <Line type={"monotone"} dataKey={"지출"} stroke="#82ca9d" activeDot={{r: 8}} />
           }
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `₩  ${Number(value).toLocaleString()}`;
+            }}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>
@@ -110,9 +101,9 @@ export const DashLineMonth = () => {
     return (
       <Table hover responsive variant={"light"}>
         <tbody>
-          <div className={"mt-10 mb-10"}>
+          <Form className={"mt-10 mb-10"}>
             {["수입", "지출"]?.map((key, index) => (
-              <div key={index} className={"fw-bold mb-10"}>
+              <Form key={index} className={"fw-bold mb-10"}>
                 <Form.Check
                   inline
                   type={"switch"}
@@ -127,9 +118,9 @@ export const DashLineMonth = () => {
                   }}
                 ></Form.Check>
                 <span>{key}</span>
-              </div>
+              </Form>
             ))}
-          </div>
+          </Form>
         </tbody>
       </Table>
     );

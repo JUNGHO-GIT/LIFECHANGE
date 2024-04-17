@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
-import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
@@ -30,8 +30,8 @@ export const DateNode = ({
   };
 
   const datePickerNode = (label, value, onChange, placement) => (
-    <div className="date-picker-container">
-      <span className="input-group-text">{label}</span>
+    <FormGroup className="date-picker-container">
+      <Form.Label className="me-2">{label}</Form.Label>
       <DatePicker
         locale={ko}
         dateFormat="yyyy-MM-dd"
@@ -41,15 +41,15 @@ export const DateNode = ({
         customInput={<CustomInput />}
         onChange={(date) => onChange(date)}
       />
-    </div>
+    </FormGroup>
   );
 
   const realDate = () => (
-    <div className="d-inline-flex flex-wrap">
+    <FormGroup className="d-inline-flex flex-wrap">
       {type === "save" && (
-        <div onClick={() => calcDate(-1)}>
+        <FormGroup onClick={() => calcDate(-1)}>
           <BiCaretLeft className="me-2 mt-10 fs-15 pointer" />
-        </div>
+        </FormGroup>
       )}
       {datePickerNode("날짜", DATE.startDt, (date) => {
         setDATE((prev) => ({
@@ -59,34 +59,34 @@ export const DateNode = ({
         }));
       }, "bottom")}
       {type === "save" && (
-        <div onClick={() => calcDate(1)}>
+        <FormGroup onClick={() => calcDate(1)}>
           <BiCaretRight className="ms-2 mt-10 fs-15 pointer" />
-        </div>
+        </FormGroup>
       )}
-    </div>
+    </FormGroup>
   );
 
   const planDate = () => (
-    <div className="date-picker-container">
+    <FormGroup className="date-picker-container">
       {datePickerNode("시작일", DATE.startDt, (date) => {
         setDATE((prev) => ({
           ...prev,
           startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
         }));
       }, "bottom")}
-      <div className={"w-10"}></div>
+      <FormGroup className={"w-10"}></FormGroup>
       {datePickerNode("종료일", DATE.endDt, (date) => {
         setDATE((prev) => ({
           ...prev,
           endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
         }));
       }, "top")}
-    </div>
+    </FormGroup>
   );
 
   return (
-    <div className="d-inline-flex flex-wrap">
+    <FormGroup className="d-inline-flex flex-wrap">
       {plan === "plan" ? planDate() : realDate()}
-    </div>
+    </FormGroup>
   );
 };

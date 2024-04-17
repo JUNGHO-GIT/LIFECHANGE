@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Table, Form, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieToday = () => {
@@ -103,7 +103,11 @@ export const DashPieToday = () => {
               <Cell key={`cell-${index}`} fill={COLORS_IN[index % COLORS_IN.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `₩  ${Number(value).toLocaleString()}`;
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -135,7 +139,11 @@ export const DashPieToday = () => {
               <Cell key={`cell-${index}`} fill={COLORS_OUT[index % COLORS_OUT.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `₩  ${Number(value).toLocaleString()}`;
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -143,13 +151,13 @@ export const DashPieToday = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-6"}>
+    <Row className={"d-center"}>
+      <Col xs={6}>
         {chartNodeIn()}
-      </div>
-      <div className={"col-6"}>
+      </Col>
+      <Col xs={6}>
         {chartNodeOut()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

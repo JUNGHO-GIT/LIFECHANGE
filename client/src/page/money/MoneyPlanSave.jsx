@@ -8,6 +8,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanSave = () => {
@@ -112,10 +113,10 @@ export const MoneyPlanSave = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <div className={"row d-center mb-20"}>
-        <div className={"col-6"}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 수입</span>
+      <Row className={"mb-20"}>
+        <Col xs={6}>
+          <FormGroup className={"input-group"}>
+            <Form.Label className={"input-group-text"}>목표 수입</Form.Label>
             <NumericFormat
               min={0}
               max={99999999999999}
@@ -141,11 +142,11 @@ export const MoneyPlanSave = () => {
                 }));
               }}
             ></NumericFormat>
-          </div>
-        </div>
-        <div className={"col-6"}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 지출</span>
+          </FormGroup>
+        </Col>
+        <Col xs={6}>
+          <FormGroup className={"input-group"}>
+            <Form.Label className={"input-group-text"}>목표 지출</Form.Label>
             <NumericFormat
               min={0}
               max={99999999999999}
@@ -171,9 +172,9 @@ export const MoneyPlanSave = () => {
                 }));
               }}
             ></NumericFormat>
-          </div>
-        </div>
-      </div>
+          </FormGroup>
+        </Col>
+      </Row>
     );
   };
 
@@ -189,23 +190,23 @@ export const MoneyPlanSave = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>Save</h1>
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {dateNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {tableNode()}
-          </div>
-          <div className={"col-12 mb-20"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {buttonNode()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

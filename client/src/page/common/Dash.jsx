@@ -1,4 +1,4 @@
-// Dash.jsx
+/* // Dash.jsx
 
 import React from "react";
 import {ko} from "date-fns/locale";
@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
-import {Button, ButtonGroup, Table, Form} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const Dash = () => {
@@ -73,76 +73,76 @@ export const Dash = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-fluid"}>
-        <div className="row mb-20">
-          <div className={"col-12"}>
-            <div className="container-wrapper d-left">
-              <div className="row d-center mt-5">
-                <div className={"col-12"}>
+    <FormGroup className={"root-wrapper"}>
+      <Form className={"container-fluid"}>
+        <Form className="row mb-20">
+          <Col xs={12}>
+            <Form className="container-wrapper d-left">
+              <Form className="row d-center mt-5">
+                <Col xs={12}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>
                   <h2 className="mb-3 fw-7">일별로 조회</h2>
-                </div>
-              </div>
-              <div className={"row d-center mt-3"}>
-                <div className="col-md-6 col-12 d-center">
+                </Form>
+              </Form>
+              <Form className={"row d-center mt-3"}>
+                <Form className="col-md-6 col-12 d-center">
                   {viewDashDay()}
-                </div>
-              </div>
-              <div className="row mb-20">
-                <div className="col-12 d-center">
+                </Form>
+              </Form>
+              <Form className="row mb-20">
+                <Form className="col-12 d-center">
                   {btnToday()}
                   {btnReset()}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className={"col-6"}>
-            <div className={"container-wrapper"}>
-              <div className="row d-center mt-5">
-                <div className={"col-12"}>
+                </Form>
+              </Form>
+            </Form>
+          </Form>
+        </Form>
+        <Form className="row">
+          <Col xs={6}>
+            <Container fluid className={"container-wrapper"}>
+              <Form className="row d-center mt-5">
+                <Col xs={12}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>
                   <h2 className="mb-3 fw-7">일별로 조회</h2>
-                </div>
-              </div>
-              <div className={"row d-center mt-3"}>
-                <div className="col-md-6 col-12 d-center">
+                </Form>
+              </Form>
+              <Form className={"row d-center mt-3"}>
+                <Form className="col-md-6 col-12 d-center">
                   {viewDashDay()}
-                </div>
-              </div>
-              <div className="row mb-20">
-                <div className="col-12 d-center">
+                </Form>
+              </Form>
+              <Form className="row mb-20">
+                <Form className="col-12 d-center">
                   {btnToday()}
                   {btnReset()}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={"col-6"}>
-            <div className={"container-wrapper"}>
-              <div className="row d-center mt-5">
-                <div className={"col-12"}>
+                </Form>
+              </Form>
+            </Form>
+          </Form>
+          <Col xs={6}>
+            <Container fluid className={"container-wrapper"}>
+              <Form className="row d-center mt-5">
+                <Col xs={12}>
                   <h1 className="mb-3 fw-7">{TITLE}</h1>
                   <h2 className="mb-3 fw-7">일별로 조회</h2>
-                </div>
-              </div>
-              <div className={"row d-center mt-3"}>
-                <div className="col-md-6 col-12 d-center">
+                </Form>
+              </Form>
+              <Form className={"row d-center mt-3"}>
+                <Form className="col-md-6 col-12 d-center">
                   {viewDashDay()}
-                </div>
-              </div>
-              <div className="row mb-20">
-                <div className="col-12 d-center">
+                </Form>
+              </Form>
+              <Form className="row mb-20">
+                <Form className="col-12 d-center">
                   {btnToday()}
                   {btnReset()}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                </Form>
+              </Form>
+            </Form>
+          </Form>
+        </Row>
+      </Container>
+    </FormGroup>
   );
-};
+}; */

@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Button, ButtonGroup, Table} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgMonth = () => {
@@ -63,7 +63,7 @@ export const DashAvgMonth = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
+      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -133,13 +133,13 @@ export const DashAvgMonth = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"row d-center"}>
-      <div className={"col-9"}>
+    <Row className={"d-center"}>
+      <Col xs={9}>
         {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
-      </div>
-      <div className={"col-3"}>
+      </Col>
+      <Col xs={3}>
         {tableNode()}
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };

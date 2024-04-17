@@ -23,7 +23,6 @@ import "../assets/css/Header.css";
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
 import {Footer} from "../layout/Footer";
-import {Dash} from "../page/common/Dash.jsx";
 
 import {FoodPlanList} from "../page/food/FoodPlanList.jsx";
 import {FoodPlanDetail} from "../page/food/FoodPlanDetail.jsx";
@@ -65,8 +64,8 @@ import {WorkSave} from "../page/work/WorkSave.jsx";
 // ------------------------------------------------------------------------------------------------>
 const Common = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Dash />} />
+    <Routes>{/*
+      <Route path="/" element={<Dash />} /> */}
     </Routes>
   );
 };

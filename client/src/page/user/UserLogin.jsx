@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
-import Button from "react-bootstrap/Button";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -38,9 +38,9 @@ export const UserLogin = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableUserLogin = () => {
     return (
-      <div>
-        <div className={"input-group mb-10"}>
-          <span className={"input-group-text"}>User ID</span>
+      <FormGroup>
+        <Form className={"input-group mb-10"}>
+          <Form.Label className={"input-group-text"}>User ID</Form.Label>
           <InputMask
             mask={""}
             type={"text"}
@@ -50,9 +50,9 @@ export const UserLogin = () => {
               setUserId(e.target.value)
             )}
           ></InputMask>
-        </div>
-        <div className={"input-group mb-10"}>
-          <span className={"input-group-text"}>Password</span>
+        </Form>
+        <Form className={"input-group mb-10"}>
+          <Form.Label className={"input-group-text"}>Password</Form.Label>
           <InputMask
             mask={""}
             type={"text"}
@@ -62,8 +62,8 @@ export const UserLogin = () => {
               setUserPw(e.target.value)
             )}
           ></InputMask>
-        </div>
-      </div>
+        </Form>
+      </FormGroup>
     );
   };
 
@@ -87,20 +87,20 @@ export const UserLogin = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={"root-wrapper"}>
-      <div className={"container-wrapper"}>
-        <div className={"row d-center"}>
-          <div className={"col-12 mb-20"}>
+    <FormGroup className={"root-wrapper"}>
+      <Container fluid className={"container-wrapper"}>
+        <Row className={"d-center"}>
+          <Col xs={12} className={"mb-20"}>
             <h1>Login</h1>
-          </div>
-          <div className={"col-12"}>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
             {tableUserLogin()}
             <br/>
             {buttonUserLogin()}
             {buttonRefreshPage()}
-          </div>
-        </div>
-      </div>
-    </div>
+          </Col>
+        </Row>
+      </Container>
+    </FormGroup>
   );
 };

@@ -58,7 +58,7 @@ export const DashLineWeek = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number((tick).toFixed(1))}`)
+      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -94,9 +94,9 @@ export const DashLineWeek = () => {
     return (
       <Table hover responsive variant={"light"}>
         <tbody>
-          <div className={"mt-10 mb-10"}>
+          <Form className={"mt-10 mb-10"}>
             {["볼륨", "시간"]?.map((key, index) => (
-              <div key={index} className={"fw-bold mb-10"}>
+              <Form key={index} className={"fw-bold mb-10"}>
                 <Form.Check
                   inline
                   type={"switch"}
@@ -111,9 +111,9 @@ export const DashLineWeek = () => {
                   }}
                 ></Form.Check>
                 <span>{key}</span>
-              </div>
+              </Form>
             ))}
-          </div>
+          </Form>
         </tbody>
       </Table>
     );

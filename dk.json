@@ -1,62 +1,73 @@
-findReal [
+[
   {
-    _id: new ObjectId("6619fae7576eb167c1095218"),
-    sleep_startDt: '2024-04-12',
-    sleep_endDt: '2024-04-12',
-    sleep_night: '02:30',
-    sleep_morning: '04:30',
-    sleep_time: '02:00'
+    "name": "월 04/14",
+    "수입": 100001,
+    "지출": 50000
+  },
+  {
+    "name": "화 04/15",
+    "수입": 2005,
+    "지출": 0
+  },
+  {
+    "name": "수 04/16",
+    "수입": 0,
+    "지출": 0
+  },
+  {
+    "name": "목 04/17",
+    "수입": 567567666,
+    "지출": 11111112312332
+  },
+  {
+    "name": "금 04/18",
+    "수입": 2222,
+    "지출": 2222
+  },
+  {
+    "name": "토 04/19",
+    "수입": 0,
+    "지출": 0
+  },
+  {
+    "name": "일 04/20",
+    "수입": 0,
+    "지출": 0
   }
 ]
-sleepNight 002:30
-sleepMorning 004:30
-sleepTime 2
-findReal [
   {
-    _id: new ObjectId("6619fa8c576eb167c109505e"),
-    sleep_startDt: '2024-04-13',
-    sleep_endDt: '2024-04-13',
-    sleep_night: '04:30',
-    sleep_morning: '06:30',
-    sleep_time: '02:00'
-  }
-]
-sleepNight 004:30
-sleepMorning 006:30
-sleepTime 2
-findReal [
+    "name": "월 04/14",
+    "수입": 100001,
+    "지출": 50000
+  },
   {
-    _id: new ObjectId("661be5e03122b36783df16cc"),
-    sleep_startDt: '2024-04-14',
-    sleep_endDt: '2024-04-14',
-    sleep_night: '22:30',
-    sleep_morning: '04:40',
-    sleep_time: '06:10'
-  }
-]
-sleepNight 022:30
-sleepMorning 004:40
-sleepTime 6.2
-findReal [
+    "name": "화 04/15",
+    "수입": 2005,
+    "지출": 0
+  },
   {
-    _id: new ObjectId("661ab4cbf82769511986db1d"),
-    sleep_startDt: '2024-04-15',
-    sleep_endDt: '2024-04-15',
-    sleep_night: '20:30',
-    sleep_morning: '04:40',
-    sleep_time: '08:10'
-  }
-]
-sleepNight 020:30
-sleepMorning 004:40
-sleepTime 8.2
-findReal [
+    "name": "수 04/16",
+    "수입": 0,
+    "지출": 0
+  },
   {
-    _id: new ObjectId("661ec0594dbabbd743abc647"),
-    sleep_startDt: '2024-04-17',
-    sleep_endDt: '2024-04-17',
-    sleep_night: '19:00',
-    sleep_morning: '12:01',
-    sleep_time: '17:01'
+    "name": "목 04/17",
+    "수입": 567567666,
+    "지출": 11111112312332
+  },
+  {
+    "name": "금 04/18",
+    "수입": 2222,
+    "지출": 2222
+  },
+  {
+    "name": "토 04/19",
+    "수입": 0,
+    "지출": 0
+  },
+  {
+    "name": "일 04/20",
+    "수입": 0,
+    "지출": 0
   }
 ]
