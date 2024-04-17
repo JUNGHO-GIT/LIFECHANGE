@@ -82,6 +82,10 @@ export const SleepList = () => {
   }];
   const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
 
+  useEffect(() => {
+    console.log(JSON.stringify(SLEEP));
+  }, [SLEEP]);
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_SLEEP}/list`, {
@@ -115,8 +119,8 @@ export const SleepList = () => {
         <tbody>
           {SLEEP?.map((item, index) => (
             <React.Fragment key={item._id}>
-              {item.sleep_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={section.sleep_part_idx}>
+              {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
+                <React.Fragment key={item._id}>
                   <tr>
                     {sectionIndex === 0 && (
                       <td rowSpan={item.sleep_section.length > 3 ? 4 : item.sleep_section.length}
