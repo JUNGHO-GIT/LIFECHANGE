@@ -86,7 +86,11 @@ export const DashAvgWeek = () => {
               tickFormatter={tickFormatter}
             />
             <Bar type={"monotone"} dataKey={"칼로리"} fill={"#8884d8"} minPointSize={1} />
-            <Tooltip />
+            <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
             <Legend />
           </BarChart>
         </ResponsiveContainer>
@@ -118,7 +122,11 @@ export const DashAvgWeek = () => {
             {LINE.includes("지방")
               && <Bar type={"monotone"} dataKey={"지방"} fill={"#ff7300"} minPointSize={1} />
             }
-            <Tooltip />
+            <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
             <Legend />
           </BarChart>
         </ResponsiveContainer>

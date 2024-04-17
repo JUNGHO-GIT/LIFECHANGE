@@ -85,7 +85,11 @@ export const DashLineWeek = () => {
             tickFormatter={tickFormatter}
           />
           <Line type={"monotone"} dataKey={"칼로리"} stroke="#8884d8" activeDot={{r: 8}} />
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>
@@ -115,7 +119,11 @@ export const DashLineWeek = () => {
           {LINE.includes("지방")
             && <Line type={"monotone"} dataKey={"지방"} stroke="#ffc658" activeDot={{r: 8}} />
           }
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>

@@ -82,7 +82,11 @@ export const DashLineWeek = () => {
           {LINE.includes("시간")
             && <Line type={"monotone"} dataKey={"시간"} stroke="#82ca9d" />
           }
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
           <Legend />
         </LineChart>
       </ResponsiveContainer>

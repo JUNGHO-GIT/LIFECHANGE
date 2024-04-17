@@ -103,7 +103,11 @@ export const DashPieMonth = () => {
               <Cell key={`cell-${index}`} fill={COLORS_PART[index % COLORS_PART.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );
@@ -135,7 +139,11 @@ export const DashPieMonth = () => {
               <Cell key={`cell-${index}`} fill={COLORS_TITLE[index % COLORS_TITLE.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
         </PieChart>
       </ResponsiveContainer>
     );

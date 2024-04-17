@@ -63,7 +63,11 @@ export const DashAvgMonth = () => {
             {LINE.includes("수면")
               && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
             }
-            <Tooltip />
+            <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
             <Legend />
           </BarChart>
         </ResponsiveContainer>

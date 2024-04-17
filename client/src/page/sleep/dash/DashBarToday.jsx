@@ -55,7 +55,11 @@ export const DashBarToday = () => {
           />
           <Line dataKey={"목표"} type={"monotone"} stroke="#ff7300" />
           <Bar dataKey={"실제"} type={"monotone"} fill={"#8884d8"} barSize={30} />
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>

@@ -78,7 +78,11 @@ export const DashScatterWeek = () => {
           />
           <Scatter name={"목표"} dataKey={"목표"} fill={"#8884d8"} />
           <Scatter name={"실제"} dataKey={"실제"} fill={"#82ca9d"} />
-          <Tooltip />
+          <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
           <Legend />
         </ComposedChart>
       </ResponsiveContainer>

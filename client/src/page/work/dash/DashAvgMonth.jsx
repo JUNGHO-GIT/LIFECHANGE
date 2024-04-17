@@ -83,7 +83,11 @@ export const DashAvgMonth = () => {
               tickFormatter={tickFormatter}
             />
             <Bar type={"monotone"} dataKey={"볼륨"} fill={"#82ca9d"} minPointSize={1} />
-            <Tooltip />
+            <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
             <Legend />
           </BarChart>
         </ResponsiveContainer>
@@ -107,7 +111,11 @@ export const DashAvgMonth = () => {
               tickFormatter={tickFormatter}
             />
             <Bar type={"monotone"} dataKey={"시간"} fill={"#ffc658"} minPointSize={1} />
-            <Tooltip />
+            <Tooltip
+            formatter={(value) => {
+              return `${Number(value).toLocaleString()}`;
+            }}
+          />
             <Legend />
           </BarChart>
         </ResponsiveContainer>
