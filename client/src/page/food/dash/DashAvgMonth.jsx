@@ -178,6 +178,7 @@ export const DashAvgMonth = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={9}>
+              <FormLabel className={"fs-20"}>월간 칼로리 / 영양소 평균</FormLabel>
               {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
             </Col>
             <Col xs={3}>

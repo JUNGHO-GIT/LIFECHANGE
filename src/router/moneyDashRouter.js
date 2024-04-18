@@ -36,7 +36,7 @@ moneyDashRouter.get("/bar/today", async (req, res) => {
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
 moneyDashRouter.get("/pie/today", async (req, res) => {
   try {
-    const result = await service.pieWeek (
+    const result = await service.pieToday (
       req.query.user_id
     );
     if (result) {

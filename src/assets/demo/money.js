@@ -51,27 +51,20 @@ const moneyArray = [
 // result ----------------------------------------------------------------------------------------->
 let demoData = [];
 for (let i = 1; i <= 100; i++) {
-  const startDate = randomDate(new Date(2024, 0, 1), new Date(2024, 11, 31));
+  const startDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
   const endDate = new Date(startDate.getTime() + Math.random() * 36000000);
-  const regDate = randomDate(new Date(2024, 0, 1), new Date(2024, 11, 31));
+  const regDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
   const updateDate = new Date(regDate.getTime() + Math.random() * 36000000);
 
   const partIndex = randomNumber(moneyArray.length - 1) + 1;
   const part = moneyArray[partIndex];
-  const titleIndex = randomNumber(part.money_title.length);
+  const titleIndex = randomNumber(3);
   const title = part.money_title[titleIndex];
 
-  const record = {
-    _id: new ObjectId(),
-    user_id: "123",
-    money_number: i + 100,
-    money_startDt: formatDate1(startDate),
-    money_endDt: formatDate1(endDate),
-
-    money_total_in: randomNumber(100000),
-    money_total_out: randomNumber(100000),
-
-    money_section: [{
+  let sections = [];
+  const sectionCount = randomNumber(5) + 1;
+  for (let j = 0; j < sectionCount; j++) {
+    sections.push({
       _id: new ObjectId(),
       money_part_idx: partIndex,
       money_part_val: part.money_part,
@@ -79,7 +72,20 @@ for (let i = 1; i <= 100; i++) {
       money_title_val: title,
       money_amount: randomNumber(100000),
       money_content: "content",
-    }],
+    });
+  }
+
+  const record = {
+    _id: new ObjectId(),
+    user_id: "123",
+    money_number: i + 200,
+    money_startDt: formatDate1(startDate),
+    money_endDt: formatDate1(endDate),
+
+    money_total_in: randomNumber(100000),
+    money_total_out: randomNumber(100000),
+
+    money_section: sections,
 
     money_regDt: formatDate2(regDate),
     money_updateDt: formatDate2(updateDate),

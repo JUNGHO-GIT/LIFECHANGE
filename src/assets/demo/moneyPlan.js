@@ -30,9 +30,9 @@ const calcDate = (startTime, endTime) => {
 // result ----------------------------------------------------------------------------------------->
 let demoData = [];
 for (let i = 1; i <= 100; i++) {
-  const startDate = randomDate(new Date(2024, 0, 1), new Date(2024, 11, 31));
+  const startDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
   const endDate = new Date(startDate.getTime() + Math.random() * 36000000);
-  const regDate = randomDate(new Date(2024, 0, 1), new Date(2024, 11, 31));
+  const regDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
   const updateDate = new Date(regDate.getTime() + Math.random() * 36000000);
 
   const record = {

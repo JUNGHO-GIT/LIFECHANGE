@@ -95,15 +95,33 @@ const workArray = [
 // result ----------------------------------------------------------------------------------------->
 let demoData = [];
 for (let i = 1; i <= 100; i++) {
-  const startDate = randomDate(new Date(2024, 0, 1), new Date(2024, 11, 31));
+  const startDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
   const endDate = new Date(startDate.getTime() + Math.random() * 36000000);
-  const regDate = randomDate(new Date(2024, 0, 1), new Date(2024, 11, 31));
+  const regDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
   const updateDate = new Date(regDate.getTime() + Math.random() * 36000000);
 
   const partIndex = randomNumber(workArray.length - 1) + 1;
   const part = workArray[partIndex];
   const titleIndex = randomNumber(part.work_title.length);
   const title = part.work_title[titleIndex];
+
+  let sections = [];
+  const sectionCount = randomNumber(5) + 1;
+  for (let j = 0; j < sectionCount; j++) {
+    sections.push({
+      _id: new ObjectId(),
+      work_part_idx: partIndex,
+      work_part_val: part.work_part,
+      work_title_idx: titleIndex,
+      work_title_val: title,
+      work_set: randomNumber(10),
+      work_rep: randomNumber(10),
+      work_kg: randomNumber(100),
+      work_rest: randomNumber(100),
+      work_volume: randomNumber(1000),
+      work_cardio: randomTime(),
+    });
+  }
 
   const record = {
     _id: new ObjectId(),
@@ -120,19 +138,7 @@ for (let i = 1; i <= 100; i++) {
     work_total_cardio: randomTime(),
     work_body_weight: randomNumber(100),
 
-    work_section: [{
-      _id: new ObjectId(),
-      work_part_idx: partIndex,
-      work_part_val: part.work_part,
-      work_title_idx: titleIndex,
-      work_title_val: title,
-      work_set: randomNumber(10),
-      work_rep: randomNumber(10),
-      work_kg: randomNumber(100),
-      work_rest: randomNumber(100),
-      work_volume: randomNumber(1000),
-      work_cardio: randomTime(),
-    }],
+    work_section: sections,
 
     work_regDt: formatDate2(regDate),
     work_updateDt: formatDate2(updateDate),

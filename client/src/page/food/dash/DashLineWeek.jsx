@@ -173,12 +173,13 @@ export const DashLineWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={9}>
-              {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
-            </Col>
-            <Col xs={3}>
-              {tableNode()}
-            </Col>
+              <Col xs={9}>
+                <FormLabel className={"fs-20"}>주간 칼로리 / 영양소</FormLabel>
+                {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
+              </Col>
+              <Col xs={3}>
+                {tableNode()}
+              </Col>
             </Row>
           </Container>
         </Card>

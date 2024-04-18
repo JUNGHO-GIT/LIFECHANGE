@@ -157,12 +157,14 @@ export const DashPieMonth = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={6}>
-              {chartNodeKcal()}
-            </Col>
-            <Col xs={6}>
-              {chartNodeNut()}
-            </Col>
+              <Col xs={6}>
+                <FormLabel className={"fs-20"}>월간 칼로리</FormLabel>
+                {chartNodeKcal()}
+              </Col>
+              <Col xs={6}>
+                <FormLabel className={"fs-20"}>월간 영양소</FormLabel>
+                {chartNodeNut()}
+              </Col>
             </Row>
           </Container>
         </Card>

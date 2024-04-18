@@ -39,13 +39,13 @@ export const barToday = async (
   return finalResult
 };
 
-// 2-1. dash (pie - week) ------------------------------------------------------------------------->
-export const pieWeek = async (
+// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+export const pieToday = async (
   user_id_param
 ) => {
 
   // in
-  const findResultIn = await repository.pieWeek.findIn(
+  const findResultIn = await repository.pieToday.findIn(
     user_id_param, koreanDate, koreanDate
   );
   const finalResultIn = findResultIn?.map((item) => ({
@@ -54,7 +54,7 @@ export const pieWeek = async (
   }));
 
   // out
-  const findResultOut = await repository.pieWeek.findOut(
+  const findResultOut = await repository.pieToday.findOut(
     user_id_param, koreanDate, koreanDate
   );
   const finalResultOut = findResultOut?.map((item) => ({
@@ -68,7 +68,36 @@ export const pieWeek = async (
   };
 };
 
-// 2-2. dash (pie - month) ------------------------------------------------------------------------>
+// 2-2. dash (pie - week) ------------------------------------------------------------------------->
+export const pieWeek = async (
+  user_id_param
+) => {
+
+  // in
+  const findResultIn = await repository.pieWeek.findIn(
+    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  );
+  const finalResultIn = findResultIn?.map((item) => ({
+    name: item._id,
+    value: intFormat(item.value)
+  }));
+
+  // out
+  const findResultOut = await repository.pieWeek.findOut(
+    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  );
+  const finalResultOut = findResultOut?.map((item) => ({
+    name: item._id,
+    value: intFormat(item.value)
+  }));
+
+  return {
+    in: finalResultIn,
+    out: finalResultOut
+  };
+};
+
+// 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = async (
   user_id_param
 ) => {
@@ -77,7 +106,6 @@ export const pieMonth = async (
   const findResultIn = await repository.pieMonth.findIn(
     user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
-
   const finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
@@ -87,7 +115,6 @@ export const pieMonth = async (
   const findResultOut = await repository.pieMonth.findOut(
     user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
-
   const finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)

@@ -51,8 +51,8 @@ export const barToday = {
   }
 };
 
-// 2-1. dash (pie - week) ------------------------------------------------------------------------->
-export const pieWeek = {
+// 2-1. dash (pie - today) ------------------------------------------------------------------------>
+export const pieToday = {
   findIn: async (
     user_id_param,
     startDt_param,
@@ -83,7 +83,7 @@ export const pieWeek = {
         }
       }},
       {$sort: {value: -1}},
-      {$limit: 5}
+      {$limit: 10}
     ]);
 
     return finalResult;
@@ -125,7 +125,81 @@ export const pieWeek = {
   }
 };
 
-// 2-2. dash (pie - month) ------------------------------------------------------------------------>
+// 2-2. dash (pie - week) ------------------------------------------------------------------------->
+export const pieWeek = {
+  findIn: async (
+    user_id_param,
+    startDt_param,
+    endDt_param
+  ) => {
+
+    const finalResult = await Money.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param
+        },
+      }},
+      {$unwind: "$money_section"
+      },
+      {$match: {
+        "money_section.money_part_val": "수입"
+      }},
+      {$group: {
+        _id: "$money_section.money_title_val",
+        value: {
+          $sum: "$money_section.money_amount"
+        }
+      }},
+      {$sort: {value: -1}},
+      {$limit: 10}
+    ]);
+
+    return finalResult;
+  },
+  findOut: async (
+    user_id_param,
+    startDt_param,
+    endDt_param
+  ) => {
+
+    const finalResult = await Money.aggregate([
+      {$match: {
+        user_id: user_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param
+        },
+      }},
+      {$unwind: "$money_section"
+      },
+      {$match: {
+        "money_section.money_part_val": "지출"
+      }},
+      {$group: {
+        _id: "$money_section.money_title_val",
+        value: {
+          $sum: "$money_section.money_amount"
+        }
+      }},
+      {$sort: {value: -1}},
+      {$limit: 10}
+    ]);
+
+    return finalResult;
+  }
+};
+
+// 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = {
   findIn: async (
     user_id_param,
@@ -157,7 +231,7 @@ export const pieMonth = {
         }
       }},
       {$sort: {value: -1}},
-      {$limit: 5}
+      {$limit: 10}
     ]);
 
     return finalResult;
