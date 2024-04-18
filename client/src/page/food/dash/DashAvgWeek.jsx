@@ -175,7 +175,7 @@ export const DashAvgWeek = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
             <Col xs={9}>
               {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}

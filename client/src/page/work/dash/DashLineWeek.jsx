@@ -126,7 +126,7 @@ export const DashLineWeek = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
             <Col xs={9}>
               <FormLabel className={"fs-20"}>주간 총볼륨 / 유산소시간</FormLabel>

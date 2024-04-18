@@ -114,7 +114,7 @@ export const UserSignup = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"row d-center mt-5"}>
               <Col xs={12}>
                 {tableUserSave()}

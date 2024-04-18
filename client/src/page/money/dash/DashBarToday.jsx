@@ -97,7 +97,7 @@ export const DashBarToday = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
             <Col xs={12}>
               <FormLabel className={"fs-20"}>오늘 지출 / 수입 실제 / 목표</FormLabel>

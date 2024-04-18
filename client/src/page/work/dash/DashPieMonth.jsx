@@ -154,7 +154,7 @@ export const DashPieMonth = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
             <Col xs={6}>
               <FormLabel className={"fs-20"}>월간 상위 5개 부위 / 운동</FormLabel>

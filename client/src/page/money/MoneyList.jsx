@@ -196,7 +196,7 @@ export const MoneyList = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
               <Col xs={12} className={"mb-20"}>
                 <h1>List</h1>

@@ -144,7 +144,7 @@ export const DashAvgMonth = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
             <Col xs={9}>
               <FormLabel className={"fs-20"}>월간 볼륨 / 유산소시간 평균</FormLabel>

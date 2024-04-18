@@ -17,7 +17,7 @@ export const Header = () => {
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [isSidebar, setIsSidebar] = useState(false);
+  const [isSidebar, setIsSidebar] = useState(true);
 
   // 4. toggle ------------------------------------------------------------------------------------>
   const toggleSidebar = () => {

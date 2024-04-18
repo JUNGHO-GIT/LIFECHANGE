@@ -29,24 +29,18 @@ textarea.form-control {
 }
 .input-group {
   margin-bottom: 10px !important;
-}
+}/*
 .button {
   padding: 4px 7px 2px 7px !important;
   height: -webkit-fill-available !important;
   width: -webkit-fill-available !important;
-}
+} */
 
 /**************************************************************************************************/
 ::-webkit-scrollbar {
   width: 0 !important;
   display: none !important;
   -ms-overflow-style: none !important;
-}
-::-webkit-scrollbar-thumb {
-  display: none !important;
-}
-::-webkit-scrollbar-track {
-  display: none !important;
 }
 
 /**************************************************************************************************/

@@ -71,7 +71,7 @@ export const DashBarToday = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
             <Col xs={12}>
               <FormLabel className={"fs-20"}>오늘 수면 목표 / 실제</FormLabel>

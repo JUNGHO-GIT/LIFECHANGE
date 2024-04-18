@@ -94,7 +94,7 @@ export const DashScatterMonth = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
             <Col xs={12}>
               <FormLabel className={"fs-20"}>월간 몸무게 목표 / 실제</FormLabel>

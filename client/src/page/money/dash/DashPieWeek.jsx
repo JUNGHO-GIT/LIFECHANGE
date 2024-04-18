@@ -154,16 +154,16 @@ export const DashPieWeek = () => {
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
-          <Container fluid className={"d-flex"}>
+          <Container>
             <Row className={"d-center"}>
-            <Col xs={6}>
-              <FormLabel className={"fs-20"}>주간 수입 항목별 비율</FormLabel>
-              {chartNodeIn()}
-            </Col>
-            <Col xs={6}>
-              <FormLabel className={"fs-20"}>주간 지출 항목별 비율</FormLabel>
-              {chartNodeOut()}
-            </Col>
+              <Col xs={6}>
+                <FormLabel className={"fs-20"}>주간 수입 항목별 비율</FormLabel>
+                {chartNodeIn()}
+              </Col>
+              <Col xs={6}>
+                <FormLabel className={"fs-20"}>주간 지출 항목별 비율</FormLabel>
+                {chartNodeOut()}
+              </Col>
             </Row>
           </Container>
         </Card>
