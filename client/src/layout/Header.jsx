@@ -6,7 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -89,7 +89,7 @@ export const Header = () => {
     };
 
     return (
-      <Form className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
+      <FormGroup className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
         <Form className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
           <h3 className={"ps-20"}>Changer</h3>
           <p className={"pt-10 pe-10"} onClick={() => setIsSidebar(!isSidebar)}>X</p>
@@ -101,7 +101,7 @@ export const Header = () => {
             ))}
           </ul>
         </Form>
-      </Form>
+      </FormGroup>
     );
   };
 
@@ -128,14 +128,14 @@ export const Header = () => {
     };
 
     return (
-      <Form className={"d-flex justify-content-between align-items-center"}>
+      <FormGroup className={"d-flex justify-content-between align-items-center"}>
         <Form className={"text-start"}>
           <h1 className={"fs-30 fw-500 ps-30"}>{preFix} / {subFix}</h1>
         </Form>
         <Form className={"text-end d-flex"}>
           {buttonClear()}
         </Form>
-      </Form>
+      </FormGroup>
     );
   };
 
@@ -153,7 +153,7 @@ export const Header = () => {
     };
     function btnLogIn () {
       return (
-        <Button variant={""} size={"sm"} className={"me-5"} onClick={() => {
+        <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
           navParam("/user/login");
         }}>
           Login
@@ -162,7 +162,7 @@ export const Header = () => {
     };
     function btnSignUp () {
       return (
-        <Button variant={""} size={"sm"} className={"me-2"} onClick={() => {
+        <Button variant={"secondary"} size={"sm"} className={"me-2"} onClick={() => {
           navParam("/user/signup");
         }}>
           Signup
@@ -171,7 +171,7 @@ export const Header = () => {
     };
     function btnLogOut () {
       return (
-        <Button variant={""} size={"sm"} className={"me-5"} onClick={() => {
+        <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
           sessionStorage.setItem("user_id", "false");
           window.location.reload();
         }}>
@@ -197,7 +197,7 @@ export const Header = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup>
+    <React.Fragment>
       <Container fluid className={"container-wrapper"}>
         <Row className={"row d-center pt-15 pb-15"}>
           <Col xs={1}>
@@ -224,6 +224,6 @@ export const Header = () => {
           </Row>
         </Container>
       </Form>
-    </FormGroup>
+    </React.Fragment>
   );
 };

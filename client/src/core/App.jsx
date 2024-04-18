@@ -64,96 +64,110 @@ import {WorkSave} from "../page/work/WorkSave.jsx";
 // ------------------------------------------------------------------------------------------------>
 const Common = () => {
   return (
-    <Routes>{/*
-      <Route path="/" element={<Dash />} /> */}
-    </Routes>
+    <React.Fragment>
+      <Routes>
+        {/* <Route path="/" element={<Dash />} /> */}
+      </Routes>
+    </React.Fragment>
   );
 };
 // ------------------------------------------------------------------------------------------------>
 const Food = () => {
   return (
-    <Routes>
-      <Route path="/plan/list" element={<FoodPlanList />} />
-      <Route path="/plan/detail" element={<FoodPlanDetail />} />
-      <Route path="/plan/save" element={<FoodPlanSave />} />
-      <Route path="/dash" element={<FoodDash />} />
-      <Route path="/search" element={<FoodSearch />} />
-      <Route path="/list" element={<FoodList />} />
-      <Route path="/detail" element={<FoodDetail />} />
-      <Route path="/save" element={<FoodSave />} />
-    </Routes>
+    <React.Fragment>
+      <Routes>
+        <Route path="/plan/list" element={<FoodPlanList />} />
+        <Route path="/plan/detail" element={<FoodPlanDetail />} />
+        <Route path="/plan/save" element={<FoodPlanSave />} />
+        <Route path="/dash" element={<FoodDash />} />
+        <Route path="/search" element={<FoodSearch />} />
+        <Route path="/list" element={<FoodList />} />
+        <Route path="/detail" element={<FoodDetail />} />
+        <Route path="/save" element={<FoodSave />} />
+      </Routes>
+    </React.Fragment>
   );
 };
 // ------------------------------------------------------------------------------------------------>
 const Money = () => {
   return (
-    <Routes>
-      <Route path="/plan/list" element={<MoneyPlanList />} />
-      <Route path="/plan/detail" element={<MoneyPlanDetail />} />
-      <Route path="/plan/save" element={<MoneyPlanSave />} />
-      <Route path="/dash" element={<MoneyDash />} />
-      <Route path="/list" element={<MoneyList />} />
-      <Route path="/detail" element={<MoneyDetail />} />
-      <Route path="/save" element={<MoneySave />} />
-    </Routes>
+    <React.Fragment>
+      <Routes>
+        <Route path="/plan/list" element={<MoneyPlanList />} />
+        <Route path="/plan/detail" element={<MoneyPlanDetail />} />
+        <Route path="/plan/save" element={<MoneyPlanSave />} />
+        <Route path="/dash" element={<MoneyDash />} />
+        <Route path="/list" element={<MoneyList />} />
+        <Route path="/detail" element={<MoneyDetail />} />
+        <Route path="/save" element={<MoneySave />} />
+      </Routes>
+    </React.Fragment>
   );
 };
 // ------------------------------------------------------------------------------------------------>
 const Sleep = () => {
   return (
-    <Routes>
-      <Route path="/plan/list" element={<SleepPlanList />} />
-      <Route path="/plan/detail" element={<SleepPlanDetail />} />
-      <Route path="/plan/save" element={<SleepPlanSave />} />
-      <Route path="/dash" element={<SleepDash />} />
-      <Route path="/list" element={<SleepList />} />
-      <Route path="/detail" element={<SleepDetail />} />
-      <Route path="/save" element={<SleepSave />} />
-    </Routes>
+    <React.Fragment>
+      <Routes>
+        <Route path="/plan/list" element={<SleepPlanList />} />
+        <Route path="/plan/detail" element={<SleepPlanDetail />} />
+        <Route path="/plan/save" element={<SleepPlanSave />} />
+        <Route path="/dash" element={<SleepDash />} />
+        <Route path="/list" element={<SleepList />} />
+        <Route path="/detail" element={<SleepDetail />} />
+        <Route path="/save" element={<SleepSave />} />
+      </Routes>
+    </React.Fragment>
   );
 };
 // ------------------------------------------------------------------------------------------------>
 const User = () => {
   return (
-    <Routes>
-      <Route path="/signup" element={<UserSignup />} />
-      <Route path="/login" element={<UserLogin />} />
-      <Route path="/dataset" element={<UserDataset />} />
-    </Routes>
+    <React.Fragment>
+      <Routes>
+        <Route path="/signup" element={<UserSignup />} />
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/dataset" element={<UserDataset />} />
+      </Routes>
+    </React.Fragment>
   );
 };
 // ------------------------------------------------------------------------------------------------>
 const Work = () => {
   return (
-    <Routes>
-      <Route path="/plan/list" element={<WorkPlanList />} />
-      <Route path="/plan/detail" element={<WorkPlanDetail />} />
-      <Route path="/plan/save" element={<WorkPlanSave />} />
-      <Route path="/dash" element={<WorkDash />} />
-      <Route path="/list" element={<WorkList />} />
-      <Route path="/detail" element={<WorkDetail />} />
-      <Route path="/save" element={<WorkSave />} />
-    </Routes>
+    <React.Fragment>
+      <Routes>
+        <Route path="/plan/list" element={<WorkPlanList />} />
+        <Route path="/plan/detail" element={<WorkPlanDetail />} />
+        <Route path="/plan/save" element={<WorkPlanSave />} />
+        <Route path="/dash" element={<WorkDash />} />
+        <Route path="/list" element={<WorkList />} />
+        <Route path="/detail" element={<WorkDetail />} />
+        <Route path="/save" element={<WorkSave />} />
+      </Routes>
+    </React.Fragment>
   );
 };
 
 // ------------------------------------------------------------------------------------------------>
 export const App = () => {
   return (
-    <div className={"App"}>
-      <DeveloperModeProvider>
-        <Loader />
-        <Header />
-        <Routes>
-          <Route path="/*" element={<Common />} />
-          <Route path="/food/*" element={<Food />} />
-          <Route path="/money/*" element={<Money />} />
-          <Route path="/sleep/*" element={<Sleep />} />
-          <Route path="/user/*" element={<User />} />
-          <Route path="/work/*" element={<Work />} />
-        </Routes>
-        <Footer />
-      </DeveloperModeProvider>
-    </div>
+    <React.Fragment>
+      <div className={"App"}>
+        <DeveloperModeProvider>
+          <Loader />
+          <Header />
+          <Routes>
+            <Route path="/*" element={<Common />} />
+            <Route path="/food/*" element={<Food />} />
+            <Route path="/money/*" element={<Money />} />
+            <Route path="/sleep/*" element={<Sleep />} />
+            <Route path="/user/*" element={<User />} />
+            <Route path="/work/*" element={<Work />} />
+          </Routes>
+          <Footer />
+        </DeveloperModeProvider>
+      </div>
+    </React.Fragment>
   );
 };

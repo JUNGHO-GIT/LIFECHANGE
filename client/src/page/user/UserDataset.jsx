@@ -8,7 +8,7 @@ import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 import {workArray} from "../../assets/data/WorkArray.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
@@ -240,8 +240,9 @@ export const UserDataset = () => {
       };
     };
     return (
-      <Table hover responsive variant={"light"}>
-        <thead className={"table-primary"}>
+      <React.Fragment>
+        <Table hover responsive variant={"light"}>
+          <thead className={"table-primary"}>
           <tr>
             <th colSpan={2} className={"pointer"} onClick={() => setDataType("food")}>
               food
@@ -315,14 +316,15 @@ export const UserDataset = () => {
             </td>
           </tr>
         </tbody>
-      </Table>
+        </Table>
+      </React.Fragment>
     );
   };
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
+        <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
         part={"user"} plan={""} type={"save"}
       />
@@ -331,26 +333,28 @@ export const UserDataset = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"d-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <h1>List</h1>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"}
-              onClick={() => (handlerSetDefault())}>
-                기본값
-            </Button>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {tableNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {buttonNode()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={12} className={"mb-20"}>
+              <h1>List</h1>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"}
+                onClick={() => (handlerSetDefault())}>
+                  기본값
+              </Button>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {tableNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

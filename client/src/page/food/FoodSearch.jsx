@@ -7,7 +7,7 @@ import InputMask from "react-input-mask";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
@@ -127,8 +127,9 @@ export const FoodSearch = () => {
       });
     };
     return (
-      <Table hover responsive variant={"light"}>
-        <thead className={"table-primary"}>
+      <React.Fragment>
+        <Table hover responsive variant={"light"}>
+          <thead className={"table-primary"}>
           <tr>
             <th>Title</th>
             <th>Brand</th>
@@ -158,7 +159,8 @@ export const FoodSearch = () => {
             </tr>
           ))}
         </tbody>
-      </Table>
+        </Table>
+      </React.Fragment>
     );
   };
 
@@ -204,23 +206,25 @@ export const FoodSearch = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"d-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <h1>Search</h1>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {tableNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {searchFood()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {pagingNode()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={12} className={"mb-20"}>
+              <h1>Search</h1>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {tableNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {searchFood()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {pagingNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

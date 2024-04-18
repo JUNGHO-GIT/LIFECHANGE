@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -70,37 +70,43 @@ export const UserLogin = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonUserLogin = () => {
     return (
-      <Button variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowUserLogin}>
+      <React.Fragment>
+        <Button variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowUserLogin}>
         Log In
       </Button>
+      </React.Fragment>
     );
   };
   const buttonRefreshPage = () => {
     return (
-      <Button variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
+      <React.Fragment>
+        <Button variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
       </Button>
+      </React.Fragment>
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"d-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <h1>Login</h1>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {tableUserLogin()}
-            <br/>
-            {buttonUserLogin()}
-            {buttonRefreshPage()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={12} className={"mb-20"}>
+              <h1>Login</h1>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {tableUserLogin()}
+              <br/>
+              {buttonUserLogin()}
+              {buttonRefreshPage()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

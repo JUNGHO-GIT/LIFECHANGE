@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Form, Table, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashLineMonth = () => {
@@ -96,42 +96,51 @@ export const DashLineMonth = () => {
   // 5-3. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <Table hover responsive variant={"light"}>
-        <tbody>
-          <Form className={"mt-10 mb-10"}>
-            {["볼륨", "시간"]?.map((key, index) => (
-              <Form key={index} className={"fw-bold mb-10"}>
-                <Form.Check
-                  inline
-                  type={"switch"}
-                  checked={LINE.includes(key)}
-                  onChange={() => {
-                    if (LINE.includes(key)) {
-                      setLINE(LINE?.filter((item) => (item !== key)));
-                    }
-                    else {
-                      setLINE([...LINE, key]);
-                    }
-                  }}
-                ></Form.Check>
-                <span>{key}</span>
-              </Form>
-            ))}
-          </Form>
-        </tbody>
-      </Table>
+      <React.Fragment>
+        <Table hover responsive variant={"light"}>
+          <tbody>
+            <Form className={"mt-10 mb-10"}>
+              {["볼륨", "시간"]?.map((key, index) => (
+                <Form key={index} className={"fw-bold mb-10"}>
+                  <Form.Check
+                    inline
+                    type={"switch"}
+                    checked={LINE.includes(key)}
+                    onChange={() => {
+                      if (LINE.includes(key)) {
+                        setLINE(LINE?.filter((item) => (item !== key)));
+                      }
+                      else {
+                        setLINE([...LINE, key]);
+                      }
+                    }}
+                  ></Form.Check>
+                  <span>{key}</span>
+                </Form>
+              ))}
+            </Form>
+          </tbody>
+        </Table>
+      </React.Fragment>
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <Row className={"d-center"}>
-      <Col xs={9}>
-        {chartNode()}
-      </Col>
-      <Col xs={3}>
-        {tableNode()}
-      </Col>
-    </Row>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={9}>
+              <FormLabel className={"fs-20"}>월간 총볼륨 / 유산소시간</FormLabel>
+              {chartNode()}
+            </Col>
+            <Col xs={3}>
+              {tableNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

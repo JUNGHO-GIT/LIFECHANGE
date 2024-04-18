@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieMonth = () => {
@@ -151,13 +151,21 @@ export const DashPieMonth = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <Row className={"d-center"}>
-      <Col xs={6}>
-        {chartNodePart()}
-      </Col>
-      <Col xs={6}>
-        {chartNodeTitle()}
-      </Col>
-    </Row>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={6}>
+              <FormLabel className={"fs-20"}>월간 상위 5개 부위 / 운동</FormLabel>
+              {chartNodePart()}
+            </Col>
+            <Col xs={6}>
+              <FormLabel className={"fs-20"}>월간 상위 5개 부위 / 운동</FormLabel>
+              {chartNodeTitle()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

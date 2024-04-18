@@ -6,7 +6,7 @@ import moment from "moment-timezone";
 import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
 
 // 4. calendar ------------------------------------------------------------------------------------>
 export const CalendarNode = ({
@@ -232,22 +232,24 @@ export const CalendarNode = ({
   };
 
   return (
-    <Draggable>
-      <Form className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
-        <span className={"d-right fw-700 pointer"}
-          style={{position: "absolute", right: "15px", top: "10px"}}
-          onClick={() => (
-            setCALENDAR((prev) => ({
-              ...prev,
-              calOpen: false
-            }))
-          )}
-        >
-          X
-        </span>
-        <Form className={"h-2"}></Form>
-        <Form>{calendarType()}</Form>
-      </Form>
-    </Draggable>
+    <React.Fragment>
+      <Draggable>
+        <Form className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
+          <span className={"d-right fw-700 pointer"}
+            style={{position: "absolute", right: "15px", top: "10px"}}
+            onClick={() => (
+              setCALENDAR((prev) => ({
+                ...prev,
+                calOpen: false
+              }))
+            )}
+          >
+            X
+          </span>
+          <Form className={"h-2"}></Form>
+          <Form>{calendarType()}</Form>
+        </Form>
+      </Draggable>
+    </React.Fragment>
   );
 };

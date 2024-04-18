@@ -1,7 +1,7 @@
 // FilterNode.jsx
 
 import React from "react";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({
@@ -12,7 +12,7 @@ export const FilterNode = ({
   const defaultNode = () => {
     function selectType() {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-select"} id={"type"} onChange={(e) => (
             setFILTER((prev) => ({
               ...prev,
@@ -25,12 +25,12 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     function selectOrder() {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-select"} id={"order"} onChange={(e) => (
             setFILTER((prev) => ({
               ...prev,
@@ -40,12 +40,12 @@ export const FilterNode = ({
             <option value="asc" selected>오름차순</option>
             <option value="desc">내림차순</option>
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     function selectLimit() {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-select"} id={"limit"} onChange={(e) => (
             setPAGING((prev) => ({
               ...prev,
@@ -59,7 +59,7 @@ export const FilterNode = ({
             <option value="5" selected>5</option>
             <option value="10">10</option>
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     return (
@@ -77,7 +77,7 @@ export const FilterNode = ({
     const foodArray = JSON.parse(session).food;
     function selectPartFood () {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-control"} id={"part"} value={foodArray[FILTER.partIdx].money_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
@@ -97,7 +97,7 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     return (
@@ -113,7 +113,7 @@ export const FilterNode = ({
     const moneyArray = JSON.parse(session).money;
     function selectPartMoney () {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-control"} id={"part"} value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
@@ -133,12 +133,12 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     function selectTitleMoney () {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
             setFILTER((prev) => ({
               ...prev,
@@ -151,7 +151,7 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     return (
@@ -168,7 +168,7 @@ export const FilterNode = ({
     const workArray = JSON.parse(session).work;
     function selectPartWork () {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-control"} id={"part"} value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
@@ -188,12 +188,12 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     function selectTitleWork () {
       return (
-        <FormGroup className={"mb-3"}>
+        <React.Fragment>
           <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
             setFILTER((prev) => ({
               ...prev,
@@ -206,7 +206,7 @@ export const FilterNode = ({
               </option>
             ))}
           </select>
-        </FormGroup>
+        </React.Fragment>
       );
     };
     return (
@@ -219,41 +219,43 @@ export const FilterNode = ({
 
   // 5. return
   return (
-    part === "food" && plan === "" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-        {foodNode()}
-      </FormGroup>
-    ) : part === "food" && plan === "plan" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-      </FormGroup>
-    ) : part === "money" && plan === "" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-        {moneyNode()}
-      </FormGroup>
-    ) : part === "money" && plan === "plan" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-      </FormGroup>
-    ) : part === "sleep" && plan === "" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-      </FormGroup>
-    ) : part === "sleep" && plan === "plan" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-      </FormGroup>
-    ) : part === "work" && plan === "" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-        {workNode()}
-      </FormGroup>
-    ) : part === "work" && plan === "plan" ? (
-      <FormGroup className={"d-inline-flex"}>
-        {defaultNode()}
-      </FormGroup>
-    ) : null
+    <React.Fragment>
+      {part === "food" && plan === "" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+          {foodNode()}
+        </ButtonGroup>
+      ) : part === "food" && plan === "plan" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+        </ButtonGroup>
+      ) : part === "money" && plan === "" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+          {moneyNode()}
+        </ButtonGroup>
+      ) : part === "money" && plan === "plan" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+        </ButtonGroup>
+      ) : part === "sleep" && plan === "" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+        </ButtonGroup>
+      ) : part === "sleep" && plan === "plan" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+        </ButtonGroup>
+      ) : part === "work" && plan === "" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+          {workNode()}
+        </ButtonGroup>
+      ) : part === "work" && plan === "plan" ? (
+        <ButtonGroup className={"d-inline-flex"}>
+          {defaultNode()}
+        </ButtonGroup>
+      ) : null}
+    </React.Fragment>
   );
 };

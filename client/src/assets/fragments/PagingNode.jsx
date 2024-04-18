@@ -1,7 +1,7 @@
 // PagingNode.jsx
 
 import React from "react";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col, Collapse} from "react-bootstrap";
+import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
 
 // 7. paging -------------------------------------------------------------------------------------->
 export const PagingNode = ({
@@ -17,7 +17,8 @@ export const PagingNode = ({
   // prev
   function btnPrev() {
     return (
-      <Button size={"sm"} variant={"primary"} className={"me-5"} disabled={PAGING.page <= 1}
+      <React.Fragment>
+        <Button size={"sm"} variant={"primary"} className={"me-5"} disabled={PAGING.page <= 1}
         onClick={() => (
           setPAGING((prev) => ({
             ...prev,
@@ -26,6 +27,7 @@ export const PagingNode = ({
         ))}>
           <i className={"bi bi-chevron-left"}></i>
       </Button>
+      </React.Fragment>
     );
   };
 
@@ -50,23 +52,27 @@ export const PagingNode = ({
   // next
   function btnNext() {
     return (
-      <Button size={"sm"} variant={"primary"} className={"ms-5"} disabled={PAGING.page >= totalPages}
-        onClick={() => (
-          setPAGING((prev) => ({
-            ...prev,
-            page: Math.min(totalPages, PAGING.page + 1)
-          })
-        ))}>
-          <i className={"bi bi-chevron-right"}></i>
-      </Button>
+      <React.Fragment>
+        <Button size={"sm"} variant={"primary"} className={"ms-5"} disabled={PAGING.page >= totalPages}
+          onClick={() => (
+            setPAGING((prev) => ({
+              ...prev,
+              page: Math.min(totalPages, PAGING.page + 1)
+            })
+          ))}>
+            <i className={"bi bi-chevron-right"}></i>
+        </Button>
+      </React.Fragment>
     );
   };
 
   return (
-    <FormGroup className={"d-inline-flex"}>
-      {btnPrev()}
-      {btnNumber()}
-      {btnNext()}
-    </FormGroup>
+    <React.Fragment>
+      <FormGroup className={"d-inline-flex"}>
+        {btnPrev()}
+        {btnNumber()}
+        {btnNext()}
+      </FormGroup>
+    </React.Fragment>
   );
 };

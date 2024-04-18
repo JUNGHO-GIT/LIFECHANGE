@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -78,8 +78,9 @@ export const DashAvgWeek = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <Table hover responsive variant={"light"}>
-        <tbody>
+      <React.Fragment>
+        <Table hover responsive variant={"light"}>
+          <tbody>
           <Form className={"mt-10 mb-10"}>
             {["취침", "수면", "기상"]?.map((key, index) => (
               <Form key={index} className={"fw-bold mb-10"}>
@@ -100,20 +101,27 @@ export const DashAvgWeek = () => {
               </Form>
             ))}
           </Form>
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+      </React.Fragment>
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <Row className={"d-center"}>
-      <Col xs={9}>
-        {chartNode()}
-      </Col>
-      <Col xs={3}>
-        {tableNode()}
-      </Col>
-    </Row>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={9}>
+              {chartNode()}
+            </Col>
+            <Col xs={3}>
+              {tableNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

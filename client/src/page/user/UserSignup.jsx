@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {
@@ -79,44 +79,52 @@ export const UserSignup = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const btnRefresh = () => {
     return (
-      <Button type={"button"} variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
+      <React.Fragment>
+        <Button type={"button"} variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
         navParam(0);
       }}>
         Refresh
       </Button>
+      </React.Fragment>
     );
   };
   const btnSignUp = () => {
     return (
-      <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowUserSave}>
+      <React.Fragment>
+        <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowUserSave}>
         Submit
       </Button>
+      </React.Fragment>
     );
   };
   const btnUserList = () => {
     return (
-      <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={() => {
+      <React.Fragment>
+        <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={() => {
         navParam("/user/list");
       }}>
         List
       </Button>
+      </React.Fragment>
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"row d-center mt-5"}>
-          <Col xs={12}>
-            {tableUserSave()}
-            <br/>
-            {btnSignUp()}
-            {btnUserList()}
-            {btnRefresh()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"row d-center mt-5"}>
+            <Col xs={12}>
+              {tableUserSave()}
+              <br/>
+              {btnSignUp()}
+              {btnUserList()}
+              {btnRefresh()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

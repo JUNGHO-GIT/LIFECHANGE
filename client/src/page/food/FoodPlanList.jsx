@@ -8,7 +8,7 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodPlanList = () => {
@@ -204,7 +204,7 @@ export const FoodPlanList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
         part={"food"} plan={"plan"} type={"list"}
       />
@@ -213,27 +213,29 @@ export const FoodPlanList = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"d-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <h1>List</h1>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {calendarNode()}
-            {tableNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {filterNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {pagingNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {buttonNode()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={12} className={"mb-20"}>
+              <h1>List</h1>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {calendarNode()}
+              {tableNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {filterNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {pagingNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

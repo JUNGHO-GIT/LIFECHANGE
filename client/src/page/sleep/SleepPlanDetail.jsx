@@ -6,7 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanDetail = () => {
@@ -113,8 +113,9 @@ export const SleepPlanDetail = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <Table hover responsive variant={"light"}>
-        <thead className={"table-primary"}>
+      <React.Fragment>
+        <Table hover responsive variant={"light"}>
+          <thead className={"table-primary"}>
           <tr>
             <th>시작일</th>
             <th>종료일</th>
@@ -136,14 +137,15 @@ export const SleepPlanDetail = () => {
             )}>X</Button></td>
           </tr>
         </tbody>
-      </Table>
+        </Table>
+      </React.Fragment>
     );
   };
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
         part={"sleep"} plan={"plan"} type={"detail"}
       />
@@ -152,20 +154,22 @@ export const SleepPlanDetail = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"d-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <h1>Detail</h1>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {tableNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {buttonNode()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={12} className={"mb-20"}>
+              <h1>Detail</h1>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {tableNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

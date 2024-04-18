@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -126,7 +126,7 @@ export const DashAvgWeek = () => {
   // 6-1. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <ButtonGroup>
+      <React.Fragment>
         <Button variant={`${LINE === "볼륨" ? "primary" : "outline-primary"}`} className={"me-5"}
           onClick={() => setLINE("볼륨")}>
           볼륨
@@ -135,19 +135,26 @@ export const DashAvgWeek = () => {
           onClick={() => setLINE("시간")}>
           시간
         </Button>
-      </ButtonGroup>
+      </React.Fragment>
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <Row className={"d-center"}>
-      <Col xs={9}>
-        {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
-      </Col>
-      <Col xs={3}>
-        {tableNode()}
-      </Col>
-    </Row>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={9}>
+              <FormLabel className={"fs-20"}>주간 볼륨 / 유산소시간 평균</FormLabel>
+              {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
+            </Col>
+            <Col xs={3}>
+              {tableNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

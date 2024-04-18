@@ -5,8 +5,10 @@ import React from "react";
 // ------------------------------------------------------------------------------------------------>
 export const Loader = () => {
   return (
-    <div className={"background"}>
-      <div className={"loader"}></div>
-    </div>
+    <React.Fragment>
+      <div className={"background"}>
+        <div className={"loader"}></div>
+      </div>
+    </React.Fragment>
   );
 };

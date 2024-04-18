@@ -8,7 +8,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSave = () => {
@@ -257,8 +257,9 @@ export const FoodSave = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <Table hover responsive variant={"light"}>
-        <thead className={"table-primary"}>
+      <React.Fragment>
+        <Table hover responsive variant={"light"}>
+          <thead className={"table-primary"}>
           <tr>
             <th>part</th>
             <th>title</th>
@@ -357,14 +358,15 @@ export const FoodSave = () => {
             <td></td>
           </tr>
         </tbody>
-      </Table>
+        </Table>
+      </React.Fragment>
     );
   };
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
         part={"food"} plan={""} type={"save"}
       />
@@ -373,23 +375,25 @@ export const FoodSave = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"d-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <h1>Save</h1>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {dateNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {tableNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {buttonNode()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={12} className={"mb-20"}>
+              <h1>Save</h1>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {dateNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {tableNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };

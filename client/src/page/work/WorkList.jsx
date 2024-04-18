@@ -8,7 +8,7 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkList = () => {
@@ -117,81 +117,83 @@ export const WorkList = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <Table hover responsive variant={"light"}>
-        <thead className={"table-primary"}>
-          <tr>
-            <th>날짜</th>
-            <th>시작</th>
-            <th>종료</th>
-            <th>시간</th>
-            <th>부위</th>
-            <th>종목</th>
-            <th>세트</th>
-            <th>횟수</th>
-            <th>중량</th>
-            <th>휴식</th>
-            <th>볼륨</th>
-          </tr>
-        </thead>
-        <tbody>
-          {WORK?.map((item, index) => (
-            <React.Fragment key={item._id}>
-              {item.work_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={`${section.work_part_val}_${section.work_title_val}`}>
+      <React.Fragment>
+        <Table hover responsive variant={"light"}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th>날짜</th>
+              <th>시작</th>
+              <th>종료</th>
+              <th>시간</th>
+              <th>부위</th>
+              <th>종목</th>
+              <th>세트</th>
+              <th>횟수</th>
+              <th>중량</th>
+              <th>휴식</th>
+              <th>볼륨</th>
+            </tr>
+          </thead>
+          <tbody>
+            {WORK?.map((item, index) => (
+              <React.Fragment key={item._id}>
+                {item.work_section.slice(0, 3)?.map((section, sectionIndex) => (
+                  <React.Fragment key={`${section.work_part_val}_${section.work_title_val}`}>
+                    <tr>
+                      {sectionIndex === 0 && (
+                        <React.Fragment>
+                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}
+                          className={"pointer"} onClick={() => {
+                            SEND.id = item._id;
+                            SEND.startDt = item.work_startDt;
+                            SEND.endDt = item.work_endDt;
+                            navParam(SEND.toDetail, {
+                              state: SEND
+                            });
+                          }}>
+                            {item.work_startDt}
+                          </td>
+                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                            {item.work_start}
+                          </td>
+                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                            {item.work_end}
+                          </td>
+                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                            {item.work_time}
+                          </td>
+                        </React.Fragment>
+                      )}
+                      <React.Fragment>
+                        <td>{section.work_part_val}</td>
+                        <td>{section.work_title_val}</td>
+                      </React.Fragment>
+                      {(section.work_part_val !== "유산소") ? (
+                        <React.Fragment>
+                          <td>{section.work_set}</td>
+                          <td>{section.work_rep}</td>
+                          <td>{section.work_kg}</td>
+                          <td>{section.work_rest}</td>
+                          <td>{section.work_volume}</td>
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          <td colSpan={5}>{section.work_cardio}</td>
+                        </React.Fragment>
+                      )}
+                    </tr>
+                  </React.Fragment>
+                ))}
+                {item.work_section.length > 3 && (
                   <tr>
-                    {sectionIndex === 0 && (
-                      <React.Fragment>
-                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.work_startDt;
-                          SEND.endDt = item.work_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                          {item.work_startDt}
-                        </td>
-                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
-                          {item.work_start}
-                        </td>
-                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
-                          {item.work_end}
-                        </td>
-                        <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
-                          {item.work_time}
-                        </td>
-                      </React.Fragment>
-                    )}
-                    <React.Fragment>
-                      <td>{section.work_part_val}</td>
-                      <td>{section.work_title_val}</td>
-                    </React.Fragment>
-                    {(section.work_part_val !== "유산소") ? (
-                      <React.Fragment>
-                        <td>{section.work_set}</td>
-                        <td>{section.work_rep}</td>
-                        <td>{section.work_kg}</td>
-                        <td>{section.work_rest}</td>
-                        <td>{section.work_volume}</td>
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        <td colSpan={5}>{section.work_cardio}</td>
-                      </React.Fragment>
-                    )}
+                    <td colSpan={10}>...</td>
                   </tr>
-                </React.Fragment>
-              ))}
-              {item.work_section.length > 3 && (
-                <tr>
-                  <td colSpan={10}>...</td>
-                </tr>
-              )}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
     );
   };
 
@@ -224,7 +226,7 @@ export const WorkList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
         part={"work"} plan={""} type={"list"}
       />
@@ -233,27 +235,29 @@ export const WorkList = () => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={"root-wrapper"}>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"d-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <h1>List</h1>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {calendarNode()}
-            {tableNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {filterNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {pagingNode()}
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            {buttonNode()}
-          </Col>
-        </Row>
-      </Container>
-    </FormGroup>
+    <React.Fragment>
+      <CardGroup className={"root-wrapper"}>
+        <Container fluid className={"container-wrapper"}>
+          <Row className={"d-center"}>
+            <Col xs={12} className={"mb-20"}>
+              <h1>List</h1>
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {calendarNode()}
+              {tableNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {filterNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {pagingNode()}
+            </Col>
+            <Col xs={12} className={"mb-20"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </CardGroup>
+    </React.Fragment>
   );
 };
