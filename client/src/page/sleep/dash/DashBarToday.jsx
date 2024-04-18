@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
@@ -73,6 +73,7 @@ export const DashBarToday = () => {
         <Container fluid className={"container-wrapper"}>
           <Row className={"d-center"}>
             <Col xs={12}>
+              <FormLabel className={"fs-20"}>오늘 수면 목표 / 실제</FormLabel>
               {chartNode()}
             </Col>
           </Row>

@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({

@@ -8,7 +8,7 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyList = () => {

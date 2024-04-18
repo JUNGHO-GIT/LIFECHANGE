@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieToday = () => {
@@ -156,9 +156,11 @@ export const DashPieToday = () => {
         <Container fluid className={"container-wrapper"}>
           <Row className={"d-center"}>
             <Col xs={6}>
+              <FormLabel className={"fs-20"}>오늘 지출 항목별 비율</FormLabel>
               {chartNodeIn()}
             </Col>
             <Col xs={6}>
+              <FormLabel className={"fs-20"}>오늘 수입 항목별 비율</FormLabel>
               {chartNodeOut()}
             </Col>
           </Row>

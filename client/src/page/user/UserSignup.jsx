@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {

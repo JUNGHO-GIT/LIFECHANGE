@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const Dash = () => {

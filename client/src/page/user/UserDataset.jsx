@@ -8,7 +8,7 @@ import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 import {workArray} from "../../assets/data/WorkArray.jsx";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {

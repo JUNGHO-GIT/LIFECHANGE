@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -146,10 +146,10 @@ export const DashAvgWeek = () => {
           onClick={() => (setPART("nut"))}>
           영양소
         </Button>
-        <Form className={"mt-10 mb-10"}>
+        <FormGroup className={"mt-20 ms-30 text-start"}>
           {["탄수화물", "단백질", "지방"]?.map((key, index) => (
             <Form key={index} className={"fw-bold mb-10"}>
-              <Form.Check
+              <FormCheck
                 inline
                 type={"switch"}
                 checked={LINE.includes(key)}
@@ -161,11 +161,11 @@ export const DashAvgWeek = () => {
                     setLINE([...LINE, key]);
                   }
                 }}
-              ></Form.Check>
+              ></FormCheck>
               <span>{key}</span>
             </Form>
           ))}
-        </Form>
+        </FormGroup>
       </React.Fragment>
     );
   };
