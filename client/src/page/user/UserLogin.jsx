@@ -40,7 +40,7 @@ export const UserLogin = () => {
     return (
       <FormGroup>
         <Form className={"input-group mb-10"}>
-          <Form.Label className={"input-group-text"}>User ID</Form.Label>
+          <FormLabel className={"input-group-text"}>User ID</FormLabel>
           <InputMask
             mask={""}
             type={"text"}
@@ -52,7 +52,7 @@ export const UserLogin = () => {
           ></InputMask>
         </Form>
         <Form className={"input-group mb-10"}>
-          <Form.Label className={"input-group-text"}>Password</Form.Label>
+          <FormLabel className={"input-group-text"}>Password</FormLabel>
           <InputMask
             mask={""}
             type={"text"}
@@ -93,8 +93,9 @@ export const UserLogin = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={12} className={"mb-20"}>
               <h1>Login</h1>
             </Col>
@@ -104,8 +105,9 @@ export const UserLogin = () => {
               {buttonUserLogin()}
               {buttonRefreshPage()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

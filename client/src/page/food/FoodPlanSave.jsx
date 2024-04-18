@@ -118,7 +118,7 @@ export const FoodPlanSave = () => {
       <Row className={"d-center"}>
         <Col xs={6} className={"mb-20"}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>칼로리</Form.Label>
+            <FormLabel className={"input-group-text"}>칼로리</FormLabel>
             <NumericFormat
               min={1}
               max={9999}
@@ -147,7 +147,7 @@ export const FoodPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>탄수화물</Form.Label>
+            <FormLabel className={"input-group-text"}>탄수화물</FormLabel>
             <NumericFormat
               min={0}
               max={9999}
@@ -176,7 +176,7 @@ export const FoodPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>단백질</Form.Label>
+            <FormLabel className={"input-group-text"}>단백질</FormLabel>
             <NumericFormat
               min={0}
               max={9999}
@@ -205,7 +205,7 @@ export const FoodPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>지방</Form.Label>
+            <FormLabel className={"input-group-text"}>지방</FormLabel>
             <NumericFormat
               min={0}
               max={9999}
@@ -250,8 +250,9 @@ export const FoodPlanSave = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={12} className={"mb-20"}>
               <h1>Save</h1>
             </Col>
@@ -264,8 +265,9 @@ export const FoodPlanSave = () => {
             <Col xs={12} className={"mb-20"}>
               {buttonNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

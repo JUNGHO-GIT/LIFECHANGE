@@ -47,7 +47,7 @@ export const UserSignup = () => {
     return (
       <FormGroup>
         <Form className={"form-floating"}>
-          <Form.Label className={"input-group-text"}>User ID</Form.Label>
+          <FormLabel className={"input-group-text"}>User ID</FormLabel>
           <InputMask
             mask={""}
             type={"text"}
@@ -60,7 +60,7 @@ export const UserSignup = () => {
           ></InputMask>
         </Form>
         <Form className={"form-floating"}>
-          <Form.Label className={"input-group-text"}>Password</Form.Label>
+          <FormLabel className={"input-group-text"}>Password</FormLabel>
           <InputMask
             mask={""}
             type={"password"}
@@ -113,17 +113,19 @@ export const UserSignup = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"row d-center mt-5"}>
-            <Col xs={12}>
-              {tableUserSave()}
-              <br/>
-              {btnSignUp()}
-              {btnUserList()}
-              {btnRefresh()}
-            </Col>
-          </Row>
-        </Container>
+        <Card className={"container-wrapper"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"row d-center mt-5"}>
+              <Col xs={12}>
+                {tableUserSave()}
+                <br/>
+                {btnSignUp()}
+                {btnUserList()}
+                {btnRefresh()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

@@ -93,14 +93,16 @@ export const DashScatterMonth = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={12}>
               <FormLabel className={"fs-20"}>월간 몸무게 목표 / 실제</FormLabel>
               {chartNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

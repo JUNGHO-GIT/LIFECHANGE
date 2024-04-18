@@ -13,16 +13,19 @@ import "react-day-picker/dist/style.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-resizable/css/styles.css";
 
+import "../assets/css/Loader.css";
 import "../assets/css/Custom.css";
 import "../assets/css/Jstyle.css";
 import "../assets/css/DatePicker.css";
 import "../assets/css/TimePicker.css";
 import "../assets/css/DayPicker.css";
-import "../assets/css/Header.css";
+import "../assets/css/SideBar.css";
 
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
+import {NavBar} from "../layout/NavBar.jsx";
 import {Footer} from "../layout/Footer";
+import {Empty} from "../layout/Empty.jsx";
 
 import {FoodPlanList} from "../page/food/FoodPlanList.jsx";
 import {FoodPlanDetail} from "../page/food/FoodPlanDetail.jsx";
@@ -157,6 +160,7 @@ export const App = () => {
         <DeveloperModeProvider>
           <Loader />
           <Header />
+          <NavBar />
           <Routes>
             <Route path="/*" element={<Common />} />
             <Route path="/food/*" element={<Food />} />
@@ -166,6 +170,7 @@ export const App = () => {
             <Route path="/work/*" element={<Work />} />
           </Routes>
           <Footer />
+          <Empty />
         </DeveloperModeProvider>
       </div>
     </React.Fragment>

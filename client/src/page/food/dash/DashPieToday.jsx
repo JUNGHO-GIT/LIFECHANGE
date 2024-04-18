@@ -154,16 +154,18 @@ export const DashPieToday = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={6}>
               {chartNodeKcal()}
             </Col>
             <Col xs={6}>
               {chartNodeNut()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

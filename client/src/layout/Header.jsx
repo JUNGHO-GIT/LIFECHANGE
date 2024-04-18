@@ -105,42 +105,8 @@ export const Header = () => {
     );
   };
 
-  // 4-3. view ------------------------------------------------------------------------------------>
-  const navBarNode = () => {
-
-    let preFix;
-    let subFix = isActive.split("/")[1];
-
-    dataArray.forEach((menu) => {
-      if (isActive.includes(menu.label.toLowerCase())) {
-        preFix = menu.label;
-      }
-    });
-
-    function buttonClear () {
-      return (
-        <p className={"btn btn-sm btn-danger me-2 pointer"} onClick={() => {
-          localStorage.clear();
-        }}>
-          Clear
-        </p>
-      );
-    };
-
-    return (
-      <FormGroup className={"d-flex justify-content-between align-items-center"}>
-        <Form className={"text-start"}>
-          <h1 className={"fs-30 fw-500 ps-30"}>{preFix} / {subFix}</h1>
-        </Form>
-        <Form className={"text-end d-flex"}>
-          {buttonClear()}
-        </Form>
-      </FormGroup>
-    );
-  };
-
   // 6-1. button ---------------------------------------------------------------------------------->
-  const loginNode = () => {
+  const buttonNode = () => {
     function btnDevMode() {
       return (
         <Button variant={isDeveloperMode ? "secondary" : ""} size={"sm"} className={"me-2"}
@@ -198,32 +164,24 @@ export const Header = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Container fluid className={"container-wrapper"}>
-        <Row className={"row d-center pt-15 pb-15"}>
-          <Col xs={1}>
-            {sideBarNode()}
-            <Button type={"button"} size={"sm"} variant={"secondary"} onClick={() => {
-              setIsSidebar(!isSidebar);
-            }}>
-              Sidebar
-            </Button>
-          </Col>
-          <Col xs={7}></Col>
-          <Col xs={3}>
-            {loginNode()}
-          </Col>
-        </Row>
-      </Container>
-      <Form className={"h-3"}></Form>
-      <Form className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"row d-center"}>
-            <Col xs={12}>
-              {navBarNode()}
+      <Card className={"container-wrapper mb-10"} border={"light"}>
+        <Container fluid className={"p-0"}>
+          <Row className={"d-center"}>
+            <Col xs={1}>
+              {sideBarNode()}
+              <Button type={"button"} size={"sm"} variant={"secondary"} onClick={() => {
+                setIsSidebar(!isSidebar);
+              }}>
+                Sidebar
+              </Button>
+            </Col>
+            <Col xs={9}></Col>
+            <Col xs={2}>
+              {buttonNode()}
             </Col>
           </Row>
         </Container>
-      </Form>
+      </Card>
     </React.Fragment>
   );
 };

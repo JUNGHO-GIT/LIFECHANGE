@@ -131,8 +131,9 @@ export const DashAvgWeek = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={9}>
               <FormLabel className={"fs-20"}>주간 지출 / 수입 평균</FormLabel>
               {chartNode()}
@@ -140,8 +141,9 @@ export const DashAvgWeek = () => {
             <Col xs={3}>
               {tableNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

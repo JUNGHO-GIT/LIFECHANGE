@@ -153,8 +153,9 @@ export const DashPieMonth = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={6}>
               <FormLabel className={"fs-20"}>월간 상위 5개 부위 / 운동</FormLabel>
               {chartNodePart()}
@@ -163,8 +164,9 @@ export const DashPieMonth = () => {
               <FormLabel className={"fs-20"}>월간 상위 5개 부위 / 운동</FormLabel>
               {chartNodeTitle()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

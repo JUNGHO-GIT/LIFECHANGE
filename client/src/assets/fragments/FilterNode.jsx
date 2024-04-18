@@ -13,7 +13,7 @@ export const FilterNode = ({
     function selectType() {
       return (
         <React.Fragment>
-          <select className={"form-select"} id={"type"} onChange={(e) => (
+          <select className={"form-select me-5"} id={"type"} onChange={(e) => (
             setFILTER((prev) => ({
               ...prev,
               type: e.target.value
@@ -31,7 +31,7 @@ export const FilterNode = ({
     function selectOrder() {
       return (
         <React.Fragment>
-          <select className={"form-select"} id={"order"} onChange={(e) => (
+          <select className={"form-select me-5"} id={"order"} onChange={(e) => (
             setFILTER((prev) => ({
               ...prev,
               order: e.target.value
@@ -46,7 +46,7 @@ export const FilterNode = ({
     function selectLimit() {
       return (
         <React.Fragment>
-          <select className={"form-select"} id={"limit"} onChange={(e) => (
+          <select className={"form-select me-5"} id={"limit"} onChange={(e) => (
             setPAGING((prev) => ({
               ...prev,
               limit: parseInt(e.target.value)
@@ -78,7 +78,7 @@ export const FilterNode = ({
     function selectPartFood () {
       return (
         <React.Fragment>
-          <select className={"form-control"} id={"part"} value={foodArray[FILTER.partIdx].money_part} onChange={(e) => {
+          <select className={"form-control me-5"} id={"part"} value={foodArray[FILTER.partIdx].money_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
             const newPartIndex = Number(idxValue);
@@ -114,7 +114,7 @@ export const FilterNode = ({
     function selectPartMoney () {
       return (
         <React.Fragment>
-          <select className={"form-control"} id={"part"} value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
+          <select className={"form-control me-5"} id={"part"} value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
             const newPartIndex = Number(idxValue);
@@ -139,7 +139,8 @@ export const FilterNode = ({
     function selectTitleMoney () {
       return (
         <React.Fragment>
-          <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
+          <select className={"form-control me-5"} id={"title"} value={FILTER.title}
+          onChange={(e) => {
             setFILTER((prev) => ({
               ...prev,
               title: e.target.value
@@ -169,7 +170,7 @@ export const FilterNode = ({
     function selectPartWork () {
       return (
         <React.Fragment>
-          <select className={"form-control"} id={"part"} value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
+          <select className={"form-control me-5"} id={"part"} value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
             const newPartIndex = Number(idxValue);
@@ -194,7 +195,8 @@ export const FilterNode = ({
     function selectTitleWork () {
       return (
         <React.Fragment>
-          <select className={"form-control"} id={"title"} value={FILTER.title} onChange={(e) => {
+          <select className={"form-control me-5"} id={"title"} value={FILTER.title}
+          onChange={(e) => {
             setFILTER((prev) => ({
               ...prev,
               title: e.target.value

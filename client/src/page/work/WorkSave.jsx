@@ -263,7 +263,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>부위</Form.Label>
+                <FormLabel className={"input-group-text"}>부위</FormLabel>
                 <select
                   id={`work_part_idx-${i}`}
                   name={`work_part_idx-${i}`}
@@ -296,7 +296,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>타이틀</Form.Label>
+                <FormLabel className={"input-group-text"}>타이틀</FormLabel>
                 <select
                   id={`work_title_idx-${i}`}
                   name={`work_title_idx-${i}`}
@@ -332,7 +332,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>세트</Form.Label>
+                <FormLabel className={"input-group-text"}>세트</FormLabel>
                 <NumericFormat
                   min={1}
                   max={99}
@@ -364,7 +364,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>횟수</Form.Label>
+                <FormLabel className={"input-group-text"}>횟수</FormLabel>
                 <NumericFormat
                   min={1}
                   max={99}
@@ -396,7 +396,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>무게</Form.Label>
+                <FormLabel className={"input-group-text"}>무게</FormLabel>
                 <NumericFormat
                   min={1}
                   max={999}
@@ -428,7 +428,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>휴식</Form.Label>
+                <FormLabel className={"input-group-text"}>휴식</FormLabel>
                 <NumericFormat
                   min={1}
                   max={999}
@@ -459,7 +459,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={12}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>볼륨</Form.Label>
+                <FormLabel className={"input-group-text"}>볼륨</FormLabel>
                 <NumericFormat
                   min={1}
                   max={999999999}
@@ -483,7 +483,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={12}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>유산소</Form.Label>
+                <FormLabel className={"input-group-text"}>유산소</FormLabel>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -525,7 +525,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>시작시간</Form.Label>
+                <FormLabel className={"input-group-text"}>시작시간</FormLabel>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -549,7 +549,7 @@ export const WorkSave = () => {
           <Row className={"row d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>종료시간</Form.Label>
+                <FormLabel className={"input-group-text"}>종료시간</FormLabel>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -573,7 +573,7 @@ export const WorkSave = () => {
           <Row className={"row d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>운동시간</Form.Label>
+                <FormLabel className={"input-group-text"}>운동시간</FormLabel>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -598,7 +598,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>총 볼륨</Form.Label>
+                <FormLabel className={"input-group-text"}>총 볼륨</FormLabel>
                   <NumericFormat
                     min={1}
                     max={99999999999999}
@@ -622,7 +622,7 @@ export const WorkSave = () => {
           <Row className={"d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>총 유산소 시간</Form.Label>
+                <FormLabel className={"input-group-text"}>총 유산소 시간</FormLabel>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -640,7 +640,7 @@ export const WorkSave = () => {
           <Row className={"d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>체중</Form.Label>
+                <FormLabel className={"input-group-text"}>체중</FormLabel>
                 <NumericFormat
                   min={1}
                   max={9999}
@@ -695,8 +695,9 @@ export const WorkSave = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={12} className={"mb-20"}>
               <h1>Save</h1>
             </Col>
@@ -712,8 +713,9 @@ export const WorkSave = () => {
             <Col xs={12} className={"mb-20"}>
               {buttonNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

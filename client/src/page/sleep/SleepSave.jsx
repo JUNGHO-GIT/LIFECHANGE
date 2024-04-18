@@ -122,7 +122,7 @@ export const SleepSave = () => {
         <Row className={"d-center"}>
           <Col xs={12}>
             <FormGroup className={"input-group"}>
-              <Form.Label className={"input-group-text"}>취침</Form.Label>
+              <FormLabel className={"input-group-text"}>취침</FormLabel>
               <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
@@ -147,7 +147,7 @@ export const SleepSave = () => {
           </Col>
           <Col xs={12}>
             <FormGroup className={"input-group"}>
-              <Form.Label className={"input-group-text"}>기상</Form.Label>
+              <FormLabel className={"input-group-text"}>기상</FormLabel>
               <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
@@ -172,7 +172,7 @@ export const SleepSave = () => {
           </Col>
           <Col xs={12}>
             <FormGroup className={"input-group"}>
-              <Form.Label className={"input-group-text"}>수면</Form.Label>
+              <FormLabel className={"input-group-text"}>수면</FormLabel>
               <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
@@ -212,8 +212,9 @@ export const SleepSave = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={12} className={"mb-20"}>
               <h1>Save</h1>
             </Col>
@@ -226,8 +227,9 @@ export const SleepSave = () => {
             <Col xs={12} className={"mb-20"}>
               {buttonNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

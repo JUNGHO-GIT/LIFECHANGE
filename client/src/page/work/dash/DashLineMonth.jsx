@@ -125,8 +125,9 @@ export const DashLineMonth = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={9}>
               <FormLabel className={"fs-20"}>월간 총볼륨 / 유산소시간</FormLabel>
               {chartNode()}
@@ -134,8 +135,9 @@ export const DashLineMonth = () => {
             <Col xs={3}>
               {tableNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

@@ -116,7 +116,7 @@ export const MoneyPlanSave = () => {
       <Row className={"mb-20"}>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>목표 수입</Form.Label>
+            <FormLabel className={"input-group-text"}>목표 수입</FormLabel>
             <NumericFormat
               min={0}
               max={99999999999999}
@@ -146,7 +146,7 @@ export const MoneyPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>목표 지출</Form.Label>
+            <FormLabel className={"input-group-text"}>목표 지출</FormLabel>
             <NumericFormat
               min={0}
               max={99999999999999}
@@ -192,22 +192,24 @@ export const MoneyPlanSave = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>Save</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {dateNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {buttonNode()}
-            </Col>
-          </Row>
-        </Container>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
+              <Col xs={12} className={"mb-20"}>
+                <h1>Save</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {dateNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {buttonNode()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

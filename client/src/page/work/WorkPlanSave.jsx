@@ -119,7 +119,7 @@ export const WorkPlanSave = () => {
       <Row className={"d-center"}>
         <Col xs={6} className={"mb-20"}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>목표 운동 횟수</Form.Label>
+            <FormLabel className={"input-group-text"}>목표 운동 횟수</FormLabel>
             <NumericFormat
               min={0}
               max={999}
@@ -148,7 +148,7 @@ export const WorkPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>목표 유산소 시간</Form.Label>
+            <FormLabel className={"input-group-text"}>목표 유산소 시간</FormLabel>
             <TimePicker
               locale={"ko"}
               format={"HH:mm"}
@@ -170,7 +170,7 @@ export const WorkPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>목표 총 볼륨</Form.Label>
+            <FormLabel className={"input-group-text"}>목표 총 볼륨</FormLabel>
             <NumericFormat
               min={0}
               max={999999}
@@ -199,7 +199,7 @@ export const WorkPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <Form.Label className={"input-group-text"}>목표 체중</Form.Label>
+            <FormLabel className={"input-group-text"}>목표 체중</FormLabel>
             <NumericFormat
               min={0}
               max={999}
@@ -244,8 +244,9 @@ export const WorkPlanSave = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={12} className={"mb-20"}>
               <h1>Save</h1>
             </Col>
@@ -258,8 +259,9 @@ export const WorkPlanSave = () => {
             <Col xs={12} className={"mb-20"}>
               {buttonNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

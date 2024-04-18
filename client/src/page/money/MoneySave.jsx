@@ -215,7 +215,7 @@ export const MoneySave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>파트</Form.Label>
+                <FormLabel className={"input-group-text"}>파트</FormLabel>
                 <select
                   id={`money_part_idx-${i}`}
                   className={"form-control"}
@@ -247,7 +247,7 @@ export const MoneySave = () => {
             </Col>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>타이틀</Form.Label>
+                <FormLabel className={"input-group-text"}>타이틀</FormLabel>
                 <select
                   id={`money_title_idx-${i}`}
                   className={"form-control"}
@@ -282,7 +282,7 @@ export const MoneySave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>금액</Form.Label>
+                <FormLabel className={"input-group-text"}>금액</FormLabel>
                 <NumericFormat
                   min={0}
                   max={9999999999}
@@ -314,7 +314,7 @@ export const MoneySave = () => {
             </Col>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <Form.Label className={"input-group-text"}>메모</Form.Label>
+                <FormLabel className={"input-group-text"}>메모</FormLabel>
                 <InputMask
                   mask={""}
                   placeholder={"메모"}
@@ -354,7 +354,7 @@ export const MoneySave = () => {
         <Row className={"d-center"}>
           <Col xs={6}>
             <FormGroup className={"input-group"}>
-              <Form.Label className={"input-group-text"}>총수입</Form.Label>
+              <FormLabel className={"input-group-text"}>총수입</FormLabel>
               <NumericFormat
                 min={0}
                 max={9999999999}
@@ -377,7 +377,7 @@ export const MoneySave = () => {
           </Col>
           <Col xs={6}>
             <FormGroup className={"input-group"}>
-              <Form.Label className={"input-group-text"}>총지출</Form.Label>
+              <FormLabel className={"input-group-text"}>총지출</FormLabel>
               <NumericFormat
                 min={0}
                 max={9999999999}
@@ -423,25 +423,27 @@ export const MoneySave = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>Save</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {dateNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {handlerSectionCount()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {buttonNode()}
-            </Col>
-          </Row>
-        </Container>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
+              <Col xs={12} className={"mb-20"}>
+                <h1>Save</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {dateNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {handlerSectionCount()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {buttonNode()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );

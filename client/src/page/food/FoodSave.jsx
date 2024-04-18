@@ -258,7 +258,7 @@ export const FoodSave = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"}>
+        <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
           <tr>
             <th>part</th>
@@ -377,8 +377,9 @@ export const FoodSave = () => {
   return (
     <React.Fragment>
       <CardGroup className={"root-wrapper"}>
-        <Container fluid className={"container-wrapper"}>
-          <Row className={"d-center"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container fluid className={"d-flex"}>
+            <Row className={"d-center"}>
             <Col xs={12} className={"mb-20"}>
               <h1>Save</h1>
             </Col>
@@ -391,8 +392,9 @@ export const FoodSave = () => {
             <Col xs={12} className={"mb-20"}>
               {buttonNode()}
             </Col>
-          </Row>
-        </Container>
+            </Row>
+          </Container>
+        </Card>
       </CardGroup>
     </React.Fragment>
   );
