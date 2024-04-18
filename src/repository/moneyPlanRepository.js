@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import {Money} from "../schema/Money.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
-import {fmtDate} from "../assets/common/common.js";
+import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (

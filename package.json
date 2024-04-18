@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "cache": "npm cache clean -f"
+    "cache": "npm cache clean -f",
+    "demo": "node src/assets/demo/demo.js"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -15,6 +16,7 @@
     "bcryptjs-react": "^2.4.6",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
     "express": "^4.18.2",
     "express-winston": "^4.2.0",
     "install": "^0.13.0",
@@ -23,10 +25,11 @@
     "moment-timezone": "^0.5.43",
     "mongoose": "^7.4.2",
     "nodemon": "^2.0.22",
-    "npm": "^10.5.0",
+    "npm": "^10.5.2",
     "style-components": "^0.1.0",
     "typescript": "^5.1.3",
-    "v": "^0.3.0"
+    "v": "^0.3.0",
+    "xml2js": "^0.6.2"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

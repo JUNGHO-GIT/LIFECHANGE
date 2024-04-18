@@ -1,7 +1,7 @@
 // moneyDashService.js
 
 import * as repository from "../repository/moneyDashRepository.js";
-import {intFormat, koreanDate, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd} from "../assets/common/common.js";
+import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../assets/common/date.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
@@ -217,8 +217,8 @@ export const avgMonth = async (
   let finalResult = [];
 
   for (
-    let month = curMonthStart.clone();
-    month.isBefore(curMonthEnd);
+    let month = curYearStart.clone();
+    month.isBefore(curYearEnd);
     month.add(1, "days")
   ) {
     const monthNum = month.month();

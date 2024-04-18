@@ -1,7 +1,7 @@
 // foodPlanService.js
 
 import * as repository from "../repository/foodPlanRepository.js";
-import {compareCount, compareTime, strToDecimal, decimalToStr} from "../assets/common/common.js";
+import {compareCount, compareTime, strToDecimal, decimalToStr} from "../assets/common/date.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (

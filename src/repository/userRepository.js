@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {User} from "../schema/User.js";
-import {fmtDate} from "../assets/common/common.js";
+import {fmtDate} from "../assets/common/date.js";
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = async (

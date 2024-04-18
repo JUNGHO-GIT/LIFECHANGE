@@ -1,7 +1,7 @@
 // workDashService.js
 
 import * as repository from "../repository/workDashRepository.js";
-import {intFormat, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd} from "../assets/common/common.js";
+import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../assets/common/date.js";
 
 // 1-1. dash (scatter - week) --------------------------------------------------------------------->
 export const scatterWeek = async (
@@ -291,8 +291,8 @@ export const avgMonth = async (
   let finalResultCardio = [];
 
   for (
-    let month = curMonthStart.clone();
-    month.isBefore(curMonthEnd);
+    let month = curYearStart.clone();
+    month.isBefore(curYearEnd);
     month.add(1, "days")
   ) {
     const monthNum = month.month();

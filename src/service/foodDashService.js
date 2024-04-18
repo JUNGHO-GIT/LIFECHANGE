@@ -1,7 +1,7 @@
 // foodDashService.js
 
 import * as repository from "../repository/foodDashRepository.js";
-import {intFormat, curWeekStart, curWeekEnd, curMonthStart, curMonthEnd, koreanDate} from "../assets/common/common.js";
+import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../assets/common/date.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
@@ -328,8 +328,8 @@ export const avgMonth = async (
   let finalResultNut = [];
 
   for (
-    let month = curMonthStart.clone();
-    month.isBefore(curMonthEnd);
+    let month = curYearStart.clone();
+    month.isBefore(curYearEnd);
     month.add(1, "days")
   ) {
     const monthNum = month.month();

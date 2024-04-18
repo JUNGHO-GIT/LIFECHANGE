@@ -2368,13 +2368,13 @@
   font-weight: 900 !important;
 }
 .fw-normal {
-  font-weight: normal;
+  font-weight: normal !important;
 }
 .fw-bold {
-  font-weight: bold;
+  font-weight: bold !important;
 }
 .fw-bolder {
-  font-weight: bolder;
+  font-weight: bolder !important;
 }
 
 .text-dark {
@@ -2419,21 +2419,21 @@
 }
 
 .over-hidden {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 .over-auto {
-  overflow: auto;
+  overflow: auto !important;
 }
 .pointer {
-  cursor: pointer;
+  cursor: pointer !important;
   caret-color: transparent;
 }
 .resize-none {
-  resize: none;
+  resize: none !important;
 }
 .webkit-fill {
-  width: -webkit-fill-available;
-  height: -webkit-fill-available;
+  width: -webkit-fill-available !important;
+  height: -webkit-fill-available !important;
 }
 
 .p-fixed {
