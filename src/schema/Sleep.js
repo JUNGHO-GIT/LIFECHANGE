@@ -50,7 +50,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  sleep_upDt: {
+  sleep_updateDt: {
     type: String,
     default: "",
     required: false

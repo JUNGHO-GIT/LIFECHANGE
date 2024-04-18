@@ -117,7 +117,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  work_upDt: {
+  work_updateDt: {
     type: String,
     default: "",
     required: false

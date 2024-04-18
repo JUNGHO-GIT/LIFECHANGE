@@ -59,10 +59,10 @@ export const WorkPlanDetail = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total_count: 0,
-    work_plan_total_volume: 0,
-    work_plan_total_cardio: "",
-    work_plan_body_weight: 0,
+    work_plan_count: 0,
+    work_plan_volume: 0,
+    work_plan_cardio: "",
+    work_plan_weight: 0,
   };
   const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
 
@@ -105,7 +105,7 @@ export const WorkPlanDetail = () => {
       });
       alert(response.data.msg);
       setWORK_PLAN(updatedData.data.result || WORK_PLAN_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);
@@ -132,10 +132,10 @@ export const WorkPlanDetail = () => {
           <tr>
             <td>{WORK_PLAN?.work_plan_startDt}</td>
             <td>{WORK_PLAN?.work_plan_endDt}</td>
-            <td>{WORK_PLAN?.work_plan_total_count}</td>
-            <td>{WORK_PLAN?.work_plan_total_volume}</td>
-            <td>{WORK_PLAN?.work_plan_total_cardio}</td>
-            <td>{WORK_PLAN?.work_plan_body_weight}</td>
+            <td>{WORK_PLAN?.work_plan_count}</td>
+            <td>{WORK_PLAN?.work_plan_volume}</td>
+            <td>{WORK_PLAN?.work_plan_cardio}</td>
+            <td>{WORK_PLAN?.work_plan_weight}</td>
             <td><Button variant={"danger"} size={"sm"}
             onClick={() => (flowDelete(WORK_PLAN?._id))}>X</Button></td>
           </tr>

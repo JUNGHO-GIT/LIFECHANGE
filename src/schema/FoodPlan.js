@@ -53,7 +53,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  food_plan_upDt: {
+  food_plan_updateDt: {
     type: String,
     default: "",
     required: false

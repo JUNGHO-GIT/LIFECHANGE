@@ -154,7 +154,7 @@ export const save = {
       money_total_out: MONEY_param.money_total_out,
       money_section: MONEY_param.money_section,
       money_regDt: fmtDate,
-      money_upDt: "",
+      money_updateDt: "",
     });
 
     return finalResult;
@@ -169,7 +169,7 @@ export const save = {
       },
       {$set: {
         ...MONEY_param,
-        money_upDt: fmtDate,
+        money_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -206,7 +206,7 @@ export const deletes = {
           },
         },
         $set: {
-          money_upDt: fmtDate,
+          money_updateDt: fmtDate,
         },
       },
       {arrayFilters: [{
@@ -237,7 +237,10 @@ export const deletes = {
         })
         .lean();
       }
-    };
+      else {
+        finalResult = updateResult;
+      }
+    }
 
     return finalResult;
   }

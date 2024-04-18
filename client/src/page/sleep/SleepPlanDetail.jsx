@@ -103,7 +103,7 @@ export const SleepPlanDetail = () => {
       });
       setSLEEP_PLAN(updatedData.data.result || SLEEP_PLAN_DEFAULT);
       alert(response.data.msg);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

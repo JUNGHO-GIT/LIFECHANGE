@@ -10,7 +10,7 @@ export const scatterWeek = async (
 
   const data = {
     "체중": {
-      plan: "work_plan_body_weight",
+      plan: "work_plan_weight",
       real: "work_body_weight"
     }
   };
@@ -50,7 +50,7 @@ export const scatterMonth = async (
 
   const data = {
     "체중": {
-      plan: "work_plan_body_weight",
+      plan: "work_plan_weight",
       real: "work_body_weight"
     }
   };

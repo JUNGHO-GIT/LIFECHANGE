@@ -15,7 +15,7 @@ export const signup = async (
     user_id: user_id_param,
     user_pw: user_pw_param,
     user_regDt: fmtDate,
-    user_upDt: "",
+    user_updateDt: "",
   });
 
   return finalResult;
@@ -123,7 +123,7 @@ export const create = async (
     user_weight: USER_param.user_weight,
     user_dataset: USER_param.user_dataset,
     user_regDt: fmtDate,
-    user_upDt: "",
+    user_updateDt: "",
   });
 
   return finalResult;
@@ -140,7 +140,7 @@ export const update = async (
     },
     {$set: {
       ...USER_param,
-      user_upDt: fmtDate,
+      user_updateDt: fmtDate,
     }},
     {upsert: true,
       new: true
@@ -166,7 +166,7 @@ export const deletes = async (
         },
       },
       $set: {
-        user_upDt: fmtDate,
+        user_updateDt: fmtDate,
       },
     },
     {arrayFilters: [{

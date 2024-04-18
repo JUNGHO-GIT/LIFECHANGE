@@ -160,7 +160,7 @@ export const save = {
       food_total_fat: FOOD_param.food_total_fat,
       food_section: FOOD_param.food_section,
       food_regDt: fmtDate,
-      food_upDt: "",
+      food_updateDt: "",
     });
 
     return finalResult;
@@ -175,7 +175,7 @@ export const save = {
       },
       {$set: {
         ...FOOD_param,
-        food_upDt: fmtDate,
+        food_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -213,7 +213,7 @@ export const deletes = {
           },
         },
         $set: {
-          food_upDt: fmtDate,
+          food_updateDt: fmtDate,
         },
       },
       {arrayFilters: [{
@@ -244,7 +244,10 @@ export const deletes = {
         })
         .lean();
       }
-    };
+      else {
+        finalResult = updateResult;
+      }
+    }
 
     return finalResult;
   }

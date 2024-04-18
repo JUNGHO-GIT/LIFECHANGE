@@ -131,7 +131,7 @@ export const save = {
       money_plan_in: MONEY_PLAN_param.money_plan_in,
       money_plan_out: MONEY_PLAN_param.money_plan_out,
       money_plan_regDt: fmtDate,
-      money_plan_upDt: "",
+      money_plan_updateDt: "",
     });
 
     return finalResult;
@@ -145,7 +145,7 @@ export const save = {
       },
       {$set: {
         ...MONEY_PLAN_param,
-        money_plan_upDt: fmtDate,
+        money_plan_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -172,7 +172,7 @@ export const deletes = {
         money_plan_endDt: endDt_param,
       },
       {$set: {
-        money_plan_upDt: fmtDate,
+        money_plan_updateDt: fmtDate,
       }},
       {arrayFilters: [{
         "elem._id": _id_param
@@ -195,6 +195,9 @@ export const deletes = {
           _id: doc._id
         })
         .lean();
+      }
+      else {
+        finalResult = updateResult;
       }
     }
 

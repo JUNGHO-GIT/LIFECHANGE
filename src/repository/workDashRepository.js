@@ -22,7 +22,7 @@ export const scatterWeek = {
       }},
       {$project: {
         _id: 0,
-        work_plan_body_weight: 1
+        work_plan_weight: 1
       }}
     ]);
     return finalResult;
@@ -70,7 +70,7 @@ export const scatterMonth = {
       }},
       {$project: {
         _id: 0,
-        work_plan_body_weight: 1
+        work_plan_weight: 1
       }}
     ]);
     return finalResult;

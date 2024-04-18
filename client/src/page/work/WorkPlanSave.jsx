@@ -59,10 +59,10 @@ export const WorkPlanSave = () => {
     work_plan_number: 0,
     work_plan_startDt: "",
     work_plan_endDt: "",
-    work_plan_total_count: 0,
-    work_plan_total_cardio: "",
-    work_plan_total_volume: 0,
-    work_plan_body_weight: 0,
+    work_plan_count: 0,
+    work_plan_cardio: "",
+    work_plan_volume: 0,
+    work_plan_weight: 0,
   };
   const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
 
@@ -135,12 +135,12 @@ export const WorkPlanSave = () => {
               allowNegative={false}
               thousandSeparator={true}
               fixedDecimalScale={true}
-              value={Math.min(999, WORK_PLAN?.work_plan_total_count)}
+              value={Math.min(999, WORK_PLAN?.work_plan_count)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values?.value));
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_total_count: limitedValue
+                  work_plan_count: limitedValue
                 }));
               }}
             ></NumericFormat>
@@ -158,11 +158,11 @@ export const WorkPlanSave = () => {
               disabled={false}
               clockIcon={null}
               disableClock={false}
-              value={WORK_PLAN?.work_plan_total_cardio}
+              value={WORK_PLAN?.work_plan_cardio}
               onChange={(e) => {
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_total_cardio: e ? e.toString() : ""
+                  work_plan_cardio: e ? e.toString() : ""
                 }));
               }}
             ></TimePicker>
@@ -186,12 +186,12 @@ export const WorkPlanSave = () => {
               fixedDecimalScale={true}
               thousandSeparator={true}
               allowLeadingZeros={false}
-              value={Math.min(999999, WORK_PLAN?.work_plan_total_volume)}
+              value={Math.min(999999, WORK_PLAN?.work_plan_volume)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999999, parseInt(values?.value));
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_total_volume: limitedValue
+                  work_plan_volume: limitedValue
                 }));
               }}
             ></NumericFormat>
@@ -215,12 +215,12 @@ export const WorkPlanSave = () => {
               thousandSeparator={true}
               fixedDecimalScale={true}
               allowLeadingZeros={false}
-              value={Math.min(999, WORK_PLAN?.work_plan_body_weight)}
+              value={Math.min(999, WORK_PLAN?.work_plan_weight)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values?.value));
                 setWORK_PLAN((prev) => ({
                   ...prev,
-                  work_plan_body_weight: limitedValue
+                  work_plan_weight: limitedValue
                 }));
               }}
             ></NumericFormat>

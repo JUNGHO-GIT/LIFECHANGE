@@ -104,7 +104,7 @@ export const FoodPlanDetail = () => {
       });
       alert(response.data.msg);
       setFOOD_PLAN(updatedData.data.result || FOOD_PLAN_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

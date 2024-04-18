@@ -79,10 +79,10 @@ export const WorkPlanList = () => {
     work_total_volume: 0,
     work_total_cardio: "",
     work_body_weight: 0,
-    work_plan_total_count: 0,
-    work_plan_total_cardio: "",
-    work_plan_total_volume: 0,
-    work_plan_body_weight: 0,
+    work_plan_count: 0,
+    work_plan_cardio: "",
+    work_plan_volume: 0,
+    work_plan_weight: 0,
     work_diff_total_count: 0,
     work_diff_total_cardio: "",
     work_diff_total_volume: 0,
@@ -139,25 +139,25 @@ export const WorkPlanList = () => {
                 </tr>
                 <tr>
                   <td>총 운동횟수</td>
-                  <td>{item.work_plan_total_count || "0"}</td>
+                  <td>{item.work_plan_count || "0"}</td>
                   <td>{item.work_total_count || "0"}</td>
                   <td>{item.work_diff_total_count || "0"}</td>
                 </tr>
                 <tr>
                   <td>총 운동량</td>
-                  <td>{item.work_plan_total_volume || "0"}</td>
+                  <td>{item.work_plan_volume || "0"}</td>
                   <td>{item.work_total_volume || "0"}</td>
                   <td>{item.work_diff_total_volume || "0"}</td>
                 </tr>
                 <tr>
                   <td>유산소 시간</td>
-                  <td>{item.work_plan_total_cardio || "0"}</td>
+                  <td>{item.work_plan_cardio || "0"}</td>
                   <td>{item.work_total_cardio || "0"}</td>
                   <td>{item.work_diff_total_cardio || "0"}</td>
                 </tr>
                 <tr>
                   <td>체중</td>
-                  <td>{item.work_plan_body_weight || "0"}</td>
+                  <td>{item.work_plan_weight || "0"}</td>
                   <td>{item.work_body_weight || "0"}</td>
                   <td>{item.work_diff_body_weight || "0"}</td>
                 </tr>

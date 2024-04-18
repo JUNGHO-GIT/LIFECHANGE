@@ -103,7 +103,7 @@ export const MoneyPlanDetail = () => {
       });
       alert(response.data.msg);
       setMONEY_PLAN(updatedData.data.result || MONEY_PLAN_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

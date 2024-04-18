@@ -167,7 +167,7 @@ export const save = {
       work_body_weight: WORK_param.work_body_weight,
       work_section: WORK_param.work_section,
       work_regDt: fmtDate,
-      work_upDt: "",
+      work_updateDt: "",
     });
 
     return finalResult;
@@ -180,7 +180,7 @@ export const save = {
       },
       {$set: {
         ...WORK_param,
-        work_plan_upDt: fmtDate,
+        work_plan_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -190,7 +190,6 @@ export const save = {
     return finalResult;
   }
 };
-
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
@@ -214,16 +213,14 @@ export const deletes = {
         },
       },
       $set: {
-        work_upDt: fmtDate,
+        work_updateDt: fmtDate,
       }},
       {arrayFilters: [{
         "elem._id": _id_param
       }]}
-    )
-    .lean();
+    );
 
     let finalResult;
-
     if (updateResult.modifiedCount > 0) {
       const doc = await Work.findOne({
         user_id: user_id_param,
@@ -244,7 +241,10 @@ export const deletes = {
         })
         .lean();
       }
-    };
+      else {
+        finalResult = updateResult;
+      }
+    }
 
     return finalResult;
   }

@@ -109,7 +109,7 @@ export const MoneyDetail = () => {
       });
       alert(response.data.msg);
       setMONEY(updatedData.data.result || MONEY_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

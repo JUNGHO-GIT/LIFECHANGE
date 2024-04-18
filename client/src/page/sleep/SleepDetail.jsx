@@ -105,7 +105,7 @@ export const SleepDetail = () => {
       });
       alert(response.data.msg);
       setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

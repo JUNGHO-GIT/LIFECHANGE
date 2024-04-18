@@ -78,6 +78,7 @@ export const detail = {
     startDt_param,
     endDt_param
   ) => {
+
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
@@ -91,6 +92,7 @@ export const detail = {
       }
     })
     .lean();
+
     return finalResult;
   }
 };
@@ -131,7 +133,7 @@ export const save = {
       sleep_endDt: endDt_param,
       sleep_section: SLEEP_param.sleep_section,
       sleep_regDt: fmtDate,
-      sleep_upDt: "",
+      sleep_updateDt: "",
     });
 
     return finalResult;
@@ -146,7 +148,7 @@ export const save = {
       },
       {$set: {
         ...SLEEP_param,
-        sleep_upDt: fmtDate,
+        sleep_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -183,7 +185,7 @@ export const deletes = {
           },
         },
         $set: {
-          sleep_upDt: fmtDate,
+          sleep_updateDt: fmtDate,
         },
       },
       {arrayFilters: [{
@@ -214,7 +216,10 @@ export const deletes = {
         })
         .lean();
       }
-    };
+      else {
+        finalResult = updateResult;
+      }
+    }
 
     return finalResult;
   }

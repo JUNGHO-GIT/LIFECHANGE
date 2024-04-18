@@ -115,7 +115,7 @@ export const FoodDetail = () => {
       });
       alert(response.data.msg);
       setFOOD(updatedData.data.result || FOOD_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

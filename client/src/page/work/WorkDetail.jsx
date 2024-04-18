@@ -171,7 +171,7 @@ export const WorkDetail = () => {
       });
       alert(response.data.msg);
       setWORK(updatedData.data.result || WORK_DEFAULT);
-      updatedData.data.result === null && navParam(SEND.toList);
+      !updatedData.data.result && navParam(SEND.toList);
     }
     else {
       alert(response.data.msg);

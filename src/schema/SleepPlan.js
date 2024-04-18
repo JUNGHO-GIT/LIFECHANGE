@@ -48,7 +48,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  sleep_plan_upDt: {
+  sleep_plan_updateDt: {
     type: String,
     default: "",
     required: false

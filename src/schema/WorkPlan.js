@@ -27,22 +27,22 @@ const schema = new mongoose.Schema({
     required: false
   },
 
-  work_plan_total_count: {
+  work_plan_count: {
     type: Number,
     default: 0,
     required: false
   },
-  work_plan_total_volume: {
+  work_plan_volume: {
     type: Number,
     default: 0,
     required: false
   },
-  work_plan_total_cardio: {
+  work_plan_cardio: {
     type: String,
     default: "",
     required: false
   },
-  work_plan_body_weight: {
+  work_plan_weight: {
     type: Number,
     default: 0,
     required: false
@@ -53,7 +53,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  work_plan_upDt: {
+  work_plan_updateDt: {
     type: String,
     default: "",
     required: false

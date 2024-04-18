@@ -138,7 +138,7 @@ export const save = {
       sleep_plan_morning: SLEEP_PLAN_param.sleep_plan_morning,
       sleep_plan_time: SLEEP_PLAN_param.sleep_plan_time,
       sleep_plan_regDt: fmtDate,
-      sleep_plan_upDt: "",
+      sleep_plan_updateDt: "",
     });
 
     return finalResult;
@@ -152,7 +152,7 @@ export const save = {
       },
       {$set: {
         ...SLEEP_PLAN_param,
-        sleep_plan_upDt: fmtDate,
+        sleep_plan_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -179,7 +179,7 @@ export const deletes = {
         sleep_plan_endDt: endDt_param,
       },
       {$set: {
-        sleep_plan_upDt: fmtDate,
+        sleep_plan_updateDt: fmtDate,
       }},
       {arrayFilters: [{
         "elem._id": _id_param
@@ -203,7 +203,11 @@ export const deletes = {
         })
         .lean();
       }
+      else {
+        finalResult = updateResult;
+      }
     }
+
     return finalResult;
   }
 };

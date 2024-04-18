@@ -43,7 +43,7 @@ const schema = new mongoose.Schema({
     default: "",
     required: false
   },
-  money_plan_upDt: {
+  money_plan_updateDt: {
     type: String,
     default: "",
     required: false

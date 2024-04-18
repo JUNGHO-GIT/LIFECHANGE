@@ -115,12 +115,12 @@ export const save = {
       user_id: user_id_param,
       work_plan_startDt: startDt_param,
       work_plan_endDt: endDt_param,
-      work_plan_total_count: WORK_PLAN_param.work_plan_total_count,
-      work_plan_total_volume: WORK_PLAN_param.work_plan_total_volume,
-      work_plan_total_cardio: WORK_PLAN_param.work_plan_total_cardio,
-      work_plan_body_weight: WORK_PLAN_param.work_plan_body_weight,
+      work_plan_count: WORK_PLAN_param.work_plan_count,
+      work_plan_volume: WORK_PLAN_param.work_plan_volume,
+      work_plan_cardio: WORK_PLAN_param.work_plan_cardio,
+      work_plan_weight: WORK_PLAN_param.work_plan_weight,
       work_plan_regDt: fmtDate,
-      work_plan_upDt: "",
+      work_plan_updateDt: "",
     });
     return finalResult;
   },
@@ -133,7 +133,7 @@ export const save = {
       },
       {$set: {
         ...WORK_PLAN_param,
-        work_plan_upDt: fmtDate,
+        work_plan_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -158,7 +158,7 @@ export const deletes = {
         work_plan_endDt: endDt_param,
       },
       {$set: {
-        work_plan_upDt: fmtDate,
+        work_plan_updateDt: fmtDate,
       }},
       {arrayFilters: [{
         "elem._id": _id_param
@@ -179,7 +179,11 @@ export const deletes = {
         })
         .lean();
       }
+      else {
+        finalResult = updateResult;
+      }
     }
+
     return finalResult;
   }
 };

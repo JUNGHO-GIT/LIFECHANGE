@@ -137,7 +137,7 @@ export const save = {
       food_plan_protein: FOOD_PLAN_param.food_plan_protein,
       food_plan_fat: FOOD_PLAN_param.food_plan_fat,
       food_plan_regDt: fmtDate,
-      food_plan_upDt: "",
+      food_plan_updateDt: "",
     });
 
     return finalResult;
@@ -152,7 +152,7 @@ export const save = {
       },
       {$set: {
         ...FOOD_PLAN_param,
-        food_plan_upDt: fmtDate,
+        food_plan_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -179,7 +179,7 @@ export const deletes = {
         food_plan_endDt: endDt_param,
       },
       {$set: {
-        food_plan_upDt: fmtDate,
+        food_plan_updateDt: fmtDate,
       }},
       {arrayFilters: [{
         "elem._id": _id_param
@@ -202,6 +202,9 @@ export const deletes = {
           _id: doc._id
         })
         .lean();
+      }
+      else {
+        finalResult = updateResult;
       }
     }
 
