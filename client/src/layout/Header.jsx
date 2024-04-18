@@ -1,108 +1,30 @@
 // Header.jsx
 
 import React, {useState, useEffect} from "react";
-import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
-import {dataArray} from "../assets/data/DataArray.jsx";
-import {useStorage} from "../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
 import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
+import {SideBar} from "./SideBar.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
-  const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
-  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
-  const {val:SEND, set:setSEND} = useStorage (
-    `SEND(${PATH})`, {
-      id: "",
-      date: koreanDate,
-      refresh: 0,
-      toLogin: "/user/login",
-      toSignup: "/user/signup",
-    }
-  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [isSidebar, setIsSidebar] = useState(true);
-  const [isActive, setIsActive] = useState(PATH);
-  const [isExpended, setIsExpended] = useState({});
+  const [isSidebar, setIsSidebar] = useState(false);
 
-  // 3-1. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setIsActive(location.pathname);
-  }, [location.pathname]);
-
-  const toggleExpand = (menuLabel) => {
-    setIsExpended(isExpended === menuLabel ? null : menuLabel);
+  // 4. toggle ------------------------------------------------------------------------------------>
+  const toggleSidebar = () => {
+    setIsSidebar(prev => !prev);
   };
-
-  // 4. sideBar ----------------------------------------------------------------------------------->
-  const sideBarNode = () => {
-
-    let preFix;
-    let lowFix;
-
-    dataArray.forEach((menu) => {
-      if (isActive.includes(menu.label.toLowerCase())) {
-        preFix = menu.label;
-        lowFix = preFix.toLowerCase()
-      }
-    });
-
-    function sidBarItem (label, items) {
-      return (
-        <li className={"text-start pointer mt-30 ps-20"}>
-          <Form className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
-            toggleExpand(label)
-          )}>
-            {label}
-          </Form>
-          <Collapse in={isExpended === label}>
-            <ul>
-              {items?.map(({ to, label }) => (
-                <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
-                  <Form className={"pointer"} onClick={() => {
-                    SEND.startDt = koreanDate;
-                    SEND.endDt = koreanDate;
-                    navParam(to, {
-                      state: SEND
-                    });
-                    setIsSidebar(false)
-                    setIsActive(to);
-                  }}>
-                    {label}
-                  </Form>
-                </li>
-              ))}
-            </ul>
-          </Collapse>
-        </li>
-      );
-    };
-
-    return (
-      <FormGroup className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
-        <Form className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
-          <h3 className={"ps-20"}>Changer</h3>
-          <p className={"pt-10 pe-10"} onClick={() => setIsSidebar(!isSidebar)}>X</p>
-        </Form>
-        <Form className={"d-flex flex-column p-3"}>
-          <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>
-            {dataArray?.map((menu) => (
-              sidBarItem(menu.label, menu.items)
-            ))}
-          </ul>
-        </Form>
-      </FormGroup>
-    );
+  const handleCloseSidebar = () => {
+    setIsSidebar(false);
   };
 
   // 6-1. button ---------------------------------------------------------------------------------->
@@ -168,10 +90,8 @@ export const Header = () => {
         <Container fluid className={"p-0"}>
           <Row className={"d-center"}>
             <Col xs={1}>
-              {sideBarNode()}
-              <Button type={"button"} size={"sm"} variant={"secondary"} onClick={() => {
-                setIsSidebar(!isSidebar);
-              }}>
+              <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
+              <Button type={"button"} size={"sm"} variant={"secondary"} onClick={toggleSidebar}>
                 Sidebar
               </Button>
             </Col>
