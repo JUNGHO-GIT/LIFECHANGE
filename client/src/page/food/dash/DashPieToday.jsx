@@ -46,15 +46,12 @@ export const DashPieToday = () => {
   const renderKcal = ({
     cx, cy, midAngle, innerRadius, outerRadius, percent, index
   }) => {
-    const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
+    const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
+    const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
-      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
-      fontSize={"12"}>
-        {`${DASH_KCAL[index]?.name} ${Math.round(percent * 100)}%`}
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
       </text>
     );
   };
@@ -63,15 +60,12 @@ export const DashPieToday = () => {
   const renderNut = ({
     cx, cy, midAngle, innerRadius, outerRadius, percent, index
   }) => {
-    const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
+    const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
+    const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
-      <text x={x} y={y} fill={"black"} textAnchor={"middle"} dominantBaseline={"central"}
-      fontSize={"12"}>
-        {`${DASH_NUT[index]?.name} ${Math.round(percent * 100)}%`}
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
       </text>
     );
   };
@@ -80,36 +74,41 @@ export const DashPieToday = () => {
   const chartNodeKcal = () => {
     const COLORS_KCAL = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
-      <ResponsiveContainer width={"100%"} height={300}>
-        <PieChart>
-          <Pie
-            data={DASH_KCAL}
-            cx={"50%"}
-            cy={"50%"}
-            labelLine={false}
-            label={renderKcal}
-            outerRadius={80}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={10}
-            onMouseEnter={(data, index) => {
-              data.payload.opacity = 0.5;
-            }}
-            onMouseLeave={(data, index) => {
-              data.payload.opacity = 1.0;
-            }}
-          >
-            {DASH_KCAL?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_KCAL[index % COLORS_KCAL.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => {
-              return `${Number(value).toLocaleString()}`;
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
+      <React.Fragment>
+        <ResponsiveContainer width={"100%"} height={350}>
+          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+            <Pie
+              data={DASH_KCAL}
+              cx={"50%"}
+              cy={"50%"}
+              label={renderKcal}
+              labelLine={false}
+              outerRadius={120}
+              fill={"#8884d8"}
+              dataKey={"value"}
+              minAngle={15}
+              onMouseEnter={(data, index) => {
+                data.payload.opacity = 0.5;
+              }}
+              onMouseLeave={(data, index) => {
+                data.payload.opacity = 1.0;
+              }}
+            >
+              {DASH_KCAL?.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS_KCAL[index % COLORS_KCAL.length]} />
+              ))}
+            </Pie>
+            <Tooltip
+              formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+              contentStyle={{
+                backgroundColor:"rgba(255, 255, 255, 0.8)",
+                border:"none",
+                borderRadius:"10px"
+              }}
+            ></Tooltip>
+          </PieChart>
+        </ResponsiveContainer>
+      </React.Fragment>
     );
   };
 
@@ -117,36 +116,41 @@ export const DashPieToday = () => {
   const chartNodeNut = () => {
     const COLORS_NUT = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
-      <ResponsiveContainer width={"100%"} height={300}>
-        <PieChart>
-          <Pie
-            data={DASH_NUT}
-            cx={"50%"}
-            cy={"50%"}
-            labelLine={false}
-            label={renderNut}
-            outerRadius={80}
-            fill={"#8884d8"}
-            dataKey={"value"}
-            minAngle={10}
-            onMouseEnter={(data, index) => {
-              data.payload.opacity = 0.5;
-            }}
-            onMouseLeave={(data, index) => {
-              data.payload.opacity = 1.0;
-            }}
-          >
-            {DASH_NUT?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS_NUT[index % COLORS_NUT.length]} />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) => {
-              return `${Number(value).toLocaleString()}`;
-            }}
-          />
-        </PieChart>
-      </ResponsiveContainer>
+      <React.Fragment>
+        <ResponsiveContainer width={"100%"} height={350}>
+          <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+            <Pie
+              data={DASH_NUT}
+              cx={"50%"}
+              cy={"50%"}
+              label={renderNut}
+              labelLine={false}
+              outerRadius={120}
+              fill={"#8884d8"}
+              dataKey={"value"}
+              minAngle={15}
+              onMouseEnter={(data, index) => {
+                data.payload.opacity = 0.5;
+              }}
+              onMouseLeave={(data, index) => {
+                data.payload.opacity = 1.0;
+              }}
+            >
+              {DASH_NUT?.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS_NUT[index % COLORS_NUT.length]} />
+              ))}
+            </Pie>
+            <Tooltip
+              formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+              contentStyle={{
+                backgroundColor:"rgba(255, 255, 255, 0.8)",
+                border:"none",
+                borderRadius:"10px"
+              }}
+            ></Tooltip>
+          </PieChart>
+        </ResponsiveContainer>
+      </React.Fragment>
     );
   };
 

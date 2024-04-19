@@ -41,40 +41,61 @@ export const DashLineMonth = () => {
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNode = () => {
     return (
-      <ResponsiveContainer width={"100%"} height={300}>
-        <LineChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type={"category"} dataKey={"name"} />
-          <YAxis
-            type={"number"}
-            domain={[0, 30]}
-            ticks={[0, 6, 12, 18, 24, 30]}
-            tickFormatter={(tick) => {
-              if (tick > 24) {
-                return `0${tick - 24}`;
-              }
-              else {
-                return tick;
-              }
-            }}
-          />
-          {LINE.includes("취침")
-            && <Line type={"monotone"} dataKey={"취침"} stroke="#8884d8" activeDot={{ r: 8 }} />
-          }
-          {LINE.includes("기상")
-            && <Line type={"monotone"} dataKey={"기상"} stroke="#ffc658" />
-          }
-          {LINE.includes("수면")
-            && <Line type={"monotone"} dataKey={"수면"} stroke="#82ca9d" />
-          }
-          <Tooltip
-            formatter={(value) => {
-              return `${Number(value).toLocaleString()}`;
-            }}
-          />
-          <Legend />
-        </LineChart>
-      </ResponsiveContainer>
+      <React.Fragment>
+        <ResponsiveContainer width={"100%"} height={350}>
+          <LineChart data={DASH} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <XAxis
+              type={"category"}
+              dataKey={"name"}
+              tickLine={false}
+              axisLine={{stroke:"#e0e0e0"}}
+              tick={{fill:"#666", fontSize:14}}
+            ></XAxis>
+            <YAxis
+              type={"number"}
+              domain={[0, 30]}
+              ticks={[0, 6, 12, 18, 24, 30]}
+              tickFormatter={(tick) => {
+                return tick > 24 ? tick -= 24 : tick;
+              }}
+              tickLine={false}
+              axisLine={{stroke:"#e0e0e0"}}
+              tick={{fill:"#666", fontSize:14}}
+            ></YAxis>
+            {LINE.includes("취침") && (
+              <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
+            )}
+            {LINE.includes("수면") && (
+              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
+            )}
+            {LINE.includes("기상") && (
+              <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
+            )}
+            <Tooltip
+              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+              contentStyle={{
+                borderRadius:"10px",
+                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+                padding:"10px",
+                border:"none",
+                background:"#fff",
+                color:"#666"
+              }}
+            ></Tooltip>
+            <Legend
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
+              iconType={"circle"}
+            ></Legend>
+          </LineChart>
+        </ResponsiveContainer>
+      </React.Fragment>
     );
   };
 

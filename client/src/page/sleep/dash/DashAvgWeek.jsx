@@ -42,10 +42,17 @@ export const DashAvgWeek = () => {
   const chartNode = () => {
     return (
       <React.Fragment>
-        <ResponsiveContainer width={"100%"} height={300}>
-          <BarChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type={"category"} dataKey={"name"} />
+        <ResponsiveContainer width={"100%"} height={350}>
+          <BarChart data={DASH} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          barGap={8} barCategoryGap={"20%"}>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <XAxis
+              type={"category"}
+              dataKey={"name"}
+              tickLine={false}
+              axisLine={{stroke:"#e0e0e0"}}
+              tick={{fill:"#666", fontSize:14}}
+            ></XAxis>
             <YAxis
               type={"number"}
               domain={[0, 30]}
@@ -53,22 +60,59 @@ export const DashAvgWeek = () => {
               tickFormatter={(tick) => {
                 return tick > 24 ? tick -= 24 : tick;
               }}
-            />
-            {LINE.includes("취침")
-              && <Bar type={"monotone"} dataKey={"취침"} fill={"#8884d8"} />
-            }
-            {LINE.includes("기상")
-              && <Bar type={"monotone"} dataKey={"기상"} fill={"#82ca9d"} />
-            }
-            {LINE.includes("수면")
-              && <Bar type={"monotone"} dataKey={"수면"} fill={"#ffc658"} />
-            }
+              tickLine={false}
+              axisLine={{stroke:"#e0e0e0"}}
+              tick={{fill:"#666", fontSize:14}}
+            ></YAxis>
+            {LINE.includes("취침") && (
+              <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
+                onMouseEnter={(data, index) => {
+                  data.payload.opacity = 0.5;
+                }}
+                onMouseLeave={(data, index) => {
+                  data.payload.opacity = 1.0;
+                }}>
+              </Bar>
+            )}
+            {LINE.includes("기상") && (
+              <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
+                onMouseEnter={(data, index) => {
+                  data.payload.opacity = 0.5;
+                }}
+                onMouseLeave={(data, index) => {
+                  data.payload.opacity = 1.0;
+                }}>
+              </Bar>
+            )}
+            {LINE.includes("수면") && (
+              <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}
+                onMouseEnter={(data, index) => {
+                  data.payload.opacity = 0.5;
+                }}
+                onMouseLeave={(data, index) => {
+                  data.payload.opacity = 1.0;
+                }}>
+              </Bar>
+            )}
+
             <Tooltip
-            formatter={(value) => {
-              return `${Number(value).toLocaleString()}`;
-            }}
-          />
-            <Legend />
+              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+              contentStyle={{
+                borderRadius:"10px",
+                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+                padding:"10px",
+                border:"none",
+                background:"#fff",
+                color:"#666"
+              }}
+            ></Tooltip>
+            <Legend
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
+              iconType={"circle"}
+            ></Legend>
           </BarChart>
         </ResponsiveContainer>
       </React.Fragment>

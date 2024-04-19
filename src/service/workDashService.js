@@ -168,7 +168,11 @@ export const lineWeek = async (
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
-  let finalResult = [];
+  // volume
+  let finalResultVolume = [];
+
+  // cardio
+  let finalResultCardio = [];
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().add(i, "days");
@@ -176,14 +180,21 @@ export const lineWeek = async (
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
-    finalResult.push({
+    finalResultVolume.push({
       name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      볼륨: intFormat(findResult?.work_total_volume || 0),
+      볼륨: intFormat(findResult?.work_total_volume || 0)
+    });
+
+    finalResultCardio.push({
+      name: `${data[i]} ${dayNum.format("MM/DD")}`,
       시간: intFormat(findResult?.work_total_cardio || 0)
     });
   };
 
-  return finalResult;
+  return {
+    volume: finalResultVolume,
+    cardio: finalResultCardio
+  };
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
@@ -197,7 +208,11 @@ export const lineMonth = async (
     "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
   ];
 
-  let finalResult = [];
+  // volume
+  let finalResultVolume = [];
+
+  // cardio
+  let finalResultCardio = [];
 
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
@@ -205,14 +220,25 @@ export const lineMonth = async (
       "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
-    finalResult.push({
+    finalResultVolume.push({
       name: `${data[i]}`,
-      볼륨: intFormat(findResult?.work_total_volume || 0),
+      볼륨: intFormat(findResult?.work_total_volume || 0)
+    });
+
+    finalResultCardio.push({
+      name: `${data[i]}`,
       시간: intFormat(findResult?.work_total_cardio || 0)
     });
-  }
 
-  return finalResult;
+    if (dayNum.isSame(curMonthEnd, "day")) {
+      break;
+    }
+  };
+
+  return {
+    volume: finalResultVolume,
+    cardio: finalResultCardio
+  };
 };
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
