@@ -162,17 +162,14 @@ export const save = {
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
-  deletes: async (
-    _id_param, section_id_param, user_id_param, startDt_param, endDt_param
+  detail: async (
+    _id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param
   ) => {
-
-    let findResult = Object();
-    let updateResult = Object();
-    let deleteResult = Object();
-    let finalResult = Object();
-
-    findResult = await Sleep.findOne({
-      _id: _id_param,
+    const finalResult = await Sleep.findOne({
+      _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       sleep_startDt: {
         $gte: startDt_param,
@@ -181,53 +178,55 @@ export const deletes = {
       sleep_endDt: {
         $gte: startDt_param,
         $lte: endDt_param,
-      }
+      },
     })
     .lean();
 
-    if (findResult) {
-      updateResult = await Sleep.updateOne(
-        {_id: _id_param,
-          user_id: user_id_param,
-          sleep_startDt: {
-            $gte: startDt_param,
-            $lte: endDt_param,
-          },
-          sleep_endDt: {
-            $gte: startDt_param,
-            $lte: endDt_param,
-          },
-        },
-        {$pull: {
-          sleep_section: {
-            _id: section_id_param
-          },
-        },
-        $set: {
-          sleep_updateDt: fmtDate,
-        }},
-        {upsert: true,
-          new: true
-        }
-      )
-      .lean();
-    }
-
-    if (findResult && findResult.sleep_section.length === 1 && updateResult.modifiedCount > 0) {
-      deleteResult = await Sleep.deleteOne({
-        _id: _id_param
-      })
-      .lean();
-      console.log(deleteResult);
-    }
-
-    if (deleteResult.deletedCount > 0) {
-      finalResult = "deleted";
-    }
-    else {
-      finalResult = "updated";
-    }
-
     return finalResult;
+  },
+
+  update: async (
+    _id_param,
+    section_id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param,
+  ) => {
+    const updateResult = await Sleep.updateOne(
+      {_id: _id_param,
+        user_id: user_id_param,
+        sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      },
+      {$pull: {
+        sleep_section: {
+          _id: section_id_param
+        },
+      },
+      $set: {
+        sleep_updateDt: fmtDate,
+      }},
+      {upsert: true, new: true}
+    )
+    .lean();
+
+    return updateResult;
+  },
+
+  deletes: async (
+    _id_param
+  ) => {
+    const deleteResult = await Sleep.deleteOne({
+      _id: _id_param
+    })
+    .lean();
+
+    return deleteResult;
   }
 };

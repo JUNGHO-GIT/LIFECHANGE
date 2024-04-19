@@ -25,7 +25,8 @@ router.get("/list", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -57,7 +58,8 @@ router.get("/detail", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -89,7 +91,8 @@ router.post("/save", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "저장 실패"
+        msg: "저장 실패",
+        result: null
       });
     }
   }
@@ -104,23 +107,34 @@ router.post("/save", async (req, res) => {
 
 // 4. deletes ------------------------------------------------------------------------------------->
 router.delete("/delete", async (req, res) => {
-  let result = await service.deletes(
-    req.query._id,
-    req.query.section_id,
-    req.query.user_id,
-    req.query.duration
-  );
-  result = await middleware.save(result);
-  if (result) {
-    res.json({
-      status: "success",
-      msg: "삭제 성공"
-    });
+  try {
+    let result = await service.deletes(
+      req.query._id,
+      req.query.section_id,
+      req.query.user_id,
+      req.query.duration
+    );
+    result = await middleware.save(result);
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "삭제 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "삭제 실패",
+        result: null
+      });
+    }
   }
-  else {
-    res.json({
-      status: "fail",
-      msg: "삭제 실패"
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
     });
   }
 });

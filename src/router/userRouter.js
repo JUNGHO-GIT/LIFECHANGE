@@ -141,7 +141,8 @@ router.get("/list", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -171,7 +172,8 @@ router.get("/detail", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -201,7 +203,8 @@ router.post("/save", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "저장 실패"
+        msg: "저장 실패",
+        result: null
       });
     }
   }

@@ -110,7 +110,7 @@ export const WorkDetail = () => {
       }
     };
 
-    const updatedSection = OBJECT.work_section.map((section) => {
+    const updatedSection = OBJECT.work_section?.map((section) => {
       sectionVolume = section.work_set * section.work_rep * section.work_kg;
       totalVolume += sectionVolume;
       totalMinutes += timeFormat(section.work_cardio);
@@ -164,20 +164,18 @@ export const WorkDetail = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    alert(response.data.msg);
 
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
-        params: {
-          _id: id,
-          user_id: user_id,
-          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-        },
-      });
-      setOBJECT(updatedData.data.result || OBJECT_DEFAULT);
-      if (response.data.result === "deleted") {
+      alert(response.data.msg);
+      if (Object.keys(response.data.result).length > 0) {
+        setOBJECT(response.data.result);
+      }
+      else {
         navParam(SEND.toList);
       }
+    }
+    else {
+      alert(response.data.msg);
     }
   };
 

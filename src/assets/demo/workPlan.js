@@ -44,7 +44,7 @@ for (let i = 1; i <= 100; i++) {
 
     work_plan_count: randomNumber(100),
     work_plan_volume: randomNumber(1000),
-    work_plan_cardio:  randomNumber(1000),
+    work_plan_cardio:  randomTime(),
     work_plan_weight: randomNumber(1000),
 
     work_plan_regDt: formatDate2(regDate),

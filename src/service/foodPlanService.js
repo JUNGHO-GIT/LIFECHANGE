@@ -91,7 +91,7 @@ export const detail = async (
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
   user_id_param,
-  OBJECT_PLAN_param,
+  OBJECT_param,
   duration_param
 ) => {
 
@@ -104,12 +104,12 @@ export const save = async (
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      user_id_param, OBJECT_PLAN_param, startDt, endDt
+      user_id_param, OBJECT_param, startDt, endDt
     );
   }
   else {
     finalResult = await repository.save.update(
-      findResult._id, OBJECT_PLAN_param
+      findResult._id, OBJECT_param
     );
   }
 
@@ -125,9 +125,36 @@ export const deletes = async (
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
-  const finalResult = await repository.deletes.deletes(
+  const findResult = await repository.deletes.detail(
     _id_param, user_id_param, startDt, endDt
   );
 
-  return finalResult
+  if (!findResult) {
+    return null;
+  }
+  else {
+    const updateResult = await repository.deletes.update(
+      _id_param, user_id_param, startDt, endDt
+    );
+
+    if (!updateResult) {
+      return null;
+    }
+    else {
+      const findAgain = await repository.deletes.detail(
+        _id_param, user_id_param, startDt, endDt
+      );
+
+      if (!findAgain) {
+        await repository.deletes.deletes(
+          _id_param
+        );
+
+        return "deleted";
+      }
+      else {
+        return findAgain;
+      }
+    }
+  }
 };

@@ -119,7 +119,7 @@ export const save = {
   },
   create: async (
     user_id_param,
-    OBJECT_PLAN_param,
+    OBJECT_param,
     startDt_param,
     endDt_param
   ) => {
@@ -128,8 +128,8 @@ export const save = {
       user_id: user_id_param,
       money_plan_startDt: startDt_param,
       money_plan_endDt: endDt_param,
-      money_plan_in: OBJECT_PLAN_param.money_plan_in,
-      money_plan_out: OBJECT_PLAN_param.money_plan_out,
+      money_plan_in: OBJECT_param.money_plan_in,
+      money_plan_out: OBJECT_param.money_plan_out,
       money_plan_regDt: fmtDate,
       money_plan_updateDt: "",
     });
@@ -138,13 +138,13 @@ export const save = {
   },
   update: async (
     _id_param,
-    OBJECT_PLAN_param
+    OBJECT_param
   ) => {
     const finalResult = await MoneyPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...OBJECT_PLAN_param,
+        ...OBJECT_param,
         money_plan_updateDt: fmtDate,
       }},
       {upsert: true,
@@ -159,11 +159,28 @@ export const save = {
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
-  deletes: async (
+  detail: async (
     _id_param,
     user_id_param,
     startDt_param,
     endDt_param
+  ) => {
+    const finalResult = await MoneyPlan.findOne({
+      _id: _id_param === "" ? {$exists:true} : _id_param,
+      user_id: user_id_param,
+      money_plan_startDt: startDt_param,
+      money_plan_endDt: endDt_param,
+    })
+    .lean();
+
+    return finalResult;
+  },
+
+  update: async (
+    _id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param,
   ) => {
     const updateResult = await MoneyPlan.updateOne(
       {_id: _id_param,
@@ -172,35 +189,23 @@ export const deletes = {
         money_plan_endDt: endDt_param,
       },
       {$set: {
-        money_plan_updateDt: fmtDate,
+        money_updateDt: fmtDate,
       }},
-      {arrayFilters: [{
-        "elem._id": _id_param
-      }]}
+      {upsert: true, new: true}
     )
     .lean();
 
-    let finalResult;
+    return updateResult;
+  },
 
-    if (updateResult.modifiedCount > 0) {
-      const doc = await MoneyPlan.findOne({
-        user_id: user_id_param,
-        money_plan_startDt: startDt_param,
-        money_plan_endDt: endDt_param,
-      })
-      .lean();
+  deletes: async (
+    _id_param
+  ) => {
+    const deleteResult = await MoneyPlan.deleteOne({
+      _id: _id_param
+    })
+    .lean();
 
-      if (doc) {
-        finalResult = await MoneyPlan.deleteOne({
-          _id: doc._id
-        })
-        .lean();
-      }
-      else {
-        finalResult = updateResult;
-      }
-    }
-
-    return finalResult;
+    return deleteResult;
   }
 };

@@ -53,7 +53,7 @@ export const SleepPlanDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,
     sleep_plan_startDt: "0000-00-00",
@@ -62,21 +62,21 @@ export const SleepPlanDetail = () => {
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
   };
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -86,27 +86,26 @@ export const SleepPlanDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_OBJECT}/delete`, {
+    const response = await axios.delete(`${URL_OBJECT}/plan/delete`, {
       params: {
         _id: id,
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
+    alert(response.data.msg);
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/plan/detail`, {
         params: {
-          _id: location_id,
+          _id: id,
           user_id: user_id,
           duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      setOBJECT_PLAN(updatedData.data.result || OBJECT_PLAN_DEFAULT);
-      alert(response.data.msg);
-      !updatedData.data.result && navParam(SEND.toList);
+      setOBJECT(updatedData.data.result || OBJECT_DEFAULT);
     }
     else {
-      alert(response.data.msg);
+      navParam(SEND.toList);
     }
   };
 
@@ -127,13 +126,13 @@ export const SleepPlanDetail = () => {
         </thead>
         <tbody>
           <tr className={"fs-20 pt-20"}>
-            <td>{OBJECT_PLAN?.sleep_plan_startDt}</td>
-            <td>{OBJECT_PLAN?.sleep_plan_endDt}</td>
-            <td>{OBJECT_PLAN?.sleep_plan_night}</td>
-            <td>{OBJECT_PLAN?.sleep_plan_morning}</td>
-            <td>{OBJECT_PLAN?.sleep_plan_time}</td>
+            <td>{OBJECT?.sleep_plan_startDt}</td>
+            <td>{OBJECT?.sleep_plan_endDt}</td>
+            <td>{OBJECT?.sleep_plan_night}</td>
+            <td>{OBJECT?.sleep_plan_morning}</td>
+            <td>{OBJECT?.sleep_plan_time}</td>
             <td><Button variant={"danger"} size={"sm"} onClick={() => (
-              flowDelete(OBJECT_PLAN?._id)
+              flowDelete(OBJECT?._id)
             )}>X</Button></td>
           </tr>
         </tbody>

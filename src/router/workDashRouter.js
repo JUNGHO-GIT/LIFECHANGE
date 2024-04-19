@@ -20,7 +20,8 @@ router.get("/scatter/week", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -49,7 +50,8 @@ router.get("/scatter/month", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -78,7 +80,8 @@ router.get("/pie/week", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -107,7 +110,8 @@ router.get("/pie/month", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -136,7 +140,8 @@ router.get("/line/week", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -165,7 +170,8 @@ router.get("/line/month", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -194,7 +200,8 @@ router.get("/avg/week", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -223,7 +230,8 @@ router.get("/avg/month", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }

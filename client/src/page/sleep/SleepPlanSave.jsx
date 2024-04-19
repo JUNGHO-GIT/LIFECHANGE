@@ -54,7 +54,7 @@ export const SleepPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,
     sleep_plan_startDt: "0000-00-00",
@@ -63,22 +63,22 @@ export const SleepPlanSave = () => {
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
   };
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
-  useTime(OBJECT_PLAN, setOBJECT_PLAN, PATH, "plan");
+  useTime(OBJECT, setOBJECT, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         _id: "",
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -88,9 +88,9 @@ export const SleepPlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/plan/save`, {
       user_id: user_id,
-      OBJECT_PLAN: OBJECT_PLAN,
+      OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
@@ -129,9 +129,9 @@ export const SleepPlanSave = () => {
               clockIcon={null}
               disabled={false}
               disableClock={false}
-              value={OBJECT_PLAN?.sleep_plan_night}
+              value={OBJECT?.sleep_plan_night}
               onChange={(e) => {
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   sleep_plan_night: e ? e.toString() : "",
                 }));
@@ -151,9 +151,9 @@ export const SleepPlanSave = () => {
               clockIcon={null}
               disabled={false}
               disableClock={false}
-              value={OBJECT_PLAN?.sleep_plan_morning}
+              value={OBJECT?.sleep_plan_morning}
               onChange={(e) => {
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   sleep_plan_morning: e ? e.toString() : "",
                 }));
@@ -173,7 +173,7 @@ export const SleepPlanSave = () => {
               disabled={true}
               clockIcon={null}
               disableClock={false}
-              value={OBJECT_PLAN?.sleep_plan_time}
+              value={OBJECT?.sleep_plan_time}
             ></TimePicker>
           </div>
         </Col>

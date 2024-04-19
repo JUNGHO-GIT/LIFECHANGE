@@ -189,16 +189,14 @@ export const save = {
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
-  deletes: async (
-    _id_param, section_id_param, user_id_param, startDt_param, endDt_param
+  detail: async (
+    _id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param
   ) => {
-    let findResult = Object();
-    let updateResult = Object();
-    let deleteResult = Object();
-    let finalResult = Object();
-
-    findResult = await Food.findOne({
-      _id: _id_param,
+    const finalResult = await Food.findOne({
+      _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -207,53 +205,55 @@ export const deletes = {
       food_endDt: {
         $gte: startDt_param,
         $lte: endDt_param,
-      }
+      },
     })
     .lean();
 
-    if (findResult) {
-      updateResult = await Food.updateOne(
-        {_id: _id_param,
-          user_id: user_id_param,
-          food_startDt: {
-            $gte: startDt_param,
-            $lte: endDt_param,
-          },
-          food_endDt: {
-            $gte: startDt_param,
-            $lte: endDt_param,
-          },
-        },
-        {$pull: {
-          food_section: {
-            _id: section_id_param
-          },
-        },
-        $set: {
-          food_updateDt: fmtDate,
-        }},
-        {upsert: true,
-          new: true
-        }
-      )
-      .lean();
-    }
-
-    if (findResult && findResult.food_section.length === 1 && updateResult.modifiedCount > 0) {
-      deleteResult = await Food.deleteOne({
-        _id: _id_param
-      })
-      .lean();
-      console.log(deleteResult);
-    }
-
-    if (deleteResult.deletedCount > 0) {
-      finalResult = "deleted";
-    }
-    else {
-      finalResult = "updated";
-    }
-
     return finalResult;
+  },
+
+  update: async (
+    _id_param,
+    section_id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param,
+  ) => {
+    const updateResult = await Food.updateOne(
+      {_id: _id_param,
+        user_id: user_id_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      },
+      {$pull: {
+        food_section: {
+          _id: section_id_param
+        },
+      },
+      $set: {
+        food_updateDt: fmtDate,
+      }},
+      {upsert: true, new: true}
+    )
+    .lean();
+
+    return updateResult;
+  },
+
+  deletes: async (
+    _id_param
+  ) => {
+    const deleteResult = await Food.deleteOne({
+      _id: _id_param
+    })
+    .lean();
+
+    return deleteResult;
   }
 };

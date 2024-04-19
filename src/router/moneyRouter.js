@@ -2,6 +2,7 @@
 
 import express from "express";
 import * as service from "../service/moneyService.js";
+import * as middleware from "../middleware/moneyMiddleware.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
@@ -24,7 +25,8 @@ router.get("/list", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -56,7 +58,8 @@ router.get("/detail", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "조회 실패"
+        msg: "조회 실패",
+        result: null
       });
     }
   }
@@ -72,11 +75,12 @@ router.get("/detail", async (req, res) => {
 // 3. save ---------------------------------------------------------------------------------------->
 router.post("/save", async (req, res) => {
   try {
-    const result = await service.save (
+    let result = await service.save(
       req.body.user_id,
       req.body.OBJECT,
       req.body.duration
     );
+    result = await middleware.save(result);
     if (result) {
       res.json({
         status: "success",
@@ -87,7 +91,8 @@ router.post("/save", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "저장 실패"
+        msg: "저장 실패",
+        result: null
       });
     }
   }
@@ -103,12 +108,13 @@ router.post("/save", async (req, res) => {
 // 4. deletes ------------------------------------------------------------------------------------->
 router.delete("/delete", async (req, res) => {
   try {
-    const result = await service.deletes(
+    let result = await service.deletes(
       req.query._id,
       req.query.section_id,
       req.query.user_id,
       req.query.duration
     );
+    result = await middleware.save(result);
     if (result) {
       res.json({
         status: "success",

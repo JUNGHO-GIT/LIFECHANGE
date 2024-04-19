@@ -54,7 +54,7 @@ export const WorkPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     work_plan_number: 0,
     work_plan_startDt: "0000-00-00",
@@ -64,21 +64,21 @@ export const WorkPlanSave = () => {
     work_plan_volume: 0,
     work_plan_weight: 0,
   };
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         _id: "",
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -90,7 +90,7 @@ export const WorkPlanSave = () => {
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/plan/save`, {
       user_id: user_id,
-      OBJECT_PLAN: OBJECT_PLAN,
+      OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
@@ -116,124 +116,128 @@ export const WorkPlanSave = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
-      <Row className={"d-center"}>
-        <Col xs={6} className={"mb-20"}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 운동 횟수</span>
-            <NumericFormat
-              min={0}
-              max={999}
-              minLength={1}
-              maxLength={5}
-              id={"work_count"}
-              name={"work_count"}
-              suffix={" 회"}
-              datatype={"number"}
-              displayType={"input"}
-              className={"form-control"}
-              disabled={false}
-              allowNegative={false}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              value={Math.min(999, OBJECT_PLAN?.work_plan_count)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(999, parseInt(values?.value));
-                setOBJECT_PLAN((prev) => ({
-                  ...prev,
-                  work_plan_count: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-        <Col xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 유산소 시간</span>
-            <TimePicker
-              locale={"ko"}
-              format={"HH:mm"}
-              id={"work_cardio"}
-              name={"work_cardio"}
-              className={"form-control"}
-              disabled={false}
-              clockIcon={null}
-              disableClock={false}
-              value={OBJECT_PLAN?.work_plan_cardio}
-              onChange={(e) => {
-                setOBJECT_PLAN((prev) => ({
-                  ...prev,
-                  work_plan_cardio: e ? e.toString() : ""
-                }));
-              }}
-            ></TimePicker>
-          </div>
-        </Col>
-        <Col xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 총 볼륨</span>
-            <NumericFormat
-              min={0}
-              max={999999}
-              minLength={1}
-              maxLength={12}
-              suffix={" vol"}
-              datatype={"number"}
-              displayType={"input"}
-              id={"work_volume"}
-              name={"work_volume"}
-              className={"form-control"}
-              allowNegative={false}
-              fixedDecimalScale={true}
-              thousandSeparator={true}
-              allowLeadingZeros={false}
-              value={Math.min(999999, OBJECT_PLAN?.work_plan_volume)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(999999, parseInt(values?.value));
-                setOBJECT_PLAN((prev) => ({
-                  ...prev,
-                  work_plan_volume: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-        <Col xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 체중</span>
-            <NumericFormat
-              min={0}
-              max={999}
-              minLength={1}
-              maxLength={6}
-              suffix={" kg"}
-              datatype={"number"}
-              displayType={"input"}
-              id={"work_weight"}
-              name={"work_weight"}
-              className={"form-control"}
-              allowNegative={false}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              allowLeadingZeros={false}
-              value={Math.min(999, OBJECT_PLAN?.work_plan_weight)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(999, parseInt(values?.value));
-                setOBJECT_PLAN((prev) => ({
-                  ...prev,
-                  work_plan_weight: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-      </Row>
+      <React.Fragment>
+        <Row className={"d-center"}>
+          <Col xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 총 볼륨</span>
+              <NumericFormat
+                min={0}
+                max={999999}
+                minLength={1}
+                maxLength={12}
+                suffix={" vol"}
+                datatype={"number"}
+                displayType={"input"}
+                id={"work_volume"}
+                name={"work_volume"}
+                className={"form-control"}
+                allowNegative={false}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                allowLeadingZeros={false}
+                value={Math.min(999999, OBJECT?.work_plan_volume)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    work_plan_volume: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 유산소 시간</span>
+              <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
+                id={"work_cardio"}
+                name={"work_cardio"}
+                className={"form-control"}
+                disabled={false}
+                clockIcon={null}
+                disableClock={false}
+                value={OBJECT?.work_plan_cardio}
+                onChange={(e) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    work_plan_cardio: e ? e.toString() : ""
+                  }));
+                }}
+              ></TimePicker>
+            </div>
+          </Col>
+        </Row>
+        <Row className={"d-center"}>
+          <Col xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 운동 횟수</span>
+              <NumericFormat
+                min={0}
+                max={999}
+                minLength={1}
+                maxLength={5}
+                id={"work_count"}
+                name={"work_count"}
+                suffix={" 회"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                disabled={false}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={Math.min(999, OBJECT?.work_plan_count)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    work_plan_count: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 체중</span>
+              <NumericFormat
+                min={0}
+                max={999}
+                minLength={1}
+                maxLength={6}
+                suffix={" kg"}
+                datatype={"number"}
+                displayType={"input"}
+                id={"work_weight"}
+                name={"work_weight"}
+                className={"form-control"}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                allowLeadingZeros={false}
+                value={Math.min(999, OBJECT?.work_plan_weight)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    work_plan_weight: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+        </Row>
+      </React.Fragment>
     );
   };
 
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={flowSave} navParam={navParam}
         part={"work"} plan={"plan"} type={"save"}
       />

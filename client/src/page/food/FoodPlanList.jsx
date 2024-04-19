@@ -70,7 +70,7 @@ export const FoodPlanList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = [{
+  const OBJECT_DEFAULT = [{
     food_startDt: "0000-00-00",
     food_endDt: "0000-00-00",
     food_plan_startDt: "0000-00-00",
@@ -88,11 +88,11 @@ export const FoodPlanList = () => {
     food_diff_protein: 0,
     food_diff_fat: 0,
   }];
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/list`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
@@ -100,7 +100,7 @@ export const FoodPlanList = () => {
         PAGING: PAGING
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -123,7 +123,7 @@ export const FoodPlanList = () => {
             </tr>
           </thead>
           <tbody>
-            {OBJECT_PLAN?.map((item, index) => (
+            {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={5} className={"pointer"} onClick={() => {

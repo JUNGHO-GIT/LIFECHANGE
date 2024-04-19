@@ -193,12 +193,15 @@ export const save = {
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
-  deletes: async (
-    _id_param, section_id_param, user_id_param, startDt_param, endDt_param
-  ) => {
 
-    const findResult = await Work.findOne({
-      _id: _id_param,
+  detail: async (
+    _id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param
+  ) => {
+    const finalResult = await Work.findOne({
+      _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       work_startDt: {
         $gte: startDt_param,
@@ -207,13 +210,20 @@ export const deletes = {
       work_endDt: {
         $gte: startDt_param,
         $lte: endDt_param,
-      }
+      },
     })
+    .lean();
 
-    if (!findResult) {
-      return null;
-    }
+    return finalResult;
+  },
 
+  update: async (
+    _id_param,
+    section_id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param,
+  ) => {
     const updateResult = await Work.updateOne(
       {_id: _id_param,
         user_id: user_id_param,
@@ -234,32 +244,21 @@ export const deletes = {
       $set: {
         work_updateDt: fmtDate,
       }},
-      {upsert: true,
-        new: true
-      }
+      {upsert: true, new: true}
     )
     .lean();
 
-    if (findResult.work_section.length === 1 && updateResult.modifiedCount > 0) {
-      const deleteResult = await Work.deleteOne({
-        _id: _id_param
-      })
-      .lean();
-    }
+    return updateResult;
+  },
 
-    const finalResult = await Work.findOne({
-      _id: _id_param,
-      user_id: user_id_param,
-      work_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      work_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      }
+  deletes: async (
+    _id_param
+  ) => {
+    const deleteResult = await Work.deleteOne({
+      _id: _id_param
     })
+    .lean();
 
-    return finalResult;
+    return deleteResult;
   }
 };

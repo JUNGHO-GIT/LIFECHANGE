@@ -70,7 +70,7 @@ export const MoneyPlanList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = [{
+  const OBJECT_DEFAULT = [{
     money_startDt: "0000-00-00",
     money_endDt: "0000-00-00",
     money_plan_startDt: "0000-00-00",
@@ -82,11 +82,11 @@ export const MoneyPlanList = () => {
     money_diff_in: 0,
     money_diff_out: 0,
   }];
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/list`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
@@ -94,7 +94,7 @@ export const MoneyPlanList = () => {
         PAGING: PAGING
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -117,7 +117,7 @@ export const MoneyPlanList = () => {
             </tr>
           </thead>
           <tbody>
-            {OBJECT_PLAN?.map((item, index) => (
+            {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={3} className={"pointer"} onClick={() => {

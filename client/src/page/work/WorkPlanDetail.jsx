@@ -54,7 +54,7 @@ export const WorkPlanDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     work_plan_number: 0,
     work_plan_startDt: "0000-00-00",
@@ -64,7 +64,7 @@ export const WorkPlanDetail = () => {
     work_plan_cardio: "00:00",
     work_plan_weight: 0,
   };
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -78,7 +78,7 @@ export const WorkPlanDetail = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -88,27 +88,26 @@ export const WorkPlanDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_OBJECT}/delete`, {
+    const response = await axios.delete(`${URL_OBJECT}/plan/delete`, {
       params: {
         _id: id,
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
+    alert(response.data.msg);
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/plan/detail`, {
         params: {
-          _id: location_id,
+          _id: id,
           user_id: user_id,
           duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert(response.data.msg);
-      setOBJECT_PLAN(updatedData.data.result || OBJECT_PLAN_DEFAULT);
-      !updatedData.data.result && navParam(SEND.toList);
+      setOBJECT(updatedData.data.result || OBJECT_DEFAULT);
     }
     else {
-      alert(response.data.msg);
+      navParam(SEND.toList);
     }
   };
 
@@ -130,14 +129,14 @@ export const WorkPlanDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{OBJECT_PLAN?.work_plan_startDt}</td>
-            <td>{OBJECT_PLAN?.work_plan_endDt}</td>
-            <td>{OBJECT_PLAN?.work_plan_count}</td>
-            <td>{OBJECT_PLAN?.work_plan_volume}</td>
-            <td>{OBJECT_PLAN?.work_plan_cardio}</td>
-            <td>{OBJECT_PLAN?.work_plan_weight}</td>
+            <td>{OBJECT?.work_plan_startDt}</td>
+            <td>{OBJECT?.work_plan_endDt}</td>
+            <td>{OBJECT?.work_plan_count}</td>
+            <td>{OBJECT?.work_plan_volume}</td>
+            <td>{OBJECT?.work_plan_cardio}</td>
+            <td>{OBJECT?.work_plan_weight}</td>
             <td><Button variant={"danger"} size={"sm"}
-            onClick={() => (flowDelete(OBJECT_PLAN?._id))}>X</Button></td>
+            onClick={() => (flowDelete(OBJECT?._id))}>X</Button></td>
           </tr>
         </tbody>
         </Table>

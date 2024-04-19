@@ -1,8 +1,6 @@
 // workService.js
 
 import * as repository from "../repository/workRepository.js";
-import moment from "moment-timezone";
-import {Work} from "../schema/Work.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
@@ -93,9 +91,36 @@ export const deletes = async (
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
-  const finalResult = await repository.deletes.deletes(
-    _id_param, section_id_param, user_id_param, startDt, endDt
+  const findResult = await repository.deletes.detail(
+    _id_param, user_id_param, startDt, endDt
   );
 
-  return finalResult
+  if (!findResult) {
+    return null;
+  }
+  else {
+    const updateResult = await repository.deletes.update(
+      _id_param, section_id_param, user_id_param, startDt, endDt
+    );
+
+    if (!updateResult) {
+      return null;
+    }
+    else {
+      const findAgain = await repository.deletes.detail(
+        _id_param, user_id_param, startDt, endDt
+      );
+
+      if (findAgain?.work_section.length === 0) {
+        await repository.deletes.deletes(
+          _id_param
+        );
+
+        return "deleted";
+      }
+      else {
+        return findAgain;
+      }
+    }
+  }
 };

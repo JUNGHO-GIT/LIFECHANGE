@@ -53,7 +53,7 @@ export const MoneyPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     money_plan_number: 0,
     money_plan_startDt: "0000-00-00",
@@ -61,7 +61,7 @@ export const MoneyPlanSave = () => {
     money_plan_in: 0,
     money_plan_out: 0
   };
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -75,7 +75,7 @@ export const MoneyPlanSave = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -85,9 +85,9 @@ export const MoneyPlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/plan/save`, {
       user_id: user_id,
-      OBJECT_PLAN: OBJECT_PLAN,
+      OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
@@ -133,10 +133,10 @@ export const MoneyPlanSave = () => {
               allowNegative={false}
               thousandSeparator={true}
               fixedDecimalScale={true}
-              value={Math.min(99999999999999, OBJECT_PLAN?.money_plan_in)}
+              value={Math.min(99999999999999, OBJECT?.money_plan_in)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   money_plan_in: limitedValue
                 }));
@@ -163,10 +163,10 @@ export const MoneyPlanSave = () => {
               allowNegative={false}
               thousandSeparator={true}
               fixedDecimalScale={true}
-              value={Math.min(99999999999999, OBJECT_PLAN?.money_plan_out)}
+              value={Math.min(99999999999999, OBJECT?.money_plan_out)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   money_plan_out: limitedValue
                 }));

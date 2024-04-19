@@ -70,7 +70,7 @@ export const WorkPlanList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = [{
+  const OBJECT_DEFAULT = [{
     work_startDt: "0000-00-00",
     work_endDt: "0000-00-00",
     work_plan_startDt: "0000-00-00",
@@ -88,7 +88,7 @@ export const WorkPlanList = () => {
     work_diff_total_volume: 0,
     work_diff_body_weight: 0,
   }];
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -100,7 +100,7 @@ export const WorkPlanList = () => {
         PAGING: PAGING
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -123,7 +123,7 @@ export const WorkPlanList = () => {
             </tr>
           </thead>
           <tbody>
-            {OBJECT_PLAN?.map((item, index) => (
+            {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={5} className={"pointer"} onClick={() => {

@@ -53,7 +53,7 @@ export const FoodPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PLAN_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     food_plan_number: 0,
     food_plan_startDt: "0000-00-00",
@@ -63,21 +63,21 @@ export const FoodPlanSave = () => {
     food_plan_protein: 0,
     food_plan_fat: 0,
   };
-  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         _id: "",
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -87,9 +87,9 @@ export const FoodPlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/plan/save`, {
       user_id: user_id,
-      OBJECT_PLAN: OBJECT_PLAN,
+      OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
@@ -134,10 +134,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(9999, OBJECT_PLAN?.food_plan_kcal)}
+              value={Math.min(9999, OBJECT?.food_plan_kcal)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(9999, parseInt(values.value));
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   food_plan_kcal: limitedValue
                 }));
@@ -163,10 +163,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(999, OBJECT_PLAN?.food_plan_carb)}
+              value={Math.min(999, OBJECT?.food_plan_carb)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values.value));
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   food_plan_carb: limitedValue
                 }));
@@ -192,10 +192,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(999, OBJECT_PLAN?.food_plan_protein)}
+              value={Math.min(999, OBJECT?.food_plan_protein)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values.value));
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   food_plan_protein: limitedValue
                 }));
@@ -221,10 +221,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(999, OBJECT_PLAN?.food_plan_fat)}
+              value={Math.min(999, OBJECT?.food_plan_fat)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values.value));
-                setOBJECT_PLAN((prev) => ({
+                setOBJECT((prev) => ({
                   ...prev,
                   food_plan_fat: limitedValue
                 }));

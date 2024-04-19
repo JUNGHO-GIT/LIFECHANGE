@@ -122,7 +122,7 @@ export const save = {
   },
   create: async (
     user_id_param,
-    OBJECT_PLAN_param,
+    OBJECT_param,
     startDt_param,
     endDt_param
   ) => {
@@ -132,10 +132,10 @@ export const save = {
       user_id: user_id_param,
       food_plan_startDt: startDt_param,
       food_plan_endDt: endDt_param,
-      food_plan_kcal: OBJECT_PLAN_param.food_plan_kcal,
-      food_plan_carb: OBJECT_PLAN_param.food_plan_carb,
-      food_plan_protein: OBJECT_PLAN_param.food_plan_protein,
-      food_plan_fat: OBJECT_PLAN_param.food_plan_fat,
+      food_plan_kcal: OBJECT_param.food_plan_kcal,
+      food_plan_carb: OBJECT_param.food_plan_carb,
+      food_plan_protein: OBJECT_param.food_plan_protein,
+      food_plan_fat: OBJECT_param.food_plan_fat,
       food_plan_regDt: fmtDate,
       food_plan_updateDt: "",
     });
@@ -144,14 +144,14 @@ export const save = {
   },
   update: async (
     _id_param,
-    OBJECT_PLAN_param
+    OBJECT_param
   ) => {
 
     const finalResult = await FoodPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...OBJECT_PLAN_param,
+        ...OBJECT_param,
         food_plan_updateDt: fmtDate,
       }},
       {upsert: true,
@@ -165,13 +165,29 @@ export const save = {
 };
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
-  deletes: async (
+  detail: async (
     _id_param,
     user_id_param,
     startDt_param,
     endDt_param
   ) => {
+    const finalResult = await FoodPlan.findOne({
+      _id: _id_param === "" ? {$exists:true} : _id_param,
+      user_id: user_id_param,
+      food_plan_startDt: startDt_param,
+      food_plan_endDt: endDt_param,
+    })
+    .lean();
 
+    return finalResult;
+  },
+
+  update: async (
+    _id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param,
+  ) => {
     const updateResult = await FoodPlan.updateOne(
       {_id: _id_param,
         user_id: user_id_param,
@@ -179,35 +195,23 @@ export const deletes = {
         food_plan_endDt: endDt_param,
       },
       {$set: {
-        food_plan_updateDt: fmtDate,
+        food_updateDt: fmtDate,
       }},
-      {arrayFilters: [{
-        "elem._id": _id_param
-      }]}
+      {upsert: true, new: true}
     )
     .lean();
 
-    let finalResult;
+    return updateResult;
+  },
 
-    if (updateResult.modifiedCount > 0) {
-      const doc = await FoodPlan.findOne({
-        user_id: user_id_param,
-        food_plan_startDt: startDt_param,
-        food_plan_endDt: endDt_param,
-      })
-      .lean();
+  deletes: async (
+    _id_param
+  ) => {
+    const deleteResult = await FoodPlan.deleteOne({
+      _id: _id_param
+    })
+    .lean();
 
-      if (doc) {
-        finalResult = await FoodPlan.deleteOne({
-          _id: doc._id
-        })
-        .lean();
-      }
-      else {
-        finalResult = updateResult;
-      }
-    }
-
-    return finalResult;
+    return deleteResult;
   }
 };

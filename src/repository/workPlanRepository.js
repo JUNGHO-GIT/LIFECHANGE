@@ -107,7 +107,7 @@ export const save = {
   },
 
   create: async (
-    user_id_param, OBJECT_PLAN_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await WorkPlan.create({
@@ -115,10 +115,10 @@ export const save = {
       user_id: user_id_param,
       work_plan_startDt: startDt_param,
       work_plan_endDt: endDt_param,
-      work_plan_count: OBJECT_PLAN_param.work_plan_count,
-      work_plan_volume: OBJECT_PLAN_param.work_plan_volume,
-      work_plan_cardio: OBJECT_PLAN_param.work_plan_cardio,
-      work_plan_weight: OBJECT_PLAN_param.work_plan_weight,
+      work_plan_count: OBJECT_param.work_plan_count,
+      work_plan_volume: OBJECT_param.work_plan_volume,
+      work_plan_cardio: OBJECT_param.work_plan_cardio,
+      work_plan_weight: OBJECT_param.work_plan_weight,
       work_plan_regDt: fmtDate,
       work_plan_updateDt: "",
     });
@@ -126,13 +126,13 @@ export const save = {
   },
 
   update: async (
-    _id_param, OBJECT_PLAN_param
+    _id_param, OBJECT_param
   ) => {
     const finalResult = await WorkPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...OBJECT_PLAN_param,
+        ...OBJECT_param,
         work_plan_updateDt: fmtDate,
       }},
       {upsert: true,
@@ -146,11 +146,29 @@ export const save = {
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
-  deletes: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+  detail: async (
+    _id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param
   ) => {
-    let finalResult;
+    const finalResult = await WorkPlan.findOne({
+      _id: _id_param === "" ? {$exists:true} : _id_param,
+      user_id: user_id_param,
+      work_plan_startDt: startDt_param,
+      work_plan_endDt: endDt_param,
+    })
+    .lean();
 
+    return finalResult;
+  },
+
+  update: async (
+    _id_param,
+    user_id_param,
+    startDt_param,
+    endDt_param,
+  ) => {
     const updateResult = await WorkPlan.updateOne(
       {_id: _id_param,
         user_id: user_id_param,
@@ -158,32 +176,23 @@ export const deletes = {
         work_plan_endDt: endDt_param,
       },
       {$set: {
-        work_plan_updateDt: fmtDate,
+        work_updateDt: fmtDate,
       }},
-      {arrayFilters: [{
-        "elem._id": _id_param
-      }]}
+      {upsert: true, new: true}
     )
     .lean();
 
-    if (updateResult.modifiedCount > 0) {
-      const doc = await WorkPlan.findOne({
-        user_id: user_id_param,
-        work_plan_startDt: startDt_param,
-        work_plan_endDt: endDt_param,
-      })
-      .lean();
-      if (doc) {
-        finalResult = await WorkPlan.deleteOne({
-          _id: doc._id
-        })
-        .lean();
-      }
-      else {
-        finalResult = updateResult;
-      }
-    }
+    return updateResult;
+  },
 
-    return finalResult;
+  deletes: async (
+    _id_param
+  ) => {
+    const deleteResult = await WorkPlan.deleteOne({
+      _id: _id_param
+    })
+    .lean();
+
+    return deleteResult;
   }
 };

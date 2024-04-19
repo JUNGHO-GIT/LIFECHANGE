@@ -50,9 +50,7 @@ export const ButtonNode = ({
     return (
       <React.Fragment>
         <Button size={"sm"} variant={"primary"} className={"button me-5"} type={"button"}
-          onClick={() => {
-            flowSave();
-          }}
+          onClick={() => (flowSave())}
         >
           Save
         </Button>
