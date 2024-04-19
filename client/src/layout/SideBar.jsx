@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
-import {Container, Table, FormGroup, Form, FormLabel, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
+import {FormGroup, Form, FormLabel, Collapse} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({ sidebar, onClose }) => {
@@ -76,8 +76,8 @@ export const SideBar = ({ sidebar, onClose }) => {
                   navParam(to, {
                     state: SEND
                   });
-                  setIsSidebar(false)
                   setIsActive(to);
+                  onClose();
                 }}>
                   {label}
                 </Form>
