@@ -25,18 +25,17 @@
 }
 
 .react-time-picker__inputGroup {
-  flex-grow: 1;
+  flex-grow: 1 !important;
+  padding: 5px 0px 5px 0px !important;
 }
 
 .react-time-picker__inputGroup__divider {
   color: #ccc;
   font-size: 1.2em;
-  padding: 0 4px;
   position: relative;
   top: -1px;
 }
 
-/** 직접선택부분 */
 .react-time-picker__inputGroup__input {
   background: none;
   border: none;

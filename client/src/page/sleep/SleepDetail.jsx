@@ -30,7 +30,7 @@ export const SleepDetail = () => {
       endDt: "0000-00-00",
       toDetail:"/sleep/detail",
       toList:"/sleep/list",
-      toSave:"/sleep/save"
+      toUpdate:"/sleep/save",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(

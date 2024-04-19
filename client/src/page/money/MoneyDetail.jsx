@@ -30,7 +30,7 @@ export const MoneyDetail = () => {
       endDt: "0000-00-00",
       toDetail: "/money/detail",
       toList: "/money/list",
-      toSave: "/money/save"
+      toUpdate: "/money/save",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(

@@ -21,7 +21,6 @@ export const WorkDetail = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -32,7 +31,7 @@ export const WorkDetail = () => {
       endDt: "0000-00-00",
       toList:"/work/list",
       toDetail:"/work/detail",
-      toSave:"/work/save",
+      toUpdate:"/work/save",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(

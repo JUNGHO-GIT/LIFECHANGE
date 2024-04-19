@@ -29,7 +29,8 @@ export const FoodDetail = () => {
       startDt: "0000-00-00",
       endDt: "0000-00-00",
       toList:"/food/list",
-      toSave:"/food/save"
+      toDetail:"/food/detail",
+      toUpdate:"/food/save",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(

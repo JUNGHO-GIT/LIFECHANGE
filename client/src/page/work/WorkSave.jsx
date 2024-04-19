@@ -126,8 +126,8 @@ export const WorkSave = () => {
     if (JSON.stringify(updatedSection) !== JSON.stringify(OBJECT?.work_section)) {
       setOBJECT((prev) => ({
         ...prev,
-        work_total_volume: /* totalVolume, */ 0,
-        work_total_cardio: /* decimalToStr(totalTime), */ "00:00",
+        work_total_volume: 0,
+        work_total_cardio: "00:00",
         work_section: updatedSection,
       }));
     }
@@ -307,7 +307,7 @@ export const WorkSave = () => {
             </Col>
           </Row>
           <Row className={"d-center"}>
-            <Col xs={3}>
+            <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>세트</span>
                 <NumericFormat
@@ -339,7 +339,7 @@ export const WorkSave = () => {
                 ></NumericFormat>
               </div>
             </Col>
-            <Col xs={3}>
+            <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>횟수</span>
                 <NumericFormat
@@ -371,7 +371,9 @@ export const WorkSave = () => {
                 ></NumericFormat>
               </div>
             </Col>
-            <Col xs={3}>
+          </Row>
+          <Row className={"d-center"}>
+            <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>무게</span>
                 <NumericFormat
@@ -403,7 +405,7 @@ export const WorkSave = () => {
                 ></NumericFormat>
               </div>
             </Col>
-            <Col xs={3}>
+            <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>휴식</span>
                 <NumericFormat
@@ -434,7 +436,7 @@ export const WorkSave = () => {
                 ></NumericFormat>
               </div>
             </Col>
-            <Col xs={12}>
+            <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>볼륨</span>
                 <NumericFormat
@@ -456,9 +458,7 @@ export const WorkSave = () => {
                 ></NumericFormat>
               </div>
             </Col>
-          </Row>
-          <Row className={"d-center"}>
-            <Col xs={12}>
+            <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>유산소</span>
                 <TimePicker
