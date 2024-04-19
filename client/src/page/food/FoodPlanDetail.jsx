@@ -115,7 +115,7 @@ export const FoodPlanDetail = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table striped hover responsive variant={"light"}>
+        <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
               <th>시작일</th>

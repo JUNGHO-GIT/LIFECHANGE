@@ -165,9 +165,9 @@ export const FoodSearch = () => {
   };
 
   // 5-2. search ---------------------------------------------------------------------------------->
-  const searchFood = () => {
+  const searchNode = () => {
     return (
-      <FormGroup className={"d-flex"}>
+      <FormGroup className={"d-inline-flex"}>
         <InputMask
           mask={""}
           id={"food_content"}
@@ -218,7 +218,7 @@ export const FoodSearch = () => {
               {tableNode()}
             </Col>
             <Col xs={12} className={"mb-20"}>
-              {searchFood()}
+              {searchNode()}
             </Col>
             <Col xs={12} className={"mb-20"}>
               {pagingNode()}
