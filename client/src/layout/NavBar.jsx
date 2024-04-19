@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse, span} from "react-bootstrap";
+import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {
@@ -45,7 +45,7 @@ export const NavBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper mb-10"}>
+      <div className={"root-wrapper mb-10"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
@@ -58,7 +58,7 @@ export const NavBar = () => {
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

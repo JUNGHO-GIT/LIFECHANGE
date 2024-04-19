@@ -10,7 +10,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, FormGroup, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkSave = () => {
@@ -262,7 +262,7 @@ export const WorkSave = () => {
         <React.Fragment key={i}>
           <Row className={"d-center"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>부위</span>
                 <select
                   id={`work_part_idx-${i}`}
@@ -292,10 +292,10 @@ export const WorkSave = () => {
                     </option>
                   ))}
                 </select>
-              </FormGroup>
+              </div>
             </Col>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>타이틀</span>
                 <select
                   id={`work_title_idx-${i}`}
@@ -326,12 +326,12 @@ export const WorkSave = () => {
                     </option>
                   ))}
                 </select>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
           <Row className={"d-center"}>
             <Col xs={3}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>세트</span>
                 <NumericFormat
                   min={1}
@@ -360,10 +360,10 @@ export const WorkSave = () => {
                     });
                   }}
                 ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
             <Col xs={3}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>횟수</span>
                 <NumericFormat
                   min={1}
@@ -392,10 +392,10 @@ export const WorkSave = () => {
                     });
                   }}
                 ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
             <Col xs={3}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>무게</span>
                 <NumericFormat
                   min={1}
@@ -424,10 +424,10 @@ export const WorkSave = () => {
                     });
                   }}
                 ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
             <Col xs={3}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>휴식</span>
                 <NumericFormat
                   min={1}
@@ -455,10 +455,10 @@ export const WorkSave = () => {
                     });
                   }}
                 ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
             <Col xs={12}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>볼륨</span>
                 <NumericFormat
                   min={1}
@@ -477,12 +477,12 @@ export const WorkSave = () => {
                   thousandSeparator={true}
                   value={Math.min(999999999, OBJECT?.work_section[i]?.work_volume)}
                 ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
           <Row className={"d-center"}>
             <Col xs={12}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>유산소</span>
                 <TimePicker
                   locale={"ko"}
@@ -504,7 +504,7 @@ export const WorkSave = () => {
                     });
                   }}
                 ></TimePicker>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
         </React.Fragment>
@@ -524,7 +524,7 @@ export const WorkSave = () => {
         <React.Fragment>
           <Row className={"d-center"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>시작시간</span>
                 <TimePicker
                   locale={"ko"}
@@ -543,12 +543,12 @@ export const WorkSave = () => {
                     }));
                   }}
                 ></TimePicker>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
           <Row className={"row d-center mt-3"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>종료시간</span>
                 <TimePicker
                   locale={"ko"}
@@ -567,12 +567,12 @@ export const WorkSave = () => {
                     }));
                   }}
                 ></TimePicker>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
           <Row className={"row d-center mt-3"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>운동시간</span>
                 <TimePicker
                   locale={"ko"}
@@ -585,7 +585,7 @@ export const WorkSave = () => {
                   disableClock={false}
                   value={OBJECT?.work_time}
                 ></TimePicker>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
         </React.Fragment>
@@ -597,7 +597,7 @@ export const WorkSave = () => {
         <React.Fragment>
           <Row className={"d-center"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>총 볼륨</span>
                   <NumericFormat
                     min={1}
@@ -616,12 +616,12 @@ export const WorkSave = () => {
                     fixedDecimalScale={true}
                     value={Math.min(99999999999999, OBJECT?.work_total_volume)}
                   ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
           <Row className={"d-center mt-3"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>총 유산소 시간</span>
                 <TimePicker
                   locale={"ko"}
@@ -634,12 +634,12 @@ export const WorkSave = () => {
                   disableClock={false}
                   value={OBJECT?.work_total_cardio}
                 ></TimePicker>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
           <Row className={"d-center mt-3"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>체중</span>
                 <NumericFormat
                   min={1}
@@ -664,7 +664,7 @@ export const WorkSave = () => {
                     }));
                   }}
                 ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
         </React.Fragment>
@@ -694,29 +694,29 @@ export const WorkSave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>Save</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {dateNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {handlerSectionCount()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20"}>
+                <h1>Save</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {dateNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {handlerSectionCount()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

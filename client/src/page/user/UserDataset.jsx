@@ -8,7 +8,7 @@ import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 import {workArray} from "../../assets/data/WorkArray.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
@@ -265,7 +265,7 @@ export const UserDataset = () => {
               {OBJECT?.user_dataset[dataType]?.map((item, index) => (
                 (index > 0) && (
                   <React.Fragment key={index}>
-                    <Form className={"pointer"} onClick={() => {
+                    <div className={"pointer"} onClick={() => {
                       setIdx((prev) => ({
                         ...prev,
                         partIdx: index,
@@ -273,7 +273,7 @@ export const UserDataset = () => {
                       }));
                     }}>
                       {item[`${dataType}_part`]}
-                    </Form>
+                    </div>
                     <span className={"pointer"} onClick={rmPart(index)}>
                       x
                     </span>
@@ -288,14 +288,14 @@ export const UserDataset = () => {
               {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (
                 (index > 0) && (
                   <React.Fragment key={index}>
-                    <Form className={"pointer"} onClick={() => {
+                    <div className={"pointer"} onClick={() => {
                       setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
                       }));
                     }}>
                       {item}
-                    </Form>
+                    </div>
                     <span className={"pointer"} onClick={rmTitle(index)}>
                       x
                     </span>
@@ -334,29 +334,29 @@ export const UserDataset = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>List</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"}
-                onClick={() => (handlerSetDefault())}>
-                  기본값
-              </Button>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20"}>
+                <h1>List</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"}
+                  onClick={() => (handlerSetDefault())}>
+                    기본값
+                </Button>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

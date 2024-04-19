@@ -1,13 +1,13 @@
 // FoodSearch.jsx
 
 import axios from "axios";
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import InputMask from "react-input-mask";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
@@ -167,7 +167,7 @@ export const FoodSearch = () => {
   // 5-2. search ---------------------------------------------------------------------------------->
   const searchNode = () => {
     return (
-      <FormGroup className={"d-inline-flex"}>
+      <div className={"d-inline-flex"}>
         <InputMask
           mask={""}
           id={"food_content"}
@@ -192,7 +192,7 @@ export const FoodSearch = () => {
         }}>
           Search
         </Button>
-      </FormGroup>
+      </div>
     );
   };
 
@@ -207,26 +207,26 @@ export const FoodSearch = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>Search</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {searchNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {pagingNode()}
-            </Col>
+              <Col xs={12} className={"mb-20"}>
+                <h1>Search</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {searchNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {pagingNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

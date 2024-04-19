@@ -2,7 +2,7 @@
 
 import React from "react";
 import moment from "moment-timezone";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
@@ -126,53 +126,53 @@ export const ButtonNode = ({
   return (
     <React.Fragment>
       {part === "food" && type === "list" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : part === "food" && type === "detail" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonUpdate()}
           {buttonList()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : part === "food" && type === "save" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonSave()}
           {buttonSearch()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : part === "food" && type === "list" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : part !== "food" && type === "list" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : part !== "food" && type === "detail" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonUpdate()}
           {buttonList()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : part !== "food" && type === "save" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonSave()}
           {buttonList()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : part !== "food" && type === "list" ? (
-        <FormGroup className={"d-inline-flex"}>
+        <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
           {buttonRefresh()}
-        </FormGroup>
+        </div>
       ) : null}
     </React.Fragment>
   );

@@ -1,7 +1,7 @@
 // FilterNode.jsx
 
 import React from "react";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
+import {ButtonGroup} from "react-bootstrap";
 
 // 8. filter  ------------------------------------------------------------------------------------->
 export const FilterNode = ({

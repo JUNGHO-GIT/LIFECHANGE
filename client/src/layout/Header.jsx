@@ -1,10 +1,10 @@
 // Header.jsx
 
-import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
-import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
-import {Container, Table, FormGroup, Form, ButtonGroup, Button, CardGroup, Card, Row, Col, Collapse} from "react-bootstrap";
 import {SideBar} from "./SideBar.jsx";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
+import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {

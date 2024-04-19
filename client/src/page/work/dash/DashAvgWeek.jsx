@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
@@ -206,21 +206,21 @@ export const DashAvgWeek = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={9}>
-              <span className={"fs-20"}>주간 볼륨 / 유산소시간 평균</span>
-              {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
-            </Col>
-            <Col xs={3}>
-              {tableNode()}
-            </Col>
+              <Col xs={9}>
+                <span className={"fs-20"}>주간 볼륨 / 유산소시간 평균</span>
+                {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
+              </Col>
+              <Col xs={3}>
+                {tableNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

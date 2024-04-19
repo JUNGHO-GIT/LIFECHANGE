@@ -9,7 +9,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -211,10 +211,10 @@ export const MoneySave = () => {
   const tableNode = () => {
     function tableSection (i) {
       return (
-        <FormGroup key={i} className={"mb-20"}>
+        <div key={i} className={"mb-20"}>
           <Row className={"d-center"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
                 <select
                   id={`money_part_idx-${i}`}
@@ -243,10 +243,10 @@ export const MoneySave = () => {
                     </option>
                   ))}
                 </select>
-              </FormGroup>
+              </div>
             </Col>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>타이틀</span>
                 <select
                   id={`money_title_idx-${i}`}
@@ -276,12 +276,12 @@ export const MoneySave = () => {
                     </option>
                   ))}
                 </select>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
           <Row className={"d-center"}>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>금액</span>
                 <NumericFormat
                   min={0}
@@ -310,10 +310,10 @@ export const MoneySave = () => {
                     });
                   }}
                 ></NumericFormat>
-              </FormGroup>
+              </div>
             </Col>
             <Col xs={6}>
-              <FormGroup className={"input-group"}>
+              <div className={"input-group"}>
                 <span className={"input-group-text"}>메모</span>
                 <InputMask
                   mask={""}
@@ -333,10 +333,10 @@ export const MoneySave = () => {
                     });
                   }}
                 ></InputMask>
-              </FormGroup>
+              </div>
             </Col>
           </Row>
-        </FormGroup>
+        </div>
       );
     };
 
@@ -353,7 +353,7 @@ export const MoneySave = () => {
       return (
         <Row className={"d-center"}>
           <Col xs={6}>
-            <FormGroup className={"input-group"}>
+            <div className={"input-group"}>
               <span className={"input-group-text"}>총수입</span>
               <NumericFormat
                 min={0}
@@ -373,10 +373,10 @@ export const MoneySave = () => {
                 fixedDecimalScale={true}
                 value={Math.min(9999999999, OBJECT?.money_total_in)}
               ></NumericFormat>
-            </FormGroup>
+            </div>
           </Col>
           <Col xs={6}>
-            <FormGroup className={"input-group"}>
+            <div className={"input-group"}>
               <span className={"input-group-text"}>총지출</span>
               <NumericFormat
                 min={0}
@@ -396,7 +396,7 @@ export const MoneySave = () => {
                 fixedDecimalScale={true}
                 value={Math.min(9999999999, OBJECT?.money_total_out)}
               ></NumericFormat>
-            </FormGroup>
+            </div>
           </Col>
         </Row>
       );
@@ -422,7 +422,7 @@ export const MoneySave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
@@ -444,7 +444,7 @@ export const MoneySave = () => {
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

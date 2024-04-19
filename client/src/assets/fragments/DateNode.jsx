@@ -4,8 +4,7 @@ import React, {forwardRef} from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
@@ -21,7 +20,7 @@ export const DateNode = ({
 
   const datePickerNode = (label, value, onChange, placement) => (
     <React.Fragment>
-      <FormGroup className={"input-group"}>
+      <div className={"input-group"}>
         <span className="input-group-text">{label}</span>
         <DatePicker
           locale={ko}
@@ -32,7 +31,7 @@ export const DateNode = ({
           customInput={<CustomInput />}
           onChange={(date) => onChange(date)}
         />
-      </FormGroup>
+      </div>
     </React.Fragment>
   );
 
@@ -56,7 +55,7 @@ export const DateNode = ({
           startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
         }));
       }, "bottom")}
-      <FormGroup className={"w-10"}></FormGroup>
+      <div className={"w-10"}></div>
       {datePickerNode("종료일", DATE.endDt, (date) => {
         setDATE((prev) => ({
           ...prev,
@@ -68,9 +67,9 @@ export const DateNode = ({
 
   return (
     <React.Fragment>
-      <FormGroup className="d-inline-flex">
+      <div className="d-inline-flex">
         {plan === "plan" ? planDate() : realDate()}
-      </FormGroup>
+      </div>
     </React.Fragment>
   );
 };

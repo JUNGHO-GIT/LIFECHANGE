@@ -7,7 +7,7 @@ import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, Button, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkDetail = () => {
@@ -285,7 +285,7 @@ export const WorkDetail = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
@@ -301,7 +301,7 @@ export const WorkDetail = () => {
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

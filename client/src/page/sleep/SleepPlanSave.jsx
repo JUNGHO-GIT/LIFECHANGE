@@ -9,7 +9,7 @@ import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanSave = () => {
@@ -118,7 +118,7 @@ export const SleepPlanSave = () => {
     return (
       <Row className={"d-center"}>
         <Col xs={12}>
-          <FormGroup className={"input-group"}>
+          <div className={"input-group"}>
             <span className={"input-group-text"}>취침</span>
             <TimePicker
               locale={"ko"}
@@ -137,10 +137,10 @@ export const SleepPlanSave = () => {
                 }));
               }}
             ></TimePicker>
-          </FormGroup>
+          </div>
         </Col>
         <Col xs={12}>
-          <FormGroup className={"input-group"}>
+          <div className={"input-group"}>
             <span className={"input-group-text"}>기상</span>
             <TimePicker
               locale={"ko"}
@@ -159,10 +159,10 @@ export const SleepPlanSave = () => {
                 }));
               }}
             ></TimePicker>
-          </FormGroup>
+          </div>
         </Col>
         <Col xs={12}>
-          <FormGroup className={"input-group"}>
+          <div className={"input-group"}>
             <span className={"input-group-text"}>수면</span>
             <TimePicker
               locale={"ko"}
@@ -175,7 +175,7 @@ export const SleepPlanSave = () => {
               disableClock={false}
               value={OBJECT_PLAN?.sleep_plan_time}
             ></TimePicker>
-          </FormGroup>
+          </div>
         </Col>
       </Row>
     );
@@ -194,26 +194,26 @@ export const SleepPlanSave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>Save</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {dateNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20"}>
+                <h1>Save</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {dateNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

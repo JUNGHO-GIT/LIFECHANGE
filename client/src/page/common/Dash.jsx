@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {DayPicker} from "react-day-picker";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table,  FormCheck, Button, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const Dash = () => {
@@ -78,77 +78,77 @@ export const Dash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
-        <Form className={"container-fluid"}>
-          <Form className="row mb-20">
+      <div className={"root-wrapper"}>
+        <div className={"container-fluid"}>
+          <div className="row mb-20">
             <Col xs={12}>
-              <Form className="container-wrapper d-left">
-                <Form className="row d-center mt-5">
+              <div className="container-wrapper d-left">
+                <div className="row d-center mt-5">
                   <Col xs={12}>
                     <h1 className="mb-3 fw-7">{TITLE}</h1>
                     <h2 className="mb-3 fw-7">일별로 조회</h2>
-                  </Form>
-                </Form>
-                <Form className={"row d-center mt-3"}>
-                  <Form className="col-md-6 col-12 d-center">
+                  </div>
+                </div>
+                <div className={"row d-center mt-3"}>
+                  <div className="col-md-6 col-12 d-center">
                     {viewDashDay()}
-                  </Form>
-                </Form>
-                <Form className="row mb-20">
-                  <Form className="col-12 d-center">
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <div className="col-12 d-center">
                     {btnToday()}
                     {btnReset()}
-                  </Form>
-                </Form>
-              </Form>
-            </Form>
-          </Form>
-          <Form className="row">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
             <Col xs={6}>
               <Container fluid className={"container-wrapper"}>
-                <Form className="row d-center mt-5">
+                <div className="row d-center mt-5">
                   <Col xs={12}>
                     <h1 className="mb-3 fw-7">{TITLE}</h1>
                     <h2 className="mb-3 fw-7">일별로 조회</h2>
-                  </Form>
-                </Form>
-                <Form className={"row d-center mt-3"}>
-                  <Form className="col-md-6 col-12 d-center">
+                  </div>
+                </div>
+                <div className={"row d-center mt-3"}>
+                  <div className="col-md-6 col-12 d-center">
                     {viewDashDay()}
-                  </Form>
-                </Form>
-                <Form className="row mb-20">
-                  <Form className="col-12 d-center">
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <div className="col-12 d-center">
                     {btnToday()}
                     {btnReset()}
-                  </Form>
-                </Form>
-              </Form>
-            </Form>
+                  </div>
+                </div>
+              </div>
+            </div>
             <Col xs={6}>
               <Container fluid className={"container-wrapper"}>
-                <Form className="row d-center mt-5">
+                <div className="row d-center mt-5">
                   <Col xs={12}>
                     <h1 className="mb-3 fw-7">{TITLE}</h1>
                     <h2 className="mb-3 fw-7">일별로 조회</h2>
-                  </Form>
-                </Form>
-                <Form className={"row d-center mt-3"}>
-                  <Form className="col-md-6 col-12 d-center">
+                  </div>
+                </div>
+                <div className={"row d-center mt-3"}>
+                  <div className="col-md-6 col-12 d-center">
                     {viewDashDay()}
-                  </Form>
-                </Form>
-                <Form className="row mb-20">
-                  <Form className="col-12 d-center">
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <div className="col-12 d-center">
                     {btnToday()}
                     {btnReset()}
-                  </Form>
-                </Form>
-              </Form>
-            </Form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </Row>
         </Container>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 }; */

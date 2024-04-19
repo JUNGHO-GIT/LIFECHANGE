@@ -8,7 +8,7 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodList = () => {
@@ -211,30 +211,30 @@ export const FoodList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>List</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {calendarNode()}
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {filterNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {pagingNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20"}>
+                <h1>List</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {calendarNode()}
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {filterNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {pagingNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

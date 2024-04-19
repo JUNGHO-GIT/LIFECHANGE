@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card, FormCheck, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashLineMonth = () => {
@@ -204,9 +204,9 @@ export const DashLineMonth = () => {
           영양소
 
         </Button>
-        <FormGroup className={"mt-20 ms-30 text-start"}>
+        <div className={"mt-20 ms-30 text-start"}>
           {["탄수화물", "단백질", "지방"]?.map((key, index) => (
-            <Form key={index} className={"fw-bold mb-10"}>
+            <div key={index} className={"fw-bold mb-10"}>
               <FormCheck
                 inline
                 type={"switch"}
@@ -221,9 +221,9 @@ export const DashLineMonth = () => {
                 }}
               ></FormCheck>
               <span>{key}</span>
-            </Form>
+            </div>
           ))}
-        </FormGroup>
+        </div>
       </React.Fragment>
     );
   };
@@ -231,7 +231,7 @@ export const DashLineMonth = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
@@ -245,7 +245,7 @@ export const DashLineMonth = () => {
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

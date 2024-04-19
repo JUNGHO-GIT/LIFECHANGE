@@ -8,7 +8,7 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanSave = () => {
@@ -115,7 +115,7 @@ export const MoneyPlanSave = () => {
     return (
       <Row className={"mb-20"}>
         <Col xs={6}>
-          <FormGroup className={"input-group"}>
+          <div className={"input-group"}>
             <span className={"input-group-text"}>목표 수입</span>
             <NumericFormat
               min={0}
@@ -142,10 +142,10 @@ export const MoneyPlanSave = () => {
                 }));
               }}
             ></NumericFormat>
-          </FormGroup>
+          </div>
         </Col>
         <Col xs={6}>
-          <FormGroup className={"input-group"}>
+          <div className={"input-group"}>
             <span className={"input-group-text"}>목표 지출</span>
             <NumericFormat
               min={0}
@@ -172,7 +172,7 @@ export const MoneyPlanSave = () => {
                 }));
               }}
             ></NumericFormat>
-          </FormGroup>
+          </div>
         </Col>
       </Row>
     );
@@ -191,7 +191,7 @@ export const MoneyPlanSave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
@@ -210,7 +210,7 @@ export const MoneyPlanSave = () => {
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

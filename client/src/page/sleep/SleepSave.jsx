@@ -9,7 +9,7 @@ import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSave = () => {
@@ -121,7 +121,7 @@ export const SleepSave = () => {
       return (
         <Row className={"d-center"}>
           <Col xs={12}>
-            <FormGroup className={"input-group"}>
+            <div className={"input-group"}>
               <span className={"input-group-text"}>취침</span>
               <TimePicker
                 locale={"ko"}
@@ -143,10 +143,10 @@ export const SleepSave = () => {
                   }));
                 }}
               ></TimePicker>
-            </FormGroup>
+            </div>
           </Col>
           <Col xs={12}>
-            <FormGroup className={"input-group"}>
+            <div className={"input-group"}>
               <span className={"input-group-text"}>기상</span>
               <TimePicker
                 locale={"ko"}
@@ -168,10 +168,10 @@ export const SleepSave = () => {
                   }));
                 }}
               ></TimePicker>
-            </FormGroup>
+            </div>
           </Col>
           <Col xs={12}>
-            <FormGroup className={"input-group"}>
+            <div className={"input-group"}>
               <span className={"input-group-text"}>수면</span>
               <TimePicker
                 locale={"ko"}
@@ -184,7 +184,7 @@ export const SleepSave = () => {
                 disableClock={false}
                 value={OBJECT?.sleep_section[0]?.sleep_time}
               ></TimePicker>
-            </FormGroup>
+            </div>
           </Col>
         </Row>
       );
@@ -211,26 +211,26 @@ export const SleepSave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={12} className={"mb-20"}>
-              <h1>Save</h1>
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {dateNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20"}>
+                <h1>Save</h1>
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {dateNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

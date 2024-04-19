@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {
@@ -45,8 +45,8 @@ export const UserSignup = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableUserSave = () => {
     return (
-      <FormGroup>
-        <Form className={"form-floating"}>
+      <div>
+        <div className={"form-floating"}>
           <span className={"input-group-text"}>User ID</span>
           <InputMask
             mask={""}
@@ -58,8 +58,8 @@ export const UserSignup = () => {
               setUserId(e.target.value)
             )}
           ></InputMask>
-        </Form>
-        <Form className={"form-floating"}>
+        </div>
+        <div className={"form-floating"}>
           <span className={"input-group-text"}>Password</span>
           <InputMask
             mask={""}
@@ -71,8 +71,8 @@ export const UserSignup = () => {
               setUserPw(e.target.value)
             )}
           ></InputMask>
-        </Form>
-      </FormGroup>
+        </div>
+      </div>
     );
   };
 
@@ -112,7 +112,7 @@ export const UserSignup = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"}>
           <Container>
             <Row className={"row d-center mt-5"}>
@@ -126,7 +126,7 @@ export const UserSignup = () => {
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

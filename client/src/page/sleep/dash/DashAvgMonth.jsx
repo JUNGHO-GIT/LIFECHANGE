@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgMonth = () => {
@@ -122,9 +122,9 @@ export const DashAvgMonth = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <FormGroup className={"mt-20 ms-30 text-start"}>
+        <div className={"mt-20 ms-30 text-start"}>
           {["취침", "수면", "기상"]?.map((key, index) => (
-            <Form key={index} className={"fw-bold mb-10"}>
+            <div key={index} className={"fw-bold mb-10"}>
               <FormCheck
                 inline
                 type={"switch"}
@@ -139,9 +139,9 @@ export const DashAvgMonth = () => {
                 }}
               ></FormCheck>
               <span>{key}</span>
-            </Form>
+            </div>
           ))}
-        </FormGroup>
+        </div>
       </React.Fragment>
     );
   };
@@ -149,21 +149,21 @@ export const DashAvgMonth = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={9}>
-              <span className={"fs-20"}>월간 수면 평균</span>
-              {chartNode()}
-            </Col>
-            <Col xs={3}>
-              {tableNode()}
-            </Col>
+              <Col xs={9}>
+                <span className={"fs-20"}>월간 수면 평균</span>
+                {chartNode()}
+              </Col>
+              <Col xs={3}>
+                {tableNode()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };

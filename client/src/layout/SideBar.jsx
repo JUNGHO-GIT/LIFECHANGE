@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
-import {FormGroup, Form, span, Collapse} from "react-bootstrap";
+import {Collapse} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({ sidebar, onClose }) => {
@@ -61,16 +61,16 @@ export const SideBar = ({ sidebar, onClose }) => {
   const sidBarItem = (label, items) => {
     return (
       <li className={"text-start pointer mt-30 ps-20"}>
-        <Form className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
+        <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
           toggleExpand(label)
         )}>
           {label}
-        </Form>
+        </div>
         <Collapse in={isExpended === label}>
           <ul>
             {items?.map(({ to, label }) => (
               <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
-                <Form className={"pointer"} onClick={() => {
+                <div className={"pointer"} onClick={() => {
                   SEND.startDt = koreanDate;
                   SEND.endDt = koreanDate;
                   navParam(to, {
@@ -80,7 +80,7 @@ export const SideBar = ({ sidebar, onClose }) => {
                   onClose();
                 }}>
                   {label}
-                </Form>
+                </div>
               </li>
             ))}
           </ul>
@@ -91,18 +91,18 @@ export const SideBar = ({ sidebar, onClose }) => {
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <FormGroup className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
-      <Form className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
+    <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
+      <div className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
         <span className={"ps-20 fs-40"}>Changer</span>
         <span className={"pt-10 pe-10 fs-20 pointer"} onClick={onClose}>X</span>
-      </Form>
-      <Form className={"d-flex flex-column p-3"}>
+      </div>
+      <div className={"d-flex flex-column p-3"}>
         <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>
           {dataArray?.map((menu) => (
             sidBarItem(menu.label, menu.items))
           )}
         </ul>
-      </Form>
-    </FormGroup>
+      </div>
+    </div>
   );
 };

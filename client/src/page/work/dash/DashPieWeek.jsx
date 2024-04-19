@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieWeek = () => {
@@ -157,22 +157,22 @@ export const DashPieWeek = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <CardGroup className={"root-wrapper"}>
+      <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-            <Col xs={6}>
-              <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
-              {chartNodePart()}
-            </Col>
-            <Col xs={6}>
-              <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
-              {chartNodeTitle()}
-            </Col>
+              <Col xs={6}>
+                <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
+                {chartNodePart()}
+              </Col>
+              <Col xs={6}>
+                <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
+                {chartNodeTitle()}
+              </Col>
             </Row>
           </Container>
         </Card>
-      </CardGroup>
+      </div>
     </React.Fragment>
   );
 };
