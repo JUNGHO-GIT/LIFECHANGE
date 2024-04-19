@@ -27,9 +27,9 @@ export const WorkDetail = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
-      refresh:0,
+      refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toList:"/work/list",
       toDetail:"/work/detail",
       toSave:"/work/save",
@@ -59,13 +59,13 @@ export const WorkDetail = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     work_number: 0,
-    work_startDt: "",
-    work_endDt: "",
-    work_start: "",
-    work_end: "",
-    work_time: "",
+    work_startDt: "0000-00-00",
+    work_endDt: "0000-00-00",
+    work_start: "00:00",
+    work_end: "00:00",
+    work_time: "00:00",
     work_total_volume: 0,
-    work_total_cardio: "",
+    work_total_cardio: "0000-00-00",
     work_body_weight: 0,
     work_section: [{
       work_part_idx: 0,
@@ -76,7 +76,7 @@ export const WorkDetail = () => {
       work_rep: 1,
       work_kg: 1,
       work_rest: 1,
-      work_cardio: "",
+      work_cardio: "0000-00-00",
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);

@@ -5,6 +5,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {TimePicker} from "react-time-picker";
 import {NumericFormat} from "react-number-format";
+import {strToDecimal, decimalToStr} from "../../assets/jsx/date.jsx";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -30,9 +31,9 @@ export const WorkSave = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
-      refresh:0,
+      refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toList:"/work/list"
     }
   );
@@ -60,13 +61,13 @@ export const WorkSave = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     work_number: 0,
-    work_startDt: "",
-    work_endDt: "",
-    work_start: "",
-    work_end: "",
-    work_time: "",
+    work_startDt: "0000-00-00",
+    work_endDt: "0000-00-00",
+    work_start: "00:00",
+    work_end: "00:00",
+    work_time: "00:00",
     work_total_volume: 0,
-    work_total_cardio: "",
+    work_total_cardio: "00:00",
     work_body_weight: 0,
     work_section: [{
       work_part_idx: 0,
@@ -78,7 +79,7 @@ export const WorkSave = () => {
       work_kg: 1,
       work_rest: 1,
       work_volume: 0,
-      work_cardio: "",
+      work_cardio: "00:00",
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
@@ -109,48 +110,24 @@ export const WorkSave = () => {
 
     let sectionVolume = 0;
     let totalVolume = 0;
-    let totalMinutes = 0;
+    let totalTime = 0.0;
 
-    const timeFormat = (data) => {
-      if (!data) {
-        return 0;
-      }
-      else if (typeof data === "string") {
-        const time = data.split(":");
-        if (time.length === 2) {
-          const hours = parseInt(time[0], 10) * 60;
-          const minutes = parseInt(time[1], 10);
-          return hours + minutes;
-        }
-        else {
-          return 0;
-        }
-      }
-      else {
-        return 0;
-      }
-    };
-
-    const updatedSections = OBJECT.work_section.map((item) => {
+    const updatedSections = OBJECT?.work_section?.map((item) => {
       sectionVolume = item.work_set * item.work_rep * item.work_kg;
       totalVolume += sectionVolume;
-      totalMinutes += timeFormat(item.work_cardio);
+      totalTime += strToDecimal(item.work_cardio || "00:00");
       return {
         ...item,
         work_volume: sectionVolume
       };
     });
 
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    const cardioTime = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
-
     // 이전 상태와 비교
-    if (OBJECT.work_total_volume !== totalVolume || OBJECT.work_total_cardio !== cardioTime) {
+    if (OBJECT.work_total_volume !== totalVolume || OBJECT.work_total_cardio !== decimalToStr(totalTime)) {
       setOBJECT({
         ...OBJECT,
         work_total_volume: totalVolume,
-        work_total_cardio: cardioTime,
+        work_total_cardio: decimalToStr(totalTime),
         work_section: updatedSections,
       });
     }
@@ -197,7 +174,7 @@ export const WorkSave = () => {
         work_kg: 1,
         work_rest: 1,
         work_volume: 0,
-        work_cardio: "",
+        work_cardio: "00:00",
       };
 
       setCOUNT((prev) => ({
@@ -601,9 +578,9 @@ export const WorkSave = () => {
                 <span className={"input-group-text"}>총 볼륨</span>
                   <NumericFormat
                     min={1}
-                    max={99999999999999}
+                    max={999999999}
                     minLength={1}
-                    maxLength={18}
+                    maxLength={13}
                     suffix={" vol"}
                     datatype={"number"}
                     displayType={"input"}
@@ -614,7 +591,7 @@ export const WorkSave = () => {
                     allowNegative={false}
                     thousandSeparator={true}
                     fixedDecimalScale={true}
-                    value={Math.min(99999999999999, OBJECT?.work_total_volume)}
+                    value={Math.min(9999999999, OBJECT?.work_total_volume)}
                   ></NumericFormat>
               </div>
             </Col>

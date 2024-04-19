@@ -11,19 +11,19 @@ const schema = new mongoose.Schema({
     required: true
   },
   food_number: {
-    type : String,
-    default : "",
+    type: Number,
+    default: 0,
     unique : true
   },
 
   food_startDt: {
     type: String,
-    default: "",
+    default: "0000-00-00",
     required: false
   },
   food_endDt: {
     type: String,
-    default: "",
+    default: "0000-00-00",
     required: false
   },
 
@@ -103,12 +103,12 @@ const schema = new mongoose.Schema({
 
   food_regDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   },
   food_updateDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   }
 });

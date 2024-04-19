@@ -15,6 +15,7 @@ const schema = new mongoose.Schema({
   },
   user_number : {
     type : Number,
+    default: 0,
     unique : true
   },
   user_pw : {
@@ -75,12 +76,12 @@ const schema = new mongoose.Schema({
 
   user_regDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   },
   user_updateDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   }
 });

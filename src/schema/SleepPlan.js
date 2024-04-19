@@ -18,39 +18,39 @@ const schema = new mongoose.Schema({
 
   sleep_plan_startDt: {
     type: String,
-    default: "",
+    default: "0000-00-00",
     required: false
   },
   sleep_plan_endDt: {
     type: String,
-    default: "",
+    default: "0000-00-00",
     required: false
   },
 
   sleep_plan_night: {
     type: String,
-    default: "",
+    default: "00:00",
     required: false
   },
   sleep_plan_morning: {
     type: String,
-    default: "",
+    default: "00:00",
     required: false
   },
   sleep_plan_time: {
     type: String,
-    default: "",
+    default: "00:00",
     required: false
   },
 
   sleep_plan_regDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   },
   sleep_plan_updateDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   }
 });

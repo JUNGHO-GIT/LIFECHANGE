@@ -2,10 +2,11 @@
 
 import express from "express";
 import * as service from "../service/workService.js";
-export const workRouter = express.Router();
+import {save} from "../middleware/saveMiddleware.js";
+export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-workRouter.get("/list", async (req, res) => {
+router.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -38,7 +39,7 @@ workRouter.get("/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-workRouter.get("/detail", async (req, res) => {
+router.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
@@ -70,9 +71,9 @@ workRouter.get("/detail", async (req, res) => {
 });
 
 // 3. save ---------------------------------------------------------------------------------------->
-workRouter.post("/save", async (req, res) => {
+router.post("/save", save, async (req, res) => {
   try {
-    const result = await service.save (
+    const result = await service.save(
       req.body.user_id,
       req.body.OBJECT,
       req.body.duration
@@ -101,7 +102,7 @@ workRouter.post("/save", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-workRouter.delete("/delete", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
       req.query._id,

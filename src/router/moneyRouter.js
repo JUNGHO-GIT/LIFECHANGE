@@ -1,11 +1,11 @@
-// moneyRouter.js
+// router.js
 
 import express from "express";
 import * as service from "../service/moneyService.js";
-export const moneyRouter = express.Router();
+export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
-moneyRouter.get("/list", async (req, res) => {
+router.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -38,7 +38,7 @@ moneyRouter.get("/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-moneyRouter.get("/detail", async (req, res) => {
+router.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
@@ -70,7 +70,7 @@ moneyRouter.get("/detail", async (req, res) => {
 });
 
 // 3. save ---------------------------------------------------------------------------------------->
-moneyRouter.post("/save", async (req, res) => {
+router.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
@@ -101,7 +101,7 @@ moneyRouter.post("/save", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-moneyRouter.delete("/delete", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
       req.query._id,

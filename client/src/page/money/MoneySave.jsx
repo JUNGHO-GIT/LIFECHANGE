@@ -29,9 +29,9 @@ export const MoneySave = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toList:"/money/list"
     }
   );
@@ -59,8 +59,8 @@ export const MoneySave = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     money_number: 0,
-    money_startDt: "",
-    money_endDt: "",
+    money_startDt: "0000-00-00",
+    money_endDt: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
     money_section: [{

@@ -26,9 +26,9 @@ export const WorkPlanList = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toDetail: "/work/plan/detail",
     }
   );
@@ -71,20 +71,20 @@ export const WorkPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_PLAN_DEFAULT = [{
-    work_startDt: "",
-    work_endDt: "",
-    work_plan_startDt: "",
-    work_plan_endDt: "",
+    work_startDt: "0000-00-00",
+    work_endDt: "0000-00-00",
+    work_plan_startDt: "0000-00-00",
+    work_plan_endDt: "0000-00-00",
     work_total_count: 0,
     work_total_volume: 0,
-    work_total_cardio: "",
+    work_total_cardio: "0000-00-00",
     work_body_weight: 0,
     work_plan_count: 0,
-    work_plan_cardio: "",
+    work_plan_cardio: "0000-00-00",
     work_plan_volume: 0,
     work_plan_weight: 0,
     work_diff_total_count: 0,
-    work_diff_total_cardio: "",
+    work_diff_total_cardio: "0000-00-00",
     work_diff_total_volume: 0,
     work_diff_body_weight: 0,
   }];

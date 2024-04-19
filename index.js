@@ -1,31 +1,34 @@
+// index.js
+
 import path from "path";
 import cors from "cors";
 import util from "util";
 import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
+import helmet from "helmet";
 import {fileURLToPath} from "url";
 
-import {foodDashRouter} from "./src/router/foodDashRouter.js";
-import {moneyDashRouter} from "./src/router/moneyDashRouter.js";
-import {sleepDashRouter} from "./src/router/sleepDashRouter.js";
-import {workDashRouter} from "./src/router/workDashRouter.js";
+import {router as foodDashRouter} from "./src/router/foodDashRouter.js";
+import {router as moneyDashRouter} from "./src/router/moneyDashRouter.js";
+import {router as sleepDashRouter} from "./src/router/sleepDashRouter.js";
+import {router as workDashRouter} from "./src/router/workDashRouter.js";
 
-import {foodPlanRouter} from "./src/router/foodPlanRouter.js";
-import {moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
-import {sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
-import {workPlanRouter} from "./src/router/workPlanRouter.js";
+import {router as foodPlanRouter} from "./src/router/foodPlanRouter.js";
+import {router as moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
+import {router as sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
+import {router as workPlanRouter} from "./src/router/workPlanRouter.js";
 
-import {foodRouter} from "./src/router/foodRouter.js";
-import {moneyRouter} from "./src/router/moneyRouter.js";
-import {sleepRouter} from "./src/router/sleepRouter.js";
-import {userRouter} from "./src/router/userRouter.js";
-import {workRouter} from "./src/router/workRouter.js";
+import {router as foodRouter} from "./src/router/foodRouter.js";
+import {router as moneyRouter} from "./src/router/moneyRouter.js";
+import {router as sleepRouter} from "./src/router/sleepRouter.js";
+import {router as userRouter} from "./src/router/userRouter.js";
+import {router as workRouter} from "./src/router/workRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
   const message = util.format(
-    "\n======================= \n-schema: \"%s\" \n-method: \"%s\" \n-query: %s \n-doc: %s \n",
+    "\n======================= \n-schema: \"%s\" \n-method: \"%s\" \n-query: %s \n-doc: %s",
     collectionName,
     method,
     JSON.stringify(query, null, 3),
@@ -49,7 +52,9 @@ app.use(cors(), (req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use("/food/dash", foodDashRouter);

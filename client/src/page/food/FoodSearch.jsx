@@ -25,9 +25,9 @@ export const FoodSearch = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toSave:"/food/save",
     }
   );
@@ -72,11 +72,11 @@ export const FoodSearch = () => {
       food_total_carb: 0,
       food_total_protein: 0,
       food_section: [{
-        food_part_val: "",
-        food_title_val: "",
-        food_count: "",
-        food_serv: "",
-        food_gram: "",
+        food_part_val: "아침",
+        food_title_val: "기타",
+        food_count: 0,
+        food_serv: "회",
+        food_gram:  0,
         food_kcal: 0,
         food_fat: 0,
         food_carb: 0,

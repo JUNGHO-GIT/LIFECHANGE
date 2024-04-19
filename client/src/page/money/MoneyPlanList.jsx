@@ -26,9 +26,9 @@ export const MoneyPlanList = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toDetail: "/money/plan/detail",
     }
   );
@@ -71,10 +71,10 @@ export const MoneyPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_PLAN_DEFAULT = [{
-    money_startDt: "",
-    money_endDt: "",
-    money_plan_startDt: "",
-    money_plan_endDt: "",
+    money_startDt: "0000-00-00",
+    money_endDt: "0000-00-00",
+    money_plan_startDt: "0000-00-00",
+    money_plan_endDt: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
     money_plan_in: 0,

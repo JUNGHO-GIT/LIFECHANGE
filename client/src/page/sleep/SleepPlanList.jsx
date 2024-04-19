@@ -26,9 +26,9 @@ export const SleepPlanList = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toDetail:"/sleep/plan/detail"
     }
   );
@@ -71,19 +71,19 @@ export const SleepPlanList = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_PLAN_DEFAULT = [{
-    sleep_startDt: "",
-    sleep_endDt: "",
-    sleep_plan_startDt: "",
-    sleep_plan_endDt: "",
-    sleep_night: "",
-    sleep_morning: "",
-    sleep_time: "",
-    sleep_plan_night: "",
-    sleep_plan_morning: "",
-    sleep_plan_time: "",
-    sleep_diff_night: "",
-    sleep_diff_morning: "",
-    sleep_diff_time: "",
+    sleep_startDt: "0000-00-00",
+    sleep_endDt: "0000-00-00",
+    sleep_plan_startDt: "0000-00-00",
+    sleep_plan_endDt: "0000-00-00",
+    sleep_night: "00:00",
+    sleep_morning: "00:00",
+    sleep_time: "00:00",
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00",
+    sleep_diff_night: "00:00",
+    sleep_diff_morning: "00:00",
+    sleep_diff_time: "00:00",
   }];
   const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 

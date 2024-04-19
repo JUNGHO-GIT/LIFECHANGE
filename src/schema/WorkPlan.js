@@ -18,12 +18,12 @@ const schema = new mongoose.Schema({
 
   work_plan_startDt: {
     type: String,
-    default: "",
+    default: "0000-00-00",
     required: false
   },
   work_plan_endDt: {
     type: String,
-    default: "",
+    default: "0000-00-00",
     required: false
   },
 
@@ -39,7 +39,7 @@ const schema = new mongoose.Schema({
   },
   work_plan_cardio: {
     type: String,
-    default: "",
+    default: "00:00",
     required: false
   },
   work_plan_weight: {
@@ -50,12 +50,12 @@ const schema = new mongoose.Schema({
 
   work_plan_regDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   },
   work_plan_updateDt: {
     type: String,
-    default: "",
+    default: "0000-00-00 / 00:00:00",
     required: false
   }
 });

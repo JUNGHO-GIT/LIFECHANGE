@@ -2,10 +2,10 @@
 
 import express from "express";
 import * as service from "../service/workDashService.js";
-export const workDashRouter = express.Router();
+export const router = express.Router();
 
 // 1-1. dash (scatter - week) -------------------------------------------------------------------->
-workDashRouter.get("/scatter/week", async (req, res) => {
+router.get("/scatter/week", async (req, res) => {
   try {
     const result = await service.scatterWeek (
       req.query.user_id
@@ -34,7 +34,7 @@ workDashRouter.get("/scatter/week", async (req, res) => {
 });
 
 // 1-2. dash (scatter - month) -------------------------------------------------------------------->
-workDashRouter.get("/scatter/month", async (req, res) => {
+router.get("/scatter/month", async (req, res) => {
   try {
     const result = await service.scatterMonth (
       req.query.user_id
@@ -63,7 +63,7 @@ workDashRouter.get("/scatter/month", async (req, res) => {
 });
 
 // 2-1. dash (pie - week) ------------------------------------------------------------------------->
-workDashRouter.get("/pie/week", async (req, res) => {
+router.get("/pie/week", async (req, res) => {
   try {
     const result = await service.pieWeek (
       req.query.user_id
@@ -92,7 +92,7 @@ workDashRouter.get("/pie/week", async (req, res) => {
 });
 
 // 2-2. dash (pie - month) ------------------------------------------------------------------------>
-workDashRouter.get("/pie/month", async (req, res) => {
+router.get("/pie/month", async (req, res) => {
   try {
     const result = await service.pieMonth (
       req.query.user_id
@@ -121,7 +121,7 @@ workDashRouter.get("/pie/month", async (req, res) => {
 });
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
-workDashRouter.get("/line/week", async (req, res) => {
+router.get("/line/week", async (req, res) => {
   try {
     const result = await service.lineWeek (
       req.query.user_id
@@ -150,7 +150,7 @@ workDashRouter.get("/line/week", async (req, res) => {
 });
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
-workDashRouter.get("/line/month", async (req, res) => {
+router.get("/line/month", async (req, res) => {
   try {
     const result = await service.lineMonth (
       req.query.user_id
@@ -179,7 +179,7 @@ workDashRouter.get("/line/month", async (req, res) => {
 });
 
 // 0-3. dash (avg - week) ------------------------------------------------------------------------->
-workDashRouter.get("/avg/week", async (req, res) => {
+router.get("/avg/week", async (req, res) => {
   try {
     const result = await service.avgWeek (
       req.query.user_id
@@ -208,7 +208,7 @@ workDashRouter.get("/avg/week", async (req, res) => {
 });
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
-workDashRouter.get("/avg/month", async (req, res) => {
+router.get("/avg/month", async (req, res) => {
   try {
     const result = await service.avgMonth (
       req.query.user_id

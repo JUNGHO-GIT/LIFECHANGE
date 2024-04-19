@@ -25,9 +25,9 @@ export const FoodPlanDetail = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toList:"/food/plan/list",
       toSave:"/food/plan/save"
     }
@@ -56,8 +56,8 @@ export const FoodPlanDetail = () => {
   const OBJECT_PLAN_DEFAULT = {
     _id: "",
     food_plan_number: 0,
-    food_plan_startDt: "",
-    food_plan_endDt: "",
+    food_plan_startDt: "0000-00-00",
+    food_plan_endDt: "0000-00-00",
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,

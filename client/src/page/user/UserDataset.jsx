@@ -26,10 +26,11 @@ export const UserDataset = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
-      toDetail:"/user/detail"
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
+      toMain: "/",
+      toList: "/user/list"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -83,17 +84,17 @@ export const UserDataset = () => {
       user_id: user_id,
       OBJECT: OBJECT
     });
+    alert(response.data.msg);
+
     if (response.data.status === "success") {
-      alert(response.data.msg);
       window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
-      navParam(SEND.toList, {
+      navParam(SEND.toMain, {
         state: SEND
       });
     }
     else {
-      alert(response.data.msg);
       window.sessionStorage.setItem("user_id", "false");
     }
   };

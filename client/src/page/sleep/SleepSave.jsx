@@ -27,9 +27,9 @@ export const SleepSave = () => {
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
-      startDt: "",
-      endDt: "",
       refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
       toList:"/sleep/list"
     }
   );
@@ -57,12 +57,12 @@ export const SleepSave = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     sleep_number: 0,
-    sleep_startDt: "",
-    sleep_endDt: "",
+    sleep_startDt: "0000-00-00",
+    sleep_endDt: "0000-00-00",
     sleep_section: [{
-      sleep_night: "",
-      sleep_morning: "",
-      sleep_time: "",
+      sleep_night: "00:00",
+      sleep_morning: "00:00",
+      sleep_time: "00:00",
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);

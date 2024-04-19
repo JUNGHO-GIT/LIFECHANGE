@@ -2,10 +2,10 @@
 
 import express from "express";
 import * as service from "../service/foodService.js";
-export const foodRouter = express.Router();
+export const router = express.Router();
 
 // 1-0. search ------------------------------------------------------------------------------------>
-foodRouter.get("/search", async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
     const result = await service.search (
       req.query.user_id,
@@ -36,7 +36,7 @@ foodRouter.get("/search", async (req, res) => {
 });
 
 // 1-1. list -------------------------------------------------------------------------------------->
-foodRouter.get("/list", async (req, res) => {
+router.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
@@ -69,7 +69,7 @@ foodRouter.get("/list", async (req, res) => {
 });
 
 // 2. detail -------------------------------------------------------------------------------------->
-foodRouter.get("/detail", async (req, res) => {
+router.get("/detail", async (req, res) => {
   try {
     const result = await service.detail (
       req.query._id,
@@ -101,7 +101,7 @@ foodRouter.get("/detail", async (req, res) => {
 });
 
 // 3. save ---------------------------------------------------------------------------------------->
-foodRouter.post("/save", async (req, res) => {
+router.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
@@ -132,7 +132,7 @@ foodRouter.post("/save", async (req, res) => {
 });
 
 // 4. deletes ------------------------------------------------------------------------------------->
-foodRouter.delete("/delete", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
       req.query._id,

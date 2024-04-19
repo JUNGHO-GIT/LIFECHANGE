@@ -25,7 +25,6 @@ export const intFormat = (data) => {
     return Math.round(data);
   }
 };
-
 export const timeFormat = (data) => {
   if (!data) {
     return 0;
@@ -51,11 +50,10 @@ export const strToDecimal = (time) => {
   const newDate = new Date(`1970-01-01T${time}Z`);
   const hours = Math.floor(newDate.getTime() / 3600000);
   const minutes = Math.floor((newDate.getTime() % 3600000) / 60000);
-  const returnTime = parseFloat((hours + minutes / 60).toFixed(1));
+  const returnTime = hours + minutes / 60;
 
   return returnTime;
 };
-
 export const decimalToStr = (time) => {
   const hours = Math.floor(time);
   const minutes = Math.round((time - hours) * 60);
