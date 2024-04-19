@@ -9,7 +9,7 @@ sleepPlanRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.sleep_plan_dur,
+      req.query.duration,
       req.query.FILTER,
       req.query.PAGING
     );
@@ -43,7 +43,7 @@ sleepPlanRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.sleep_plan_dur
+      req.query.duration
     );
     if (result) {
       res.json({
@@ -73,8 +73,8 @@ sleepPlanRouter.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
-      req.body.SLEEP_PLAN,
-      req.body.sleep_plan_dur
+      req.body.OBJECT_PLAN,
+      req.body.duration
     );
     if (result) {
       res.json({
@@ -105,7 +105,7 @@ sleepPlanRouter.delete("/delete", async (req, res) => {
     const result = await service.deletes(
       req.query._id,
       req.query.user_id,
-      req.query.sleep_plan_dur
+      req.query.duration
     );
     if (result) {
       res.json({

@@ -4,13 +4,13 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_USER = process.env.REACT_APP_URL_USER;
+  const URL_OBJECT = process.env.REACT_APP_URL_USER;
   const navParam = useNavigate();
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -19,7 +19,7 @@ export const UserLogin = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserLogin = async () => {
-    const response = await axios.post (`${URL_USER}/login`, {
+    const response = await axios.post (`${URL_OBJECT}/login`, {
       user_id: user_id,
       user_pw: user_pw,
     });
@@ -40,7 +40,7 @@ export const UserLogin = () => {
     return (
       <FormGroup>
         <Form className={"input-group mb-10"}>
-          <FormLabel className={"input-group-text"}>User ID</FormLabel>
+          <span className={"input-group-text"}>User ID</span>
           <InputMask
             mask={""}
             type={"text"}
@@ -52,7 +52,7 @@ export const UserLogin = () => {
           ></InputMask>
         </Form>
         <Form className={"input-group mb-10"}>
-          <FormLabel className={"input-group-text"}>Password</FormLabel>
+          <span className={"input-group-text"}>Password</span>
           <InputMask
             mask={""}
             type={"text"}

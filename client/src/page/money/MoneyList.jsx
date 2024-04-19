@@ -8,13 +8,13 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -70,7 +70,7 @@ export const MoneyList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const MONEY_DEFAULT = [{
+  const OBJECT_DEFAULT = [{
     _id: "",
     money_number: 0,
     money_startDt: "",
@@ -84,19 +84,19 @@ export const MoneyList = () => {
       money_content: "",
     }],
   }];
-  const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/list`, {
+    const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
-        money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setMONEY(response.data.result || MONEY_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -119,20 +119,23 @@ export const MoneyList = () => {
           </tr>
         </thead>
         <tbody>
-          {MONEY?.map((item, index) => (
+          {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={section.money_part_idx}>
+                <React.Fragment key={sectionIndex}>
                   <tr>
                     {sectionIndex === 0 && (
-                      <td rowSpan={item.money_section.length > 3 ? 4 : item.money_section.length}
+                      <td rowSpan={Math.min(item.money_section.length, 3)}
                       className={"pointer"} onClick={() => {
                         SEND.id = item._id;
                         SEND.startDt = item.money_startDt;
                         SEND.endDt = item.money_endDt;
-                        navParam(SEND.toDetail, { state: SEND });
+                        navParam(SEND.toDetail, {
+                          state: SEND
+                        });
                       }}>
                         {item.money_startDt}
+                        {item.money_section.length > 3 && <div>더보기</div>}
                       </td>
                     )}
                     <td>{section.money_part_val}</td>
@@ -142,11 +145,6 @@ export const MoneyList = () => {
                   </tr>
                 </React.Fragment>
               ))}
-              {item.money_section.length > 3 && (
-                <tr>
-                  <td colSpan={5}>...</td>
-                </tr>
-              )}
             </React.Fragment>
           ))}
         </tbody>

@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
-import {FormGroup, Form, FormLabel, Collapse} from "react-bootstrap";
+import {FormGroup, Form, span, Collapse} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({ sidebar, onClose }) => {
@@ -93,8 +93,8 @@ export const SideBar = ({ sidebar, onClose }) => {
   return (
     <FormGroup className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
       <Form className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
-        <FormLabel className={"ps-20 fs-40"}>Changer</FormLabel>
-        <FormLabel className={"pt-10 pe-10 fs-20 pointer"} onClick={onClose}>X</FormLabel>
+        <span className={"ps-20 fs-40"}>Changer</span>
+        <span className={"pt-10 pe-10 fs-20 pointer"} onClick={onClose}>X</span>
       </Form>
       <Form className={"d-flex flex-column p-3"}>
         <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>

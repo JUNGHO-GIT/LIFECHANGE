@@ -6,13 +6,13 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_OBJECT = process.env.REACT_APP_URL_SLEEP;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ export const SleepDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const SLEEP_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     sleep_number: 0,
     sleep_startDt: "",
@@ -65,21 +65,21 @@ export const SleepDetail = () => {
       sleep_time: "",
     }],
   };
-  const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setSLEEP(response.data.result || SLEEP_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       sectionCnt: response.data.sectionCnt || 0
@@ -87,28 +87,29 @@ export const SleepDetail = () => {
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_SLEEP}/delete`, {
+  const flowDelete = async (id, section_id) => {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
+        section_id: section_id,
         user_id: user_id,
-        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
+    alert(response.data.msg);
+
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_SLEEP}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
-          _id: location_id,
+          _id: id,
           user_id: user_id,
-          sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert(response.data.msg);
-      setSLEEP(updatedData.data.result || SLEEP_DEFAULT);
-      !updatedData.data.result && navParam(SEND.toList);
-    }
-    else {
-      alert(response.data.msg);
+      setOBJECT(updatedData.data.result || OBJECT_DEFAULT);
+      if (response.data.result === "deleted") {
+        navParam(SEND.toList);
+      }
     }
   };
 
@@ -118,29 +119,29 @@ export const SleepDetail = () => {
       <React.Fragment>
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
-          <tr>
-            <th>날짜</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className={"fs-20 pt-20"}>
-            <td>{SLEEP?.sleep_startDt}</td>
-            {SLEEP?.sleep_section?.map((section, index) => (
-              <React.Fragment key={index}>
-                <td>{section.sleep_night}</td>
-                <td>{section.sleep_morning}</td>
-                <td>{section.sleep_time}</td>
-                <td><Button variant={"danger"} size={"sm"} onClick={() => (
-                  flowDelete(section._id)
-                )}>X</Button></td>
-              </React.Fragment>
-            ))}
-          </tr>
-        </tbody>
+            <tr>
+              <th>날짜</th>
+              <th>취침시간</th>
+              <th>기상시간</th>
+              <th>수면시간</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className={"fs-20 pt-20"}>
+              <td>{OBJECT?.sleep_startDt}</td>
+              {OBJECT?.sleep_section?.map((section, index) => (
+                <React.Fragment key={index}>
+                  <td>{section.sleep_night}</td>
+                  <td>{section.sleep_morning}</td>
+                  <td>{section.sleep_time}</td>
+                  <td><Button variant={"danger"} size={"sm"} onClick={() => (
+                    flowDelete(OBJECT._id, section._id)
+                  )}>X</Button></td>
+                </React.Fragment>
+              ))}
+            </tr>
+          </tbody>
         </Table>
       </React.Fragment>
     );

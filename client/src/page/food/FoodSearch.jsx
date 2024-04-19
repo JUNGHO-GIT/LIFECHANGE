@@ -7,13 +7,13 @@ import InputMask from "react-input-mask";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -65,8 +65,8 @@ export const FoodSearch = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:FOOD, set:setFOOD} = useStorage(
-    `FOOD(${PATH})`, {
+  const {val:OBJECT, set:setOBJECT} = useStorage(
+    `OBJECT(${PATH})`, {
       food_total_kcal: 0,
       food_total_fat: 0,
       food_total_carb: 0,
@@ -100,13 +100,13 @@ export const FoodSearch = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSearch = async () => {
-    const response = await axios.get(`${URL_FOOD}/search`, {
+    const response = await axios.get(`${URL_OBJECT}/search`, {
       params: {
         user_id: user_id,
         FILTER: FILTER
       }
     });
-    setFOOD((prev) => ({
+    setOBJECT((prev) => ({
       ...prev,
       food_section: response.data.result
     }));
@@ -142,7 +142,7 @@ export const FoodSearch = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD?.food_section?.map((item, index) => (
+          {OBJECT?.food_section?.map((item, index) => (
             <tr key={index}>
               <td className={"pointer"} onClick={() => {
                 handleStorage(item);

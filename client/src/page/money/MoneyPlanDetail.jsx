@@ -6,13 +6,13 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ export const MoneyPlanDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const MONEY_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     money_plan_number: 0,
     money_plan_startDt: "",
@@ -62,21 +62,21 @@ export const MoneyPlanDetail = () => {
     money_plan_in: 0,
     money_plan_out: 0
   };
-  const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setMONEY_PLAN(response.data.result || MONEY_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -86,23 +86,23 @@ export const MoneyPlanDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_MONEY_PLAN}/delete`, {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
-        money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_MONEY_PLAN}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
-          money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       alert(response.data.msg);
-      setMONEY_PLAN(updatedData.data.result || MONEY_PLAN_DEFAULT);
+      setOBJECT_PLAN(updatedData.data.result || OBJECT_PLAN_DEFAULT);
       !updatedData.data.result && navParam(SEND.toList);
     }
     else {
@@ -126,12 +126,12 @@ export const MoneyPlanDetail = () => {
         </thead>
         <tbody>
           <tr className={"fs-20 pt-20"}>
-            <td>{MONEY_PLAN?.money_plan_startDt}</td>
-            <td>{MONEY_PLAN?.money_plan_endDt}</td>
-            <td>{MONEY_PLAN?.money_plan_in}</td>
-            <td>{MONEY_PLAN?.money_plan_out}</td>
+            <td>{OBJECT_PLAN?.money_plan_startDt}</td>
+            <td>{OBJECT_PLAN?.money_plan_endDt}</td>
+            <td>{OBJECT_PLAN?.money_plan_in}</td>
+            <td>{OBJECT_PLAN?.money_plan_out}</td>
             <td><Button variant={"danger"} size={"sm"} onClick={() => {
-              flowDelete(MONEY_PLAN?._id);
+              flowDelete(OBJECT_PLAN?._id);
             }}>X</Button></td>
           </tr>
         </tbody>

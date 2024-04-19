@@ -5,13 +5,13 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -22,24 +22,24 @@ export const DashPieToday = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_KCAL_DEFAULT = [
+  const OBJECT_KCAL_DEFAULT = [
     {name:"", value: 100}
   ];
-  const DASH_NUT_DEFAULT = [
+  const OBJECT_NUT_DEFAULT = [
     {name:"", value: 100}
   ];
-  const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
-  const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
+  const [OBJECT_KCAL, setOBJECT_KCAL] = useState(OBJECT_KCAL_DEFAULT);
+  const [OBJECT_NUT, setOBJECT_NUT] = useState(OBJECT_NUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/dash/pie/today`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_KCAL(response.data.result.kcal.length > 0 ? response.data.result.kcal : DASH_KCAL_DEFAULT);
-    setDASH_NUT(response.data.result.nut.length > 0 ? response.data.result.nut : DASH_NUT_DEFAULT);
+    setOBJECT_KCAL(response.data.result.kcal.length > 0 ? response.data.result.kcal : OBJECT_KCAL_DEFAULT);
+    setOBJECT_NUT(response.data.result.nut.length > 0 ? response.data.result.nut : OBJECT_NUT_DEFAULT);
   })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->
@@ -78,7 +78,7 @@ export const DashPieToday = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
             <Pie
-              data={DASH_KCAL}
+              data={OBJECT_KCAL}
               cx={"50%"}
               cy={"50%"}
               label={renderKcal}
@@ -94,7 +94,7 @@ export const DashPieToday = () => {
                 data.payload.opacity = 1.0;
               }}
             >
-              {DASH_KCAL?.map((entry, index) => (
+              {OBJECT_KCAL?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_KCAL[index % COLORS_KCAL.length]} />
               ))}
             </Pie>
@@ -120,7 +120,7 @@ export const DashPieToday = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
             <Pie
-              data={DASH_NUT}
+              data={OBJECT_NUT}
               cx={"50%"}
               cy={"50%"}
               label={renderNut}
@@ -136,7 +136,7 @@ export const DashPieToday = () => {
                 data.payload.opacity = 1.0;
               }}
             >
-              {DASH_NUT?.map((entry, index) => (
+              {OBJECT_NUT?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_NUT[index % COLORS_NUT.length]} />
               ))}
             </Pie>
@@ -162,11 +162,11 @@ export const DashPieToday = () => {
           <Container>
             <Row className={"d-center"}>
               <Col xs={6}>
-                <FormLabel className={"fs-20"}>오늘 칼로리</FormLabel>
+                <span className={"fs-20"}>오늘 칼로리</span>
                 {chartNodeKcal()}
               </Col>
               <Col xs={6}>
-                <FormLabel className={"fs-20"}>오늘 영양소</FormLabel>
+                <span className={"fs-20"}>오늘 영양소</span>
                 {chartNodeNut()}
               </Col>
             </Row>

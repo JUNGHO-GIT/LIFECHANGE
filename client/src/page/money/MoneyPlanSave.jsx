@@ -8,13 +8,13 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY_PLAN = process.env.REACT_APP_URL_MONEY_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -53,7 +53,7 @@ export const MoneyPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const MONEY_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     money_plan_number: 0,
     money_plan_startDt: "",
@@ -61,21 +61,21 @@ export const MoneyPlanSave = () => {
     money_plan_in: 0,
     money_plan_out: 0
   };
-  const [MONEY_PLAN, setMONEY_PLAN] = useState(MONEY_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setMONEY_PLAN(response.data.result || MONEY_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -85,10 +85,10 @@ export const MoneyPlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_MONEY_PLAN}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
-      MONEY_PLAN: MONEY_PLAN,
-      money_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      OBJECT_PLAN: OBJECT_PLAN,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -116,7 +116,7 @@ export const MoneyPlanSave = () => {
       <Row className={"mb-20"}>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>목표 수입</FormLabel>
+            <span className={"input-group-text"}>목표 수입</span>
             <NumericFormat
               min={0}
               max={99999999999999}
@@ -133,10 +133,10 @@ export const MoneyPlanSave = () => {
               allowNegative={false}
               thousandSeparator={true}
               fixedDecimalScale={true}
-              value={Math.min(99999999999999, MONEY_PLAN?.money_plan_in)}
+              value={Math.min(99999999999999, OBJECT_PLAN?.money_plan_in)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                setMONEY_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   money_plan_in: limitedValue
                 }));
@@ -146,7 +146,7 @@ export const MoneyPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>목표 지출</FormLabel>
+            <span className={"input-group-text"}>목표 지출</span>
             <NumericFormat
               min={0}
               max={99999999999999}
@@ -163,10 +163,10 @@ export const MoneyPlanSave = () => {
               allowNegative={false}
               thousandSeparator={true}
               fixedDecimalScale={true}
-              value={Math.min(99999999999999, MONEY_PLAN?.money_plan_out)}
+              value={Math.min(99999999999999, OBJECT_PLAN?.money_plan_out)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                setMONEY_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   money_plan_out: limitedValue
                 }));

@@ -8,13 +8,13 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkPlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -70,7 +70,7 @@ export const WorkPlanList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const WORK_PLAN_DEFAULT = [{
+  const OBJECT_PLAN_DEFAULT = [{
     work_startDt: "",
     work_endDt: "",
     work_plan_startDt: "",
@@ -88,19 +88,19 @@ export const WorkPlanList = () => {
     work_diff_total_volume: 0,
     work_diff_body_weight: 0,
   }];
-  const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK_PLAN}/list`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
-        work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setWORK_PLAN(response.data.result || WORK_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -123,7 +123,7 @@ export const WorkPlanList = () => {
             </tr>
           </thead>
           <tbody>
-            {WORK_PLAN?.map((item, index) => (
+            {OBJECT_PLAN?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
                   <td rowSpan={5} className={"pointer"} onClick={() => {

@@ -9,13 +9,13 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
   const user_id = window.sessionStorage.getItem("user_id");
   const session = window.sessionStorage.getItem("dataset") || "";
   const moneyArray = JSON.parse(session)?.money || [];
@@ -56,7 +56,7 @@ export const MoneySave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const MONEY_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     money_number: 0,
     money_startDt: "",
@@ -72,21 +72,21 @@ export const MoneySave = () => {
       money_content: "",
     }]
   };
-  const [MONEY, setMONEY] = useState(MONEY_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setMONEY(response.data.result || MONEY_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -97,27 +97,27 @@ export const MoneySave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     // money_part_val 가 수입인경우, 지출인 경우
-    const totals = MONEY?.money_section.reduce((acc, cur) => {
+    const totals = OBJECT?.money_section.reduce((acc, cur) => {
       return {
         totalIn: acc.totalIn + (cur.money_part_val === "수입" ? cur.money_amount : 0),
         totalOut: acc.totalOut + (cur.money_part_val === "지출" ? cur.money_amount : 0)
       };
     }, {totalIn: 0, totalOut: 0});
 
-    setMONEY((prev) => ({
+    setOBJECT((prev) => ({
       ...prev,
       money_total_in: Math.round(totals.totalIn),
       money_total_out: Math.round(totals.totalOut)
     }));
 
-  }, [MONEY?.money_section]);
+  }, [OBJECT?.money_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_MONEY}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
-      MONEY: MONEY,
-      money_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      OBJECT: OBJECT,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -159,15 +159,15 @@ export const MoneySave = () => {
 
       if (newCount > 0) {
         let updatedSections = Array(newCount).fill(null).map((_, idx) => (
-          idx < MONEY.money_section.length ? MONEY.money_section[idx] : defaultSection
+          idx < OBJECT.money_section.length ? OBJECT.money_section[idx] : defaultSection
         ));
-        setMONEY((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           money_section: updatedSections
         }));
       }
       else {
-        setMONEY((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           money_section: []
         }));
@@ -215,14 +215,14 @@ export const MoneySave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>파트</FormLabel>
+                <span className={"input-group-text"}>파트</span>
                 <select
                   id={`money_part_idx-${i}`}
                   className={"form-control"}
-                  value={MONEY?.money_section[i]?.money_part_idx}
+                  value={OBJECT?.money_section[i]?.money_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
-                    setMONEY((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.money_section];
                       updatedSection[i] = {
@@ -247,16 +247,16 @@ export const MoneySave = () => {
             </Col>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>타이틀</FormLabel>
+                <span className={"input-group-text"}>타이틀</span>
                 <select
                   id={`money_title_idx-${i}`}
                   className={"form-control"}
-                  value={MONEY?.money_section[i]?.money_title_idx}
+                  value={OBJECT?.money_section[i]?.money_title_idx}
                   onChange={(e) => {
                     const newTitleIdx = parseInt(e.target.value);
-                    const newTitleVal = moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                    const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
-                      setMONEY((prev) => {
+                      setOBJECT((prev) => {
                         let updated = {...prev};
                         let updatedSection = [...updated.money_section];
                         updatedSection[i] = {
@@ -270,7 +270,7 @@ export const MoneySave = () => {
                     }
                   }}
                 >
-                  {moneyArray[MONEY?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
+                  {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
                     <option key={idx} value={idx}>
                       {title}
                     </option>
@@ -282,7 +282,7 @@ export const MoneySave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>금액</FormLabel>
+                <span className={"input-group-text"}>금액</span>
                 <NumericFormat
                   min={0}
                   max={9999999999}
@@ -298,10 +298,10 @@ export const MoneySave = () => {
                   allowNegative={false}
                   thousandSeparator={true}
                   fixedDecimalScale={true}
-                  value={MONEY?.money_section[i]?.money_amount}
+                  value={OBJECT?.money_section[i]?.money_amount}
                   onValueChange={(values) => {
                     const limitedValue = Math.min(9999999999, parseInt(values?.value));
-                    setMONEY((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.money_section];
                       updatedSection[i].money_amount = limitedValue;
@@ -314,7 +314,7 @@ export const MoneySave = () => {
             </Col>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>메모</FormLabel>
+                <span className={"input-group-text"}>메모</span>
                 <InputMask
                   mask={""}
                   placeholder={"메모"}
@@ -322,10 +322,10 @@ export const MoneySave = () => {
                   name={`money_content-${i}`}
                   className={"form-control"}
                   maskChar={null}
-                  value={MONEY?.money_section[i]?.money_content}
+                  value={OBJECT?.money_section[i]?.money_content}
                   onChange={(e) => {
                     const limitedContent = e.target.value.slice(0, 100);
-                    setMONEY((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.money_section];
                       updatedSection[i].money_content = limitedContent;
@@ -354,7 +354,7 @@ export const MoneySave = () => {
         <Row className={"d-center"}>
           <Col xs={6}>
             <FormGroup className={"input-group"}>
-              <FormLabel className={"input-group-text"}>총수입</FormLabel>
+              <span className={"input-group-text"}>총수입</span>
               <NumericFormat
                 min={0}
                 max={9999999999}
@@ -371,13 +371,13 @@ export const MoneySave = () => {
                 allowNegative={false}
                 thousandSeparator={true}
                 fixedDecimalScale={true}
-                value={Math.min(9999999999, MONEY?.money_total_in)}
+                value={Math.min(9999999999, OBJECT?.money_total_in)}
               ></NumericFormat>
             </FormGroup>
           </Col>
           <Col xs={6}>
             <FormGroup className={"input-group"}>
-              <FormLabel className={"input-group-text"}>총지출</FormLabel>
+              <span className={"input-group-text"}>총지출</span>
               <NumericFormat
                 min={0}
                 max={9999999999}
@@ -394,7 +394,7 @@ export const MoneySave = () => {
                 allowNegative={false}
                 thousandSeparator={true}
                 fixedDecimalScale={true}
-                value={Math.min(9999999999, MONEY?.money_total_out)}
+                value={Math.min(9999999999, OBJECT?.money_total_out)}
               ></NumericFormat>
             </FormGroup>
           </Col>

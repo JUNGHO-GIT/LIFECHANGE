@@ -5,12 +5,12 @@ import * as repository from "../repository/moneyRepository.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (
   user_id_param,
-  money_dur_param,
+  duration_param,
   FILTER_param,
   PAGING_param
 ) => {
 
-  const [startDt, endDt] = money_dur_param.split(` ~ `);
+  const [startDt, endDt] = duration_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
@@ -36,10 +36,10 @@ export const list = async (
 export const detail = async (
   _id_param,
   user_id_param,
-  money_dur_param
+  duration_param
 ) => {
 
-  const [startDt, endDt] = money_dur_param.split(` ~ `);
+  const [startDt, endDt] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail(
     _id_param, user_id_param, startDt, endDt
@@ -56,11 +56,11 @@ export const detail = async (
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
   user_id_param,
-  MONEY_param,
-  money_dur_param
+  OBJECT_param,
+  duration_param
 ) => {
 
-  const [startDt, endDt] = money_dur_param.split(` ~ `);
+  const [startDt, endDt] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
     "", user_id_param, startDt, endDt
@@ -69,12 +69,12 @@ export const save = async (
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      user_id_param, MONEY_param, startDt, endDt
+      user_id_param, OBJECT_param, startDt, endDt
     );
   }
   else {
     finalResult = await repository.save.update(
-      findResult._id, MONEY_param
+      findResult._id, OBJECT_param
     );
   }
 
@@ -84,14 +84,15 @@ export const save = async (
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
   _id_param,
+  section_id_param,
   user_id_param,
-  money_dur_param
+  duration_param
 ) => {
 
-  const [startDt, endDt] = money_dur_param.split(` ~ `);
+  const [startDt, endDt] = duration_param.split(` ~ `);
 
   const finalResult = await repository.deletes.deletes(
-    _id_param, user_id_param, startDt, endDt
+    _id_param, section_id_param, user_id_param, startDt, endDt
   );
 
   return finalResult

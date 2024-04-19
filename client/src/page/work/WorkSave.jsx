@@ -10,13 +10,13 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, FormGroup, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const user_id = window.sessionStorage.getItem("user_id");
   const session = window.sessionStorage.getItem("dataset") || "";
   const workArray = JSON.parse(session)?.work || [];
@@ -57,7 +57,7 @@ export const WorkSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const WORK_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     work_number: 0,
     work_startDt: "",
@@ -81,22 +81,22 @@ export const WorkSave = () => {
       work_cardio: "",
     }],
   };
-  const [WORK, setWORK] = useState(WORK_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
-  useTime(WORK, setWORK, PATH, "real");
+  useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setWORK(response.data.result || WORK_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -131,7 +131,7 @@ export const WorkSave = () => {
       }
     };
 
-    const updatedSections = WORK.work_section.map((item) => {
+    const updatedSections = OBJECT.work_section.map((item) => {
       sectionVolume = item.work_set * item.work_rep * item.work_kg;
       totalVolume += sectionVolume;
       totalMinutes += timeFormat(item.work_cardio);
@@ -146,22 +146,22 @@ export const WorkSave = () => {
     const cardioTime = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
 
     // 이전 상태와 비교
-    if (WORK.work_total_volume !== totalVolume || WORK.work_total_cardio !== cardioTime) {
-      setWORK({
-        ...WORK,
+    if (OBJECT.work_total_volume !== totalVolume || OBJECT.work_total_cardio !== cardioTime) {
+      setOBJECT({
+        ...OBJECT,
         work_total_volume: totalVolume,
         work_total_cardio: cardioTime,
         work_section: updatedSections,
       });
     }
-  }, [WORK?.work_section]);
+  }, [OBJECT?.work_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_WORK}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
-      WORK: WORK,
-      work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      OBJECT: OBJECT,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -207,15 +207,15 @@ export const WorkSave = () => {
 
       if (newCount > 0) {
         let updatedSections = Array(newCount).fill(null).map((_, idx) =>
-          idx < WORK.work_section.length ? WORK.work_section[idx] : defaultSection
+          idx < OBJECT.work_section.length ? OBJECT.work_section[idx] : defaultSection
         );
-        setWORK((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           work_section: updatedSections
         }));
       }
       else {
-        setWORK((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           work_section: []
         }));
@@ -263,15 +263,15 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>부위</FormLabel>
+                <span className={"input-group-text"}>부위</span>
                 <select
                   id={`work_part_idx-${i}`}
                   name={`work_part_idx-${i}`}
                   className={"form-control"}
-                  value={WORK?.work_section[i]?.work_part_idx}
+                  value={OBJECT?.work_section[i]?.work_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
-                    setWORK((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.work_section];
                       updatedSection[i] = {
@@ -296,17 +296,17 @@ export const WorkSave = () => {
             </Col>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>타이틀</FormLabel>
+                <span className={"input-group-text"}>타이틀</span>
                 <select
                   id={`work_title_idx-${i}`}
                   name={`work_title_idx-${i}`}
                   className={"form-control"}
-                  value={WORK?.work_section[i]?.work_title_idx}
+                  value={OBJECT?.work_section[i]?.work_title_idx}
                   onChange={(e) => {
                     const newTitleIdx = parseInt(e.target.value);
-                    const newTitleVal = workArray[WORK?.work_section[i]?.work_part_idx]?.work_title[newTitleIdx];
+                    const newTitleVal = workArray[OBJECT?.work_section[i]?.work_part_idx]?.work_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
-                      setWORK((prev) => {
+                      setOBJECT((prev) => {
                         let updated = {...prev};
                         let updatedSection = [...updated.work_section];
                         updatedSection[i] = {
@@ -320,7 +320,7 @@ export const WorkSave = () => {
                     }
                   }}
                 >
-                  {workArray[WORK?.work_section[i]?.work_part_idx]?.work_title?.map((title, idx) => (
+                  {workArray[OBJECT?.work_section[i]?.work_part_idx]?.work_title?.map((title, idx) => (
                     <option key={idx} value={idx}>
                       {title}
                     </option>
@@ -332,7 +332,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>세트</FormLabel>
+                <span className={"input-group-text"}>세트</span>
                 <NumericFormat
                   min={1}
                   max={99}
@@ -347,11 +347,11 @@ export const WorkSave = () => {
                   allowNegative={false}
                   thousandSeparator={true}
                   fixedDecimalScale={false}
-                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={Math.min(99, WORK?.work_section[i]?.work_set)}
+                  disabled={OBJECT?.work_section[i]?.work_part_val === "유산소"}
+                  value={Math.min(99, OBJECT?.work_section[i]?.work_set)}
                   onValueChange={(values) => {
                     const limitedValue = Math.min(99, parseInt(values?.value));
-                    setWORK((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.work_section];
                       updatedSection[i].work_set = limitedValue;
@@ -364,7 +364,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>횟수</FormLabel>
+                <span className={"input-group-text"}>횟수</span>
                 <NumericFormat
                   min={1}
                   max={99}
@@ -379,11 +379,11 @@ export const WorkSave = () => {
                   allowNegative={false}
                   thousandSeparator={true}
                   fixedDecimalScale={false}
-                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={Math.min(99, WORK?.work_section[i]?.work_rep)}
+                  disabled={OBJECT?.work_section[i]?.work_part_val === "유산소"}
+                  value={Math.min(99, OBJECT?.work_section[i]?.work_rep)}
                   onValueChange={(values) => {
                     const limitedValue = Math.min(99, parseInt(values?.value));
-                    setWORK((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.work_section];
                       updatedSection[i].work_rep = limitedValue;
@@ -396,7 +396,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>무게</FormLabel>
+                <span className={"input-group-text"}>무게</span>
                 <NumericFormat
                   min={1}
                   max={999}
@@ -411,11 +411,11 @@ export const WorkSave = () => {
                   allowNegative={false}
                   thousandSeparator={true}
                   fixedDecimalScale={true}
-                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={Math.min(999, WORK?.work_section[i]?.work_kg)}
+                  disabled={OBJECT?.work_section[i]?.work_part_val === "유산소"}
+                  value={Math.min(999, OBJECT?.work_section[i]?.work_kg)}
                   onValueChange={(values) => {
                     const limitedValue = Math.min(999, parseInt(values?.value));
-                    setWORK((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.work_section];
                       updatedSection[i].work_kg = limitedValue;
@@ -428,7 +428,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={3}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>휴식</FormLabel>
+                <span className={"input-group-text"}>휴식</span>
                 <NumericFormat
                   min={1}
                   max={999}
@@ -442,11 +442,11 @@ export const WorkSave = () => {
                   name={`work_rest-${i}`}
                   allowNegative={false}
                   thousandSeparator={true}
-                  disabled={WORK?.work_section[i]?.work_part_val === "유산소"}
-                  value={Math.min(999, WORK?.work_section[i]?.work_rest)}
+                  disabled={OBJECT?.work_section[i]?.work_part_val === "유산소"}
+                  value={Math.min(999, OBJECT?.work_section[i]?.work_rest)}
                   onValueChange={(values) => {
                     const limitedValue = Math.min(999, parseInt(values?.value));
-                    setWORK((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.work_section];
                       updatedSection[i].work_rest = limitedValue;
@@ -459,7 +459,7 @@ export const WorkSave = () => {
             </Col>
             <Col xs={12}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>볼륨</FormLabel>
+                <span className={"input-group-text"}>볼륨</span>
                 <NumericFormat
                   min={1}
                   max={999999999}
@@ -475,7 +475,7 @@ export const WorkSave = () => {
                   allowNegative={false}
                   fixedDecimalScale={true}
                   thousandSeparator={true}
-                  value={Math.min(999999999, WORK?.work_section[i]?.work_volume)}
+                  value={Math.min(999999999, OBJECT?.work_section[i]?.work_volume)}
                 ></NumericFormat>
               </FormGroup>
             </Col>
@@ -483,7 +483,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={12}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>유산소</FormLabel>
+                <span className={"input-group-text"}>유산소</span>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -492,10 +492,10 @@ export const WorkSave = () => {
                   name={"work_cardio"}
                   clockIcon={null}
                   disableClock={false}
-                  disabled={WORK?.work_section[i]?.work_part_val !== "유산소"}
-                  value={WORK?.work_section[i]?.work_cardio}
+                  disabled={OBJECT?.work_section[i]?.work_part_val !== "유산소"}
+                  value={OBJECT?.work_section[i]?.work_cardio}
                   onChange={(e) => {
-                    setWORK((prev) => {
+                    setOBJECT((prev) => {
                       let updated = {...prev};
                       let updatedSection = [...updated.work_section];
                       updatedSection[i].work_cardio  = e ? e.toString() : "";
@@ -525,7 +525,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>시작시간</FormLabel>
+                <span className={"input-group-text"}>시작시간</span>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -535,9 +535,9 @@ export const WorkSave = () => {
                   disabled={false}
                   clockIcon={null}
                   disableClock={false}
-                  value={WORK?.work_start}
+                  value={OBJECT?.work_start}
                   onChange={(e) => {
-                    setWORK((prev) => ({
+                    setOBJECT((prev) => ({
                       ...prev,
                       work_start: e ? e.toString() : "",
                     }));
@@ -549,7 +549,7 @@ export const WorkSave = () => {
           <Row className={"row d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>종료시간</FormLabel>
+                <span className={"input-group-text"}>종료시간</span>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -559,9 +559,9 @@ export const WorkSave = () => {
                   disabled={false}
                   clockIcon={null}
                   disableClock={false}
-                  value={WORK?.work_end}
+                  value={OBJECT?.work_end}
                   onChange={(e) => {
-                    setWORK((prev) => ({
+                    setOBJECT((prev) => ({
                       ...prev,
                       work_end: e ? e.toString() : "",
                     }));
@@ -573,7 +573,7 @@ export const WorkSave = () => {
           <Row className={"row d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>운동시간</FormLabel>
+                <span className={"input-group-text"}>운동시간</span>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -583,7 +583,7 @@ export const WorkSave = () => {
                   disabled={true}
                   clockIcon={null}
                   disableClock={false}
-                  value={WORK?.work_time}
+                  value={OBJECT?.work_time}
                 ></TimePicker>
               </FormGroup>
             </Col>
@@ -598,7 +598,7 @@ export const WorkSave = () => {
           <Row className={"d-center"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>총 볼륨</FormLabel>
+                <span className={"input-group-text"}>총 볼륨</span>
                   <NumericFormat
                     min={1}
                     max={99999999999999}
@@ -614,7 +614,7 @@ export const WorkSave = () => {
                     allowNegative={false}
                     thousandSeparator={true}
                     fixedDecimalScale={true}
-                    value={Math.min(99999999999999, WORK?.work_total_volume)}
+                    value={Math.min(99999999999999, OBJECT?.work_total_volume)}
                   ></NumericFormat>
               </FormGroup>
             </Col>
@@ -622,7 +622,7 @@ export const WorkSave = () => {
           <Row className={"d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>총 유산소 시간</FormLabel>
+                <span className={"input-group-text"}>총 유산소 시간</span>
                 <TimePicker
                   locale={"ko"}
                   format={"HH:mm"}
@@ -632,7 +632,7 @@ export const WorkSave = () => {
                   disabled={true}
                   clockIcon={null}
                   disableClock={false}
-                  value={WORK?.work_total_cardio}
+                  value={OBJECT?.work_total_cardio}
                 ></TimePicker>
               </FormGroup>
             </Col>
@@ -640,7 +640,7 @@ export const WorkSave = () => {
           <Row className={"d-center mt-3"}>
             <Col xs={6}>
               <FormGroup className={"input-group"}>
-                <FormLabel className={"input-group-text"}>체중</FormLabel>
+                <span className={"input-group-text"}>체중</span>
                 <NumericFormat
                   min={1}
                   max={9999}
@@ -655,10 +655,10 @@ export const WorkSave = () => {
                   disabled={false}
                   allowNegative={false}
                   thousandSeparator={true}
-                  value={WORK?.work_body_weight}
+                  value={OBJECT?.work_body_weight}
                   onValueChange={(values) => {
                     const limitedValue = Math.min(9999, parseInt(values?.value));
-                    setWORK((prev) => ({
+                    setOBJECT((prev) => ({
                       ...prev,
                       work_body_weight: limitedValue
                     }));

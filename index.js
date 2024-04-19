@@ -1,7 +1,8 @@
 import path from "path";
+import cors from "cors";
+import util from "util";
 import mongoose from "mongoose";
 import express from "express";
-import cors from "cors";
 import bodyParser from "body-parser";
 import {fileURLToPath} from "url";
 
@@ -22,7 +23,22 @@ import {userRouter} from "./src/router/userRouter.js";
 import {workRouter} from "./src/router/workRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
+const customLogger = (collectionName, method, query, doc, options) => {
+  const message = util.format(
+    "\n======================= \nschema: %s \nmethod: %s \nquery: %s \ndoc: %s \noptions: %s",
+    collectionName,
+    method,
+    JSON.stringify(query, null, 2),
+    JSON.stringify(doc, null, 2),
+    JSON.stringify(options, null, 2),
+  );
+  console.log(message);
+}
+
+// ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://127.0.0.1:27017");
+mongoose.set("debug", customLogger);
+mongoose.set("autoIndex", true);
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,8 +49,6 @@ app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
 });
-
-// ------------------------------------------------------------------------------------------------>
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "client/build")));

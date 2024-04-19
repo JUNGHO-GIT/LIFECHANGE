@@ -8,13 +8,13 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -70,7 +70,7 @@ export const FoodList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const FOOD_DEFAULT = [{
+  const OBJECT_DEFAULT = [{
     _id: "",
     food_number: 0,
     food_startDt: "",
@@ -91,19 +91,19 @@ export const FoodList = () => {
       food_protein: 0,
     }],
   }];
-  const [FOOD, setFOOD] = useState(FOOD_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/list`, {
+    const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
-        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setFOOD(response.data.result || FOOD_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -132,13 +132,13 @@ export const FoodList = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD?.map((item, index) => (
+          {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={`${section.food_part_val}_${section.food_title_val}`}>
+                <React.Fragment key={sectionIndex}>
                   <tr>
                     {sectionIndex === 0 && (
-                      <td rowSpan={item.food_section.length > 3 ? 4 : item.food_section.length}
+                      <td rowSpan={Math.min(item.food_section.length, 3)}
                       className={"pointer"} onClick={() => {
                         SEND.id = item._id;
                         SEND.startDt = item.food_startDt;
@@ -148,6 +148,7 @@ export const FoodList = () => {
                         });
                       }}>
                         {item.food_startDt}
+                        {item.food_section.length > 3 && <div>더보기</div>}
                       </td>
                     )}
                     <td>{section.food_part_val}</td>
@@ -163,11 +164,6 @@ export const FoodList = () => {
                   </tr>
                 </React.Fragment>
               ))}
-              {item.food_section.length > 3 && (
-                <tr>
-                  <td colSpan={11}>...</td>
-                </tr>
-              )}
             </React.Fragment>
           ))}
         </tbody>

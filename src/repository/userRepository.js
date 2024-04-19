@@ -108,20 +108,20 @@ export const detail = async (
 // 3-1. create ------------------------------------------------------------------------------------>
 export const create = async (
   user_id_param,
-  USER_param
+  OBJECT_param
 ) => {
 
   const finalResult = await User.create({
     _id: new mongoose.Types.ObjectId(),
     user_id: user_id_param,
-    user_pw: USER_param.user_pw,
-    user_email: USER_param.user_email,
-    user_phone: USER_param.user_phone,
-    user_sex: USER_param.user_sex,
-    user_age: USER_param.user_age,
-    user_height: USER_param.user_height,
-    user_weight: USER_param.user_weight,
-    user_dataset: USER_param.user_dataset,
+    user_pw: OBJECT_param.user_pw,
+    user_email: OBJECT_param.user_email,
+    user_phone: OBJECT_param.user_phone,
+    user_sex: OBJECT_param.user_sex,
+    user_age: OBJECT_param.user_age,
+    user_height: OBJECT_param.user_height,
+    user_weight: OBJECT_param.user_weight,
+    user_dataset: OBJECT_param.user_dataset,
     user_regDt: fmtDate,
     user_updateDt: "",
   });
@@ -132,14 +132,14 @@ export const create = async (
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
   _id_param,
-  USER_param
+  OBJECT_param
 ) => {
 
   const finalResult = await User.findOneAndUpdate(
     {_id: _id_param
     },
     {$set: {
-      ...USER_param,
+      ...OBJECT_param,
       user_updateDt: fmtDate,
     }},
     {upsert: true,

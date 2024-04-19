@@ -149,7 +149,7 @@ export const save = {
   },
   create: async (
     user_id_param,
-    WORK_param,
+    OBJECT_param,
     startDt_param,
     endDt_param
   ) => {
@@ -159,13 +159,13 @@ export const save = {
       user_id: user_id_param,
       work_startDt: startDt_param,
       work_endDt: endDt_param,
-      work_start: WORK_param.work_start,
-      work_end: WORK_param.work_end,
-      work_time: WORK_param.work_time,
-      work_total_volume: WORK_param.work_total_volume,
-      work_total_cardio: WORK_param.work_total_cardio,
-      work_body_weight: WORK_param.work_body_weight,
-      work_section: WORK_param.work_section,
+      work_start: OBJECT_param.work_start,
+      work_end: OBJECT_param.work_end,
+      work_time: OBJECT_param.work_time,
+      work_total_volume: OBJECT_param.work_total_volume,
+      work_total_cardio: OBJECT_param.work_total_cardio,
+      work_body_weight: OBJECT_param.work_body_weight,
+      work_section: OBJECT_param.work_section,
       work_regDt: fmtDate,
       work_updateDt: "",
     });
@@ -173,13 +173,13 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param, WORK_param
+    _id_param, OBJECT_param
   ) => {
     const finalResult = await Work.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...WORK_param,
+        ...OBJECT_param,
         work_plan_updateDt: fmtDate,
       }},
       {upsert: true,
@@ -194,56 +194,69 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   deletes: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+    _id_param, section_id_param, user_id_param, startDt_param, endDt_param
   ) => {
-    const updateResult = await Work.updateOne(
-      {user_id: user_id_param,
-        work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-        work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-      },
-      {$pull: {
-        work_section: {
-          _id: _id_param
-        },
-      },
-      $set: {
-        work_updateDt: fmtDate,
-      }},
-      {arrayFilters: [{
-        "elem._id": _id_param
-      }]}
-    );
 
-    let finalResult;
-    if (updateResult.modifiedCount > 0) {
-      const doc = await Work.findOne({
-        user_id: user_id_param,
-        work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+    let findResult = Object();
+    let updateResult = Object();
+    let deleteResult = Object();
+    let finalResult = Object();
+
+    findResult = await Work.findOne({
+      _id: _id_param,
+      user_id: user_id_param,
+      work_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      work_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      }
+    })
+    .lean();
+
+    if (findResult) {
+      updateResult = await Work.updateOne(
+        {_id: _id_param,
+          user_id: user_id_param,
+          work_startDt: {
+            $gte: startDt_param,
+            $lte: endDt_param,
+          },
+          work_endDt: {
+            $gte: startDt_param,
+            $lte: endDt_param,
+          },
         },
-        work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        {$pull: {
+          work_section: {
+            _id: section_id_param
+          },
         },
+        $set: {
+          work_updateDt: fmtDate,
+        }},
+        {upsert: true,
+          new: true
+        }
+      )
+      .lean();
+    }
+
+    if (findResult && findResult.work_section.length === 1 && updateResult.modifiedCount > 0) {
+      deleteResult = await Work.deleteOne({
+        _id: _id_param
       })
       .lean();
+      console.log(deleteResult);
+    }
 
-      if ((doc) && (!doc.work_section || doc.work_section.length === 0)) {
-        finalResult = await Work.deleteOne({
-          _id: doc._id
-        })
-        .lean();
-      }
-      else {
-        finalResult = updateResult;
-      }
+    if (deleteResult.deletedCount > 0) {
+      finalResult = "deleted";
+    }
+    else {
+      finalResult = "updated";
     }
 
     return finalResult;

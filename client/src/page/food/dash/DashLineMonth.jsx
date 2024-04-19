@@ -6,13 +6,13 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashLineMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -26,24 +26,24 @@ export const DashLineMonth = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const DASH_KCAL_DEFAULT = [
+  const OBJECT_KCAL_DEFAULT = [
     {name:"", 칼로리: 0},
   ];
-  const DASH_NUT_DEFAULT = [
+  const OBJECT_NUT_DEFAULT = [
     {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
   ];
-  const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
-  const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
+  const [OBJECT_KCAL, setOBJECT_KCAL] = useState(OBJECT_KCAL_DEFAULT);
+  const [OBJECT_NUT, setOBJECT_NUT] = useState(OBJECT_NUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/dash/line/month`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_KCAL(response.data.result.kcal || DASH_KCAL_DEFAULT);
-    setDASH_NUT(response.data.result.nut || DASH_NUT_DEFAULT);
+    setOBJECT_KCAL(response.data.result.kcal || OBJECT_KCAL_DEFAULT);
+    setOBJECT_NUT(response.data.result.nut || OBJECT_NUT_DEFAULT);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -84,10 +84,10 @@ export const DashLineMonth = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeKcal = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_KCAL);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
-        <LineChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
+        <LineChart data={OBJECT_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
           <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
           <XAxis
             type={"category"}
@@ -134,11 +134,11 @@ export const DashLineMonth = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNodeNut = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_NUT);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={DASH_NUT} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <LineChart data={OBJECT_NUT} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -236,7 +236,7 @@ export const DashLineMonth = () => {
           <Container>
             <Row className={"d-center"}>
               <Col xs={9}>
-                <FormLabel className={"fs-20"}>월간 칼로리 / 영양소</FormLabel>
+                <span className={"fs-20"}>월간 칼로리 / 영양소</span>
                 {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
               <Col xs={3}>

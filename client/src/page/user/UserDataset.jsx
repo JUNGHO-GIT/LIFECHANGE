@@ -8,13 +8,13 @@ import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
 import {workArray} from "../../assets/data/WorkArray.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserDataset = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_USER = process.env.REACT_APP_URL_USER;
+  const URL_OBJECT = process.env.REACT_APP_URL_USER;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -49,7 +49,7 @@ export const UserDataset = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const USER_DEFAULT = {
+  const OBJECT_DEFAULT = {
     user_dataset: {
       food: [{
         food_part: "",
@@ -65,23 +65,23 @@ export const UserDataset = () => {
       }]
     }
   };
-  const [USER, setUSER] = useState(USER_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_USER}/dataset`, {
+    const response = await axios.get(`${URL_OBJECT}/dataset`, {
       params: {
         user_id: user_id
       }
     });
-    setUSER(response.data.result || USER_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
   })()}, [user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_USER}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
-      USER: USER
+      OBJECT: OBJECT
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -114,7 +114,7 @@ export const UserDataset = () => {
     }
 
     if (confirm) {
-      setUSER((prev) => ({
+      setOBJECT((prev) => ({
         ...prev,
         user_dataset: {
           ...prev.user_dataset,
@@ -127,7 +127,7 @@ export const UserDataset = () => {
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function addPart() {
-      setUSER((prev) => ({
+      setOBJECT((prev) => ({
         ...prev,
         user_dataset: {
           ...prev.user_dataset,
@@ -143,7 +143,7 @@ export const UserDataset = () => {
     function addTitle () {
       const index = idx.partIdx;
       return function() {
-        setUSER((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_dataset: {
             ...prev.user_dataset,
@@ -165,7 +165,7 @@ export const UserDataset = () => {
       return function() {
         const newPart = prompt("새로운 이름을 입력하세요.");
         if (newPart) {
-          setUSER((prev) => ({
+          setOBJECT((prev) => ({
             ...prev,
             user_dataset: {
               ...prev.user_dataset,
@@ -185,7 +185,7 @@ export const UserDataset = () => {
       return function() {
         const newTitle = prompt("새로운 이름을 입력하세요.");
         if (newTitle) {
-          setUSER((prev) => ({
+          setOBJECT((prev) => ({
             ...prev,
             user_dataset: {
               ...prev.user_dataset,
@@ -207,7 +207,7 @@ export const UserDataset = () => {
     };
     function rmPart(index) {
       return function() {
-        setUSER((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_dataset: {
             ...prev.user_dataset,
@@ -221,7 +221,7 @@ export const UserDataset = () => {
     };
     function rmTitle(index) {
       return function() {
-        setUSER((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           user_dataset: {
             ...prev.user_dataset,
@@ -262,7 +262,7 @@ export const UserDataset = () => {
         <tbody>
           <tr>
             <td colSpan={3}>
-              {USER?.user_dataset[dataType]?.map((item, index) => (
+              {OBJECT?.user_dataset[dataType]?.map((item, index) => (
                 (index > 0) && (
                   <React.Fragment key={index}>
                     <Form className={"pointer"} onClick={() => {
@@ -285,7 +285,7 @@ export const UserDataset = () => {
               ))}
             </td>
             <td colSpan={3}>
-              {USER?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (
+              {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (
                 (index > 0) && (
                   <React.Fragment key={index}>
                     <Form className={"pointer"} onClick={() => {

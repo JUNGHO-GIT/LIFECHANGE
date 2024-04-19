@@ -3,16 +3,17 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -20,6 +21,7 @@ export const WorkDetail = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+  const {log} = useDeveloperMode();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -29,6 +31,7 @@ export const WorkDetail = () => {
       endDt: "",
       refresh:0,
       toList:"/work/list",
+      toDetail:"/work/detail",
       toSave:"/work/save",
     }
   );
@@ -53,7 +56,7 @@ export const WorkDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const WORK_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     work_number: 0,
     work_startDt: "",
@@ -76,7 +79,7 @@ export const WorkDetail = () => {
       work_cardio: "",
     }],
   };
-  const [WORK, setWORK] = useState(WORK_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -108,7 +111,7 @@ export const WorkDetail = () => {
       }
     };
 
-    const updatedSections = WORK.work_section.map((section) => {
+    const updatedSections = OBJECT.work_section.map((section) => {
       sectionVolume = section.work_set * section.work_rep * section.work_kg;
       totalVolume += sectionVolume;
       totalMinutes += timeFormat(section.work_cardio);
@@ -123,27 +126,27 @@ export const WorkDetail = () => {
     const cardioTime = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
 
     // 이전 상태와 비교
-    if (WORK.work_total_volume !== totalVolume || WORK.work_total_cardio !== cardioTime) {
-      setWORK((prev) => ({
+    if (OBJECT.work_total_volume !== totalVolume || OBJECT.work_total_cardio !== cardioTime) {
+      setOBJECT((prev) => ({
         ...prev,
         work_total_volume: totalVolume,
         work_total_cardio: cardioTime,
         work_section: updatedSections,
       }));
     }
-  }, [WORK.work_section]);
+  }, [OBJECT.work_section]);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
 
-    setWORK(response.data.result || WORK_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -153,28 +156,29 @@ export const WorkDetail = () => {
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_WORK}/delete`, {
+  const flowDelete = async (id, section_id) => {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
+        section_id: section_id,
         user_id: user_id,
-        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
+    alert(response.data.msg);
+
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_WORK}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
-          _id: location_id,
+          _id: id,
           user_id: user_id,
-          work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert(response.data.msg);
-      setWORK(updatedData.data.result || WORK_DEFAULT);
-      !updatedData.data.result && navParam(SEND.toList);
-    }
-    else {
-      alert(response.data.msg);
+      setOBJECT(updatedData.data.result || OBJECT_DEFAULT);
+      if (response.data.result === "deleted") {
+        navParam(SEND.toList);
+      }
     }
   };
 
@@ -200,27 +204,31 @@ export const WorkDetail = () => {
             </tr>
           </thead>
           <tbody>
-            {WORK?.work_section?.map((section, index) => (
+            {OBJECT?.work_section?.map((section, index) => (
               <tr key={index} className={"fs-20 pt-20"}>
                 {index === 0 && (
                   <React.Fragment>
-                    <td rowSpan={WORK?.work_section?.length}>
-                      {WORK?.work_startDt}
+                    <td rowSpan={OBJECT?.work_section?.length}>
+                      {OBJECT?.work_startDt}
+                      <div>{OBJECT?._id}</div>
                     </td>
-                    <td rowSpan={WORK?.work_section?.length}>
-                      {WORK?.work_start}
+                    <td rowSpan={OBJECT?.work_section?.length}>
+                      {OBJECT?.work_start}
                     </td>
-                    <td rowSpan={WORK?.work_section?.length}>
-                      {WORK?.work_end}
+                    <td rowSpan={OBJECT?.work_section?.length}>
+                      {OBJECT?.work_end}
                     </td>
-                    <td rowSpan={WORK?.work_section?.length}>
-                      {WORK?.work_time}
+                    <td rowSpan={OBJECT?.work_section?.length}>
+                      {OBJECT?.work_time}
                     </td>
                   </React.Fragment>
                 )}
                 <React.Fragment>
                   <td>{section.work_part_val}</td>
-                  <td>{section.work_title_val}</td>
+                  <td>
+                    {section.work_title_val}
+                    <div>{section._id}</div>
+                  </td>
                 </React.Fragment>
                 {(section.work_part_val !== "유산소") ? (
                   <React.Fragment>
@@ -235,25 +243,27 @@ export const WorkDetail = () => {
                     <td colSpan={5}>{section.work_cardio}</td>
                   </React.Fragment>
                 )}
-                <td><Button variant={"danger"} size={"sm"} onClick={() => (flowDelete(section._id))}>X</Button></td>
+                <td><Button variant={"danger"} size={"sm"} onClick={() => (
+                  flowDelete(OBJECT._id, section._id)
+                )}>X</Button></td>
               </tr>
             ))}
             <tr>
               <td colSpan={4}>총 볼륨</td>
               <td colSpan={3}></td>
-              <td colSpan={4}>{WORK?.work_total_volume}</td>
+              <td colSpan={4}>{OBJECT?.work_total_volume}</td>
               <td></td>
             </tr>
             <tr>
               <td colSpan={4}>총 유산소 시간</td>
               <td colSpan={3}></td>
-              <td colSpan={4}>{WORK?.work_total_cardio}</td>
+              <td colSpan={4}>{OBJECT?.work_total_cardio}</td>
               <td></td>
             </tr>
             <tr>
               <td colSpan={4}>체중</td>
               <td colSpan={3}></td>
-              <td colSpan={4}>{WORK?.work_body_weight}</td>
+              <td colSpan={4}>{OBJECT?.work_body_weight}</td>
               <td></td>
             </tr>
           </tbody>

@@ -5,13 +5,13 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -22,24 +22,24 @@ export const DashPieWeek = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_PART_DEFAULT = [
+  const OBJECT_PART_DEFAULT = [
     {name:"", value: 100}
   ];
-  const DASH_TITLE_DEFAULT = [
+  const OBJECT_TITLE_DEFAULT = [
     {name:"", value: 100}
   ];
-  const [DASH_PART, setDASH_PART] = useState(DASH_PART_DEFAULT);
-  const [DASH_TITLE, setDASH_TITLE] = useState(DASH_TITLE_DEFAULT);
+  const [OBJECT_PART, setOBJECT_PART] = useState(OBJECT_PART_DEFAULT);
+  const [OBJECT_TITLE, setOBJECT_TITLE] = useState(OBJECT_TITLE_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/dash/pie/week`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_PART(response.data.result.part.length > 0 ? response.data.result.part : DASH_PART_DEFAULT);
-    setDASH_TITLE(response.data.result.title.length > 0 ? response.data.result.title : DASH_TITLE_DEFAULT);
+    setOBJECT_PART(response.data.result.part.length > 0 ? response.data.result.part : OBJECT_PART_DEFAULT);
+    setOBJECT_TITLE(response.data.result.title.length > 0 ? response.data.result.title : OBJECT_TITLE_DEFAULT);
   })()}, [user_id]);
 
   // 4-1. renderPart ------------------------------------------------------------------------------>
@@ -51,7 +51,7 @@ export const DashPieWeek = () => {
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
       <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
-        {`${DASH_PART[index].name} ${Math.round(percent * 100)}%`}
+        {`${OBJECT_PART[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
   };
@@ -65,7 +65,7 @@ export const DashPieWeek = () => {
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
       <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
-        {`${DASH_TITLE[index].name} ${Math.round(percent * 100)}%`}
+        {`${OBJECT_TITLE[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
   };
@@ -78,7 +78,7 @@ export const DashPieWeek = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
             <Pie
-              data={DASH_PART}
+              data={OBJECT_PART}
               cx={"50%"}
               cy={"50%"}
               label={renderPart}
@@ -94,7 +94,7 @@ export const DashPieWeek = () => {
                 data.payload.opacity = 1.0;
               }}
             >
-              {DASH_PART?.map((entry, index) => (
+              {OBJECT_PART?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_PART[index % COLORS_PART.length]} />
               ))}
             </Pie>
@@ -120,7 +120,7 @@ export const DashPieWeek = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
             <Pie
-              data={DASH_TITLE}
+              data={OBJECT_TITLE}
               cx={"50%"}
               cy={"50%"}
               label={renderTitle}
@@ -136,7 +136,7 @@ export const DashPieWeek = () => {
                 data.payload.opacity = 1.0;
               }}
             >
-              {DASH_TITLE?.map((entry, index) => (
+              {OBJECT_TITLE?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_TITLE[index % COLORS_TITLE.length]} />
               ))}
             </Pie>
@@ -162,11 +162,11 @@ export const DashPieWeek = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={6}>
-              <FormLabel className={"fs-20"}>주간 상위 5개 부위 / 운동</FormLabel>
+              <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
               {chartNodePart()}
             </Col>
             <Col xs={6}>
-              <FormLabel className={"fs-20"}>주간 상위 5개 부위 / 운동</FormLabel>
+              <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
               {chartNodeTitle()}
             </Col>
             </Row>

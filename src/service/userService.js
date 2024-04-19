@@ -95,7 +95,7 @@ export const detail = async (
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
   user_id_param,
-  USER_param
+  OBJECT_param
 ) => {
 
   const findResult = await repository.detail(
@@ -105,12 +105,12 @@ export const save = async (
   let finalResult;
   if (!findResult) {
     finalResult = await repository.create(
-      user_id_param, USER_param
+      user_id_param, OBJECT_param
     );
   }
   else {
     finalResult = await repository.update(
-      findResult._id, USER_param
+      findResult._id, OBJECT_param
     );
   }
 

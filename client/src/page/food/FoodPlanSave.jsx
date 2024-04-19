@@ -8,13 +8,13 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -53,7 +53,7 @@ export const FoodPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const FOOD_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     food_plan_number: 0,
     food_plan_startDt: "",
@@ -63,21 +63,21 @@ export const FoodPlanSave = () => {
     food_plan_protein: 0,
     food_plan_fat: 0,
   };
-  const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setFOOD_PLAN(response.data.result || FOOD_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -87,10 +87,10 @@ export const FoodPlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_FOOD_PLAN}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
-      FOOD_PLAN: FOOD_PLAN,
-      food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      OBJECT_PLAN: OBJECT_PLAN,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -118,7 +118,7 @@ export const FoodPlanSave = () => {
       <Row className={"d-center"}>
         <Col xs={6} className={"mb-20"}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>칼로리</FormLabel>
+            <span className={"input-group-text"}>칼로리</span>
             <NumericFormat
               min={1}
               max={9999}
@@ -134,10 +134,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(9999, FOOD_PLAN?.food_plan_kcal)}
+              value={Math.min(9999, OBJECT_PLAN?.food_plan_kcal)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(9999, parseInt(values.value));
-                setFOOD_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   food_plan_kcal: limitedValue
                 }));
@@ -147,7 +147,7 @@ export const FoodPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>탄수화물</FormLabel>
+            <span className={"input-group-text"}>탄수화물</span>
             <NumericFormat
               min={0}
               max={9999}
@@ -163,10 +163,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(999, FOOD_PLAN?.food_plan_carb)}
+              value={Math.min(999, OBJECT_PLAN?.food_plan_carb)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values.value));
-                setFOOD_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   food_plan_carb: limitedValue
                 }));
@@ -176,7 +176,7 @@ export const FoodPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>단백질</FormLabel>
+            <span className={"input-group-text"}>단백질</span>
             <NumericFormat
               min={0}
               max={9999}
@@ -192,10 +192,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(999, FOOD_PLAN?.food_plan_protein)}
+              value={Math.min(999, OBJECT_PLAN?.food_plan_protein)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values.value));
-                setFOOD_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   food_plan_protein: limitedValue
                 }));
@@ -205,7 +205,7 @@ export const FoodPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>지방</FormLabel>
+            <span className={"input-group-text"}>지방</span>
             <NumericFormat
               min={0}
               max={9999}
@@ -221,10 +221,10 @@ export const FoodPlanSave = () => {
               allowNegative={false}
               fixedDecimalScale={true}
               thousandSeparator={true}
-              value={Math.min(999, FOOD_PLAN?.food_plan_fat)}
+              value={Math.min(999, OBJECT_PLAN?.food_plan_fat)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values.value));
-                setFOOD_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   food_plan_fat: limitedValue
                 }));

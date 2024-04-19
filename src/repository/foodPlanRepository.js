@@ -122,7 +122,7 @@ export const save = {
   },
   create: async (
     user_id_param,
-    FOOD_PLAN_param,
+    OBJECT_PLAN_param,
     startDt_param,
     endDt_param
   ) => {
@@ -132,10 +132,10 @@ export const save = {
       user_id: user_id_param,
       food_plan_startDt: startDt_param,
       food_plan_endDt: endDt_param,
-      food_plan_kcal: FOOD_PLAN_param.food_plan_kcal,
-      food_plan_carb: FOOD_PLAN_param.food_plan_carb,
-      food_plan_protein: FOOD_PLAN_param.food_plan_protein,
-      food_plan_fat: FOOD_PLAN_param.food_plan_fat,
+      food_plan_kcal: OBJECT_PLAN_param.food_plan_kcal,
+      food_plan_carb: OBJECT_PLAN_param.food_plan_carb,
+      food_plan_protein: OBJECT_PLAN_param.food_plan_protein,
+      food_plan_fat: OBJECT_PLAN_param.food_plan_fat,
       food_plan_regDt: fmtDate,
       food_plan_updateDt: "",
     });
@@ -144,14 +144,14 @@ export const save = {
   },
   update: async (
     _id_param,
-    FOOD_PLAN_param
+    OBJECT_PLAN_param
   ) => {
 
     const finalResult = await FoodPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...FOOD_PLAN_param,
+        ...OBJECT_PLAN_param,
         food_plan_updateDt: fmtDate,
       }},
       {upsert: true,

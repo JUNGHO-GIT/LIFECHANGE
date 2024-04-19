@@ -6,13 +6,13 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -23,24 +23,24 @@ export const DashBarToday = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_KCAL_DEFAULT = [
+  const OBJECT_KCAL_DEFAULT = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const DASH_NUT_DEFAULT = ([
+  const OBJECT_NUT_DEFAULT = ([
     {name:"", 목표: 0, 실제: 0},
   ]);
-  const [DASH_KCAL, setDASH_KCAL] = useState(DASH_KCAL_DEFAULT);
-  const [DASH_NUT, setDASH_NUT] = useState(DASH_NUT_DEFAULT);
+  const [OBJECT_KCAL, setOBJECT_KCAL] = useState(OBJECT_KCAL_DEFAULT);
+  const [OBJECT_NUT, setOBJECT_NUT] = useState(OBJECT_NUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/dash/bar/today`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_KCAL(response.data.result.kcal || DASH_KCAL_DEFAULT);
-    setDASH_NUT(response.data.result.nut || DASH_NUT_DEFAULT);
+    setOBJECT_KCAL(response.data.result.kcal || OBJECT_KCAL_DEFAULT);
+    setOBJECT_NUT(response.data.result.nut || OBJECT_NUT_DEFAULT);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -81,11 +81,11 @@ export const DashBarToday = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeKcal = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_KCAL);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_KCAL);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={DASH_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+          <ComposedChart data={OBJECT_KCAL} margin={{top: 60, right: 60, bottom: 20, left: 20}}
           barGap={80} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -148,11 +148,11 @@ export const DashBarToday = () => {
 
   // 5-2. chart ----------------------------------------------------------------------------------->
   const chartNodeNut = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_NUT);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_NUT);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={DASH_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+          <ComposedChart data={OBJECT_NUT} margin={{top: 60, right: 60, bottom: 20, left: 20}}
           barGap={20} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -231,7 +231,7 @@ export const DashBarToday = () => {
           <Container>
             <Row className={"d-center"}>
               <Col xs={9}>
-                <FormLabel className={"fs-20"}>오늘 칼로리 / 영양소</FormLabel>
+                <span className={"fs-20"}>오늘 칼로리 / 영양소</span>
                 {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
               <Col xs={3}>

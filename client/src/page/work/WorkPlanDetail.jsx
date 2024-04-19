@@ -6,13 +6,13 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ export const WorkPlanDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const WORK_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     work_plan_number: 0,
     work_plan_startDt: "",
@@ -64,21 +64,21 @@ export const WorkPlanDetail = () => {
     work_plan_cardio: "",
     work_plan_weight: 0,
   };
-  const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setWORK_PLAN(response.data.result || WORK_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -88,23 +88,23 @@ export const WorkPlanDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_WORK_PLAN}/delete`, {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
-        work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_WORK_PLAN}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
-          work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       alert(response.data.msg);
-      setWORK_PLAN(updatedData.data.result || WORK_PLAN_DEFAULT);
+      setOBJECT_PLAN(updatedData.data.result || OBJECT_PLAN_DEFAULT);
       !updatedData.data.result && navParam(SEND.toList);
     }
     else {
@@ -130,14 +130,14 @@ export const WorkPlanDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{WORK_PLAN?.work_plan_startDt}</td>
-            <td>{WORK_PLAN?.work_plan_endDt}</td>
-            <td>{WORK_PLAN?.work_plan_count}</td>
-            <td>{WORK_PLAN?.work_plan_volume}</td>
-            <td>{WORK_PLAN?.work_plan_cardio}</td>
-            <td>{WORK_PLAN?.work_plan_weight}</td>
+            <td>{OBJECT_PLAN?.work_plan_startDt}</td>
+            <td>{OBJECT_PLAN?.work_plan_endDt}</td>
+            <td>{OBJECT_PLAN?.work_plan_count}</td>
+            <td>{OBJECT_PLAN?.work_plan_volume}</td>
+            <td>{OBJECT_PLAN?.work_plan_cardio}</td>
+            <td>{OBJECT_PLAN?.work_plan_weight}</td>
             <td><Button variant={"danger"} size={"sm"}
-            onClick={() => (flowDelete(WORK_PLAN?._id))}>X</Button></td>
+            onClick={() => (flowDelete(OBJECT_PLAN?._id))}>X</Button></td>
           </tr>
         </tbody>
         </Table>

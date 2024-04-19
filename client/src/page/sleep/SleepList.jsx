@@ -8,13 +8,13 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_OBJECT = process.env.REACT_APP_URL_SLEEP;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -70,7 +70,7 @@ export const SleepList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const SLEEP_DEFAULT = [{
+  const OBJECT_DEFAULT = [{
     _id: "",
     sleep_number: 0,
     sleep_startDt: "",
@@ -81,19 +81,19 @@ export const SleepList = () => {
       sleep_time: "",
     }],
   }];
-  const [SLEEP, setSLEEP] = useState(SLEEP_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/list`, {
+    const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
-        sleep_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setSLEEP(response.data.result || SLEEP_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -115,13 +115,13 @@ export const SleepList = () => {
           </tr>
         </thead>
         <tbody>
-          {SLEEP?.map((item, index) => (
+          {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={item._id}>
+                <React.Fragment key={sectionIndex}>
                   <tr>
                     {sectionIndex === 0 && (
-                      <td rowSpan={item.sleep_section.length > 3 ? 4 : item.sleep_section.length}
+                      <td rowSpan={Math.min(item.sleep_section.length, 3)}
                       className={"pointer"} onClick={() => {
                         SEND.id = item._id;
                         SEND.startDt = item.sleep_startDt;
@@ -131,6 +131,7 @@ export const SleepList = () => {
                         });
                       }}>
                         {item.sleep_startDt}
+                        {item.sleep_section.length > 3 && <div>더보기</div>}
                       </td>
                     )}
                     <td>{section.sleep_night}</td>
@@ -139,13 +140,6 @@ export const SleepList = () => {
                   </tr>
                 </React.Fragment>
               ))}
-              {item.sleep_section.length > 3 && (
-                <React.Fragment key={item._id}>
-                  <tr>
-                    <td colSpan={5}>...</td>
-                  </tr>
-                </React.Fragment>
-              )}
             </React.Fragment>
           ))}
         </tbody>

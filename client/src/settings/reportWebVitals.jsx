@@ -1,4 +1,5 @@
-//@ts-ignore
+// reportWebVitals.jsx
+// @ts-ignore
 
 export const reportWebVitals = (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {

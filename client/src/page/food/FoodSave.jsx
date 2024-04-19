@@ -8,13 +8,13 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const user_id = window.sessionStorage.getItem("user_id");
   const session = window.sessionStorage.getItem("dataset") || "";
   const foodArray = JSON.parse(session)?.food || [];
@@ -57,7 +57,7 @@ export const FoodSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const FOOD_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     food_number: 0,
     food_startDt: "",
@@ -78,11 +78,11 @@ export const FoodSave = () => {
       food_protein: 0,
     }],
   };
-  const {val:FOOD_BEFORE, set:setFOOD_BEFORE} = useStorage(
-    `FOOD_BEFORE(${PATH})`, FOOD_DEFAULT
+  const {val:OBJECT_BEFORE, set:setOBJECT_BEFORE} = useStorage(
+    `OBJECT_BEFORE(${PATH})`, OBJECT_DEFAULT
   );
-  const {val:FOOD, set:setFOOD} = useStorage(
-    `FOOD(${PATH})`, FOOD_DEFAULT
+  const {val:OBJECT, set:setOBJECT} = useStorage(
+    `OBJECT(${PATH})`, OBJECT_DEFAULT
   );
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
@@ -97,29 +97,29 @@ export const FoodSave = () => {
 
     // 상세 데이터 가져오기
     const fetchDetail = async () => {
-      const response = await axios.get(`${URL_FOOD}/detail`, {
+      const response = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: "",
           user_id: user_id,
-          food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
 
-      // 결과 있는경우 FOOD 상태 업데이트
+      // 결과 있는경우 OBJECT 상태 업데이트
       if (response.data.result !== null && !storageSection) {
-        setFOOD((prev) => ({
+        setOBJECT((prev) => ({
           ...prev,
           ...response.data.result,
         }));
       }
 
-      // 결과가 null or !null 이면서 스토리지 데이터가 있는 경우, FOOD 상태 업데이트
+      // 결과가 null or !null 이면서 스토리지 데이터가 있는 경우, OBJECT 상태 업데이트
       else if (
         (response.data.result !== null && storageSection) ||
         (response.data.result === null && storageSection)
       ) {
         if (storageSection) {
-          setFOOD((prev) => {
+          setOBJECT((prev) => {
             let newFoodSection = [...prev.food_section];
 
             // 첫 번째 항목이 빈 값 객체인지 확인하고, 조건에 맞으면 제거
@@ -143,9 +143,9 @@ export const FoodSave = () => {
         }
       }
 
-      // 결과가 null 일 경우, FOOD 상태를 명시적으로 초기화
+      // 결과가 null 일 경우, OBJECT 상태를 명시적으로 초기화
       else {
-        setFOOD(FOOD_DEFAULT);
+        setOBJECT(OBJECT_DEFAULT);
       }
 
       setCOUNT((prev) => ({
@@ -161,15 +161,15 @@ export const FoodSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     // 초기 영양소 값 설정
-    setFOOD_BEFORE((prev) => ({
+    setOBJECT_BEFORE((prev) => ({
       ...prev,
-      food_section: [...FOOD?.food_section],
+      food_section: [...OBJECT?.food_section],
     }));
-  }, [FOOD]);
+  }, [OBJECT]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    const totals = FOOD?.food_section?.reduce((acc, current) => {
+    const totals = OBJECT?.food_section?.reduce((acc, current) => {
       return {
         totalKcal: acc.totalKcal + Number(current.food_kcal),
         totalFat: acc.totalFat + Number(current.food_fat),
@@ -178,21 +178,21 @@ export const FoodSave = () => {
       };
     }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0 });
 
-    setFOOD(prev => ({
+    setOBJECT(prev => ({
       ...prev,
       food_total_kcal: Number(totals.totalKcal.toFixed(1)),
       food_total_fat: Number(totals.totalFat.toFixed(1)),
       food_total_carb: Number(totals.totalCarb.toFixed(1)),
       food_total_protein: Number(totals.totalProtein.toFixed(1)),
     }));
-  }, [FOOD?.food_section]);
+  }, [OBJECT?.food_section]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_FOOD}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
-      FOOD: FOOD,
-      food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      OBJECT: OBJECT,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -218,10 +218,10 @@ export const FoodSave = () => {
   const handleCountChange = (index, newValue) => {
     const newCountValue = Number(newValue);
 
-    setFOOD((prev) => {
+    setOBJECT((prev) => {
       const newFoodSection = [...prev.food_section];
       const section = newFoodSection[index];
-      const defaultSection = FOOD_BEFORE.food_section[index];
+      const defaultSection = OBJECT_BEFORE.food_section[index];
       const ratio = newCountValue / (defaultSection.food_count || 1);
 
       if (defaultSection) {
@@ -244,7 +244,7 @@ export const FoodSave = () => {
 
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerFoodDelete = (index) => {
-    setFOOD((prev) => {
+    setOBJECT((prev) => {
       const newFoodSection = [...prev.food_section];
       newFoodSection.splice(index, 1);
       return {
@@ -274,7 +274,7 @@ export const FoodSave = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD?.food_section?.map((item, index) => (
+          {OBJECT?.food_section?.map((item, index) => (
             <React.Fragment key={index}>
               <tr>
                 <td>
@@ -285,7 +285,7 @@ export const FoodSave = () => {
                     value={item.food_part_val}
                     onChange={(e) => {
                       const newVal = parseInt(e.target.value);
-                      setFOOD((prev) => {
+                      setOBJECT((prev) => {
                         const newFoodSection = [...prev.food_section];
                         newFoodSection[index] = {
                           ...item,
@@ -351,10 +351,10 @@ export const FoodSave = () => {
             <td></td>
             <td></td>
             <td></td>
-            <td>{FOOD?.food_total_kcal}</td>
-            <td>{FOOD?.food_total_fat}</td>
-            <td>{FOOD?.food_total_carb}</td>
-            <td>{FOOD?.food_total_protein}</td>
+            <td>{OBJECT?.food_total_kcal}</td>
+            <td>{OBJECT?.food_total_fat}</td>
+            <td>{OBJECT?.food_total_carb}</td>
+            <td>{OBJECT?.food_total_protein}</td>
             <td></td>
           </tr>
         </tbody>

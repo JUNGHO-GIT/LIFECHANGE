@@ -107,7 +107,7 @@ export const save = {
   },
 
   create: async (
-    user_id_param, WORK_PLAN_param, startDt_param, endDt_param
+    user_id_param, OBJECT_PLAN_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await WorkPlan.create({
@@ -115,10 +115,10 @@ export const save = {
       user_id: user_id_param,
       work_plan_startDt: startDt_param,
       work_plan_endDt: endDt_param,
-      work_plan_count: WORK_PLAN_param.work_plan_count,
-      work_plan_volume: WORK_PLAN_param.work_plan_volume,
-      work_plan_cardio: WORK_PLAN_param.work_plan_cardio,
-      work_plan_weight: WORK_PLAN_param.work_plan_weight,
+      work_plan_count: OBJECT_PLAN_param.work_plan_count,
+      work_plan_volume: OBJECT_PLAN_param.work_plan_volume,
+      work_plan_cardio: OBJECT_PLAN_param.work_plan_cardio,
+      work_plan_weight: OBJECT_PLAN_param.work_plan_weight,
       work_plan_regDt: fmtDate,
       work_plan_updateDt: "",
     });
@@ -126,13 +126,13 @@ export const save = {
   },
 
   update: async (
-    _id_param, WORK_PLAN_param
+    _id_param, OBJECT_PLAN_param
   ) => {
     const finalResult = await WorkPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...WORK_PLAN_param,
+        ...OBJECT_PLAN_param,
         work_plan_updateDt: fmtDate,
       }},
       {upsert: true,

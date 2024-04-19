@@ -9,13 +9,13 @@ import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_SLEEP;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ export const SleepPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const SLEEP_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,
     sleep_plan_startDt: "",
@@ -63,22 +63,22 @@ export const SleepPlanSave = () => {
     sleep_plan_morning: "",
     sleep_plan_time: "",
   };
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
-  useTime(SLEEP_PLAN, setSLEEP_PLAN, PATH, "plan");
+  useTime(OBJECT_PLAN, setOBJECT_PLAN, PATH, "plan");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setSLEEP_PLAN(response.data.result || SLEEP_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -88,10 +88,10 @@ export const SleepPlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_SLEEP_PLAN}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
-      SLEEP_PLAN: SLEEP_PLAN,
-      sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      OBJECT_PLAN: OBJECT_PLAN,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -119,7 +119,7 @@ export const SleepPlanSave = () => {
       <Row className={"d-center"}>
         <Col xs={12}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>취침</FormLabel>
+            <span className={"input-group-text"}>취침</span>
             <TimePicker
               locale={"ko"}
               format={"HH:mm"}
@@ -129,9 +129,9 @@ export const SleepPlanSave = () => {
               clockIcon={null}
               disabled={false}
               disableClock={false}
-              value={SLEEP_PLAN?.sleep_plan_night}
+              value={OBJECT_PLAN?.sleep_plan_night}
               onChange={(e) => {
-                setSLEEP_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   sleep_plan_night: e ? e.toString() : "",
                 }));
@@ -141,7 +141,7 @@ export const SleepPlanSave = () => {
         </Col>
         <Col xs={12}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>기상</FormLabel>
+            <span className={"input-group-text"}>기상</span>
             <TimePicker
               locale={"ko"}
               format={"HH:mm"}
@@ -151,9 +151,9 @@ export const SleepPlanSave = () => {
               clockIcon={null}
               disabled={false}
               disableClock={false}
-              value={SLEEP_PLAN?.sleep_plan_morning}
+              value={OBJECT_PLAN?.sleep_plan_morning}
               onChange={(e) => {
-                setSLEEP_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   sleep_plan_morning: e ? e.toString() : "",
                 }));
@@ -163,7 +163,7 @@ export const SleepPlanSave = () => {
         </Col>
         <Col xs={12}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>수면</FormLabel>
+            <span className={"input-group-text"}>수면</span>
             <TimePicker
               locale={"ko"}
               format={"HH:mm"}
@@ -173,7 +173,7 @@ export const SleepPlanSave = () => {
               disabled={true}
               clockIcon={null}
               disableClock={false}
-              value={SLEEP_PLAN?.sleep_plan_time}
+              value={OBJECT_PLAN?.sleep_plan_time}
             ></TimePicker>
           </FormGroup>
         </Col>

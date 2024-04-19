@@ -189,7 +189,7 @@ userRouter.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
-      req.body.USER
+      req.body.OBJECT
     );
     if (result) {
       res.json({

@@ -6,13 +6,13 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgWeek = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_OBJECT = process.env.REACT_APP_URL_SLEEP;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -23,19 +23,19 @@ export const DashAvgWeek = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_DEFAULT = [
+  const OBJECT_DEFAULT = [
     {name:"", 취침: 0, 수면: 0, 기상: 0}
   ];
-  const [DASH, setDASH] = useState(DASH_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_SLEEP}/dash/avg/week`, {
+    const responseWeek = await axios.get(`${URL_OBJECT}/dash/avg/week`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH(responseWeek.data.result || DASH_DEFAULT);
+    setOBJECT(responseWeek.data.result || OBJECT_DEFAULT);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -43,7 +43,7 @@ export const DashAvgWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <BarChart data={DASH} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          <BarChart data={OBJECT} margin={{top: 10, right: 30, bottom: 20, left: 20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -155,7 +155,7 @@ export const DashAvgWeek = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={9}>
-              <FormLabel className={"fs-20"}>주간 수면 평균</FormLabel>
+              <span className={"fs-20"}>주간 수면 평균</span>
               {chartNode()}
             </Col>
             <Col xs={3}>

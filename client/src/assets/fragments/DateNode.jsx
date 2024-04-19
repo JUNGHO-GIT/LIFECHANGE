@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
@@ -22,7 +22,7 @@ export const DateNode = ({
   const datePickerNode = (label, value, onChange, placement) => (
     <React.Fragment>
       <FormGroup className={"input-group"}>
-        <FormLabel className="input-group-text">{label}</FormLabel>
+        <span className="input-group-text">{label}</span>
         <DatePicker
           locale={ko}
           dateFormat={"yyyy-MM-dd"}

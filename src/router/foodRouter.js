@@ -40,7 +40,7 @@ foodRouter.get("/list", async (req, res) => {
   try {
     const result = await service.list (
       req.query.user_id,
-      req.query.food_dur,
+      req.query.duration,
       req.query.FILTER,
       req.query.PAGING
     );
@@ -74,7 +74,7 @@ foodRouter.get("/detail", async (req, res) => {
     const result = await service.detail (
       req.query._id,
       req.query.user_id,
-      req.query.food_dur
+      req.query.duration
     );
     if (result && result.result) {
       res.json({
@@ -105,8 +105,8 @@ foodRouter.post("/save", async (req, res) => {
   try {
     const result = await service.save (
       req.body.user_id,
-      req.body.FOOD,
-      req.body.food_dur
+      req.body.OBJECT,
+      req.body.duration
     );
     if (result) {
       res.json({
@@ -136,8 +136,9 @@ foodRouter.delete("/delete", async (req, res) => {
   try {
     const result = await service.deletes(
       req.query._id,
+      req.query.section_id,
       req.query.user_id,
-      req.query.food_dur
+      req.query.duration
     );
     if (result) {
       res.json({
@@ -149,7 +150,8 @@ foodRouter.delete("/delete", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "삭제 실패"
+        msg: "삭제 실패",
+        result: null
       });
     }
   }

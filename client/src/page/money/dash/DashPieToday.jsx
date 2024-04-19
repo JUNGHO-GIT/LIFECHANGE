@@ -5,13 +5,13 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashPieToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -22,24 +22,24 @@ export const DashPieToday = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_IN_DEFAULT = [
+  const OBJECT_IN_DEFAULT = [
     {name:"", value: 100}
   ];
-  const DASH_OUT_DEFAULT = [
+  const OBJECT_OUT_DEFAULT = [
     {name:"", value: 100}
   ];
-  const [DASH_IN, setDASH_IN] = useState(DASH_IN_DEFAULT);
-  const [DASH_OUT, setDASH_OUT] = useState(DASH_OUT_DEFAULT);
+  const [OBJECT_IN, setOBJECT_IN] = useState(OBJECT_IN_DEFAULT);
+  const [OBJECT_OUT, setOBJECT_OUT] = useState(OBJECT_OUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/dash/pie/today`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_IN(response.data.result.in.length > 0 ? response.data.result.in : DASH_IN_DEFAULT);
-    setDASH_OUT(response.data.result.out.length > 0 ? response.data.result.out : DASH_OUT_DEFAULT);
+    setOBJECT_IN(response.data.result.in.length > 0 ? response.data.result.in : OBJECT_IN_DEFAULT);
+    setOBJECT_OUT(response.data.result.out.length > 0 ? response.data.result.out : OBJECT_OUT_DEFAULT);
   })()}, [user_id]);
 
   // 4-1. renderIn -------------------------------------------------------------------------------->
@@ -51,7 +51,7 @@ export const DashPieToday = () => {
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
       <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
-        {`${DASH_IN[index].name} ${Math.round(percent * 100)}%`}
+        {`${OBJECT_IN[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
   };
@@ -65,7 +65,7 @@ export const DashPieToday = () => {
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
       <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
-        {`${DASH_OUT[index].name} ${Math.round(percent * 100)}%`}
+        {`${OBJECT_OUT[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
   };
@@ -78,7 +78,7 @@ export const DashPieToday = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
             <Pie
-              data={DASH_IN}
+              data={OBJECT_IN}
               cx={"50%"}
               cy={"50%"}
               label={renderIn}
@@ -94,7 +94,7 @@ export const DashPieToday = () => {
                 data.payload.opacity = 1.0;
               }}
             >
-              {DASH_IN?.map((entry, index) => (
+              {OBJECT_IN?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_IN[index % COLORS_IN.length]} />
               ))}
             </Pie>
@@ -120,7 +120,7 @@ export const DashPieToday = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <PieChart margin={{top: 20, right: 20, bottom: 20, left: 20}}>
             <Pie
-              data={DASH_OUT}
+              data={OBJECT_OUT}
               cx={"50%"}
               cy={"50%"}
               label={renderOut}
@@ -136,7 +136,7 @@ export const DashPieToday = () => {
                 data.payload.opacity = 1.0;
               }}
             >
-              {DASH_OUT?.map((entry, index) => (
+              {OBJECT_OUT?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_OUT[index % COLORS_OUT.length]} />
               ))}
             </Pie>
@@ -162,11 +162,11 @@ export const DashPieToday = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={6}>
-              <FormLabel className={"fs-20"}>오늘 수입 항목별 비율</FormLabel>
+              <span className={"fs-20"}>오늘 수입 항목별 비율</span>
               {chartNodeIn()}
             </Col>
             <Col xs={6}>
-              <FormLabel className={"fs-20"}>오늘 지출 항목별 비율</FormLabel>
+              <span className={"fs-20"}>오늘 지출 항목별 비율</span>
               {chartNodeOut()}
             </Col>
             </Row>

@@ -6,13 +6,13 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashBarToday = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_MONEY = process.env.REACT_APP_URL_MONEY;
+  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -23,19 +23,19 @@ export const DashBarToday = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_DEFAULT = [
+  const OBJECT_DEFAULT = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const [DASH, setDASH] = useState(DASH_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_MONEY}/dash/bar/today`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH(response.data.result || DASH_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -76,11 +76,11 @@ export const DashBarToday = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNode = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={DASH} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+          <ComposedChart data={OBJECT} margin={{top: 60, right: 60, bottom: 20, left: 20}}
           barGap={20} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -143,7 +143,7 @@ export const DashBarToday = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={12}>
-              <FormLabel className={"fs-20"}>오늘 지출 / 수입 실제 / 목표</FormLabel>
+              <span className={"fs-20"}>오늘 지출 / 수입 실제 / 목표</span>
               {chartNode()}
             </Col>
             </Row>

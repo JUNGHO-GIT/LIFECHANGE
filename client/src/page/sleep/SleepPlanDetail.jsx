@@ -6,13 +6,13 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP_PLAN = process.env.REACT_APP_URL_SLEEP_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_SLEEP;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -53,7 +53,7 @@ export const SleepPlanDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const SLEEP_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,
     sleep_plan_startDt: "",
@@ -62,21 +62,21 @@ export const SleepPlanDetail = () => {
     sleep_plan_morning: "",
     sleep_plan_time: "",
   };
-  const [SLEEP_PLAN, setSLEEP_PLAN] = useState(SLEEP_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setSLEEP_PLAN(response.data.result || SLEEP_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -86,22 +86,22 @@ export const SleepPlanDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_SLEEP_PLAN}/delete`, {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
-        sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_SLEEP_PLAN}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
-          sleep_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      setSLEEP_PLAN(updatedData.data.result || SLEEP_PLAN_DEFAULT);
+      setOBJECT_PLAN(updatedData.data.result || OBJECT_PLAN_DEFAULT);
       alert(response.data.msg);
       !updatedData.data.result && navParam(SEND.toList);
     }
@@ -127,13 +127,13 @@ export const SleepPlanDetail = () => {
         </thead>
         <tbody>
           <tr className={"fs-20 pt-20"}>
-            <td>{SLEEP_PLAN?.sleep_plan_startDt}</td>
-            <td>{SLEEP_PLAN?.sleep_plan_endDt}</td>
-            <td>{SLEEP_PLAN?.sleep_plan_night}</td>
-            <td>{SLEEP_PLAN?.sleep_plan_morning}</td>
-            <td>{SLEEP_PLAN?.sleep_plan_time}</td>
+            <td>{OBJECT_PLAN?.sleep_plan_startDt}</td>
+            <td>{OBJECT_PLAN?.sleep_plan_endDt}</td>
+            <td>{OBJECT_PLAN?.sleep_plan_night}</td>
+            <td>{OBJECT_PLAN?.sleep_plan_morning}</td>
+            <td>{OBJECT_PLAN?.sleep_plan_time}</td>
             <td><Button variant={"danger"} size={"sm"} onClick={() => (
-              flowDelete(SLEEP_PLAN?._id)
+              flowDelete(OBJECT_PLAN?._id)
             )}>X</Button></td>
           </tr>
         </tbody>

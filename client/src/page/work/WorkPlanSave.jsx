@@ -9,13 +9,13 @@ import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK_PLAN = process.env.REACT_APP_URL_WORK_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ export const WorkPlanSave = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const WORK_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     work_plan_number: 0,
     work_plan_startDt: "",
@@ -64,21 +64,21 @@ export const WorkPlanSave = () => {
     work_plan_volume: 0,
     work_plan_weight: 0,
   };
-  const [WORK_PLAN, setWORK_PLAN] = useState(WORK_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: "",
         user_id: user_id,
-        work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setWORK_PLAN(response.data.result || WORK_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -88,10 +88,10 @@ export const WorkPlanSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_WORK_PLAN}/save`, {
+    const response = await axios.post(`${URL_OBJECT}/plan/save`, {
       user_id: user_id,
-      WORK_PLAN: WORK_PLAN,
-      work_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+      OBJECT_PLAN: OBJECT_PLAN,
+      duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -119,7 +119,7 @@ export const WorkPlanSave = () => {
       <Row className={"d-center"}>
         <Col xs={6} className={"mb-20"}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>목표 운동 횟수</FormLabel>
+            <span className={"input-group-text"}>목표 운동 횟수</span>
             <NumericFormat
               min={0}
               max={999}
@@ -135,10 +135,10 @@ export const WorkPlanSave = () => {
               allowNegative={false}
               thousandSeparator={true}
               fixedDecimalScale={true}
-              value={Math.min(999, WORK_PLAN?.work_plan_count)}
+              value={Math.min(999, OBJECT_PLAN?.work_plan_count)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values?.value));
-                setWORK_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   work_plan_count: limitedValue
                 }));
@@ -148,7 +148,7 @@ export const WorkPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>목표 유산소 시간</FormLabel>
+            <span className={"input-group-text"}>목표 유산소 시간</span>
             <TimePicker
               locale={"ko"}
               format={"HH:mm"}
@@ -158,9 +158,9 @@ export const WorkPlanSave = () => {
               disabled={false}
               clockIcon={null}
               disableClock={false}
-              value={WORK_PLAN?.work_plan_cardio}
+              value={OBJECT_PLAN?.work_plan_cardio}
               onChange={(e) => {
-                setWORK_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   work_plan_cardio: e ? e.toString() : ""
                 }));
@@ -170,7 +170,7 @@ export const WorkPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>목표 총 볼륨</FormLabel>
+            <span className={"input-group-text"}>목표 총 볼륨</span>
             <NumericFormat
               min={0}
               max={999999}
@@ -186,10 +186,10 @@ export const WorkPlanSave = () => {
               fixedDecimalScale={true}
               thousandSeparator={true}
               allowLeadingZeros={false}
-              value={Math.min(999999, WORK_PLAN?.work_plan_volume)}
+              value={Math.min(999999, OBJECT_PLAN?.work_plan_volume)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999999, parseInt(values?.value));
-                setWORK_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   work_plan_volume: limitedValue
                 }));
@@ -199,7 +199,7 @@ export const WorkPlanSave = () => {
         </Col>
         <Col xs={6}>
           <FormGroup className={"input-group"}>
-            <FormLabel className={"input-group-text"}>목표 체중</FormLabel>
+            <span className={"input-group-text"}>목표 체중</span>
             <NumericFormat
               min={0}
               max={999}
@@ -215,10 +215,10 @@ export const WorkPlanSave = () => {
               thousandSeparator={true}
               fixedDecimalScale={true}
               allowLeadingZeros={false}
-              value={Math.min(999, WORK_PLAN?.work_plan_weight)}
+              value={Math.min(999, OBJECT_PLAN?.work_plan_weight)}
               onValueChange={(values) => {
                 const limitedValue = Math.min(999, parseInt(values?.value));
-                setWORK_PLAN((prev) => ({
+                setOBJECT_PLAN((prev) => ({
                   ...prev,
                   work_plan_weight: limitedValue
                 }));

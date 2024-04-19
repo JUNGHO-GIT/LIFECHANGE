@@ -6,13 +6,13 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashLineMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_SLEEP = process.env.REACT_APP_URL_SLEEP;
+  const URL_OBJECT = process.env.REACT_APP_URL_SLEEP;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -23,19 +23,19 @@ export const DashLineMonth = () => {
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const DASH_DEFAULT = [
+  const OBJECT_DEFAULT = [
     {name:"", 취침: 0, 수면: 0, 기상: 0},
   ];
-  const [DASH, setDASH] = useState(DASH_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_SLEEP}/dash/line/month`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH(response.data.result || DASH_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
   })()}, [user_id]);
 
   // 5-2. chart ----------------------------------------------------------------------------------->
@@ -43,7 +43,7 @@ export const DashLineMonth = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={DASH} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <LineChart data={OBJECT} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -135,7 +135,7 @@ export const DashLineMonth = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={9}>
-              <FormLabel className={"fs-20"}>월간 수면</FormLabel>
+              <span className={"fs-20"}>월간 수면</span>
               {chartNode()}
             </Col>
             <Col xs={3}>

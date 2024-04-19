@@ -125,7 +125,7 @@ export const save = {
   },
   create: async (
     user_id_param,
-    SLEEP_PLAN_param,
+    OBJECT_PLAN_param,
     startDt_param,
     endDt_param
   ) => {
@@ -134,9 +134,9 @@ export const save = {
       user_id: user_id_param,
       sleep_plan_startDt: startDt_param,
       sleep_plan_endDt: endDt_param,
-      sleep_plan_night: SLEEP_PLAN_param.sleep_plan_night,
-      sleep_plan_morning: SLEEP_PLAN_param.sleep_plan_morning,
-      sleep_plan_time: SLEEP_PLAN_param.sleep_plan_time,
+      sleep_plan_night: OBJECT_PLAN_param.sleep_plan_night,
+      sleep_plan_morning: OBJECT_PLAN_param.sleep_plan_morning,
+      sleep_plan_time: OBJECT_PLAN_param.sleep_plan_time,
       sleep_plan_regDt: fmtDate,
       sleep_plan_updateDt: "",
     });
@@ -145,13 +145,13 @@ export const save = {
   },
   update: async (
     _id_param,
-    SLEEP_PLAN_param
+    OBJECT_PLAN_param
   ) => {
     const finalResult = await SleepPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...SLEEP_PLAN_param,
+        ...OBJECT_PLAN_param,
         sleep_plan_updateDt: fmtDate,
       }},
       {upsert: true,

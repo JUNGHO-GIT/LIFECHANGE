@@ -141,7 +141,7 @@ export const save = {
   },
   create: async (
     user_id_param,
-    MONEY_param,
+    OBJECT_param,
     startDt_param,
     endDt_param
   ) => {
@@ -150,9 +150,9 @@ export const save = {
       user_id: user_id_param,
       money_startDt: startDt_param,
       money_endDt: endDt_param,
-      money_total_in: MONEY_param.money_total_in,
-      money_total_out: MONEY_param.money_total_out,
-      money_section: MONEY_param.money_section,
+      money_total_in: OBJECT_param.money_total_in,
+      money_total_out: OBJECT_param.money_total_out,
+      money_section: OBJECT_param.money_section,
       money_regDt: fmtDate,
       money_updateDt: "",
     });
@@ -161,14 +161,14 @@ export const save = {
   },
   update: async (
     _id_param,
-    MONEY_param
+    OBJECT_param
   ) => {
 
     const finalResult = await Money.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
-        ...MONEY_param,
+        ...OBJECT_param,
         money_updateDt: fmtDate,
       }},
       {upsert: true,
@@ -184,62 +184,68 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   deletes: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, section_id_param, user_id_param, startDt_param, endDt_param
   ) => {
-    const updateResult = await Money.updateOne(
-      {user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+    let findResult = Object();
+    let updateResult = Object();
+    let deleteResult = Object();
+    let finalResult = Object();
+
+    findResult = await Money.findOne({
+      _id: _id_param,
+      user_id: user_id_param,
+      money_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
       },
-      {$pull: {
+      money_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      }
+    })
+    .lean();
+
+    if (findResult) {
+      updateResult = await Money.updateOne(
+        {_id: _id_param,
+          user_id: user_id_param,
+          money_startDt: {
+            $gte: startDt_param,
+            $lte: endDt_param,
+          },
+          money_endDt: {
+            $gte: startDt_param,
+            $lte: endDt_param,
+          },
+        },
+        {$pull: {
           money_section: {
-            _id: _id_param
+            _id: section_id_param
           },
         },
         $set: {
           money_updateDt: fmtDate,
-        },
-      },
-      {arrayFilters: [{
-        "elem._id": _id_param
-      }]}
-    )
-    .lean();
-
-    let finalResult;
-
-    if (updateResult.modifiedCount > 0) {
-      const doc = await Money.findOne({
-        user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+        }},
+        {upsert: true,
+          new: true
         }
+      )
+      .lean();
+    }
+
+    if (findResult && findResult.money_section.length === 1 && updateResult.modifiedCount > 0) {
+      deleteResult = await Money.deleteOne({
+        _id: _id_param
       })
       .lean();
+      console.log(deleteResult);
+    }
 
-      if ((doc) && (!doc.money_section || doc.money_section.length === 0)) {
-        finalResult = await Money.deleteOne({
-          _id: doc._id
-        })
-        .lean();
-      }
-      else {
-        finalResult = updateResult;
-      }
+    if (deleteResult.deletedCount > 0) {
+      finalResult = "deleted";
+    }
+    else {
+      finalResult = "updated";
     }
 
     return finalResult;

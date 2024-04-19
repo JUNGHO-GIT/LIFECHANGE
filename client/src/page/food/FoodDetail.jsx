@@ -6,13 +6,13 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD = process.env.REACT_APP_URL_FOOD;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -53,7 +53,7 @@ export const FoodDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const FOOD_DEFAULT = {
+  const OBJECT_DEFAULT = {
     _id: "",
     food_number: 0,
     food_startDt: "",
@@ -74,21 +74,21 @@ export const FoodDetail = () => {
       food_protein: 0,
     }],
   };
-  const [FOOD, setFOOD] = useState(FOOD_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setFOOD(response.data.result || FOOD_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -97,28 +97,29 @@ export const FoodDetail = () => {
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_FOOD}/delete`, {
+  const flowDelete = async (id, section_id) => {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
+        section_id: section_id,
         user_id: user_id,
-        food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
+    alert(response.data.msg);
+
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_FOOD}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
-          _id: location_id,
+          _id: id,
           user_id: user_id,
-          food_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
-      alert(response.data.msg);
-      setFOOD(updatedData.data.result || FOOD_DEFAULT);
-      !updatedData.data.result && navParam(SEND.toList);
-    }
-    else {
-      alert(response.data.msg);
+      setOBJECT(updatedData.data.result || OBJECT_DEFAULT);
+      if (response.data.result === "deleted") {
+        navParam(SEND.toList);
+      }
     }
   };
 
@@ -142,12 +143,12 @@ export const FoodDetail = () => {
           </tr>
         </thead>
         <tbody>
-          {FOOD?.food_section?.map((section, index) => (
+          {OBJECT?.food_section?.map((section, index) => (
             <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
                 <React.Fragment>
-                  <td rowSpan={FOOD?.food_section?.length}>
-                    {FOOD?.food_startDt}
+                  <td rowSpan={OBJECT?.food_section?.length}>
+                    {OBJECT?.food_startDt}
                   </td>
                 </React.Fragment>
               )}
@@ -159,17 +160,17 @@ export const FoodDetail = () => {
               <td>{section.food_carb}</td>
               <td>{section.food_protein}</td>
               <td>{section.food_fat}</td>
-              <td><Button type={"button"} variant={"danger"} size={"sm"} onClick={() => (
-                flowDelete(section._id)
-              )}>x</Button></td>
+              <td><Button variant={"danger"} size={"sm"} onClick={() => (
+                flowDelete(OBJECT._id, section._id)
+              )}>X</Button></td>
             </tr>
           ))}
           <tr>
             <td colSpan={5}>합계</td>
-            <td>{FOOD?.food_total_kcal}</td>
-            <td>{FOOD?.food_total_carb}</td>
-            <td>{FOOD?.food_total_protein}</td>
-            <td>{FOOD?.food_total_fat}</td>
+            <td>{OBJECT?.food_total_kcal}</td>
+            <td>{OBJECT?.food_total_carb}</td>
+            <td>{OBJECT?.food_total_protein}</td>
+            <td>{OBJECT?.food_total_fat}</td>
             <td></td>
           </tr>
         </tbody>

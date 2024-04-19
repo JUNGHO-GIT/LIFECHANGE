@@ -6,13 +6,13 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_FOOD_PLAN = process.env.REACT_APP_URL_FOOD_PLAN;
+  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -53,7 +53,7 @@ export const FoodPlanDetail = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const FOOD_PLAN_DEFAULT = {
+  const OBJECT_PLAN_DEFAULT = {
     _id: "",
     food_plan_number: 0,
     food_plan_startDt: "",
@@ -63,21 +63,21 @@ export const FoodPlanDetail = () => {
     food_plan_protein: 0,
     food_plan_fat: 0,
   };
-  const [FOOD_PLAN, setFOOD_PLAN] = useState(FOOD_PLAN_DEFAULT);
+  const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_FOOD_PLAN}/detail`, {
+    const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: location_id,
         user_id: user_id,
-        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
-    setFOOD_PLAN(response.data.result || FOOD_PLAN_DEFAULT);
+    setOBJECT_PLAN(response.data.result || OBJECT_PLAN_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -87,23 +87,23 @@ export const FoodPlanDetail = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_FOOD_PLAN}/delete`, {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
         user_id: user_id,
-        food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_FOOD_PLAN}/detail`, {
+      const updatedData = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: location_id,
           user_id: user_id,
-          food_plan_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       alert(response.data.msg);
-      setFOOD_PLAN(updatedData.data.result || FOOD_PLAN_DEFAULT);
+      setOBJECT_PLAN(updatedData.data.result || OBJECT_PLAN_DEFAULT);
       !updatedData.data.result && navParam(SEND.toList);
     }
     else {
@@ -129,14 +129,14 @@ export const FoodPlanDetail = () => {
           </thead>
           <tbody>
             <tr className={"fs-20 pt-20"}>
-              <td>{FOOD_PLAN?.food_plan_startDt}</td>
-              <td>{FOOD_PLAN?.food_plan_endDt}</td>
-              <td>{FOOD_PLAN?.food_plan_kcal}</td>
-              <td>{FOOD_PLAN?.food_plan_carb}</td>
-              <td>{FOOD_PLAN?.food_plan_protein}</td>
-              <td>{FOOD_PLAN?.food_plan_fat}</td>
+              <td>{OBJECT_PLAN?.food_plan_startDt}</td>
+              <td>{OBJECT_PLAN?.food_plan_endDt}</td>
+              <td>{OBJECT_PLAN?.food_plan_kcal}</td>
+              <td>{OBJECT_PLAN?.food_plan_carb}</td>
+              <td>{OBJECT_PLAN?.food_plan_protein}</td>
+              <td>{OBJECT_PLAN?.food_plan_fat}</td>
               <td><Button variant={"danger"} size={"sm"} onClick={() => (
-                flowDelete(FOOD_PLAN?._id)
+                flowDelete(OBJECT_PLAN?._id)
               )}>X</Button></td>
             </tr>
           </tbody>

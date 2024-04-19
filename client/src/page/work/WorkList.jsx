@@ -8,13 +8,13 @@ import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
 import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
 import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const WorkList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const user_id = window.sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -70,7 +70,7 @@ export const WorkList = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const WORK_DEFAULT = [{
+  const OBJECT_DEFAULT = [{
     _id: "",
     work_number: 0,
     work_startDt: "",
@@ -94,19 +94,19 @@ export const WorkList = () => {
       work_cardio: "",
     }],
   }];
-  const [WORK, setWORK] = useState(WORK_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/list`, {
+    const response = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
-        work_dur: `${DATE.startDt} ~ ${DATE.endDt}`,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
         PAGING: PAGING
       },
     });
-    setWORK(response.data.result || WORK_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
@@ -135,14 +135,14 @@ export const WorkList = () => {
             </tr>
           </thead>
           <tbody>
-            {WORK?.map((item, index) => (
+            {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 {item.work_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={`${section.work_part_val}_${section.work_title_val}`}>
+                  <React.Fragment key={sectionIndex}>
                     <tr>
                       {sectionIndex === 0 && (
                         <React.Fragment>
-                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}
+                          <td rowSpan={Math.min(item.work_section.length, 3)}
                           className={"pointer"} onClick={() => {
                             SEND.id = item._id;
                             SEND.startDt = item.work_startDt;
@@ -152,14 +152,15 @@ export const WorkList = () => {
                             });
                           }}>
                             {item.work_startDt}
+                            {item.work_section.length > 3 && <div>더보기</div>}
                           </td>
-                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          <td rowSpan={Math.min(item.work_section.length, 3)}>
                             {item.work_start}
                           </td>
-                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          <td rowSpan={Math.min(item.work_section.length, 3)}>
                             {item.work_end}
                           </td>
-                          <td rowSpan={item.work_section.length > 3 ? 4 : item.work_section.length}>
+                          <td rowSpan={Math.min(item.work_section.length, 3)}>
                             {item.work_time}
                           </td>
                         </React.Fragment>
@@ -184,11 +185,6 @@ export const WorkList = () => {
                     </tr>
                   </React.Fragment>
                 ))}
-                {item.work_section.length > 3 && (
-                  <tr>
-                    <td colSpan={10}>...</td>
-                  </tr>
-                )}
               </React.Fragment>
             ))}
           </tbody>

@@ -6,13 +6,13 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashScatterMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -23,19 +23,19 @@ export const DashScatterMonth = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_DEFAULT = [
+  const OBJECT_DEFAULT = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const [DASH, setDASH] = useState(DASH_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/dash/scatter/month`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/scatter/month`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH(response.data.result || DASH_DEFAULT);
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -76,11 +76,11 @@ export const DashScatterMonth = () => {
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNode = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={DASH} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <ComposedChart data={OBJECT} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -142,7 +142,7 @@ export const DashScatterMonth = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={12}>
-              <FormLabel className={"fs-20"}>월간 몸무게 목표 / 실제</FormLabel>
+              <span className={"fs-20"}>월간 몸무게 목표 / 실제</span>
               {chartNode()}
             </Col>
             </Row>

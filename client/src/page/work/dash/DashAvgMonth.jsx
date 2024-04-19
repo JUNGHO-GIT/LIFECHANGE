@@ -6,13 +6,13 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Table, FormGroup, FormLabel, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
+import {Container, Table, FormGroup, FormCheck, Form, ButtonGroup, Button, CardGroup, Card, Row, Col} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DashAvgMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_WORK = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -23,24 +23,24 @@ export const DashAvgMonth = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const DASH_VOLUME_DEFAULT = [
+  const OBJECT_VOLUME_DEFAULT = [
     {name:"", 볼륨: 0},
   ];
-  const DASH_CARDIO_DEFAULT = [
+  const OBJECT_CARDIO_DEFAULT = [
     {name:"", 시간: 0},
   ];
-  const [DASH_VOLUME, setDASH_VOLUME] = useState(DASH_VOLUME_DEFAULT);
-  const [DASH_CARDIO, setDASH_CARDIO] = useState(DASH_CARDIO_DEFAULT);
+  const [OBJECT_VOLUME, setOBJECT_VOLUME] = useState(OBJECT_VOLUME_DEFAULT);
+  const [OBJECT_CARDIO, setOBJECT_CARDIO] = useState(OBJECT_CARDIO_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_WORK}/dash/avg/month`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
     });
-    setDASH_VOLUME(response.data.result.volume);
-    setDASH_CARDIO(response.data.result.cardio);
+    setOBJECT_VOLUME(response.data.result.volume);
+    setOBJECT_CARDIO(response.data.result.cardio);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -75,11 +75,11 @@ export const DashAvgMonth = () => {
 
   // 5-3. chart ----------------------------------------------------------------------------------->
   const chartNodeVolume = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_VOLUME);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_VOLUME);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <BarChart data={DASH_VOLUME} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          <BarChart data={OBJECT_VOLUME} margin={{top: 10, right: 30, bottom: 20, left: 20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -132,11 +132,11 @@ export const DashAvgMonth = () => {
 
   // 5-4. chart ----------------------------------------------------------------------------------->
   const chartNodeCardio = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(DASH_CARDIO);
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_CARDIO);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <BarChart data={DASH_CARDIO} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          <BarChart data={OBJECT_CARDIO} margin={{top: 10, right: 30, bottom: 20, left: 20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -211,7 +211,7 @@ export const DashAvgMonth = () => {
           <Container>
             <Row className={"d-center"}>
             <Col xs={9}>
-              <FormLabel className={"fs-20"}>월간 볼륨 / 유산소시간 평균</FormLabel>
+              <span className={"fs-20"}>월간 볼륨 / 유산소시간 평균</span>
               {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
             </Col>
             <Col xs={3}>
