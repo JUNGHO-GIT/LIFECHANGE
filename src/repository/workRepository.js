@@ -197,12 +197,7 @@ export const deletes = {
     _id_param, section_id_param, user_id_param, startDt_param, endDt_param
   ) => {
 
-    let findResult = Object();
-    let updateResult = Object();
-    let deleteResult = Object();
-    let finalResult = Object();
-
-    findResult = await Work.findOne({
+    const findResult = await Work.findOne({
       _id: _id_param,
       user_id: user_id_param,
       work_startDt: {
@@ -214,50 +209,56 @@ export const deletes = {
         $lte: endDt_param,
       }
     })
-    .lean();
 
-    if (findResult) {
-      updateResult = await Work.updateOne(
-        {_id: _id_param,
-          user_id: user_id_param,
-          work_startDt: {
-            $gte: startDt_param,
-            $lte: endDt_param,
-          },
-          work_endDt: {
-            $gte: startDt_param,
-            $lte: endDt_param,
-          },
-        },
-        {$pull: {
-          work_section: {
-            _id: section_id_param
-          },
-        },
-        $set: {
-          work_updateDt: fmtDate,
-        }},
-        {upsert: true,
-          new: true
-        }
-      )
-      .lean();
+    if (!findResult) {
+      return null;
     }
 
-    if (findResult && findResult.work_section.length === 1 && updateResult.modifiedCount > 0) {
-      deleteResult = await Work.deleteOne({
+    const updateResult = await Work.updateOne(
+      {_id: _id_param,
+        user_id: user_id_param,
+        work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      },
+      {$pull: {
+        work_section: {
+          _id: section_id_param
+        },
+      },
+      $set: {
+        work_updateDt: fmtDate,
+      }},
+      {upsert: true,
+        new: true
+      }
+    )
+    .lean();
+
+    if (findResult.work_section.length === 1 && updateResult.modifiedCount > 0) {
+      const deleteResult = await Work.deleteOne({
         _id: _id_param
       })
       .lean();
-      console.log(deleteResult);
     }
 
-    if (deleteResult.deletedCount > 0) {
-      finalResult = "deleted";
-    }
-    else {
-      finalResult = "updated";
-    }
+    const finalResult = await Work.findOne({
+      _id: _id_param,
+      user_id: user_id_param,
+      work_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      work_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      }
+    })
 
     return finalResult;
   }

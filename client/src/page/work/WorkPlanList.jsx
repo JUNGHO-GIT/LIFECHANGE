@@ -77,14 +77,14 @@ export const WorkPlanList = () => {
     work_plan_endDt: "0000-00-00",
     work_total_count: 0,
     work_total_volume: 0,
-    work_total_cardio: "0000-00-00",
+    work_total_cardio: "00:00",
     work_body_weight: 0,
     work_plan_count: 0,
-    work_plan_cardio: "0000-00-00",
+    work_plan_cardio: "00:00",
     work_plan_volume: 0,
     work_plan_weight: 0,
     work_diff_total_count: 0,
-    work_diff_total_cardio: "0000-00-00",
+    work_diff_total_cardio: "00:00",
     work_diff_total_volume: 0,
     work_diff_body_weight: 0,
   }];
@@ -139,27 +139,27 @@ export const WorkPlanList = () => {
                 </tr>
                 <tr>
                   <td>총 운동횟수</td>
-                  <td>{item.work_plan_count || "0"}</td>
-                  <td>{item.work_total_count || "0"}</td>
-                  <td>{item.work_diff_total_count || "0"}</td>
+                  <td>{item.work_plan_count}</td>
+                  <td>{item.work_total_count}</td>
+                  <td>{item.work_diff_total_count}</td>
                 </tr>
                 <tr>
                   <td>총 운동량</td>
-                  <td>{item.work_plan_volume || "0"}</td>
-                  <td>{item.work_total_volume || "0"}</td>
-                  <td>{item.work_diff_total_volume || "0"}</td>
+                  <td>{item.work_plan_volume}</td>
+                  <td>{item.work_total_volume}</td>
+                  <td>{item.work_diff_total_volume}</td>
                 </tr>
                 <tr>
                   <td>유산소 시간</td>
-                  <td>{item.work_plan_cardio || "0"}</td>
-                  <td>{item.work_total_cardio || "0"}</td>
-                  <td>{item.work_diff_total_cardio || "0"}</td>
+                  <td>{item.work_plan_cardio}</td>
+                  <td>{item.work_total_cardio}</td>
+                  <td>{item.work_diff_total_cardio}</td>
                 </tr>
                 <tr>
                   <td>체중</td>
-                  <td>{item.work_plan_weight || "0"}</td>
-                  <td>{item.work_body_weight || "0"}</td>
-                  <td>{item.work_diff_body_weight || "0"}</td>
+                  <td>{item.work_plan_weight}</td>
+                  <td>{item.work_body_weight}</td>
+                  <td>{item.work_diff_body_weight}</td>
                 </tr>
               </React.Fragment>
             ))}

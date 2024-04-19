@@ -2,7 +2,7 @@
 
 import express from "express";
 import * as service from "../service/workService.js";
-import {save} from "../middleware/saveMiddleware.js";
+import * as middleware from "../middleware/workMiddleware.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
@@ -71,13 +71,14 @@ router.get("/detail", async (req, res) => {
 });
 
 // 3. save ---------------------------------------------------------------------------------------->
-router.post("/save", save, async (req, res) => {
+router.post("/save", async (req, res) => {
   try {
-    const result = await service.save(
+    let result = await service.save(
       req.body.user_id,
       req.body.OBJECT,
       req.body.duration
     );
+    result = await middleware.save(result);
     if (result) {
       res.json({
         status: "success",
@@ -103,33 +104,23 @@ router.post("/save", save, async (req, res) => {
 
 // 4. deletes ------------------------------------------------------------------------------------->
 router.delete("/delete", async (req, res) => {
-  try {
-    const result = await service.deletes(
-      req.query._id,
-      req.query.section_id,
-      req.query.user_id,
-      req.query.duration
-    );
-    if (result) {
-      res.json({
-        status: "success",
-        msg: "삭제 성공",
-        result: result
-      });
-    }
-    else {
-      res.json({
-        status: "fail",
-        msg: "삭제 실패",
-        result: null
-      });
-    }
+  let result = await service.deletes(
+    req.query._id,
+    req.query.section_id,
+    req.query.user_id,
+    req.query.duration
+  );
+  result = await middleware.save(result);
+  if (result) {
+    res.json({
+      status: "success",
+      msg: "삭제 성공"
+    });
   }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({
-      status: "error",
-      error: err.toString()
+  else {
+    res.json({
+      status: "fail",
+      msg: "삭제 실패"
     });
   }
 });

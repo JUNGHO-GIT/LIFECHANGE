@@ -1,0 +1,63 @@
+===========================================================
+first object : {
+  "_id": "6621947ba1de22ac9e8df5bb",
+  "user_id": "123",
+  "work_number": 148,
+  "work_startDt": "2024-04-20",
+  "work_endDt": "2024-04-20",
+  "work_start": "06:45",
+  "work_end": "09:43",
+  "work_time": "02:58",
+  "work_total_volume": 0,
+  "work_total_cardio": "00:00",
+  "work_body_weight": 63,
+  "work_section": [
+    {
+      "work_part_idx": 2,
+      "work_part_val": "하체",
+      "work_title_idx": 3,
+      "work_title_val": "핵스쿼트",
+      "work_kg": 22,
+      "work_set": 44,
+      "work_rep": 22,
+      "work_rest": 22,
+      "work_volume": 21296,
+      "work_cardio": "00:00",
+      "_id": "66228dcc6c35d78eaad45527"
+    }
+  ],
+  "work_regDt": "2024-04-18 / 10:18:20",
+  "work_updateDt": "2024-04-20 / 01:10:54"
+}
+===========================================================
+final object : {
+  "_id": "6621947ba1de22ac9e8df5bb",
+  "user_id": "123",
+  "work_number": 148,
+  "work_startDt": "2024-04-20",
+  "work_endDt": "2024-04-20",
+  "work_start": "06:45",
+  "work_end": "09:43",
+  "work_time": "02:58",
+  "work_total_volume": 21296,
+  "work_total_cardio": "00:00",
+  "work_body_weight": 63,
+  "work_section": [
+    {
+      "work_part_idx": 2,
+      "work_part_val": "하체",
+      "work_title_idx": 3,
+      "work_title_val": "핵스쿼트",
+      "work_kg": 22,
+      "work_set": 44,
+      "work_rep": 22,
+      "work_rest": 22,
+      "work_volume": 21296,
+      "work_cardio": "00:00",
+      "_id": "66228dcc6c35d78eaad45527"
+    }
+  ],
+  "work_regDt": "2024-04-18 / 10:18:20",
+  "work_updateDt": "2024-04-20 / 01:10:54",
+  "work_total_time": "00:00"
+}

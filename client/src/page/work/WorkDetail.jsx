@@ -65,18 +65,18 @@ export const WorkDetail = () => {
     work_end: "00:00",
     work_time: "00:00",
     work_total_volume: 0,
-    work_total_cardio: "0000-00-00",
+    work_total_cardio: "00:00",
     work_body_weight: 0,
     work_section: [{
       work_part_idx: 0,
       work_part_val: "전체",
       work_title_idx: 0,
       work_title_val: "전체",
-      work_set: 1,
-      work_rep: 1,
-      work_kg: 1,
-      work_rest: 1,
-      work_cardio: "0000-00-00",
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
+      work_cardio: "00:00",
     }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
@@ -111,7 +111,7 @@ export const WorkDetail = () => {
       }
     };
 
-    const updatedSections = OBJECT.work_section.map((section) => {
+    const updatedSection = OBJECT.work_section.map((section) => {
       sectionVolume = section.work_set * section.work_rep * section.work_kg;
       totalVolume += sectionVolume;
       totalMinutes += timeFormat(section.work_cardio);
@@ -131,7 +131,7 @@ export const WorkDetail = () => {
         ...prev,
         work_total_volume: totalVolume,
         work_total_cardio: cardioTime,
-        work_section: updatedSections,
+        work_section: updatedSection,
       }));
     }
   }, [OBJECT.work_section]);

@@ -79,19 +79,19 @@ export const WorkList = () => {
     work_end: "00:00",
     work_time: "00:00",
     work_total_volume: 0,
-    work_total_cardio: "0000-00-00",
-    work_body_weight: "",
+    work_total_cardio: "00:00",
+    work_body_weight: 0,
     work_section: [{
       work_part_idx: 0,
       work_part_val: "전체",
       work_title_idx: 0,
       work_title_val: "전체",
-      work_set: 1,
-      work_rep: 1,
-      work_kg: 1,
-      work_rest: 1,
+      work_set: 0,
+      work_rep: 0,
+      work_kg: 0,
+      work_rest: 0,
       work_volume: 0,
-      work_cardio: "0000-00-00",
+      work_cardio: "00:00",
     }],
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
@@ -222,7 +222,7 @@ export const WorkList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
         part={"work"} plan={""} type={"list"}
       />

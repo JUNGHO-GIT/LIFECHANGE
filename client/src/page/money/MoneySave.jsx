@@ -158,12 +158,12 @@ export const MoneySave = () => {
       }));
 
       if (newCount > 0) {
-        let updatedSections = Array(newCount).fill(null).map((_, idx) => (
+        let updatedSection = Array(newCount).fill(null).map((_, idx) => (
           idx < OBJECT.money_section.length ? OBJECT.money_section[idx] : defaultSection
         ));
         setOBJECT((prev) => ({
           ...prev,
-          money_section: updatedSections
+          money_section: updatedSection
         }));
       }
       else {

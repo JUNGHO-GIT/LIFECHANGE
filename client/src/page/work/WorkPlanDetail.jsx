@@ -61,7 +61,7 @@ export const WorkPlanDetail = () => {
     work_plan_endDt: "0000-00-00",
     work_plan_count: 0,
     work_plan_volume: 0,
-    work_plan_cardio: "0000-00-00",
+    work_plan_cardio: "00:00",
     work_plan_weight: 0,
   };
   const [OBJECT_PLAN, setOBJECT_PLAN] = useState(OBJECT_PLAN_DEFAULT);

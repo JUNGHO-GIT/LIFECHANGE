@@ -5,7 +5,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {TimePicker} from "react-time-picker";
 import {NumericFormat} from "react-number-format";
-import {strToDecimal, decimalToStr} from "../../assets/jsx/date.jsx";
+import {strToDecimal, decimalToStr} from "../../assets/common/date.js";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -112,10 +112,10 @@ export const WorkSave = () => {
     let totalVolume = 0;
     let totalTime = 0.0;
 
-    const updatedSections = OBJECT?.work_section?.map((item) => {
+    const updatedSection = OBJECT?.work_section?.map((item) => {
       sectionVolume = item.work_set * item.work_rep * item.work_kg;
       totalVolume += sectionVolume;
-      totalTime += strToDecimal(item.work_cardio || "00:00");
+      totalTime += strToDecimal(item.work_cardio);
       return {
         ...item,
         work_volume: sectionVolume
@@ -123,13 +123,13 @@ export const WorkSave = () => {
     });
 
     // 이전 상태와 비교
-    if (OBJECT.work_total_volume !== totalVolume || OBJECT.work_total_cardio !== decimalToStr(totalTime)) {
-      setOBJECT({
-        ...OBJECT,
-        work_total_volume: totalVolume,
-        work_total_cardio: decimalToStr(totalTime),
-        work_section: updatedSections,
-      });
+    if (JSON.stringify(updatedSection) !== JSON.stringify(OBJECT?.work_section)) {
+      setOBJECT((prev) => ({
+        ...prev,
+        work_total_volume: /* totalVolume, */ 0,
+        work_total_cardio: /* decimalToStr(totalTime), */ "00:00",
+        work_section: updatedSection,
+      }));
     }
   }, [OBJECT?.work_section]);
 
@@ -169,10 +169,10 @@ export const WorkSave = () => {
         work_part_val: "전체",
         work_title_idx: 0,
         work_title_val: "전체",
-        work_set: 1,
-        work_rep: 1,
-        work_kg: 1,
-        work_rest: 1,
+        work_set: 0,
+        work_rep: 0,
+        work_kg: 0,
+        work_rest: 0,
         work_volume: 0,
         work_cardio: "00:00",
       };
@@ -183,12 +183,12 @@ export const WorkSave = () => {
       }));
 
       if (newCount > 0) {
-        let updatedSections = Array(newCount).fill(null).map((_, idx) =>
+        let updatedSection = Array(newCount).fill(null).map((_, idx) =>
           idx < OBJECT.work_section.length ? OBJECT.work_section[idx] : defaultSection
         );
         setOBJECT((prev) => ({
           ...prev,
-          work_section: updatedSections
+          work_section: updatedSection
         }));
       }
       else {
