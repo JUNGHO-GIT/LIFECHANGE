@@ -23,14 +23,13 @@ import {userRouter} from "./src/router/userRouter.js";
 import {workRouter} from "./src/router/workRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
-const customLogger = (collectionName, method, query, doc, options) => {
+const customLogger = (collectionName, method, query, doc) => {
   const message = util.format(
-    "\n======================= \nschema: %s \nmethod: %s \nquery: %s \ndoc: %s \noptions: %s",
+    "\n======================= \n-schema: \"%s\" \n-method: \"%s\" \n-query: %s \n-doc: %s \n",
     collectionName,
     method,
-    JSON.stringify(query, null, 2),
-    JSON.stringify(doc, null, 2),
-    JSON.stringify(options, null, 2),
+    JSON.stringify(query, null, 3),
+    JSON.stringify(doc, null, 3)
   );
   console.log(message);
 }
