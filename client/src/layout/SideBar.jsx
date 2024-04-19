@@ -28,7 +28,7 @@ export const SideBar = ({ sidebar, onClose }) => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [isSidebar, setIsSidebar] = useState(false);
+  const [isSidebar, setIsSidebar] = useState(sidebar);
   const [isActive, setIsActive] = useState(PATH);
   const [isExpended, setIsExpended] = useState({});
 
