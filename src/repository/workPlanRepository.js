@@ -146,6 +146,7 @@ export const save = {
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
+
   detail: async (
     _id_param,
     user_id_param,
@@ -161,28 +162,6 @@ export const deletes = {
     .lean();
 
     return finalResult;
-  },
-
-  update: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param,
-  ) => {
-    const updateResult = await WorkPlan.updateOne(
-      {_id: _id_param,
-        user_id: user_id_param,
-        work_plan_startDt: startDt_param,
-        work_plan_endDt: endDt_param,
-      },
-      {$set: {
-        work_updateDt: fmtDate,
-      }},
-      {upsert: true, new: true}
-    )
-    .lean();
-
-    return updateResult;
   },
 
   deletes: async (

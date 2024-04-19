@@ -93,19 +93,18 @@ export const SleepPlanDetail = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    alert(response.data.msg);
+
     if (response.data.status === "success") {
-      const updatedData = await axios.get(`${URL_OBJECT}/plan/detail`, {
-        params: {
-          _id: id,
-          user_id: user_id,
-          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-        },
-      });
-      setOBJECT(updatedData.data.result || OBJECT_DEFAULT);
+      alert(response.data.msg);
+      if (Object.keys(response.data.result).length > 0) {
+        setOBJECT(response.data.result);
+      }
+      else {
+        navParam(SEND.toList);
+      }
     }
     else {
-      navParam(SEND.toList);
+      alert(response.data.msg);
     }
   };
 

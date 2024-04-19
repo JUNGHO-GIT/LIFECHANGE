@@ -1,63 +1,13 @@
-===========================================================
-first object : {
-  "_id": "6621947ba1de22ac9e8df5bb",
+findAgain : {
+  "_id": "6622a00d5c79ff8b7b6e9eb9",
   "user_id": "123",
-  "work_number": 148,
-  "work_startDt": "2024-04-20",
-  "work_endDt": "2024-04-20",
-  "work_start": "06:45",
-  "work_end": "09:43",
-  "work_time": "02:58",
-  "work_total_volume": 0,
-  "work_total_cardio": "00:00",
-  "work_body_weight": 63,
-  "work_section": [
-    {
-      "work_part_idx": 2,
-      "work_part_val": "하체",
-      "work_title_idx": 3,
-      "work_title_val": "핵스쿼트",
-      "work_kg": 22,
-      "work_set": 44,
-      "work_rep": 22,
-      "work_rest": 22,
-      "work_volume": 21296,
-      "work_cardio": "00:00",
-      "_id": "66228dcc6c35d78eaad45527"
-    }
-  ],
-  "work_regDt": "2024-04-18 / 10:18:20",
-  "work_updateDt": "2024-04-20 / 01:10:54"
-}
-===========================================================
-final object : {
-  "_id": "6621947ba1de22ac9e8df5bb",
-  "user_id": "123",
-  "work_number": 148,
-  "work_startDt": "2024-04-20",
-  "work_endDt": "2024-04-20",
-  "work_start": "06:45",
-  "work_end": "09:43",
-  "work_time": "02:58",
-  "work_total_volume": 21296,
-  "work_total_cardio": "00:00",
-  "work_body_weight": 63,
-  "work_section": [
-    {
-      "work_part_idx": 2,
-      "work_part_val": "하체",
-      "work_title_idx": 3,
-      "work_title_val": "핵스쿼트",
-      "work_kg": 22,
-      "work_set": 44,
-      "work_rep": 22,
-      "work_rest": 22,
-      "work_volume": 21296,
-      "work_cardio": "00:00",
-      "_id": "66228dcc6c35d78eaad45527"
-    }
-  ],
-  "work_regDt": "2024-04-18 / 10:18:20",
-  "work_updateDt": "2024-04-20 / 01:10:54",
-  "work_total_time": "00:00"
+  "work_plan_number": 110,
+  "work_plan_startDt": "2024-04-06",
+  "work_plan_endDt": "2024-04-06",
+  "work_plan_count": 23,
+  "work_plan_volume": 144,
+  "work_plan_cardio": "02:42",
+  "work_plan_weight": 726,
+  "work_plan_regDt": "2024-04-28 / 07:41:57",
+  "work_plan_updateDt": "2024-04-20 / 04:08:55"
 }

@@ -232,8 +232,7 @@ export const deletes = {
       },
       $set: {
         money_updateDt: fmtDate,
-      }},
-      {upsert: true, new: true}
+      }}
     )
     .lean();
 

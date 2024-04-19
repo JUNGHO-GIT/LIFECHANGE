@@ -238,8 +238,7 @@ export const deletes = {
       },
       $set: {
         food_updateDt: fmtDate,
-      }},
-      {upsert: true, new: true}
+      }}
     )
     .lean();
 

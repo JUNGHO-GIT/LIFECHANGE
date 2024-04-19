@@ -243,8 +243,7 @@ export const deletes = {
       },
       $set: {
         work_updateDt: fmtDate,
-      }},
-      {upsert: true, new: true}
+      }}
     )
     .lean();
 

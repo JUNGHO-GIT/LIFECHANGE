@@ -131,28 +131,9 @@ export const deletes = async (
     return null;
   }
   else {
-    const updateResult = await repository.deletes.update(
-      _id_param, user_id_param, startDt, endDt
+    await repository.deletes.deletes(
+      _id_param
     );
-
-    if (!updateResult) {
-      return null;
-    }
-    else {
-      const findAgain = await repository.deletes.detail(
-        _id_param, user_id_param, startDt, endDt
-      );
-
-      if (!findAgain) {
-        await repository.deletes.deletes(
-          _id_param
-        );
-
-        return "deleted";
-      }
-      else {
-        return findAgain;
-      }
-    }
+    return "deleted";
   }
-};
+}

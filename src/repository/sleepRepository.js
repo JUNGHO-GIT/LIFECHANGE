@@ -211,8 +211,7 @@ export const deletes = {
       },
       $set: {
         sleep_updateDt: fmtDate,
-      }},
-      {upsert: true, new: true}
+      }}
     )
     .lean();
 

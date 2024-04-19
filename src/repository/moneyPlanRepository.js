@@ -176,28 +176,6 @@ export const deletes = {
     return finalResult;
   },
 
-  update: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param,
-  ) => {
-    const updateResult = await MoneyPlan.updateOne(
-      {_id: _id_param,
-        user_id: user_id_param,
-        money_plan_startDt: startDt_param,
-        money_plan_endDt: endDt_param,
-      },
-      {$set: {
-        money_updateDt: fmtDate,
-      }},
-      {upsert: true, new: true}
-    )
-    .lean();
-
-    return updateResult;
-  },
-
   deletes: async (
     _id_param
   ) => {

@@ -183,28 +183,6 @@ export const deletes = {
     return finalResult;
   },
 
-  update: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param,
-  ) => {
-    const updateResult = await SleepPlan.updateOne(
-      {_id: _id_param,
-        user_id: user_id_param,
-        sleep_plan_startDt: startDt_param,
-        sleep_plan_endDt: endDt_param,
-      },
-      {$set: {
-        sleep_updateDt: fmtDate,
-      }},
-      {upsert: true, new: true}
-    )
-    .lean();
-
-    return updateResult;
-  },
-
   deletes: async (
     _id_param
   ) => {

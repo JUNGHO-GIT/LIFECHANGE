@@ -102,7 +102,6 @@ export const deletes = async (
     const updateResult = await repository.deletes.update(
       _id_param, section_id_param, user_id_param, startDt, endDt
     );
-
     if (!updateResult) {
       return null;
     }
@@ -110,12 +109,10 @@ export const deletes = async (
       const findAgain = await repository.deletes.detail(
         _id_param, user_id_param, startDt, endDt
       );
-
       if (findAgain?.money_section.length === 0) {
         await repository.deletes.deletes(
           _id_param
         );
-
         return "deleted";
       }
       else {
