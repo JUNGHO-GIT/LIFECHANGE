@@ -16,25 +16,41 @@ export const list = async (object) => {
     let percent = 0;
     if (extra === "in") {
       percent = ((plan - real) / plan) * 100;
+      // 1. ~ 1%
+      if (percent <= 1) {
+        return "text-danger";
+      }
+      // 2. 1% ~ 10%
+      else if (percent > 1 && percent <= 10) {
+        return "text-warning";
+      }
+      // 3. 10% ~ 50%
+      else if (percent > 10 && percent <= 30) {
+        return "text-success";
+      }
+      // 4. 50% ~
+      else {
+        return "text-primary";
+      }
     }
     if (extra === "out") {
       percent = ((real - plan) / plan) * 100;
-    }
-    // 1. ~ 1%
-    if (percent <= 1) {
-      return "text-primary";
-    }
-    // 2. 1% ~ 10%
-    else if (percent > 1 && percent <= 10) {
-      return "text-success";
-    }
-    // 3. 10% ~ 50%
-    else if (percent > 10 && percent <= 30) {
-      return "text-warning";
-    }
-    // 4. 50% ~
-    else {
-      return "text-danger";
+      // 1. ~ 1%
+      if (percent <= 1) {
+        return "text-primary";
+      }
+      // 2. 1% ~ 10%
+      else if (percent > 1 && percent <= 10) {
+        return "text-success";
+      }
+      // 3. 10% ~ 50%
+      else if (percent > 10 && percent <= 30) {
+        return "text-warning";
+      }
+      // 4. 50% ~
+      else {
+        return "text-danger";
+      }
     }
   };
 

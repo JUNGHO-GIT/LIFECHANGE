@@ -114,9 +114,7 @@ export const percent = {
     return finalResult;
   },
   findSleepReal: async (
-    user_id_param,
-    startDt_param,
-    endDt_param,
+    user_id_param, startDt_param, endDt_param,
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
@@ -139,12 +137,7 @@ export const percent = {
         sleep_night: "$sleep_section.sleep_night",
         sleep_morning: "$sleep_section.sleep_morning",
         sleep_time: "$sleep_section.sleep_time",
-      }},
-      {$sort: {
-        sleep_startDt: 1,
-        sleep_endDt: 1,
-      }},
-      {$limit: 1},
+      }}
     ]);
     return finalResult;
   },

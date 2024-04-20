@@ -1,9 +1,11 @@
 // UserLogin.jsx
 
 import axios from "axios";
-import React, {useState} from "react";
+import moment from "moment-timezone";
 import InputMask from "react-input-mask";
-import {useNavigate} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useNavigate, useLocation} from "react-router-dom";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -11,11 +13,22 @@ export const UserLogin = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_OBJECT = process.env.REACT_APP_URL_USER;
+  const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
+  const location = useLocation();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: koreanDate,
+      endDt: koreanDate,
+    }
+  );
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserLogin = async () => {
@@ -25,9 +38,16 @@ export const UserLogin = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      const responseToday = await axios.get(`${URL_OBJECT}/plan/percent`, {
+        params: {
+          user_id: user_id,
+          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+        },
+      });
       window.sessionStorage.setItem("user_id", user_id);
       window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
       navParam("/");
+      window.sessionStorage.setItem("percent", JSON.stringify(responseToday.data.result));
     }
     else {
       alert(response.data.msg);

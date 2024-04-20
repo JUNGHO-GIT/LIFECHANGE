@@ -50,9 +50,7 @@ export const list = {
     return finalResult;
   },
   findReal: async (
-    user_id_param,
-    startDt_param,
-    endDt_param,
+    user_id_param, startDt_param, endDt_param,
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {

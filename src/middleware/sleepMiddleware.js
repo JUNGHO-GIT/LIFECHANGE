@@ -30,7 +30,7 @@ export const list = async (object) => {
     else {
       return "text-primary";
     }
-  }
+  };
 
   if (!object) {
     return [];

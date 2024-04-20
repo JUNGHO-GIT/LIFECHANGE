@@ -60,7 +60,8 @@ export const Header = () => {
     function btnLogOut () {
       return (
         <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
-          sessionStorage.setItem("user_id", "false");
+          window.sessionStorage.clear();
+          window.sessionStorage.setItem("user_id", "false");
           window.location.reload();
         }}>
           Logout

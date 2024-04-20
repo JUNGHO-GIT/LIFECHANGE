@@ -115,4 +115,30 @@ for (let i = 1; i <= 100; i++) {
 };
 
 // Create a new document in the collection.
-db.getCollection('food').insertMany(demoData);
+db.getCollection('food').insertMany(demoData, function(err, result) {
+  if (err) {
+    console.log(err);
+  }
+  else {
+    db.getCollection('food').aggregate([
+    {$group: {
+      _id: "$food_startDt", // Group by the start date
+      uniqueIds: { $push: "$_id" }, // Collect all ids
+      minId: { $first: "$_id" } // Keep the id of the first document
+    }},
+    {$project: {
+      _id: 0,
+      deleteIds: {
+        $filter: {
+          input: "$uniqueIds",
+          as: "id",
+          cond: { $ne: ["$$id", "$minId"] } // Exclude the first document's id
+        }
+      }
+    }}
+  ]).forEach(function(doc) {
+    if (doc.deleteIds.length > 0) {
+      db.getCollection('food').deleteMany({ _id: { $in: doc.deleteIds } });
+    }
+  });
+}});
