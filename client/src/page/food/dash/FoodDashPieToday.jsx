@@ -161,11 +161,11 @@ export const FoodDashPieToday = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={6}>
+              <Col xs={6} className={"text-center mb-20"}>
                 <span className={"fs-20"}>오늘 칼로리</span>
                 {chartNodeKcal()}
               </Col>
-              <Col xs={6}>
+              <Col xs={6} className={"text-center mb-20"}>
                 <span className={"fs-20"}>오늘 영양소</span>
                 {chartNodeNut()}
               </Col>

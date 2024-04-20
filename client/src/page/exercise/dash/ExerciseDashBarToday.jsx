@@ -136,8 +136,10 @@ export const ExerciseDashBarToday = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={12}>
+              <Col xs={12} className={"text-center mb-20"}>
                 <span className={"fs-20"}>오늘 몸무게 목표 / 실제</span>
+              </Col>
+              <Col xs={12}>
                 {chartNode()}
               </Col>
             </Row>

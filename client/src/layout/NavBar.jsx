@@ -75,14 +75,14 @@ export const NavBar = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
-              <Col xs={2} className={"d-left"}>
+              <Col xs={4} className={"d-left"}>
                 {!preFix ? (
                   <span className={"fs-30 fw-500 ps-30 pt-10"}>Home</span>
                 ) : (
                   <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
                 )}
               </Col>
-              <Col xs={8} className={"d-center"}>
+              <Col xs={6} className={"d-center"}>
                 <Row>
                   <Col xs={4} className={"d-center"}>
                     <span>Total </span> {makeIcon("total")}

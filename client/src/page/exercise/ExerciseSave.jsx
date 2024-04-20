@@ -237,7 +237,7 @@ export const ExerciseSave = () => {
     function tableSection (i) {
       return (
         <React.Fragment key={i}>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>부위</span>
@@ -306,7 +306,7 @@ export const ExerciseSave = () => {
               </div>
             </Col>
           </Row>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>세트</span>
@@ -372,7 +372,7 @@ export const ExerciseSave = () => {
               </div>
             </Col>
           </Row>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>무게</span>
@@ -499,7 +499,7 @@ export const ExerciseSave = () => {
     function tableTime () {
       return (
         <React.Fragment>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>시작시간</span>
@@ -572,7 +572,7 @@ export const ExerciseSave = () => {
     function tableRemain () {
       return (
         <React.Fragment>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>총 볼륨</span>
@@ -674,20 +674,20 @@ export const ExerciseSave = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"mb-20"}>
+            <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
                 <h1>Save</h1>
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {handlerSectionCount()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

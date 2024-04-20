@@ -154,11 +154,15 @@ export const SleepDashAvgWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={9}>
+              <Col xs={12} className={"text-center mb-20"}>
                 <span className={"fs-20"}>주간 수면 평균</span>
+              </Col>
+            </Row>
+            <Row className={"d-center"}>
+              <Col xs={10}>
                 {chartNode()}
               </Col>
-              <Col xs={3}>
+              <Col xs={2}>
                 {tableNode()}
               </Col>
             </Row>

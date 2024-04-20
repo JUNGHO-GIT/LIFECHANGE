@@ -134,8 +134,8 @@ export const MoneyDashBarToday = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12}>
+            <Row>
+              <Col xs={12} className={"text-center mb-20"}>
                 <span className={"fs-20"}>오늘 지출 / 수입 실제 / 목표</span>
                 {chartNode()}
               </Col>

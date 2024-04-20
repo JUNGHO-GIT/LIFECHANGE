@@ -187,22 +187,6 @@ export const ExerciseDashAvgWeek = () => {
     );
   };
 
-  // 6-1. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
-    return (
-      <React.Fragment>
-        <Button variant={`${LINE === "볼륨" ? "primary" : "outline-primary"}`} className={"me-5"}
-          onClick={() => setLINE("볼륨")}>
-          볼륨
-        </Button>
-        <Button variant={`${LINE === "시간" ? "primary" : "outline-primary"}`} className={"ms-5"}
-          onClick={() => setLINE("시간")}>
-          시간
-        </Button>
-      </React.Fragment>
-    );
-  };
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -210,12 +194,23 @@ export const ExerciseDashAvgWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={9}>
+              <Col xs={10} className={"text-center mb-20"}>
                 <span className={"fs-20"}>주간 볼륨 / 유산소시간 평균</span>
-                {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
-              <Col xs={3}>
-                {tableNode()}
+              <Col xs={1} className={"text-end"}>
+                <span className={`${LINE === "볼륨" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("볼륨"))}>
+                  볼륨
+                </span>
+              </Col>
+              <Col xs={1} className={"text-end"}>
+                <span className={`${LINE === "시간" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("시간"))}>
+                  시간
+                </span>
+              </Col>
+            </Row>
+            <Row className={"d-center"}>
+              <Col xs={12}>
+                {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
             </Row>
           </Container>

@@ -212,7 +212,7 @@ export const MoneySave = () => {
     function tableSection (i) {
       return (
         <div key={i} className={"mb-20"}>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
@@ -279,7 +279,7 @@ export const MoneySave = () => {
               </div>
             </Col>
           </Row>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>금액</span>
@@ -424,20 +424,20 @@ export const MoneySave = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"mb-20"}>
+            <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
                 <h1>Save</h1>
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {handlerSectionCount()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

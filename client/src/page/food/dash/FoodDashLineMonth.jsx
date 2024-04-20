@@ -195,15 +195,6 @@ export const FoodDashLineMonth = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Button variant={`${PART === "kcal" ? "primary" : "outline-primary"}`} className={"me-5"}
-          onClick={() => (setPART("kcal"))}>
-          칼로리
-        </Button>
-        <Button variant={`${PART === "nut" ? "primary" : "outline-primary"}`} className={"ms-5"}
-          onClick={() => (setPART("nut"))}>
-          영양소
-
-        </Button>
         <div className={"mt-20 ms-30 text-start"}>
           {["탄수화물", "단백질", "지방"]?.map((key, index) => (
             <div key={index} className={"fw-bold mb-10"}>
@@ -235,11 +226,25 @@ export const FoodDashLineMonth = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={9}>
-                <span className={"fs-20"}>월간 칼로리 / 영양소</span>
+              <Col xs={10} className={"text-center mb-20"}>
+                <span className={"fs-20"}>주간 칼로리 / 영양소</span>
+              </Col>
+              <Col xs={1} className={"text-end"}>
+                <span className={`${PART === "kcal" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setPART("kcal"))}>
+                  칼로리
+                </span>
+              </Col>
+              <Col xs={1} className={"text-end"}>
+                <span className={`${PART === "nut" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setPART("nut"))}>
+                  영양소
+                </span>
+              </Col>
+            </Row>
+            <Row className={"d-center"}>
+              <Col xs={10}>
                 {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
-              <Col xs={3}>
+              <Col xs={2}>
                 {tableNode()}
               </Col>
             </Row>

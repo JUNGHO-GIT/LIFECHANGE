@@ -214,21 +214,21 @@ export const FoodList = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"mb-20"}>
+            <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
                 <h1>List</h1>
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {calendarNode()}
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {filterNode()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {pagingNode()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

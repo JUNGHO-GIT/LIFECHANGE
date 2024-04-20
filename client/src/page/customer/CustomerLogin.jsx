@@ -115,11 +115,11 @@ export const CustomerLogin = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"mb-20"}>
+            <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
                 <h1>Login</h1>
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {tableCustomerLogin()}
                 <br/>
                 {buttonCustomerLogin()}

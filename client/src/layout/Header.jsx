@@ -89,7 +89,7 @@ export const Header = () => {
     <React.Fragment>
       <Card className={"container-wrapper mb-10"} border={"light"}>
         <Container fluid className={"p-0"}>
-          <Row className={"d-center"}>
+          <Row>
             <Col xs={1}>
               <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
               <Button type={"button"} size={"sm"} variant={"secondary"} onClick={toggleSidebar}>

@@ -202,12 +202,23 @@ export const ExerciseDashLineMonth = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={9}>
+              <Col xs={10} className={"text-center mb-20"}>
                 <span className={"fs-20"}>월간 총볼륨 / 유산소시간</span>
-                {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
-              <Col xs={3}>
-                {tableNode()}
+              <Col xs={1} className={"text-end"}>
+                <span className={`${LINE === "볼륨" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("볼륨"))}>
+                  볼륨
+                </span>
+              </Col>
+              <Col xs={1} className={"text-end"}>
+                <span className={`${LINE === "시간" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("시간"))}>
+                  시간
+                </span>
+              </Col>
+            </Row>
+            <Row className={"d-center"}>
+              <Col xs={12}>
+                {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
             </Row>
           </Container>

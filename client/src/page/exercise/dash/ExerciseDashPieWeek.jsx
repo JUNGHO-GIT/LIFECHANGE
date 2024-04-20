@@ -161,11 +161,11 @@ export const ExerciseDashPieWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={6}>
+              <Col xs={6} className={"text-center mb-20"}>
                 <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
                 {chartNodePart()}
               </Col>
-              <Col xs={6}>
+              <Col xs={6} className={"text-center mb-20"}>
                 <span className={"fs-20"}>주간 상위 5개 부위 / 운동</span>
                 {chartNodeTitle()}
               </Col>

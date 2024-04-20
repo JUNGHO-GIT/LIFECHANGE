@@ -161,11 +161,11 @@ export const MoneyDashPieToday = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={6}>
+              <Col xs={6} className={"text-center mb-20"}>
                 <span className={"fs-20"}>오늘 수입 항목별 비율</span>
                 {chartNodeIn()}
               </Col>
-              <Col xs={6}>
+              <Col xs={6} className={"text-center mb-20"}>
                 <span className={"fs-20"}>오늘 지출 항목별 비율</span>
                 {chartNodeOut()}
               </Col>

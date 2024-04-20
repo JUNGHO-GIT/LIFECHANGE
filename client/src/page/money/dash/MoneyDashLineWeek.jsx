@@ -165,11 +165,11 @@ export const MoneyDashLineWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={9}>
+              <Col xs={10} className={"text-center mb-20"}>
                 <span className={"fs-20"}>주간 지출 / 수입</span>
                 {chartNode()}
               </Col>
-              <Col xs={3}>
+              <Col xs={2}>
                 {tableNode()}
               </Col>
             </Row>

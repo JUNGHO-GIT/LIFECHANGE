@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Row, Col, Card, Button} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashBarToday = () => {
@@ -186,22 +186,6 @@ export const FoodDashBarToday = () => {
     );
   };
 
-  // 6-1. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
-    return (
-      <React.Fragment>
-        <Button variant={`${LINE === "kcal" ? "primary" : "outline-primary"}`} className={"me-5"}
-          onClick={() => (setLINE("kcal"))}>
-          칼로리
-        </Button>
-        <Button variant={`${LINE === "nut" ? "primary" : "outline-primary"}`} className={"ms-5"}
-          onClick={() => (setLINE("nut"))}>
-          영양소
-        </Button>
-      </React.Fragment>
-    );
-  };
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -209,12 +193,23 @@ export const FoodDashBarToday = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center"}>
-              <Col xs={9}>
+              <Col xs={10} className={"text-center mb-20"}>
                 <span className={"fs-20"}>오늘 칼로리 / 영양소</span>
-                {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
-              <Col xs={3}>
-                {tableNode()}
+              <Col xs={1} className={"text-end"}>
+                <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("kcal"))}>
+                  칼로리
+                </span>
+              </Col>
+              <Col xs={1} className={"text-end"}>
+                <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("nut"))}>
+                  영양소
+                </span>
+              </Col>
+            </Row>
+            <Row className={"d-center"}>
+              <Col xs={12}>
+                {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
             </Row>
           </Container>

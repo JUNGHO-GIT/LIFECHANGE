@@ -84,17 +84,13 @@ export const CustomerDataset = () => {
       customer_id: customer_id,
       OBJECT: OBJECT
     });
-    alert(response.data.msg);
-
     if (response.data.status === "success") {
+      alert(response.data.msg);
       window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
-      SEND.startDt = DATE.startDt;
-      SEND.endDt = DATE.endDt;
-      navParam(SEND.toMain, {
-        state: SEND
-      });
+      navParam(SEND.refresh);
     }
     else {
+      alert(response.data.msg);
       window.sessionStorage.setItem("customer_id", "false");
     }
   };
@@ -125,8 +121,38 @@ export const CustomerDataset = () => {
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableNode1 = () => {
+    return (
+      <React.Fragment>
+        <Table hover variant={"light"} border={2}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th>Section</th>
+            </tr>
+          </thead>
+          <tbody>
+            {["exercise", "food", "money"].map((item, index) => (
+              <tr>
+                <td>
+                  <Row>
+                    <Col xs={12} className={"fs-20 p-5"}>
+                      <div className={"pointer me-2"} onClick={() => (setDataType(item))}>
+                        {item}
+                      </div>
+                    </Col>
+                  </Row>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
+  };
+
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableNode2 = () => {
     function addPart() {
       setOBJECT((prev) => ({
         ...prev,
@@ -140,27 +166,6 @@ export const CustomerDataset = () => {
           ]
         }
       }));
-    };
-    function addTitle () {
-      const index = idx.partIdx;
-      return function() {
-        setOBJECT((prev) => ({
-          ...prev,
-          customer_dataset: {
-            ...prev.customer_dataset,
-            [dataType]: [
-              ...prev.customer_dataset[dataType]?.slice(0, index), {
-                ...prev.customer_dataset[dataType]?.[index],
-                [`${dataType}_title`]: [
-                  ...prev.customer_dataset[dataType]?.[index]?.[`${dataType}_title`],
-                  ""
-                ]
-              },
-              ...prev.customer_dataset[dataType]?.slice(index + 1)
-            ]
-          }
-        }));
-      };
     };
     function renamePart(index) {
       return function() {
@@ -181,6 +186,91 @@ export const CustomerDataset = () => {
           }));
         }
       };
+    };
+    function rmPart(index) {
+      return function() {
+        setOBJECT((prev) => ({
+          ...prev,
+          customer_dataset: {
+            ...prev.customer_dataset,
+            [dataType]: [
+              ...prev.customer_dataset[dataType].slice(0, index),
+              ...prev.customer_dataset[dataType].slice(index + 1)
+            ]
+          }
+        }));
+      };
+    };
+    return (
+      <React.Fragment>
+        <Table hover variant={"light"} border={2}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th>Part</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
+              <tr>
+                <td>
+                  <Row>
+                    <Col xs={7} className={"fs-20 p-5"}>
+                      <div className={"pointer me-2"} onClick={() => setIdx(prev => ({
+                        ...prev,
+                        partIdx: index,
+                        titleIdx: 0
+                      }))}>
+                        {item[`${dataType}_part`]}
+                      </div>
+                    </Col>
+                    <Col xs={3} className={"fs-15 p-5"}>
+                      <div className={"pointer d-center text-success"}
+                      onClick={renamePart(index)}>
+                        변경
+                      </div>
+                    </Col>
+                    <Col xs={2} className={"fs-15 p-5"}>
+                      <div className={"pointer d-center text-danger fw-bolder"}
+                      onClick={rmPart(index)}>
+                        x
+                      </div>
+                    </Col>
+                  </Row>
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td>
+                <div className={"pointer btn btn-outline-primary"} onClick={addPart}>
+                  Add Part
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
+  };
+
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableNode3 = () => {
+    function addTitle () {
+      setOBJECT((prev) => ({
+        ...prev,
+        customer_dataset: {
+          ...prev.customer_dataset,
+          [dataType]: [
+            ...prev.customer_dataset[dataType]?.slice(0, idx.partIdx), {
+              ...prev.customer_dataset[dataType]?.[idx.partIdx],
+              [`${dataType}_title`]: [
+                ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
+                ""
+              ]
+            },
+            ...prev.customer_dataset[dataType]?.slice(idx.partIdx + 1)
+          ]
+        }
+      }));
     };
     function renameTitle(index) {
       return function() {
@@ -206,20 +296,6 @@ export const CustomerDataset = () => {
         }
       };
     };
-    function rmPart(index) {
-      return function() {
-        setOBJECT((prev) => ({
-          ...prev,
-          customer_dataset: {
-            ...prev.customer_dataset,
-            [dataType]: [
-              ...prev.customer_dataset[dataType].slice(0, index),
-              ...prev.customer_dataset[dataType].slice(index + 1)
-            ]
-          }
-        }));
-      };
-    };
     function rmTitle(index) {
       return function() {
         setOBJECT((prev) => ({
@@ -242,81 +318,49 @@ export const CustomerDataset = () => {
     };
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
+        <Table hover variant={"light"} border={2}>
           <thead className={"table-primary"}>
-          <tr>
-            <th colSpan={2} className={"pointer"} onClick={() => setDataType("exercise")}>
-              exercise
-            </th>
-            <th colSpan={2} className={"pointer"} onClick={() => setDataType("food")}>
-              food
-            </th>
-            <th colSpan={2} className={"pointer"} onClick={() => setDataType("money")}>
-              money
-            </th>
-          </tr>
-          <tr>
-            <th colSpan={3}>part</th>
-            <th colSpan={3}>title</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colSpan={3}>
-              {OBJECT?.customer_dataset[dataType]?.map((item, index) => (
-                (index > 0) && (
-                  <React.Fragment key={index}>
-                    <div className={"pointer"} onClick={() => {
-                      setIdx((prev) => ({
-                        ...prev,
-                        partIdx: index,
-                        titleIdx: 0
-                      }));
-                    }}>
-                      {item[`${dataType}_part`]}
-                    </div>
-                    <span className={"pointer"} onClick={rmPart(index)}>
-                      x
-                    </span>
-                    <span className={"pointer"} onClick={renamePart(index)}>
-                      rename
-                    </span>
-                  </React.Fragment>
-                )
-              ))}
-            </td>
-            <td colSpan={3}>
-              {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (
-                (index > 0) && (
-                  <React.Fragment key={index}>
-                    <div className={"pointer"} onClick={() => {
-                      setIdx((prev) => ({
+            <tr>
+              <th>Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+              <tr>
+                <td>
+                  <Row>
+                    <Col xs={7} className={"fs-20 p-5"}>
+                      <div className="pointer me-2" onClick={() => setIdx(prev => ({
                         ...prev,
                         titleIdx: index
-                      }));
-                    }}>
-                      {item}
-                    </div>
-                    <span className={"pointer"} onClick={rmTitle(index)}>
-                      x
-                    </span>
-                    <span className={"pointer"} onClick={renameTitle(index)}>
-                      rename
-                    </span>
-                  </React.Fragment>
-                )
-              ))}
-            </td>
-          </tr>
-          <tr>
-            <td colSpan={3} className={"pointer"} onClick={addPart}>
-              추가
-            </td>
-            <td colSpan={3} className={"pointer"} onClick={addTitle()}>
-              추가
-            </td>
-          </tr>
-        </tbody>
+                      }))}>
+                        {item}
+                      </div>
+                    </Col>
+                    <Col xs={3} className={"fs-15 p-5"}>
+                      <div className={"pointer d-center text-success"}
+                      onClick={renameTitle(index)}>
+                        변경
+                      </div>
+                    </Col>
+                    <Col xs={2} className={"fs-15 p-5"}>
+                      <div className={"pointer d-center text-danger fw-bolder"}
+                      onClick={rmTitle(index)}>
+                        x
+                      </div>
+                    </Col>
+                  </Row>
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td colSpan={3}>
+                <div className={"pointer btn btn-outline-primary"} onClick={addTitle}>
+                  Add Title
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </Table>
       </React.Fragment>
     );
@@ -338,20 +382,20 @@ export const CustomerDataset = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"mb-20"}>
+            <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
                 <h1>List</h1>
               </Col>
-              <Col xs={12} className={"mb-20"}>
-                <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"}
-                  onClick={() => (handlerSetDefault())}>
-                    기본값
-                </Button>
+              <Col xs={4} className={"mb-20 text-center"}>
+                {tableNode1()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
-                {tableNode()}
+              <Col xs={4} className={"mb-20 text-center"}>
+                {tableNode2()}
               </Col>
-              <Col xs={12} className={"mb-20"}>
+              <Col xs={4} className={"mb-20 text-center"}>
+                {dataType !== "food" && tableNode3()}
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>
