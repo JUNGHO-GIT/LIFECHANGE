@@ -1,6 +1,7 @@
 // MoneyList.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -75,6 +76,8 @@ export const MoneyList = () => {
     money_number: 0,
     money_startDt: "0000-00-00",
     money_endDt: "0000-00-00",
+    money_total_in: 0,
+    money_total_out: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -118,7 +121,7 @@ export const MoneyList = () => {
             <th>내용</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
@@ -140,7 +143,7 @@ export const MoneyList = () => {
                     )}
                     <td>{section.money_part_val}</td>
                     <td>{section.money_title_val}</td>
-                    <td>{section.money_amount}</td>
+                    <td>{`₩  ${numeral(section.money_amount).format('0,0')}`}</td>
                     <td>{section.money_content}</td>
                   </tr>
                 </React.Fragment>

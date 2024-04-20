@@ -39,7 +39,7 @@ const customLogger = (collectionName, method, query, doc) => {
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://127.0.0.1:27017");
-mongoose.set("debug", customLogger);
+/* mongoose.set("debug", customLogger); */
 mongoose.set("autoIndex", true);
 const app = express();
 const __filename = fileURLToPath(import.meta.url);

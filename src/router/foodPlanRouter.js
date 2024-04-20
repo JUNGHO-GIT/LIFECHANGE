@@ -2,18 +2,19 @@
 
 import express from "express";
 import * as service from "../service/foodPlanService.js";
-import * as middleware from "../middleware/foodPlanMiddleware.js";
+import * as middleware from "../middleware/foodMiddleware.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->
 router.get("/list", async (req, res) => {
   try {
-    const result = await service.list (
+    let result = await service.list (
       req.query.user_id,
       req.query.duration,
       req.query.FILTER,
       req.query.PAGING
     );
+    result = await middleware.list(result);
     if (result && result.result) {
       res.json({
         status: "success",
@@ -42,7 +43,7 @@ router.get("/list", async (req, res) => {
 // 2. detail -------------------------------------------------------------------------------------->
 router.get("/detail", async (req, res) => {
   try {
-    const result = await service.detail (
+    let result = await service.detail (
       req.query._id,
       req.query.user_id,
       req.query.duration
@@ -79,7 +80,6 @@ router.post("/save", async (req, res) => {
       req.body.OBJECT,
       req.body.duration
     );
-    result = await middleware.save(result);
     if (result) {
       res.json({
         status: "success",
@@ -112,7 +112,6 @@ router.delete("/delete", async (req, res) => {
       req.query.user_id,
       req.query.duration
     );
-    result = await middleware.save(result);
     if (result) {
       res.json({
         status: "success",

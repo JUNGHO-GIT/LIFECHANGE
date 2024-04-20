@@ -141,7 +141,7 @@ export const FoodSearch = () => {
             <th>Protein</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           {OBJECT?.food_section?.map((item, index) => (
             <tr key={index}>
               <td className={"pointer"} onClick={() => {

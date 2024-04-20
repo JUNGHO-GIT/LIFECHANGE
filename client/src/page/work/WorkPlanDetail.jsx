@@ -30,7 +30,7 @@ export const WorkPlanDetail = () => {
       endDt: "0000-00-00",
       toDetail: "/work/plan/detail",
       toList: "/work/plan/list",
-      toSave: "/work/plan/save"
+      toUpdate: "/work/plan/save"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -126,7 +126,7 @@ export const WorkPlanDetail = () => {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           <tr>
             <td>{OBJECT?.work_plan_startDt}</td>
             <td>{OBJECT?.work_plan_endDt}</td>

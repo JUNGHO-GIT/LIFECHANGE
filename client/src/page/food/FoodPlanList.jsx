@@ -1,6 +1,7 @@
 // FoodPlanList.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -87,6 +88,10 @@ export const FoodPlanList = () => {
     food_diff_carb: 0,
     food_diff_protein: 0,
     food_diff_fat: 0,
+    food_diff_kcal_color: "",
+    food_diff_carb_color: "",
+    food_diff_protein_color: "",
+    food_diff_fat_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
@@ -122,7 +127,7 @@ export const FoodPlanList = () => {
               <th>비교</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
@@ -139,27 +144,27 @@ export const FoodPlanList = () => {
                 </tr>
                 <tr>
                   <td>칼로리</td>
-                  <td>{item.food_plan_kcal}</td>
-                  <td>{item.food_total_kcal}</td>
-                  <td>{item.food_diff_kcal}</td>
+                  <td>{`${numeral(item.food_plan_kcal).format('0,0')} kcal`}</td>
+                  <td>{`${numeral(item.food_total_kcal).format('0,0')} kcal`}</td>
+                  <td className={item.food_diff_kcal_color}>{`${numeral(item.food_diff_kcal).format('0,0')} kcal`}</td>
                 </tr>
                 <tr>
                   <td>탄수화물</td>
-                  <td>{item.food_plan_carb}</td>
-                  <td>{item.food_total_carb}</td>
-                  <td>{item.food_diff_carb}</td>
+                  <td>{`${numeral(item.food_plan_carb).format('0,0')} g`}</td>
+                  <td>{`${numeral(item.food_total_carb).format('0,0')} g`}</td>
+                  <td className={item.food_diff_carb_color}>{`${numeral(item.food_diff_carb).format('0,0')} g`}</td>
                 </tr>
                 <tr>
                   <td>단백질</td>
-                  <td>{item.food_plan_protein}</td>
-                  <td>{item.food_total_protein}</td>
-                  <td>{item.food_diff_protein}</td>
+                  <td>{`${numeral(item.food_plan_protein).format('0,0')} g`}</td>
+                  <td>{`${numeral(item.food_total_protein).format('0,0')} g`}</td>
+                  <td className={item.food_diff_protein_color}>{`${numeral(item.food_diff_protein).format('0,0')} g`}</td>
                 </tr>
                 <tr>
                   <td>지방</td>
-                  <td>{item.food_plan_fat}</td>
-                  <td>{item.food_total_fat}</td>
-                  <td>{item.food_diff_fat}</td>
+                  <td>{`${numeral(item.food_plan_fat).format('0,0')} g`}</td>
+                  <td>{`${numeral(item.food_total_fat).format('0,0')} g`}</td>
+                  <td className={item.food_diff_fat_color}>{`${numeral(item.food_diff_fat).format('0,0')} g`}</td>
                 </tr>
               </React.Fragment>
             ))}

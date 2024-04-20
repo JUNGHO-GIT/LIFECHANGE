@@ -1,6 +1,7 @@
 // WorkList.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -134,7 +135,7 @@ export const WorkList = () => {
               <th>볼륨</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 {item.work_section.slice(0, 3)?.map((section, sectionIndex) => (
@@ -171,11 +172,11 @@ export const WorkList = () => {
                       </React.Fragment>
                       {(section.work_part_val !== "유산소") ? (
                         <React.Fragment>
-                          <td>{section.work_set}</td>
-                          <td>{section.work_rep}</td>
-                          <td>{section.work_kg}</td>
-                          <td>{section.work_rest}</td>
-                          <td>{section.work_volume}</td>
+                          <td>{`${numeral(section.work_set).format('0,0')}`}</td>
+                          <td>{`${numeral(section.work_rep).format('0,0')}`}</td>
+                          <td>{`${numeral(section.work_kg).format('0,0')}`}</td>
+                          <td>{`${numeral(section.work_rest).format('0,0')}`}</td>
+                          <td>{`${numeral(section.work_volume).format('0,0')}`}</td>
                         </React.Fragment>
                       ) : (
                         <React.Fragment>

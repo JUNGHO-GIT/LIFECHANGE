@@ -30,7 +30,7 @@ export const MoneyPlanDetail = () => {
       endDt: "0000-00-00",
       toDetail: "/money/plan/detail",
       toList: "/money/plan/list",
-      toSave: "/money/plan/save"
+      toUpdate: "/money/plan/save"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -122,7 +122,7 @@ export const MoneyPlanDetail = () => {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           <tr className={"fs-20 pt-20"}>
             <td>{OBJECT?.money_plan_startDt}</td>
             <td>{OBJECT?.money_plan_endDt}</td>
@@ -141,7 +141,7 @@ export const MoneyPlanDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} flowSave={""} navParam={navParam}
         part={"money"} plan={"plan"} type={"detail"}
       />

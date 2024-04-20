@@ -47,14 +47,8 @@ export const list = {
     const finalResult = await Work.aggregate([
       {$match: {
         user_id: user_id_param,
-        work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
+        work_startDt: startDt_param,
+        work_endDt: endDt_param,
         ...(part_param !== "전체" && {
           "work_section.work_part_val": part_param
         }),
@@ -108,14 +102,8 @@ export const detail = {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      work_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      }
+      work_startDt: startDt_param,
+      work_endDt: endDt_param,
     })
     .lean();
 
@@ -134,14 +122,8 @@ export const save = {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      work_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      }
+      work_startDt: startDt_param,
+      work_endDt: endDt_param,
     })
     .lean();
 
@@ -203,14 +185,8 @@ export const deletes = {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      work_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
+      work_startDt: startDt_param,
+      work_endDt: endDt_param,
     })
     .lean();
 

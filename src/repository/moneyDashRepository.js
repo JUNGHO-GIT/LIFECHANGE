@@ -62,14 +62,8 @@ export const pieToday = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
+        money_startDt: startDt_param,
+        money_endDt: endDt_param,
       }},
       {$unwind: "$money_section"
       },
@@ -97,14 +91,8 @@ export const pieToday = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
+        money_startDt: startDt_param,
+        money_endDt: endDt_param,
       }},
       {$unwind: "$money_section"
       },
@@ -136,14 +124,8 @@ export const pieWeek = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
+        money_startDt: startDt_param,
+        money_endDt: endDt_param,
       }},
       {$unwind: "$money_section"
       },
@@ -171,14 +153,8 @@ export const pieWeek = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
+        money_startDt: startDt_param,
+        money_endDt: endDt_param,
       }},
       {$unwind: "$money_section"
       },
@@ -210,14 +186,8 @@ export const pieMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
+        money_startDt: startDt_param,
+        money_endDt: endDt_param,
       }},
       {$unwind: "$money_section"
       },
@@ -245,14 +215,8 @@ export const pieMonth = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
-        money_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param
-        },
+        money_startDt: startDt_param,
+        money_endDt: endDt_param,
       }},
       {$unwind: "$money_section"
       },
@@ -285,14 +249,8 @@ export const lineWeek = {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      }
+      money_startDt: startDt_param,
+      money_endDt: endDt_param,
     })
     .lean();
 
@@ -312,14 +270,8 @@ export const lineMonth = {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      }
+      money_startDt: startDt_param,
+      money_endDt: endDt_param,
     })
     .lean();
 
@@ -339,14 +291,8 @@ export const avgWeek = {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      }
+      money_startDt: startDt_param,
+      money_endDt: endDt_param,
     })
     .lean();
 
@@ -366,14 +312,8 @@ export const avgMonth = {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      }
+      money_startDt: startDt_param,
+      money_endDt: endDt_param,
     })
     .lean();
 

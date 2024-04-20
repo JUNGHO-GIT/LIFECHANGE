@@ -84,6 +84,9 @@ export const SleepPlanList = () => {
     sleep_diff_night: "00:00",
     sleep_diff_morning: "00:00",
     sleep_diff_time: "00:00",
+    sleep_diff_night_color: "",
+    sleep_diff_morning_color: "",
+    sleep_diff_time_color: ""
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
@@ -119,7 +122,7 @@ export const SleepPlanList = () => {
               <th>비교</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
@@ -138,19 +141,19 @@ export const SleepPlanList = () => {
                   <td>취침</td>
                   <td>{item.sleep_plan_night}</td>
                   <td>{item.sleep_night}</td>
-                  <td>{item.sleep_diff_night}</td>
+                  <td className={item.sleep_diff_night_color}>{item.sleep_diff_night}</td>
                 </tr>
                 <tr>
                   <td>기상</td>
                   <td>{item.sleep_plan_morning}</td>
                   <td>{item.sleep_morning}</td>
-                  <td>{item.sleep_diff_morning}</td>
+                  <td className={item.sleep_diff_morning_color}>{item.sleep_diff_morning}</td>
                 </tr>
                 <tr>
                   <td>수면</td>
                   <td>{item.sleep_plan_time}</td>
                   <td>{item.sleep_time}</td>
-                  <td>{item.sleep_diff_time}</td>
+                  <td className={item.sleep_diff_time_color}>{item.sleep_diff_time}</td>
                 </tr>
               </React.Fragment>
             ))}

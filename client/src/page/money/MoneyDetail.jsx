@@ -59,6 +59,8 @@ export const MoneyDetail = () => {
     money_number: 0,
     money_startDt: "0000-00-00",
     money_endDt: "0000-00-00",
+    money_total_in: 0,
+    money_total_out: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -130,7 +132,7 @@ export const MoneyDetail = () => {
               <th>삭제</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             {OBJECT?.money_section?.map((section, index) => (
               <tr key={index} className={"fs-20 pt-20"}>
                 {index === 0 && (
@@ -149,6 +151,16 @@ export const MoneyDetail = () => {
                 )}>X</Button></td>
               </tr>
             ))}
+            <tr>
+              <td colSpan={3}>수입 합계</td>
+              <td>{OBJECT?.money_total_in}</td>
+              <td colSpan={3}></td>
+            </tr>
+            <tr>
+              <td colSpan={3}>지출 합계</td>
+              <td>{OBJECT?.money_total_out}</td>
+              <td colSpan={3}></td>
+            </tr>
           </tbody>
         </Table>
       </React.Fragment>

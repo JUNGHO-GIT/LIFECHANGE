@@ -1,6 +1,7 @@
 // FoodList.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -131,7 +132,7 @@ export const FoodList = () => {
             <th>지방(g)</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
@@ -154,13 +155,13 @@ export const FoodList = () => {
                     <td>{section.food_part_val}</td>
                     <td>{section.food_title_val}</td>
                     <td>{section.food_brand}</td>
-                    <td>{section.food_count}</td>
+                    <td>{`${numeral(section.food_count).format('0,0')}`}</td>
                     <td>{section.food_serv}</td>
-                    <td>{section.food_gram}</td>
-                    <td>{section.food_kcal}</td>
-                    <td>{section.food_carb}</td>
-                    <td>{section.food_protein}</td>
-                    <td>{section.food_fat}</td>
+                    <td>{`${numeral(section.food_gram).format('0,0')} g`}</td>
+                    <td>{`${numeral(section.food_kcal).format('0,0')} kcal`}</td>
+                    <td>{`${numeral(section.food_carb).format('0,0')} g`}</td>
+                    <td>{`${numeral(section.food_protein).format('0,0')} g`}</td>
+                    <td>{`${numeral(section.food_fat).format('0,0')} g`}</td>
                   </tr>
                 </React.Fragment>
               ))}

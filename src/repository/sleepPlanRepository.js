@@ -28,12 +28,7 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   findPlan: async (
-    user_id_param,
-    sort_param,
-    limit_param,
-    page_param,
-    startDt_param,
-    endDt_param,
+    user_id_param, sort_param, limit_param, page_param, startDt_param,  endDt_param,
   ) => {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
@@ -62,12 +57,8 @@ export const list = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_startDt: {
-          $lte: endDt_param,
-        },
-        sleep_endDt: {
-          $gte: startDt_param,
-        },
+        sleep_startDt: startDt_param,
+        sleep_endDt: endDt_param,
       }},
       {$unwind: "$sleep_section"
       },
@@ -78,11 +69,16 @@ export const list = {
         sleep_night: "$sleep_section.sleep_night",
         sleep_morning: "$sleep_section.sleep_morning",
         sleep_time: "$sleep_section.sleep_time",
-      }}
+      }},
+      {$sort: {
+        sleep_startDt: 1,
+        sleep_endDt: 1,
+      }},
+      {$limit: 1},
     ]);
 
     return finalResult;
-  },
+  }
 };
 
 // 2. detail -------------------------------------------------------------------------------------->

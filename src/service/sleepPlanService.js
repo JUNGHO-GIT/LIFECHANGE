@@ -33,34 +33,20 @@ export const list = async (
     );
 
     const sleepNight = findReal.reduce((acc, curr) => (
-      acc + strToDecimal(curr?.sleep_night ?? "00:00")
+      acc + strToDecimal(curr?.sleep_night)
     ), 0);
     const sleepMorning = findReal.reduce((acc, curr) => (
-      acc + strToDecimal(curr?.sleep_morning ?? "00:00")
+      acc + strToDecimal(curr?.sleep_morning)
     ), 0);
     const sleepTime = findReal.reduce((acc, curr) => (
-      acc + strToDecimal(curr?.sleep_time ?? "00:00")
+      acc + strToDecimal(curr?.sleep_time)
     ), 0);
-
-    console.log("findReal", findReal);
-    console.log("sleepNight", sleepNight);
-    console.log("sleepMorning", sleepMorning);
-    console.log("sleepTime", sleepTime);
 
     return {
       ...plan,
       sleep_night: decimalToStr(sleepNight),
       sleep_morning: decimalToStr(sleepMorning),
-      sleep_time: decimalToStr(sleepTime),
-      sleep_diff_night: compareTime(
-        plan.sleep_plan_night, decimalToStr(sleepNight)
-      ),
-      sleep_diff_morning: compareTime(
-        plan.sleep_plan_morning, decimalToStr(sleepMorning)
-      ),
-      sleep_diff_time: compareTime(
-        plan.sleep_plan_time, decimalToStr(sleepTime)
-      )
+      sleep_time: decimalToStr(sleepTime)
     };
   }));
 

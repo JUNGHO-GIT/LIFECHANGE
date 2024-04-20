@@ -7,7 +7,7 @@ export const router = express.Router();
 // 0-0. signup ------------------------------------------------------------------------------------>
 router.post("/signup", async (req, res) => {
   try {
-    const result = await service.signup (
+    let result = await service.signup (
       req.body.user_id,
       req.body.user_pw
     );
@@ -37,7 +37,7 @@ router.post("/signup", async (req, res) => {
 // 0-1. login ------------------------------------------------------------------------------------->
 router.post("/login", async (req, res) => {
   try {
-    const result = await service.login (
+    let result = await service.login (
       req.body.user_id,
       req.body.user_pw
     );
@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
 // 0-2. checkId ----------------------------------------------------------------------------------->
 router.post("/checkId", async (req, res) => {
   try {
-    const result = await service.checkId (
+    let result = await service.checkId (
       req.body.user_id
     );
     if (result) {
@@ -96,7 +96,7 @@ router.post("/checkId", async (req, res) => {
 // 1-1. dataset ----------------------------------------------------------------------------------->
 router.get("/dataset", async (req, res) => {
   try {
-    const result = await service.dataset (
+    let result = await service.dataset (
       req.query.user_id
     );
     if (result) {
@@ -125,7 +125,7 @@ router.get("/dataset", async (req, res) => {
 // 1-2. list -------------------------------------------------------------------------------------->
 router.get("/list", async (req, res) => {
   try {
-    const result = await service.list (
+    let result = await service.list (
       req.query.user_id,
       req.query.sort,
       req.query.limit,
@@ -158,7 +158,7 @@ router.get("/list", async (req, res) => {
 // 2. detail -------------------------------------------------------------------------------------->
 router.get("/detail", async (req, res) => {
   try {
-    const result = await service.detail (
+    let result = await service.detail (
       req.query._id,
       req.query.user_id
     );
@@ -189,7 +189,7 @@ router.get("/detail", async (req, res) => {
 // 3. save ---------------------------------------------------------------------------------------->
 router.post("/save", async (req, res) => {
   try {
-    const result = await service.save (
+    let result = await service.save (
       req.body.user_id,
       req.body.OBJECT
     );
@@ -220,7 +220,7 @@ router.post("/save", async (req, res) => {
 // 4. deletes ------------------------------------------------------------------------------------->
 router.delete("/delete", async (req, res) => {
   try {
-    const result = await service.deletes(
+    let result = await service.deletes(
       req.query._id,
       req.query.user_id
     );

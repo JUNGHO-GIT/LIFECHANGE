@@ -70,7 +70,7 @@ export const DashBarToday = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
+      tickFormatter: (tick) => (`₩  ${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -112,7 +112,7 @@ export const DashBarToday = () => {
               }}
             ></Bar>
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+              formatter={(value) => (`₩  ${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",

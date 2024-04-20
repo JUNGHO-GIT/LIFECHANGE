@@ -1,6 +1,7 @@
 // WorkPlanList.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -83,10 +84,14 @@ export const WorkPlanList = () => {
     work_plan_cardio: "00:00",
     work_plan_volume: 0,
     work_plan_weight: 0,
-    work_diff_total_count: 0,
-    work_diff_total_cardio: "00:00",
-    work_diff_total_volume: 0,
-    work_diff_body_weight: 0,
+    work_diff_count: 0,
+    work_diff_cardio: "00:00",
+    work_diff_volume: 0,
+    work_diff_weight: 0,
+    work_diff_count_color: "",
+    work_diff_cardio_color: "",
+    work_diff_volume_color: "",
+    work_diff_weight_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
@@ -122,7 +127,7 @@ export const WorkPlanList = () => {
               <th>비교</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
@@ -139,27 +144,35 @@ export const WorkPlanList = () => {
                 </tr>
                 <tr>
                   <td>총 운동횟수</td>
-                  <td>{item.work_plan_count}</td>
-                  <td>{item.work_total_count}</td>
-                  <td>{item.work_diff_total_count}</td>
+                  <td>{`${numeral(item.work_plan_count).format("0,0")} 회`}</td>
+                  <td>{`${numeral(item.work_total_count).format("0,0")} 회`}</td>
+                  <td className={item.work_diff_count_color}>
+                    {`${numeral(item.work_diff_count).format("0,0")} 회`}
+                  </td>
                 </tr>
                 <tr>
                   <td>총 운동량</td>
-                  <td>{item.work_plan_volume}</td>
-                  <td>{item.work_total_volume}</td>
-                  <td>{item.work_diff_total_volume}</td>
+                  <td>{`${numeral(item.work_plan_volume).format("0,0")} vol`}</td>
+                  <td>{`${numeral(item.work_total_volume).format("0,0")} vol`}</td>
+                  <td className={item.work_diff_volume_color}>
+                    {`${numeral(item.work_diff_volume).format("0,0")} vol`}
+                  </td>
                 </tr>
                 <tr>
                   <td>유산소 시간</td>
                   <td>{item.work_plan_cardio}</td>
                   <td>{item.work_total_cardio}</td>
-                  <td>{item.work_diff_total_cardio}</td>
+                  <td className={item.work_diff_cardio_color}>
+                    {item.work_diff_cardio}
+                  </td>
                 </tr>
                 <tr>
                   <td>체중</td>
-                  <td>{item.work_plan_weight}</td>
-                  <td>{item.work_body_weight}</td>
-                  <td>{item.work_diff_body_weight}</td>
+                  <td>{`${numeral(item.work_plan_weight).format("0,0")} kg`}</td>
+                  <td>{`${numeral(item.work_body_weight).format("0,0")} kg`}</td>
+                  <td className={item.work_diff_weight_color}>
+                    {`${numeral(item.work_diff_weight).format("0,0")} kg`}
+                  </td>
                 </tr>
               </React.Fragment>
             ))}

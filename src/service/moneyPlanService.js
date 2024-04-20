@@ -42,13 +42,7 @@ export const list = async (
     return {
       ...plan,
       money_total_in: moneyTotalIn,
-      money_total_out: moneyTotalOut,
-      money_diff_in: compareCount(
-        plan.money_plan_in, moneyTotalIn
-      ),
-      money_diff_out: compareCount(
-        plan.money_plan_out, moneyTotalOut
-      )
+      money_total_out: moneyTotalOut
     };
   }));
 

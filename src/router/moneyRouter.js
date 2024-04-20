@@ -8,7 +8,7 @@ export const router = express.Router();
 // 1-1. list -------------------------------------------------------------------------------------->
 router.get("/list", async (req, res) => {
   try {
-    const result = await service.list (
+    let result = await service.list (
       req.query.user_id,
       req.query.duration,
       req.query.FILTER,
@@ -42,7 +42,7 @@ router.get("/list", async (req, res) => {
 // 2. detail -------------------------------------------------------------------------------------->
 router.get("/detail", async (req, res) => {
   try {
-    const result = await service.detail (
+    let result = await service.detail (
       req.query._id,
       req.query.user_id,
       req.query.duration

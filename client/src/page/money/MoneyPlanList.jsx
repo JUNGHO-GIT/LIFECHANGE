@@ -1,6 +1,7 @@
 // MoneyPlanList.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -81,6 +82,8 @@ export const MoneyPlanList = () => {
     money_plan_out: 0,
     money_diff_in: 0,
     money_diff_out: 0,
+    money_diff_in_color: "",
+    money_diff_out_color: "",
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
@@ -116,7 +119,7 @@ export const MoneyPlanList = () => {
               <th>비교</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
@@ -133,15 +136,15 @@ export const MoneyPlanList = () => {
                 </tr>
                 <tr>
                   <td>수입</td>
-                  <td>{item.money_plan_in}</td>
-                  <td>{item.money_total_in}</td>
-                  <td>{item.money_diff_in}</td>
+                  <td>{`₩  ${numeral(item.money_plan_in).format('0,0')}`}</td>
+                  <td>{`₩  ${numeral(item.money_total_in).format('0,0')}`}</td>
+                  <td className={item.money_diff_in_color}>{`₩  ${numeral(item.money_diff_in).format('0,0')}`}</td>
                 </tr>
                 <tr>
                   <td>지출</td>
-                  <td>{item.money_plan_out}</td>
-                  <td>{item.money_total_out}</td>
-                  <td>{item.money_diff_out}</td>
+                  <td>{`₩  ${numeral(item.money_plan_out).format('0,0')}`}</td>
+                  <td>{`₩  ${numeral(item.money_total_out).format('0,0')}`}</td>
+                  <td className={item.money_diff_out_color}>{`₩  ${numeral(item.money_diff_out).format('0,0')}`}</td>
                 </tr>
               </React.Fragment>
             ))}

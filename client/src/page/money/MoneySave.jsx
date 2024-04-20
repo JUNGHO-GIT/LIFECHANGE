@@ -65,12 +65,12 @@ export const MoneySave = () => {
     money_total_out: 0,
     money_section: [{
       money_part_idx: 0,
-      money_part_val: "",
+      money_part_val: "전체",
       money_title_idx: 0,
-      money_title_val: "",
+      money_title_val: "전체",
       money_amount: 0,
       money_content: "",
-    }]
+    }],
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 

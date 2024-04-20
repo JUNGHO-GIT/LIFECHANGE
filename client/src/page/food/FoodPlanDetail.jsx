@@ -29,7 +29,7 @@ export const FoodPlanDetail = () => {
       startDt: "0000-00-00",
       endDt: "0000-00-00",
       toList:"/food/plan/list",
-      toSave:"/food/plan/save"
+      toUpdate:"/food/plan/save"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -125,7 +125,7 @@ export const FoodPlanDetail = () => {
               <th>삭제</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             <tr className={"fs-20 pt-20"}>
               <td>{OBJECT?.food_plan_startDt}</td>
               <td>{OBJECT?.food_plan_endDt}</td>

@@ -141,7 +141,7 @@ export const FoodDetail = () => {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           {OBJECT?.food_section?.map((section, index) => (
             <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (

@@ -29,7 +29,7 @@ export const SleepPlanDetail = () => {
       startDt: "0000-00-00",
       endDt: "0000-00-00",
       toList:"/sleep/plan/list",
-      toSave:"/sleep/plan/save"
+      toUpdate:"/sleep/plan/save"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -123,7 +123,7 @@ export const SleepPlanDetail = () => {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           <tr className={"fs-20 pt-20"}>
             <td>{OBJECT?.sleep_plan_startDt}</td>
             <td>{OBJECT?.sleep_plan_endDt}</td>

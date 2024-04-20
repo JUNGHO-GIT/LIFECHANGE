@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "cache": "npm cache clean -f",
-    "demo": "node src/assets/demo/demo.js"
+    "cache": "npm cache clean -f"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",

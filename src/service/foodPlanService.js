@@ -50,19 +50,7 @@ export const list = async (
       food_total_kcal: foodTotalKcal,
       food_total_carb: foodTotalCarb,
       food_total_protein: foodTotalProtein,
-      food_total_fat: foodTotalFat,
-      food_diff_kcal: compareCount(
-        plan.food_plan_kcal, foodTotalKcal
-      ),
-      food_diff_carb: compareCount(
-        plan.food_plan_carb, foodTotalCarb
-      ),
-      food_diff_protein: compareCount(
-        plan.food_plan_protein, foodTotalProtein
-      ),
-      food_diff_fat: compareCount(
-        plan.food_plan_fat, foodTotalFat
-      )
+      food_total_fat: foodTotalFat
     };
   }));
 

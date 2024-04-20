@@ -178,7 +178,7 @@ export const FoodSave = () => {
       };
     }, { totalKcal: 0, totalFat: 0, totalCarb: 0, totalProtein: 0 });
 
-    setOBJECT(prev => ({
+    setOBJECT((prev) => ({
       ...prev,
       food_total_kcal: Number(totals.totalKcal.toFixed(1)),
       food_total_fat: Number(totals.totalFat.toFixed(1)),
@@ -273,7 +273,7 @@ export const FoodSave = () => {
             <th>x</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           {OBJECT?.food_section?.map((item, index) => (
             <React.Fragment key={index}>
               <tr>

@@ -260,7 +260,7 @@ export const UserDataset = () => {
             <th colSpan={3}>title</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={"text-start"}>
           <tr>
             <td colSpan={3}>
               {OBJECT?.user_dataset[dataType]?.map((item, index) => (

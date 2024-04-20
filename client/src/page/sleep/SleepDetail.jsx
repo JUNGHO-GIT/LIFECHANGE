@@ -125,7 +125,7 @@ export const SleepDetail = () => {
               <th>삭제</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={"text-start"}>
             <tr className={"fs-20 pt-20"}>
               <td>{OBJECT?.sleep_startDt}</td>
               {OBJECT?.sleep_section?.map((section, index) => (
