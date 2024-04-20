@@ -131,7 +131,7 @@ export const FoodList = () => {
             <th>지방(g)</th>
           </tr>
         </thead>
-        <tbody className={"text-start"}>
+        <tbody>
           {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (

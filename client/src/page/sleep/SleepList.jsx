@@ -114,7 +114,7 @@ export const SleepList = () => {
             <th>수면</th>
           </tr>
         </thead>
-        <tbody className={"text-start"}>
+        <tbody>
           {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (

@@ -121,7 +121,7 @@ export const MoneyList = () => {
             <th>내용</th>
           </tr>
         </thead>
-        <tbody className={"text-start"}>
+        <tbody>
           {OBJECT?.map((item, index) => (
             <React.Fragment key={item._id}>
               {item.money_section.slice(0, 3)?.map((section, sectionIndex) => (

@@ -135,7 +135,7 @@ export const ExerciseList = () => {
               <th>볼륨</th>
             </tr>
           </thead>
-          <tbody className={"text-start"}>
+          <tbody>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (

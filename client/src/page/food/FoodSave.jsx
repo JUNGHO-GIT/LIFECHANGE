@@ -273,7 +273,7 @@ export const FoodSave = () => {
             <th>x</th>
           </tr>
         </thead>
-        <tbody className={"text-start"}>
+        <tbody>
           {OBJECT?.food_section?.map((item, index) => (
             <React.Fragment key={index}>
               <tr>

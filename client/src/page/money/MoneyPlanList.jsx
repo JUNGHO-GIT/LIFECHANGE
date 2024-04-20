@@ -119,7 +119,7 @@ export const MoneyPlanList = () => {
               <th>비교</th>
             </tr>
           </thead>
-          <tbody className={"text-start"}>
+          <tbody>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
