@@ -412,8 +412,8 @@ export const MoneySave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} flowSave={flowSave} navParam={navParam}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        SEND={SEND} FILTER={""} setFILTER={""} flowSave={flowSave} navParam={navParam}
         part={"money"} plan={""} type={"save"}
       />
     );

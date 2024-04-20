@@ -6,11 +6,7 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  user_id_param,
-  part_param,
-  title_param,
-  startDt_param,
-  endDt_param
+  user_id_param, part_param, title_param, startDt_param, endDt_param
 ) => {
 
   const finalResult = await Food.countDocuments({
@@ -35,14 +31,7 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   find: async (
-    user_id_param,
-    part_param,
-    title_param,
-    sort_param,
-    limit_param,
-    page_param,
-    startDt_param,
-    endDt_param
+    user_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Food.aggregate([
@@ -93,26 +82,22 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   }
 };
@@ -120,46 +105,33 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
   create: async (
-    user_id_param,
-    OBJECT_param,
-    startDt_param,
-    endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Food.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-      food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+      food_startDt: startDt_param,
+      food_endDt: endDt_param,
       food_total_kcal: OBJECT_param.food_total_kcal,
       food_total_carb: OBJECT_param.food_total_carb,
       food_total_protein: OBJECT_param.food_total_protein,
@@ -188,7 +160,6 @@ export const save = {
       }
     )
     .lean();
-
     return finalResult;
   }
 };
@@ -196,34 +167,26 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
 
   update: async (
-    _id_param,
-    section_id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param,
+    _id_param, section_id_param, user_id_param, startDt_param, endDt_param,
   ) => {
     const updateResult = await Food.updateOne(
       {_id: _id_param,
@@ -247,7 +210,6 @@ export const deletes = {
       }}
     )
     .lean();
-
     return updateResult;
   },
 
@@ -258,7 +220,6 @@ export const deletes = {
       _id: _id_param
     })
     .lean();
-
     return deleteResult;
   }
 };

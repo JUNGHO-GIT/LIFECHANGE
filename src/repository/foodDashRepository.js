@@ -16,16 +16,15 @@ export const barToday = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
   findReal: async (
@@ -39,16 +38,15 @@ export const barToday = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   }
 };
@@ -269,13 +267,13 @@ export const lineWeek = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
@@ -294,13 +292,13 @@ export const lineMonth = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
@@ -319,13 +317,13 @@ export const avgWeek = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
@@ -344,13 +342,13 @@ export const avgMonth = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;

@@ -8,7 +8,6 @@ export const list = async (object) => {
   const makeColor = (plan, real, extra) => {
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
-
     let diff = 0;
     if (realDate < planDate) {
       diff = planDate.getTime() - realDate.getTime();
@@ -16,7 +15,6 @@ export const list = async (object) => {
     else {
       diff = realDate.getTime() - planDate.getTime();
     }
-
     // 1. 10분이내
     if (0 <= diff && diff <= 600000) {
       return "text-success";
@@ -59,7 +57,5 @@ export const save = async (object) => {
   if (object === "deleted") {
     return {};
   }
-  else {
-    return object;
-  }
+  return object;
 };

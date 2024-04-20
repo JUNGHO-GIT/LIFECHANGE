@@ -5,14 +5,20 @@ import {strToDecimal, decimalToStr, compareTime} from "../assets/common/date.js"
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (object) => {
 
+  if (!object) {
+    return [];
+  }
+
   const compareCount = (plan, real) => {
     const diff = Math.abs(real - plan);
     return diff;
   };
 
   const makeColor = (plan, real, extra) => {
+    const percent = ((real - plan) / plan) * 100;
+    const planDate = new Date(`1970-01-01T${plan}Z`);
+    const realDate = new Date(`1970-01-01T${real}Z`);
     if (extra === "volume") {
-      const percent = ((real - plan) / plan) * 100;
       // 1. ~ 1%
       if (percent <= 1) {
         return "text-primary";
@@ -31,9 +37,6 @@ export const list = async (object) => {
       }
     }
     else {
-      const planDate = new Date(`1970-01-01T${plan}Z`);
-      const realDate = new Date(`1970-01-01T${real}Z`);
-
       let diff = 0;
       if (realDate < planDate) {
         diff = planDate.getTime() - realDate.getTime();
@@ -41,7 +44,6 @@ export const list = async (object) => {
       else {
         diff = realDate.getTime() - planDate.getTime();
       }
-
       // 1. 10분이내
       if (0 <= diff && diff <= 600000) {
         return "text-success";
@@ -60,13 +62,8 @@ export const list = async (object) => {
     }
   };
 
-  if (!object) {
-    return [];
-  }
-
   object?.result?.map((item) => {
-
-    Object.assign(item, {
+    Object.assign((item), {
       work_diff_count: compareCount(item.work_plan_count, item.work_total_count),
       work_diff_volume: compareCount(item.work_plan_volume, item.work_total_volume),
       work_diff_cardio: compareTime(item.work_plan_cardio, item.work_total_cardio),
@@ -87,18 +84,16 @@ export const save = async (object) => {
   if (object === "deleted") {
     return {};
   }
-  else {
-    let totalVolume = 0;
-    let totalTime = 0.0;
+  let totalVolume = 0;
+  let totalTime = 0.0;
 
-    object?.work_section?.map((item) => {
-      totalVolume += item.work_set * item.work_rep * item.work_kg;
-      totalTime += strToDecimal(item.work_cardio);
-    });
+  object?.work_section?.map((item) => {
+    totalVolume += item.work_set * item.work_rep * item.work_kg;
+    totalTime += strToDecimal(item.work_cardio);
+  });
 
-    object.work_total_volume = totalVolume;
-    object.work_total_time = decimalToStr(totalTime);
+  object.work_total_volume = totalVolume;
+  object.work_total_time = decimalToStr(totalTime);
 
-    return object;
-  }
+  return object;
 };

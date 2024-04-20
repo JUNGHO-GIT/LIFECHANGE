@@ -6,11 +6,7 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  user_id_param,
-  part_param,
-  title_param,
-  startDt_param,
-  endDt_param
+  user_id_param, part_param, title_param, startDt_param, endDt_param
 ) => {
 
   const finalResult = await Work.countDocuments({
@@ -35,14 +31,7 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   find: async (
-    user_id_param,
-    part_param,
-    title_param,
-    sort_param,
-    limit_param,
-    page_param,
-    startDt_param,
-    endDt_param
+    user_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Work.aggregate([
       {$match: {
@@ -100,10 +89,7 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
@@ -118,7 +104,6 @@ export const detail = {
         },
     })
     .lean();
-
     return finalResult;
   },
 };
@@ -126,45 +111,32 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
   create: async (
-    user_id_param,
-    OBJECT_param,
-    startDt_param,
-    endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Work.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-      work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+      work_startDt: startDt_param,
+      work_endDt: endDt_param,
       work_start: OBJECT_param.work_start,
       work_end: OBJECT_param.work_end,
       work_time: OBJECT_param.work_time,
@@ -201,34 +173,26 @@ export const save = {
 export const deletes = {
 
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
 
   update: async (
-    _id_param,
-    section_id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param,
+    _id_param, section_id_param, user_id_param, startDt_param, endDt_param,
   ) => {
     const updateResult = await Work.updateOne(
       {_id: _id_param,
@@ -252,7 +216,6 @@ export const deletes = {
       }}
     )
     .lean();
-
     return updateResult;
   },
 
@@ -263,7 +226,6 @@ export const deletes = {
       _id: _id_param
     })
     .lean();
-
     return deleteResult;
   }
 };

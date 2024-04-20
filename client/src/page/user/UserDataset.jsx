@@ -70,6 +70,16 @@ export const UserDataset = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    await axios.get(`${URL_OBJECT}/plan/percent`, {
+      params: {
+        user_id: user_id,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+      }
+    });
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/dataset`, {
       params: {
         user_id: user_id
@@ -325,8 +335,8 @@ export const UserDataset = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-        <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} flowSave={flowSave} navParam={navParam}
+      <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
+        SEND={SEND}  FILTER={""} setFILTER={""} flowSave={flowSave} navParam={navParam}
         part={"user"} plan={""} type={"save"}
       />
     );

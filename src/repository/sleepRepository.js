@@ -73,26 +73,22 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       sleep_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   }
 };
@@ -100,43 +96,31 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       sleep_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
   },
   create: async (
-    user_id_param,
-    OBJECT_param,
-    startDt_param,
-    endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      sleep_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-      sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+      sleep_startDt: startDt_param,
+      sleep_endDt: endDt_param,
       sleep_section: OBJECT_param.sleep_section,
       sleep_regDt: fmtDate,
       sleep_updateDt: "",
@@ -145,10 +129,8 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param,
-    OBJECT_param
+    _id_param, OBJECT_param
   ) => {
-
     const finalResult = await Sleep.findOneAndUpdate(
       {_id: _id_param
       },
@@ -161,7 +143,6 @@ export const save = {
       }
     )
     .lean();
-
     return finalResult;
   }
 };
@@ -169,34 +150,26 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       sleep_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
 
   update: async (
-    _id_param,
-    section_id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param,
+    _id_param, section_id_param, user_id_param, startDt_param, endDt_param,
   ) => {
     const updateResult = await Sleep.updateOne(
       {_id: _id_param,
@@ -220,7 +193,6 @@ export const deletes = {
       }}
     )
     .lean();
-
     return updateResult;
   },
 
@@ -231,7 +203,6 @@ export const deletes = {
       _id: _id_param
     })
     .lean();
-
     return deleteResult;
   }
 };

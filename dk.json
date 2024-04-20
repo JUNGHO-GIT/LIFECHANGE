@@ -1,200 +1,83 @@
-first object : {
-  "totalCnt": 36,
-  "result": [
-    {
-      "_id": "6622a00d5c79ff8b7b6e9ec5",
-      "user_id": "123",
-      "work_plan_number": 122,
-      "work_plan_startDt": "2024-04-07",
-      "work_plan_endDt": "2024-04-07",
-      "work_plan_count": 81,
-      "work_plan_volume": 351,
-      "work_plan_cardio": "14:53",
-      "work_plan_weight": 833,
-      "work_plan_regDt": "2024-05-29 / 19:11:10",
-      "work_plan_updateDt": "2024-05-29 / 20:03:42",
-      "work_total_count": 0,
-      "work_total_volume": 0,
-      "work_total_cardio": "00:00",
-      "work_body_weight": null
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9ee4",
-      "user_id": "123",
-      "work_plan_number": 153,
-      "work_plan_startDt": "2024-04-07",
-      "work_plan_endDt": "2024-04-08",
-      "work_plan_count": 16,
-      "work_plan_volume": 688,
-      "work_plan_cardio": "16:47",
-      "work_plan_weight": 179,
-      "work_plan_regDt": "2024-05-17 / 09:45:01",
-      "work_plan_updateDt": "2024-05-17 / 14:51:08",
-      "work_total_count": 0,
-      "work_total_volume": 0,
-      "work_total_cardio": "00:00",
-      "work_body_weight": null
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9ec3",
-      "user_id": "123",
-      "work_plan_number": 120,
-      "work_plan_startDt": "2024-04-08",
-      "work_plan_endDt": "2024-04-09",
-      "work_plan_count": 27,
-      "work_plan_volume": 885,
-      "work_plan_cardio": "17:54",
-      "work_plan_weight": 455,
-      "work_plan_regDt": "2024-04-09 / 23:11:06",
-      "work_plan_updateDt": "2024-04-10 / 08:48:32",
-      "work_total_count": 1,
-      "work_total_volume": 8542,
-      "work_total_cardio": "16:45",
-      "work_body_weight": 18
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9efa",
-      "user_id": "123",
-      "work_plan_number": 175,
-      "work_plan_startDt": "2024-04-09",
-      "work_plan_endDt": "2024-04-09",
-      "work_plan_count": 90,
-      "work_plan_volume": 203,
-      "work_plan_cardio": "20:01",
-      "work_plan_weight": 519,
-      "work_plan_regDt": "2024-05-24 / 20:10:38",
-      "work_plan_updateDt": "2024-05-25 / 05:40:46",
-      "work_total_count": 1,
-      "work_total_volume": 8542,
-      "work_total_cardio": "16:45",
-      "work_body_weight": 18
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9f04",
-      "user_id": "123",
-      "work_plan_number": 185,
-      "work_plan_startDt": "2024-04-10",
-      "work_plan_endDt": "2024-04-10",
-      "work_plan_count": 86,
-      "work_plan_volume": 37,
-      "work_plan_cardio": "03:37",
-      "work_plan_weight": 928,
-      "work_plan_regDt": "2024-05-08 / 22:09:22",
-      "work_plan_updateDt": "2024-05-09 / 06:41:49",
-      "work_total_count": 2,
-      "work_total_volume": 3934,
-      "work_total_cardio": "19:00",
-      "work_body_weight": 2
-    }
-  ]
-}
-second object : {
-  "totalCnt": 36,
-  "result": [
-    {
-      "_id": "6622a00d5c79ff8b7b6e9ec5",
-      "user_id": "123",
-      "work_plan_number": 122,
-      "work_plan_startDt": "2024-04-07",
-      "work_plan_endDt": "2024-04-07",
-      "work_plan_count": 81,
-      "work_plan_volume": 351,
-      "work_plan_cardio": "14:53",
-      "work_plan_weight": 833,
-      "work_plan_regDt": "2024-05-29 / 19:11:10",
-      "work_plan_updateDt": "2024-05-29 / 20:03:42",
-      "work_total_count": 0,
-      "work_total_volume": 0,
-      "work_total_cardio": "00:00",
-      "work_body_weight": null,
-      "work_diff_count": 81,
-      "work_diff_volume": 351,
-      "work_diff_cardio": "14:53",
-      "work_diff_weight": 833
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9ee4",
-      "user_id": "123",
-      "work_plan_number": 153,
-      "work_plan_startDt": "2024-04-07",
-      "work_plan_endDt": "2024-04-08",
-      "work_plan_count": 16,
-      "work_plan_volume": 688,
-      "work_plan_cardio": "16:47",
-      "work_plan_weight": 179,
-      "work_plan_regDt": "2024-05-17 / 09:45:01",
-      "work_plan_updateDt": "2024-05-17 / 14:51:08",
-      "work_total_count": 0,
-      "work_total_volume": 0,
-      "work_total_cardio": "00:00",
-      "work_body_weight": null,
-      "work_diff_count": 16,
-      "work_diff_volume": 688,
-      "work_diff_cardio": "16:47",
-      "work_diff_weight": 179
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9ec3",
-      "user_id": "123",
-      "work_plan_number": 120,
-      "work_plan_startDt": "2024-04-08",
-      "work_plan_endDt": "2024-04-09",
-      "work_plan_count": 27,
-      "work_plan_volume": 885,
-      "work_plan_cardio": "17:54",
-      "work_plan_weight": 455,
-      "work_plan_regDt": "2024-04-09 / 23:11:06",
-      "work_plan_updateDt": "2024-04-10 / 08:48:32",
-      "work_total_count": 1,
-      "work_total_volume": 8542,
-      "work_total_cardio": "16:45",
-      "work_body_weight": 18,
-      "work_diff_count": 26,
-      "work_diff_volume": 7657,
-      "work_diff_cardio": "01:09",
-      "work_diff_weight": 437
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9efa",
-      "user_id": "123",
-      "work_plan_number": 175,
-      "work_plan_startDt": "2024-04-09",
-      "work_plan_endDt": "2024-04-09",
-      "work_plan_count": 90,
-      "work_plan_volume": 203,
-      "work_plan_cardio": "20:01",
-      "work_plan_weight": 519,
-      "work_plan_regDt": "2024-05-24 / 20:10:38",
-      "work_plan_updateDt": "2024-05-25 / 05:40:46",
-      "work_total_count": 1,
-      "work_total_volume": 8542,
-      "work_total_cardio": "16:45",
-      "work_body_weight": 18,
-      "work_diff_count": 89,
-      "work_diff_volume": 8339,
-      "work_diff_cardio": "03:16",
-      "work_diff_weight": 501
-    },
-    {
-      "_id": "6622a00d5c79ff8b7b6e9f04",
-      "user_id": "123",
-      "work_plan_number": 185,
-      "work_plan_startDt": "2024-04-10",
-      "work_plan_endDt": "2024-04-10",
-      "work_plan_count": 86,
-      "work_plan_volume": 37,
-      "work_plan_cardio": "03:37",
-      "work_plan_weight": 928,
-      "work_plan_regDt": "2024-05-08 / 22:09:22",
-      "work_plan_updateDt": "2024-05-09 / 06:41:49",
-      "work_total_count": 2,
-      "work_total_volume": 3934,
-      "work_total_cardio": "19:00",
-      "work_body_weight": 2,
-      "work_diff_count": 84,
-      "work_diff_volume": 3897,
-      "work_diff_cardio": "15:23",
-      "work_diff_weight": 926
-    }
-  ]
+{
+  "food": {
+    "plan": [
+      {
+        "_id": "662388350ad0a618509c39d0",
+        "user_id": "123",
+        "food_plan_number": 201,
+        "food_plan_startDt": "2024-04-20",
+        "food_plan_endDt": "2024-04-20",
+        "food_plan_kcal": 222,
+        "food_plan_carb": 222,
+        "food_plan_protein": 222,
+        "food_plan_fat": 222,
+        "food_plan_regDt": "2024-04-20 / 18:16:36",
+        "food_plan_updateDt": "2024-04-20 / 18:30:08",
+        "__v": 0
+      }
+    ],
+    "real": [
+      {
+        "_id": "662194bb153afa1556c03fb3",
+        "food_startDt": "2024-04-19",
+        "food_endDt": "2024-04-20",
+        "food_total_kcal": 3397,
+        "food_total_carb": 44,
+        "food_total_protein": 40,
+        "food_total_fat": 27
+      }
+    ]
+  },
+  "money": {
+    "plan": [],
+    "real": [
+      {
+        "_id": "662196094ed1491f3bd179b2",
+        "money_startDt": "2024-04-19",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 80000,
+        "money_total_out": 22092
+      },
+      {
+        "_id": "662196094ed1491f3bd17a02",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 37491,
+        "money_total_out": 29258
+      }
+    ]
+  },
+  "sleep": {
+    "plan": [],
+    "real": []
+  },
+  "work": {
+    "plan": [],
+    "real": [
+      {
+        "_id": "6623a54d2896e743ecaa4c28",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 55,
+        "work_total_cardio": "10:42",
+        "work_body_weight": 34
+      },
+      {
+        "_id": "6623a54d2896e743ecaa4c37",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 397,
+        "work_total_cardio": "20:16",
+        "work_body_weight": 21
+      },
+      {
+        "_id": "6623a54d2896e743ecaa4c3a",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 7934,
+        "work_total_cardio": "05:34",
+        "work_body_weight": 63
+      }
+    ]
+  }
 }

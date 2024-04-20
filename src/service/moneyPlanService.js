@@ -5,10 +5,7 @@ import {compareCount, compareTime, strToDecimal, decimalToStr} from "../assets/c
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param,
-  duration_param,
-  FILTER_param,
-  PAGING_param
+  user_id_param, duration_param, FILTER_param, PAGING_param
 ) => {
 
   const [startDtPlan, endDtPlan] = duration_param.split(` ~ `);
@@ -54,9 +51,7 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param,
-  user_id_param,
-  duration_param
+  _id_param, user_id_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
@@ -70,9 +65,7 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param,
-  OBJECT_param,
-  duration_param
+  user_id_param, OBJECT_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
@@ -98,9 +91,7 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param,
-  user_id_param,
-  duration_param
+  _id_param, user_id_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);

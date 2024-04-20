@@ -247,13 +247,13 @@ export const lineWeek = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
@@ -272,13 +272,13 @@ export const lineMonth = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
@@ -297,13 +297,13 @@ export const avgWeek = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
@@ -322,13 +322,13 @@ export const avgMonth = {
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       work_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       work_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;

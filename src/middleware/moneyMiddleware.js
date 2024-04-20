@@ -3,13 +3,16 @@
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (object) => {
 
+  if (!object) {
+    return [];
+  }
+
   const compareCount = (plan, real) => {
     const diff = Math.abs(plan - real);
     return diff;
   };
 
   const makeColor = (plan, real, extra) => {
-
     let percent = 0;
     if (extra === "in") {
       percent = ((plan - real) / plan) * 100;
@@ -35,12 +38,7 @@ export const list = async (object) => {
     }
   };
 
-  if (!object) {
-    return [];
-  }
-
   object?.result?.map((item) => {
-
     Object.assign((item), {
       money_diff_in: compareCount(item.money_plan_in, item.money_total_in),
       money_diff_out: compareCount(item.money_plan_out, item.money_total_out),
@@ -58,22 +56,20 @@ export const save = async (object) => {
   if (object === "deleted") {
     return {};
   }
-  else {
-    let totalIn = 0;
-    let totalOut = 0;
+  let totalIn = 0;
+  let totalOut = 0;
 
-    object?.money_section?.map((item) => {
-      if (item.money_part_val === "수입") {
-        totalIn += item.money_amount;
-      }
-      else if (item.money_part_val === "지출") {
-        totalOut += item.money_amount;
-      }
-    });
+  object?.money_section?.map((item) => {
+    if (item.money_part_val === "수입") {
+      totalIn += item.money_amount;
+    }
+    else if (item.money_part_val === "지출") {
+      totalOut += item.money_amount;
+    }
+  });
 
-    object.money_total_in = totalIn;
-    object.money_total_out = totalOut;
+  object.money_total_in = totalIn;
+  object.money_total_out = totalOut;
 
-    return object;
-  }
+  return object;
 };

@@ -82,25 +82,21 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       money_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       money_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   }
 };
@@ -108,44 +104,37 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       money_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       money_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
   create: async (
-    user_id_param,
-    OBJECT_param,
-    startDt_param,
-    endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
       money_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       money_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       money_plan_in: OBJECT_param.money_plan_in,
       money_plan_out: OBJECT_param.money_plan_out,
       money_plan_regDt: fmtDate,
@@ -170,7 +159,6 @@ export const save = {
       }
     )
     .lean();
-
     return finalResult;
   }
 };
@@ -178,25 +166,21 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    _id_param,
-    user_id_param,
-    startDt_param,
-    endDt_param
+    _id_param, user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
       money_plan_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       money_plan_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
-
     return finalResult;
   },
 
@@ -207,7 +191,6 @@ export const deletes = {
       _id: _id_param
     })
     .lean();
-
     return deleteResult;
   }
 };

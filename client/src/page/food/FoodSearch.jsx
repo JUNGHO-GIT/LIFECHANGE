@@ -199,7 +199,7 @@ export const FoodSearch = () => {
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
     return (
-      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+    <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       />
     );
   };

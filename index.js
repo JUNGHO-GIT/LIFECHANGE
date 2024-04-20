@@ -12,11 +12,13 @@ import {fileURLToPath} from "url";
 import {router as foodDashRouter} from "./src/router/foodDashRouter.js";
 import {router as moneyDashRouter} from "./src/router/moneyDashRouter.js";
 import {router as sleepDashRouter} from "./src/router/sleepDashRouter.js";
+import {router as userDashRouter} from "./src/router/userDashRouter.js";
 import {router as workDashRouter} from "./src/router/workDashRouter.js";
 
 import {router as foodPlanRouter} from "./src/router/foodPlanRouter.js";
 import {router as moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
 import {router as sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
+import {router as userPlanRouter} from "./src/router/userPlanRouter.js";
 import {router as workPlanRouter} from "./src/router/workPlanRouter.js";
 
 import {router as foodRouter} from "./src/router/foodRouter.js";
@@ -60,11 +62,13 @@ app.use(express.static(path.join(__dirname, "client/build")));
 app.use("/food/dash", foodDashRouter);
 app.use("/money/dash", moneyDashRouter);
 app.use("/sleep/dash", sleepDashRouter);
+app.use("/user/dash", userDashRouter);
 app.use("/work/dash", workDashRouter);
 
 app.use("/food/plan", foodPlanRouter);
 app.use("/money/plan", moneyPlanRouter);
 app.use("/sleep/plan", sleepPlanRouter);
+app.use("/user/plan", userPlanRouter);
 app.use("/work/plan", workPlanRouter);
 
 app.use("/food", foodRouter);
