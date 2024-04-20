@@ -15,10 +15,30 @@ export const useTime = (
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
-    // 1. work
-    if (type === "real" && strLow === "work") {
-      const startTime = OBJECT?.work_start;
-      const endTime = OBJECT?.work_end;
+    // 1-1. exercise
+    if (type === "plan" && strLow === "exercise") {
+      const startTime = OBJECT?.exercise_plan_startDt;
+      const endTime = OBJECT?.exercise_plan_endDt;
+
+      if (startTime && endTime) {
+        const startDate = new Date(`${startTime}T00:00`);
+        const endDate = new Date(`${endTime}T00:00`);
+
+        const diff = endDate.getTime() - startDate.getTime();
+        const days = Math.floor(diff / 86400000);
+        const time = `${String(days).padStart(2, "0")}`;
+
+        setOBJECT((prev) => ({
+          ...prev,
+          exercise_plan_time: time,
+        }));
+      }
+    }
+
+    // 1-2. exercise
+    if (type === "real" && strLow === "exercise") {
+      const startTime = OBJECT?.exercise_start;
+      const endTime = OBJECT?.exercise_end;
 
       if (startTime && endTime) {
         const startDate = new Date(`${koreanDate}T${startTime}Z`);
@@ -35,14 +55,37 @@ export const useTime = (
 
         setOBJECT((prev) => ({
           ...prev,
-          work_start: startTime,
-          work_end: endTime,
-          work_time: time,
+          exercise_time: time,
         }));
       }
     }
 
-    // 2. sleep
+    // 4-1. sleep
+    if (type === "plan" && strLow === "sleep") {
+      const nightTime = OBJECT?.sleep_plan_night;
+      const morningTime = OBJECT?.sleep_plan_morning;
+
+      if (nightTime && morningTime) {
+        const startDate = new Date(`${koreanDate}T${nightTime}`);
+        const endDate = new Date(`${koreanDate}T${morningTime}`);
+
+        if (endDate < startDate) {
+          endDate.setDate(endDate.getDate() + 1);
+        }
+
+        const diff = endDate.getTime() - startDate.getTime();
+        const hours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+
+        setOBJECT((prev) => ({
+          ...prev,
+          sleep_plan_time: time,
+        }));
+      }
+    }
+
+    // 4-2. sleep
     if (type === "real" && strLow === "sleep") {
       const nightTime = OBJECT?.sleep_section[0]?.sleep_night;
       const morningTime = OBJECT?.sleep_section[0]?.sleep_morning;
@@ -70,37 +113,15 @@ export const useTime = (
       }
     }
 
-    // 3. sleep
-    if (type === "plan" && strLow === "sleep") {
-      const nightTime = OBJECT?.sleep_plan_night;
-      const morningTime = OBJECT?.sleep_plan_morning;
-
-      if (nightTime && morningTime) {
-        const startDate = new Date(`${koreanDate}T${nightTime}`);
-        const endDate = new Date(`${koreanDate}T${morningTime}`);
-
-        if (endDate < startDate) {
-          endDate.setDate(endDate.getDate() + 1);
-        }
-
-        const diff = endDate.getTime() - startDate.getTime();
-        const hours = Math.floor(diff / 3600000);
-        const minutes = Math.floor((diff % 3600000) / 60000);
-        const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-
-        setOBJECT((prev) => ({
-          ...prev,
-          sleep_plan_time: time,
-        }));
-      }
-    }
   }, [
     strLow,
-    type === "real" && strLow === "work" ? OBJECT?.work_start : "",
-    type === "real" && strLow === "work" ? OBJECT?.work_end : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_night : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_morning : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
+    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_startDt : "",
+    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_endDt : "",
+    type === "real" && strLow === "exercise" ? OBJECT?.exercise_start : "",
+    type === "real" && strLow === "exercise" ? OBJECT?.exercise_end : "",
   ]);
 };

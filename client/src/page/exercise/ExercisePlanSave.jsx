@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {TimePicker} from "react-time-picker";
 import {NumericFormat} from "react-number-format";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
@@ -68,6 +69,7 @@ export const ExercisePlanSave = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
+  useTime(OBJECT, setOBJECT, PATH, "real");
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -238,8 +240,8 @@ export const ExercisePlanSave = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND}  FILTER={""} setFILTER={""} flowSave={flowSave} navParam={navParam}
-        part={"exercise"} plan={"plan"} type={"save"}
+        SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={flowSave} navParam={navParam} part={"exercise"} plan={"plan"} type={"save"}
       />
     );
   };

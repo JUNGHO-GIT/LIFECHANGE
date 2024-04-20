@@ -240,8 +240,8 @@ export const FoodPlanSave = () => {
   const buttonNode = () => {
   return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={""} setFILTER={""} flowSave={flowSave} navParam={navParam}
-        part={"food"} plan={"plan"} type={"save"}
+        SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={flowSave} navParam={navParam} part={"food"} plan={"plan"} type={"save"}
       />
     );
   };

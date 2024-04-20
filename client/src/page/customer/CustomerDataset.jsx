@@ -8,7 +8,6 @@ import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
 import {exerciseArray} from "../../assets/data/ExerciseArray.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
-import {sleepArray} from "../../assets/data/SleepArray.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -64,10 +63,6 @@ export const CustomerDataset = () => {
       money: [{
         money_part: "",
         money_title: [""]
-      }],
-      sleep: [{
-        sleep_part: "",
-        sleep_title: [""]
       }]
     }
   };
@@ -117,9 +112,6 @@ export const CustomerDataset = () => {
     }
     else if (dataType === "money") {
       defaultArray = moneyArray;
-    }
-    else if (dataType === "sleep") {
-      defaultArray = sleepArray;
     }
 
     if (confirm) {
@@ -334,8 +326,8 @@ export const CustomerDataset = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
-        SEND={SEND}  FILTER={""} setFILTER={""} flowSave={flowSave} navParam={navParam}
-        part={"customer"} plan={""} type={"save"}
+        SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={flowSave} navParam={navParam} part={"customer"} plan={""} type={"save"}
       />
     );
   };

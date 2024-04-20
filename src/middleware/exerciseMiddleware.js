@@ -33,7 +33,25 @@ export const list = async (object) => {
     const percent = ((real - plan) / plan) * 100;
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
-    if (extra === "volume") {
+    if (extra === "count") {
+      // 1. ~ 1%
+      if (percent <= 1) {
+        return "text-danger";
+      }
+      // 2. 1% ~ 10%
+      else if (percent > 1 && percent <= 10) {
+        return "text-warning";
+      }
+      // 3. 10% ~ 50%
+      else if (percent > 10 && percent <= 30) {
+        return "text-success";
+      }
+      // 4. 50% ~
+      else {
+        return "text-primary";
+      }
+    }
+    else if (extra === "volume" || extra === "weight") {
       // 1. ~ 1%
       if (percent <= 1) {
         return "text-primary";
@@ -51,7 +69,7 @@ export const list = async (object) => {
         return "text-danger";
       }
     }
-    else {
+    else if (extra === "time") {
       let diff = 0;
       if (realDate < planDate) {
         diff = planDate.getTime() - realDate.getTime();
@@ -84,10 +102,10 @@ export const list = async (object) => {
       exercise_diff_cardio: compareTime(item?.exercise_plan_cardio, item?.exercise_total_cardio),
       exercise_diff_weight: compareCount(item?.exercise_plan_weight, item?.exercise_body_weight),
 
-      exercise_diff_count_color: makeColor(item?.exercise_plan_count, item?.exercise_total_count, ""),
+      exercise_diff_count_color: makeColor(item?.exercise_plan_count, item?.exercise_total_count, "count"),
       exercise_diff_volume_color: makeColor(item?.exercise_plan_volume, item?.exercise_total_volume, "volume"),
       exercise_diff_cardio_color: makeColor(item?.exercise_plan_cardio, item?.exercise_total_cardio, "time"),
-      exercise_diff_weight_color: makeColor(item?.exercise_plan_weight, item?.exercise_body_weight, ""),
+      exercise_diff_weight_color: makeColor(item?.exercise_plan_weight, item?.exercise_body_weight, "weight"),
     });
   });
 
