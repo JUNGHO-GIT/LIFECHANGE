@@ -57,8 +57,14 @@ export const list = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_startDt: startDt_param,
-        sleep_endDt: endDt_param,
+        sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: "$sleep_section"
       },
@@ -92,8 +98,14 @@ export const detail = {
     const finalResult = await SleepPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_plan_startDt: startDt_param,
-      sleep_plan_endDt: endDt_param,
+      sleep_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -112,8 +124,14 @@ export const save = {
     const finalResult = await SleepPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_plan_startDt: startDt_param,
-      sleep_plan_endDt: endDt_param,
+      sleep_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -128,8 +146,14 @@ export const save = {
     const finalResult = await SleepPlan.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      sleep_plan_startDt: startDt_param,
-      sleep_plan_endDt: endDt_param,
+      sleep_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       sleep_plan_night: OBJECT_param.sleep_plan_night,
       sleep_plan_morning: OBJECT_param.sleep_plan_morning,
       sleep_plan_time: OBJECT_param.sleep_plan_time,
@@ -171,8 +195,14 @@ export const deletes = {
     const finalResult = await SleepPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_plan_startDt: startDt_param,
-      sleep_plan_endDt: endDt_param,
+      sleep_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 

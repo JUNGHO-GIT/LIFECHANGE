@@ -90,8 +90,14 @@ export const detail = {
     const finalResult = await MoneyPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_plan_startDt: startDt_param,
-      money_plan_endDt: endDt_param,
+      money_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -110,8 +116,14 @@ export const save = {
     const finalResult = await MoneyPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_plan_startDt: startDt_param,
-      money_plan_endDt: endDt_param,
+      money_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -126,8 +138,14 @@ export const save = {
     const finalResult = await MoneyPlan.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      money_plan_startDt: startDt_param,
-      money_plan_endDt: endDt_param,
+      money_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       money_plan_in: OBJECT_param.money_plan_in,
       money_plan_out: OBJECT_param.money_plan_out,
       money_plan_regDt: fmtDate,
@@ -168,8 +186,14 @@ export const deletes = {
     const finalResult = await MoneyPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_plan_startDt: startDt_param,
-      money_plan_endDt: endDt_param,
+      money_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 

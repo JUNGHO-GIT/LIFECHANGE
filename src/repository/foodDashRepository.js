@@ -15,8 +15,14 @@ export const barToday = {
     const finalResult = await FoodPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_plan_startDt: startDt_param,
-      food_plan_endDt: endDt_param,
+      food_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -32,8 +38,14 @@ export const barToday = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -51,8 +63,14 @@ export const pieToday = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: "$food_section"
       },
@@ -77,8 +95,14 @@ export const pieToday = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$group: {
         _id: null,
@@ -107,8 +131,14 @@ export const pieWeek = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: "$food_section"
       },
@@ -133,8 +163,14 @@ export const pieWeek = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$group: {
         _id: null,
@@ -163,8 +199,14 @@ export const pieMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: "$food_section"
       },
@@ -189,8 +231,14 @@ export const pieMonth = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$group: {
         _id: null,
@@ -220,8 +268,14 @@ export const lineWeek = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -239,8 +293,14 @@ export const lineMonth = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -258,8 +318,14 @@ export const avgWeek = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -277,8 +343,14 @@ export const avgMonth = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;

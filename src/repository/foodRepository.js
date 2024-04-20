@@ -48,8 +48,14 @@ export const list = {
     const finalResult = await Food.aggregate([
       {$match: {
         user_id: user_id_param,
-        food_startDt: startDt_param,
-        food_endDt: endDt_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$project: {
         food_startDt: 1,
@@ -96,8 +102,14 @@ export const detail = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -117,8 +129,14 @@ export const save = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -134,8 +152,14 @@ export const save = {
     const finalResult = await Food.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       food_total_kcal: OBJECT_param.food_total_kcal,
       food_total_carb: OBJECT_param.food_total_carb,
       food_total_protein: OBJECT_param.food_total_protein,
@@ -180,8 +204,14 @@ export const deletes = {
     const finalResult = await Food.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_startDt: startDt_param,
-      food_endDt: endDt_param,
+      food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 

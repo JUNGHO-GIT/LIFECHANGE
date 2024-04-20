@@ -5,8 +5,6 @@ import {strToDecimal, decimalToStr, compareTime} from "../assets/common/date.js"
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (object) => {
 
-  console.log("first object : " + JSON.stringify(object));
-
   const compareCount = (plan, real) => {
     const diff = Math.abs(real - plan);
     return diff;
@@ -79,10 +77,7 @@ export const list = async (object) => {
       work_diff_cardio_color: makeColor(item.work_plan_cardio, item.work_total_cardio),
       work_diff_weight_color: makeColor(item.work_plan_weight, item.work_body_weight),
     });
-
   });
-
-  console.log("second object : " + JSON.stringify(object));
 
   return object;
 };

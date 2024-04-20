@@ -47,8 +47,14 @@ export const list = {
     const finalResult = await Money.aggregate([
       {$match: {
         user_id: user_id_param,
-        money_startDt: startDt_param,
-        money_endDt: endDt_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$project: {
         money_startDt: 1,
@@ -94,8 +100,14 @@ export const detail = {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_startDt: startDt_param,
-      money_endDt: endDt_param,
+      money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -114,8 +126,14 @@ export const save = {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_startDt: startDt_param,
-      money_endDt: endDt_param,
+      money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -130,8 +148,14 @@ export const save = {
     const finalResult = await Money.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      money_startDt: startDt_param,
-      money_endDt: endDt_param,
+      money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       money_total_in: OBJECT_param.money_total_in,
       money_total_out: OBJECT_param.money_total_out,
       money_section: OBJECT_param.money_section,
@@ -174,8 +198,14 @@ export const deletes = {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      money_startDt: startDt_param,
-      money_endDt: endDt_param,
+      money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 

@@ -37,8 +37,14 @@ export const list = {
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
-        sleep_startDt: startDt_param,
-        sleep_endDt: endDt_param,
+        sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: "$sleep_section"},
       {$project: {
@@ -76,8 +82,14 @@ export const detail = {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -96,8 +108,14 @@ export const save = {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -111,8 +129,14 @@ export const save = {
     const finalResult = await Sleep.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       sleep_section: OBJECT_param.sleep_section,
       sleep_regDt: fmtDate,
       sleep_updateDt: "",
@@ -153,8 +177,14 @@ export const deletes = {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 

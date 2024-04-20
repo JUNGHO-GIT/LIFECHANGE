@@ -13,8 +13,14 @@ export const barToday = {
   ) => {
     const finalResult = await SleepPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      sleep_plan_startDt: startDt_param,
-      sleep_plan_endDt: endDt_param,
+      sleep_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -27,8 +33,14 @@ export const barToday = {
   ) => {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -46,8 +58,14 @@ export const lineWeek = {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -65,8 +83,14 @@ export const lineMonth = {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -84,8 +108,14 @@ export const avgWeek = {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -103,8 +133,14 @@ export const avgMonth = {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      sleep_startDt: startDt_param,
-      sleep_endDt: endDt_param,
+      sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;

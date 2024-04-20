@@ -3,8 +3,6 @@
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (object) => {
 
-  console.log("first object : " + JSON.stringify(object));
-
   const compareCount = (plan, real) => {
     const diff = Math.abs(real - plan);
     return diff;
@@ -51,10 +49,7 @@ export const list = async (object) => {
       food_diff_protein_color: makeColor(item.food_plan_protein, item.food_total_protein, ""),
       food_diff_fat_color: makeColor(item.food_plan_fat, item.food_total_fat, ""),
     });
-
   });
-
-  console.log("second object : " + JSON.stringify(object));
 
   return object;
 };

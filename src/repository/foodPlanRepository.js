@@ -93,8 +93,14 @@ export const detail = {
     const finalResult = await FoodPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_plan_startDt: startDt_param,
-      food_plan_endDt: endDt_param,
+      food_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -113,8 +119,14 @@ export const save = {
     const finalResult = await FoodPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_plan_startDt: startDt_param,
-      food_plan_endDt: endDt_param,
+      food_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 
@@ -130,8 +142,14 @@ export const save = {
     const finalResult = await FoodPlan.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      food_plan_startDt: startDt_param,
-      food_plan_endDt: endDt_param,
+      food_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       food_plan_kcal: OBJECT_param.food_plan_kcal,
       food_plan_carb: OBJECT_param.food_plan_carb,
       food_plan_protein: OBJECT_param.food_plan_protein,
@@ -174,8 +192,14 @@ export const deletes = {
     const finalResult = await FoodPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      food_plan_startDt: startDt_param,
-      food_plan_endDt: endDt_param,
+      food_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      food_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 

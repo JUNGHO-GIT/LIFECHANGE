@@ -5,8 +5,6 @@ import {compareTime, strToDecimal, decimalToStr} from "../assets/common/date.js"
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (object) => {
 
-  console.log("first object : " + JSON.stringify(object));
-
   const makeColor = (plan, real, extra) => {
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
@@ -51,10 +49,7 @@ export const list = async (object) => {
       sleep_diff_morning_color: makeColor(item.sleep_plan_morning, item.sleep_morning, ""),
       sleep_diff_time_color: makeColor(item.sleep_plan_time, item.sleep_time, ""),
     });
-
   });
-
-  console.log("second object : " + JSON.stringify(object));
 
   return object;
 };

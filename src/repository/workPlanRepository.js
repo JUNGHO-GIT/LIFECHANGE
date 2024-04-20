@@ -85,8 +85,14 @@ export const detail = {
     const finalResult = await WorkPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_plan_startDt: startDt_param,
-      work_plan_endDt: endDt_param,
+      work_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     });
     return finalResult;
   }
@@ -100,8 +106,14 @@ export const save = {
     const finalResult = await WorkPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_plan_startDt: startDt_param,
-      work_plan_endDt: endDt_param,
+      work_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     });
     return finalResult;
   },
@@ -113,8 +125,14 @@ export const save = {
     const finalResult = await WorkPlan.create({
       _id: new mongoose.Types.ObjectId(),
       user_id: user_id_param,
-      work_plan_startDt: startDt_param,
-      work_plan_endDt: endDt_param,
+      work_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       work_plan_count: OBJECT_param.work_plan_count,
       work_plan_volume: OBJECT_param.work_plan_volume,
       work_plan_cardio: OBJECT_param.work_plan_cardio,
@@ -156,8 +174,14 @@ export const deletes = {
     const finalResult = await WorkPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_plan_startDt: startDt_param,
-      work_plan_endDt: endDt_param,
+      work_plan_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_plan_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
 

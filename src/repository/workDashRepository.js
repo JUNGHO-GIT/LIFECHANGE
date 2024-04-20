@@ -109,8 +109,14 @@ export const pieWeek = {
     const finalResult = await Work.aggregate([
       {$match: {
         user_id: user_id_param,
-        work_startDt: startDt_param,
-        work_endDt: endDt_param,
+        work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: {
         path: "$work_section"
@@ -135,8 +141,14 @@ export const pieWeek = {
     const finalResult = await Work.aggregate([
       {$match: {
         user_id: user_id_param,
-        work_startDt: startDt_param,
-        work_endDt: endDt_param,
+        work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: {
         path: "$work_section"
@@ -165,8 +177,14 @@ export const pieMonth = {
     const finalResult = await Work.aggregate([
       {$match: {
         user_id: user_id_param,
-        work_startDt: startDt_param,
-        work_endDt: endDt_param,
+        work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: {
         path: "$work_section"
@@ -191,8 +209,14 @@ export const pieMonth = {
     const finalResult = await Work.aggregate([
       {$match: {
         user_id: user_id_param,
-        work_startDt: startDt_param,
-        work_endDt: endDt_param,
+        work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
       }},
       {$unwind: {
         path: "$work_section"
@@ -222,8 +246,14 @@ export const lineWeek = {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_startDt: startDt_param,
-      work_endDt: endDt_param,
+      work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -241,8 +271,14 @@ export const lineMonth = {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_startDt: startDt_param,
-      work_endDt: endDt_param,
+      work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -260,8 +296,14 @@ export const avgWeek = {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_startDt: startDt_param,
-      work_endDt: endDt_param,
+      work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
@@ -279,8 +321,14 @@ export const avgMonth = {
     const finalResult = await Work.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
       user_id: user_id_param,
-      work_startDt: startDt_param,
-      work_endDt: endDt_param,
+      work_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      work_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
     })
     .lean();
     return finalResult;
