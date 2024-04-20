@@ -14,6 +14,10 @@ export const FilterNode = ({
       return (
         <React.Fragment>
           <select className={"form-select me-5"} id={"type"} onChange={(e) => (
+            setPAGING((prev) => ({
+              ...prev,
+              page: 1
+            })),
             setFILTER((prev) => ({
               ...prev,
               type: e.target.value
