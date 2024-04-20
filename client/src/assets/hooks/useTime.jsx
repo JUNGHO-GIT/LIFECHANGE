@@ -15,10 +15,10 @@ export const useTime = (
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
-    // 1. exercise
-    if (type === "real" && strLow === "exercise") {
-      const startTime = OBJECT?.exercise_start;
-      const endTime = OBJECT?.exercise_end;
+    // 1. work
+    if (type === "real" && strLow === "work") {
+      const startTime = OBJECT?.work_start;
+      const endTime = OBJECT?.work_end;
 
       if (startTime && endTime) {
         const startDate = new Date(`${koreanDate}T${startTime}Z`);
@@ -35,9 +35,9 @@ export const useTime = (
 
         setOBJECT((prev) => ({
           ...prev,
-          exercise_start: startTime,
-          exercise_end: endTime,
-          exercise_time: time,
+          work_start: startTime,
+          work_end: endTime,
+          work_time: time,
         }));
       }
     }
@@ -96,8 +96,8 @@ export const useTime = (
     }
   }, [
     strLow,
-    type === "real" && strLow === "exercise" ? OBJECT?.exercise_start : "",
-    type === "real" && strLow === "exercise" ? OBJECT?.exercise_end : "",
+    type === "real" && strLow === "work" ? OBJECT?.work_start : "",
+    type === "real" && strLow === "work" ? OBJECT?.work_end : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_night : "",

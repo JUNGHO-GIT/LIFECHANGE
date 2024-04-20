@@ -339,7 +339,6 @@ export const MoneySave = () => {
         </div>
       );
     };
-
     function tableFragment () {
       return (
         <Row className={"d-center"}>

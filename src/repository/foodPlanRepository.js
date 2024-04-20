@@ -7,9 +7,7 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  customer_id_param,
-  startDt_param,
-  endDt_param
+  customer_id_param, startDt_param, endDt_param
 ) => {
 
   const finalResult = await FoodPlan.countDocuments({

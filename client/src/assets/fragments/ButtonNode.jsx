@@ -6,8 +6,8 @@ import {Button} from "react-bootstrap";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  CALENDAR, setCALENDAR, DATE, setDATE, SEND, FILTER, setFILTER, flowSave, navParam,
-  part, plan, type
+  CALENDAR, setCALENDAR, DATE, setDATE, SEND, FILTER, setFILTER, PAGING, setPAGING,
+  flowSave, navParam, part, plan, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -38,6 +38,10 @@ export const ButtonNode = ({
             setFILTER((prev) => ({
               ...prev,
               type: "day",
+            }));
+            setPAGING((prev) => ({
+              ...prev,
+              page: 1,
             }));
             setDATE((prev) => ({
               ...prev,

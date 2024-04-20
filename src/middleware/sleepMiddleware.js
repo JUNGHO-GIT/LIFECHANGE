@@ -1,9 +1,13 @@
 // sleepMiddleware.js
 
-import {compareTime, strToDecimal, decimalToStr} from "../assets/common/date.js";
+import {compareTime} from "../assets/common/date.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (object) => {
+
+  if (!object) {
+    return [];
+  }
 
   const makeColor = (plan, real, extra) => {
     const planDate = new Date(`1970-01-01T${plan}Z`);
@@ -32,12 +36,7 @@ export const list = async (object) => {
     }
   };
 
-  if (!object) {
-    return [];
-  }
-
   object?.result?.map((item) => {
-
     Object.assign((item), {
       sleep_diff_night: compareTime(item?.sleep_plan_night, item?.sleep_night),
       sleep_diff_morning: compareTime(item?.sleep_plan_morning, item?.sleep_morning),

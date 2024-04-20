@@ -6,9 +6,7 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  customer_id_param,
-  startDt_param,
-  endDt_param
+  customer_id_param, startDt_param, endDt_param
 ) => {
 
   const finalResult = await Sleep.countDocuments({
@@ -27,12 +25,7 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   find: async (
-    customer_id_param,
-    sort_param,
-    limit_param,
-    page_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {

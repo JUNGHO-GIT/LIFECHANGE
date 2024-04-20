@@ -54,5 +54,51 @@ for (let i = 1; i <= 100; i++) {
   demoData.push(record);
 };
 
+
+
 // Create a new document in the collection.
-db.getCollection('exercisePlan').insertMany(demoData);
+async function insertDataAndRemoveDuplicates() {
+  try {
+    const collection = db.getCollection('exercisePlan')
+
+    // 데이터 삽입
+    const insertResult = await collection.insertMany(demoData);
+    console.log('Inserted documents:', insertResult.insertedCount);
+
+    // 중복된 날짜 항목 삭제 로직
+    const docs = await collection.aggregate([
+      {
+        $group: {
+          _id: "$exercise_plan_startDt",
+          docIds: { $push: "$_id" },
+          firstId: { $first: "$_id" }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          toDelete: {
+            $filter: {
+              input: "$docIds",
+              as: "docId",
+              cond: { $ne: ["$$docId", "$firstId"] }
+            }
+          }
+        }
+      }
+    ]).toArray();
+
+    // 필터링된 문서 ID로 deleteMany 실행
+    for (const doc of docs) {
+      if (doc.toDelete.length > 0) {
+        const deleteResult = await collection.deleteMany({ _id: { $in: doc.toDelete } });
+        console.log("Deleted documents:", deleteResult.deletedCount);
+      }
+    }
+  } catch (error) {
+    console.error('Error during database operations:', error);
+  }
+}
+
+// 함수 호출
+insertDataAndRemoveDuplicates();

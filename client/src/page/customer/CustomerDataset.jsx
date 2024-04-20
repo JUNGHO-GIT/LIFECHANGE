@@ -5,9 +5,10 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {exerciseArray} from "../../assets/data/ExerciseArray.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
-import {exerciseArray} from "../../assets/data/ExerciseArray.jsx";
+import {sleepArray} from "../../assets/data/SleepArray.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -52,6 +53,10 @@ export const CustomerDataset = () => {
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     customer_dataset: {
+      exercise: [{
+        exercise_part: "",
+        exercise_title: [""]
+      }],
       food: [{
         food_part: "",
         food_title: [""]
@@ -60,23 +65,13 @@ export const CustomerDataset = () => {
         money_part: "",
         money_title: [""]
       }],
-      exercise: [{
-        exercise_part: "",
-        exercise_title: [""]
+      sleep: [{
+        sleep_part: "",
+        sleep_title: [""]
       }]
     }
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
-    await axios.get(`${URL_OBJECT}/plan/percent`, {
-      params: {
-        customer_id: customer_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-      }
-    });
-  })()}, [customer_id, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -114,14 +109,17 @@ export const CustomerDataset = () => {
     const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
     let defaultArray = [];
-    if (dataType === "food") {
+    if (dataType === "exercise") {
+      defaultArray = exerciseArray;
+    }
+    else if (dataType === "food") {
       defaultArray = foodArray;
     }
     else if (dataType === "money") {
       defaultArray = moneyArray;
     }
-    else if (dataType === "exercise") {
-      defaultArray = exerciseArray;
+    else if (dataType === "sleep") {
+      defaultArray = sleepArray;
     }
 
     if (confirm) {
@@ -255,14 +253,14 @@ export const CustomerDataset = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
           <tr>
+            <th colSpan={2} className={"pointer"} onClick={() => setDataType("exercise")}>
+              exercise
+            </th>
             <th colSpan={2} className={"pointer"} onClick={() => setDataType("food")}>
               food
             </th>
             <th colSpan={2} className={"pointer"} onClick={() => setDataType("money")}>
               money
-            </th>
-            <th colSpan={2} className={"pointer"} onClick={() => setDataType("exercise")}>
-              exercise
             </th>
           </tr>
           <tr>
