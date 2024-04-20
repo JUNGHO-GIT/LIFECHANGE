@@ -124,7 +124,6 @@ export const FoodList = () => {
             <th>식품명</th>
             <th>브랜드</th>
             <th>수량</th>
-            <th>서빙 사이즈</th>
             <th>그램(g)</th>
             <th>칼로리(kcal)</th>
             <th>탄수화물(g)</th>
@@ -155,8 +154,8 @@ export const FoodList = () => {
                     <td>{section.food_part_val}</td>
                     <td>{section.food_title_val}</td>
                     <td>{section.food_brand}</td>
-                    <td>{`${numeral(section.food_count).format('0,0')}`}</td>
-                    <td>{section.food_serv}</td>
+                    <td>{`${numeral(section.food_count).format('0,0')}`}
+                      {section.food_serv}</td>
                     <td>{`${numeral(section.food_gram).format('0,0')} g`}</td>
                     <td>{`${numeral(section.food_kcal).format('0,0')} kcal`}</td>
                     <td>{`${numeral(section.food_carb).format('0,0')} g`}</td>

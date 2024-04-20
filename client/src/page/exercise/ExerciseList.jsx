@@ -180,7 +180,11 @@ export const ExerciseList = () => {
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
-                          <td colSpan={5}>{section.exercise_cardio}</td>
+                          <td></td>
+                          <td></td>
+                          <td>{section.exercise_cardio}</td>
+                          <td></td>
+                          <td></td>
                         </React.Fragment>
                       )}
                     </tr>

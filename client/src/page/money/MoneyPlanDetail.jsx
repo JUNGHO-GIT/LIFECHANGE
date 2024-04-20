@@ -122,15 +122,17 @@ export const MoneyPlanDetail = () => {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody className={"text-start"}>
+        <tbody>
           <tr className={"fs-20 pt-20"}>
             <td>{OBJECT?.money_plan_startDt}</td>
             <td>{OBJECT?.money_plan_endDt}</td>
             <td>{OBJECT?.money_plan_in}</td>
             <td>{OBJECT?.money_plan_out}</td>
-            <td><Button variant={"danger"} size={"sm"} onClick={() => {
-              flowDelete(OBJECT?._id);
-            }}>X</Button></td>
+            <td>
+              <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                flowDelete(OBJECT._id)
+              )}>x</p>
+            </td>
           </tr>
         </tbody>
         </Table>
@@ -142,8 +144,8 @@ export const MoneyPlanDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={""} setFILTER={""} flowSave={""} navParam={navParam}
-        part={"money"} plan={"plan"} type={"detail"}
+        SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={""} navParam={navParam} part={"money"} plan={"plan"} type={"detail"}
       />
     );
   };

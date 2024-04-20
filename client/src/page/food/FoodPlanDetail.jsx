@@ -125,7 +125,7 @@ export const FoodPlanDetail = () => {
               <th>삭제</th>
             </tr>
           </thead>
-          <tbody className={"text-start"}>
+          <tbody>
             <tr className={"fs-20 pt-20"}>
               <td>{OBJECT?.food_plan_startDt}</td>
               <td>{OBJECT?.food_plan_endDt}</td>
@@ -133,9 +133,11 @@ export const FoodPlanDetail = () => {
               <td>{OBJECT?.food_plan_carb}</td>
               <td>{OBJECT?.food_plan_protein}</td>
               <td>{OBJECT?.food_plan_fat}</td>
-              <td><Button variant={"danger"} size={"sm"} onClick={() => (
-                flowDelete(OBJECT?._id)
-              )}>X</Button></td>
+              <td>
+                <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                  flowDelete(OBJECT._id)
+                )}>x</p>
+              </td>
             </tr>
           </tbody>
         </Table>
@@ -147,8 +149,8 @@ export const FoodPlanDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={""} setFILTER={""} flowSave={""} navParam={navParam}
-        part={"food"} plan={"plan"} type={"detail"}
+        SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={""} navParam={navParam} part={"food"} plan={"plan"} type={"detail"}
       />
     );
   };

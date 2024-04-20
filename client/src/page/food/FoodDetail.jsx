@@ -133,7 +133,6 @@ export const FoodDetail = () => {
             <th>브랜드</th>
             <th>분류</th>
             <th>횟수</th>
-            <th>서빙</th>
             <th>칼로리</th>
             <th>탄수화물</th>
             <th>단백질</th>
@@ -141,7 +140,7 @@ export const FoodDetail = () => {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody className={"text-start"}>
+        <tbody>
           {OBJECT?.food_section?.map((section, index) => (
             <tr key={index} className={"fs-20 pt-20"}>
               {index === 0 && (
@@ -153,19 +152,20 @@ export const FoodDetail = () => {
               )}
               <td>{section.food_title_val}</td>
               <td>{section.food_part_val}</td>
-              <td>{section.food_count}</td>
-              <td>{section.food_serv}</td>
+              <td>{section.food_count} {section.food_serv}</td>
               <td>{section.food_kcal}</td>
               <td>{section.food_carb}</td>
               <td>{section.food_protein}</td>
               <td>{section.food_fat}</td>
-              <td><Button variant={"danger"} size={"sm"} onClick={() => (
-                flowDelete(OBJECT._id, section._id)
-              )}>X</Button></td>
+              <td>
+                <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                  flowDelete(OBJECT._id, section._id)
+                )}>x</p>
+              </td>
             </tr>
           ))}
           <tr>
-            <td colSpan={5}>합계</td>
+            <td colSpan={4}>합계</td>
             <td>{OBJECT?.food_total_kcal}</td>
             <td>{OBJECT?.food_total_carb}</td>
             <td>{OBJECT?.food_total_protein}</td>
@@ -182,8 +182,8 @@ export const FoodDetail = () => {
   const buttonNode = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={""} setFILTER={""} flowSave={""} navParam={navParam}
-        part={"food"} plan={""} type={"detail"}
+        SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={""} navParam={navParam} part={"food"} plan={""} type={"detail"}
       />
     );
   };

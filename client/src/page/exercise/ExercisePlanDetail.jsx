@@ -126,7 +126,7 @@ export const ExercisePlanDetail = () => {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody className={"text-start"}>
+        <tbody>
           <tr>
             <td>{OBJECT?.exercise_plan_startDt}</td>
             <td>{OBJECT?.exercise_plan_endDt}</td>
@@ -134,8 +134,11 @@ export const ExercisePlanDetail = () => {
             <td>{OBJECT?.exercise_plan_volume}</td>
             <td>{OBJECT?.exercise_plan_cardio}</td>
             <td>{OBJECT?.exercise_plan_weight}</td>
-            <td><Button variant={"danger"} size={"sm"}
-            onClick={() => (flowDelete(OBJECT?._id))}>X</Button></td>
+            <td>
+              <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                flowDelete(OBJECT._id)
+              )}>x</p>
+            </td>
           </tr>
         </tbody>
         </Table>
@@ -146,9 +149,9 @@ export const ExercisePlanDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={""} setFILTER={""} flowSave={""} navParam={navParam}
-        part={"exercise"} plan={"plan"} type={"detail"}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={""} navParam={navParam} part={"exercise"} plan={"plan"} type={"detail"}
       />
     );
   };

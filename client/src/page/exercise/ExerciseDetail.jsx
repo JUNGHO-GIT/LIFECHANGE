@@ -200,14 +200,13 @@ export const ExerciseDetail = () => {
               <th>삭제</th>
             </tr>
           </thead>
-          <tbody className={"text-start"}>
+          <tbody>
             {OBJECT?.exercise_section?.map((section, index) => (
               <tr key={index} className={"fs-20 pt-20"}>
                 {index === 0 && (
                   <React.Fragment>
                     <td rowSpan={OBJECT?.exercise_section?.length}>
                       {OBJECT?.exercise_startDt}
-                      <div>{OBJECT?._id}</div>
                     </td>
                     <td rowSpan={OBJECT?.exercise_section?.length}>
                       {OBJECT?.exercise_start}
@@ -224,7 +223,6 @@ export const ExerciseDetail = () => {
                   <td>{section.exercise_part_val}</td>
                   <td>
                     {section.exercise_title_val}
-                    <div>{section._id}</div>
                   </td>
                 </React.Fragment>
                 {(section.exercise_part_val !== "유산소") ? (
@@ -237,12 +235,18 @@ export const ExerciseDetail = () => {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <td colSpan={5}>{section.exercise_cardio}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{section.exercise_cardio}</td>
+                    <td></td>
+                    <td></td>
                   </React.Fragment>
                 )}
-                <td><Button variant={"danger"} size={"sm"} onClick={() => (
-                  flowDelete(OBJECT._id, section._id)
-                )}>X</Button></td>
+                <td>
+                  <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                    flowDelete(OBJECT._id, section._id)
+                  )}>x</p>
+                </td>
               </tr>
             ))}
             <tr>
@@ -272,9 +276,9 @@ export const ExerciseDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-        <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={""} setFILTER={""} flowSave={""} navParam={navParam}
-        part={"exercise"} plan={""} type={"detail"}
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+        flowSave={""} navParam={navParam} part={"exercise"} plan={""} type={"detail"}
       />
     );
   };
