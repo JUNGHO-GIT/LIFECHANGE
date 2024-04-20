@@ -107,7 +107,7 @@ export const ExerciseDashAvgMonth = () => {
               }}>
             </Bar>
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",
@@ -164,7 +164,7 @@ export const ExerciseDashAvgMonth = () => {
               }}>
             </Bar>
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()} vol`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",

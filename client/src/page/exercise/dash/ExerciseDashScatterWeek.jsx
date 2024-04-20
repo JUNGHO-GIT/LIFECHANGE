@@ -70,7 +70,7 @@ export const ExerciseDashScatterWeek = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
+      tickFormatter: (tick) => (`${Number(tick).toLocaleString()} kg`)
     };
   };
 

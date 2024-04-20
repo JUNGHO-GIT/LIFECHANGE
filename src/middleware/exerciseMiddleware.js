@@ -117,6 +117,9 @@ export const save = async (object) => {
   if (object === "deleted") {
     return {};
   }
+
+  console.log("object", JSON.stringify(object));
+
   let totalVolume = 0;
   let totalTime = 0.0;
 

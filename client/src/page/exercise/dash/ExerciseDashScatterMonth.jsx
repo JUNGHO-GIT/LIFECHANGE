@@ -111,7 +111,7 @@ export const ExerciseDashScatterMonth = () => {
               line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
             ></Scatter>
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",

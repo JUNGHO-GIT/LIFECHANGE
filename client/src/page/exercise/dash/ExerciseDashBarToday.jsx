@@ -106,7 +106,7 @@ export const ExerciseDashBarToday = () => {
               barSize={20}
             ></Bar>
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",
