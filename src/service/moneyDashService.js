@@ -5,7 +5,7 @@ import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonth
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   const data  = {
@@ -23,10 +23,10 @@ export const barToday = async (
 
   for (let key in data) {
     const findPlan = await repository.barToday.findPlan(
-      "", user_id_param, koreanDate, koreanDate
+      "", customer_id_param, koreanDate, koreanDate
     );
     const findReal = await repository.barToday.findReal(
-      "", user_id_param, koreanDate, koreanDate
+      "", customer_id_param, koreanDate, koreanDate
     );
 
     finalResult.push({
@@ -41,12 +41,12 @@ export const barToday = async (
 
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
 export const pieToday = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   // in
   const findResultIn = await repository.pieToday.findIn(
-    user_id_param, koreanDate, koreanDate
+    customer_id_param, koreanDate, koreanDate
   );
   const finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
@@ -55,7 +55,7 @@ export const pieToday = async (
 
   // out
   const findResultOut = await repository.pieToday.findOut(
-    user_id_param, koreanDate, koreanDate
+    customer_id_param, koreanDate, koreanDate
   );
   const finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
@@ -70,12 +70,12 @@ export const pieToday = async (
 
 // 2-2. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   // in
   const findResultIn = await repository.pieWeek.findIn(
-    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+    customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
   const finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
@@ -84,7 +84,7 @@ export const pieWeek = async (
 
   // out
   const findResultOut = await repository.pieWeek.findOut(
-    user_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+    customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
   const finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
@@ -99,12 +99,12 @@ export const pieWeek = async (
 
 // 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   // in
   const findResultIn = await repository.pieMonth.findIn(
-    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+    customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
   const finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
@@ -113,7 +113,7 @@ export const pieMonth = async (
 
   // out
   const findResultOut = await repository.pieMonth.findOut(
-    user_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+    customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
   const finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
@@ -128,7 +128,7 @@ export const pieMonth = async (
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   const data = [
@@ -140,7 +140,7 @@ export const lineWeek = async (
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
     const findResult = await repository.lineWeek.find(
-      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+      "", customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResult.push({
@@ -155,7 +155,7 @@ export const lineWeek = async (
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   const data = [
@@ -169,7 +169,7 @@ export const lineMonth = async (
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
     const findResult = await repository.lineMonth.find(
-      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+      "", customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResult.push({
@@ -184,7 +184,7 @@ export const lineMonth = async (
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 export const avgWeek = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   let sumMoneyIn = Array(5).fill(0);
@@ -206,7 +206,7 @@ export const avgWeek = async (
 
     if (weekNum >= 1 && weekNum <= 5) {
       const findResult = await repository.avgWeek.find(
-        "", user_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
+        "", customer_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
       if (findResult) {
@@ -230,7 +230,7 @@ export const avgWeek = async (
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   let sumMoneyIn = Array(12).fill(0);
@@ -251,7 +251,7 @@ export const avgMonth = async (
     const monthNum = month.month();
 
     const findResult = await repository.avgMonth.find(
-      "", user_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
+      "", customer_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 
     if (findResult) {

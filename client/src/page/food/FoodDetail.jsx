@@ -13,7 +13,7 @@ export const FoodDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -85,7 +85,7 @@ export const FoodDetail = () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: location_id,
-        user_id: user_id,
+        customer_id: customer_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -95,7 +95,7 @@ export const FoodDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id, section_id) => {
@@ -103,7 +103,7 @@ export const FoodDetail = () => {
       params: {
         _id: id,
         section_id: section_id,
-        user_id: user_id,
+        customer_id: customer_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });

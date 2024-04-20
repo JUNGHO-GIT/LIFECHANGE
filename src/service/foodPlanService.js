@@ -5,7 +5,7 @@ import {compareCount, compareTime, strToDecimal, decimalToStr} from "../assets/c
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param, duration_param, FILTER_param, PAGING_param
+  customer_id_param, duration_param, FILTER_param, PAGING_param
 ) => {
 
   const [startDtPlan, endDtPlan] = duration_param.split(` ~ `);
@@ -15,10 +15,10 @@ export const list = async (
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const totalCnt = await repository.totalCnt(
-    user_id_param, startDtPlan, endDtPlan
+    customer_id_param, startDtPlan, endDtPlan
   );
   const findPlan = await repository.list.findPlan(
-    user_id_param, sort, limit, page, startDtPlan, endDtPlan
+    customer_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
 
   const finalResult = await Promise.all(findPlan.map(async (plan) => {
@@ -26,7 +26,7 @@ export const list = async (
     const endDt = plan.food_plan_endDt;
 
     const findReal = await repository.list.findReal(
-      user_id_param, startDt, endDt
+      customer_id_param, startDt, endDt
     );
 
     const foodTotalKcal = findReal.reduce((acc, curr) => (
@@ -59,13 +59,13 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param, user_id_param, duration_param
+  _id_param, customer_id_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail(
-    _id_param, user_id_param, startDt, endDt
+    _id_param, customer_id_param, startDt, endDt
   );
 
   return finalResult
@@ -73,19 +73,19 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param, OBJECT_param, duration_param
+  customer_id_param, OBJECT_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
-    "", user_id_param, startDt, endDt
+    "", customer_id_param, startDt, endDt
   );
 
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      user_id_param, OBJECT_param, startDt, endDt
+      customer_id_param, OBJECT_param, startDt, endDt
     );
   }
   else {
@@ -99,13 +99,13 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param, user_id_param, duration_param
+  _id_param, customer_id_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
   const findResult = await repository.deletes.detail(
-    _id_param, user_id_param, startDt, endDt
+    _id_param, customer_id_param, startDt, endDt
   );
 
   if (!findResult) {

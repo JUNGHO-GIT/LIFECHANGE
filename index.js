@@ -6,26 +6,24 @@ import util from "util";
 import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
-import helmet from "helmet";
 import {fileURLToPath} from "url";
 
+import {router as exerciseDashRouter} from "./src/router/exerciseDashRouter.js";
 import {router as foodDashRouter} from "./src/router/foodDashRouter.js";
 import {router as moneyDashRouter} from "./src/router/moneyDashRouter.js";
 import {router as sleepDashRouter} from "./src/router/sleepDashRouter.js";
-import {router as userDashRouter} from "./src/router/userDashRouter.js";
-import {router as workDashRouter} from "./src/router/workDashRouter.js";
 
+import {router as customerPlanRouter} from "./src/router/customerPlanRouter.js";
+import {router as exercisePlanRouter} from "./src/router/exercisePlanRouter.js";
 import {router as foodPlanRouter} from "./src/router/foodPlanRouter.js";
 import {router as moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
 import {router as sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
-import {router as userPlanRouter} from "./src/router/userPlanRouter.js";
-import {router as workPlanRouter} from "./src/router/workPlanRouter.js";
 
+import {router as customerRouter} from "./src/router/customerRouter.js";
+import {router as exerciseRouter} from "./src/router/exerciseRouter.js";
 import {router as foodRouter} from "./src/router/foodRouter.js";
 import {router as moneyRouter} from "./src/router/moneyRouter.js";
 import {router as sleepRouter} from "./src/router/sleepRouter.js";
-import {router as userRouter} from "./src/router/userRouter.js";
-import {router as workRouter} from "./src/router/workRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
@@ -59,23 +57,22 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use("/exercise/dash", exerciseDashRouter);
 app.use("/food/dash", foodDashRouter);
 app.use("/money/dash", moneyDashRouter);
 app.use("/sleep/dash", sleepDashRouter);
-app.use("/user/dash", userDashRouter);
-app.use("/work/dash", workDashRouter);
 
+app.use("/customer/plan", customerPlanRouter);
+app.use("/exercise/plan", exercisePlanRouter);
 app.use("/food/plan", foodPlanRouter);
 app.use("/money/plan", moneyPlanRouter);
 app.use("/sleep/plan", sleepPlanRouter);
-app.use("/user/plan", userPlanRouter);
-app.use("/work/plan", workPlanRouter);
 
+app.use("/customer", customerRouter);
+app.use("/exercise", exerciseRouter);
 app.use("/food", foodRouter);
 app.use("/money", moneyRouter);
 app.use("/sleep", sleepRouter);
-app.use("/user", userRouter);
-app.use("/work", workRouter);
 
 // ------------------------------------------------------------------------------------------------>
 app.listen(app.get("port"), () => {

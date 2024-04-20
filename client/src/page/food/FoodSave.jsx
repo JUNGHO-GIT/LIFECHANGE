@@ -15,7 +15,7 @@ export const FoodSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const customer_id = window.sessionStorage.getItem("customer_id");
   const session = window.sessionStorage.getItem("dataset") || "";
   const foodArray = JSON.parse(session)?.food || [];
   const navParam = useNavigate();
@@ -100,7 +100,7 @@ export const FoodSave = () => {
       const response = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: "",
-          user_id: user_id,
+          customer_id: customer_id,
           duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
@@ -156,7 +156,7 @@ export const FoodSave = () => {
     };
 
     fetchDetail();
-  }, [user_id, DATE.startDt, DATE.endDt]);
+  }, [customer_id, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -190,7 +190,7 @@ export const FoodSave = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
-      user_id: user_id,
+      customer_id: customer_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

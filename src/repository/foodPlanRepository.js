@@ -7,13 +7,13 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  user_id_param,
+  customer_id_param,
   startDt_param,
   endDt_param
 ) => {
 
   const finalResult = await FoodPlan.countDocuments({
-    user_id: user_id_param,
+    customer_id: customer_id_param,
     food_plan_startDt: {
       $lte: endDt_param,
     },
@@ -28,7 +28,7 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   findPlan: async (
-    user_id_param,
+    customer_id_param,
     sort_param,
     limit_param,
     page_param,
@@ -37,7 +37,7 @@ export const list = {
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         food_plan_startDt: {
           $lte: endDt_param,
         },
@@ -55,11 +55,11 @@ export const list = {
     return finalResult;
   },
   findReal: async (
-    user_id_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         food_startDt: {
           $lte: endDt_param,
         },
@@ -84,12 +84,12 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await FoodPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       food_plan_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -106,12 +106,12 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await FoodPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       food_plan_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -125,12 +125,12 @@ export const save = {
     return finalResult;
   },
   create: async (
-    user_id_param, OBJECT_param, startDt_param, endDt_param
+    customer_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await FoodPlan.create({
       _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       food_plan_startDt: startDt_param,
       food_plan_endDt: endDt_param,
       food_plan_kcal: OBJECT_param.food_plan_kcal,
@@ -166,11 +166,11 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       food_plan_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,

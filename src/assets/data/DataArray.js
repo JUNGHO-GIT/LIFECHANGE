@@ -7,9 +7,9 @@ export const dataArray = [
     ]
   },
   {
-    label: "User",
+    label: "Customer",
     items: [
-      {to: "/user/list", label: "UserList"},
+      {to: "/customer/list", label: "CustomerList"},
     ]
   },
   {
@@ -44,13 +44,13 @@ export const dataArray = [
     ]
   },
   {
-    label: "Work",
+    label: "Exercise",
     items: [
-      {to: "/work/dash", label: "WorkDash"},
-      {to: "/work/list", label: "WorkList"},
-      {to: "/work/save", label: "WorkSave"},
-      {to: "/work/list", label: "WorkPlanList"},
-      {to: "/work/save", label: "WorkPlanSave"},
+      {to: "/exercise/dash", label: "ExerciseDash"},
+      {to: "/exercise/list", label: "ExerciseList"},
+      {to: "/exercise/save", label: "ExerciseSave"},
+      {to: "/exercise/list", label: "ExercisePlanList"},
+      {to: "/exercise/save", label: "ExercisePlanSave"},
     ]
   }
 ];

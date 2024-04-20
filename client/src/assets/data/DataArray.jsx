@@ -1,10 +1,20 @@
 // 1. dataArray ---------------------------------------------------------------------------------->
 export const dataArray = [
   {
-    label: "User",
+    label: "Customer",
     items: [
-      {to: "/user/dash", label: "UserDash"},
-      {to: "/user/dataset", label: "UserDataset"},
+      {to: "/customer/dash", label: "CustomerDash"},
+      {to: "/customer/dataset", label: "CustomerDataset"},
+    ]
+  },
+  {
+    label: "Exercise",
+    items: [
+      {to: "/exercise/dash", label: "ExerciseDash"},
+      {to: "/exercise/list", label: "ExerciseList"},
+      {to: "/exercise/save", label: "ExerciseSave"},
+      {to: "/exercise/plan/list", label: "ExercisePlanList"},
+      {to: "/exercise/plan/save", label: "ExercisePlanSave"},
     ]
   },
   {
@@ -38,14 +48,4 @@ export const dataArray = [
       {to: "/sleep/plan/save", label: "SleepPlanSave"},
     ]
   },
-  {
-    label: "Work",
-    items: [
-      {to: "/work/dash", label: "WorkDash"},
-      {to: "/work/list", label: "WorkList"},
-      {to: "/work/save", label: "WorkSave"},
-      {to: "/work/plan/list", label: "WorkPlanList"},
-      {to: "/work/plan/save", label: "WorkPlanSave"},
-    ]
-  }
 ];

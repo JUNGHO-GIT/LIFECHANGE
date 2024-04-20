@@ -16,7 +16,7 @@ export const MoneySave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const customer_id = window.sessionStorage.getItem("customer_id");
   const session = window.sessionStorage.getItem("dataset") || "";
   const moneyArray = JSON.parse(session)?.money || [];
   const navParam = useNavigate();
@@ -82,7 +82,7 @@ export const MoneySave = () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         _id: "",
-        user_id: user_id,
+        customer_id: customer_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -92,7 +92,7 @@ export const MoneySave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [user_id, DATE.startDt, DATE.endDt]);
+  })()}, [customer_id, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -115,7 +115,7 @@ export const MoneySave = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
-      user_id: user_id,
+      customer_id: customer_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

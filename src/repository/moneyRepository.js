@@ -6,11 +6,11 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  user_id_param, part_param, title_param, startDt_param, endDt_param
+  customer_id_param, part_param, title_param, startDt_param, endDt_param
 ) => {
 
   const finalResult = await Money.countDocuments({
-    user_id: user_id_param,
+    customer_id: customer_id_param,
     money_startDt: {
       $gte: startDt_param,
     },
@@ -31,11 +31,11 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   find: async (
-    user_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    customer_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -81,11 +81,11 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -103,11 +103,11 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -121,11 +121,11 @@ export const save = {
     return finalResult;
   },
   create: async (
-    user_id_param, OBJECT_param, startDt_param, endDt_param
+    customer_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.create({
       _id: new mongoose.Types.ObjectId(),
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: startDt_param,
       money_endDt: endDt_param,
       money_total_in: OBJECT_param.money_total_in,
@@ -161,11 +161,11 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    _id_param, user_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -180,11 +180,11 @@ export const deletes = {
   },
 
   update: async (
-    _id_param, section_id_param, user_id_param, startDt_param, endDt_param,
+    _id_param, section_id_param, customer_id_param, startDt_param, endDt_param,
   ) => {
     const updateResult = await Money.updateOne(
       {_id: _id_param,
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,

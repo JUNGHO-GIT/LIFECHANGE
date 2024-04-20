@@ -1,14 +1,14 @@
 // MoneyDash.jsx
 
 import React from "react";
-import {DashBarToday} from "./DashBarToday.jsx";
-import {DashPieToday} from "./DashPieToday.jsx";
-import {DashPieWeek} from "./DashPieWeek.jsx";
-import {DashPieMonth} from "./DashPieMonth.jsx";
-import {DashLineWeek} from "./DashLineWeek.jsx";
-import {DashLineMonth} from "./DashLineMonth.jsx";
-import {DashAvgWeek} from "./DashAvgWeek.jsx";
-import {DashAvgMonth} from "./DashAvgMonth.jsx";
+import {MoneyDashBarToday} from "./MoneyDashBarToday.jsx";
+import {MoneyDashPieToday} from "./MoneyDashPieToday.jsx";
+import {MoneyDashPieWeek} from "./MoneyDashPieWeek.jsx";
+import {MoneyDashPieMonth} from "./MoneyDashPieMonth.jsx";
+import {MoneyDashLineWeek} from "./MoneyDashLineWeek.jsx";
+import {MoneyDashLineMonth} from "./MoneyDashLineMonth.jsx";
+import {MoneyDashAvgWeek} from "./MoneyDashAvgWeek.jsx";
+import {MoneyDashAvgMonth} from "./MoneyDashAvgMonth.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDash = () => {
@@ -16,21 +16,21 @@ export const MoneyDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {DashBarToday()}
+      {MoneyDashBarToday()}
       <br />
-      {DashPieToday()}
+      {MoneyDashPieToday()}
       <br />
-      {DashPieWeek()}
+      {MoneyDashPieWeek()}
       <br />
-      {DashPieMonth()}
+      {MoneyDashPieMonth()}
       <br />
-      {DashLineWeek()}
+      {MoneyDashLineWeek()}
       <br />
-      {DashLineMonth()}
+      {MoneyDashLineMonth()}
       <br />
-      {DashAvgWeek()}
+      {MoneyDashAvgWeek()}
       <br />
-      {DashAvgMonth()}
+      {MoneyDashAvgMonth()}
       <br />
     </React.Fragment>
   );

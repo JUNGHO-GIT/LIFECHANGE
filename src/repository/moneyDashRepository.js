@@ -7,14 +7,14 @@ import {MoneyPlan} from "../schema/MoneyPlan.js";
 export const barToday = {
   findPlan: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
 
     const finalResult = await MoneyPlan.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_plan_startDt: {
         $lte: endDt_param
       },
@@ -27,14 +27,14 @@ export const barToday = {
   },
   findReal: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
 
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param
@@ -52,14 +52,12 @@ export const barToday = {
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
 export const pieToday = {
   findIn: async (
-    user_id_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -87,14 +85,12 @@ export const pieToday = {
     return finalResult;
   },
   findOut: async (
-    user_id_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -126,14 +122,12 @@ export const pieToday = {
 // 2-2. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = {
   findIn: async (
-    user_id_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -161,14 +155,12 @@ export const pieWeek = {
     return finalResult;
   },
   findOut: async (
-    user_id_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -200,14 +192,12 @@ export const pieWeek = {
 // 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = {
   findIn: async (
-    user_id_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -235,14 +225,12 @@ export const pieMonth = {
     return finalResult;
   },
   findOut: async (
-    user_id_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Money.aggregate([
       {$match: {
-        user_id: user_id_param,
+        customer_id: customer_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -275,14 +263,14 @@ export const pieMonth = {
 export const lineWeek = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
 
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -301,14 +289,14 @@ export const lineWeek = {
 export const lineMonth = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
 
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -327,14 +315,14 @@ export const lineMonth = {
 export const avgWeek = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
 
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -353,14 +341,14 @@ export const avgWeek = {
 export const avgMonth = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
 
     const finalResult = await Money.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,

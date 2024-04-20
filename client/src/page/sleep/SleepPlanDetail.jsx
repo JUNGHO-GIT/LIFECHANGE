@@ -13,7 +13,7 @@ export const SleepPlanDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_OBJECT = process.env.REACT_APP_URL_SLEEP;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -72,7 +72,7 @@ export const SleepPlanDetail = () => {
     const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         _id: location_id,
-        user_id: user_id,
+        customer_id: customer_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -82,14 +82,14 @@ export const SleepPlanDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_OBJECT}/plan/delete`, {
       params: {
         _id: id,
-        user_id: user_id,
+        customer_id: customer_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });

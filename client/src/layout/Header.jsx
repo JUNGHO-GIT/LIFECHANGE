@@ -11,7 +11,7 @@ export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const navParam = useNavigate();
-  const user_id = window.sessionStorage.getItem("user_id");
+  const customer_id = window.sessionStorage.getItem("customer_id");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
@@ -42,7 +42,7 @@ export const Header = () => {
     function btnLogIn () {
       return (
         <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
-          navParam("/user/login");
+          navParam("/customer/login");
         }}>
           Login
         </Button>
@@ -51,7 +51,7 @@ export const Header = () => {
     function btnSignUp () {
       return (
         <Button variant={"secondary"} size={"sm"} className={"me-2"} onClick={() => {
-          navParam("/user/signup");
+          navParam("/customer/signup");
         }}>
           Signup
         </Button>
@@ -61,7 +61,7 @@ export const Header = () => {
       return (
         <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
           window.sessionStorage.clear();
-          window.sessionStorage.setItem("user_id", "false");
+          window.sessionStorage.setItem("customer_id", "false");
           window.location.reload();
         }}>
           Logout
@@ -69,7 +69,7 @@ export const Header = () => {
       );
     };
     return (
-      (!user_id || user_id === "false") ? (
+      (!customer_id || customer_id === "false") ? (
         <React.Fragment>
           {btnDevMode()}
           {btnLogIn()}

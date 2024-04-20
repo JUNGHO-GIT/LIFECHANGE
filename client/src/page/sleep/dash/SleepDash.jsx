@@ -1,11 +1,11 @@
 // SleepDash.jsx
 
 import React from "react";
-import {DashBarToday} from "./DashBarToday.jsx";
-import {DashLineWeek} from "./DashLineWeek.jsx";
-import {DashLineMonth} from "./DashLineMonth.jsx";
-import {DashAvgWeek} from "./DashAvgWeek.jsx";
-import {DashAvgMonth} from "./DashAvgMonth.jsx";
+import {SleepDashBarToday} from "./SleepDashBarToday.jsx";
+import {SleepDashLineWeek} from "./SleepDashLineWeek.jsx";
+import {SleepDashLineMonth} from "./SleepDashLineMonth.jsx";
+import {SleepDashAvgWeek} from "./SleepDashAvgWeek.jsx";
+import {SleepDashAvgMonth} from "./SleepDashAvgMonth.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDash = () => {
@@ -13,15 +13,15 @@ export const SleepDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {DashBarToday()}
+      {SleepDashBarToday()}
       <br />
-      {DashLineWeek()}
+      {SleepDashLineWeek()}
       <br />
-      {DashLineMonth()}
+      {SleepDashLineMonth()}
       <br />
-      {DashAvgWeek()}
+      {SleepDashAvgWeek()}
       <br />
-      {DashAvgMonth()}
+      {SleepDashAvgMonth()}
       <br />
     </React.Fragment>
   );

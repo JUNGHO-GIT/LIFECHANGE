@@ -9,7 +9,7 @@ export const router = express.Router();
 router.get("/search", async (req, res) => {
   try {
     let result = await service.search (
-      req.query.user_id,
+      req.query.customer_id,
       req.query.FILTER
     );
     if (result && result.result) {
@@ -41,7 +41,7 @@ router.get("/search", async (req, res) => {
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
-      req.query.user_id,
+      req.query.customer_id,
       req.query.duration,
       req.query.FILTER,
       req.query.PAGING
@@ -76,7 +76,7 @@ router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
       req.query._id,
-      req.query.user_id,
+      req.query.customer_id,
       req.query.duration
     );
     if (result && result.result) {
@@ -108,7 +108,7 @@ router.get("/detail", async (req, res) => {
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save(
-      req.body.user_id,
+      req.body.customer_id,
       req.body.OBJECT,
       req.body.duration
     );
@@ -143,7 +143,7 @@ router.delete("/delete", async (req, res) => {
     let result = await service.deletes(
       req.query._id,
       req.query.section_id,
-      req.query.user_id,
+      req.query.customer_id,
       req.query.duration
     );
     result = await middleware.save(result);

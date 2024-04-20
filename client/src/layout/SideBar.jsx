@@ -22,8 +22,8 @@ export const SideBar = ({ sidebar, onClose }) => {
       id: "",
       date: koreanDate,
       refresh: 0,
-      toLogin: "/user/login",
-      toSignup: "/user/signup",
+      toLogin: "/customer/login",
+      toSignup: "/customer/signup",
     }
   );
 

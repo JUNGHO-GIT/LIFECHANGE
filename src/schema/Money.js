@@ -5,7 +5,7 @@ import {incrementSeq} from "./Counter.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-  user_id: {
+  customer_id: {
     type: String,
     default: "",
     required: true

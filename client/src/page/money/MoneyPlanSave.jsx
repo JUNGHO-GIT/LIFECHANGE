@@ -15,7 +15,7 @@ export const MoneyPlanSave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
-  const user_id = window.sessionStorage.getItem("user_id");
+  const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -71,7 +71,7 @@ export const MoneyPlanSave = () => {
     const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         _id: "",
-        user_id: user_id,
+        customer_id: customer_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -81,12 +81,12 @@ export const MoneyPlanSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, DATE.startDt, DATE.endDt]);
+  })()}, [customer_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/plan/save`, {
-      user_id: user_id,
+      customer_id: customer_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });

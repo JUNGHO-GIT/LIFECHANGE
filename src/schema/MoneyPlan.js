@@ -1,11 +1,11 @@
 // MoneyPlan.js
 
 import mongoose from "mongoose";
-import {incrementSeq} from "./CounterPlan.js";
+import {incrementSeq} from "./Counter.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-  user_id: {
+  customer_id: {
     type: String,
     default: "",
     required: true

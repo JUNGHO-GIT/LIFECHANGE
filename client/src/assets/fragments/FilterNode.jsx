@@ -167,19 +167,19 @@ export const FilterNode = ({
     );
   };
 
-  // 4. work
-  const workNode = () => {
+  // 4. exercise
+  const exerciseNode = () => {
     const session = window.sessionStorage.getItem("dataset") || "";
-    const workArray = JSON.parse(session).work;
-    function selectPartWork () {
+    const exerciseArray = JSON.parse(session).exercise;
+    function selectPartExercise () {
       return (
         <React.Fragment>
-          <select className={"form-control me-5"} id={"part"} value={workArray[FILTER.partIdx].work_part} onChange={(e) => {
+          <select className={"form-control me-5"} id={"part"} value={exerciseArray[FILTER.partIdx].exercise_part} onChange={(e) => {
             const selectedOption = e.target.options[e.target.selectedIndex];
             const idxValue = selectedOption.getAttribute("data-idx");
             const newPartIndex = Number(idxValue);
             const newPartVal = String(e.target.value);
-            const newTitleVal = workArray[newPartIndex].work_title[0];
+            const newTitleVal = exerciseArray[newPartIndex].exercise_title[0];
             setFILTER((prev) => ({
               ...prev,
               partIdx: newPartIndex,
@@ -187,16 +187,16 @@ export const FilterNode = ({
               title: newTitleVal
             }));
           }}>
-            {workArray?.map((item, idx) => (
+            {exerciseArray?.map((item, idx) => (
               <option key={idx} data-idx={idx}>
-                {item.work_part}
+                {item.exercise_part}
               </option>
             ))}
           </select>
         </React.Fragment>
       );
     };
-    function selectTitleWork () {
+    function selectTitleExercise () {
       return (
         <React.Fragment>
           <select className={"form-control me-5"} id={"title"} value={FILTER.title}
@@ -206,7 +206,7 @@ export const FilterNode = ({
               title: e.target.value
             }));
           }}>
-            {workArray[FILTER.partIdx].work_title?.map((item, idx) => (
+            {exerciseArray[FILTER.partIdx].exercise_title?.map((item, idx) => (
               <option key={idx}>
                 {item}
               </option>
@@ -217,8 +217,8 @@ export const FilterNode = ({
     };
     return (
       <React.Fragment>
-        {selectPartWork()}
-        {selectTitleWork()}
+        {selectPartExercise()}
+        {selectTitleExercise()}
       </React.Fragment>
     );
   };
@@ -252,12 +252,12 @@ export const FilterNode = ({
         <ButtonGroup className={"d-inline-flex"}>
           {defaultNode()}
         </ButtonGroup>
-      ) : part === "work" && plan === "" ? (
+      ) : part === "exercise" && plan === "" ? (
         <ButtonGroup className={"d-inline-flex"}>
           {defaultNode()}
-          {workNode()}
+          {exerciseNode()}
         </ButtonGroup>
-      ) : part === "work" && plan === "plan" ? (
+      ) : part === "exercise" && plan === "plan" ? (
         <ButtonGroup className={"d-inline-flex"}>
           {defaultNode()}
         </ButtonGroup>

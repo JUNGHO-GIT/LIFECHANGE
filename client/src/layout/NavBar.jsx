@@ -5,6 +5,15 @@ import {useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
+// @ts-ignore
+import img1 from "../assets/images/1.png";
+// @ts-ignore
+import img2 from "../assets/images/2.png";
+// @ts-ignore
+import img3 from "../assets/images/3.png";
+// @ts-ignore
+import img4 from "../assets/images/4.png";
+
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {
 
@@ -22,13 +31,29 @@ export const NavBar = () => {
   }, [location.pathname]);
 
   let preFix;
-  let subFix = isActive.split("/")[1];
+  let subFix = isActive.split("/").pop();
 
   dataArray.forEach((menu) => {
     if (isActive.includes(menu.label.toLowerCase())) {
       preFix = menu.label;
     }
   });
+
+  // 3. function ---------------------------------------------------------------------------------->
+  const makeIcon = (label) => {
+    if (percent?.[`${label}`] < 2) {
+      return <img src={img1} className={"image"} alt="Icon 1" />;
+    }
+    else if (percent?.[`${label}`] < 3) {
+      return <img src={img2} className={"image"} alt="Icon 2" />;
+    }
+    else if (percent?.[`${label}`] < 4) {
+      return <img src={img3} className={"image"} alt="Icon 3" />;
+    }
+    else {
+      return <img src={img4} className={"image"} alt="Icon 4" />;
+    }
+  };
 
   // 4. node -------------------------------------------------------------------------------------->
   const buttonClear = () => {
@@ -50,23 +75,33 @@ export const NavBar = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
-              <Col xs={3} className={"d-left"}>
+              <Col xs={2} className={"d-left"}>
                 {!preFix ? (
                   <span className={"fs-30 fw-500 ps-30 pt-10"}>Home</span>
                 ) : (
                   <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
                 )}
               </Col>
-              <Col xs={6} className={"d-center"}>
-                Food : <span className={`${percent?.food?.color}`}>{percent?.food?.value}</span>
-                &nbsp;|&nbsp;
-                Money : <span className={`${percent?.money?.color}`}>{percent?.money?.value}</span>
-                &nbsp;|&nbsp;
-                Work : <span className={`${percent?.work?.color}`}>{percent?.work?.value}</span>
-                &nbsp;|&nbsp;
-                Sleep : <span className={`${percent?.sleep?.color}`}>{percent?.sleep?.value}</span>
+              <Col xs={8} className={"d-center"}>
+                <Row>
+                  <Col xs={4} className={"d-center"}>
+                    <span>Total </span> {makeIcon("total")}
+                  </Col>
+                  <Col xs={2} className={"d-center"}>
+                    <span>Food </span> {makeIcon("food")}
+                  </Col>
+                  <Col xs={2} className={"d-center"}>
+                    <span>Money </span> {makeIcon("money")}
+                  </Col>
+                  <Col xs={2} className={"d-center"}>
+                    <span>Sleep </span> {makeIcon("sleep")}
+                  </Col>
+                  <Col xs={2} className={"d-center"}>
+                    <span>Exercise </span> {makeIcon("exercise")}
+                  </Col>
+                </Row>
               </Col>
-              <Col xs={3} className={"d-right"}>
+              <Col xs={2} className={"d-right"}>
                 {buttonClear()}
               </Col>
             </Row>

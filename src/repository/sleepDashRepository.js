@@ -7,7 +7,7 @@ import {SleepPlan} from "../schema/SleepPlan.js";
 export const barToday = {
   findPlan: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
@@ -27,7 +27,7 @@ export const barToday = {
   },
   findReal: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
@@ -51,13 +51,13 @@ export const barToday = {
 export const lineWeek = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       sleep_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -76,13 +76,13 @@ export const lineWeek = {
 export const lineMonth = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       sleep_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -101,13 +101,13 @@ export const lineMonth = {
 export const avgWeek = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       sleep_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -126,13 +126,13 @@ export const avgWeek = {
 export const avgMonth = {
   find: async (
     _id_param,
-    user_id_param,
+    customer_id_param,
     startDt_param,
     endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
       _id: _id_param === "" ? {$exists:true} : _id_param,
-      user_id: user_id_param,
+      customer_id: customer_id_param,
       sleep_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,

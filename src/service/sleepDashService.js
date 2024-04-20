@@ -5,7 +5,7 @@ import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonth
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   const data = {
@@ -27,10 +27,10 @@ export const barToday = async (
 
   for (let key in data) {
     const findPlan = await repository.barToday.findPlan(
-      "", user_id_param, koreanDate, koreanDate
+      "", customer_id_param, koreanDate, koreanDate
     );
     const findReal = await repository.barToday.findReal(
-      "", user_id_param, koreanDate, koreanDate
+      "", customer_id_param, koreanDate, koreanDate
     );
 
     finalResult.push({
@@ -45,7 +45,7 @@ export const barToday = async (
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   const data = [
@@ -57,7 +57,7 @@ export const lineWeek = async (
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().add(i, "days");
     const findResult = await repository.lineWeek.find(
-      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+      "", customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResult.push({
@@ -73,7 +73,7 @@ export const lineWeek = async (
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   const data = [
@@ -87,7 +87,7 @@ export const lineMonth = async (
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
     const findResult = await repository.lineMonth.find(
-      "", user_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+      "", customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResult.push({
@@ -103,7 +103,7 @@ export const lineMonth = async (
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 export const avgWeek = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   let sumSleepStart = Array(5).fill(0);
@@ -126,7 +126,7 @@ export const avgWeek = async (
 
     if (weekNum >= 1 && weekNum <= 5) {
       const findResult = await repository.avgWeek.find(
-        "", user_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
+        "", customer_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
       if (findResult) {
@@ -152,7 +152,7 @@ export const avgWeek = async (
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = async (
-  user_id_param
+  customer_id_param
 ) => {
 
   let sumSleepStart = Array(12).fill(0);
@@ -174,7 +174,7 @@ export const avgMonth = async (
     const monthNum = month.month();
 
     const findResult = await repository.avgMonth.find(
-      "", user_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
+      "", customer_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 
     if (findResult) {

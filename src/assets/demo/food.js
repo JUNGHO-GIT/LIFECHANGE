@@ -95,7 +95,7 @@ for (let i = 1; i <= 100; i++) {
 
   const record = {
     _id: new ObjectId(),
-    user_id: "123",
+    customer_id: "123",
     food_number: i + 300,
     food_startDt: formatDate1(startDate),
     food_endDt: formatDate1(startDate),

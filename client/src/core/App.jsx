@@ -27,6 +27,19 @@ import {NavBar} from "../layout/NavBar.jsx";
 import {Footer} from "../layout/Footer";
 import {Empty} from "../layout/Empty.jsx";
 
+import {CustomerSignup} from "../page/customer/CustomerSignup.jsx";
+import {CustomerLogin} from "../page/customer/CustomerLogin.jsx";
+import {CustomerDataset} from "../page/customer/CustomerDataset.jsx";
+import {CustomerDash} from "../page/customer/dash/CustomerDash.jsx";
+
+import {ExercisePlanList} from "../page/exercise/ExercisePlanList.jsx";
+import {ExercisePlanDetail} from "../page/exercise/ExercisePlanDetail.jsx";
+import {ExercisePlanSave} from "../page/exercise/ExercisePlanSave.jsx";
+import {ExerciseDash} from "../page/exercise/dash/ExerciseDash.jsx";
+import {ExerciseList} from "../page/exercise/ExerciseList.jsx";
+import {ExerciseDetail} from "../page/exercise/ExerciseDetail.jsx";
+import {ExerciseSave} from "../page/exercise/ExerciseSave.jsx";
+
 import {FoodPlanList} from "../page/food/FoodPlanList.jsx";
 import {FoodPlanDetail} from "../page/food/FoodPlanDetail.jsx";
 import {FoodPlanSave} from "../page/food/FoodPlanSave.jsx";
@@ -52,28 +65,31 @@ import {SleepList} from "../page/sleep/SleepList.jsx";
 import {SleepDetail} from "../page/sleep/SleepDetail.jsx";
 import {SleepSave} from "../page/sleep/SleepSave.jsx";
 
-import {UserSignup} from "../page/user/UserSignup.jsx";
-import {UserLogin} from "../page/user/UserLogin.jsx";
-import {UserDataset} from "../page/user/UserDataset.jsx";
-import {UserDash} from "../page/user/dash/UserDash.jsx";
-
-import {WorkPlanList} from "../page/work/WorkPlanList.jsx";
-import {WorkPlanDetail} from "../page/work/WorkPlanDetail.jsx";
-import {WorkPlanSave} from "../page/work/WorkPlanSave.jsx";
-import {WorkDash} from "../page/work/dash/WorkDash.jsx";
-import {WorkList} from "../page/work/WorkList.jsx";
-import {WorkDetail} from "../page/work/WorkDetail.jsx";
-import {WorkSave} from "../page/work/WorkSave.jsx";
-
 // ------------------------------------------------------------------------------------------------>
-const User = () => {
+const Customer = () => {
   return (
     <React.Fragment>
       <Routes>
-        <Route path="/dash" element={<UserDash />} />
-        <Route path="/signup" element={<UserSignup />} />
-        <Route path="/login" element={<UserLogin />} />
-        <Route path="/dataset" element={<UserDataset />} />
+        <Route path="/dash" element={<CustomerDash />} />
+        <Route path="/signup" element={<CustomerSignup />} />
+        <Route path="/login" element={<CustomerLogin />} />
+        <Route path="/dataset" element={<CustomerDataset />} />
+      </Routes>
+    </React.Fragment>
+  );
+};
+// ------------------------------------------------------------------------------------------------>
+const Exercise = () => {
+  return (
+    <React.Fragment>
+      <Routes>
+        <Route path="/plan/list" element={<ExercisePlanList />} />
+        <Route path="/plan/detail" element={<ExercisePlanDetail />} />
+        <Route path="/plan/save" element={<ExercisePlanSave />} />
+        <Route path="/dash" element={<ExerciseDash />} />
+        <Route path="/list" element={<ExerciseList />} />
+        <Route path="/detail" element={<ExerciseDetail />} />
+        <Route path="/save" element={<ExerciseSave />} />
       </Routes>
     </React.Fragment>
   );
@@ -128,23 +144,6 @@ const Sleep = () => {
   );
 };
 // ------------------------------------------------------------------------------------------------>
-const Work = () => {
-  return (
-    <React.Fragment>
-      <Routes>
-        <Route path="/plan/list" element={<WorkPlanList />} />
-        <Route path="/plan/detail" element={<WorkPlanDetail />} />
-        <Route path="/plan/save" element={<WorkPlanSave />} />
-        <Route path="/dash" element={<WorkDash />} />
-        <Route path="/list" element={<WorkList />} />
-        <Route path="/detail" element={<WorkDetail />} />
-        <Route path="/save" element={<WorkSave />} />
-      </Routes>
-    </React.Fragment>
-  );
-};
-
-// ------------------------------------------------------------------------------------------------>
 export const App = () => {
   return (
     <React.Fragment>
@@ -157,8 +156,8 @@ export const App = () => {
             <Route path="/food/*" element={<Food />} />
             <Route path="/money/*" element={<Money />} />
             <Route path="/sleep/*" element={<Sleep />} />
-            <Route path="/user/*" element={<User />} />
-            <Route path="/work/*" element={<Work />} />
+            <Route path="/customer/*" element={<Customer />} />
+            <Route path="/exercise/*" element={<Exercise />} />
           </Routes>
           <Footer />
           <Empty />

@@ -89,8 +89,8 @@ export const compare = (
     }
   }
 
-  // 4. work
-  function workCompare (plan, real, extra) {
+  // 4. exercise
+  function exerciseCompare (plan, real, extra) {
     const abs = Math.abs(plan - real);
     if (real < plan) {
       return (<span className={"text-danger"}>{abs}</span>);
@@ -112,8 +112,8 @@ export const compare = (
   else if (part === "sleep") {
     return sleepCompare(plan, real, extra);
   }
-  else if (part === "work") {
-    return workCompare(plan, real, extra);
+  else if (part === "exercise") {
+    return exerciseCompare(plan, real, extra);
   }
 
 };

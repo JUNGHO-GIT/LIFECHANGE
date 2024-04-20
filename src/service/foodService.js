@@ -6,7 +6,7 @@ import * as repository from "../repository/foodRepository.js";
 
 // 1-0. search ------------------------------------------------------------------------------------>
 export const search = async (
-  user_id_param,
+  customer_id_param,
   FILTER_param
 ) => {
 
@@ -117,7 +117,7 @@ export const search = async (
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
-  user_id_param, duration_param, FILTER_param, PAGING_param
+  customer_id_param, duration_param, FILTER_param, PAGING_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
@@ -129,11 +129,11 @@ export const list = async (
   const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
   const totalCnt = await repository.totalCnt(
-    user_id_param, part, title, startDt, endDt
+    customer_id_param, part, title, startDt, endDt
   );
 
   const finalResult = await repository.list.find(
-    user_id_param, part, title, sort, limit, page, startDt, endDt
+    customer_id_param, part, title, sort, limit, page, startDt, endDt
   );
 
   return {
@@ -144,13 +144,13 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param, user_id_param, duration_param
+  _id_param, customer_id_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail (
-    _id_param, user_id_param, startDt, endDt
+    _id_param, customer_id_param, startDt, endDt
   );
 
   const sectionCnt = finalResult?.food_section.length || 0;
@@ -163,19 +163,19 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  user_id_param, OBJECT_param, duration_param
+  customer_id_param, OBJECT_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
-    "", user_id_param, startDt, endDt
+    "", customer_id_param, startDt, endDt
   );
 
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      user_id_param, OBJECT_param, startDt, endDt
+      customer_id_param, OBJECT_param, startDt, endDt
     );
   }
   else {
@@ -189,13 +189,13 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param, section_id_param, user_id_param, duration_param
+  _id_param, section_id_param, customer_id_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
   const findResult = await repository.deletes.detail(
-    _id_param, user_id_param, startDt, endDt
+    _id_param, customer_id_param, startDt, endDt
   );
 
   if (!findResult) {
@@ -203,14 +203,14 @@ export const deletes = async (
   }
   else {
     const updateResult = await repository.deletes.update(
-      _id_param, section_id_param, user_id_param, startDt, endDt
+      _id_param, section_id_param, customer_id_param, startDt, endDt
     );
     if (!updateResult) {
       return null;
     }
     else {
       const findAgain = await repository.deletes.detail(
-        _id_param, user_id_param, startDt, endDt
+        _id_param, customer_id_param, startDt, endDt
       );
       if (findAgain?.food_section.length === 0) {
         await repository.deletes.deletes(

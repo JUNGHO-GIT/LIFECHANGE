@@ -37,7 +37,7 @@ for (let i = 1; i <= 100; i++) {
 
   const record = {
     _id: new ObjectId(),
-    user_id: "123",
+    customer_id: "123",
     sleep_plan_number: i + 100,
     sleep_plan_startDt: formatDate1(startDate),
     sleep_plan_endDt: formatDate1(endDate),
