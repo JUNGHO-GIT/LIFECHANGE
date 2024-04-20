@@ -40,11 +40,11 @@ export const list = async (object) => {
 
   object?.result?.map((item) => {
     Object.assign((item), {
-      money_diff_in: compareCount(item.money_plan_in, item.money_total_in),
-      money_diff_out: compareCount(item.money_plan_out, item.money_total_out),
+      money_diff_in: compareCount(item?.money_plan_in, item?.money_total_in),
+      money_diff_out: compareCount(item?.money_plan_out, item?.money_total_out),
 
-      money_diff_in_color: makeColor(item.money_plan_in, item.money_total_in, "in"),
-      money_diff_out_color: makeColor(item.money_plan_out, item.money_total_out, "out"),
+      money_diff_in_color: makeColor(item?.money_plan_in, item?.money_total_in, "in"),
+      money_diff_out_color: makeColor(item?.money_plan_out, item?.money_total_out, "out"),
     });
   });
 
@@ -60,11 +60,11 @@ export const save = async (object) => {
   let totalOut = 0;
 
   object?.money_section?.map((item) => {
-    if (item.money_part_val === "수입") {
-      totalIn += item.money_amount;
+    if (item?.money_part_val === "수입") {
+      totalIn += item?.money_amount;
     }
-    else if (item.money_part_val === "지출") {
-      totalOut += item.money_amount;
+    else if (item?.money_part_val === "지출") {
+      totalOut += item?.money_amount;
     }
   });
 

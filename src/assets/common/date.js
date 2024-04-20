@@ -64,6 +64,7 @@ export const decimalToStr = (time) => {
 
 // 1-3. compare ----------------------------------------------------------------------------------->
 export const compareTime = (plan, real) => {
+
   const planDate = new Date(`1970-01-01T${plan}Z`);
   const realDate = new Date(`1970-01-01T${real}Z`);
 
@@ -81,7 +82,6 @@ export const compareTime = (plan, real) => {
 
   return diffTime;
 };
-
 export const compareCount = (plan, real) => {
   const diff = Math.abs(plan - real);
   return diff;

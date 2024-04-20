@@ -1,6 +1,6 @@
 // workMiddleware.js
 
-import {strToDecimal, decimalToStr, compareTime} from "../assets/common/date.js";
+import {strToDecimal, decimalToStr} from "../assets/common/date.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (object) => {
@@ -12,6 +12,21 @@ export const list = async (object) => {
   const compareCount = (plan, real) => {
     const diff = Math.abs(real - plan);
     return diff;
+  };
+
+  const compareTime = (plan, real) => {
+    const hoursPlan = parseInt(plan.split(":")[0], 10);
+    const minutesPlan = parseInt(plan.split(":")[1], 10);
+
+    const hoursReal = parseInt(real.split(":")[0], 10);
+    const minutesReal = parseInt(real.split(":")[1], 10);
+
+    const hours = Math.abs(hoursPlan - hoursReal);
+    const minutes = Math.abs(minutesPlan - minutesReal);
+
+    const diffTime = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+
+    return diffTime;
   };
 
   const makeColor = (plan, real, extra) => {
@@ -64,15 +79,15 @@ export const list = async (object) => {
 
   object?.result?.map((item) => {
     Object.assign((item), {
-      work_diff_count: compareCount(item.work_plan_count, item.work_total_count),
-      work_diff_volume: compareCount(item.work_plan_volume, item.work_total_volume),
-      work_diff_cardio: compareTime(item.work_plan_cardio, item.work_total_cardio),
-      work_diff_weight: compareCount(item.work_plan_weight, item.work_body_weight),
+      work_diff_count: compareCount(item?.work_plan_count, item?.work_total_count),
+      work_diff_volume: compareCount(item?.work_plan_volume, item?.work_total_volume),
+      work_diff_cardio: compareTime(item?.work_plan_cardio, item?.work_total_cardio),
+      work_diff_weight: compareCount(item?.work_plan_weight, item?.work_body_weight),
 
-      work_diff_count_color: makeColor(item.work_plan_count, item.work_total_count, ""),
-      work_diff_volume_color: makeColor(item.work_plan_volume, item.work_total_volume, "volume"),
-      work_diff_cardio_color: makeColor(item.work_plan_cardio, item.work_total_cardio, "time"),
-      work_diff_weight_color: makeColor(item.work_plan_weight, item.work_body_weight, ""),
+      work_diff_count_color: makeColor(item?.work_plan_count, item?.work_total_count, ""),
+      work_diff_volume_color: makeColor(item?.work_plan_volume, item?.work_total_volume, "volume"),
+      work_diff_cardio_color: makeColor(item?.work_plan_cardio, item?.work_total_cardio, "time"),
+      work_diff_weight_color: makeColor(item?.work_plan_weight, item?.work_body_weight, ""),
     });
   });
 
@@ -88,12 +103,12 @@ export const save = async (object) => {
   let totalTime = 0.0;
 
   object?.work_section?.map((item) => {
-    totalVolume += item.work_set * item.work_rep * item.work_kg;
-    totalTime += strToDecimal(item.work_cardio);
+    totalVolume += item?.work_set * item?.work_rep * item?.work_kg;
+    totalTime += strToDecimal(item?.work_cardio);
   });
 
   object.work_total_volume = totalVolume;
-  object.work_total_time = decimalToStr(totalTime);
+  object.work_total_cardio = decimalToStr(totalTime);
 
   return object;
 };

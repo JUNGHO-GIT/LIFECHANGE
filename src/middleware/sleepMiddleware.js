@@ -39,13 +39,13 @@ export const list = async (object) => {
   object?.result?.map((item) => {
 
     Object.assign((item), {
-      sleep_diff_night: compareTime(item.sleep_plan_night, item.sleep_night),
-      sleep_diff_morning: compareTime(item.sleep_plan_morning, item.sleep_morning),
-      sleep_diff_time: compareTime(item.sleep_plan_time, item.sleep_time),
+      sleep_diff_night: compareTime(item?.sleep_plan_night, item?.sleep_night),
+      sleep_diff_morning: compareTime(item?.sleep_plan_morning, item?.sleep_morning),
+      sleep_diff_time: compareTime(item?.sleep_plan_time, item?.sleep_time),
 
-      sleep_diff_night_color: makeColor(item.sleep_plan_night, item.sleep_night, ""),
-      sleep_diff_morning_color: makeColor(item.sleep_plan_morning, item.sleep_morning, ""),
-      sleep_diff_time_color: makeColor(item.sleep_plan_time, item.sleep_time, ""),
+      sleep_diff_night_color: makeColor(item?.sleep_plan_night, item?.sleep_night, ""),
+      sleep_diff_morning_color: makeColor(item?.sleep_plan_morning, item?.sleep_morning, ""),
+      sleep_diff_time_color: makeColor(item?.sleep_plan_time, item?.sleep_time, ""),
     });
   });
 

@@ -34,15 +34,15 @@ export const list = async (object) => {
 
   object?.result?.map((item) => {
     Object.assign((item), {
-      food_diff_kcal: compareCount(item.food_plan_kcal, item.food_total_kcal),
-      food_diff_carb: compareCount(item.food_plan_carb, item.food_total_carb),
-      food_diff_protein: compareCount(item.food_plan_protein, item.food_total_protein),
-      food_diff_fat: compareCount(item.food_plan_fat, item.food_total_fat),
+      food_diff_kcal: compareCount(item?.food_plan_kcal, item?.food_total_kcal),
+      food_diff_carb: compareCount(item?.food_plan_carb, item?.food_total_carb),
+      food_diff_protein: compareCount(item?.food_plan_protein, item?.food_total_protein),
+      food_diff_fat: compareCount(item?.food_plan_fat, item?.food_total_fat),
 
-      food_diff_kcal_color: makeColor(item.food_plan_kcal, item.food_total_kcal, ""),
-      food_diff_carb_color: makeColor(item.food_plan_carb, item.food_total_carb, ""),
-      food_diff_protein_color: makeColor(item.food_plan_protein, item.food_total_protein, ""),
-      food_diff_fat_color: makeColor(item.food_plan_fat, item.food_total_fat, ""),
+      food_diff_kcal_color: makeColor(item?.food_plan_kcal, item?.food_total_kcal, ""),
+      food_diff_carb_color: makeColor(item?.food_plan_carb, item?.food_total_carb, ""),
+      food_diff_protein_color: makeColor(item?.food_plan_protein, item?.food_total_protein, ""),
+      food_diff_fat_color: makeColor(item?.food_plan_fat, item?.food_total_fat, ""),
     });
   });
 
@@ -60,10 +60,10 @@ export const save = async (object) => {
   let totalFat = 0;
 
   object?.food_section?.map((item) => {
-    totalKcal += item.food_kcal;
-    totalCarb += item.food_carb;
-    totalProtein += item.food_protein;
-    totalFat += item.food_fat;
+    totalKcal += item?.food_kcal;
+    totalCarb += item?.food_carb;
+    totalProtein += item?.food_protein;
+    totalFat += item?.food_fat;
   });
 
   object.food_total_kcal = totalKcal;

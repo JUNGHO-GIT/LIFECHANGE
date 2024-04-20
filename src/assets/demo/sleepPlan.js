@@ -33,7 +33,7 @@ for (let i = 1; i <= 100; i++) {
   const startDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
   const endDate = new Date(startDate.getTime() + Math.random() * 36000000);
   const regDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
-  const updateDate = new Date(regDate.getTime() + Math.random() * 36000000);
+  const updateDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
 
   const record = {
     _id: new ObjectId(),

@@ -1,4 +1,4 @@
-{
+/n/n first : {
   "food": {
     "plan": [
       {
@@ -16,67 +16,258 @@
         "__v": 0
       }
     ],
-    "real": [
-      {
-        "_id": "662194bb153afa1556c03fb3",
-        "food_startDt": "2024-04-19",
-        "food_endDt": "2024-04-20",
-        "food_total_kcal": 3397,
-        "food_total_carb": 44,
-        "food_total_protein": 40,
-        "food_total_fat": 27
-      }
-    ]
+    "real": []
   },
   "money": {
     "plan": [],
     "real": [
       {
-        "_id": "662196094ed1491f3bd179b2",
-        "money_startDt": "2024-04-19",
-        "money_endDt": "2024-04-20",
-        "money_total_in": 80000,
-        "money_total_out": 22092
-      },
-      {
-        "_id": "662196094ed1491f3bd17a02",
+        "_id": "6623b9f3cdb218890f043a4a",
         "money_startDt": "2024-04-20",
         "money_endDt": "2024-04-20",
-        "money_total_in": 37491,
-        "money_total_out": 29258
+        "money_total_in": 29152,
+        "money_total_out": 21074
+      },
+      {
+        "_id": "6623b9f3cdb218890f043a5e",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 65598,
+        "money_total_out": 10893
+      },
+      {
+        "_id": "6623b9f3cdb218890f043a62",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 47087,
+        "money_total_out": 96880
+      },
+      {
+        "_id": "6623b9f3cdb218890f043ad1",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 19067,
+        "money_total_out": 80851
       }
     ]
   },
   "sleep": {
     "plan": [],
-    "real": []
+    "real": [
+      {
+        "_id": "6623b9f95694e3c0b730a305",
+        "sleep_startDt": "2024-04-20",
+        "sleep_endDt": "2024-04-20",
+        "sleep_night": "19:17",
+        "sleep_morning": "05:46",
+        "sleep_time": "02:04"
+      }
+    ]
   },
   "work": {
+    "plan": [
+      {
+        "_id": "6623b481fb0b176c302f9cff",
+        "user_id": "123",
+        "work_plan_number": 201,
+        "work_plan_startDt": "2024-04-20",
+        "work_plan_endDt": "2024-04-20",
+        "work_plan_count": 222,
+        "work_plan_volume": 22,
+        "work_plan_cardio": "22:22",
+        "work_plan_weight": 22,
+        "work_plan_regDt": "2024-04-20 / 21:26:22",
+        "work_plan_updateDt": "2024-04-20 / 21:32:31",
+        "__v": 0
+      }
+    ],
+    "real": [
+      {
+        "_id": "6623b9fec4313a0aef94bd66",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 3794,
+        "work_total_cardio": "00:11",
+        "work_body_weight": 97
+      },
+      {
+        "_id": "6623b9fec4313a0aef94bdf0",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 5993,
+        "work_total_cardio": "16:35",
+        "work_body_weight": 81
+      },
+      {
+        "_id": "6623b9fec4313a0aef94bdf4",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 3527,
+        "work_total_cardio": "18:06",
+        "work_body_weight": 33
+      },
+      {
+        "_id": "6623b9fec4313a0aef94be65",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 7885,
+        "work_total_cardio": "15:45",
+        "work_body_weight": 43
+      },
+      {
+        "_id": "6623b9fec4313a0aef94be72",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 8703,
+        "work_total_cardio": "06:49",
+        "work_body_weight": 57
+      },
+      {
+        "_id": "6623b9fec4313a0aef94be7d",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 8218,
+        "work_total_cardio": "19:21",
+        "work_body_weight": 50
+      }
+    ]
+  }
+}
+/n/n second : {
+  "food": {
+    "plan": [
+      {
+        "_id": "662388350ad0a618509c39d0",
+        "user_id": "123",
+        "food_plan_number": 201,
+        "food_plan_startDt": "2024-04-20",
+        "food_plan_endDt": "2024-04-20",
+        "food_plan_kcal": 222,
+        "food_plan_carb": 222,
+        "food_plan_protein": 222,
+        "food_plan_fat": 222,
+        "food_plan_regDt": "2024-04-20 / 18:16:36",
+        "food_plan_updateDt": "2024-04-20 / 18:30:08",
+        "__v": 0,
+        "food_percent_kcal": null,
+        "food_percent_carb": null,
+        "food_percent_protein": null,
+        "food_percent_fat": null
+      }
+    ],
+    "real": []
+  },
+  "money": {
     "plan": [],
     "real": [
       {
-        "_id": "6623a54d2896e743ecaa4c28",
-        "work_startDt": "2024-04-20",
-        "work_endDt": "2024-04-20",
-        "work_total_volume": 55,
-        "work_total_cardio": "10:42",
-        "work_body_weight": 34
+        "_id": "6623b9f3cdb218890f043a4a",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 29152,
+        "money_total_out": 21074
       },
       {
-        "_id": "6623a54d2896e743ecaa4c37",
-        "work_startDt": "2024-04-20",
-        "work_endDt": "2024-04-20",
-        "work_total_volume": 397,
-        "work_total_cardio": "20:16",
-        "work_body_weight": 21
+        "_id": "6623b9f3cdb218890f043a5e",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 65598,
+        "money_total_out": 10893
       },
       {
-        "_id": "6623a54d2896e743ecaa4c3a",
+        "_id": "6623b9f3cdb218890f043a62",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 47087,
+        "money_total_out": 96880
+      },
+      {
+        "_id": "6623b9f3cdb218890f043ad1",
+        "money_startDt": "2024-04-20",
+        "money_endDt": "2024-04-20",
+        "money_total_in": 19067,
+        "money_total_out": 80851
+      }
+    ]
+  },
+  "sleep": {
+    "plan": [],
+    "real": [
+      {
+        "_id": "6623b9f95694e3c0b730a305",
+        "sleep_startDt": "2024-04-20",
+        "sleep_endDt": "2024-04-20",
+        "sleep_night": "19:17",
+        "sleep_morning": "05:46",
+        "sleep_time": "02:04"
+      }
+    ]
+  },
+  "work": {
+    "plan": [
+      {
+        "_id": "6623b481fb0b176c302f9cff",
+        "user_id": "123",
+        "work_plan_number": 201,
+        "work_plan_startDt": "2024-04-20",
+        "work_plan_endDt": "2024-04-20",
+        "work_plan_count": 222,
+        "work_plan_volume": 22,
+        "work_plan_cardio": "22:22",
+        "work_plan_weight": 22,
+        "work_plan_regDt": "2024-04-20 / 21:26:22",
+        "work_plan_updateDt": "2024-04-20 / 21:32:31",
+        "__v": 0
+      }
+    ],
+    "real": [
+      {
+        "_id": "6623b9fec4313a0aef94bd66",
         "work_startDt": "2024-04-20",
         "work_endDt": "2024-04-20",
-        "work_total_volume": 7934,
-        "work_total_cardio": "05:34",
-        "work_body_weight": 63
+        "work_total_volume": 3794,
+        "work_total_cardio": "00:11",
+        "work_body_weight": 97
+      },
+      {
+        "_id": "6623b9fec4313a0aef94bdf0",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 5993,
+        "work_total_cardio": "16:35",
+        "work_body_weight": 81
+      },
+      {
+        "_id": "6623b9fec4313a0aef94bdf4",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 3527,
+        "work_total_cardio": "18:06",
+        "work_body_weight": 33
+      },
+      {
+        "_id": "6623b9fec4313a0aef94be65",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 7885,
+        "work_total_cardio": "15:45",
+        "work_body_weight": 43
+      },
+      {
+        "_id": "6623b9fec4313a0aef94be72",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 8703,
+        "work_total_cardio": "06:49",
+        "work_body_weight": 57
+      },
+      {
+        "_id": "6623b9fec4313a0aef94be7d",
+        "work_startDt": "2024-04-20",
+        "work_endDt": "2024-04-20",
+        "work_total_volume": 8218,
+        "work_total_cardio": "19:21",
+        "work_body_weight": 50
       }
     ]
   }

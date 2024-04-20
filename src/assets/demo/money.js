@@ -3,6 +3,31 @@
 
 // The current database to use.
 use('test');
+
+// array ----------------------------------------------------------------------------------------->
+const moneyArray = [
+  // 0
+  {
+    money_part: "전체",
+    money_title: [
+      "전체"
+    ]
+  },
+  {
+    money_part: "수입",
+    money_title: [
+      "전체", "근로", "금융", "기타",
+    ]
+  },
+  {
+    money_part: "지출",
+    money_title: [
+      "전체", "식비", "문화", "주거", "건강", "교통", "유흥", "품위", "저축", "금융", "기타",
+    ]
+  }
+];
+
+// function --------------------------------------------------------------------------------------->
 const randomNumber = (data) => {
   return Math.floor(Math.random() * data);
 }
@@ -26,35 +51,13 @@ const calcDate = (startTime, endTime) => {
   const duration = new Date(end - start + 24 * 60 * 60 * 1000);
   return `${duration.getHours().toString().padStart(2, '0')}:${duration.getMinutes().toString().padStart(2, '0')}`;
 }
-const moneyArray = [
-  // 0
-  {
-    money_part: "전체",
-    money_title: [
-      "전체"
-    ]
-  },
-  {
-    money_part: "수입",
-    money_title: [
-      "전체", "근로", "금융", "기타",
-    ]
-  },
-  {
-    money_part: "지출",
-    money_title: [
-      "전체", "식비", "문화", "주거", "건강", "교통", "유흥", "품위", "저축", "금융", "기타",
-    ]
-  }
-];
 
 // result ----------------------------------------------------------------------------------------->
 let demoData = [];
 for (let i = 1; i <= 100; i++) {
   const startDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
-  const endDate = new Date(startDate.getTime() + Math.random() * 36000000);
   const regDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
-  const updateDate = new Date(regDate.getTime() + Math.random() * 36000000);
+  const updateDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
 
   const partIndex = randomNumber(moneyArray.length - 1) + 1;
   const part = moneyArray[partIndex];
@@ -80,13 +83,10 @@ for (let i = 1; i <= 100; i++) {
     user_id: "123",
     money_number: i + 200,
     money_startDt: formatDate1(startDate),
-    money_endDt: formatDate1(endDate),
-
+    money_endDt: formatDate1(startDate),
     money_total_in: randomNumber(100000),
     money_total_out: randomNumber(100000),
-
     money_section: sections,
-
     money_regDt: formatDate2(regDate),
     money_updateDt: formatDate2(updateDate),
   };
