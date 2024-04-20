@@ -1,28 +1,28 @@
-// DashLineWeek.jsx
+// DashAvgMonth.tsx
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {Line, LineChart} from "recharts";
+import {BarChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const DashLineWeek = () => {
+export const DashAvgMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_USER;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:LINE, set:setLINE} = useStorage(
-    `LINE (line-month) (${PATH})`, "볼륨"
+    `LINE (avg-month) (${PATH})`, "볼륨"
   );
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_VOLUME_DEFAULT = [
     {name:"", 볼륨: 0},
   ];
@@ -34,19 +34,19 @@ export const DashLineWeek = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/dash/avg/week`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_VOLUME(response.data.result.volume || OBJECT_VOLUME_DEFAULT);
-    setOBJECT_CARDIO(response.data.result.cardio || OBJECT_CARDIO_DEFAULT);
+    setOBJECT_VOLUME(response.data.result.volume);
+    setOBJECT_CARDIO(response.data.result.cardio);
   })()}, [user_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
   const handlerCalcY = (value) => {
     const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item?.볼륨, item?.시간)));
+    const maxValue = Math.max(...value?.map((item) => Math.max(item?.횟수, item?.볼륨, item?.시간)));
     let topValue = Math.ceil(maxValue / 100) * 100;
 
     // topValue에 따른 동적 틱 간격 설정
@@ -60,14 +60,8 @@ export const DashLineWeek = () => {
     else if (topValue > 500) {
       tickInterval = 500;
     }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
-    }
-    else if (topValue > 5000) {
-      tickInterval = 5000;
-    }
-    else if (topValue > 10000) {
-      tickInterval = 10000;
+    else if (topValue > 100) {
+      tickInterval = 100;
     }
     for (let i = 0; i <= topValue; i += tickInterval) {
       ticks.push(i);
@@ -79,13 +73,14 @@ export const DashLineWeek = () => {
     };
   };
 
-  // 5-1. chart ----------------------------------------------------------------------------------->
+  // 5-3. chart ----------------------------------------------------------------------------------->
   const chartNodeVolume = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_VOLUME);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_VOLUME} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <BarChart data={OBJECT_VOLUME} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -103,8 +98,14 @@ export const DashLineWeek = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-            strokeWidth={2}></Line>
+            <Bar dataKey={"볼륨"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
+              onMouseEnter={(data, index) => {
+                data.payload.opacity = 0.5;
+              }}
+              onMouseLeave={(data, index) => {
+                data.payload.opacity = 1.0;
+              }}>
+            </Bar>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -123,19 +124,20 @@ export const DashLineWeek = () => {
               wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
               iconType={"circle"}
             ></Legend>
-          </LineChart>
+          </BarChart>
         </ResponsiveContainer>
       </React.Fragment>
     );
   };
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
+  // 5-4. chart ----------------------------------------------------------------------------------->
   const chartNodeCardio = () => {
     const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_CARDIO);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_CARDIO} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <BarChart data={OBJECT_CARDIO} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -153,8 +155,14 @@ export const DashLineWeek = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-            strokeWidth={2}></Line>
+            <Bar dataKey={"시간"} fill={"#82ca9d"} radius={[10, 10, 0, 0]} minPointSize={1}
+              onMouseEnter={(data, index) => {
+                data.payload.opacity = 0.5;
+              }}
+              onMouseLeave={(data, index) => {
+                data.payload.opacity = 1.0;
+              }}>
+            </Bar>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -173,7 +181,7 @@ export const DashLineWeek = () => {
               wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
               iconType={"circle"}
             ></Legend>
-          </LineChart>
+          </BarChart>
         </ResponsiveContainer>
       </React.Fragment>
     );
@@ -203,12 +211,12 @@ export const DashLineWeek = () => {
           <Container>
             <Row className={"d-center"}>
               <Col xs={9}>
-                <span className={"fs-20"}>주간 총볼륨 / 유산소시간</span>
+                <span className={"fs-20"}>월간 볼륨 / 유산소시간 평균</span>
                 {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
               <Col xs={3}>
                 {tableNode()}
-            </Col>
+              </Col>
             </Row>
           </Container>
         </Card>

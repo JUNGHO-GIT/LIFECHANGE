@@ -55,6 +55,7 @@ import {SleepSave} from "../page/sleep/SleepSave.jsx";
 import {UserSignup} from "../page/user/UserSignup.jsx";
 import {UserLogin} from "../page/user/UserLogin.jsx";
 import {UserDataset} from "../page/user/UserDataset.jsx";
+import {UserDash} from "../page/user/dash/UserDash.jsx";
 
 import {WorkPlanList} from "../page/work/WorkPlanList.jsx";
 import {WorkPlanDetail} from "../page/work/WorkPlanDetail.jsx";
@@ -65,11 +66,14 @@ import {WorkDetail} from "../page/work/WorkDetail.jsx";
 import {WorkSave} from "../page/work/WorkSave.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-const Common = () => {
+const User = () => {
   return (
     <React.Fragment>
       <Routes>
-        {/* <Route path="/" element={<Dash />} /> */}
+        <Route path="/dash" element={<UserDash />} />
+        <Route path="/signup" element={<UserSignup />} />
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/dataset" element={<UserDataset />} />
       </Routes>
     </React.Fragment>
   );
@@ -124,18 +128,6 @@ const Sleep = () => {
   );
 };
 // ------------------------------------------------------------------------------------------------>
-const User = () => {
-  return (
-    <React.Fragment>
-      <Routes>
-        <Route path="/signup" element={<UserSignup />} />
-        <Route path="/login" element={<UserLogin />} />
-        <Route path="/dataset" element={<UserDataset />} />
-      </Routes>
-    </React.Fragment>
-  );
-};
-// ------------------------------------------------------------------------------------------------>
 const Work = () => {
   return (
     <React.Fragment>
@@ -162,7 +154,6 @@ export const App = () => {
           <Header />
           <NavBar />
           <Routes>
-            <Route path="/*" element={<Common />} />
             <Route path="/food/*" element={<Food />} />
             <Route path="/money/*" element={<Money />} />
             <Route path="/sleep/*" element={<Sleep />} />

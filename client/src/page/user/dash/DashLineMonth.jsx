@@ -1,4 +1,4 @@
-// DashLineWeek.jsx
+// DashLineMonth.jsx
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
@@ -9,10 +9,10 @@ import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const DashLineWeek = () => {
+export const DashLineMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
+  const URL_OBJECT = process.env.REACT_APP_URL_USER;
   const location = useLocation();
   const user_id = window.sessionStorage.getItem("user_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -34,7 +34,7 @@ export const DashLineWeek = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/dash/avg/week`, {
+    const response = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
@@ -203,12 +203,12 @@ export const DashLineWeek = () => {
           <Container>
             <Row className={"d-center"}>
               <Col xs={9}>
-                <span className={"fs-20"}>주간 총볼륨 / 유산소시간</span>
+                <span className={"fs-20"}>월간 총볼륨 / 유산소시간</span>
                 {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
               <Col xs={3}>
                 {tableNode()}
-            </Col>
+              </Col>
             </Row>
           </Container>
         </Card>

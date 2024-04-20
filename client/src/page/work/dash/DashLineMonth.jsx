@@ -19,7 +19,7 @@ export const DashLineMonth = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:LINE, set:setLINE} = useStorage(
-    `LINE (line-month) (${PATH})`, ["볼륨", "시간"]
+    `LINE (line-month) (${PATH})`, "볼륨"
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->

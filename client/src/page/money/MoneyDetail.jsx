@@ -171,7 +171,7 @@ export const MoneyDetail = () => {
   const buttonNode = () => {
     return (
         <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} flowSave={""} navParam={navParam}
+        SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} flowSave={""} navParam={navParam}
         part={"money"} plan={""} type={"detail"}
       />
     );

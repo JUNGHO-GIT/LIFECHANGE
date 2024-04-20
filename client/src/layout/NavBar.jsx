@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
-import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
+import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {
@@ -50,7 +50,11 @@ export const NavBar = () => {
           <Container fluid className={"p-0"}>
             <Row>
               <Col xs={6} className={"d-left"}>
-                <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
+                {!preFix ? (
+                  <span className={"fs-30 fw-500 ps-30 pt-10"}>Home</span>
+                ) : (
+                  <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
+                )}
               </Col>
               <Col xs={6} className={"d-right"}>
                 {buttonClear()}

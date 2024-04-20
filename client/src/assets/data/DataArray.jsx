@@ -1,15 +1,9 @@
 // 1. dataArray ---------------------------------------------------------------------------------->
 export const dataArray = [
   {
-    label: "Main",
-    items: [
-      {to: "/", label: "Home"},
-      {to: "/test", label: "Test"},
-    ]
-  },
-  {
     label: "User",
     items: [
+      {to: "/user/dash", label: "UserDash"},
       {to: "/user/dataset", label: "UserDataset"},
     ]
   },

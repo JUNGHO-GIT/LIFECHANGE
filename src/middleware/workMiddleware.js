@@ -72,10 +72,10 @@ export const list = async (object) => {
       work_diff_cardio: compareTime(item.work_plan_cardio, item.work_total_cardio),
       work_diff_weight: compareCount(item.work_plan_weight, item.work_body_weight),
 
-      work_diff_count_color: makeColor(item.work_plan_count, item.work_total_count),
+      work_diff_count_color: makeColor(item.work_plan_count, item.work_total_count, ""),
       work_diff_volume_color: makeColor(item.work_plan_volume, item.work_total_volume, "volume"),
-      work_diff_cardio_color: makeColor(item.work_plan_cardio, item.work_total_cardio),
-      work_diff_weight_color: makeColor(item.work_plan_weight, item.work_body_weight),
+      work_diff_cardio_color: makeColor(item.work_plan_cardio, item.work_total_cardio, "time"),
+      work_diff_weight_color: makeColor(item.work_plan_weight, item.work_body_weight, ""),
     });
   });
 

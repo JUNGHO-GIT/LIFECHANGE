@@ -6,7 +6,8 @@ import {Button} from "react-bootstrap";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  CALENDAR, setCALENDAR, DATE, setDATE, SEND, flowSave, navParam, part, plan, type
+  CALENDAR, setCALENDAR, DATE, setDATE, SEND, FILTER, setFILTER, flowSave, navParam,
+  part, plan, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -34,6 +35,10 @@ export const ButtonNode = ({
       <React.Fragment>
         <Button size={"sm"} variant={"success"} className={"button me-5"} type={"button"}
           onClick={() => {
+            setFILTER((prev) => ({
+              ...prev,
+              type: "day",
+            }));
             setDATE((prev) => ({
               ...prev,
               startDt: koreanDate,
