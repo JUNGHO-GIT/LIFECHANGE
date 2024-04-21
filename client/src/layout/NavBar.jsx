@@ -88,6 +88,9 @@ export const NavBar = () => {
                     <span>Total </span> {makeIcon("total")}
                   </Col>
                   <Col xs={2} className={"d-center"}>
+                    <span>Exercise </span> {makeIcon("exercise")}
+                  </Col>
+                  <Col xs={2} className={"d-center"}>
                     <span>Food </span> {makeIcon("food")}
                   </Col>
                   <Col xs={2} className={"d-center"}>
@@ -95,9 +98,6 @@ export const NavBar = () => {
                   </Col>
                   <Col xs={2} className={"d-center"}>
                     <span>Sleep </span> {makeIcon("sleep")}
-                  </Col>
-                  <Col xs={2} className={"d-center"}>
-                    <span>Exercise </span> {makeIcon("exercise")}
                   </Col>
                 </Row>
               </Col>

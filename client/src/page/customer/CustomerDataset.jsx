@@ -95,31 +95,7 @@ export const CustomerDataset = () => {
     }
   };
 
-  // 4. handler ----------------------------------------------------------------------------------->
-  const handlerSetDefault = () => {
-    const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
-    let defaultArray = [];
-    if (dataType === "exercise") {
-      defaultArray = exerciseArray;
-    }
-    else if (dataType === "food") {
-      defaultArray = foodArray;
-    }
-    else if (dataType === "money") {
-      defaultArray = moneyArray;
-    }
-
-    if (confirm) {
-      setOBJECT((prev) => ({
-        ...prev,
-        customer_dataset: {
-          ...prev.customer_dataset,
-          [dataType]: defaultArray
-        }
-      }));
-    }
-  };
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode1 = () => {
@@ -240,9 +216,9 @@ export const CustomerDataset = () => {
               </tr>
             ))}
             <tr>
-              <td>
-                <div className={"pointer btn btn-outline-primary"} onClick={addPart}>
-                  Add Part
+              <td colSpan={3} className={"d-inline-flex"}>
+                <div className={"pointer btn btn-outline-primary button"}  onClick={addPart}>
+                  추가
                 </div>
               </td>
             </tr>
@@ -354,14 +330,50 @@ export const CustomerDataset = () => {
               </tr>
             ))}
             <tr>
-              <td colSpan={3}>
-                <div className={"pointer btn btn-outline-primary"} onClick={addTitle}>
-                  Add Title
+              <td colSpan={3} className={"d-inline-flex"}>
+                <div className={"pointer btn btn-outline-primary button"} onClick={addTitle}>
+                  추가
                 </div>
               </td>
             </tr>
           </tbody>
         </Table>
+      </React.Fragment>
+    );
+  };
+
+  // 4. button ------------------------------------------------------------------------------------>
+  const buttonDefault = () => {
+    function confirmDefault() {
+      const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
+
+      let defaultArray = [];
+      if (dataType === "exercise") {
+        defaultArray = exerciseArray;
+      }
+      else if (dataType === "food") {
+        defaultArray = foodArray;
+      }
+      else if (dataType === "money") {
+        defaultArray = moneyArray;
+      }
+
+      if (confirm) {
+        setOBJECT((prev) => ({
+          ...prev,
+          customer_dataset: {
+            ...prev.customer_dataset,
+            [dataType]: defaultArray
+          }
+        }));
+      }
+    }
+    return (
+      <React.Fragment>
+        <Button variant={"outline-primary"} size={"sm"} className={"button me-5"}
+        onClick={confirmDefault}>
+          기본값
+        </Button>
       </React.Fragment>
     );
   };
@@ -396,6 +408,7 @@ export const CustomerDataset = () => {
                 {dataType !== "food" && tableNode3()}
               </Col>
               <Col xs={12} className={"mb-20 text-center"}>
+                <span className={"me-5 d-inline-flex"}>{buttonDefault()}</span>
                 {buttonNode()}
               </Col>
             </Row>
