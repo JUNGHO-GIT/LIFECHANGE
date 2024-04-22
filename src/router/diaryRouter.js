@@ -10,6 +10,7 @@ router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.customer_id,
+      req.query.category,
       req.query.duration
     );
     if (result && result.result) {
@@ -76,6 +77,7 @@ router.post("/save", async (req, res) => {
   try {
     let result = await service.save(
       req.body.customer_id,
+      req.body.category,
       req.body.OBJECT,
       req.body.duration
     );
@@ -110,6 +112,7 @@ router.delete("/delete", async (req, res) => {
     let result = await service.deletes(
       req.query._id,
       req.query.customer_id,
+      req.query.category,
       req.query.section_id,
       req.query.duration
     );

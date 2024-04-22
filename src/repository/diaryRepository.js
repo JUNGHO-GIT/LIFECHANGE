@@ -6,15 +6,18 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  customer_id_param, startDt_param, endDt_param
+  customer_id_param, category_param, startDt_param, endDt_param
 ) => {
 
   const finalResult = await Diary.countDocuments({
     customer_id: customer_id_param,
+    diary_category: category_param,
     diary_startDt: {
       $gte: startDt_param,
+      $lte: endDt_param,
     },
     diary_endDt: {
+      $gte: startDt_param,
       $lte: endDt_param,
     },
   });
@@ -91,11 +94,12 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    _id_param, customer_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, category_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
+      diary_category: category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -147,11 +151,12 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    _id_param, customer_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, category_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
+      diary_category: category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -166,11 +171,12 @@ export const deletes = {
   },
 
   update: async (
-    _id_param, section_id_param, customer_id_param, startDt_param, endDt_param,
+    _id_param, section_id_param, customer_id_param, category_param, startDt_param, endDt_param,
   ) => {
     const updateResult = await Diary.updateOne(
       {_id: _id_param,
         customer_id: customer_id_param,
+        diary_category: category_param,
         diary_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,

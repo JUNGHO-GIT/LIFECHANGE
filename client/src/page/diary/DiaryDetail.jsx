@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import InputMask from "react-input-mask";
+import Draggable from "react-draggable";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -19,6 +20,8 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -34,8 +37,8 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: startDt,
-      endDt: endDt
+      startDt: location_startDt,
+      endDt: location_endDt
     }
   );
 
@@ -77,13 +80,16 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
       customer_id: customer_id,
+      category: popupNumber,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
     if (response.data.status === "success") {
       alert(response.data.msg);
-      navParam(SEND.toList);
+      navParam(SEND.toList, {
+        state: SEND
+      });
     }
     else {
       alert(response.data.msg);
@@ -94,67 +100,70 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
   const popupNode = () => {
     return (
       <React.Fragment>
-        <div className={`popup ${isOpen ? "" : "d-none"}`}>
-          <span className={"d-right fw-700 x-button"} onClick={() => (
-            setIsOpen(false),
-            setPopupNumber(0)
-          )}>
-            X
-          </span>
-          <div className={"form-group mt-20"}>
-            {startDt} ~ {endDt}
+        <Draggable>
+          <div className={`popup ${isOpen ? "" : "d-none"}`}>
+            <span className={"d-right fw-700 x-button"} onClick={() => (
+              setIsOpen(false),
+              setPopupNumber(0)
+            )}>
+              X
+            </span>
+            <div className={"form-group mt-20"}>
+              {startDt} ~ {endDt}
+            </div>
+            <InputMask
+              mask={""}
+              placeholder={"카테고리"}
+              id={`diary_category`}
+              name={`diary_category`}
+              className={"form-control"}
+              maskChar={null}
+              value={popupNumber}
+              disabled={true}
+              onChange={(e) => (
+                setOBJECT((prev) => ({
+                  ...prev,
+                  diary_category: e.target.value
+                }))
+              )}
+            ></InputMask>
+            <InputMask
+              mask={""}
+              placeholder={"메모"}
+              id={`diary_title`}
+              name={`diary_title`}
+              className={"form-control"}
+              maskChar={null}
+              value={OBJECT?.diary_title}
+              onChange={(e) => (
+                setOBJECT((prev) => ({
+                  ...prev,
+                  diary_title: e.target.value
+                }))
+              )}
+            ></InputMask>
+            <InputMask
+              mask={""}
+              placeholder={"내용"}
+              id={`diary_detail`}
+              name={`diary_detail`}
+              className={"form-control"}
+              maskChar={null}
+              value={OBJECT?.diary_detail}
+              onChange={(e) => (
+                setOBJECT((prev) => ({
+                  ...prev,
+                  diary_detail: e.target.value
+                }))
+              )}
+            ></InputMask>
+            <Button variant={"primary"} className={"mt-20"} onClick={() => {
+              flowSave();
+            }}>
+              저장
+            </Button>
           </div>
-          <InputMask
-            mask={""}
-            placeholder={"카테고리"}
-            id={`diary_category`}
-            name={`diary_category`}
-            className={"form-control"}
-            maskChar={null}
-            value={popupNumber}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                diary_category: e.target.value
-              }))
-            )}
-          ></InputMask>
-          <InputMask
-            mask={""}
-            placeholder={"메모"}
-            id={`diary_title`}
-            name={`diary_title`}
-            className={"form-control"}
-            maskChar={null}
-            value={OBJECT?.diary_title}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                diary_title: e.target.value
-              }))
-            )}
-          ></InputMask>
-          <InputMask
-            mask={""}
-            placeholder={"내용"}
-            id={`diary_detail`}
-            name={`diary_detail`}
-            className={"form-control"}
-            maskChar={null}
-            value={OBJECT?.diary_detail}
-            onChange={(e) => (
-              setOBJECT((prev) => ({
-                ...prev,
-                diary_detail: e.target.value
-              }))
-            )}
-          ></InputMask>
-          <Button variant={"primary"} className={"mt-20"} onClick={() => {
-            flowSave();
-          }}>
-            저장
-          </Button>
-        </div>
+        </Draggable>
       </React.Fragment>
     );
   };
