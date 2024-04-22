@@ -27,6 +27,11 @@ const schema = new mongoose.Schema({
     required: false
   },
 
+  diary_category: {
+    type : String,
+    default: "",
+    unique : true
+  },
   diary_title: {
     type : String,
     default: "",

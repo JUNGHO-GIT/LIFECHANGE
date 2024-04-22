@@ -13,7 +13,7 @@ export const barToday = {
   ) => {
 
     const finalResult = await MoneyPlan.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       money_plan_startDt: {
         $lte: endDt_param
@@ -33,7 +33,7 @@ export const barToday = {
   ) => {
 
     const finalResult = await Money.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
@@ -269,7 +269,7 @@ export const lineWeek = {
   ) => {
 
     const finalResult = await Money.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
@@ -295,7 +295,7 @@ export const lineMonth = {
   ) => {
 
     const finalResult = await Money.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
@@ -321,7 +321,7 @@ export const avgWeek = {
   ) => {
 
     const finalResult = await Money.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,
@@ -347,7 +347,7 @@ export const avgMonth = {
   ) => {
 
     const finalResult = await Money.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       money_startDt: {
         $gte: startDt_param,

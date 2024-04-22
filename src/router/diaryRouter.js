@@ -10,9 +10,7 @@ router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.customer_id,
-      req.query.duration,
-      req.query.FILTER,
-      req.query.PAGING
+      req.query.duration
     );
     if (result && result.result) {
       res.json({
@@ -110,8 +108,8 @@ router.delete("/delete", async (req, res) => {
   try {
     let result = await service.deletes(
       req.query._id,
-      req.query.section_id,
       req.query.customer_id,
+      req.query.section_id,
       req.query.duration
     );
     result = await middleware.save(result);

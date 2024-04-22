@@ -81,7 +81,7 @@ export const detail = {
     _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_plan_startDt: {
         $gte: startDt_param,
@@ -102,7 +102,7 @@ export const save = {
     _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_plan_startDt: {
         $gte: startDt_param,
@@ -161,7 +161,7 @@ export const deletes = {
     _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_plan_startDt: {
         $gte: startDt_param,

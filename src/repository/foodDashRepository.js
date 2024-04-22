@@ -13,7 +13,7 @@ export const barToday = {
   ) => {
 
     const finalResult = await FoodPlan.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       food_plan_startDt: {
         $gte: startDt_param,
@@ -35,7 +35,7 @@ export const barToday = {
   ) => {
 
     const finalResult = await Food.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -252,7 +252,7 @@ export const lineWeek = {
     endDt_param
   ) => {
     const finalResult = await Food.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -277,7 +277,7 @@ export const lineMonth = {
     endDt_param
   ) => {
     const finalResult = await Food.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -302,7 +302,7 @@ export const avgWeek = {
     endDt_param
   ) => {
     const finalResult = await Food.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -327,7 +327,7 @@ export const avgMonth = {
     endDt_param
   ) => {
     const finalResult = await Food.findOne({
-      _id: _id_param === "" ? {$exists:true} : _id_param,
+      !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       food_startDt: {
         $gte: startDt_param,

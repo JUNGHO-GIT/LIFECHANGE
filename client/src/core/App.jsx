@@ -34,7 +34,8 @@ import {CustomerLogin} from "../page/customer/CustomerLogin.jsx";
 import {CustomerDataset} from "../page/customer/CustomerDataset.jsx";
 import {CustomerDash} from "../page/customer/dash/CustomerDash.jsx";
 
-import {DiaryMain} from "../page/diary/DiaryMain.jsx";
+import {DiaryList} from "../page/diary/DiaryList.jsx";
+import {DiaryDetail} from "../page/diary/DiaryDetail.jsx";
 
 import {ExercisePlanList} from "../page/exercise/ExercisePlanList.jsx";
 import {ExercisePlanDetail} from "../page/exercise/ExercisePlanDetail.jsx";
@@ -88,7 +89,8 @@ const Diary = () => {
   return (
     <React.Fragment>
       <Routes>
-        <Route path="/main" element={<DiaryMain />} />
+        <Route path="/list" element={<DiaryList />} />
+        <Route path="/detail" element={<DiaryDetail />} />
       </Routes>
     </React.Fragment>
   );

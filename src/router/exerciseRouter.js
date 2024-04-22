@@ -110,8 +110,8 @@ router.delete("/delete", async (req, res) => {
   try {
     let result = await service.deletes(
       req.query._id,
-      req.query.section_id,
       req.query.customer_id,
+      req.query.section_id,
       req.query.duration
     );
     result = await middleware.save(result);

@@ -10,7 +10,8 @@ export const dataArray = [
   {
     label: "Diary",
     items: [
-      {to: "/diary/main", label: "DiaryMain"},
+      {to: "/diary/list", label: "DiaryList"},
+      {to: "/diary/detail", label: "DiaryDetail"},
     ]
   },
   {

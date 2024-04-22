@@ -86,7 +86,7 @@ export const NavBar = () => {
                 <span className={"ps-10 pt-10"}>{`Total`}</span>
                 <span className={"ps-10 pt-10"}>{makeIcon("total")}</span>
                 <span className={"ps-10 pt-10"}>{`${preFix}`}</span>
-                <span className={"ps-10 pt-10"}>{makeIcon(`${preFix.toLowerCase()}`)}</span>
+                <span className={"ps-10 pt-10"}>{makeIcon(`${preFix?.toLowerCase()}`)}</span>
               </Col>
               <Col xs={2} className={"d-right"}>
                 {buttonClear()}

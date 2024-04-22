@@ -91,7 +91,7 @@ export const detail = async (
 ) => {
 
   const finalResult = await Customer.findOne({
-    _id: _id_param === "" ? {$exists:true} : _id_param,
+    !_id_param ? {$exists:true} : _id_param,
     customer_id: customer_id_param,
   })
   .lean();

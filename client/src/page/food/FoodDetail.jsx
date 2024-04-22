@@ -104,8 +104,8 @@ export const FoodDetail = () => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         _id: id,
-        section_id: section_id,
         customer_id: customer_id,
+        section_id: section_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
