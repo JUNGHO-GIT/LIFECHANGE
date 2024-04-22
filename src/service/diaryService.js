@@ -71,7 +71,7 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param, section_id_param, customer_id_param, category_param, duration_param
+  _id_param, customer_id_param, category_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
@@ -84,25 +84,9 @@ export const deletes = async (
     return null;
   }
   else {
-    const updateResult = await repository.deletes.update(
-      _id_param, section_id_param, customer_id_param, category_param, startDt, endDt
+    await repository.deletes.deletes(
+      _id_param
     );
-    if (!updateResult) {
-      return null;
-    }
-    else {
-      const findAgain = await repository.deletes.detail(
-        _id_param, customer_id_param, category_param, startDt, endDt
-      );
-      if (findAgain?.diary_section.length === 0) {
-        await repository.deletes.deletes(
-          _id_param
-        );
-        return "deleted";
-      }
-      else {
-        return findAgain;
-      }
-    }
+    return "deleted";
   }
-};
+}

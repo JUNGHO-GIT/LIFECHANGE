@@ -7,7 +7,7 @@ import Draggable from "react-draggable";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {Button} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, startDt, endDt }) => {
@@ -87,12 +87,38 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
     setOBJECT(response.data.result || OBJECT_DEFAULT);
     if (response.data.status === "success") {
       alert(response.data.msg);
-      navParam(SEND.toList, {
-        state: SEND
-      });
+      setIsOpen(false);
     }
     else {
       alert(response.data.msg);
+      setIsOpen(false);
+    }
+  };
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowDelete = async (id) => {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
+      params: {
+        _id: id,
+        customer_id: customer_id,
+        category: popupNumber,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+      },
+    });
+    if (response.data.status === "success") {
+      alert(response.data.msg);
+      if (Object.keys(response.data.result).length > 0) {
+        setOBJECT(response.data.result);
+        setIsOpen(false);
+      }
+      else {
+        navParam(SEND.toList);
+        setIsOpen(false);
+      }
+    }
+    else {
+      alert(response.data.msg);
+      setIsOpen(false);
     }
   };
 
@@ -108,60 +134,75 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
             )}>
               X
             </span>
-            <div className={"form-group mt-20"}>
-              {startDt} ~ {endDt}
-            </div>
-            <InputMask
-              mask={""}
-              placeholder={"카테고리"}
-              id={`diary_category`}
-              name={`diary_category`}
-              className={"form-control"}
-              maskChar={null}
-              value={popupNumber}
-              disabled={true}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  diary_category: e.target.value
-                }))
-              )}
-            ></InputMask>
-            <InputMask
-              mask={""}
-              placeholder={"메모"}
-              id={`diary_title`}
-              name={`diary_title`}
-              className={"form-control"}
-              maskChar={null}
-              value={OBJECT?.diary_title}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  diary_title: e.target.value
-                }))
-              )}
-            ></InputMask>
-            <InputMask
-              mask={""}
-              placeholder={"내용"}
-              id={`diary_detail`}
-              name={`diary_detail`}
-              className={"form-control"}
-              maskChar={null}
-              value={OBJECT?.diary_detail}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  diary_detail: e.target.value
-                }))
-              )}
-            ></InputMask>
-            <Button variant={"primary"} className={"mt-20"} onClick={() => {
-              flowSave();
-            }}>
-              저장
-            </Button>
+            <Row className={"d-center mt-30 mb-20"}>
+              <Col xs={12}>
+                <h3>{startDt}</h3>
+              </Col>
+            </Row>
+            <Row className={"d-center mb-20"}>
+              <Col xs={12}>
+                <InputMask
+                  mask={""}
+                  placeholder={"카테고리"}
+                  id={`diary_category`}
+                  name={`diary_category`}
+                  className={"form-control d-inline-flex mb-20 p-10"}
+                  maskChar={null}
+                  value={popupNumber}
+                  disabled={true}
+                  onChange={(e) => (
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      diary_category: e.target.value
+                    }))
+                  )}
+                ></InputMask>
+                <InputMask
+                  mask={""}
+                  placeholder={"제목"}
+                  id={`diary_title`}
+                  name={`diary_title`}
+                  className={"form-control d-inline-flex mb-20 p-10"}
+                  maskChar={null}
+                  value={OBJECT?.diary_title}
+                  onChange={(e) => (
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      diary_title: e.target.value
+                    }))
+                  )}
+                ></InputMask>
+                <InputMask
+                  mask={""}
+                  placeholder={"내용"}
+                  id={`diary_detail`}
+                  name={`diary_detail`}
+                  className={"form-control d-inline-flex mb-20 p-10"}
+                  maskChar={null}
+                  value={OBJECT?.diary_detail}
+                  onChange={(e) => (
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      diary_detail: e.target.value
+                    }))
+                  )}
+                ></InputMask>
+              </Col>
+            </Row>
+            <Row className={"d-center mb-20"}>
+              <Col xs={12}>
+                <Button variant={"primary"} className={"me-10"} onClick={() => {
+                  flowSave();
+                }}>
+                  저장
+                </Button>
+                <Button variant={"danger"} className={"ms-10"} onClick={() => {
+                  flowDelete(OBJECT._id);
+                }}>
+                  삭제
+                </Button>
+              </Col>
+            </Row>
           </div>
         </Draggable>
       </React.Fragment>

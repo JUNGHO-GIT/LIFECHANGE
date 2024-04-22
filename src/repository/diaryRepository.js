@@ -170,35 +170,6 @@ export const deletes = {
     return finalResult;
   },
 
-  update: async (
-    _id_param, section_id_param, customer_id_param, category_param, startDt_param, endDt_param,
-  ) => {
-    const updateResult = await Diary.updateOne(
-      {_id: _id_param,
-        customer_id: customer_id_param,
-        diary_category: category_param,
-        diary_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-        diary_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-      },
-      {$pull: {
-        diary_section: {
-          _id: section_id_param
-        },
-      },
-      $set: {
-        diary_updateDt: fmtDate,
-      }}
-    )
-    .lean();
-    return updateResult;
-  },
-
   deletes: async (
     _id_param
   ) => {
