@@ -272,7 +272,7 @@ export const lineWeek = {
     endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
-      !_id_param ? {$exists:true} : _id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_startDt: {
         $gte: startDt_param,
@@ -297,7 +297,7 @@ export const lineMonth = {
     endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
-      !_id_param ? {$exists:true} : _id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_startDt: {
         $gte: startDt_param,
@@ -322,7 +322,7 @@ export const avgWeek = {
     endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
-      !_id_param ? {$exists:true} : _id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_startDt: {
         $gte: startDt_param,
@@ -347,7 +347,7 @@ export const avgMonth = {
     endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
-      !_id_param ? {$exists:true} : _id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_startDt: {
         $gte: startDt_param,

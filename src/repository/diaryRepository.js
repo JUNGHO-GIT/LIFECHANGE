@@ -66,12 +66,13 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param, customer_id_param, startDt_param, endDt_param
+    _id_param, customer_id_param, category_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Diary.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
+      diary_category: category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -82,12 +83,6 @@ export const detail = {
       },
     })
     .lean();
-
-    console.log("_id_param", _id_param);
-    console.log("customer_id_param", customer_id_param);
-    console.log("startDt_param", startDt_param);
-    console.log("endDt_param", endDt_param);
-    console.log("finalResult", finalResult);
 
     return finalResult;
   }
@@ -155,7 +150,7 @@ export const deletes = {
     _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOne({
-      !_id_param ? {$exists:true} : _id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       diary_startDt: {
         $gte: startDt_param,

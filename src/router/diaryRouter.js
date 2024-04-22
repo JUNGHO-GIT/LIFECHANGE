@@ -43,6 +43,7 @@ router.get("/detail", async (req, res) => {
     let result = await service.detail (
       req.query._id,
       req.query.customer_id,
+      req.query.category,
       req.query.duration
     );
     if (result && result.result) {

@@ -29,13 +29,13 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param, customer_id_param, duration_param
+  _id_param, customer_id_param, category_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail(
-    _id_param, customer_id_param, startDt, endDt
+    _id_param, customer_id_param, category_param, startDt, endDt
   );
 
   return {

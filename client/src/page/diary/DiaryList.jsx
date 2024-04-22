@@ -1,11 +1,9 @@
 // DiaryList.jsx
 
-import axios from "axios";
 import moment from "moment";
 import Calendar from "react-calendar";
-import { DiaryDetail } from "./DiaryDetail.jsx";
-import React, {useState, useEffect} from "react";
-import {useDate} from "../../assets/hooks/useDate.jsx";
+import {DiaryDetail} from "./DiaryDetail.jsx";
+import React from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
@@ -14,13 +12,7 @@ import {Container, Row, Col, Card, Button} from "react-bootstrap";
 export const DiaryList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_DIARY || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
-  const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
@@ -38,8 +30,6 @@ export const DiaryList = () => {
   const {val:popupNumber, set:setPopupNumber} = useStorage(
     `popupNumber(${PATH})`, 1
   );
-
-  //
 
   // 10. return ----------------------------------------------------------------------------------->
   return (

@@ -56,35 +56,29 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {
-    setOBJECT((prev) => ({
-      ...prev,
-      diary_category: popupNumber.toString()
-    }));
-  }, [popupNumber]);
-
-  // 2.3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {
     if (popupNumber > 0 && isOpen) {(async () => {
       const response = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: location_id,
           customer_id: customer_id,
+          category: popupNumber,
           duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         },
       });
       setOBJECT(response.data.result || OBJECT_DEFAULT);
-    })();
-    } else {
-      setOBJECT(OBJECT_DEFAULT);
-    }
+      setOBJECT((prev) => ({
+        ...prev,
+        diary_category: String(popupNumber)
+      }));
+    })()}
   }, [popupNumber, isOpen, location_id, customer_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
       customer_id: customer_id,
+      OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-      OBJECT: OBJECT
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
     if (response.data.status === "success") {
@@ -118,7 +112,6 @@ export const DiaryDetail = ({ popupNumber, setPopupNumber, isOpen, setIsOpen, st
             className={"form-control"}
             maskChar={null}
             value={popupNumber}
-            disabled={true}
             onChange={(e) => (
               setOBJECT((prev) => ({
                 ...prev,
