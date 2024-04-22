@@ -29,7 +29,7 @@ export const DeveloperModeProvider = (
   // 1-6. log
   const log = (message) => {
     if (isDeveloperMode) {
-      console.log(message);
+      console.log(JSON.stringify(message));
     }
   };
 

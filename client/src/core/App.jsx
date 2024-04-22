@@ -12,14 +12,16 @@ import "boxicons/css/boxicons.min.css";
 import "react-day-picker/dist/style.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-resizable/css/styles.css";
+import "react-calendar/dist/Calendar.css";
 
 import "../assets/css/Loader.css";
 import "../assets/css/Custom.css";
 import "../assets/css/Jstyle.css";
+import "../assets/css/SideBar.css";
 import "../assets/css/DatePicker.css";
 import "../assets/css/TimePicker.css";
 import "../assets/css/DayPicker.css";
-import "../assets/css/SideBar.css";
+import "../assets/css/Calendar.css";
 
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
@@ -31,6 +33,8 @@ import {CustomerSignup} from "../page/customer/CustomerSignup.jsx";
 import {CustomerLogin} from "../page/customer/CustomerLogin.jsx";
 import {CustomerDataset} from "../page/customer/CustomerDataset.jsx";
 import {CustomerDash} from "../page/customer/dash/CustomerDash.jsx";
+
+import {DiaryMain} from "../page/diary/DiaryMain.jsx";
 
 import {ExercisePlanList} from "../page/exercise/ExercisePlanList.jsx";
 import {ExercisePlanDetail} from "../page/exercise/ExercisePlanDetail.jsx";
@@ -78,6 +82,18 @@ const Customer = () => {
     </React.Fragment>
   );
 };
+
+// ------------------------------------------------------------------------------------------------>
+const Diary = () => {
+  return (
+    <React.Fragment>
+      <Routes>
+        <Route path="/main" element={<DiaryMain />} />
+      </Routes>
+    </React.Fragment>
+  );
+};
+
 // ------------------------------------------------------------------------------------------------>
 const Exercise = () => {
   return (
@@ -94,6 +110,7 @@ const Exercise = () => {
     </React.Fragment>
   );
 };
+
 // ------------------------------------------------------------------------------------------------>
 const Food = () => {
   return (
@@ -111,6 +128,7 @@ const Food = () => {
     </React.Fragment>
   );
 };
+
 // ------------------------------------------------------------------------------------------------>
 const Money = () => {
   return (
@@ -127,6 +145,7 @@ const Money = () => {
     </React.Fragment>
   );
 };
+
 // ------------------------------------------------------------------------------------------------>
 const Sleep = () => {
   return (
@@ -143,6 +162,7 @@ const Sleep = () => {
     </React.Fragment>
   );
 };
+
 // ------------------------------------------------------------------------------------------------>
 export const App = () => {
   return (
@@ -153,11 +173,12 @@ export const App = () => {
           <Header />
           <NavBar />
           <Routes>
+            <Route path="/customer/*" element={<Customer />} />
+            <Route path="/diary/*" element={<Diary />} />
+            <Route path="/exercise/*" element={<Exercise />} />
             <Route path="/food/*" element={<Food />} />
             <Route path="/money/*" element={<Money />} />
             <Route path="/sleep/*" element={<Sleep />} />
-            <Route path="/customer/*" element={<Customer />} />
-            <Route path="/exercise/*" element={<Exercise />} />
           </Routes>
           <Footer />
           <Empty />

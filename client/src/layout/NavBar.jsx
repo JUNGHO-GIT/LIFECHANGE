@@ -75,31 +75,18 @@ export const NavBar = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
-              <Col xs={4} className={"d-left"}>
+              <Col xs={10} className={"d-left"}>
                 {!preFix ? (
                   <span className={"fs-30 fw-500 ps-30 pt-10"}>Home</span>
                 ) : (
-                  <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
+                  <React.Fragment>
+                    <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
+                  </React.Fragment>
                 )}
-              </Col>
-              <Col xs={6} className={"d-center"}>
-                <Row>
-                  <Col xs={4} className={"d-center"}>
-                    <span>Total </span> {makeIcon("total")}
-                  </Col>
-                  <Col xs={2} className={"d-center"}>
-                    <span>Exercise </span> {makeIcon("exercise")}
-                  </Col>
-                  <Col xs={2} className={"d-center"}>
-                    <span>Food </span> {makeIcon("food")}
-                  </Col>
-                  <Col xs={2} className={"d-center"}>
-                    <span>Money </span> {makeIcon("money")}
-                  </Col>
-                  <Col xs={2} className={"d-center"}>
-                    <span>Sleep </span> {makeIcon("sleep")}
-                  </Col>
-                </Row>
+                <span className={"ps-10 pt-10"}>{`Total`}</span>
+                <span className={"ps-10 pt-10"}>{makeIcon("total")}</span>
+                <span className={"ps-10 pt-10"}>{`${preFix}`}</span>
+                <span className={"ps-10 pt-10"}>{makeIcon(`${preFix.toLowerCase()}`)}</span>
               </Col>
               <Col xs={2} className={"d-right"}>
                 {buttonClear()}

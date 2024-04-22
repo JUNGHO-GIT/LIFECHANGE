@@ -4,8 +4,7 @@ import * as repository from "../repository/customerRepository.js";
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = async (
-  customer_id_param,
-  customer_pw_param
+  customer_id_param, customer_pw_param
 ) => {
 
   const findResult = await repository.checkId(
@@ -27,8 +26,7 @@ export const signup = async (
 
 // 0-1. login ------------------------------------------------------------------------------------->
 export const login = async (
-  customer_id_param,
-  customer_pw_param
+  customer_id_param, customer_pw_param
 ) => {
 
   const findResult = await repository.login(
@@ -66,10 +64,7 @@ export const dataset = async (
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
-  customer_id_param,
-  sort_param,
-  limit_param,
-  page_param
+  customer_id_param, sort_param, limit_param, page_param
 ) => {
 
   const finalResult = await repository.find(
@@ -81,8 +76,7 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param,
-  customer_id_param
+  _id_param, customer_id_param
 ) => {
 
   const finalResult = await repository.detail(
@@ -94,9 +88,10 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  customer_id_param,
-  OBJECT_param
+  customer_id_param, duration_param, OBJECT_param
 ) => {
+
+  const [startDt, endDt] = duration_param.split(` ~ `);
 
   const findResult = await repository.detail(
     "", customer_id_param
@@ -119,8 +114,7 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param,
-  customer_id_param
+  _id_param, customer_id_param
 ) => {
 
   const finalResult = await repository.deletes(

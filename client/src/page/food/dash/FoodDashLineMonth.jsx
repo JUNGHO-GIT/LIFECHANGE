@@ -12,7 +12,9 @@ import {Container, Row, Col, Card, FormCheck, Button} from "react-bootstrap";
 export const FoodDashLineMonth = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_FOOD;
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_FOOD || "";
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = window.sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();

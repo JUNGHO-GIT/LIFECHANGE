@@ -15,7 +15,9 @@ import {Container, Table, Row, Col, Card} from "react-bootstrap";
 export const ExercisePlanList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_WORK;
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();

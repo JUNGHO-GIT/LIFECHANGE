@@ -12,7 +12,9 @@ import {Container, Row, Col, Card, Button} from "react-bootstrap";
 export const CustomerLogin = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_USER;
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_CUSTOMER || "";
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const koreanDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD");
   const navParam = useNavigate();
   const location = useLocation();

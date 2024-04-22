@@ -12,7 +12,9 @@ import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
 export const MoneyDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_MONEY || "";
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();

@@ -234,15 +234,12 @@ export const CalendarNode = ({
     <React.Fragment>
       <Draggable>
         <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
-          <span className={"d-right fw-700 pointer"}
-            style={{position: "absolute", right: "15px", top: "10px"}}
-            onClick={() => (
-              setCALENDAR((prev) => ({
-                ...prev,
-                calOpen: false
-              }))
-            )}
-          >
+          <span className={"d-right fw-700 x-button"} onClick={() => (
+            setCALENDAR((prev) => ({
+              ...prev,
+              calOpen: false
+            }))
+          )}>
             X
           </span>
           <div className={"h-2"}></div>

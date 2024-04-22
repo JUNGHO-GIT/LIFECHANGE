@@ -8,6 +8,12 @@ export const dataArray = [
     ]
   },
   {
+    label: "Diary",
+    items: [
+      {to: "/diary/main", label: "DiaryMain"},
+    ]
+  },
+  {
     label: "Exercise",
     items: [
       {to: "/exercise/dash", label: "ExerciseDash"},

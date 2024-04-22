@@ -20,6 +20,7 @@ import {router as moneyPlanRouter} from "./src/router/moneyPlanRouter.js";
 import {router as sleepPlanRouter} from "./src/router/sleepPlanRouter.js";
 
 import {router as customerRouter} from "./src/router/customerRouter.js";
+import {router as diaryRouter} from "./src/router/diaryRouter.js";
 import {router as exerciseRouter} from "./src/router/exerciseRouter.js";
 import {router as foodRouter} from "./src/router/foodRouter.js";
 import {router as moneyRouter} from "./src/router/moneyRouter.js";
@@ -69,6 +70,7 @@ app.use("/money/plan", moneyPlanRouter);
 app.use("/sleep/plan", sleepPlanRouter);
 
 app.use("/customer", customerRouter);
+app.use("/diary", diaryRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/food", foodRouter);
 app.use("/money", moneyRouter);

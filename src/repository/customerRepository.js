@@ -6,8 +6,7 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 export const signup = async (
-  customer_id_param,
-  customer_pw_param
+  customer_id_param, customer_pw_param
 ) => {
 
   const finalResult = await Customer.create({
@@ -23,8 +22,7 @@ export const signup = async (
 
 // 0.1. login ------------------------------------------------------------------------------------>
 export const login = async (
-  customer_id_param,
-  customer_pw_param
+  customer_id_param, customer_pw_param
 ) => {
 
   const finalResult = await Customer.findOne({
@@ -51,10 +49,7 @@ export const checkId = async (
 
 // 1-1. find -------------------------------------------------------------------------------------->
 export const find = async (
-  customer_id_param,
-  sort_param,
-  limit_param,
-  page_param
+  customer_id_param, sort_param, limit_param, page_param
 ) => {
 
   const finalResult = await Customer.find({
@@ -92,8 +87,7 @@ export const aggregateDataset = async (
 
 // 2-1. detail ------------------------------------------------------------------------------------>
 export const detail = async (
-  _id_param,
-  customer_id_param
+  _id_param, customer_id_param
 ) => {
 
   const finalResult = await Customer.findOne({
@@ -107,20 +101,19 @@ export const detail = async (
 
 // 3-1. create ------------------------------------------------------------------------------------>
 export const create = async (
-  customer_id_param,
-  OBJECT_param
+  customer_id_param, OBJECT_param
 ) => {
 
   const finalResult = await Customer.create({
     _id: new mongoose.Types.ObjectId(),
     customer_id: customer_id_param,
     customer_pw: OBJECT_param.customer_pw,
-    customer_email: OBJECT_param.customer_email,
-    customer_phone: OBJECT_param.customer_phone,
     customer_sex: OBJECT_param.customer_sex,
     customer_age: OBJECT_param.customer_age,
     customer_height: OBJECT_param.customer_height,
     customer_weight: OBJECT_param.customer_weight,
+    customer_email: OBJECT_param.customer_email,
+    customer_phone: OBJECT_param.customer_phone,
     customer_dataset: OBJECT_param.customer_dataset,
     customer_regDt: fmtDate,
     customer_updateDt: "",
@@ -131,8 +124,7 @@ export const create = async (
 
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
-  _id_param,
-  OBJECT_param
+  _id_param, OBJECT_param
 ) => {
 
   const finalResult = await Customer.findOneAndUpdate(
@@ -153,8 +145,7 @@ export const update = async (
 
 // 4-1. delete ------------------------------------------------------------------------------------>
 export const deletes = async (
-  _id_param,
-  customer_id_param
+  _id_param, customer_id_param
 ) => {
 
   const updateResult = await Customer.updateOne(

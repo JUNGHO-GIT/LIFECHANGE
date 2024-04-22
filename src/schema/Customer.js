@@ -5,7 +5,6 @@ import {incrementSeq} from "./Counter.js";
 import {exerciseArray} from "../assets/data/ExerciseArray.js";
 import {moneyArray} from "../assets/data/MoneyArray.js";
 import {foodArray} from "../assets/data/FoodArray.js";
-import {sleepArray} from "../assets/data/SleepArray.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
@@ -14,26 +13,15 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
-  customer_number : {
-    type : Number,
-    default: 0,
-    unique : true
-  },
   customer_pw : {
     type : String,
     default: "",
     required : false
   },
-
-  customer_email: {
-    type : String,
-    default: "",
-    required : false
-  },
-  customer_phone: {
-    type : String,
-    default: "",
-    required : false
+  customer_number : {
+    type : Number,
+    default: 0,
+    unique : true
   },
 
   customer_sex: {
@@ -56,6 +44,16 @@ const schema = new mongoose.Schema({
     default: "",
     required : false
   },
+  customer_email: {
+    type : String,
+    default: "",
+    required : false
+  },
+  customer_phone: {
+    type : String,
+    default: "",
+    required : false
+  },
 
   customer_dataset: {
     exercise: {
@@ -71,11 +69,6 @@ const schema = new mongoose.Schema({
     money: {
       type: Array,
       default: moneyArray,
-      required: false
-    },
-    sleep: {
-      type: Array,
-      default: sleepArray,
       required: false
     }
   },

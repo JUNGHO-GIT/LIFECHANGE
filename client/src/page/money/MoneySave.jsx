@@ -15,7 +15,9 @@ import {Container, Row, Col, Card} from "react-bootstrap";
 export const MoneySave = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_MONEY;
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_MONEY || "";
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = window.sessionStorage.getItem("customer_id");
   const session = window.sessionStorage.getItem("dataset") || "";
   const moneyArray = JSON.parse(session)?.money || [];

@@ -14,7 +14,9 @@ import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 export const CustomerDataset = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
-  const URL_OBJECT = process.env.REACT_APP_URL_USER;
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_CUSTOMER || "";
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
@@ -51,6 +53,8 @@ export const CustomerDataset = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
+    customer_id: customer_id,
+    customer_number: 0,
     customer_dataset: {
       exercise: [{
         exercise_part: "",
@@ -94,8 +98,6 @@ export const CustomerDataset = () => {
       window.sessionStorage.setItem("customer_id", "false");
     }
   };
-
-
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode1 = () => {
