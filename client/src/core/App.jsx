@@ -26,7 +26,6 @@ import "../assets/css/Calendar.css";
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
 import {NavBar} from "../layout/NavBar.jsx";
-import {Footer} from "../layout/Footer";
 import {Empty} from "../layout/Empty.jsx";
 
 import {CustomerSignup} from "../page/customer/CustomerSignup.jsx";
@@ -90,7 +89,6 @@ const Diary = () => {
     <React.Fragment>
       <Routes>
         <Route path="/list" element={<DiaryList />} />
-        <Route path="/detail" element={<DiaryDetail />} />
       </Routes>
     </React.Fragment>
   );
@@ -182,7 +180,6 @@ export const App = () => {
             <Route path="/money/*" element={<Money />} />
             <Route path="/sleep/*" element={<Sleep />} />
           </Routes>
-          <Footer />
           <Empty />
         </DeveloperModeProvider>
       </div>

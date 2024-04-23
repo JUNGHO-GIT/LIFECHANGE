@@ -6,12 +6,10 @@ import {fmtDate} from "../assets/common/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
-  customer_id_param, category_param, startDt_param, endDt_param
+  customer_id_param, startDt_param, endDt_param
 ) => {
-
   const finalResult = await Diary.countDocuments({
     customer_id: customer_id_param,
-    diary_category: category_param,
     diary_startDt: {
       $gte: startDt_param,
       $lte: endDt_param,
@@ -28,38 +26,18 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   find: async (
-    customer_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.aggregate([
       {$match: {
         customer_id: customer_id_param,
         diary_startDt: {
-          $gte: startDt_param,
           $lte: endDt_param,
         },
         diary_endDt: {
           $gte: startDt_param,
-          $lte: endDt_param,
         },
-      }},
-      {$unwind: "$diary_section"},
-      {$project: {
-        _id: 1,
-        diary_startDt: 1,
-        diary_endDt: 1,
-        diary_section: [{
-          _id: "$diary_section._id",
-          diary_night: "$diary_section.diary_night",
-          diary_morning: "$diary_section.diary_morning",
-          diary_time: "$diary_section.diary_time",
-        }]
-      }},
-      {$sort: {
-        diary_startDt: sort_param,
-        diary_endDt: sort_param
-      }},
-      {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit:  Number(limit_param)},
+      }}
     ]);
 
     return finalResult;
@@ -71,7 +49,6 @@ export const detail = {
   detail: async (
     _id_param, customer_id_param, category_param, startDt_param, endDt_param
   ) => {
-
     const finalResult = await Diary.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,

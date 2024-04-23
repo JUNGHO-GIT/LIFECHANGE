@@ -10,7 +10,6 @@ router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.customer_id,
-      req.query.category,
       req.query.duration
     );
     if (result && result.result) {

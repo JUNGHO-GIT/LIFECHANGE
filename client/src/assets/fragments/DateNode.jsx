@@ -67,9 +67,19 @@ export const DateNode = ({
 
   return (
     <React.Fragment>
-      <div className="d-inline-flex">
-        {plan === "plan" ? planDate() : realDate()}
-      </div>
+      {part === "diary" && plan === "" ? (
+        <div className={"d-inline-flex"}>
+          {planDate()}
+        </div>
+      ) : part !== "diary" && plan === "" ? (
+        <div className={"d-inline-flex"}>
+          {realDate()}
+        </div>
+      ) : part !== "diary" && plan === "plan" ? (
+        <div className={"d-inline-flex"}>
+          {planDate()}
+        </div>
+      ) : null}
     </React.Fragment>
   );
 };

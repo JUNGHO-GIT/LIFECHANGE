@@ -26,12 +26,7 @@ export const totalCnt = async (
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   findPlan: async (
-    customer_id_param,
-    sort_param,
-    limit_param,
-    page_param,
-    startDt_param,
-    endDt_param
+    customer_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
@@ -142,8 +137,7 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param,
-    OBJECT_param
+    _id_param, OBJECT_param
   ) => {
 
     const finalResult = await FoodPlan.findOneAndUpdate(

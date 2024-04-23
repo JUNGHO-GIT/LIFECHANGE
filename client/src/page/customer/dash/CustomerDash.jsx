@@ -13,11 +13,11 @@ export const CustomerDash = () => {
   return (
     <React.Fragment>
       <div className={"root-wrapper"}>
-        <div style={{display: "flex", flexDirection: "row"}}>
+        <div>
           {ExerciseDashBarToday()}
           {FoodDashBarToday()}
         </div>
-        <div style={{display: "flex", flexDirection: "row"}}>
+        <div>
           {MoneyDashBarToday()}
           {SleepDashBarToday()}
         </div>

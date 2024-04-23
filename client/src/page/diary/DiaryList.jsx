@@ -1,9 +1,10 @@
 // DiaryList.jsx
 
 import moment from "moment";
+import axios from "axios";
+import React, {useState, useEffect} from "react";
 import Calendar from "react-calendar";
 import {DiaryDetail} from "./DiaryDetail.jsx";
-import React from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
@@ -12,24 +13,76 @@ import {Container, Row, Col, Card, Button} from "react-bootstrap";
 export const DiaryList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
+  const URL = process.env.REACT_APP_URL || "";
+  const SUBFIX = process.env.REACT_APP_DIARY || "";
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const customer_id = window.sessionStorage.getItem("customer_id");
   const location = useLocation();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_id = location?.state?.id?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
+      startDt: moment().startOf("month").format("YYYY-MM-DD"),
+      endDt: moment().endOf("month").format("YYYY-MM-DD"),
     }
   );
   const {val:isOpen, set:setIsOpen} = useStorage(
     `isOpen(${PATH})`, false
   );
-  const {val:popupNumber, set:setPopupNumber} = useStorage(
-    `popupNumber(${PATH})`, 1
-  );
+
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const OBJECT_DEFAULT = [{
+    customer_id: customer_id,
+    diary_number: 0,
+    diary_startDt: "0000-00-00",
+    diary_endDt: "0000-00-00",
+    diary_category: "",
+    diary_title: "",
+    diary_detail: ""
+  }];
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const response = await axios.get(`${URL_OBJECT}/list`, {
+      params: {
+        customer_id: customer_id,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
+      },
+    });
+    setOBJECT(response.data.result || OBJECT_DEFAULT);
+  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
+    return (
+      <React.Fragment>
+        <Calendar
+          locale={"ko-KR"}
+          value={new Date()}
+          showNavigation={true}
+          showNeighboringMonth={true}
+          view={"month"}
+          onChange={(date) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(date?.toString()).format("YYYY-MM-DD"),
+              endDt: moment(date?.toString()).format("YYYY-MM-DD"),
+            }));
+          }}
+          tileClassName={}
+        />
+        <DiaryDetail
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          startDt={DATE.startDt}
+          endDt={DATE.endDt}
+        />
+      </React.Fragment>
+    );
+  };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
@@ -39,52 +92,7 @@ export const DiaryList = () => {
           <Container>
             <Row>
               <Col xs={12} className={"mb-20 text-center"}>
-                <Calendar
-                  locale={"ko-KR"}
-                  value={new Date()}
-                  showNavigation={true}
-                  showNeighboringMonth={true}
-                  view={"month"}
-                  onChange={(date) => {
-                    setDATE((prev) => ({
-                      ...prev,
-                      startDt: moment(date?.toString()).format("YYYY-MM-DD"),
-                      endDt: moment(date?.toString()).format("YYYY-MM-DD"),
-                    }));
-                  }}
-                  tileContent={({date, view}) => (
-                    <React.Fragment key={view}>
-                      <div className={"d-inline-block ms-20"}>
-                        <span className={"text-primary p-4"} onClick={() => {
-                          setIsOpen(true);
-                          setPopupNumber(1);
-                        }}>
-                          ●
-                        </span>
-                        <span className={"text-success p-4"} onClick={() => {
-                          setIsOpen(true);
-                          setPopupNumber(2);
-                        }}>
-                          ●
-                        </span>
-                        <span className={"text-danger p-4"} onClick={() => {
-                          setIsOpen(true);
-                          setPopupNumber(3);
-                        }}>
-                          ●
-                        </span>
-                      </div>
-                    </React.Fragment>
-                  )}
-                />
-                <DiaryDetail
-                  popupNumber={popupNumber}
-                  setPopupNumber={setPopupNumber}
-                  isOpen={isOpen}
-                  setIsOpen={setIsOpen}
-                  startDt={DATE.startDt}
-                  endDt={DATE.endDt}
-                />
+                {tableNode()}
               </Col>
             </Row>
           </Container>

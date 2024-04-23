@@ -80,8 +80,8 @@ textarea.form-control {
 
 /**************************************************************************************************/
 .popup {
-  width: 400px;
-  height: 450px;
+  width: 700px;
+  height: 700px;
   position: fixed;
   z-index: 1000;
   background-color: #ffffff;
@@ -97,14 +97,4 @@ textarea.form-control {
   right: 15px;
   top: 10px;
   cursor: pointer;
-}
-
-/**************************************************************************************************/
-.footer {
-  position: fixed !important;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: white;
-  text-align: center;
 }

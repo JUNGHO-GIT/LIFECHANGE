@@ -4,21 +4,17 @@ import * as repository from "../repository/diaryRepository.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
-  customer_id_param, category_param, duration_param, FILTER_param, PAGING_param
+  customer_id_param, duration_param
 ) => {
 
   const [startDt, endDt] = duration_param.split(` ~ `);
 
-  const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
-  const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
-
   const totalCnt = await repository.totalCnt(
-    customer_id_param, category_param, startDt, endDt
+    customer_id_param, startDt, endDt
   );
 
   const finalResult = await repository.list.find(
-    customer_id_param, sort, limit, page, startDt, endDt
+    customer_id_param, startDt, endDt
   );
 
   return {

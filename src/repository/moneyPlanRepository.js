@@ -136,8 +136,7 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param,
-    OBJECT_param
+    _id_param, OBJECT_param
   ) => {
     const finalResult = await MoneyPlan.findOneAndUpdate(
       {_id: _id_param

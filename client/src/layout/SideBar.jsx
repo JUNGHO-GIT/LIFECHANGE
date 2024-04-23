@@ -99,8 +99,8 @@ export const SideBar = ({ sidebar, onClose }) => {
       <div className={"d-flex flex-column p-3"}>
         <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>
           {dataArray?.map((menu) => (
-            sidBarItem(menu.label, menu.items))
-          )}
+            sidBarItem(menu.label, menu.items)
+          ))}
         </ul>
       </div>
     </div>

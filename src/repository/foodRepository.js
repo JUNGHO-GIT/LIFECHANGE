@@ -144,8 +144,7 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param,
-    OBJECT_param
+    _id_param, OBJECT_param
   ) => {
 
     const finalResult = await Food.findOneAndUpdate(
