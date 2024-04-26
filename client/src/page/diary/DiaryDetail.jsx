@@ -74,7 +74,7 @@ export const DiaryDetail = () => {
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
       customer_id: customer_id,
-      category: location_category,
+      category: OBJECT.diary_category,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
@@ -95,7 +95,7 @@ export const DiaryDetail = () => {
       params: {
         customer_id: customer_id,
         _id: id,
-        category: location_category,
+        category: OBJECT.diary_category,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });

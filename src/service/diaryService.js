@@ -81,7 +81,7 @@ export const deletes = async (
   }
   else {
     await repository.deletes.deletes(
-      _id_param
+      customer_id_param, _id_param
     );
     return "deleted";
   }
