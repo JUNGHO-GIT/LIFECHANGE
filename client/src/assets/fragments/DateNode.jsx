@@ -13,24 +13,48 @@ export const DateNode = ({
 
   // @ts-ignore
   const CustomInput = forwardRef(({value, onClick}, ref) => (
-    <Button className={"form-control pointer fw-bold"} onClick={onClick} ref={ref} variant={"outline-primary"} size={"lg"} type={"button"}>
+    <Button className={"pointer fw-bold"} onClick={onClick} ref={ref} variant={"outline-secondary"} size={"lg"} type={"button"}>
       {value}
     </Button>
   ));
 
-  const datePickerNode = (label, value, onChange, placement) => (
+  // 0. datePicker
+  const datePickerNode = (onChange, label, value) => (
     <React.Fragment>
-      <div className={"input-group"}>
-        <span className="input-group-text">{label}</span>
-        <DatePicker
-          locale={ko}
-          dateFormat={"yyyy-MM-dd"}
-          popperPlacement={placement}
-          className={"form-control"}
-          selected={new Date(value)}
-          customInput={<CustomInput />}
-          onChange={(date) => onChange(date)}
-        />
+      <div className={"d-inline-flex"}>
+        <div className={"input-group"}>
+          <span className="input-group-text">{label}</span>
+          <DatePicker
+            locale={ko}
+            dateFormat={"yyyy-MM-dd"}
+            className={"form-control"}
+            popperPlacement={"bottom-start"}
+            popperProps={{
+              strategy: "fixed"  // 팝업의 위치를 고정
+            }}
+            popperModifiers={[
+              {
+                name: "preventOverflow",
+                options: {
+                  altBoundary: true,
+                  tether: false,
+                  rootBoundary: "viewport",
+                  padding: 8
+                }
+              },
+              {
+                name: "flip",
+                options: {
+                  behavior: ["bottom", "top"],  // 위 또는 아래로 펼칠 수 있도록 설정
+                  boundary: "viewport"
+                }
+              }
+            ]}
+            selected={new Date(value)}
+            customInput={<CustomInput />}
+            onChange={(date) => (onChange(date))}
+          />
+        </div>
       </div>
     </React.Fragment>
   );
@@ -38,32 +62,32 @@ export const DateNode = ({
   // 1. realDate
   const realDate = () => (
     <React.Fragment>
-      {datePickerNode("날짜", DATE.startDt, (date) => {
+      {datePickerNode((date) => {
         setDATE((prev) => ({
           ...prev,
           startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
           endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
         }));
-      }, "bottom")}
+      }, "날짜", DATE.startDt)}
     </React.Fragment>
   );
 
   // 2. planDate
   const planDate = () => (
     <React.Fragment>
-      {datePickerNode("시작일", DATE.startDt, (date) => {
+      {datePickerNode((date) => {
         setDATE((prev) => ({
           ...prev,
           startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
         }));
-      }, "bottom")}
+      }, "시작일", DATE.startDt)}
       <div className={"w-10"}></div>
-      {datePickerNode("종료일", DATE.endDt, (date) => {
+      {datePickerNode((date) => {
         setDATE((prev) => ({
           ...prev,
           endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
         }));
-      }, "top")}
+      }, "종료일", DATE.endDt)}
     </React.Fragment>
   );
 
@@ -71,17 +95,11 @@ export const DateNode = ({
   return (
     <React.Fragment>
       {part === "diary" && plan === "" ? (
-        <div className={"d-inline-flex"}>
-          {planDate()}
-        </div>
+        planDate()
       ) : part !== "diary" && plan === "" ? (
-        <div className={"d-inline-flex"}>
-          {realDate()}
-        </div>
+        realDate()
       ) : part !== "diary" && plan === "plan" ? (
-        <div className={"d-inline-flex"}>
-          {planDate()}
-        </div>
+        planDate()
       ) : null}
     </React.Fragment>
   );

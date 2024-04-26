@@ -1,4 +1,4 @@
-.react-datepicker-wrapper {
+.date-picker-container {
   display: flex !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
