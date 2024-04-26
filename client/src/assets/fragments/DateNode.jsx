@@ -35,6 +35,7 @@ export const DateNode = ({
     </React.Fragment>
   );
 
+  // 1. realDate
   const realDate = () => (
     <React.Fragment>
       {datePickerNode("날짜", DATE.startDt, (date) => {
@@ -47,6 +48,7 @@ export const DateNode = ({
     </React.Fragment>
   );
 
+  // 2. planDate
   const planDate = () => (
     <React.Fragment>
       {datePickerNode("시작일", DATE.startDt, (date) => {
@@ -65,6 +67,7 @@ export const DateNode = ({
     </React.Fragment>
   );
 
+  // 3. return
   return (
     <React.Fragment>
       {part === "diary" && plan === "" ? (

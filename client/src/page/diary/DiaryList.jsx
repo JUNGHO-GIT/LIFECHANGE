@@ -1,14 +1,12 @@
 // DiaryList.jsx
 
-import moment from "moment";
 import axios from "axios";
 import Calendar from "react-calendar";
-import {DiaryDetail} from "./DiaryDetail.jsx";
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
-import {useDate} from "../../assets/hooks/useDate.jsx";
+import moment from "moment-timezone";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {Container, Row, Col, Card, Button} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DiaryList = () => {
@@ -18,25 +16,26 @@ export const DiaryList = () => {
   const SUBFIX = process.env.REACT_APP_DIARY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = window.sessionStorage.getItem("customer_id");
+  const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:SEND, set:setSEND} = useStorage(
+    `SEND(${PATH})`, {
+      id: "",
+      refresh: 0,
+      startDt: "0000-00-00",
+      endDt: "0000-00-00",
+      category: "",
+      toDetail: "/diary/detail"
+    }
+  );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: moment().startOf("month").format("YYYY-MM-DD"),
-      endDt: moment().endOf("month").format("YYYY-MM-DD"),
+      endDt: moment().endOf("month").format("YYYY-MM-DD")
     }
-  );
-  const {val:isOpen, set:setIsOpen} = useStorage(
-    `isOpen(${PATH})`, false
-  );
-  const {val:id_param, set:setId_param} = useStorage(
-    `id_param(${PATH})`, ""
-  );
-  const {val:category_param, set:setCategory_param} = useStorage(
-    `category_param(${PATH})`, ""
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -60,7 +59,7 @@ export const DiaryList = () => {
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
-  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [customer_id, DATE.startDt, DATE.endDt]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -71,47 +70,52 @@ export const DiaryList = () => {
     return (
       <React.Fragment>
         <Calendar
-          locale={"ko-KR"}
+          locale={"ko"}
           value={new Date()}
           showNavigation={true}
           showNeighboringMonth={true}
           view={"month"}
           tileContent={({ date, view }) => {
-            const diaryForDates = OBJECT.filter((diary) =>
+            const diaryForDates = OBJECT?.filter((diary) => (
               dateInRange(date, diary.diary_startDt, diary.diary_endDt)
-            );
+            ));
             return diaryForDates.length > 0 ? (
-              diaryForDates.map(diary => (
+              diaryForDates?.map((diary) => (
                 <div key={diary._id}>
                   <p className="calendar-filled"
                     style={{ backgroundColor: diary.diary_color }}
                     onClick={() => {
-                      setIsOpen(true);
-                      setId_param(diary._id);
-                      setCategory_param(diary.diary_category);
-                      setDATE({
-                        startDt: diary.diary_startDt,
-                        endDt: diary.diary_endDt,
+                      SEND.id = diary._id;
+                      SEND.startDt = diary.diary_startDt;
+                      SEND.endDt = diary.diary_endDt;
+                      SEND.category = diary.diary_category;
+                      navParam(SEND.toDetail, {
+                        state: SEND
                       });
                     }}>
                   </p>
                 </div>
               ))
             ) : (
-              <div key={date.toISOString()}>
-                <p className="calendar-unfilled"></p>
-              </div>
+              <React.Fragment>
+                <span onClick={() => {
+                  SEND.id = "";
+                  SEND.startDt = moment(date).format("YYYY-MM-DD");
+                  SEND.endDt = moment(date).format("YYYY-MM-DD");
+                  SEND.category = "";
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  +
+                </span>
+                <div key={date.toISOString()}>
+                  <p className="calendar-unfilled"></p>
+                </div>
+              </React.Fragment>
             );
           }}
         ></Calendar>
-        <DiaryDetail
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          id_param={id_param}
-          category_param={category_param}
-          startDt={DATE.startDt}
-          endDt={DATE.endDt}
-        ></DiaryDetail>
       </React.Fragment>
     );
   };

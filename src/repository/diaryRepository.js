@@ -64,13 +64,6 @@ export const detail = {
     })
     .lean();
 
-    console.log("id_param", _id_param);
-    console.log("customer_id_param", customer_id_param);
-    console.log("category_param", category_param);
-    console.log("startDt_param", startDt_param);
-    console.log("endDt_param", endDt_param);
-    console.log("finalResult", finalResult);
-
     return finalResult;
   }
 };
@@ -83,7 +76,7 @@ export const save = {
     const finalResult = await Diary.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
-      diary_category: category_param,
+      diary_category: !category_param ? {$exists:true} : category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -97,14 +90,14 @@ export const save = {
     return finalResult;
   },
   create: async (
-    customer_id_param, OBJECT_param, startDt_param, endDt_param
+    customer_id_param, category_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.create({
       _id: new mongoose.Types.ObjectId(),
       customer_id: customer_id_param,
       diary_startDt: startDt_param,
       diary_endDt: endDt_param,
-      diary_category: OBJECT_param.diary_category,
+      diary_category: category_param,
       diary_color: OBJECT_param.diary_color,
       diary_detail: OBJECT_param.diary_detail,
       diary_regDt: fmtDate,
@@ -114,13 +107,16 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param, OBJECT_param
+    _id_param, category_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOneAndUpdate(
-      {_id: _id_param
+      {_id: _id_param,
+        diary_category: category_param
       },
       {$set: {
         ...OBJECT_param,
+        diary_startDt: startDt_param,
+        diary_endDt: endDt_param,
         diary_updateDt: fmtDate,
       }},
       {upsert: true,
@@ -140,7 +136,7 @@ export const deletes = {
     const finalResult = await Diary.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
-      diary_category: category_param,
+      diary_category: !category_param ? {$exists:true} : category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,

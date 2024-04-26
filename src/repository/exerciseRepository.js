@@ -95,13 +95,13 @@ export const detail = {
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
       exercise_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
       exercise_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
     })
     .lean();
     return finalResult;
@@ -151,14 +151,16 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param, OBJECT_param
+    _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
         ...OBJECT_param,
-        exercise_plan_updateDt: fmtDate,
+        exercise_startDt: startDt_param,
+        exercise_endDt: endDt_param,
+        exercise_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -171,12 +173,11 @@ export const save = {
 
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
-
   detail: async (
     _id_param, customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
-      _id: !_id_param ? {$exists:true} : _id_param,
+      _id: _id_param ? _id_param : {$exists:true},
       customer_id: customer_id_param,
       exercise_startDt: {
         $gte: startDt_param,
@@ -194,7 +195,7 @@ export const deletes = {
   update: async (
     _id_param, section_id_param, customer_id_param, startDt_param, endDt_param,
   ) => {
-    const updateResult = await Exercise.updateOne(
+    const updateResult = await Exercise.findOneAndUpdate(
       {_id: _id_param,
         customer_id: customer_id_param,
         exercise_startDt: {

@@ -143,13 +143,15 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param, OBJECT_param
+    _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
         ...OBJECT_param,
+        sleep_plan_startDt: startDt_param,
+        sleep_plan_endDt: endDt_param,
         sleep_plan_updateDt: fmtDate,
       }},
       {upsert: true,

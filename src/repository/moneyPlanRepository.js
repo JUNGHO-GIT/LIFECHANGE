@@ -136,13 +136,15 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param, OBJECT_param
+    _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
         ...OBJECT_param,
+        money_plan_startDt: startDt_param,
+        money_plan_endDt: endDt_param,
         money_plan_updateDt: fmtDate,
       }},
       {upsert: true,

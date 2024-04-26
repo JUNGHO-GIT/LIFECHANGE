@@ -7,12 +7,10 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
-import {Button, Col, Row} from "react-bootstrap";
+import {Button, Col, Row, Container, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const DiaryDetail = ({
-  isOpen, setIsOpen, id_param, category_param, startDt, endDt
-}) => {
+export const DiaryDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -21,6 +19,10 @@ export const DiaryDetail = ({
   const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
+  const location_id = location?.state?.id?.trim()?.toString();
+  const location_startDt = location?.state?.startDt?.trim()?.toString();
+  const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const location_category = location?.state?.category?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -30,18 +32,14 @@ export const DiaryDetail = ({
       refresh: 0,
       startDt: "0000-00-00",
       endDt: "0000-00-00",
-      toList: "/diary/list",
-      toDetail: "/diary/detail"
+      toList: "/diary/list"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: startDt,
-      endDt: endDt
+      startDt: location_startDt,
+      endDt: location_endDt
     }
-  );
-  const {val:popCategory, set:setPopCategory} = useStorage(
-    `popCategory(${PATH})`, ""
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -57,37 +55,37 @@ export const DiaryDetail = ({
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
-  useDate(startDt, endDt, DATE, setDATE);
+  useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        _id: id_param,
+        _id: location_id,
         customer_id: customer_id,
-        category: category_param,
+        category: location_category,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
-  })()}, [id_param, customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, customer_id, location_category, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
       customer_id: customer_id,
-      category: popCategory,
+      category: location_category,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
     if (response.data.status === "success") {
       alert(response.data.msg);
-      setIsOpen(false);
+      navParam(SEND?.toList);
     }
     else {
       alert(response.data.msg);
-      setIsOpen(false);
+      navParam(SEND?.toList);
     }
   };
 
@@ -97,24 +95,24 @@ export const DiaryDetail = ({
       params: {
         _id: id,
         customer_id: customer_id,
-        category: popCategory,
+        category: location_category,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     if (response.data.status === "success") {
-      alert(response.data.msg);
       if (Object.keys(response.data.result).length > 0) {
+        alert(response.data.msg);
         setOBJECT(response.data.result);
-        setIsOpen(false);
+        navParam(SEND?.toList);
       }
       else {
-        navParam(SEND.toList);
-        setIsOpen(false);
+        alert(response.data.msg);
+        navParam(SEND?.toList);
       }
     }
     else {
       alert(response.data.msg);
-      setIsOpen(false);
+      navParam(SEND?.toList);
     }
   };
 
@@ -129,52 +127,55 @@ export const DiaryDetail = ({
   const tableNode = () => {
     return (
       <React.Fragment>
-        <InputMask
-          mask={""}
-          placeholder={"카테고리"}
-          id={`diary_category`}
-          name={`diary_category`}
-          className={"form-control mb-20 p-10"}
-          maskChar={null}
-          value={OBJECT?.diary_category}
-          onChange={(e) => (
-            setPopCategory(e.target.value),
-            setOBJECT((prev) => ({
-              ...prev,
-              diary_category: e.target.value
-            }))
-          )}
-        ></InputMask>
-        <InputMask
-          mask={""}
-          placeholder={"내용"}
-          id={`diary_detail`}
-          name={`diary_detail`}
-          className={"form-control mb-20 p-10"}
-          maskChar={null}
-          value={OBJECT?.diary_detail}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              diary_detail: e.target.value
-            }))
-          )}
-        ></InputMask>
-        <InputMask
-          mask={""}
-          placeholder={"색상"}
-          id={`diary_color`}
-          name={`diary_color`}
-          className={"form-control mb-20 p-10"}
-          maskChar={null}
-          value={OBJECT?.diary_color}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              diary_color: e.target.value
-            }))
-          )}
-        ></InputMask>
+        <Row className={"text-center"}>
+          <Col xs={12}>
+            <InputMask
+              mask={""}
+              placeholder={"카테고리"}
+              id={`diary_category`}
+              name={`diary_category`}
+              className={"form-control mb-20 p-10"}
+              maskChar={null}
+              value={OBJECT?.diary_category}
+              onChange={(e) => (
+                setOBJECT((prev) => ({
+                  ...prev,
+                  diary_category: e.target.value
+                }))
+              )}
+            ></InputMask>
+            <InputMask
+              mask={""}
+              placeholder={"내용"}
+              id={`diary_detail`}
+              name={`diary_detail`}
+              className={"form-control mb-20 p-10"}
+              maskChar={null}
+              value={OBJECT?.diary_detail}
+              onChange={(e) => (
+                setOBJECT((prev) => ({
+                  ...prev,
+                  diary_detail: e.target.value
+                }))
+              )}
+            ></InputMask>
+            <InputMask
+              mask={""}
+              placeholder={"색상"}
+              id={`diary_color`}
+              name={`diary_color`}
+              className={"form-control mb-20 p-10"}
+              maskChar={null}
+              value={OBJECT?.diary_color}
+              onChange={(e) => (
+                setOBJECT((prev) => ({
+                  ...prev,
+                  diary_color: e.target.value
+                }))
+              )}
+            ></InputMask>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   };
@@ -200,33 +201,32 @@ export const DiaryDetail = ({
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={`popup ${isOpen ? "" : "d-none"}`}>
-        <span className={"d-right fw-700 x-button"} onClick={() => (
-          setIsOpen(false)
-        )}>
-          X
-        </span>
-        <Row className={"d-center mt-30 mb-20"}>
-          <Col xs={12}>
-            <h3>{startDt}</h3>
-          </Col>
-        </Row>
-        <Row className={"d-center mb-20"}>
-          <Col xs={12}>
-            {dateNode()}
-          </Col>
-        </Row>
-        <Row className={"d-center mb-20"}>
-          <Col xs={12}>
-            {tableNode()}
-          </Col>
-        </Row>
-        <Row className={"d-center mb-20"}>
-          <Col xs={12}>
-            {buttonNode()}
-          </Col>
-        </Row>
+      <div className={"root-wrapper"}>
+        <Card className={"container-wrapper"} border={"light"}>
+          <Container>
+            <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
+                <h1 className={"text-center"}>일기 상세</h1>
+              </Col>
+            </Row>
+            <Row className={"d-center mb-20"}>
+              <Col xs={12}>
+                {dateNode()}
+              </Col>
+            </Row>
+            <Row className={"d-center mb-20"}>
+              <Col xs={12}>
+                {tableNode()}
+              </Col>
+            </Row>
+            <Row className={"d-center mb-20"}>
+              <Col xs={12}>
+                {buttonNode()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
       </div>
     </React.Fragment>
   );
-};
+}

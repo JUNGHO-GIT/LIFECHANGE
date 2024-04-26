@@ -136,13 +136,15 @@ export const save = {
   },
 
   update: async (
-    _id_param, OBJECT_param
+    _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOneAndUpdate(
       {_id: _id_param
       },
       {$set: {
         ...OBJECT_param,
+        exercise_plan_startDt: startDt_param,
+        exercise_plan_endDt: endDt_param,
         exercise_plan_updateDt: fmtDate,
       }},
       {upsert: true,

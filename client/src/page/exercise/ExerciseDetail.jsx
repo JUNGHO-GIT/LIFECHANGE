@@ -3,7 +3,6 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useDeveloperMode} from "../../assets/hooks/useDeveloperMode.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
@@ -146,14 +145,12 @@ export const ExerciseDetail = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-
     setOBJECT(response.data.result || OBJECT_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-
   })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -166,7 +163,6 @@ export const ExerciseDetail = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-
     if (response.data.status === "success") {
       alert(response.data.msg);
       if (Object.keys(response.data.result).length > 0) {

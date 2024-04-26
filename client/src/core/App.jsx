@@ -89,6 +89,7 @@ const Diary = () => {
     <React.Fragment>
       <Routes>
         <Route path="/list" element={<DiaryList />} />
+        <Route path="/detail" element={<DiaryDetail />} />
       </Routes>
     </React.Fragment>
   );

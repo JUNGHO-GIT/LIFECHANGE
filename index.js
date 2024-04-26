@@ -36,11 +36,11 @@ const customLogger = (collectionName, method, query, doc) => {
     JSON.stringify(doc, null, 3)
   );
   console.log(message);
-}
+};
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://127.0.0.1:27017");
-/* mongoose.set("debug", customLogger); */
+mongoose.set("debug", customLogger);
 mongoose.set("autoIndex", true);
 const app = express();
 const __filename = fileURLToPath(import.meta.url);

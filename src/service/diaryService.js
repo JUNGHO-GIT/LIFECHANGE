@@ -7,14 +7,14 @@ export const list = async (
   customer_id_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const totalCnt = await repository.totalCnt(
-    customer_id_param, startDt, endDt
+    customer_id_param, startDt_param, endDt_param
   );
 
   const finalResult = await repository.list.find(
-    customer_id_param, startDt, endDt
+    customer_id_param, startDt_param, endDt_param
   );
 
   return {
@@ -28,10 +28,10 @@ export const detail = async (
   _id_param, customer_id_param, category_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail(
-    _id_param, customer_id_param, category_param, startDt, endDt
+    _id_param, customer_id_param, category_param, startDt_param, endDt_param
   );
 
   return {
@@ -44,21 +44,21 @@ export const save = async (
   customer_id_param, category_param, OBJECT_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
-    "", customer_id_param, category_param, startDt, endDt
+    "", customer_id_param, category_param, startDt_param, endDt_param
   );
 
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      customer_id_param, OBJECT_param, startDt, endDt
+      customer_id_param, category_param, OBJECT_param, startDt_param, endDt_param
     );
   }
   else {
     finalResult = await repository.save.update(
-      findResult._id, OBJECT_param
+      findResult._id, category_param, OBJECT_param, startDt_param, endDt_param
     );
   }
 
@@ -70,10 +70,10 @@ export const deletes = async (
   _id_param, customer_id_param, category_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.deletes.detail(
-    _id_param, customer_id_param, category_param, startDt, endDt
+    _id_param, customer_id_param, category_param, startDt_param, endDt_param
   );
 
   if (!findResult) {

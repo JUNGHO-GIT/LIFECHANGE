@@ -8,18 +8,18 @@ export const percent = async (
   customer_id_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   // 1. exercise
   const findExercisePlan = await repository.percent.findExercisePlan(
-    customer_id_param, startDt, endDt
+    customer_id_param, startDt_param, endDt_param
   );
   const findExerciseReal = await Promise.all(findExercisePlan.map(async (plan) => {
     const startDt = plan.exercise_plan_startDt;
     const endDt = plan.exercise_plan_endDt;
 
     const findReal = await repository.percent.findExerciseReal(
-      customer_id_param, startDt, endDt
+      customer_id_param, startDt_param, endDt_param
     );
 
     const exerciseTotalCount = findReal.reduce((acc, curr) => (
@@ -46,14 +46,14 @@ export const percent = async (
 
   // 2. food
   const findFoodPlan = await repository.percent.findFoodPlan(
-    customer_id_param, startDt, endDt
+    customer_id_param, startDt_param, endDt_param
   );
   const findFoodReal = await Promise.all(findFoodPlan.map(async (plan) => {
     const startDt = plan.food_plan_startDt;
     const endDt = plan.food_plan_endDt;
 
     const findReal = await repository.percent.findFoodReal(
-      customer_id_param, startDt, endDt
+      customer_id_param, startDt_param, endDt_param
     );
 
     const foodTotalKcal = findReal.reduce((acc, curr) => (
@@ -80,14 +80,14 @@ export const percent = async (
 
   // 3. money
   const findMoneyPlan = await repository.percent.findMoneyPlan(
-    customer_id_param, startDt, endDt
+    customer_id_param, startDt_param, endDt_param
   );
   const findMoneyReal = await Promise.all(findMoneyPlan.map(async (plan) => {
     const startDt = plan.money_plan_startDt;
     const endDt = plan.money_plan_endDt;
 
     const findReal = await repository.percent.findMoneyReal(
-      customer_id_param, startDt, endDt
+      customer_id_param, startDt_param, endDt_param
     );
 
     const moneyTotalIn = findReal.reduce((acc, curr) => (
@@ -106,14 +106,14 @@ export const percent = async (
 
   // 4. sleep
   const findSleepPlan = await repository.percent.findSleepPlan(
-    customer_id_param, startDt, endDt
+    customer_id_param, startDt_param, endDt_param
   );
   const findSleepReal = await Promise.all(findSleepPlan.map(async (plan) => {
     const startDt = plan.sleep_plan_startDt;
     const endDt = plan.sleep_plan_endDt;
 
     const findReal = await repository.percent.findSleepReal(
-      customer_id_param, startDt, endDt
+      customer_id_param, startDt_param, endDt_param
     );
 
     const sleepNight = findReal.reduce((acc, curr) => (

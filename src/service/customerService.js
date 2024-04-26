@@ -91,7 +91,7 @@ export const save = async (
   customer_id_param, duration_param, OBJECT_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.detail(
     "", customer_id_param

@@ -7,7 +7,7 @@ export const list = async (
   customer_id_param, duration_param, FILTER_param, PAGING_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
   const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
@@ -16,11 +16,11 @@ export const list = async (
   const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
   const totalCnt = await repository.totalCnt(
-    customer_id_param, part, title, startDt, endDt
+    customer_id_param, part, title, startDt_param, endDt_param
   );
 
   const finalResult = await repository.list.find(
-    customer_id_param, part, title, sort, limit, page, startDt, endDt
+    customer_id_param, part, title, sort, limit, page, startDt_param, endDt_param
   );
 
   return {
@@ -34,10 +34,10 @@ export const detail = async (
   _id_param, customer_id_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail(
-    _id_param, customer_id_param, startDt, endDt
+    _id_param, customer_id_param, startDt_param, endDt_param
   );
 
   const sectionCnt = finalResult?.exercise_section.length || 0;
@@ -53,21 +53,21 @@ export const save = async (
   customer_id_param, OBJECT_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
-    "", customer_id_param, startDt, endDt
+    "", customer_id_param, startDt_param, endDt_param
   );
 
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      customer_id_param, OBJECT_param, startDt, endDt
+      customer_id_param, OBJECT_param, startDt_param, endDt_param
     );
   }
   else {
     finalResult = await repository.save.update(
-      findResult._id, OBJECT_param
+      findResult._id, OBJECT_param, startDt_param, endDt_param
     );
   }
 
@@ -79,25 +79,24 @@ export const deletes = async (
   _id_param, section_id_param, customer_id_param, duration_param
 ) => {
 
-  const [startDt, endDt] = duration_param.split(` ~ `);
+  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.deletes.detail(
-    _id_param, customer_id_param, startDt, endDt
+    _id_param, customer_id_param, startDt_param, endDt_param
   );
-
   if (!findResult) {
     return null;
   }
   else {
     const updateResult = await repository.deletes.update(
-      _id_param, section_id_param, customer_id_param, startDt, endDt
+      _id_param, section_id_param, customer_id_param, startDt_param, endDt_param
     );
     if (!updateResult) {
       return null;
     }
     else {
       const findAgain = await repository.deletes.detail(
-        _id_param, customer_id_param, startDt, endDt
+        _id_param, customer_id_param, startDt_param, endDt_param
       );
       if (findAgain?.exercise_section.length === 0) {
         await repository.deletes.deletes(
@@ -110,4 +109,5 @@ export const deletes = async (
       }
     }
   }
+
 };

@@ -144,7 +144,7 @@ export const save = {
     return finalResult;
   },
   update: async (
-    _id_param, OBJECT_param
+    _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
 
     const finalResult = await Food.findOneAndUpdate(
@@ -152,6 +152,8 @@ export const save = {
       },
       {$set: {
         ...OBJECT_param,
+        food_startDt: startDt_param,
+        food_endDt: endDt_param,
         food_updateDt: fmtDate,
       }},
       {upsert: true,

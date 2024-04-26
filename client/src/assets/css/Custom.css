@@ -24,7 +24,6 @@ textarea.form-control {
 }
 .form-control {
   padding: 0px 15px 0px 15px !important;
-  width: fit-content !important;
 }
 .input-group {
   margin-bottom: 10px !important;
