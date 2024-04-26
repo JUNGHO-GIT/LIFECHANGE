@@ -76,8 +76,8 @@ export const SleepDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        _id: location_id,
         customer_id: customer_id,
+        _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -92,8 +92,8 @@ export const SleepDetail = () => {
   const flowDelete = async (id, section_id) => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
-        _id: id,
         customer_id: customer_id,
+        _id: id,
         section_id: section_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },

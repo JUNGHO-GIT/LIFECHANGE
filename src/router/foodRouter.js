@@ -42,9 +42,9 @@ router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
       req.query.customer_id,
-      req.query.duration,
       req.query.FILTER,
-      req.query.PAGING
+      req.query.PAGING,
+      req.query.duration
     );
     if (result && result.result) {
       res.json({
@@ -75,8 +75,8 @@ router.get("/list", async (req, res) => {
 router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
-      req.query._id,
       req.query.customer_id,
+      req.query._id,
       req.query.duration
     );
     if (result && result.result) {
@@ -141,8 +141,8 @@ router.post("/save", async (req, res) => {
 router.delete("/delete", async (req, res) => {
   try {
     let result = await service.deletes(
-      req.query._id,
       req.query.customer_id,
+      req.query._id,
       req.query.section_id,
       req.query.duration
     );

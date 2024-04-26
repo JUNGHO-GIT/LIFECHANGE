@@ -5,7 +5,7 @@ import * as repository from "../repository/sleepPlanRepository.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
-  customer_id_param, duration_param, FILTER_param, PAGING_param
+  customer_id_param, FILTER_param, PAGING_param, duration_param
 ) => {
 
   const [startDtPlan, endDtPlan] = duration_param.split(` ~ `);
@@ -55,13 +55,13 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param, customer_id_param, duration_param
+  customer_id_param, _id_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail(
-    _id_param, customer_id_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   );
 
   return finalResult
@@ -75,7 +75,7 @@ export const save = async (
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findPlan = await repository.save.detail(
-    "", customer_id_param, startDt_param, endDt_param
+    customer_id_param, "", startDt_param, endDt_param
   );
 
   let finalResult = null;
@@ -95,13 +95,13 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param, customer_id_param, duration_param
+  customer_id_param, _id_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.deletes.detail(
-    _id_param, customer_id_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   );
 
   if (!findResult) {

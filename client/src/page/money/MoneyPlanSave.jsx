@@ -72,8 +72,8 @@ export const MoneyPlanSave = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
-        _id: "",
         customer_id: customer_id,
+        _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });

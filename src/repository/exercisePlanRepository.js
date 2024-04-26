@@ -78,11 +78,11 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    _id_param, customer_id_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOne({
-      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       exercise_plan_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -99,11 +99,11 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   find: async (
-    _id_param, customer_id_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOne({
-      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       exercise_plan_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -119,10 +119,9 @@ export const save = {
   create: async (
     customer_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
-
     const finalResult = await ExercisePlan.create({
-      _id: new mongoose.Types.ObjectId(),
       customer_id: customer_id_param,
+      _id: new mongoose.Types.ObjectId(),
       exercise_plan_startDt: startDt_param,
       exercise_plan_endDt: endDt_param,
       exercise_plan_count: OBJECT_param.exercise_plan_count,
@@ -136,10 +135,11 @@ export const save = {
   },
 
   update: async (
-    _id_param, OBJECT_param, startDt_param, endDt_param
+    customer_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOneAndUpdate(
-      {_id: _id_param
+      {customer_id: customer_id_param,
+        _id: _id_param
       },
       {$set: {
         ...OBJECT_param,
@@ -160,11 +160,11 @@ export const save = {
 export const deletes = {
 
   detail: async (
-    _id_param, customer_id_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOne({
-      _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
+      _id: !_id_param ? {$exists:true} : _id_param,
       exercise_plan_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -179,9 +179,10 @@ export const deletes = {
   },
 
   deletes: async (
-    _id_param
+    customer_id_param, _id_param
   ) => {
     const deleteResult = await ExercisePlan.deleteOne({
+      customer_id: customer_id_param,
       _id: _id_param
     })
     .lean();

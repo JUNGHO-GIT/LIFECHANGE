@@ -36,10 +36,10 @@ export const barToday = async (
   let finalResultNut = [];
 
   const findPlan = await repository.barToday.findPlan(
-    "", customer_id_param, koreanDate, koreanDate
+    customer_id_param, "", koreanDate, koreanDate
   );
   const findReal = await repository.barToday.findReal(
-    "", customer_id_param, koreanDate, koreanDate
+    customer_id_param, "", koreanDate, koreanDate
   );
 
   for (let key in dataKcal) {
@@ -177,7 +177,7 @@ export const lineWeek = async (
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
     const findResult = await repository.lineWeek.find(
-      "", customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+      customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResultKcal.push({
@@ -222,7 +222,7 @@ export const lineMonth = async (
     day.add(1, "days")
   ) {
     const findResult = await repository.lineMonth.find(
-      "", customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
+      customer_id_param, "", day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
     finalResultKcal.push({
@@ -274,7 +274,7 @@ export const avgWeek = async (
 
     if (weekNum >= 1 && weekNum <= 5) {
       const findResult = await repository.avgWeek.find(
-        "", customer_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
+        customer_id_param, "", week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
       if (findResult) {
@@ -335,7 +335,7 @@ export const avgMonth = async (
     const monthNum = month.month();
 
     const findResult = await repository.avgMonth.find(
-      "", customer_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
+      customer_id_param, "", month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 
     if (findResult) {

@@ -25,13 +25,13 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param, customer_id_param, category_param, duration_param
+  customer_id_param, _id_param, category_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail(
-    _id_param, customer_id_param, category_param, startDt_param, endDt_param
+    customer_id_param, _id_param, category_param, startDt_param, endDt_param
   );
 
   return {
@@ -47,7 +47,7 @@ export const save = async (
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
-    "", customer_id_param, category_param, startDt_param, endDt_param
+    customer_id_param, "", category_param, startDt_param, endDt_param
   );
 
   let finalResult;
@@ -58,7 +58,7 @@ export const save = async (
   }
   else {
     finalResult = await repository.save.update(
-      findResult._id, category_param, OBJECT_param, startDt_param, endDt_param
+      customer_id_param, findResult._id, category_param, OBJECT_param, startDt_param, endDt_param
     );
   }
 
@@ -67,13 +67,13 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param, customer_id_param, category_param, duration_param
+  customer_id_param, _id_param, category_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.deletes.detail(
-    _id_param, customer_id_param, category_param, startDt_param, endDt_param
+    customer_id_param, _id_param, category_param, startDt_param, endDt_param
   );
 
   if (!findResult) {

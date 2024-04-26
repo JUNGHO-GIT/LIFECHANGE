@@ -73,8 +73,8 @@ export const MoneyPlanDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
-        _id: location_id,
         customer_id: customer_id,
+        _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -90,8 +90,8 @@ export const MoneyPlanDetail = () => {
   const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_OBJECT}/plan/delete`, {
       params: {
-        _id: id,
         customer_id: customer_id,
+        _id: id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });

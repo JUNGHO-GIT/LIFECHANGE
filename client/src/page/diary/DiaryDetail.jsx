@@ -61,8 +61,8 @@ export const DiaryDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        _id: location_id,
         customer_id: customer_id,
+        _id: location_id,
         category: location_category,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -93,8 +93,8 @@ export const DiaryDetail = () => {
   const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
-        _id: id,
         customer_id: customer_id,
+        _id: id,
         category: location_category,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
