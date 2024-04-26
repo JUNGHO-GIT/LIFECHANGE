@@ -89,7 +89,7 @@ export const DiaryList = () => {
                 });
               }}
             >
-              <span className={"ms-10"}>{diary.diary_category}</span>
+              <span className={"calendar-category"}>{diary.diary_category}</span>
             </div>
           ))}
         </React.Fragment>
@@ -98,9 +98,11 @@ export const DiaryList = () => {
     const unActiveLine = (diaryForDates) => {
       return (
         <React.Fragment>
-          <div key={diaryForDates}>
-            <p className={"calendar-unfilled"}></p>
-          </div>
+          {diaryForDates?.map((diary) => (
+            <div key={diary._id} className={"calendar-unfilled"}>
+              <span className={"calendar-category"}>{diary.diary_category}</span>
+            </div>
+          ))}
         </React.Fragment>
       );
     };
