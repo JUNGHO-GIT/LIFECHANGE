@@ -1,19 +1,19 @@
 /** core ******************************************************************************************/
 html {
-  scroll-behavior: smooth !important;
+  scroll-behavior: smooth;
 }
 html, body {
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  background-color: #f5f5f9 !important;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: #f5f5f9;
 }
 .main {
   margin-top: 50px;
   margin-bottom : 50px;
 }
 textarea {
-  resize: none !important;
+  resize: none;
 }
 textarea.form-control {
   resize: none;
@@ -23,15 +23,26 @@ textarea.form-control {
   background-color: #ffffff;
 }
 .form-control {
-  padding: 0px 15px 0px 15px !important;
+  padding: 0px 15px 0px 15px;
 }
 .input-group {
-  margin-bottom: 10px !important;
+  margin-bottom: 10px;
+  position: relative;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  display: flex;
+}
+.custom-input {
+  cursor: pointer;
+  font-weight: bolder;
+  border-radius: 10px;
+  border-color: darkgrey;
 }
 .button {
-  padding: 4px 7px 2px 7px !important;
-  height: -webkit-fill-available !important;
-  width: -webkit-fill-available !important;
+  padding: 4px 7px 2px 7px;
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
 }
 .image {
   width: 25px;
@@ -44,9 +55,9 @@ textarea.form-control {
 
 /**************************************************************************************************/
 ::-webkit-scrollbar {
-  width: 0 !important;
-  display: none !important;
-  -ms-overflow-style: none !important;
+  width: 0;
+  display: none;
+  -ms-overflow-style: none;
 }
 
 /**************************************************************************************************/
@@ -64,17 +75,17 @@ textarea.form-control {
   border-radius: 0.5rem;
 }
 .table-light {
-  --bs-table-color: #000000 !important;
-  --bs-table-bg: #fefefe !important;
-  --bs-table-border-color: #ececec !important;
-  --bs-table-striped-bg: #ececec !important;
-  --bs-table-striped-color: #000000 !important;
-  --bs-table-active-bg: #dfe0e1 !important;
-  --bs-table-active-color: #000000 !important;
-  --bs-table-hover-bg: #e5e6e7 !important;
-  --bs-table-hover-color: #000000 !important;
-  color: var(--bs-table-color) !important;
-  border-color: var(--bs-table-border-color) !important;
+  --bs-table-color: #000000;
+  --bs-table-bg: #fefefe;
+  --bs-table-border-color: #ececec;
+  --bs-table-striped-bg: #ececec;
+  --bs-table-striped-color: #000000;
+  --bs-table-active-bg: #dfe0e1;
+  --bs-table-active-color: #000000;
+  --bs-table-hover-bg: #e5e6e7;
+  --bs-table-hover-color: #000000;
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
 }
 
 /**************************************************************************************************/
