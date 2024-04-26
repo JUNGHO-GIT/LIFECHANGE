@@ -3,8 +3,8 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import InputMask from "react-input-mask";
-import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {Button, Col, Row, Container, Card} from "react-bootstrap";
@@ -53,6 +53,11 @@ export const DiaryDetail = () => {
     diary_detail: ""
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {
+    alert(JSON.stringify(location));
+  }, []);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);

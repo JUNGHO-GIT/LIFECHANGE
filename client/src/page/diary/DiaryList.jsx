@@ -63,9 +63,46 @@ export const DiaryList = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const formatDate = (date) => {
+      return moment(date).format("YYYY-MM-DD");
+    };
     const dateInRange = (date, startDt, endDt) => {
-      const currDate = moment(date).format("YYYY-MM-DD");
+      const currDate = formatDate(date);
       return currDate >= startDt && currDate <= endDt;
+    };
+    const activeLine = (diaryForDates) => {
+      return (
+        <React.Fragment>
+          {diaryForDates?.map((diary) => (
+            <div key={diary._id} className={"calendar-filled"}
+              style={{
+                backgroundColor: diary.diary_color,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                SEND.id = diary._id;
+                SEND.startDt = diary.diary_startDt;
+                SEND.endDt = diary.diary_endDt;
+                SEND.category = diary.diary_category;
+                navParam(SEND.toDetail, {
+                  state: SEND
+                });
+              }}
+            >
+              <span className={"ms-10"}>{diary.diary_category}</span>
+            </div>
+          ))}
+        </React.Fragment>
+      );
+    };
+    const unActiveLine = (diaryForDates) => {
+      return (
+        <React.Fragment>
+          <div key={diaryForDates}>
+            <p className={"calendar-unfilled"}></p>
+          </div>
+        </React.Fragment>
+      );
     };
     return (
       <React.Fragment>
@@ -75,47 +112,27 @@ export const DiaryList = () => {
           showNavigation={true}
           showNeighboringMonth={true}
           view={"month"}
+          onClickDay={(date) => {
+            SEND.id = "";
+            SEND.startDt = formatDate(date);
+            SEND.endDt = formatDate(date);
+            SEND.category = "";
+            SEND.toDetail = "/diary/detail";
+            navParam(SEND.toDetail, {
+              state: SEND
+            });
+          }}
           tileContent={({ date, view }) => {
             const diaryForDates = OBJECT?.filter((diary) => (
               dateInRange(date, diary.diary_startDt, diary.diary_endDt)
             ));
-            return diaryForDates.length > 0 ? (
-              diaryForDates?.map((diary) => (
-                <div key={diary._id}>
-                  <p className="calendar-filled"
-                    style={{ backgroundColor: diary.diary_color }}
-                    onClick={() => {
-                      SEND.id = diary._id;
-                      SEND.startDt = diary.diary_startDt;
-                      SEND.endDt = diary.diary_endDt;
-                      SEND.category = diary.diary_category;
-                      navParam(SEND.toDetail, {
-                        state: SEND
-                      });
-                    }}>
-                  </p>
-                </div>
-              ))
-            ) : (
+            return (
               <React.Fragment>
-                <span onClick={() => {
-                  SEND.id = "";
-                  SEND.startDt = moment(date).format("YYYY-MM-DD");
-                  SEND.endDt = moment(date).format("YYYY-MM-DD");
-                  SEND.category = "";
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}>
-                  +
-                </span>
-                <div key={date.toISOString()}>
-                  <p className="calendar-unfilled"></p>
-                </div>
+                {diaryForDates.length > 0 ? activeLine(diaryForDates) : unActiveLine(diaryForDates)}
               </React.Fragment>
             );
           }}
-        ></Calendar>
+        />
       </React.Fragment>
     );
   };
