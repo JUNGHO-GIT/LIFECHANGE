@@ -3,7 +3,6 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import InputMask from "react-input-mask";
-import Draggable from "react-draggable";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -12,7 +11,7 @@ import {Button, Col, Row} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const DiaryDetail = ({
-  isOpen, setIsOpen, startDt, endDt
+  isOpen, setIsOpen, id_param, category_param, startDt, endDt
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -22,9 +21,6 @@ export const DiaryDetail = ({
   const customer_id = window.sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const location_id = location?.state?.id?.trim()?.toString();
-  const location_startDt = location?.state?.startDt?.trim()?.toString();
-  const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -40,8 +36,8 @@ export const DiaryDetail = ({
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
+      startDt: startDt,
+      endDt: endDt
     }
   );
   const {val:popCategory, set:setPopCategory} = useStorage(
@@ -55,7 +51,7 @@ export const DiaryDetail = ({
     diary_startDt: "0000-00-00",
     diary_endDt: "0000-00-00",
     diary_category: "",
-    diary_title: "",
+    diary_color: "",
     diary_detail: ""
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
@@ -67,14 +63,14 @@ export const DiaryDetail = ({
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        _id: location_id,
+        _id: id_param,
         customer_id: customer_id,
-        category: popCategory,
+        category: category_param,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
-  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [id_param, customer_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -151,21 +147,6 @@ export const DiaryDetail = ({
         ></InputMask>
         <InputMask
           mask={""}
-          placeholder={"제목"}
-          id={`diary_title`}
-          name={`diary_title`}
-          className={"form-control mb-20 p-10"}
-          maskChar={null}
-          value={OBJECT?.diary_title}
-          onChange={(e) => (
-            setOBJECT((prev) => ({
-              ...prev,
-              diary_title: e.target.value
-            }))
-          )}
-        ></InputMask>
-        <InputMask
-          mask={""}
           placeholder={"내용"}
           id={`diary_detail`}
           name={`diary_detail`}
@@ -176,6 +157,21 @@ export const DiaryDetail = ({
             setOBJECT((prev) => ({
               ...prev,
               diary_detail: e.target.value
+            }))
+          )}
+        ></InputMask>
+        <InputMask
+          mask={""}
+          placeholder={"색상"}
+          id={`diary_color`}
+          name={`diary_color`}
+          className={"form-control mb-20 p-10"}
+          maskChar={null}
+          value={OBJECT?.diary_color}
+          onChange={(e) => (
+            setOBJECT((prev) => ({
+              ...prev,
+              diary_color: e.target.value
             }))
           )}
         ></InputMask>
@@ -204,35 +200,33 @@ export const DiaryDetail = ({
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Draggable>
-        <div className={`popup ${isOpen ? "" : "d-none"}`}>
-          <span className={"d-right fw-700 x-button"} onClick={() => (
-            setIsOpen(false)
-          )}>
-            X
-          </span>
-          <Row className={"d-center mt-30 mb-20"}>
-            <Col xs={12}>
-              <h3>{startDt}</h3>
-            </Col>
-          </Row>
-          <Row className={"d-center mb-20"}>
-            <Col xs={12}>
-              {dateNode()}
-            </Col>
-          </Row>
-          <Row className={"d-center mb-20"}>
-            <Col xs={12}>
-              {tableNode()}
-            </Col>
-          </Row>
-          <Row className={"d-center mb-20"}>
-            <Col xs={12}>
-              {buttonNode()}
-            </Col>
-          </Row>
-        </div>
-      </Draggable>
+      <div className={`popup ${isOpen ? "" : "d-none"}`}>
+        <span className={"d-right fw-700 x-button"} onClick={() => (
+          setIsOpen(false)
+        )}>
+          X
+        </span>
+        <Row className={"d-center mt-30 mb-20"}>
+          <Col xs={12}>
+            <h3>{startDt}</h3>
+          </Col>
+        </Row>
+        <Row className={"d-center mb-20"}>
+          <Col xs={12}>
+            {dateNode()}
+          </Col>
+        </Row>
+        <Row className={"d-center mb-20"}>
+          <Col xs={12}>
+            {tableNode()}
+          </Col>
+        </Row>
+        <Row className={"d-center mb-20"}>
+          <Col xs={12}>
+            {buttonNode()}
+          </Col>
+        </Row>
+      </div>
     </React.Fragment>
   );
 };

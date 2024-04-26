@@ -21,7 +21,7 @@ export const Header = () => {
 
   // 4. toggle ------------------------------------------------------------------------------------>
   const toggleSidebar = () => {
-    setIsSidebar(prev => !prev);
+    setIsSidebar((prev) => (!prev));
   };
   const handleCloseSidebar = () => {
     setIsSidebar(false);

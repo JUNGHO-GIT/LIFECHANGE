@@ -32,7 +32,7 @@ const schema = new mongoose.Schema({
     default: "",
     unique : true
   },
-  diary_title: {
+  diary_color: {
     type : String,
     default: "",
     required : false

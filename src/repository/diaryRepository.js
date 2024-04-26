@@ -52,7 +52,7 @@ export const detail = {
     const finalResult = await Diary.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
       customer_id: customer_id_param,
-      diary_category: category_param,
+      diary_category: !category_param ? {$exists:true} : category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -63,6 +63,13 @@ export const detail = {
       },
     })
     .lean();
+
+    console.log("id_param", _id_param);
+    console.log("customer_id_param", customer_id_param);
+    console.log("category_param", category_param);
+    console.log("startDt_param", startDt_param);
+    console.log("endDt_param", endDt_param);
+    console.log("finalResult", finalResult);
 
     return finalResult;
   }
@@ -98,7 +105,7 @@ export const save = {
       diary_startDt: startDt_param,
       diary_endDt: endDt_param,
       diary_category: OBJECT_param.diary_category,
-      diary_title: OBJECT_param.diary_title,
+      diary_color: OBJECT_param.diary_color,
       diary_detail: OBJECT_param.diary_detail,
       diary_regDt: fmtDate,
       diary_updateDt: "",

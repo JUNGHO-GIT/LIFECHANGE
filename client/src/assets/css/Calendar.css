@@ -68,3 +68,22 @@
   background: #ffffff;
   color: #0080ff;
 }
+
+.calendar-tile {
+  position: relative;
+  top: 0;
+}
+
+.calendar-unfilled {
+  width: auto;
+  height: 3px;
+  margin: 10px 0px 10px 0px;
+  background-color: #ffffff;
+}
+
+.calendar-filled {
+  width: auto;
+  height: 3px;
+  margin: 10px 0px 10px 0px;
+  background-color: #0080ff;
+}
