@@ -46,8 +46,16 @@ export const CustomerDataset = () => {
   );
   const {val:idx, set:setIdx} = useStorage(
     `idx(${PATH})`, {
-      partIdx: 0,
-      titleIdx: 0,
+      sectionIdx: 0,
+      partIdx: 1,
+      titleIdx: 1,
+    }
+  );
+  const {val:selectedIdx, set:setSelectedIdx} = useStorage(
+    `selectedIdx(${PATH})`, {
+      sectionIdx: 0,
+      partIdx: 1,
+      titleIdx: 1,
     }
   );
   const {val:dataType, set:setDataType} = useStorage(
@@ -111,25 +119,37 @@ export const CustomerDataset = () => {
   const tableNode1 = () => {
     return (
       <React.Fragment>
-        <Table hover variant={"light"} border={2}>
-          <thead className={"table-primary"}>
+        <Table hover variant="light" border={2}>
+          <thead className="table-primary">
             <tr>
               <th>Section</th>
             </tr>
           </thead>
           <tbody>
-            {datasetArray.map((item) => (
-              <tr>
+            {datasetArray.map((item, index) => (
+              <tr
+                key={index}
+                className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
+                style={{border: "1px solid #dee2e6"}}
+                onClick={() => {
+                  setDataType(item);
+                  setSelectedIdx((prev) => ({
+                    ...prev,
+                    sectionIdx: index,
+                    partIdx: 1,
+                    titleIdx: 1
+                  }));
+                  setIdx((prev) => ({
+                    ...prev,
+                    partIdx: 1,
+                    titleIdx: 1
+                  }));
+                }}
+              >
                 <td>
                   <Row>
-                    <Col xs={12} className={"fs-20 p-5"}>
-                      <div className={"pointer me-2"} onClick={() => (
-                        setDataType(item),
-                        setIdx((prev) => ({
-                          ...prev,
-                          partIdx: 1
-                        }))
-                      )}>
+                    <Col xs={12} className="fs-20 p-5">
+                      <div className="pointer me-2">
                         {item}
                       </div>
                     </Col>
@@ -203,7 +223,17 @@ export const CustomerDataset = () => {
           </thead>
           <tbody>
             {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
-              <tr>
+              <tr
+                key={index}
+                className={selectedIdx.partIdx === index ? "table-secondary" : ""}
+                style={{border: "1px solid #dee2e6"}}
+                onClick={() => {
+                  setSelectedIdx((prev) => ({
+                    ...prev,
+                    partIdx: index
+                  }));
+                }}
+              >
                 <td>
                   <Row>
                     <Col xs={7} className={"fs-20 p-5"}>
@@ -317,7 +347,17 @@ export const CustomerDataset = () => {
           </thead>
           <tbody>
             {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-              <tr>
+              <tr
+                key={index}
+                className={selectedIdx.titleIdx === index ? "table-secondary" : ""}
+                style={{border: "1px solid #dee2e6"}}
+                onClick={() => {
+                  setSelectedIdx((prev) => ({
+                    ...prev,
+                    titleIdx: index
+                  }));
+                }}
+              >
                 <td>
                   <Row>
                     <Col xs={7} className={"fs-20 p-5"}>

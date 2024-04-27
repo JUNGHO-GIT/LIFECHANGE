@@ -176,9 +176,6 @@ export const deletes = {
   detail: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
-
-    console.log(customer_id_param, _id_param, startDt_param, endDt_param);
-
     const finalResult = await Exercise.findOne({
       customer_id: customer_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,

@@ -76,11 +76,11 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  _id_param, customer_id_param
+  customer_id_param, _id_param
 ) => {
 
   const finalResult = await repository.detail(
-    _id_param, customer_id_param
+    customer_id_param, _id_param
   );
 
   return finalResult
@@ -88,13 +88,11 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  customer_id_param, duration_param, OBJECT_param
+  customer_id_param, OBJECT_param
 ) => {
 
-  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
-
   const findResult = await repository.detail(
-    "", customer_id_param
+    customer_id_param, ""
   );
 
   let finalResult;
@@ -105,7 +103,7 @@ export const save = async (
   }
   else {
     finalResult = await repository.update(
-      findResult._id, OBJECT_param
+      customer_id_param, findResult._id, OBJECT_param
     );
   }
 
@@ -114,11 +112,11 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  _id_param, customer_id_param
+  customer_id_param, _id_param
 ) => {
 
   const finalResult = await repository.deletes(
-    _id_param, customer_id_param
+    customer_id_param, _id_param
   );
 
   return finalResult

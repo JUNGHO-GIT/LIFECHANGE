@@ -89,7 +89,7 @@ export const aggregateDataset = async (
 
 // 2-1. detail ------------------------------------------------------------------------------------>
 export const detail = async (
-  _id_param, customer_id_param
+  customer_id_param, _id_param
 ) => {
 
   const finalResult = await Customer.findOne({
@@ -126,11 +126,11 @@ export const create = async (
 
 // 3-2. update ------------------------------------------------------------------------------------>
 export const update = async (
-  _id_param, OBJECT_param
+  customer_id_param, _id_param, OBJECT_param
 ) => {
-
   const finalResult = await Customer.findOneAndUpdate(
-    {_id: _id_param
+    {customer_id: customer_id_param,
+      _id: _id_param
     },
     {$set: {
       ...OBJECT_param,
@@ -147,21 +147,21 @@ export const update = async (
 
 // 4-1. delete ------------------------------------------------------------------------------------>
 export const deletes = async (
-  _id_param, customer_id_param
+  customer_id_param, _id_param
 ) => {
 
   const updateResult = await Customer.updateOne(
-    {customer_id: customer_id_param
+    {customer_id: customer_id_param,
+      _id: _id_param
     },
     {$pull: {
-        customer_section: {
-          _id: _id_param
-        },
-      },
-      $set: {
-        customer_updateDt: fmtDate,
+      customer_section: {
+        _id: _id_param
       },
     },
+    $set: {
+      customer_updateDt: fmtDate,
+    }},
     {arrayFilters: [{
       "elem._id": _id_param
     }]}
