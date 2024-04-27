@@ -119,7 +119,7 @@ export const SleepDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>날짜</th>
+              <th className={"w-20"}>날짜</th>
               <th>취침시간</th>
               <th>기상시간</th>
               <th>수면시간</th>
@@ -135,7 +135,7 @@ export const SleepDetail = () => {
                   <td>{section.sleep_morning}</td>
                   <td>{section.sleep_time}</td>
                   <td>
-                    <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                    <p className={"del-btn"} onClick={() => (
                       flowDelete(OBJECT._id, section._id)
                     )}>x</p>
                   </td>

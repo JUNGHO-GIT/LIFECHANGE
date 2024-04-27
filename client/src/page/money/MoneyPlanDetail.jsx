@@ -126,7 +126,7 @@ export const MoneyPlanDetail = () => {
             <td>{OBJECT?.money_plan_in}</td>
             <td>{OBJECT?.money_plan_out}</td>
             <td>
-              <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+              <p className={"del-btn"} onClick={() => (
                 flowDelete(OBJECT._id)
               )}>x</p>
             </td>

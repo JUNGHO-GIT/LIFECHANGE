@@ -132,7 +132,7 @@ export const ExercisePlanDetail = () => {
             <td>{OBJECT?.exercise_plan_cardio}</td>
             <td>{OBJECT?.exercise_plan_weight}</td>
             <td>
-              <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+              <p className={"del-btn"} onClick={() => (
                 flowDelete(OBJECT._id)
               )}>x</p>
             </td>

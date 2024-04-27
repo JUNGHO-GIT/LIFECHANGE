@@ -128,7 +128,7 @@ export const SleepPlanDetail = () => {
             <td>{OBJECT?.sleep_plan_morning}</td>
             <td>{OBJECT?.sleep_plan_time}</td>
             <td>
-              <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+              <p className={"del-btn"} onClick={() => (
                 flowDelete(OBJECT._id)
               )}>x</p>
             </td>

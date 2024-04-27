@@ -138,8 +138,8 @@ export const MoneyList = () => {
                           state: SEND
                         });
                       }}>
-                        {item.money_startDt}
-                        {item.money_section.length > 3 && <div>더보기</div>}
+                        {item.money_startDt.substring(5, 10)}
+                        {item.money_section.length > 3 && (<div>더보기</div>)}
                       </td>
                     )}
                     <td>{section.money_part_val}</td>

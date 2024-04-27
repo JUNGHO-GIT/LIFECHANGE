@@ -125,7 +125,7 @@ export const MoneyDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>날짜</th>
+              <th className={"w-20"}>날짜</th>
               <th>분류</th>
               <th>항목</th>
               <th>금액</th>
@@ -148,7 +148,7 @@ export const MoneyDetail = () => {
                 <td>{section.money_amount}</td>
                 <td>{section.money_content}</td>
                 <td>
-                  <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                  <p className={"del-btn"} onClick={() => (
                     flowDelete(OBJECT._id, section._id)
                   )}>x</p>
                 </td>

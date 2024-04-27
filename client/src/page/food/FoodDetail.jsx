@@ -131,7 +131,7 @@ export const FoodDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>날짜</th>
+              <th className={"w-20"}>날짜</th>
               <th>분류</th>
               <th>식품명</th>
               <th>브랜드</th>
@@ -164,7 +164,7 @@ export const FoodDetail = () => {
                 <td>{section.food_protein}</td>
                 <td>{section.food_fat}</td>
                 <td>
-                  <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                  <p className={"del-btn"} onClick={() => (
                     flowDelete(OBJECT._id, section._id)
                   )}>x</p>
                 </td>

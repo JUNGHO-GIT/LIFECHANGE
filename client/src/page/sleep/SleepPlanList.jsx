@@ -117,7 +117,7 @@ export const SleepPlanList = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>날짜</th>
+              <th className={"w-20"}>날짜</th>
               <th>분류</th>
               <th>목표</th>
               <th>실제</th>

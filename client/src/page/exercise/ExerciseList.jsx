@@ -124,7 +124,7 @@ export const ExerciseList = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>날짜</th>
+              <th className={"w-20"}>날짜</th>
               <th>부위</th>
               <th>종목</th>
               <th>set x rep x kg</th>
@@ -134,45 +134,33 @@ export const ExerciseList = () => {
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={sectionIndex}>
-                    <tr>
-                      {sectionIndex === 0 && (
-                        <React.Fragment>
-                          <td rowSpan={Math.min(item.exercise_section.length, 3)}
-                          className={"pointer"} onClick={() => {
-                            SEND.id = item._id;
-                            SEND.startDt = item.exercise_startDt;
-                            SEND.endDt = item.exercise_endDt;
-                            navParam(SEND.toDetail, {
-                              state: SEND
-                            });
-                          }}>
-                            {item.exercise_startDt}
-                            {item.exercise_section.length > 3 && <div>더보기</div>}
-                          </td>
-                        </React.Fragment>
-                      )}
-                      {(section.exercise_part_val !== "유산소") ? (
-                        <React.Fragment>
-                          <td>{section.exercise_part_val}</td>
-                          <td>{section.exercise_title_val}</td>
-                          <td>
-                            {`${numeral(section.exercise_set).format('0,0')}`}
-                            &nbsp;x&nbsp;
-                            {`${numeral(section.exercise_rep).format('0,0')}`}
-                            &nbsp;x&nbsp;
-                            {`${numeral(section.exercise_kg).format('0,0')}`}
-                          </td>
-                        </React.Fragment>
+                  <tr key={sectionIndex}>
+                    {sectionIndex === 0 && (
+                      <td rowSpan={Math.min(item.exercise_section.length, 3)}
+                        className={"pointer"} onClick={() => {
+                          SEND.id = item._id;
+                          SEND.startDt = item.exercise_startDt;
+                          SEND.endDt = item.exercise_endDt;
+                          navParam(SEND.toDetail, {
+                            state: SEND
+                          });
+                        }}>
+                        {item.exercise_startDt.substring(5, 10)}
+                        {item.exercise_section.length > 3 && (<div>더보기</div>)}
+                      </td>
+                    )}
+                    <td>{section.exercise_part_val.substring(0, 6)}</td>
+                    <td>{section.exercise_title_val.substring(0, 6)}</td>
+                    <td>
+                      {section.exercise_part_val !== "유산소" ? (
+                        `${numeral(section.exercise_set).format('0,0')}`
+                        + ' x ' + `${numeral(section.exercise_rep).format('0,0')}`
+                        + ' x ' + `${numeral(section.exercise_kg).format('0,0')}`
                       ) : (
-                        <React.Fragment>
-                          <td>{section.exercise_part_val}</td>
-                          <td>{section.exercise_title_val}</td>
-                          <td>{section.exercise_cardio}</td>
-                        </React.Fragment>
+                        section.exercise_cardio
                       )}
-                    </tr>
-                  </React.Fragment>
+                    </td>
+                  </tr>
                 ))}
               </React.Fragment>
             ))}

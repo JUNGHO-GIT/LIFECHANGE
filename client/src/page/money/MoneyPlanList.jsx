@@ -114,7 +114,7 @@ export const MoneyPlanList = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>기간</th>
+              <th className={"w-20"}>날짜</th>
               <th>분류</th>
               <th>목표</th>
               <th>실제</th>
@@ -133,7 +133,7 @@ export const MoneyPlanList = () => {
                       state: SEND
                     });
                   }}>
-                    {item.money_plan_startDt} ~ {item.money_plan_endDt}
+                    {`${item.money_plan_startDt.substring(5, 10)} ~ ${item.money_plan_endDt.substring(5, 10)}`}
                   </td>
                 </tr>
                 <tr>

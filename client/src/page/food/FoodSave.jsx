@@ -342,7 +342,7 @@ export const FoodSave = () => {
                 <td>{item.food_carb}</td>
                 <td>{item.food_protein}</td>
                 <td>
-                  <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                  <p className={"del-btn"} onClick={() => (
                     handlerFoodDelete(index)
                   )}>
                     x

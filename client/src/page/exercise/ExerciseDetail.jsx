@@ -132,7 +132,7 @@ export const ExerciseDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>날짜</th>
+              <th className={"w-20"}>날짜</th>
               <th>시작</th>
               <th>종료</th>
               <th>시간</th>
@@ -189,7 +189,7 @@ export const ExerciseDetail = () => {
                   </React.Fragment>
                 )}
                 <td>
-                  <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                  <p className={"del-btn"} onClick={() => (
                     flowDelete(OBJECT._id, section._id)
                   )}>x</p>
                 </td>

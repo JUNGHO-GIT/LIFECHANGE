@@ -61,6 +61,12 @@
     font-size: 1rem;
     padding: 5px 5px 5px 5px;
   }
+  .del-btn {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.850rem;
+    color: red;
+  }
   tbody, td, tfoot, th, thead, tr {
     border-color: inherit;
     border-style: solid;
@@ -138,6 +144,12 @@
     border-color: darkgrey;
     font-size: 0.875rem;
     padding: 5px 5px 5px 5px;
+  }
+  .del-btn {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.800rem;
+    color: red;
   }
   tbody, td, tfoot, th, thead, tr {
     border-color: inherit;
@@ -217,6 +229,12 @@
     font-size: 0.85rem;
     padding: 5px 5px 5px 5px;
   }
+  .del-btn {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.750rem;
+    color: red;
+  }
   tbody, td, tfoot, th, thead, tr {
     border-color: inherit;
     border-style: solid;
@@ -295,6 +313,12 @@
     font-size: 0.8rem;
     padding: 5px 5px 5px 5px;
   }
+  .del-btn {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.700rem;
+    color: red;
+  }
   tbody, td, tfoot, th, thead, tr {
     border-color: inherit;
     border-style: solid;
@@ -372,6 +396,12 @@
     border-color: darkgrey;
     font-size: 0.75rem;
     padding: 5px 5px 5px 5px;
+  }
+  .del-btn {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.650rem;
+    color: red;
   }
   tbody, td, tfoot, th, thead, tr {
     border-color: inherit;

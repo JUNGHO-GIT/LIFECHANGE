@@ -131,7 +131,7 @@ export const FoodPlanDetail = () => {
               <td>{OBJECT?.food_plan_protein}</td>
               <td>{OBJECT?.food_plan_fat}</td>
               <td>
-                <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                <p className={"del-btn"} onClick={() => (
                   flowDelete(OBJECT._id)
                 )}>x</p>
               </td>
