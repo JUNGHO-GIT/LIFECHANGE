@@ -116,8 +116,11 @@ export const CustomerSignup = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"}>
           <Container>
-            <Row className={"row d-center mt-5"}>
-              <Col xs={12}>
+            <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
+                <h1>Sign Up</h1>
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {tableCustomerSave()}
                 <br/>
                 {btnSignUp()}

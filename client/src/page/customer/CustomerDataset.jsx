@@ -5,9 +5,11 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {diaryArray} from "../../assets/data/DiaryArray.jsx";
 import {exerciseArray} from "../../assets/data/ExerciseArray.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
 import {moneyArray} from "../../assets/data/MoneyArray.jsx";
+import {sleepArray} from "../../assets/data/SleepArray.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -23,6 +25,7 @@ export const CustomerDataset = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
+  const datasetArray = ["diary", "exercise", "food", "money", "sleep"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -48,7 +51,7 @@ export const CustomerDataset = () => {
     }
   );
   const {val:dataType, set:setDataType} = useStorage(
-    `dataType(${PATH})`, "food"
+    `dataType(${PATH})`, "diary"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -115,12 +118,18 @@ export const CustomerDataset = () => {
             </tr>
           </thead>
           <tbody>
-            {["exercise", "food", "money"].map((item, index) => (
+            {datasetArray.map((item) => (
               <tr>
                 <td>
                   <Row>
                     <Col xs={12} className={"fs-20 p-5"}>
-                      <div className={"pointer me-2"} onClick={() => (setDataType(item))}>
+                      <div className={"pointer me-2"} onClick={() => (
+                        setDataType(item),
+                        setIdx((prev) => ({
+                          ...prev,
+                          partIdx: 1
+                        }))
+                      )}>
                         {item}
                       </div>
                     </Col>
@@ -198,10 +207,9 @@ export const CustomerDataset = () => {
                 <td>
                   <Row>
                     <Col xs={7} className={"fs-20 p-5"}>
-                      <div className={"pointer me-2"} onClick={() => setIdx(prev => ({
+                      <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
                         ...prev,
-                        partIdx: index,
-                        titleIdx: 0
+                        partIdx: index
                       }))}>
                         {item[`${dataType}_part`]}
                       </div>
@@ -313,7 +321,7 @@ export const CustomerDataset = () => {
                 <td>
                   <Row>
                     <Col xs={7} className={"fs-20 p-5"}>
-                      <div className="pointer me-2" onClick={() => setIdx(prev => ({
+                      <div className="pointer me-2" onClick={() => setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
                       }))}>
@@ -355,7 +363,10 @@ export const CustomerDataset = () => {
       const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
       let defaultArray = [];
-      if (dataType === "exercise") {
+      if (dataType === "diary") {
+        defaultArray = diaryArray;
+      }
+      else if (dataType === "exercise") {
         defaultArray = exerciseArray;
       }
       else if (dataType === "food") {
@@ -363,6 +374,9 @@ export const CustomerDataset = () => {
       }
       else if (dataType === "money") {
         defaultArray = moneyArray;
+      }
+      else if (dataType === "sleep") {
+        defaultArray = sleepArray;
       }
 
       if (confirm) {
@@ -409,7 +423,7 @@ export const CustomerDataset = () => {
                 {tableNode2()}
               </Col>
               <Col xs={4} className={"mb-20 text-center"}>
-                {dataType !== "food" && tableNode3()}
+                {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableNode3())}
               </Col>
               <Col xs={12} className={"mb-20 text-center"}>
                 <span className={"me-5 d-inline-flex"}>{buttonDefault()}</span>

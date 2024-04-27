@@ -75,9 +75,11 @@ export const aggregateDataset = async (
     {$project: {
       _id: 0,
       customer_dataset: {
+        diary: 1,
         food: 1,
         money: 1,
-        exercise: 1
+        exercise: 1,
+        sleep: 1,
       }
     }}
   ]);
