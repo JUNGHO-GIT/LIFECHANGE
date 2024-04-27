@@ -128,52 +128,65 @@ export const DiaryDetail = () => {
     return (
       <React.Fragment>
         <Row className={"text-center"}>
-          <Col xs={12}>
-            <InputMask
-              mask={""}
-              placeholder={"카테고리"}
-              id={`diary_category`}
-              name={`diary_category`}
-              className={"form-control mb-20 p-10"}
-              maskChar={null}
-              value={OBJECT?.diary_category}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  diary_category: e.target.value
-                }))
-              )}
-            ></InputMask>
-            <InputMask
-              mask={""}
-              placeholder={"내용"}
-              id={`diary_detail`}
-              name={`diary_detail`}
-              className={"form-control mb-20 p-10"}
-              maskChar={null}
-              value={OBJECT?.diary_detail}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  diary_detail: e.target.value
-                }))
-              )}
-            ></InputMask>
-            <InputMask
-              mask={""}
-              placeholder={"색상"}
-              id={`diary_color`}
-              name={`diary_color`}
-              className={"form-control mb-20 p-10"}
-              maskChar={null}
-              value={OBJECT?.diary_color}
-              onChange={(e) => (
-                setOBJECT((prev) => ({
-                  ...prev,
-                  diary_color: e.target.value
-                }))
-              )}
-            ></InputMask>
+          <Col xs={12} className={"mb-20"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>카테고리</span>
+              <InputMask
+                mask={""}
+                placeholder={"카테고리"}
+                id={`diary_category`}
+                name={`diary_category`}
+                className={"form-control"}
+                maskChar={null}
+                value={OBJECT?.diary_category}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    diary_category: e.target.value
+                  }))
+                )}
+              ></InputMask>
+            </div>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>내용</span>
+              <InputMask
+                mask={""}
+                placeholder={"내용"}
+                id={`diary_detail`}
+                name={`diary_detail`}
+                className={"form-control"}
+                maskChar={null}
+                value={OBJECT?.diary_detail}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    diary_detail: e.target.value
+                  }))
+                )}
+              ></InputMask>
+            </div>
+          </Col>
+          <Col xs={12} className={"mb-20"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>색상</span>
+              <InputMask
+                mask={""}
+                placeholder={"색상"}
+                id={`diary_color`}
+                name={`diary_color`}
+                className={"form-control"}
+                maskChar={null}
+                value={OBJECT?.diary_color}
+                onChange={(e) => (
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    diary_color: e.target.value
+                  }))
+                )}
+              ></InputMask>
+            </div>
           </Col>
         </Row>
       </React.Fragment>
@@ -204,11 +217,6 @@ export const DiaryDetail = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row>
-              <Col xs={12} className={"mb-20 text-center"}>
-                <h1 className={"text-center"}>일기 상세</h1>
-              </Col>
-            </Row>
             <Row className={"d-center mb-20"}>
               <Col xs={12}>
                 {dateNode()}

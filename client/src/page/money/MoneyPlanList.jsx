@@ -205,9 +205,6 @@ export const MoneyPlanList = () => {
           <Container>
             <Row>
               <Col xs={12} className={"mb-20 text-center"}>
-                <h1>List</h1>
-              </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
                 {calendarNode()}
                 {tableNode()}
               </Col>

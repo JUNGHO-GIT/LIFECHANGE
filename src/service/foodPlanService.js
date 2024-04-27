@@ -26,7 +26,7 @@ export const list = async (
     const endDt = plan.food_plan_endDt;
 
     const findReal = await repository.list.findReal(
-      customer_id_param, startDt_param, endDt_param
+      customer_id_param, startDt, endDt
     );
 
     const foodTotalKcal = findReal.reduce((acc, curr) => (

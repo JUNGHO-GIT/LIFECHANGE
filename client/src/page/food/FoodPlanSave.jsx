@@ -256,9 +256,6 @@ export const FoodPlanSave = () => {
           <Container>
             <Row>
               <Col xs={12} className={"mb-20 text-center"}>
-                <h1>Save</h1>
-              </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
               <Col xs={12} className={"mb-20 text-center"}>

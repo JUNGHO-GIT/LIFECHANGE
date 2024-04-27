@@ -162,9 +162,6 @@ export const SleepPlanDetail = () => {
           <Container>
             <Row>
               <Col xs={12} className={"mb-20 text-center"}>
-                <h1>Detail</h1>
-              </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
               <Col xs={12} className={"mb-20 text-center"}>

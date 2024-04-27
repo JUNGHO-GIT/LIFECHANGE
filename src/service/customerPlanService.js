@@ -19,7 +19,7 @@ export const percent = async (
     const endDt = plan.exercise_plan_endDt;
 
     const findReal = await repository.percent.findExerciseReal(
-      customer_id_param, startDt_param, endDt_param
+      customer_id_param, startDt, endDt
     );
 
     const exerciseTotalCount = findReal.reduce((acc, curr) => (

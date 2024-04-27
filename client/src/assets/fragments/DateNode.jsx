@@ -1,6 +1,6 @@
 // DateNode.jsx
 
-import React, {forwardRef} from "react";
+import React, {forwardRef, useEffect} from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
@@ -10,6 +10,17 @@ import {Button} from "react-bootstrap";
 export const DateNode = ({
   DATE, setDATE, part, plan, type
 }) => {
+
+  // 0. useEffect --------------------------------------------------------------------------------->
+  useEffect(() => {
+    // endDt가 startDt보다 작을 경우 endDt를 startDt로 설정
+    if (moment(DATE.endDt).isBefore(DATE.startDt)) {
+      setDATE((prev) => ({
+        ...prev,
+        endDt: DATE.startDt
+      }));
+    }
+  }, [DATE.startDt, DATE.endDt]);
 
   // @ts-ignore
   const CustomInput = forwardRef(({value, onClick}, ref) => (

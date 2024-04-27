@@ -124,7 +124,7 @@ export const DiaryList = () => {
               state: SEND
             });
           }}
-          tileContent={({ date, view }) => {
+          tileContent={({ activeStartDate, date, view }) => {
             const diaryForDates = OBJECT?.filter((diary) => (
               dateInRange(date, diary.diary_startDt, diary.diary_endDt)
             ));

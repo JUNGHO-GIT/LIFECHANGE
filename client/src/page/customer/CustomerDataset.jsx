@@ -397,9 +397,6 @@ export const CustomerDataset = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={12} className={"mb-20 text-center"}>
-                <h1>List</h1>
-              </Col>
               <Col xs={4} className={"mb-20 text-center"}>
                 {tableNode1()}
               </Col>
