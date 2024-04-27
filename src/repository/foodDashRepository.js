@@ -63,7 +63,7 @@ export const pieToday = {
       {$unwind: "$food_section"
       },
       {$group: {
-        _id: "$food_section.food_title_val",
+        _id: "$food_section.food_title",
         value: {
           $sum: {
             $toDouble: "$food_section.food_kcal"
@@ -127,7 +127,7 @@ export const pieWeek = {
       {$unwind: "$food_section"
       },
       {$group: {
-        _id: "$food_section.food_title_val",
+        _id: "$food_section.food_title",
         value: {
           $sum: {
             $toDouble: "$food_section.food_kcal"
@@ -191,7 +191,7 @@ export const pieMonth = {
       {$unwind: "$food_section"
       },
       {$group: {
-        _id: "$food_section.food_title_val",
+        _id: "$food_section.food_title",
         value: {
           $sum: {
             $toDouble: "$food_section.food_kcal"

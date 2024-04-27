@@ -15,7 +15,7 @@ export const SleepDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
+  const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -98,7 +98,6 @@ export const SleepDetail = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-
     if (response.data.status === "success") {
       alert(response.data.msg);
       if (Object.keys(response.data.result).length > 0) {

@@ -49,12 +49,17 @@ const schema = new mongoose.Schema({
   },
 
   food_section: [{
+    food_part_idx: {
+      type: Number,
+      default: 0,
+      required: false
+    },
     food_part_val: {
       type: String,
       default: "",
       required: false,
     },
-    food_title_val: {
+    food_title : {
       type: String,
       default: "",
       required: false,

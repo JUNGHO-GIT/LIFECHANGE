@@ -18,7 +18,7 @@ export const FoodList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
+  const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -83,8 +83,9 @@ export const FoodList = () => {
     food_total_carb: 0,
     food_total_protein: 0,
     food_section: [{
+      food_part_idx: 0,
       food_part_val: "아침",
-      food_title_val: "기타",
+      food_title: "",
       food_count: 0,
       food_serv: "회",
       food_gram:  0,
@@ -154,7 +155,7 @@ export const FoodList = () => {
                       </td>
                     )}
                     <td>{section.food_part_val}</td>
-                    <td>{section.food_title_val}</td>
+                    <td>{section.food_title}</td>
                     <td>{section.food_brand}</td>
                     <td>{`${numeral(section.food_count).format('0,0')}`}
                       {section.food_serv}</td>

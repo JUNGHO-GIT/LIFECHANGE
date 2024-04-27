@@ -11,12 +11,10 @@ export const totalCnt = async (
   const finalResult = await Diary.countDocuments({
     customer_id: customer_id_param,
     diary_startDt: {
-      $gte: startDt_param,
       $lte: endDt_param,
     },
     diary_endDt: {
       $gte: startDt_param,
-      $lte: endDt_param,
     },
   });
 
@@ -47,12 +45,11 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    customer_id_param, _id_param, category_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOne({
       customer_id: customer_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      diary_category: !category_param ? {$exists:true} : category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -71,12 +68,11 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    customer_id_param, _id_param, category_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOne({
       customer_id: customer_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      diary_category: !category_param ? {$exists:true} : category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -90,16 +86,14 @@ export const save = {
     return finalResult;
   },
   create: async (
-    customer_id_param, category_param, OBJECT_param, startDt_param, endDt_param
+    customer_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.create({
       customer_id: customer_id_param,
       _id: new mongoose.Types.ObjectId(),
       diary_startDt: startDt_param,
       diary_endDt: endDt_param,
-      diary_category: category_param,
-      diary_color: OBJECT_param.diary_color,
-      diary_detail: OBJECT_param.diary_detail,
+      diary_section: OBJECT_param.diary_section,
       diary_regDt: fmtDate,
       diary_updateDt: "",
     });
@@ -107,12 +101,11 @@ export const save = {
     return finalResult;
   },
   update: async (
-    customer_id_param, _id_param, category_param, OBJECT_param, startDt_param, endDt_param
+    customer_id_param, _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOneAndUpdate(
       {customer_id: customer_id_param,
-        _id: _id_param,
-        diary_category: category_param
+        _id: _id_param
       },
       {$set: {
         ...OBJECT_param,
@@ -132,12 +125,11 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    customer_id_param, _id_param, category_param, startDt_param, endDt_param
+    customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.findOne({
       customer_id: customer_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
-      diary_category: !category_param ? {$exists:true} : category_param,
       diary_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,

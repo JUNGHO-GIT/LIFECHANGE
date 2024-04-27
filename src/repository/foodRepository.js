@@ -21,7 +21,7 @@ export const totalCnt = async (
       "food_section.food_part_val": part_param
     }),
     ...(title_param !== "전체" && {
-      "food_section.food_title_val": title_param
+      "food_section.food_title": title_param
     }),
   });
 
@@ -62,8 +62,8 @@ export const list = {
                 ? {$ne: ["$$section.food_part_val", null]}
                 : {$eq: ["$$section.food_part_val", part_param]},
                 title_param === "전체"
-                ? {$ne: ["$$section.food_title_val", null]}
-                : {$eq: ["$$section.food_title_val", title_param]}
+                ? {$ne: ["$$section.food_title", null]}
+                : {$eq: ["$$section.food_title", title_param]}
               ]
             }
           }

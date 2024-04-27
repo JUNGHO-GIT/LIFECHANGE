@@ -8,28 +8,23 @@ use('test');
 const foodArray = [
   // 0
   {
-    food_part: "전체",
-    food_title: ["전체"]
+    food_part: "전체"
   },
   // 1
   {
-    food_part: "아침",
-    food_title: ["전체"]
+    food_part: "아침"
   },
   // 2
   {
-    food_part: "점심",
-    food_title: ["전체"]
+    food_part: "점심"
   },
   // 3
   {
-    food_part: "저녁",
-    food_title: ["전체"]
+    food_part: "저녁"
   },
   // 4
   {
-    food_part: "간식",
-    food_title: ["전체"]
+    food_part: "간식"
   },
 ];
 
@@ -81,8 +76,7 @@ for (let i = 1; i <= 100; i++) {
       _id: new ObjectId(),
       food_part_idx: partIndex,
       food_part_val: part.food_part,
-      food_title_idx: titleIndex,
-      food_title_val: title,
+      food_title : title,
       food_count: randomNumber(10),
       food_serv: "회",
       food_gram: randomNumber(100),

@@ -8,7 +8,6 @@ import {fmtDate} from "../assets/common/date.js";
 export const totalCnt = async (
   customer_id_param, startDt_param, endDt_param
 ) => {
-
   const finalResult = await Sleep.countDocuments({
     customer_id: customer_id_param,
     sleep_startDt: {

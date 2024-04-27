@@ -17,7 +17,7 @@ export const CustomerDataset = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_CUSTOMER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
+  const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -56,17 +56,22 @@ export const CustomerDataset = () => {
     customer_id: customer_id,
     customer_number: 0,
     customer_dataset: {
+      diary: [{
+        diary_part: ""
+      }],
       exercise: [{
         exercise_part: "",
         exercise_title: [""]
       }],
       food: [{
-        food_part: "",
-        food_title: [""]
+        food_part: ""
       }],
       money: [{
         money_part: "",
         money_title: [""]
+      }],
+      sleep: [{
+        sleep_part: ""
       }]
     }
   };
@@ -90,12 +95,12 @@ export const CustomerDataset = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
-      window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
+      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
       navParam(SEND.refresh);
     }
     else {
       alert(response.data.msg);
-      window.sessionStorage.setItem("customer_id", "false");
+      sessionStorage.setItem("customer_id", "false");
     }
   };
 

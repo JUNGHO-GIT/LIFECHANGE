@@ -48,7 +48,7 @@ export const CustomerLogin = () => {
     }
     else {
       alert(response.data.msg);
-      window.sessionStorage.setItem("customer_id", "false");
+      sessionStorage.setItem("customer_id", "false");
     }
   };
 
@@ -57,7 +57,7 @@ export const CustomerLogin = () => {
     return (
       <div>
         <div className={"input-group mb-10"}>
-          <span className={"input-group-text"}>Customer ID</span>
+          <span className={"input-group-text"}>ID</span>
           <InputMask
             mask={""}
             type={"text"}

@@ -11,7 +11,7 @@ export const Header = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const navParam = useNavigate();
-  const customer_id = window.sessionStorage.getItem("customer_id");
+  const customer_id = sessionStorage.getItem("customer_id");
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
   const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
@@ -60,8 +60,8 @@ export const Header = () => {
     function btnLogOut () {
       return (
         <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
-          window.sessionStorage.clear();
-          window.sessionStorage.setItem("customer_id", "false");
+          sessionStorage.clear();
+          sessionStorage.setItem("customer_id", "false");
           window.location.reload();
         }}>
           Logout

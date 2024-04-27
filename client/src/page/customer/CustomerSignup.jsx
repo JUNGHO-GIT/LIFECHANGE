@@ -29,7 +29,6 @@ export const CustomerSignup = () => {
       customer_id: customer_id,
       customer_pw: customer_pw,
     });
-
     if (response.data.status === "success") {
       alert(response.data.msg);
       navParam("/customer/login");
@@ -48,8 +47,8 @@ export const CustomerSignup = () => {
   const tableCustomerSave = () => {
     return (
       <div>
-        <div className={"form-floating"}>
-          <span className={"input-group-text"}>Customer ID</span>
+        <div className={"input-group mb-10"}>
+          <span className={"input-group-text"}>ID</span>
           <InputMask
             mask={""}
             type={"text"}
@@ -61,7 +60,7 @@ export const CustomerSignup = () => {
             )}
           ></InputMask>
         </div>
-        <div className={"form-floating"}>
+        <div className={"input-group mb-10"}>
           <span className={"input-group-text"}>Password</span>
           <InputMask
             mask={""}

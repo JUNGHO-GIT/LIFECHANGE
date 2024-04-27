@@ -19,8 +19,8 @@ export const MoneySave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
-  const session = window.sessionStorage.getItem("dataset") || "";
+  const customer_id = sessionStorage.getItem("customer_id");
+  const session = sessionStorage.getItem("dataset") || "";
   const moneyArray = JSON.parse(session)?.money || [];
   const navParam = useNavigate();
   const location = useLocation();
@@ -227,8 +227,7 @@ export const MoneySave = () => {
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.money_section];
+                      let updatedSection = [...prev.money_section];
                       updatedSection[i] = {
                         ...updatedSection[i],
                         money_part_idx: newIndex,
@@ -236,8 +235,10 @@ export const MoneySave = () => {
                         money_title_idx: 0,
                         money_title_val: moneyArray[newIndex].money_title[0],
                       };
-                      updated.money_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        money_section: updatedSection
+                      };
                     });
                   }}
                 >
@@ -261,15 +262,16 @@ export const MoneySave = () => {
                     const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
                       setOBJECT((prev) => {
-                        let updated = {...prev};
-                        let updatedSection = [...updated.money_section];
+                        let updatedSection = [...prev.money_section];
                         updatedSection[i] = {
                           ...updatedSection[i],
                           money_title_idx: newTitleIdx,
                           money_title_val: newTitleVal,
                         };
-                        updated.money_section = updatedSection;
-                        return updated;
+                        return {
+                          ...prev,
+                          money_section: updatedSection
+                        };
                       });
                     }
                   }}
@@ -306,11 +308,12 @@ export const MoneySave = () => {
                   onValueChange={(values) => {
                     const limitedValue = Math.min(9999999999, parseInt(values?.value));
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.money_section];
+                      let updatedSection = [...prev.money_section];
                       updatedSection[i].money_amount = limitedValue;
-                      updated.money_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        money_section: updatedSection
+                      };
                     });
                   }}
                 ></NumericFormat>
@@ -330,10 +333,12 @@ export const MoneySave = () => {
                   onChange={(e) => {
                     const limitedContent = e.target.value.slice(0, 100);
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.money_section];
+                      let updatedSection = [...prev.money_section];
                       updatedSection[i].money_content = limitedContent;
-                      return updated;
+                      return {
+                        ...prev,
+                        money_section: updatedSection
+                      };
                     });
                   }}
                 ></InputMask>

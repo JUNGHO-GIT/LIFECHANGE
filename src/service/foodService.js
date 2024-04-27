@@ -93,7 +93,7 @@ export const search = async (
       const nutritionElement = calcServ(prev.querySelector("div.smallText.greyText.greyLink")?.textContent?.trim());
 
       finalResult.push({
-        food_title_val: titleElement || "-",
+        food_title: titleElement || "-",
         food_brand: brandElement || "-",
         food_count: nutritionElement.count,
         food_serv: nutritionElement.serv,

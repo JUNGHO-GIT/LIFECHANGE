@@ -77,7 +77,7 @@ export const FilterNode = ({
 
   // 2. food
   const foodNode = () => {
-    const session = window.sessionStorage.getItem("dataset") || "";
+    const session = sessionStorage.getItem("dataset") || "";
     const foodArray = JSON.parse(session).food;
     function selectPartFood () {
       return (
@@ -87,12 +87,10 @@ export const FilterNode = ({
             const idxValue = selectedOption.getAttribute("data-idx");
             const newPartIndex = Number(idxValue);
             const newPartVal = String(e.target.value);
-            const newTitleVal = foodArray[newPartIndex].food_title[0];
             setFILTER((prev) => ({
               ...prev,
               partIdx: newPartIndex,
-              part: newPartVal,
-              title: newTitleVal
+              part: newPartVal
             }));
           }}>
             {foodArray?.map((item, idx) => (
@@ -113,7 +111,7 @@ export const FilterNode = ({
 
   // 3. money
   const moneyNode = () => {
-    const session = window.sessionStorage.getItem("dataset") || "";
+    const session = sessionStorage.getItem("dataset") || "";
     const moneyArray = JSON.parse(session).money;
     function selectPartMoney () {
       return (
@@ -169,7 +167,7 @@ export const FilterNode = ({
 
   // 4. exercise
   const exerciseNode = () => {
-    const session = window.sessionStorage.getItem("dataset") || "";
+    const session = sessionStorage.getItem("dataset") || "";
     const exerciseArray = JSON.parse(session).exercise;
     function selectPartExercise () {
       return (

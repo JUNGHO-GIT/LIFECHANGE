@@ -18,8 +18,8 @@ export const FoodSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
-  const session = window.sessionStorage.getItem("dataset") || "";
+  const customer_id = sessionStorage.getItem("customer_id");
+  const session = sessionStorage.getItem("dataset") || "";
   const foodArray = JSON.parse(session)?.food || [];
   const navParam = useNavigate();
   const location = useLocation();
@@ -70,8 +70,9 @@ export const FoodSave = () => {
     food_total_carb: 0,
     food_total_protein: 0,
     food_section: [{
+      food_part_idx: 0,
       food_part_val: "아침",
-      food_title_val: "기타",
+      food_title: "",
       food_count: 0,
       food_serv: "회",
       food_gram:  0,
@@ -309,7 +310,7 @@ export const FoodSave = () => {
                     ))}
                   </select>
                 </td>
-                <td>{item.food_title_val}</td>
+                <td>{item.food_title}</td>
                 <td>{item.food_brand}</td>
                 <td>
                   <div className={"d-flex"}>

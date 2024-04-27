@@ -15,16 +15,16 @@ export const DiaryList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_DIARY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
+  const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
   const PATH = location.pathname?.trim()?.toString();
-  const percent = JSON.parse(window.sessionStorage.getItem("percent") || "{}");
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
     `SEND(${PATH})`, {
       id: "",
+      section_id: "",
       refresh: 0,
       startDt: "0000-00-00",
       endDt: "0000-00-00",
@@ -45,9 +45,13 @@ export const DiaryList = () => {
     diary_number: 0,
     diary_startDt: "0000-00-00",
     diary_endDt: "0000-00-00",
-    diary_category: "",
-    diary_color: "",
-    diary_detail: ""
+    diary_section: [{
+      diary_part_idx: 0,
+      diary_part_val: "일정",
+      diary_title : "",
+      diary_color: "#000000",
+      diary_detail: ""
+    }]
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
@@ -75,23 +79,25 @@ export const DiaryList = () => {
       return (
         <React.Fragment>
           {diaryForDates?.map((diary) => (
-            <div key={diary._id} className={"calendar-filled"}
-              style={{
-                backgroundColor: diary.diary_color,
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                SEND.id = diary._id;
-                SEND.startDt = diary.diary_startDt;
-                SEND.endDt = diary.diary_endDt;
-                SEND.category = diary.diary_category;
-                navParam(SEND.toDetail, {
-                  state: SEND
-                });
-              }}
-            >
-              <span className={"calendar-category"}>{diary.diary_category}</span>
-            </div>
+            diary.diary_section.map((section) => (
+              <div key={diary._id} className={"calendar-filled"}
+                style={{
+                  backgroundColor: section.diary_color,
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  SEND.id = diary._id;
+                  SEND.section_id = section._id;
+                  SEND.startDt = diary.diary_startDt;
+                  SEND.endDt = diary.diary_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}
+              >
+                <span className={"calendar-category"}>{section.diary_title}</span>
+              </div>
+            ))
           ))}
         </React.Fragment>
       );
@@ -100,9 +106,11 @@ export const DiaryList = () => {
       return (
         <React.Fragment>
           {diaryForDates?.map((diary) => (
-            <div key={diary._id} className={"calendar-unfilled"}>
-              <span className={"calendar-category"}>{diary.diary_category}</span>
-            </div>
+            diary.diary_section.map((section) => (
+              <div key={diary._id} className={"calendar-unfilled"}>
+                <span className={"calendar-category"}>{section.diary_title}</span>
+              </div>
+            ))
           ))}
         </React.Fragment>
       );

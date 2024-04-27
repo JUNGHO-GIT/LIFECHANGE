@@ -21,18 +21,19 @@ export const list = async (object) => {
     }
     // 1. 10분이내
     if (0 <= diff && diff <= 600000) {
-      return "text-success";
+      return "text-primary";
     }
     // 2. 10분 ~ 20분
     else if (600000 < diff && diff <= 1200000) {
+      return "text-success";
+    }
+    // 3. 20분 ~ 30분
+    else if (1200000 < diff && diff <= 1800000) {
       return "text-warning";
     }
-    // 3. 20분 ~
-    else if (1200000 < diff) {
-      return "text-danger";
-    }
+    // 4. 30분 ~
     else {
-      return "text-primary";
+      return "text-danger";
     }
   };
 

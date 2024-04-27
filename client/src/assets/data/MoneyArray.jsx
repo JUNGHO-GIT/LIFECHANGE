@@ -7,12 +7,14 @@ export const moneyArray = [
       "전체"
     ]
   },
+  // 1
   {
     money_part: "수입",
     money_title: [
       "전체", "근로", "금융", "기타",
     ]
   },
+  // 2
   {
     money_part: "지출",
     money_title: [

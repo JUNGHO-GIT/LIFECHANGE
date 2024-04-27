@@ -21,8 +21,8 @@ export const ExerciseSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
-  const session = window.sessionStorage.getItem("dataset") || "";
+  const customer_id = sessionStorage.getItem("customer_id");
+  const session = sessionStorage.getItem("dataset") || "";
   const exerciseArray = JSON.parse(session)?.exercise || [];
   const navParam = useNavigate();
   const location = useLocation();
@@ -253,8 +253,7 @@ export const ExerciseSave = () => {
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.exercise_section];
+                      let updatedSection = [...prev.exercise_section];
                       updatedSection[i] = {
                         ...updatedSection[i],
                         exercise_part_idx: newIndex,
@@ -262,8 +261,10 @@ export const ExerciseSave = () => {
                         exercise_title_idx: 0,
                         exercise_title_val: exerciseArray[newIndex].exercise_title[0],
                       };
-                      updated.exercise_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        exercise_section: updatedSection
+                      };
                     });
                   }}
                 >
@@ -288,15 +289,16 @@ export const ExerciseSave = () => {
                     const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
                       setOBJECT((prev) => {
-                        let updated = {...prev};
-                        let updatedSection = [...updated.exercise_section];
+                        let updatedSection = [...prev.exercise_section];
                         updatedSection[i] = {
                           ...updatedSection[i],
                           exercise_title_idx: newTitleIdx,
                           exercise_title_val: newTitleVal,
                         };
-                        updated.exercise_section = updatedSection;
-                        return updated;
+                        return {
+                          ...prev,
+                          exercise_section: updatedSection
+                        };
                       });
                     }
                   }}
@@ -333,11 +335,12 @@ export const ExerciseSave = () => {
                   onValueChange={(values) => {
                     const limitedValue = Math.min(99, parseInt(values?.value));
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.exercise_section];
+                      let updatedSection = [...prev.exercise_section];
                       updatedSection[i].exercise_set = limitedValue;
-                      updated.exercise_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        exercise_section: updatedSection
+                      };
                     });
                   }}
                 ></NumericFormat>
@@ -365,11 +368,12 @@ export const ExerciseSave = () => {
                   onValueChange={(values) => {
                     const limitedValue = Math.min(99, parseInt(values?.value));
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.exercise_section];
+                      let updatedSection = [...prev.exercise_section];
                       updatedSection[i].exercise_rep = limitedValue;
-                      updated.exercise_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        exercise_section: updatedSection
+                      };
                     });
                   }}
                 ></NumericFormat>
@@ -399,11 +403,12 @@ export const ExerciseSave = () => {
                   onValueChange={(values) => {
                     const limitedValue = Math.min(999, parseInt(values?.value));
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.exercise_section];
+                      let updatedSection = [...prev.exercise_section];
                       updatedSection[i].exercise_kg = limitedValue;
-                      updated.exercise_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        exercise_section: updatedSection
+                      };
                     });
                   }}
                 ></NumericFormat>
@@ -430,11 +435,12 @@ export const ExerciseSave = () => {
                   onValueChange={(values) => {
                     const limitedValue = Math.min(999, parseInt(values?.value));
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.exercise_section];
+                      let updatedSection = [...prev.exercise_section];
                       updatedSection[i].exercise_rest = limitedValue;
-                      updated.exercise_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        exercise_section: updatedSection
+                      };
                     });
                   }}
                 ></NumericFormat>
@@ -477,11 +483,12 @@ export const ExerciseSave = () => {
                   value={OBJECT?.exercise_section[i]?.exercise_cardio}
                   onChange={(e) => {
                     setOBJECT((prev) => {
-                      let updated = {...prev};
-                      let updatedSection = [...updated.exercise_section];
+                      let updatedSection = [...prev.exercise_section];
                       updatedSection[i].exercise_cardio  = e ? e.toString() : "";
-                      updated.exercise_section = updatedSection;
-                      return updated;
+                      return {
+                        ...prev,
+                        exercise_section: updatedSection
+                      };
                     });
                   }}
                 ></TimePicker>

@@ -40,18 +40,19 @@ export const percent = async (object) => {
       }
       // 1. 10분이내
       if (0 <= diff && diff <= 600000) {
-        return 3;
+        return 4;
       }
       // 2. 10분 ~ 20분
       else if (600000 < diff && diff <= 1200000) {
+        return 3;
+      }
+      // 3. 20분 ~ 30분
+      else if (1200000 < diff && diff <= 1800000) {
         return 2;
       }
-      // 3. 20분 ~
-      else if (1200000 < diff) {
-        return 1;
-      }
+      // 4. 30분 ~
       else {
-        return 4;
+        return 1;
       }
     }
   };
@@ -136,18 +137,18 @@ export const percent = async (object) => {
     }
     // 1. 10분이내
     if (0 <= diff && diff <= 600000) {
-      return 3;
+      return 4;
     }
     // 2. 10분 ~ 20분
     else if (600000 < diff && diff <= 1200000) {
+      return 3;
+    }
+    // 3. 20분 ~ 30분
+    else if (1200000 < diff && diff <= 1800000) {
       return 2;
     }
-    // 3. 20분 ~
-    else if (1200000 < diff) {
-      return 1;
-    }
     else {
-      return 4;
+      return 1;
     }
   };
 

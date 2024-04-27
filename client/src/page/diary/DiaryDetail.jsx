@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import InputMask from "react-input-mask";
+import {NumericFormat} from "react-number-format";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -16,7 +17,9 @@ export const DiaryDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_DIARY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = window.sessionStorage.getItem("customer_id");
+  const customer_id = sessionStorage.getItem("customer_id");
+  const session = sessionStorage.getItem("dataset") || "";
+  const diaryArray = JSON.parse(session)?.diary || [];
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -41,6 +44,12 @@ export const DiaryDetail = () => {
       endDt: location_endDt
     }
   );
+  const {val:COUNT, set:setCOUNT} = useStorage(
+    `COUNT(${PATH})`, {
+      totalCnt: 0,
+      sectionCnt: 0
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
@@ -48,9 +57,13 @@ export const DiaryDetail = () => {
     diary_number: 0,
     diary_startDt: "0000-00-00",
     diary_endDt: "0000-00-00",
-    diary_category: "",
-    diary_color: "",
-    diary_detail: ""
+    diary_section: [{
+      diary_part_idx: 0,
+      diary_part_val: "일정",
+      diary_title : "",
+      diary_color: "#000000",
+      diary_detail: ""
+    }]
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
@@ -58,23 +71,31 @@ export const DiaryDetail = () => {
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
+  useEffect(() => {
+    console.log(JSON.stringify(OBJECT, null, 2));
+  }, [OBJECT]);
+
+  // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         customer_id: customer_id,
         _id: location_id,
-        category: location_category,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setCOUNT((prev) => ({
+      ...prev,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
+    }));
   })()}, [location_id, customer_id, location_category, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
       customer_id: customer_id,
-      category: OBJECT.diary_category,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
@@ -95,7 +116,6 @@ export const DiaryDetail = () => {
       params: {
         customer_id: customer_id,
         _id: id,
-        category: OBJECT.diary_category,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
@@ -123,72 +143,234 @@ export const DiaryDetail = () => {
     );
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
-    return (
-      <React.Fragment>
-        <Row className={"text-center"}>
-          <Col xs={12} className={"mb-20"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>카테고리</span>
-              <InputMask
-                mask={""}
-                placeholder={"카테고리"}
-                id={`diary_category`}
-                name={`diary_category`}
-                className={"form-control"}
-                maskChar={null}
-                value={OBJECT?.diary_category}
-                onChange={(e) => (
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    diary_category: e.target.value
-                  }))
-                )}
-              ></InputMask>
-            </div>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>내용</span>
-              <InputMask
-                mask={""}
-                placeholder={"내용"}
-                id={`diary_detail`}
-                name={`diary_detail`}
-                className={"form-control"}
-                maskChar={null}
-                value={OBJECT?.diary_detail}
-                onChange={(e) => (
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    diary_detail: e.target.value
-                  }))
-                )}
-              ></InputMask>
-            </div>
-          </Col>
-          <Col xs={12} className={"mb-20"}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>색상</span>
-              <InputMask
-                mask={""}
-                placeholder={"색상"}
-                id={`diary_color`}
-                name={`diary_color`}
-                className={"form-control"}
-                maskChar={null}
-                value={OBJECT?.diary_color}
-                onChange={(e) => (
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    diary_color: e.target.value
-                  }))
-                )}
-              ></InputMask>
-            </div>
+  // 5. handler ----------------------------------------------------------------------------------->
+  const handlerSectionCount = () => {
+    function handlerCount(e) {
+      let newCount = parseInt(e, 10);
+      let defaultSection = {
+        diary_part_idx: 0,
+        diary_part_val: "일정",
+        diary_title : "",
+        diary_color: "#000000",
+        diary_detail: ""
+      };
+
+      setCOUNT((prev) => ({
+        ...prev,
+        sectionCnt: newCount
+      }));
+
+      if (newCount === 0) {
+        setOBJECT((prev) => ({
+          ...prev,
+          diary_section: []
+        }));
+      }
+      else if (newCount > 0) {
+        let updatedSection = Array(newCount).fill(null).map((_, idx) => (
+          idx < OBJECT.diary_section.length ? OBJECT.diary_section[idx] : {...defaultSection}
+        ));
+        setOBJECT((prev) => ({
+          ...prev,
+          diary_section: updatedSection
+        }));
+      }
+      else {
+        setOBJECT((prev) => ({
+          ...prev,
+          diary_section: [defaultSection]
+        }));
+      }
+    };
+    function inputFragment () {
+      return (
+        <Row className={"d-center"}>
+          <Col xs={4}>
+            <NumericFormat
+              min={0}
+              max={10}
+              minLength={1}
+              maxLength={2}
+              datatype={"number"}
+              displayType={"input"}
+              id={"sectionCnt"}
+              name={"sectionCnt"}
+              className={"form-control mb-30"}
+              disabled={false}
+              thousandSeparator={false}
+              fixedDecimalScale={true}
+              value={Math.min(10, COUNT?.sectionCnt)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(10, parseInt(values?.value));
+                handlerCount(limitedValue.toString());
+              }}
+            ></NumericFormat>
           </Col>
         </Row>
+      );
+    };
+    return (
+      <React.Fragment>
+        {inputFragment()}
+      </React.Fragment>
+    );
+  };
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
+    const colors = [
+      {name: "red", value: "#ff0000"},
+      {name: "orange", value: "#ffa500"},
+      {name: "yellow", value: "#ffff00"},
+      {name: "green", value: "#008000"},
+      {name: "blue", value: "#0000ff"},
+      {name: "navy", value: "#000080"},
+      {name: "purple", value: "#800080"},
+      {name: "black", value: "#000000"},
+      {name: "gray", value: "#808080"}
+    ];
+    function tableSection (i) {
+      return (
+        <div key={i}>
+          <Row className={"text-center mb-20"}>
+            <Col xs={12}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>파트</span>
+                <select
+                  id={`diary_part_idx-${i}`}
+                  name={`diary_part_idx-${i}`}
+                  className={"form-control"}
+                  value={OBJECT?.diary_section[i]?.diary_part_idx}
+                  onChange={(e) => {
+                    const newIndex = parseInt(e.target.value);
+                    setOBJECT((prev) => {
+                      let updatedSection = [...prev.diary_section];
+                      updatedSection[i] = {
+                        ...updatedSection[i],
+                        diary_part_idx: newIndex,
+                        diary_part_val: diaryArray[newIndex]?.diary_part
+                      };
+                      return {
+                        ...prev,
+                        diary_section: updatedSection
+                      };
+                    });
+                  }}
+                >
+                  {diaryArray?.map((item, idx) => (
+                    <option key={idx} value={idx}>
+                      {item.diary_part}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </Col>
+          </Row>
+          <Row className={"text-center mb-20"}>
+            <Col xs={12}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>타이틀</span>
+                <InputMask
+                  mask={""}
+                  placeholder={"제목"}
+                  id={`diary_title-${i}`}
+                  name={`diary_title-${i}`}
+                  className={"form-control"}
+                  maskChar={null}
+                  value={OBJECT?.diary_section[i]?.diary_title}
+                  onChange={(e) => {
+                    const newTitle = e.target.value;
+                    setOBJECT((prev) => {
+                      let updatedSection = [...prev.diary_section];
+                      updatedSection[i] = {
+                        ...updatedSection[i],
+                        diary_title: newTitle
+                      };
+                      return {
+                        ...prev,
+                        diary_section: updatedSection
+                      };
+                    });
+                  }}
+                ></InputMask>
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>내용</span>
+                <InputMask
+                  mask={""}
+                  placeholder={"내용"}
+                  id={`diary_detail-${i}`}
+                  name={`diary_detail-${i}`}
+                  className={"form-control"}
+                  maskChar={null}
+                  value={OBJECT?.diary_section[i]?.diary_detail}
+                  onChange={(e) => {
+                    const newDetail = e.target.value;
+                    setOBJECT((prev) => {
+                      let updatedSection = [...prev.diary_section];
+                      updatedSection[i] = {
+                        ...updatedSection[i],
+                        diary_detail: newDetail
+                      };
+                      return {
+                        ...prev,
+                        diary_section: updatedSection
+                      };
+                    });
+                  }}
+                ></InputMask>
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>색상</span>
+                <select
+                  id={`diary_color-${i}`}
+                  name={`diary_color-${i}`}
+                  className={"form-select"}
+                  value={OBJECT?.diary_section[i]?.diary_color}
+                  style={{color: OBJECT?.diary_section[i]?.diary_color}}
+                  onChange={(e) => {
+                    const newColor = e.target.value;
+                    setOBJECT((prev) => {
+                      let updatedSection = [...prev.diary_section];
+                      updatedSection[i] = {
+                        ...updatedSection[i],
+                        diary_color: newColor
+                      };
+                      return {
+                        ...prev,
+                        diary_section: updatedSection
+                      };
+                    });
+                  }}
+                >
+                  {colors.map((color, index) => (
+                    <option key={index} value={color.value} style={{color: color.value}}>
+                      ● {color.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      );
+    };
+    function tableFragment () {
+      return (
+        <Row className={"d-center"}>
+          <Col xs={12}>
+            {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
+          </Col>
+        </Row>
+      );
+    };
+    return (
+      <React.Fragment>
+        {tableFragment()}
       </React.Fragment>
     );
   };
@@ -218,17 +400,16 @@ export const DiaryDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center mb-20"}>
-              <Col xs={12}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-            </Row>
-            <Row className={"d-center mb-20"}>
-              <Col xs={12}>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {handlerSectionCount()}
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-            </Row>
-            <Row className={"d-center mb-20"}>
-              <Col xs={12}>
+              <Col xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

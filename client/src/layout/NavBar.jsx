@@ -19,7 +19,7 @@ export const NavBar = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const location = useLocation();
   const PATH = location.pathname?.trim()?.toString();
-  const percent = JSON.parse(window.sessionStorage.getItem("percent") || "{}");
+  const percent = JSON.parse(sessionStorage.getItem("percent") || "{}");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isActive, setIsActive] = useState(PATH);
@@ -74,7 +74,7 @@ export const NavBar = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
-              <Col xs={10} className={"d-left"}>
+              <Col xs={3} className={"d-left"}>
                 {!preFix ? (
                   <span className={"fs-30 fw-500 ps-30 pt-10"}>Home</span>
                 ) : (
@@ -82,12 +82,14 @@ export const NavBar = () => {
                     <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
                   </React.Fragment>
                 )}
+              </Col>
+              <Col xs={6} className={"d-center"}>
                 <span className={"ps-10 pt-10"}>{`Total`}</span>
                 <span className={"ps-10 pt-10"}>{makeIcon("total")}</span>
                 <span className={"ps-10 pt-10"}>{`${preFix}`}</span>
                 <span className={"ps-10 pt-10"}>{makeIcon(`${preFix?.toLowerCase()}`)}</span>
               </Col>
-              <Col xs={2} className={"d-right"}>
+              <Col xs={3} className={"d-right"}>
                 {buttonClear()}
               </Col>
             </Row>

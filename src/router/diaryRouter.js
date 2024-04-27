@@ -43,7 +43,6 @@ router.get("/detail", async (req, res) => {
     let result = await service.detail (
       req.query.customer_id,
       req.query._id,
-      req.query.category,
       req.query.duration
     );
     if (result && result.result) {
@@ -76,7 +75,6 @@ router.post("/save", async (req, res) => {
   try {
     let result = await service.save(
       req.body.customer_id,
-      req.body.category,
       req.body.OBJECT,
       req.body.duration
     );
@@ -111,7 +109,6 @@ router.delete("/delete", async (req, res) => {
     let result = await service.deletes(
       req.query.customer_id,
       req.query._id,
-      req.query.category,
       req.query.duration
     );
     result = await middleware.save(result);
