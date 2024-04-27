@@ -5,14 +5,15 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {TimePicker} from "react-time-picker";
 import {NumericFormat} from "react-number-format";
-import {strToDecimal, decimalToStr} from "../../assets/common/date.js";
 import {percent} from "../../assets/common/percent.js";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
 import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {strToDecimal, decimalToStr} from "../../assets/common/date.js";
 import {Container, Row, Col, Card} from "react-bootstrap";
+import _ from 'lodash';
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseSave = () => {
@@ -111,30 +112,39 @@ export const ExerciseSave = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
-    let sectionVolume = 0;
-    let totalVolume = 0;
-    let totalTime = 0.0;
+    if (!OBJECT?.exercise_section) {
+      return;
+    }
 
-    const updatedSection = OBJECT?.exercise_section?.map((item) => {
-      sectionVolume = item.exercise_set * item.exercise_rep * item.exercise_kg;
+    let totalVolume = 0;
+    let totalTime = 0;
+
+    const updatedSections = OBJECT.exercise_section.map((section) => {
+      const {exercise_set, exercise_rep, exercise_kg} = section;
+      const sectionVolume = exercise_set * exercise_rep * exercise_kg;
+
       totalVolume += sectionVolume;
-      totalTime += strToDecimal(item.exercise_cardio);
+
+      const {exercise_cardio} = section;
+      if (exercise_cardio) {
+        const [hours, minutes] = exercise_cardio.split(':').map(Number);
+        totalTime += hours * 60 + minutes;
+      }
+
       return {
-        ...item,
+        ...section,
         exercise_volume: sectionVolume
       };
     });
 
-    // 이전 상태와 비교
-    if (JSON.stringify(updatedSection) !== JSON.stringify(OBJECT?.exercise_section)) {
-      setOBJECT((prev) => ({
-        ...prev,
-        exercise_total_volume: 0,
-        exercise_total_cardio: "00:00",
-        exercise_section: updatedSection,
-      }));
-    }
-  }, [OBJECT?.exercise_section]);
+    setOBJECT((prev) => ({
+      ...prev,
+      exercise_section: updatedSections,
+      exercise_total_volume: totalVolume,
+      exercise_total_cardio: `${Math.floor(totalTime / 60).toString().padStart(2, '0')}:${(totalTime % 60).toString().padStart(2, '0')}`
+    }));
+
+  }, [JSON.stringify(OBJECT.exercise_section)]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -252,20 +262,18 @@ export const ExerciseSave = () => {
                   value={OBJECT?.exercise_section[i]?.exercise_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.exercise_section];
-                      updatedSection[i] = {
-                        ...updatedSection[i],
-                        exercise_part_idx: newIndex,
-                        exercise_part_val: exerciseArray[newIndex].exercise_part,
-                        exercise_title_idx: 0,
-                        exercise_title_val: exerciseArray[newIndex].exercise_title[0],
-                      };
-                      return {
-                        ...prev,
-                        exercise_section: updatedSection
-                      };
-                    });
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_part_idx: newIndex,
+                          exercise_part_val: exerciseArray[newIndex]?.exercise_part,
+                          exercise_title_idx: 0,
+                          exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
+                        } : item
+                      ))
+                    }));
                   }}
                 >
                   {exerciseArray?.map((item, idx) => (
@@ -288,18 +296,16 @@ export const ExerciseSave = () => {
                     const newTitleIdx = parseInt(e.target.value);
                     const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
-                      setOBJECT((prev) => {
-                        let updatedSection = [...prev.exercise_section];
-                        updatedSection[i] = {
-                          ...updatedSection[i],
-                          exercise_title_idx: newTitleIdx,
-                          exercise_title_val: newTitleVal,
-                        };
-                        return {
-                          ...prev,
-                          exercise_section: updatedSection
-                        };
-                      });
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        exercise_section: prev.exercise_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_title_idx: newTitleIdx,
+                            exercise_title_val: newTitleVal
+                          } : item
+                        ))
+                      }));
                     }
                   }}
                 >
@@ -312,140 +318,142 @@ export const ExerciseSave = () => {
               </div>
             </Col>
           </Row>
-          <Row>
-            <Col xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>세트</span>
-                <NumericFormat
-                  min={1}
-                  max={99}
-                  minLength={1}
-                  maxLength={6}
-                  suffix={" set"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_set-${i}`}
-                  name={`exercise_set-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  fixedDecimalScale={false}
-                  disabled={OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"}
-                  value={Math.min(99, OBJECT?.exercise_section[i]?.exercise_set)}
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(99, parseInt(values?.value));
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.exercise_section];
-                      updatedSection[i].exercise_set = limitedValue;
-                      return {
+          {OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소" && (
+            <Row>
+              <Col xs={3}>
+                <div className={"input-group"}>
+                  <span className={"input-group-text"}>세트</span>
+                  <NumericFormat
+                    min={1}
+                    max={99}
+                    minLength={1}
+                    maxLength={6}
+                    suffix={" set"}
+                    datatype={"number"}
+                    displayType={"input"}
+                    className={"form-control"}
+                    id={`exercise_set-${i}`}
+                    name={`exercise_set-${i}`}
+                    allowNegative={false}
+                    thousandSeparator={true}
+                    fixedDecimalScale={false}
+                    value={Math.min(99, OBJECT?.exercise_section[i]?.exercise_set)}
+                    onValueChange={(values) => {
+                      const limitedValue = Math.min(99, parseInt(values?.value));
+                      setOBJECT((prev) => ({
                         ...prev,
-                        exercise_section: updatedSection
-                      };
-                    });
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-            <Col xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>횟수</span>
-                <NumericFormat
-                  min={1}
-                  max={99}
-                  minLength={1}
-                  maxLength={4}
-                  suffix={" 회"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_rep-${i}`}
-                  name={`exercise_rep-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  fixedDecimalScale={false}
-                  disabled={OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"}
-                  value={Math.min(99, OBJECT?.exercise_section[i]?.exercise_rep)}
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(99, parseInt(values?.value));
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.exercise_section];
-                      updatedSection[i].exercise_rep = limitedValue;
-                      return {
+                        exercise_section: prev.exercise_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_set: limitedValue
+                          } : item
+                        ))
+                      }));
+                    }}
+                  ></NumericFormat>
+                </div>
+              </Col>
+              <Col xs={3}>
+                <div className={"input-group"}>
+                  <span className={"input-group-text"}>횟수</span>
+                  <NumericFormat
+                    min={1}
+                    max={99}
+                    minLength={1}
+                    maxLength={4}
+                    suffix={" 회"}
+                    datatype={"number"}
+                    displayType={"input"}
+                    className={"form-control"}
+                    id={`exercise_rep-${i}`}
+                    name={`exercise_rep-${i}`}
+                    allowNegative={false}
+                    thousandSeparator={true}
+                    fixedDecimalScale={false}
+                    value={Math.min(99, OBJECT?.exercise_section[i]?.exercise_rep)}
+                    onValueChange={(values) => {
+                      const limitedValue = Math.min(99, parseInt(values?.value));
+                      setOBJECT((prev) => ({
                         ...prev,
-                        exercise_section: updatedSection
-                      };
-                    });
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>무게</span>
-                <NumericFormat
-                  min={1}
-                  max={999}
-                  minLength={1}
-                  maxLength={6}
-                  suffix={" kg"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_kg-${i}`}
-                  name={`exercise_kg-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  fixedDecimalScale={true}
-                  disabled={OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"}
-                  value={Math.min(999, OBJECT?.exercise_section[i]?.exercise_kg)}
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(999, parseInt(values?.value));
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.exercise_section];
-                      updatedSection[i].exercise_kg = limitedValue;
-                      return {
+                        exercise_section: prev.exercise_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_rep: limitedValue
+                          } : item
+                        ))
+                      }));
+                    }}
+                  ></NumericFormat>
+                </div>
+              </Col>
+              <Col xs={3}>
+                <div className={"input-group"}>
+                  <span className={"input-group-text"}>무게</span>
+                  <NumericFormat
+                    min={1}
+                    max={999}
+                    minLength={1}
+                    maxLength={6}
+                    suffix={" kg"}
+                    datatype={"number"}
+                    displayType={"input"}
+                    className={"form-control"}
+                    id={`exercise_kg-${i}`}
+                    name={`exercise_kg-${i}`}
+                    allowNegative={false}
+                    thousandSeparator={true}
+                    fixedDecimalScale={true}
+                    value={Math.min(999, OBJECT?.exercise_section[i]?.exercise_kg)}
+                    onValueChange={(values) => {
+                      const limitedValue = Math.min(999, parseInt(values?.value));
+                      setOBJECT((prev) => ({
                         ...prev,
-                        exercise_section: updatedSection
-                      };
-                    });
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-            <Col xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>휴식</span>
-                <NumericFormat
-                  min={1}
-                  max={999}
-                  minLength={1}
-                  maxLength={7}
-                  suffix={" min"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_rest-${i}`}
-                  name={`exercise_rest-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  disabled={OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"}
-                  value={Math.min(999, OBJECT?.exercise_section[i]?.exercise_rest)}
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(999, parseInt(values?.value));
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.exercise_section];
-                      updatedSection[i].exercise_rest = limitedValue;
-                      return {
+                        exercise_section: prev.exercise_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_kg: limitedValue
+                          } : item
+                        ))
+                      }));
+                    }}
+                  ></NumericFormat>
+                </div>
+              </Col>
+              <Col xs={3}>
+                <div className={"input-group"}>
+                  <span className={"input-group-text"}>휴식</span>
+                  <NumericFormat
+                    min={1}
+                    max={999}
+                    minLength={1}
+                    maxLength={7}
+                    suffix={" min"}
+                    datatype={"number"}
+                    displayType={"input"}
+                    className={"form-control"}
+                    id={`exercise_rest-${i}`}
+                    name={`exercise_rest-${i}`}
+                    allowNegative={false}
+                    thousandSeparator={true}
+                    value={Math.min(999, OBJECT?.exercise_section[i]?.exercise_rest)}
+                    onValueChange={(values) => {
+                      const limitedValue = Math.min(999, parseInt(values?.value));
+                      setOBJECT((prev) => ({
                         ...prev,
-                        exercise_section: updatedSection
-                      };
-                    });
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
+                        exercise_section: prev.exercise_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            exercise_rest: limitedValue
+                          } : item
+                        ))
+                      }));
+                    }}
+                  ></NumericFormat>
+                </div>
+              </Col>
+            </Row>
+          )}
+          <Row className={"mb-20"}>
             <Col xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>볼륨</span>
@@ -482,14 +490,16 @@ export const ExerciseSave = () => {
                   disabled={OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"}
                   value={OBJECT?.exercise_section[i]?.exercise_cardio}
                   onChange={(e) => {
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.exercise_section];
-                      updatedSection[i].exercise_cardio  = e ? e.toString() : "";
-                      return {
-                        ...prev,
-                        exercise_section: updatedSection
-                      };
-                    });
+                    const timeValue = e ? e.toString() : "00:00";
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      exercise_section: prev.exercise_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          exercise_cardio: timeValue
+                        } : item
+                      ))
+                    }));
                   }}
                 ></TimePicker>
               </div>
@@ -511,7 +521,7 @@ export const ExerciseSave = () => {
       return (
         <React.Fragment>
           <Row>
-            <Col xs={6}>
+            <Col xs={4}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>시작시간</span>
                 <TimePicker
@@ -525,17 +535,16 @@ export const ExerciseSave = () => {
                   disableClock={false}
                   value={OBJECT?.exercise_start}
                   onChange={(e) => {
+                    const timeValue = e ? e.toString() : "00:00";
                     setOBJECT((prev) => ({
                       ...prev,
-                      exercise_start: e ? e.toString() : "",
+                      exercise_start: timeValue,
                     }));
                   }}
                 ></TimePicker>
               </div>
             </Col>
-          </Row>
-          <Row className={"row d-center mt-3"}>
-            <Col xs={6}>
+            <Col xs={4}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>종료시간</span>
                 <TimePicker
@@ -549,17 +558,16 @@ export const ExerciseSave = () => {
                   disableClock={false}
                   value={OBJECT?.exercise_end}
                   onChange={(e) => {
+                    const timeValue = e ? e.toString() : "00:00";
                     setOBJECT((prev) => ({
                       ...prev,
-                      exercise_end: e ? e.toString() : "",
+                      exercise_end: timeValue,
                     }));
                   }}
                 ></TimePicker>
               </div>
             </Col>
-          </Row>
-          <Row className={"row d-center mt-3"}>
-            <Col xs={6}>
+            <Col xs={4}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>운동시간</span>
                 <TimePicker
@@ -584,7 +592,7 @@ export const ExerciseSave = () => {
       return (
         <React.Fragment>
           <Row>
-            <Col xs={6}>
+            <Col xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>총 볼륨</span>
                   <NumericFormat
@@ -606,9 +614,7 @@ export const ExerciseSave = () => {
                   ></NumericFormat>
               </div>
             </Col>
-          </Row>
-          <Row className={"d-center mt-3"}>
-            <Col xs={6}>
+            <Col xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>총 유산소 시간</span>
                 <TimePicker
@@ -624,9 +630,7 @@ export const ExerciseSave = () => {
                 ></TimePicker>
               </div>
             </Col>
-          </Row>
-          <Row className={"d-center mt-3"}>
-            <Col xs={6}>
+            <Col xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>체중</span>
                 <NumericFormat

@@ -74,7 +74,7 @@ export const FoodSearch = () => {
       food_total_carb: 0,
       food_total_protein: 0,
       food_section: [{
-        food_part_idx: 0,
+        food_part_idx: 1,
         food_part_val: "아침",
         food_title: "",
         food_count: 0,

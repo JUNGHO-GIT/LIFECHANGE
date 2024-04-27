@@ -130,7 +130,7 @@ export const update = async (
 ) => {
   const finalResult = await Customer.findOneAndUpdate(
     {customer_id: customer_id_param,
-      _id: _id_param
+      _id: !_id_param ? {$exists:true} : _id_param
     },
     {$set: {
       ...OBJECT_param,
@@ -152,11 +152,11 @@ export const deletes = async (
 
   const updateResult = await Customer.updateOne(
     {customer_id: customer_id_param,
-      _id: _id_param
+      _id: !_id_param ? {$exists:true} : _id_param
     },
     {$pull: {
       customer_section: {
-        _id: _id_param
+        _id: !_id_param ? {$exists:true} : _id_param
       },
     },
     $set: {

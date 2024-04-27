@@ -70,7 +70,7 @@ export const FoodSave = () => {
     food_total_carb: 0,
     food_total_protein: 0,
     food_section: [{
-      food_part_idx: 0,
+      food_part_idx: 1,
       food_part_val: "아침",
       food_title: "",
       food_count: 0,
@@ -284,23 +284,22 @@ export const FoodSave = () => {
               <tr>
                 <td>
                   <select
-                    id={"food_part_val"}
-                    name={"food_part_val"}
+                    id={"food_part_idx"}
+                    name={"food_part_idx"}
                     className={"form-select"}
-                    value={item.food_part_val}
+                    value={item.food_part_idx}
                     onChange={(e) => {
-                      const newVal = parseInt(e.target.value);
-                      setOBJECT((prev) => {
-                        const newFoodSection = [...prev.food_section];
-                        newFoodSection[index] = {
-                          ...item,
-                          food_part_val: newVal
-                        };
-                        return {
-                          ...prev,
-                          food_section: newFoodSection,
-                        };
-                      });
+                      const newIndex = parseInt(e.target.value);
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section.map((item, idx) => (
+                          idx === index ? {
+                            ...item,
+                            food_part_idx: newIndex,
+                            food_part_val: foodArray[newIndex]?.food_part
+                          } : item
+                        ))
+                      }));
                     }}
                   >
                     {foodArray?.map((item, idx) => (
@@ -342,11 +341,13 @@ export const FoodSave = () => {
                 <td>{item.food_fat}</td>
                 <td>{item.food_carb}</td>
                 <td>{item.food_protein}</td>
-                <td><span className={"btn btn-sm btn-danger"} onClick={() => (
+                <td>
+                  <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
                     handlerFoodDelete(index)
                   )}>
                     x
-                  </span></td>
+                  </p>
+                </td>
               </tr>
             </React.Fragment>
           ))}

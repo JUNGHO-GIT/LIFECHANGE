@@ -76,10 +76,10 @@ export const NavBar = () => {
             <Row>
               <Col xs={3} className={"d-left"}>
                 {!preFix ? (
-                  <span className={"fs-30 fw-500 ps-30 pt-10"}>Home</span>
+                  <span className={"fs-25 fw-500 ps-30 pt-10"}>Home</span>
                 ) : (
                   <React.Fragment>
-                    <span className={"fs-30 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
+                    <span className={"fs-25 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
                   </React.Fragment>
                 )}
               </Col>

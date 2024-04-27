@@ -84,58 +84,6 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-
-    let sectionVolume = 0;
-    let totalVolume = 0;
-    let totalMinutes = 0;
-
-    const timeFormat = (data) => {
-      if (!data) {
-        return 0;
-      }
-      else if (typeof data === "string") {
-        const time = data.split(":");
-        if (time.length === 2) {
-          const hours = parseInt(time[0], 10) * 60;
-          const minutes = parseInt(time[1], 10);
-          return hours + minutes;
-        }
-        else {
-          return 0;
-        }
-      }
-      else {
-        return 0;
-      }
-    };
-
-    const updatedSection = OBJECT.exercise_section?.map((section) => {
-      sectionVolume = section.exercise_set * section.exercise_rep * section.exercise_kg;
-      totalVolume += sectionVolume;
-      totalMinutes += timeFormat(section.exercise_cardio);
-      return {
-        ...section,
-        exercise_volume: sectionVolume
-      };
-    });
-
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    const cardioTime = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
-
-    // 이전 상태와 비교
-    if (OBJECT.exercise_total_volume !== totalVolume || OBJECT.exercise_total_cardio !== cardioTime) {
-      setOBJECT((prev) => ({
-        ...prev,
-        exercise_total_volume: totalVolume,
-        exercise_total_cardio: cardioTime,
-        exercise_section: updatedSection,
-      }));
-    }
-  }, [OBJECT.exercise_section]);
-
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {

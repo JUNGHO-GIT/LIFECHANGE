@@ -66,7 +66,7 @@ export const FoodDetail = () => {
     food_total_carb: 0,
     food_total_protein: 0,
     food_section: [{
-      food_part_idx: 0,
+      food_part_idx: 1,
       food_part_val: "아침",
       food_title: "",
       food_count: 0,
@@ -130,51 +130,55 @@ export const FoodDetail = () => {
       <React.Fragment>
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
-          <tr>
-            <th>음식명</th>
-            <th>브랜드</th>
-            <th>분류</th>
-            <th>횟수</th>
-            <th>칼로리</th>
-            <th>탄수화물</th>
-            <th>단백질</th>
-            <th>지방</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          {OBJECT?.food_section?.map((section, index) => (
-            <tr key={index} className={"fs-20 pt-20"}>
-              {index === 0 && (
-                <React.Fragment>
-                  <td rowSpan={OBJECT?.food_section?.length}>
-                    {OBJECT?.food_startDt}
-                  </td>
-                </React.Fragment>
-              )}
-              <td>{section.food_title}</td>
-              <td>{section.food_part_val}</td>
-              <td>{section.food_count} {section.food_serv}</td>
-              <td>{section.food_kcal}</td>
-              <td>{section.food_carb}</td>
-              <td>{section.food_protein}</td>
-              <td>{section.food_fat}</td>
-              <td>
-                <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
-                  flowDelete(OBJECT._id, section._id)
-                )}>x</p>
-              </td>
+            <tr>
+              <th>날짜</th>
+              <th>분류</th>
+              <th>식품명</th>
+              <th>브랜드</th>
+              <th>수량</th>
+              <th>그램(g)</th>
+              <th>칼로리(kcal)</th>
+              <th>탄수화물(g)</th>
+              <th>단백질(g)</th>
+              <th>지방(g)</th>
+              <th>삭제</th>
             </tr>
-          ))}
-          <tr>
-            <td colSpan={4}>합계</td>
-            <td>{OBJECT?.food_total_kcal}</td>
-            <td>{OBJECT?.food_total_carb}</td>
-            <td>{OBJECT?.food_total_protein}</td>
-            <td>{OBJECT?.food_total_fat}</td>
-            <td></td>
-          </tr>
-        </tbody>
+          </thead>
+          <tbody>
+            {OBJECT?.food_section?.map((section, index) => (
+              <tr key={index} className={"fs-20 pt-20"}>
+                {index === 0 && (
+                  <React.Fragment>
+                    <td rowSpan={OBJECT?.food_section?.length}>
+                      {OBJECT?.food_startDt}
+                    </td>
+                  </React.Fragment>
+                )}
+                <td>{section.food_part_val}</td>
+                <td>{section.food_title}</td>
+                <td>{section.food_brand}</td>
+                <td>{section.food_count} {section.food_serv}</td>
+                <td>{section.food_gram}</td>
+                <td>{section.food_kcal}</td>
+                <td>{section.food_carb}</td>
+                <td>{section.food_protein}</td>
+                <td>{section.food_fat}</td>
+                <td>
+                  <p className={"pointer d-center text-danger fs-30 fw-bolder"} onClick={() => (
+                    flowDelete(OBJECT._id, section._id)
+                  )}>x</p>
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td colSpan={4}>합계</td>
+              <td>{OBJECT?.food_total_kcal}</td>
+              <td>{OBJECT?.food_total_carb}</td>
+              <td>{OBJECT?.food_total_protein}</td>
+              <td>{OBJECT?.food_total_fat}</td>
+              <td></td>
+            </tr>
+          </tbody>
         </Table>
       </React.Fragment>
     );

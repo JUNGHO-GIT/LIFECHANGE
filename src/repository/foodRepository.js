@@ -144,7 +144,7 @@ export const save = {
   ) => {
     const finalResult = await Food.findOneAndUpdate(
       {customer_id: customer_id_param,
-        _id: _id_param
+        _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
         ...OBJECT_param,
@@ -186,7 +186,7 @@ export const deletes = {
     customer_id_param, _id_param, section_id_param, startDt_param, endDt_param,
   ) => {
     const updateResult = await Food.updateOne(
-      {_id: _id_param,
+      {_id: !_id_param ? {$exists:true} : _id_param,
         customer_id: customer_id_param,
         food_startDt: {
           $gte: startDt_param,
@@ -215,7 +215,7 @@ export const deletes = {
   ) => {
     const deleteResult = await Food.deleteOne({
       customer_id: customer_id_param,
-      _id: _id_param
+      _id: !_id_param ? {$exists:true} : _id_param
     })
     .lean();
     return deleteResult;

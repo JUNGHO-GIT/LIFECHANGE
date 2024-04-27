@@ -226,20 +226,18 @@ export const MoneySave = () => {
                   value={OBJECT?.money_section[i]?.money_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.money_section];
-                      updatedSection[i] = {
-                        ...updatedSection[i],
-                        money_part_idx: newIndex,
-                        money_part_val: moneyArray[newIndex].money_part,
-                        money_title_idx: 0,
-                        money_title_val: moneyArray[newIndex].money_title[0],
-                      };
-                      return {
-                        ...prev,
-                        money_section: updatedSection
-                      };
-                    });
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_part_idx: newIndex,
+                          money_part_val: moneyArray[newIndex]?.money_part,
+                          money_title_idx: 0,
+                          money_title_val: moneyArray[newIndex]?.money_title[0],
+                        } : item
+                      ))
+                    }));
                   }}
                 >
                   {moneyArray?.map((item, idx) => (
@@ -261,18 +259,16 @@ export const MoneySave = () => {
                     const newTitleIdx = parseInt(e.target.value);
                     const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
                     if (newTitleIdx >= 0 && newTitleVal) {
-                      setOBJECT((prev) => {
-                        let updatedSection = [...prev.money_section];
-                        updatedSection[i] = {
-                          ...updatedSection[i],
-                          money_title_idx: newTitleIdx,
-                          money_title_val: newTitleVal,
-                        };
-                        return {
-                          ...prev,
-                          money_section: updatedSection
-                        };
-                      });
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        money_section: prev.money_section.map((item, idx) => (
+                          idx === i ? {
+                            ...item,
+                            money_title_idx: newTitleIdx,
+                            money_title_val: newTitleVal,
+                          } : item
+                        ))
+                      }));
                     }
                   }}
                 >
@@ -299,7 +295,7 @@ export const MoneySave = () => {
                   displayType={"input"}
                   id={`money_amount-${i}`}
                   name={`money_amount-${i}`}
-                  className={"form-control"}
+                  className={`form-control ${OBJECT?.money_section[i]?.money_part_val === "수입" ? "text-primary" : "text-danger"}`}
                   disabled={false}
                   allowNegative={false}
                   thousandSeparator={true}
@@ -307,14 +303,15 @@ export const MoneySave = () => {
                   value={OBJECT?.money_section[i]?.money_amount}
                   onValueChange={(values) => {
                     const limitedValue = Math.min(9999999999, parseInt(values?.value));
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.money_section];
-                      updatedSection[i].money_amount = limitedValue;
-                      return {
-                        ...prev,
-                        money_section: updatedSection
-                      };
-                    });
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_amount: limitedValue
+                        } : item
+                      ))
+                    }));
                   }}
                 ></NumericFormat>
               </div>
@@ -332,14 +329,15 @@ export const MoneySave = () => {
                   value={OBJECT?.money_section[i]?.money_content}
                   onChange={(e) => {
                     const limitedContent = e.target.value.slice(0, 100);
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.money_section];
-                      updatedSection[i].money_content = limitedContent;
-                      return {
-                        ...prev,
-                        money_section: updatedSection
-                      };
-                    });
+                    setOBJECT((prev) =>({
+                      ...prev,
+                      money_section: prev.money_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_content: limitedContent
+                        } : item
+                      ))
+                    }));
                   }}
                 ></InputMask>
               </div>
@@ -373,7 +371,7 @@ export const MoneySave = () => {
                 displayType={"input"}
                 id={"money_total_in"}
                 name={"money_total_in"}
-                className={"form-control"}
+                className={`form-control text-primary`}
                 readOnly={true}
                 disabled={true}
                 allowNegative={false}
@@ -396,7 +394,7 @@ export const MoneySave = () => {
                 displayType={"input"}
                 id={"money_total_out"}
                 name={"money_total_out"}
-                className={"form-control"}
+                className={`form-control text-danger`}
                 readOnly={true}
                 disabled={true}
                 allowNegative={false}

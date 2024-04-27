@@ -124,7 +124,7 @@ export const save = {
   ) => {
     const finalResult = await Sleep.findOneAndUpdate(
       {customer_id: customer_id_param,
-        _id: _id_param
+        _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
         ...OBJECT_param,
@@ -195,7 +195,7 @@ export const deletes = {
   ) => {
     const deleteResult = await Sleep.deleteOne({
       customer_id: customer_id_param,
-      _id: _id_param
+      _id: !_id_param ? {$exists:true} : _id_param
     })
     .lean();
     return deleteResult;

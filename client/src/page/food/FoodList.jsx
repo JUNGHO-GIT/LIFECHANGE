@@ -83,7 +83,7 @@ export const FoodList = () => {
     food_total_carb: 0,
     food_total_protein: 0,
     food_section: [{
-      food_part_idx: 0,
+      food_part_idx: 1,
       food_part_val: "아침",
       food_title: "",
       food_count: 0,
@@ -121,55 +121,54 @@ export const FoodList = () => {
       <React.Fragment>
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
-          <tr>
-            <th>날짜</th>
-            <th>분류</th>
-            <th>식품명</th>
-            <th>브랜드</th>
-            <th>수량</th>
-            <th>그램(g)</th>
-            <th>칼로리(kcal)</th>
-            <th>탄수화물(g)</th>
-            <th>단백질(g)</th>
-            <th>지방(g)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {OBJECT?.map((item, index) => (
-            <React.Fragment key={item._id}>
-              {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={sectionIndex}>
-                  <tr>
-                    {sectionIndex === 0 && (
-                      <td rowSpan={Math.min(item.food_section.length, 3)}
-                      className={"pointer"} onClick={() => {
-                        SEND.id = item._id;
-                        SEND.startDt = item.food_startDt;
-                        SEND.endDt = item.food_endDt;
-                        navParam(SEND.toDetail, {
-                          state: SEND
-                        });
-                      }}>
-                        {item.food_startDt}
-                        {item.food_section.length > 3 && <div>더보기</div>}
-                      </td>
-                    )}
-                    <td>{section.food_part_val}</td>
-                    <td>{section.food_title}</td>
-                    <td>{section.food_brand}</td>
-                    <td>{`${numeral(section.food_count).format('0,0')}`}
-                      {section.food_serv}</td>
-                    <td>{`${numeral(section.food_gram).format('0,0')} g`}</td>
-                    <td>{`${numeral(section.food_kcal).format('0,0')} kcal`}</td>
-                    <td>{`${numeral(section.food_carb).format('0,0')} g`}</td>
-                    <td>{`${numeral(section.food_protein).format('0,0')} g`}</td>
-                    <td>{`${numeral(section.food_fat).format('0,0')} g`}</td>
-                  </tr>
-                </React.Fragment>
-              ))}
-            </React.Fragment>
-          ))}
-        </tbody>
+            <tr>
+              <th>날짜</th>
+              <th>분류</th>
+              <th>식품명</th>
+              <th>브랜드</th>
+              <th>수량</th>
+              <th>그램(g)</th>
+              <th>칼로리(kcal)</th>
+              <th>탄수화물(g)</th>
+              <th>단백질(g)</th>
+              <th>지방(g)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.map((item, index) => (
+              <React.Fragment key={item._id}>
+                {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
+                  <React.Fragment key={sectionIndex}>
+                    <tr>
+                      {sectionIndex === 0 && (
+                        <td rowSpan={Math.min(item.food_section.length, 3)}
+                        className={"pointer"} onClick={() => {
+                          SEND.id = item._id;
+                          SEND.startDt = item.food_startDt;
+                          SEND.endDt = item.food_endDt;
+                          navParam(SEND.toDetail, {
+                            state: SEND
+                          });
+                        }}>
+                          {item.food_startDt}
+                          {item.food_section.length > 3 && <div>더보기</div>}
+                        </td>
+                      )}
+                      <td>{section.food_part_val}</td>
+                      <td>{section.food_title}</td>
+                      <td>{section.food_brand}</td>
+                      <td>{`${numeral(section.food_count).format('0,0')}`}{section.food_serv}</td>
+                      <td>{`${numeral(section.food_gram).format('0,0')} g`}</td>
+                      <td>{`${numeral(section.food_kcal).format('0,0')} kcal`}</td>
+                      <td>{`${numeral(section.food_carb).format('0,0')} g`}</td>
+                      <td>{`${numeral(section.food_protein).format('0,0')} g`}</td>
+                      <td>{`${numeral(section.food_fat).format('0,0')} g`}</td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+              </React.Fragment>
+            ))}
+          </tbody>
         </Table>
       </React.Fragment>
     );

@@ -3,6 +3,7 @@
 import {SideBar} from "./SideBar.jsx";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import moment from "moment-timezone";
 import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
@@ -90,14 +91,16 @@ export const Header = () => {
       <Card className={"container-wrapper mb-10"} border={"light"}>
         <Container fluid className={"p-0"}>
           <Row>
-            <Col xs={1}>
+            <Col xs={3} className={"d-left"}>
               <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
               <Button type={"button"} size={"sm"} variant={"secondary"} onClick={toggleSidebar}>
                 Sidebar
               </Button>
             </Col>
-            <Col xs={9}></Col>
-            <Col xs={2}>
+            <Col xs={6} className={"d-center"}>
+              <h4 className={"text-center"}>{moment().format("YYYY-MM-DD")}</h4>
+            </Col>
+            <Col xs={3} className={"d-right"}>
               {buttonNode()}
             </Col>
           </Row>

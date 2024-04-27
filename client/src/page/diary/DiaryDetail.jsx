@@ -58,7 +58,7 @@ export const DiaryDetail = () => {
     diary_startDt: "0000-00-00",
     diary_endDt: "0000-00-00",
     diary_section: [{
-      diary_part_idx: 0,
+      diary_part_idx: 1,
       diary_part_val: "일정",
       diary_title : "",
       diary_color: "#000000",
@@ -148,7 +148,7 @@ export const DiaryDetail = () => {
     function handlerCount(e) {
       let newCount = parseInt(e, 10);
       let defaultSection = {
-        diary_part_idx: 0,
+        diary_part_idx: 1,
         diary_part_val: "일정",
         diary_title : "",
         diary_color: "#000000",
@@ -160,13 +160,7 @@ export const DiaryDetail = () => {
         sectionCnt: newCount
       }));
 
-      if (newCount === 0) {
-        setOBJECT((prev) => ({
-          ...prev,
-          diary_section: []
-        }));
-      }
-      else if (newCount > 0) {
+      if (newCount > 0) {
         let updatedSection = Array(newCount).fill(null).map((_, idx) => (
           idx < OBJECT.diary_section.length ? OBJECT.diary_section[idx] : {...defaultSection}
         ));
@@ -178,7 +172,7 @@ export const DiaryDetail = () => {
       else {
         setOBJECT((prev) => ({
           ...prev,
-          diary_section: [defaultSection]
+          diary_section: []
         }));
       }
     };
@@ -243,18 +237,16 @@ export const DiaryDetail = () => {
                   value={OBJECT?.diary_section[i]?.diary_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.diary_section];
-                      updatedSection[i] = {
-                        ...updatedSection[i],
-                        diary_part_idx: newIndex,
-                        diary_part_val: diaryArray[newIndex]?.diary_part
-                      };
-                      return {
-                        ...prev,
-                        diary_section: updatedSection
-                      };
-                    });
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      diary_section: prev.diary_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          diary_part_idx: newIndex,
+                          diary_part_val: diaryArray[newIndex]?.diary_part
+                        } : item
+                      ))
+                    }));
                   }}
                 >
                   {diaryArray?.map((item, idx) => (
@@ -267,94 +259,121 @@ export const DiaryDetail = () => {
             </Col>
           </Row>
           <Row className={"text-center mb-20"}>
-            <Col xs={12}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>타이틀</span>
-                <InputMask
-                  mask={""}
-                  placeholder={"제목"}
-                  id={`diary_title-${i}`}
-                  name={`diary_title-${i}`}
-                  className={"form-control"}
-                  maskChar={null}
-                  value={OBJECT?.diary_section[i]?.diary_title}
-                  onChange={(e) => {
-                    const newTitle = e.target.value;
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.diary_section];
-                      updatedSection[i] = {
-                        ...updatedSection[i],
-                        diary_title: newTitle
-                      };
-                      return {
-                        ...prev,
-                        diary_section: updatedSection
-                      };
-                    });
-                  }}
-                ></InputMask>
-              </div>
-            </Col>
-            <Col xs={12}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>내용</span>
-                <InputMask
-                  mask={""}
-                  placeholder={"내용"}
-                  id={`diary_detail-${i}`}
-                  name={`diary_detail-${i}`}
-                  className={"form-control"}
-                  maskChar={null}
-                  value={OBJECT?.diary_section[i]?.diary_detail}
-                  onChange={(e) => {
-                    const newDetail = e.target.value;
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.diary_section];
-                      updatedSection[i] = {
-                        ...updatedSection[i],
-                        diary_detail: newDetail
-                      };
-                      return {
-                        ...prev,
-                        diary_section: updatedSection
-                      };
-                    });
-                  }}
-                ></InputMask>
-              </div>
-            </Col>
-            <Col xs={12}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>색상</span>
-                <select
-                  id={`diary_color-${i}`}
-                  name={`diary_color-${i}`}
-                  className={"form-select"}
-                  value={OBJECT?.diary_section[i]?.diary_color}
-                  style={{color: OBJECT?.diary_section[i]?.diary_color}}
-                  onChange={(e) => {
-                    const newColor = e.target.value;
-                    setOBJECT((prev) => {
-                      let updatedSection = [...prev.diary_section];
-                      updatedSection[i] = {
-                        ...updatedSection[i],
-                        diary_color: newColor
-                      };
-                      return {
-                        ...prev,
-                        diary_section: updatedSection
-                      };
-                    });
-                  }}
-                >
-                  {colors.map((color, index) => (
-                    <option key={index} value={color.value} style={{color: color.value}}>
-                      ● {color.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </Col>
+            {OBJECT?.diary_section[i]?.diary_part_val === "일정" ? (
+              <React.Fragment>
+                <Col xs={12}>
+                  <div className={"input-group"}>
+                    <span className={"input-group-text"}>타이틀</span>
+                    <InputMask
+                      mask={""}
+                      placeholder={"제목"}
+                      id={`diary_title-${i}`}
+                      name={`diary_title-${i}`}
+                      className={"form-control"}
+                      maskChar={null}
+                      value={OBJECT?.diary_section[i]?.diary_title}
+                      onChange={(e) => {
+                        const newTitle = e.target.value;
+                        setOBJECT((prev) => ({
+                          ...prev,
+                          diary_section: prev.diary_section.map((item, idx) => (
+                            idx === i ? {
+                              ...item,
+                              diary_title: newTitle
+                            } : item
+                          ))
+                        }));
+                      }}
+                    ></InputMask>
+                  </div>
+                </Col>
+                <Col xs={12}>
+                  <div className={"input-group"}>
+                    <span className={"input-group-text"}>내용</span>
+                    <InputMask
+                      mask={""}
+                      placeholder={"내용"}
+                      id={`diary_detail-${i}`}
+                      name={`diary_detail-${i}`}
+                      className={"form-control"}
+                      maskChar={null}
+                      value={OBJECT?.diary_section[i]?.diary_detail}
+                      onChange={(e) => {
+                        const newDetail = e.target.value;
+                        setOBJECT((prev) => ({
+                          ...prev,
+                          diary_section: prev.diary_section.map((item, idx) => (
+                            idx === i ? {
+                              ...item,
+                              diary_detail: newDetail
+                            } : item
+                          ))
+                        }));
+                      }}
+                    ></InputMask>
+                  </div>
+                </Col>
+                <Col xs={12}>
+                  <div className={"input-group"}>
+                    <span className={"input-group-text"}>색상</span>
+                    <select
+                      id={`diary_color-${i}`}
+                      name={`diary_color-${i}`}
+                      className={"form-select"}
+                      value={OBJECT?.diary_section[i]?.diary_color}
+                      style={{color: OBJECT?.diary_section[i]?.diary_color}}
+                      onChange={(e) => {
+                        const newColor = e.target.value;
+                        setOBJECT((prev) => ({
+                          ...prev,
+                          diary_section: prev.diary_section.map((item, idx) => (
+                            idx === i ? {
+                              ...item,
+                              diary_color: newColor
+                            } : item
+                          ))
+                        }));
+                      }}
+                    >
+                      {colors.map((color, index) => (
+                        <option key={index} value={color.value} style={{color: color.value}}>
+                          ● {color.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </Col>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Col xs={12}>
+                  <div className={"input-group"}>
+                    <span className={"input-group-text"}>타이틀</span>
+                    <InputMask
+                      mask={""}
+                      placeholder={"제목"}
+                      id={`diary_title-${i}`}
+                      name={`diary_title-${i}`}
+                      className={"form-control"}
+                      maskChar={null}
+                      value={OBJECT?.diary_section[i]?.diary_title}
+                      onChange={(e) => {
+                        const newTitle = e.target.value;
+                        setOBJECT((prev) => ({
+                          ...prev,
+                          diary_section: prev.diary_section.map((item, idx) => (
+                            idx === i ? {
+                              ...item,
+                              diary_title: newTitle
+                            } : item
+                          ))
+                        }));
+                      }}
+                    ></InputMask>
+                  </div>
+                </Col>
+              </React.Fragment>
+            )}
           </Row>
         </div>
       );

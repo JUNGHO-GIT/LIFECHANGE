@@ -34,8 +34,7 @@ export const CustomerDataset = () => {
       refresh: 0,
       startDt: "0000-00-00",
       endDt: "0000-00-00",
-      toMain: "/",
-      toList: "/customer/list"
+      toDataset: "/customer/dataset",
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
@@ -107,7 +106,7 @@ export const CustomerDataset = () => {
     if (response.data.status === "success") {
       alert(response.data.msg);
       sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
-      navParam(SEND.refresh);
+      navParam(SEND.toDataset);
     }
     else {
       alert(response.data.msg);

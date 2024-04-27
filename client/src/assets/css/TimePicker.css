@@ -7,8 +7,8 @@
 }
 
 .react-time-picker--disabled {
-  background-color: #f7f7f7;
-  color: #ccc;
+  background-color:  var(--bs-secondary-bg);
+  opacity: 1;
 }
 
 .react-time-picker__wrapper {
@@ -16,6 +16,7 @@
   flex-direction: row;
   font-size: 1rem;
   position: relative;
+  text-align: left;
 }
 
 .react-time-picker__wrapper--disabled {
