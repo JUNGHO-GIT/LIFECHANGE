@@ -1,6 +1,6 @@
 // sleepMiddleware.js
 
-import {compareTime} from "../assets/common/date.js";
+import {compareTime} from "../assets/js/date.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (object) => {

@@ -14,14 +14,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-resizable/css/styles.css";
 import "react-calendar/dist/Calendar.css";
 
-import "../assets/css/Loader.css";
-import "../assets/css/Custom.css";
-import "../assets/css/Jstyle.css";
-import "../assets/css/SideBar.css";
-import "../assets/css/DatePicker.css";
-import "../assets/css/TimePicker.css";
-import "../assets/css/DayPicker.css";
-import "../assets/css/Calendar.css";
+import "../assets/css/custom/Custom.css";
+import "../assets/css/custom/Jstyle.css";
+
+import "../assets/css/fragments/DatePicker.css";
+import "../assets/css/fragments/TimePicker.css";
+import "../assets/css/fragments/DayPicker.css";
+import "../assets/css/fragments/Calendar.css";
+
+import "../assets/css/layout/Header.css";
+import "../assets/css/layout/Loader.css";
+import "../assets/css/layout/NavBar.css";
+import "../assets/css/layout/SideBar.css";
 
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";

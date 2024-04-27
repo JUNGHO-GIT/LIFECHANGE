@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Diary} from "../schema/Diary.js";
-import {fmtDate} from "../assets/common/date.js";
+import {fmtDate} from "../assets/js/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
@@ -108,9 +108,9 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        ...OBJECT_param,
         diary_startDt: startDt_param,
         diary_endDt: endDt_param,
+        diary_section: OBJECT_param.diary_section,
         diary_updateDt: fmtDate,
       }},
       {upsert: true,

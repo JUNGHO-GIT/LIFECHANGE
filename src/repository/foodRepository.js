@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Food} from "../schema/Food.js";
-import {fmtDate} from "../assets/common/date.js";
+import {fmtDate} from "../assets/js/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
@@ -147,9 +147,13 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        ...OBJECT_param,
         food_startDt: startDt_param,
         food_endDt: endDt_param,
+        food_total_kcal: OBJECT_param.food_total_kcal,
+        food_total_carb: OBJECT_param.food_total_carb,
+        food_total_protein: OBJECT_param.food_total_protein,
+        food_total_fat: OBJECT_param.food_total_fat,
+        food_section: OBJECT_param.food_section,
         food_updateDt: fmtDate,
       }},
       {upsert: true,

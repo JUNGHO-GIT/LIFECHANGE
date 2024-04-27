@@ -7,7 +7,7 @@ import {NumericFormat} from "react-number-format";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {DateNode} from "../../assets/fragments/DateNode.jsx";
+import {DateNode} from "../../fragments/DateNode.jsx";
 import {Button, Col, Row, Container, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -319,7 +319,7 @@ export const DiaryDetail = () => {
                     <select
                       id={`diary_color-${i}`}
                       name={`diary_color-${i}`}
-                      className={"form-select"}
+                      className={"form-control"}
                       value={OBJECT?.diary_section[i]?.diary_color}
                       style={{color: OBJECT?.diary_section[i]?.diary_color}}
                       onChange={(e) => {
@@ -398,12 +398,12 @@ export const DiaryDetail = () => {
   const buttonNode = () => {
     return (
       <React.Fragment>
-        <Button variant={"primary"} className={"me-10"} onClick={() => {
+        <Button variant={"primary"} className={"me-10"} size={"sm"} onClick={() => {
           flowSave();
         }}>
           저장
         </Button>
-        <Button variant={"danger"} className={"ms-10"} onClick={() => {
+        <Button variant={"danger"} className={"ms-10"} size={"sm"} onClick={() => {
           flowDelete(OBJECT._id);
         }}>
           삭제

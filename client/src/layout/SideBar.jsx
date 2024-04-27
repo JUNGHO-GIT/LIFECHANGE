@@ -60,49 +60,58 @@ export const SideBar = ({ sidebar, onClose }) => {
   // 5. node -------------------------------------------------------------------------------------->
   const sidBarItem = (label, items) => {
     return (
-      <li className={"text-start pointer mt-30 ps-20"}>
-        <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
-          toggleExpand(label)
-        )}>
-          {label}
-        </div>
-        <Collapse in={isExpended === label}>
-          <ul>
-            {items?.map(({ to, label }) => (
-              <li key={to} className={`fs-14 fw-400 ${isActive === to ? "highlight" : ""}`}>
-                <div className={"pointer"} onClick={() => {
-                  SEND.startDt = koreanDate;
-                  SEND.endDt = koreanDate;
-                  navParam(to, {
-                    state: SEND
-                  });
-                  setIsActive(to);
-                  onClose();
-                }}>
-                  {label}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </Collapse>
-      </li>
+      <React.Fragment>
+        <ul className={"sidebar-ul-text"}>
+          <li className={"sidebar-li-text"}>
+            <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
+              toggleExpand(label)
+            )}>
+              {label}
+            </div>
+            <Collapse in={isExpended === label}>
+              <ul>
+                {items?.map(({ to, label }) => (
+                  <li key={to} className={`sidebar-li-ul-text ${isActive === to ? "highlight" : ""}`}>
+                    <div onClick={() => {
+                      SEND.startDt = koreanDate;
+                      SEND.endDt = koreanDate;
+                      navParam(to, {
+                        state: SEND
+                      });
+                      setIsActive(to);
+                      onClose();
+                    }}>
+                      {label}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </Collapse>
+          </li>
+        </ul>
+      </React.Fragment>
     );
   };
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
-    <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
-      <div className={"d-flex justify-content-between align-items-center text-dark pointer p-10"}>
-        <span className={"ps-20 fs-40"}>Changer</span>
-        <span className={"pt-10 pe-10 fs-20 pointer"} onClick={onClose}>X</span>
-      </div>
-      <div className={"d-flex flex-column p-3"}>
-        <ul className={"nav nav-pills flex-column mb-auto fs-20 fw-500 text-dark"}>
+    <React.Fragment>
+      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
+        <div className={"sidebar-head-group"}>
+          <span className={"sidebar-head-title"}>Changer</span>
+          <span className={"sidebar-head-close"} onClick={onClose}>X</span>
+        </div>
+        <div>
           {dataArray?.map((menu) => (
             sidBarItem(menu.label, menu.items)
           ))}
-        </ul>
+        </div>
+        <div className={"btn btn-sm btn-danger pointer"} onClick={() => (
+          localStorage.clear()
+        )}>
+          Clear
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };

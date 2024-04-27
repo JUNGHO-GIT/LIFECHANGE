@@ -1,7 +1,7 @@
 // exercisePlanService.js
 
 import * as repository from "../repository/exercisePlanRepository.js";
-import {strToDecimal, decimalToStr, compareTime, compareCount} from "../assets/common/date.js";
+import {strToDecimal, decimalToStr, compareTime, compareCount} from "../assets/js/date.js";
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (

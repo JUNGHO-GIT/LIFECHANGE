@@ -4,10 +4,10 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {CalendarNode} from "../../assets/fragments/CalendarNode.jsx";
-import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
-import {FilterNode} from "../../assets/fragments/FilterNode.jsx";
-import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {CalendarNode} from "../../fragments/CalendarNode.jsx";
+import {PagingNode} from "../../fragments/PagingNode.jsx";
+import {FilterNode} from "../../fragments/FilterNode.jsx";
+import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {Container, Row, Col, Card, Table} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>

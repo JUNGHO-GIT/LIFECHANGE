@@ -1,7 +1,7 @@
 // exerciseDashService.js
 
 import * as repository from "../repository/exerciseDashRepository.js";
-import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../assets/common/date.js";
+import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../assets/js/date.js";
 
 // 1-1. dash (scatter - Today) -------------------------------------------------------------------->
 export const scatterToday = async (

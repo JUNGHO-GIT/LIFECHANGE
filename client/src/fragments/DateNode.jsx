@@ -4,7 +4,7 @@ import React, {forwardRef, useEffect} from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
-import {Button} from "react-bootstrap";
+import {Button, Col, Row, Container} from "react-bootstrap";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
@@ -24,7 +24,7 @@ export const DateNode = ({
 
   // @ts-ignore
   const CustomInput = forwardRef(({value, onClick}, ref) => (
-    <Button className={"custom-input"} onClick={onClick} ref={ref} variant={"outline-secondary"} size={"lg"} type={"button"}>
+    <Button className={"form-control"} onClick={onClick} ref={ref} variant={"outline-secondary"} type={"button"}>
       {value}
     </Button>
   ));
@@ -34,7 +34,7 @@ export const DateNode = ({
     <React.Fragment>
       <div className={"input-group d-block"}>
         <div className={"d-inline-flex"}>
-          <span className="input-group-text">{label}</span>
+          <span className={"input-group-text"}>{label}</span>
           <DatePicker
             locale={ko}
             dateFormat={"yyyy-MM-dd"}
@@ -54,36 +54,45 @@ export const DateNode = ({
   // 1. realDate
   const realDate = () => (
     <React.Fragment>
-      <div className={"d-inline-flex"}>
-        {datePickerNode((date) => {
-          setDATE((prev) => ({
-            ...prev,
-            startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
-            endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
-          }));
-        }, "날짜", DATE.startDt)}
-      </div>
+      <Container className={"d-inline-flex d-center"}>
+        <Row>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            {datePickerNode((date) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+                endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+              }));
+            }, "날짜", DATE.startDt)}
+          </Col>
+        </Row>
+      </Container>
     </React.Fragment>
   );
 
   // 2. planDate
   const planDate = () => (
     <React.Fragment>
-      <div className={"d-inline-flex"}>
-        {datePickerNode((date) => {
-          setDATE((prev) => ({
-            ...prev,
-            startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-          }));
-        }, "시작일", DATE.startDt)}
-        <div className={"w-10"}></div>
-        {datePickerNode((date) => {
-          setDATE((prev) => ({
-            ...prev,
-            endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-          }));
-        }, "종료일", DATE.endDt)}
-      </div>
+      <Container className={"d-inline-flex d-center"}>
+        <Row>
+          <Col lg={6} md={6} sm={6} xs={12}>
+            {datePickerNode((date) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+              }));
+            }, "시작", DATE.startDt)}
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={12}>
+            {datePickerNode((date) => {
+              setDATE((prev) => ({
+                ...prev,
+                endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+              }));
+            }, "종료", DATE.endDt)}
+          </Col>
+        </Row>
+      </Container>
     </React.Fragment>
   );
 

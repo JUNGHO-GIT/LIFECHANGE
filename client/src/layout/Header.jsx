@@ -30,16 +30,6 @@ export const Header = () => {
 
   // 6-1. button ---------------------------------------------------------------------------------->
   const buttonNode = () => {
-    function btnDevMode() {
-      return (
-        <Button variant={isDeveloperMode ? "secondary" : ""} size={"sm"} className={"me-2"}
-        onClick={() => {
-          toggleDeveloperMode();
-        }}>
-          Dev
-        </Button>
-      );
-    };
     function btnLogIn () {
       return (
         <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
@@ -72,13 +62,11 @@ export const Header = () => {
     return (
       (!customer_id || customer_id === "false") ? (
         <React.Fragment>
-          {btnDevMode()}
           {btnLogIn()}
           {btnSignUp()}
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {btnDevMode()}
           {btnLogOut()}
         </React.Fragment>
       )
@@ -98,7 +86,7 @@ export const Header = () => {
               </Button>
             </Col>
             <Col xs={6} className={"d-center"}>
-              <h4 className={"text-center"}>{moment().format("YYYY-MM-DD")}</h4>
+              <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
             </Col>
             <Col xs={3} className={"d-right"}>
               {buttonNode()}

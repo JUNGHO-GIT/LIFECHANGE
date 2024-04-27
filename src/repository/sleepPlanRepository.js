@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import {Sleep} from "../schema/Sleep.js";
 import {SleepPlan} from "../schema/SleepPlan.js";
-import {fmtDate} from "../assets/common/date.js";
+import {fmtDate} from "../assets/js/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
@@ -150,9 +150,11 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        ...OBJECT_param,
         sleep_plan_startDt: startDt_param,
         sleep_plan_endDt: endDt_param,
+        sleep_plan_night: OBJECT_param.sleep_plan_night,
+        sleep_plan_morning: OBJECT_param.sleep_plan_morning,
+        sleep_plan_time: OBJECT_param.sleep_plan_time,
         sleep_plan_updateDt: fmtDate,
       }},
       {upsert: true,

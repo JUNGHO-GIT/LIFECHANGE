@@ -1,7 +1,7 @@
 // customerPlanService.js
 
 import * as repository from "../repository/customerPlanRepository.js";
-import {strToDecimal, decimalToStr} from "../assets/common/date.js";
+import {strToDecimal, decimalToStr} from "../assets/js/date.js";
 
 // 1-1. percent ----------------------------------------------------------------------------------->
 export const percent = async (

@@ -54,19 +54,6 @@ export const NavBar = () => {
     }
   };
 
-  // 4. node -------------------------------------------------------------------------------------->
-  const buttonClear = () => {
-    return (
-      <React.Fragment>
-        <Button variant={"danger"} size={"sm"} className={"me-5"} onClick={() => (
-          localStorage.clear()
-        )}>
-          Clear
-        </Button>
-      </React.Fragment>
-    );
-  };
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -74,23 +61,20 @@ export const NavBar = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
-              <Col xs={3} className={"d-left"}>
+              <Col lg={6} md={6} sm={4} xs={4} className={"d-left"}>
                 {!preFix ? (
-                  <span className={"fs-25 fw-500 ps-30 pt-10"}>Home</span>
+                  <span className={"nav-text"}>Home</span>
                 ) : (
-                  <React.Fragment>
-                    <span className={"fs-25 fw-500 ps-30 pt-10"}>{preFix} / {subFix}</span>
-                  </React.Fragment>
+                  <span className={"nav-text"}>{preFix} / {subFix}</span>
                 )}
               </Col>
-              <Col xs={6} className={"d-center"}>
-                <span className={"ps-10 pt-10"}>{`Total`}</span>
-                <span className={"ps-10 pt-10"}>{makeIcon("total")}</span>
-                <span className={"ps-10 pt-10"}>{`${preFix}`}</span>
-                <span className={"ps-10 pt-10"}>{makeIcon(`${preFix?.toLowerCase()}`)}</span>
+              <Col lg={3} md={3} sm={4} xs={4} className={"d-right"}>
+                <span className={"nav-icon-text"}>{`Total`}</span>
+                <span className={"nav-icon-text"}>{makeIcon("total")}</span>
               </Col>
-              <Col xs={3} className={"d-right"}>
-                {buttonClear()}
+              <Col lg={3} md={3} sm={4} xs={4} className={"d-right"}>
+                <span className={"nav-icon-text"}>{`${preFix}`}</span>
+                <span className={"nav-icon-text"}>{makeIcon(`${preFix?.toLowerCase()}`)}</span>
               </Col>
             </Row>
           </Container>

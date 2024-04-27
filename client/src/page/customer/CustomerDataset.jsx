@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {diaryArray} from "../../assets/data/DiaryArray.jsx";
 import {exerciseArray} from "../../assets/data/ExerciseArray.jsx";
 import {foodArray} from "../../assets/data/FoodArray.jsx";
@@ -119,7 +119,7 @@ export const CustomerDataset = () => {
     return (
       <React.Fragment>
         <Table hover variant="light" border={2}>
-          <thead className="table-primary">
+          <thead className={"table-primary"}>
             <tr>
               <th>Section</th>
             </tr>
@@ -147,8 +147,8 @@ export const CustomerDataset = () => {
               >
                 <td>
                   <Row>
-                    <Col xs={12} className="fs-20 p-5">
-                      <div className="pointer me-2">
+                    <Col xs={12} className={"fs-20 p-5"}>
+                      <div className={"pointer me-2"}>
                         {item}
                       </div>
                     </Col>
@@ -360,7 +360,7 @@ export const CustomerDataset = () => {
                 <td>
                   <Row>
                     <Col xs={7} className={"fs-20 p-5"}>
-                      <div className="pointer me-2" onClick={() => setIdx((prev) => ({
+                      <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
                       }))}>

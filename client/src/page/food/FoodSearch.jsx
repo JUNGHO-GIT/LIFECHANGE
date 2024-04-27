@@ -6,7 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import InputMask from "react-input-mask";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {PagingNode} from "../../assets/fragments/PagingNode.jsx";
+import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>

@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 import {Money} from "../schema/Money.js";
-import {fmtDate} from "../assets/common/date.js";
+import {fmtDate} from "../assets/js/date.js";
 
 // 0-1. totalCnt ---------------------------------------------------------------------------------->
 export const totalCnt = async (
@@ -145,9 +145,11 @@ export const save = {
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
-        ...OBJECT_param,
         money_startDt: startDt_param,
         money_endDt: endDt_param,
+        money_total_in: OBJECT_param.money_total_in,
+        money_total_out: OBJECT_param.money_total_out,
+        money_section: OBJECT_param.money_section,
         money_updateDt: fmtDate,
       }},
       {upsert: true,

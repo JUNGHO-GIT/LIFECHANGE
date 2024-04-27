@@ -5,7 +5,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {ButtonNode} from "../../assets/fragments/ButtonNode.jsx";
+import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {Container, Table, Button, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
