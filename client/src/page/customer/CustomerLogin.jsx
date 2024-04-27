@@ -6,6 +6,7 @@ import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {percent} from "../../assets/common/percent.js";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -40,16 +41,10 @@ export const CustomerLogin = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
-      const responseToday = await axios.get(`${URL_OBJECT}/plan/percent`, {
-        params: {
-          customer_id: customer_id,
-          duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-        },
-      });
-      window.sessionStorage.setItem("customer_id", customer_id);
-      window.sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
-      navParam("/");
-      window.sessionStorage.setItem("percent", JSON.stringify(responseToday.data.result));
+      sessionStorage.setItem("customer_id", customer_id);
+      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
+      percent();
+      navParam("/diary/list");
     }
     else {
       alert(response.data.msg);

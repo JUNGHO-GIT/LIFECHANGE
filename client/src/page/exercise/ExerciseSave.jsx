@@ -6,6 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {TimePicker} from "react-time-picker";
 import {NumericFormat} from "react-number-format";
 import {strToDecimal, decimalToStr} from "../../assets/common/date.js";
+import {percent} from "../../assets/common/percent.js";
 import {useTime} from "../../assets/hooks/useTime.jsx";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
@@ -144,6 +145,7 @@ export const ExerciseSave = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
       navParam(SEND.toList, {

@@ -90,7 +90,7 @@ export const save = async (
   }
   else {
     finalResult = await repository.save.update(
-      findPlan._id, OBJECT_param, startDt_param, endDt_param
+      customer_id_param, findPlan._id, OBJECT_param, startDt_param, endDt_param
     );
   }
 

@@ -5,6 +5,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
 import InputMask from "react-input-mask";
+import {percent} from "../../assets/common/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {DateNode} from "../../assets/fragments/DateNode.jsx";
@@ -123,6 +124,7 @@ export const MoneySave = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
       navParam(SEND.toList, {

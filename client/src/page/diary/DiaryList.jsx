@@ -1,12 +1,12 @@
 // DiaryList.jsx
 
 import axios from "axios";
+import moment from "moment-timezone";
 import Calendar from "react-calendar";
 import React, {useState, useEffect} from "react";
-import moment from "moment-timezone";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {Container, Row, Col, Card} from "react-bootstrap";
+import {useStorage} from "../../assets/hooks/useStorage.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const DiaryList = () => {
@@ -19,6 +19,7 @@ export const DiaryList = () => {
   const navParam = useNavigate();
   const location = useLocation();
   const PATH = location.pathname?.trim()?.toString();
+  const percent = JSON.parse(window.sessionStorage.getItem("percent") || "{}");
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -124,7 +125,7 @@ export const DiaryList = () => {
               state: SEND
             });
           }}
-          tileContent={({ activeStartDate, date, view }) => {
+          tileContent={({activeStartDate, date, view}) => {
             const diaryForDates = OBJECT?.filter((diary) => (
               dateInRange(date, diary.diary_startDt, diary.diary_endDt)
             ));

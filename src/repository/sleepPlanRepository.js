@@ -143,7 +143,7 @@ export const save = {
     return finalResult;
   },
   update: async (
-    customer_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    customer_id_param, _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.findOneAndUpdate(
       {customer_id: customer_id_param,

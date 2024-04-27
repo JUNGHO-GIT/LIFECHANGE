@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
-
 // @ts-ignore
 import img1 from "../assets/images/1.png";
 // @ts-ignore
