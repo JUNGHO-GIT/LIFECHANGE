@@ -120,7 +120,6 @@ export const MoneyList = () => {
             <th>분류</th>
             <th>항목</th>
             <th>금액</th>
-            <th>내용</th>
           </tr>
         </thead>
         <tbody>
@@ -146,7 +145,6 @@ export const MoneyList = () => {
                     <td>{section.money_part_val}</td>
                     <td>{section.money_title_val}</td>
                     <td>{`₩  ${numeral(section.money_amount).format('0,0')}`}</td>
-                    <td>{section.money_content}</td>
                   </tr>
                 </React.Fragment>
               ))}

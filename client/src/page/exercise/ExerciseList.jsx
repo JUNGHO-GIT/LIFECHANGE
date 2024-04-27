@@ -125,16 +125,9 @@ export const ExerciseList = () => {
           <thead className={"table-primary"}>
             <tr>
               <th>날짜</th>
-              <th>시작</th>
-              <th>종료</th>
-              <th>시간</th>
               <th>부위</th>
               <th>종목</th>
-              <th>세트</th>
-              <th>횟수</th>
-              <th>중량</th>
-              <th>휴식</th>
-              <th>볼륨</th>
+              <th>set x rep x kg</th>
             </tr>
           </thead>
           <tbody>
@@ -157,36 +150,25 @@ export const ExerciseList = () => {
                             {item.exercise_startDt}
                             {item.exercise_section.length > 3 && <div>더보기</div>}
                           </td>
-                          <td rowSpan={Math.min(item.exercise_section.length, 3)}>
-                            {item.exercise_start}
-                          </td>
-                          <td rowSpan={Math.min(item.exercise_section.length, 3)}>
-                            {item.exercise_end}
-                          </td>
-                          <td rowSpan={Math.min(item.exercise_section.length, 3)}>
-                            {item.exercise_time}
-                          </td>
                         </React.Fragment>
                       )}
-                      <React.Fragment>
-                        <td>{section.exercise_part_val}</td>
-                        <td>{section.exercise_title_val}</td>
-                      </React.Fragment>
                       {(section.exercise_part_val !== "유산소") ? (
                         <React.Fragment>
-                          <td>{`${numeral(section.exercise_set).format('0,0')}`}</td>
-                          <td>{`${numeral(section.exercise_rep).format('0,0')}`}</td>
-                          <td>{`${numeral(section.exercise_kg).format('0,0')}`}</td>
-                          <td>{`${numeral(section.exercise_rest).format('0,0')}`}</td>
-                          <td>{`${numeral(section.exercise_volume).format('0,0')}`}</td>
+                          <td>{section.exercise_part_val}</td>
+                          <td>{section.exercise_title_val}</td>
+                          <td>
+                            {`${numeral(section.exercise_set).format('0,0')}`}
+                            &nbsp;x&nbsp;
+                            {`${numeral(section.exercise_rep).format('0,0')}`}
+                            &nbsp;x&nbsp;
+                            {`${numeral(section.exercise_kg).format('0,0')}`}
+                          </td>
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
-                          <td></td>
-                          <td></td>
+                          <td>{section.exercise_part_val}</td>
+                          <td>{section.exercise_title_val}</td>
                           <td>{section.exercise_cardio}</td>
-                          <td></td>
-                          <td></td>
                         </React.Fragment>
                       )}
                     </tr>

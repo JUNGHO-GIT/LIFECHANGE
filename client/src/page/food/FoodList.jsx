@@ -125,13 +125,9 @@ export const FoodList = () => {
               <th>날짜</th>
               <th>분류</th>
               <th>식품명</th>
-              <th>브랜드</th>
               <th>수량</th>
-              <th>그램(g)</th>
-              <th>칼로리(kcal)</th>
-              <th>탄수화물(g)</th>
-              <th>단백질(g)</th>
-              <th>지방(g)</th>
+              <th>그램</th>
+              <th>영양정보</th>
             </tr>
           </thead>
           <tbody>
@@ -156,13 +152,22 @@ export const FoodList = () => {
                       )}
                       <td>{section.food_part_val}</td>
                       <td>{section.food_title}</td>
-                      <td>{section.food_brand}</td>
                       <td>{`${numeral(section.food_count).format('0,0')}`}{section.food_serv}</td>
                       <td>{`${numeral(section.food_gram).format('0,0')} g`}</td>
-                      <td>{`${numeral(section.food_kcal).format('0,0')} kcal`}</td>
-                      <td>{`${numeral(section.food_carb).format('0,0')} g`}</td>
-                      <td>{`${numeral(section.food_protein).format('0,0')} g`}</td>
-                      <td>{`${numeral(section.food_fat).format('0,0')} g`}</td>
+                      <td className={"text-end"}>
+                        <tr>
+                          <td>{`${numeral(section.food_kcal).format('0,0')} kcal`}</td>
+                        </tr>
+                        <tr>
+                          <td>{`${numeral(section.food_fat).format('0,0')} g`}</td>
+                        </tr>
+                        <tr>
+                          <td>{`${numeral(section.food_carb).format('0,0')} g`}</td>
+                        </tr>
+                        <tr>
+                          <td>{`${numeral(section.food_protein).format('0,0')} g`}</td>
+                        </tr>
+                      </td>
                     </tr>
                   </React.Fragment>
                 ))}
