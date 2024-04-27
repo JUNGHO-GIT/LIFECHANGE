@@ -79,7 +79,7 @@ export const Header = () => {
       <Card className={"container-wrapper mb-10"} border={"light"}>
         <Container fluid className={"p-0"}>
           <Row>
-            <Col xs={3} className={"d-left"}>
+            <Col xs={3} className={"d-center"}>
               <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
               <Button type={"button"} size={"sm"} variant={"secondary"} onClick={toggleSidebar}>
                 Sidebar
@@ -88,7 +88,7 @@ export const Header = () => {
             <Col xs={6} className={"d-center"}>
               <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
             </Col>
-            <Col xs={3} className={"d-right"}>
+            <Col xs={3} className={"d-center"}>
               {buttonNode()}
             </Col>
           </Row>

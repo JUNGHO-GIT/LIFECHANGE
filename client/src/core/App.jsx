@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Routes, Route} from "react-router-dom";
-import {DeveloperModeProvider} from "../assets/hooks/useDeveloperMode";
+import {DeveloperModeProvider} from "../assets/hooks/useDeveloperMode.jsx";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";

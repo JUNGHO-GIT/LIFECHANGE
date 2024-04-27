@@ -222,7 +222,7 @@ export const MoneySave = () => {
                 <span className={"input-group-text"}>파트</span>
                 <select
                   id={`money_part_idx-${i}`}
-                  className={"form-control"}
+                  className={"form-select"}
                   value={OBJECT?.money_section[i]?.money_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
@@ -253,7 +253,7 @@ export const MoneySave = () => {
                 <span className={"input-group-text"}>타이틀</span>
                 <select
                   id={`money_title_idx-${i}`}
-                  className={"form-control"}
+                  className={"form-select"}
                   value={OBJECT?.money_section[i]?.money_title_idx}
                   onChange={(e) => {
                     const newTitleIdx = parseInt(e.target.value);

@@ -32,6 +32,10 @@
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
+  .form-select {
+    font-size: 1rem;
+    font-weight: 400;
+  }
   .input-group-text {
     display: flex;
     align-items: center;
@@ -54,11 +58,17 @@
     font-size: 1rem;
     padding: 5px 5px 5px 5px;
   }
+  tbody, td, tfoot, th, thead, tr {
+    border-color: inherit !important;
+    border-style: solid !important;
+    border-width: 0 !important;
+    font-size: 1.0rem !important;
+  }
   .btn-group-sm>.btn, .btn-sm {
-    --bs-btn-padding-y: 0.25rem;
-    --bs-btn-padding-x: 0.5rem;
-    --bs-btn-font-size: 0.875rem;
-    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    --bs-btn-padding-y: 0.25rem !important;
+    --bs-btn-padding-x: 0.5rem !important;
+    --bs-btn-font-size: 0.875rem !important;
+    --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
   }
 }
 
@@ -96,6 +106,10 @@
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
+  .form-select {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
   .input-group-text {
     display: flex;
     align-items: center;
@@ -118,11 +132,17 @@
     font-size: 0.875rem;
     padding: 5px 5px 5px 5px;
   }
+  tbody, td, tfoot, th, thead, tr {
+    border-color: inherit !important;
+    border-style: solid !important;
+    border-width: 0 !important;
+    font-size: 0.8rem !important;
+  }
   .btn-group-sm>.btn, .btn-sm {
-    --bs-btn-padding-y: 0.24rem;
-    --bs-btn-padding-x: 0.4rem;
-    --bs-btn-font-size: 0.85rem;
-    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    --bs-btn-padding-y: 0.24rem !important;
+    --bs-btn-padding-x: 0.4rem !important;
+    --bs-btn-font-size: 0.85rem !important;
+    --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
   }
 }
 
@@ -160,6 +180,10 @@
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
+  .form-select {
+    font-size: 0.7rem;
+    font-weight: 400;
+  }
   .input-group-text {
     display: flex;
     align-items: center;
@@ -182,11 +206,17 @@
     font-size: 0.85rem;
     padding: 5px 5px 5px 5px;
   }
+  tbody, td, tfoot, th, thead, tr {
+    border-color: inherit !important;
+    border-style: solid !important;
+    border-width: 0 !important;
+    font-size: 0.7rem !important;
+  }
   .btn-group-sm>.btn, .btn-sm {
-    --bs-btn-padding-y: 0.23rem;
-    --bs-btn-padding-x: 0.3rem;
-    --bs-btn-font-size: 0.8rem;
-    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    --bs-btn-padding-y: 0.23rem !important;
+    --bs-btn-padding-x: 0.3rem !important;
+    --bs-btn-font-size: 0.8rem !important;
+    --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
   }
 }
 
@@ -224,6 +254,10 @@
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   }
+  .form-select {
+    font-size: 0.6rem;
+    font-weight: 400;
+  }
   .input-group-text {
     display: flex;
     align-items: center;
@@ -246,11 +280,17 @@
     font-size: 0.8rem;
     padding: 5px 5px 5px 5px;
   }
+  tbody, td, tfoot, th, thead, tr {
+    border-color: inherit !important;
+    border-style: solid !important;
+    border-width: 0 !important;
+    font-size: 0.6rem !important;
+  }
   .btn-group-sm>.btn, .btn-sm {
-    --bs-btn-padding-y: 0.22rem;
-    --bs-btn-padding-x: 0.3rem;
-    --bs-btn-font-size: 0.8rem;
-    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    --bs-btn-padding-y: 0.22rem !important;
+    --bs-btn-padding-x: 0.3rem !important;
+    --bs-btn-font-size: 0.8rem !important;
+    --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
   }
 }
 
@@ -267,7 +307,7 @@
     position: relative;
   }
   .container-wrapper {
-    padding: 12px;
+    padding: 10px;
     margin: 0 auto;
     box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
     background-color: #fff;
@@ -287,6 +327,10 @@
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+  .form-select {
+    font-size: 0.5rem;
+    font-weight: 400;
   }
   .input-group-text {
     display: flex;
@@ -310,11 +354,17 @@
     font-size: 0.75rem;
     padding: 5px 5px 5px 5px;
   }
+  tbody, td, tfoot, th, thead, tr {
+    border-color: inherit !important;
+    border-style: solid !important;
+    border-width: 0 !important;
+    font-size: 0.5rem !important;
+  }
   .btn-group-sm>.btn, .btn-sm {
-    --bs-btn-padding-y: 0.21rem;
-    --bs-btn-padding-x: 0.2rem;
-    --bs-btn-font-size: 0.7rem;
-    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    --bs-btn-padding-y: 0.21rem !important;
+    --bs-btn-padding-x: 0.2rem !important;
+    --bs-btn-font-size: 0.7rem !important;
+    --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
   }
 }
 

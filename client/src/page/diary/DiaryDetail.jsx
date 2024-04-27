@@ -233,7 +233,7 @@ export const DiaryDetail = () => {
                 <select
                   id={`diary_part_idx-${i}`}
                   name={`diary_part_idx-${i}`}
-                  className={"form-control"}
+                  className={"form-select"}
                   value={OBJECT?.diary_section[i]?.diary_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
@@ -319,7 +319,7 @@ export const DiaryDetail = () => {
                     <select
                       id={`diary_color-${i}`}
                       name={`diary_color-${i}`}
-                      className={"form-control"}
+                      className={"form-select"}
                       value={OBJECT?.diary_section[i]?.diary_color}
                       style={{color: OBJECT?.diary_section[i]?.diary_color}}
                       onChange={(e) => {

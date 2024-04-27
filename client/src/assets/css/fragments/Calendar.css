@@ -4,6 +4,70 @@
   /** non display **/
 
   /** display **/
+  .react-calendar button {
+    display: inline-grid;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-height: 8.0rem;
+    margin: 0;
+    border-top: 0.3px solid #dadada;
+    border-left: 0.3px solid #dadada;
+    outline: none;
+    text-align: left;
+    padding: 5px 20px 80px 5px;
+  }
+  .react-calendar__tile {
+    font-size: 1.0rem !important;
+    font-weight: 500;
+    color: #000000;
+    background: #ffffff;
+  }
+  .react-calendar__navigation__label__labelText--from {
+    color: #000000;
+    font-size: 1.5rem;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+  abbr[title] {
+    text-decoration: none !important;
+    color: #000000;
+    font-size: 1.0rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .calendar-filled {
+    width: auto;
+    max-width: 5.0rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #0080ff;
+  }
+  .calendar-unfilled {
+    width: auto;
+    max-width: 5.0rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  .calendar-category {
+    margin: 0px 0px 0px 3px;
+    color: #ffffff;
+    font-size: 1.0rem !important;
+  }
 }
 
 /** Tablet Device = 992px ~ 1199px ****************************************************************/
@@ -12,6 +76,70 @@
   /** non display **/
 
   /** display **/
+  .react-calendar button {
+    display: inline-grid;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-height: 7.5rem;
+    margin: 0;
+    border-top: 0.3px solid #dadada;
+    border-left: 0.3px solid #dadada;
+    outline: none;
+    text-align: left;
+    padding: 5px 20px 80px 5px;
+  }
+  .react-calendar__tile {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #000000;
+    background: #ffffff;
+  }
+  .react-calendar__navigation__label__labelText--from {
+    color: #000000;
+    font-size: 1.3rem;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+  abbr[title] {
+    text-decoration: none !important;
+    color: #000000;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .calendar-filled {
+    width: auto;
+    max-width: 4.2rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #0080ff;
+  }
+  .calendar-unfilled {
+    width: auto;
+    max-width: 4.2rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  .calendar-category {
+    margin: 0px 0px 0px 3px;
+    color: #ffffff;
+    font-size: 0.9rem !important;
+  }
 }
 
 /** Mobile Device = 768px ~ 991px *****************************************************************/
@@ -20,6 +148,70 @@
   /** non display **/
 
   /** display **/
+  .react-calendar button {
+    display: inline-grid;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-height: 7.0rem;
+    margin: 0;
+    border-top: 0.3px solid #dadada;
+    border-left: 0.3px solid #dadada;
+    outline: none;
+    text-align: left;
+    padding: 5px 20px 80px 5px;
+  }
+  .react-calendar__tile {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #000000;
+    background: #ffffff;
+  }
+  .react-calendar__navigation__label__labelText--from {
+    color: #000000;
+    font-size: 1.2rem;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+  abbr[title] {
+    text-decoration: none !important;
+    color: #000000;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .calendar-filled {
+    width: auto;
+    max-width: 3.4rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #0080ff;
+  }
+  .calendar-unfilled {
+    width: auto;
+    max-width: 3.4rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  .calendar-category {
+    margin: 0px 0px 0px 3px;
+    color: #ffffff;
+    font-size: 0.8rem !important;
+  }
 }
 
 /** Mobile Device = 480px ~ 767px *****************************************************************/
@@ -28,6 +220,70 @@
   /** non display **/
 
   /** display **/
+  .react-calendar button {
+    display: inline-grid;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-height: 6.5rem;
+    margin: 0;
+    border-top: 0.3px solid #dadada;
+    border-left: 0.3px solid #dadada;
+    outline: none;
+    text-align: left;
+    padding: 5px 20px 80px 5px;
+  }
+  .react-calendar__tile {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #000000;
+    background: #ffffff;
+  }
+  .react-calendar__navigation__label__labelText--from {
+    color: #000000;
+    font-size: 1.1rem;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+  abbr[title] {
+    text-decoration: none !important;
+    color: #000000;
+    font-size: 0.7rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .calendar-filled {
+    width: auto;
+    max-width: 2.6rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #0080ff;
+  }
+  .calendar-unfilled {
+    width: auto;
+    max-width: 2.6rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  .calendar-category {
+    margin: 0px 0px 0px 3px;
+    color: #ffffff;
+    font-size: 0.7rem !important;
+  }
 }
 
 /** Small devices = ~ 479px ***********************************************************************/
@@ -36,6 +292,70 @@
   /** non display **/
 
   /** display **/
+  .react-calendar button {
+    display: inline-grid;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-height: 6.0rem;
+    margin: 0;
+    border-top: 0.3px solid #dadada;
+    border-left: 0.3px solid #dadada;
+    outline: none;
+    text-align: left;
+    padding: 5px 20px 80px 5px;
+  }
+  .react-calendar__navigation__label__labelText--from {
+    color: #000000;
+    font-size: 1.0rem;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+  }
+  .react-calendar__tile {
+    font-size: 0.6rem !important;
+    font-weight: 500;
+    color: #000000;
+    background: #ffffff;
+  }
+  abbr[title] {
+    text-decoration: none !important;
+    color: #000000;
+    font-size: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .calendar-filled {
+    width: auto;
+    max-width: 1.6rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #0080ff;
+  }
+  .calendar-unfilled {
+    width: auto;
+    max-width: 1.6rem;
+    height: auto;
+    max-height: 1.0rem;
+    text-align: left;
+    color: #ffffff;
+    margin: 3px 0px 3px 0px;
+    padding: 0px 0px 0px 0px;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  .calendar-category {
+    margin: 0px 0px 0px 3px;
+    color: #ffffff;
+    font-size: 0.5rem !important;
+  }
 }
 
 /** All Device ************************************************************************************/
@@ -48,21 +368,8 @@
     width: 100%;
     height: 100%;
     border: none;
-    padding: 10px;
+    padding: 0px 0px 0px 0px;
     background-color: #ffffff;
-  }
-  .react-calendar button {
-    display: inline-grid;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    max-height: 120px;
-    margin: 0;
-    border-top: 0.3px solid #dadada;
-    border-left: 0.3px solid #dadada;
-    outline: none;
-    text-align: left;
-    padding: 5px 20px 80px 5px;
   }
   .react-calendar__tile,
   .react-calendar__tile--active {
@@ -79,16 +386,15 @@
   }
   .react-calendar__navigation button {
     min-width: 44px;
+    text-align: center;
     border: none;
     background-color: #ffffff;
     color: #000000;
   }
-  .react-calendar__navigation__label__labelText--from {
-    color: #000000;
-    font-size: 1.5em;
-    text-align: center;
-    justify-content: center;
-    display: flex;
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: #ffffff;
+    color: #0080ff;
   }
   .react-calendar__month-view__days {
     display: flex;
@@ -101,12 +407,12 @@
     text-align: center;
     text-transform: uppercase;
     font: inherit;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     font-weight: bold;
     border-right: 0.3px solid #dadada;
   }
   .react-calendar__month-view__weekdays__weekday {
-    padding: 0.5em;
+    padding: 0.5rem;
     border-top: 0.3px solid #dadada;
     border-left: 0.3px solid #dadada;
   }
@@ -130,35 +436,10 @@
     align-items: center;
     padding: 5px;
   }
-  .calendar-unfilled {
-    width: auto;
-    max-width: 40px;
-    height: auto;
-    max-height: 15px;
-    text-align: left;
-    color: #ffffff;
-    margin: 3px 0px 3px 0px;
-    padding: 0px 0px 0px 0px;
-    opacity: 0.8;
-    border-radius: 5px;
-    background-color: #ffffff;
-  }
-  .calendar-filled {
-    width: auto;
-    max-width: 40px;
-    height: auto;
-    max-height: 20px;
-    text-align: left;
-    color: #ffffff;
-    margin: 3px 0px 3px 0px;
-    padding: 0px 0px 0px 0px;
-    opacity: 0.8;
-    border-radius: 5px;
-    background-color: #0080ff;
-  }
-  .calendar-category {
-    margin: 0px 0px 0px 3px;
-    color: #ffffff;
-    font-size: 4px;
+  .calendar-tile-text abbr {
+    text-decoration: none;
+    color: #000000;
+    font-size: 0.5rem;
+    font-weight: 500;
   }
 }

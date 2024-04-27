@@ -61,18 +61,18 @@ export const NavBar = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
-              <Col lg={6} md={6} sm={4} xs={4} className={"d-left"}>
+              <Col lg={6} md={6} sm={4} xs={4} className={"d-center"}>
                 {!preFix ? (
                   <span className={"nav-text"}>Home</span>
                 ) : (
                   <span className={"nav-text"}>{preFix} / {subFix}</span>
                 )}
               </Col>
-              <Col lg={3} md={3} sm={4} xs={4} className={"d-right"}>
+              <Col lg={3} md={3} sm={4} xs={4} className={"d-center"}>
                 <span className={"nav-icon-text"}>{`Total`}</span>
                 <span className={"nav-icon-text"}>{makeIcon("total")}</span>
               </Col>
-              <Col lg={3} md={3} sm={4} xs={4} className={"d-right"}>
+              <Col lg={3} md={3} sm={4} xs={4} className={"d-center"}>
                 <span className={"nav-icon-text"}>{`${preFix}`}</span>
                 <span className={"nav-icon-text"}>{makeIcon(`${preFix?.toLowerCase()}`)}</span>
               </Col>

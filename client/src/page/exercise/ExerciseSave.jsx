@@ -258,7 +258,7 @@ export const ExerciseSave = () => {
                 <select
                   id={`exercise_part_idx-${i}`}
                   name={`exercise_part_idx-${i}`}
-                  className={"form-control"}
+                  className={"form-select"}
                   value={OBJECT?.exercise_section[i]?.exercise_part_idx}
                   onChange={(e) => {
                     const newIndex = parseInt(e.target.value);
@@ -290,7 +290,7 @@ export const ExerciseSave = () => {
                 <select
                   id={`exercise_title_idx-${i}`}
                   name={`exercise_title_idx-${i}`}
-                  className={"form-control"}
+                  className={"form-select"}
                   value={OBJECT?.exercise_section[i]?.exercise_title_idx}
                   onChange={(e) => {
                     const newTitleIdx = parseInt(e.target.value);

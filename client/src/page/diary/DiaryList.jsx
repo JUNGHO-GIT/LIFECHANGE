@@ -118,10 +118,26 @@ export const DiaryList = () => {
     return (
       <React.Fragment>
         <Calendar
-          locale={"ko"}
           value={new Date()}
           showNavigation={true}
           showNeighboringMonth={true}
+          showDoubleView={false}
+          prevLabel={"이전"}
+          nextLabel={"다음"}
+          prev2Label={null}
+          next2Label={null}
+          formatDay={(locale, date) => (moment(date).format("D"))}
+          formatWeekday={(locale, date) => (moment(date).format("D"))}
+          formatMonth={(locale, date) => (moment(date).format("MM"))}
+          formatYear={(locale, date) => (moment(date).format("YYYY"))}
+          formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
+          formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
+          // 월화수목금토일 한글로 표시
+          formatShortWeekday={(locale, date) => {
+            const day = moment(date).format("d");
+            const week = ["일", "월", "화", "수", "목", "금", "토"];
+            return week[day];
+          }}
           view={"month"}
           onClickDay={(date) => {
             SEND.id = "";
@@ -132,6 +148,9 @@ export const DiaryList = () => {
             navParam(SEND.toDetail, {
               state: SEND
             });
+          }}
+          tileClassName={({date, view}) => {
+            return "calendar-tile-text";
           }}
           tileContent={({activeStartDate, date, view}) => {
             const diaryForDates = OBJECT?.filter((diary) => (
