@@ -1,6 +1,7 @@
 // ExercisePlanDetail.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
@@ -125,10 +126,10 @@ export const ExercisePlanDetail = () => {
         <tbody>
           <tr>
             <td>{`${OBJECT?.exercise_plan_startDt.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt.substring(5, 10)}`}</td>
-            <td>{OBJECT?.exercise_plan_count}</td>
-            <td>{OBJECT?.exercise_plan_volume}</td>
+            <td>{`${numeral(OBJECT?.exercise_plan_count).format("0,0")} 회`}</td>
+            <td>{`${numeral(OBJECT?.exercise_plan_volume).format("0,0")} vol`}</td>
             <td>{OBJECT?.exercise_plan_cardio}</td>
-            <td>{OBJECT?.exercise_plan_weight}</td>
+            <td>{`${numeral(OBJECT?.exercise_plan_weight).format("0,0")} kg`}</td>
             <td>
               <p className={"del-btn"} onClick={() => (
                 flowDelete(OBJECT._id)

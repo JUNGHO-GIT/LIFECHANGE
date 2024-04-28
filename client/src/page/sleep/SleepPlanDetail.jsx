@@ -112,8 +112,7 @@ export const SleepPlanDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
           <tr>
-            <th>시작일</th>
-            <th>종료일</th>
+            <th className={"w-20"}>날짜</th>
             <th>취침 목표</th>
             <th>기상 목표</th>
             <th>수면 목표</th>
@@ -122,8 +121,7 @@ export const SleepPlanDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{OBJECT?.sleep_plan_startDt}</td>
-            <td>{OBJECT?.sleep_plan_endDt}</td>
+            <td>{`${OBJECT?.sleep_plan_startDt.substring(5, 10)} ~ ${OBJECT?.sleep_plan_endDt.substring(5, 10)}`}</td>
             <td>{OBJECT?.sleep_plan_night}</td>
             <td>{OBJECT?.sleep_plan_morning}</td>
             <td>{OBJECT?.sleep_plan_time}</td>
