@@ -135,7 +135,11 @@ export const lineWeek = async (
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
-  let finalResult = [];
+  // in
+  let finalResultIn = [];
+
+  // out
+  let finalResultOut = [];
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
@@ -143,14 +147,21 @@ export const lineWeek = async (
       customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
-    finalResult.push({
+    finalResultIn.push({
       name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      수입: intFormat(findResult?.money_total_in || 0),
-      지출: intFormat(findResult?.money_total_out || 0),
+      수입: intFormat(findResult?.money_total_in || 0)
+    });
+
+    finalResultOut.push({
+      name: `${data[i]} ${dayNum.format("MM/DD")}`,
+      지출: intFormat(findResult?.money_total_out || 0)
     });
   };
 
-  return finalResult
+  return {
+    in: finalResultIn,
+    out: finalResultOut
+  }
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
@@ -164,7 +175,11 @@ export const lineMonth = async (
     "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
   ];
 
-  let finalResult = [];
+  // in
+  let finalResultIn = [];
+
+  // out
+  let finalResultOut = [];
 
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
@@ -172,14 +187,21 @@ export const lineMonth = async (
       customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
-    finalResult.push({
+    finalResultIn.push({
       name: `${data[i]}`,
-      수입: intFormat(findResult?.money_total_in || 0),
-      지출: intFormat(findResult?.money_total_out || 0),
+      수입: intFormat(findResult?.money_total_in || 0)
+    });
+
+    finalResultOut.push({
+      name: `${data[i]}`,
+      지출: intFormat(findResult?.money_total_out || 0)
     });
   }
 
-  return finalResult
+  return {
+    in: finalResultIn,
+    out: finalResultOut
+  }
 };
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
@@ -195,7 +217,11 @@ export const avgWeek = async (
     "1주차", "2주차", "3주차", "4주차", "5주차"
   ];
 
-  let finalResult = [];
+  // in
+  let finalResultIn = [];
+
+  // out
+  let finalResultOut = [];
 
   for (
     let week = curMonthStart.clone();
@@ -218,14 +244,20 @@ export const avgWeek = async (
   };
 
   for (let i = 0; i < 5; i++) {
-    finalResult.push({
+    finalResultIn.push({
       name: `${data[i]}`,
-      수입: intFormat(sumMoneyIn[i] / countRecords[i]),
-      지출: intFormat(sumMoneyOut[i] / countRecords[i]),
+      수입: intFormat(sumMoneyIn[i] / countRecords[i])
+    });
+    finalResultOut.push({
+      name: `${data[i]}`,
+      지출: intFormat(sumMoneyOut[i] / countRecords[i])
     });
   };
 
-  return finalResult
+  return {
+    in: finalResultIn,
+    out: finalResultOut
+  }
 };
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
@@ -241,7 +273,11 @@ export const avgMonth = async (
     "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
   ];
 
-  let finalResult = [];
+  // in
+  let finalResultIn = [];
+
+  // out
+  let finalResultOut = [];
 
   for (
     let month = curYearStart.clone();
@@ -262,12 +298,18 @@ export const avgMonth = async (
   };
 
   for (let i = 0; i < 12; i++) {
-    finalResult.push({
+    finalResultIn.push({
       name: data[i],
-      수입: intFormat(sumMoneyIn[i] / countRecords[i]),
-      지출: intFormat(sumMoneyOut[i] / countRecords[i]),
+      수입: intFormat(sumMoneyIn[i] / countRecords[i])
+    });
+    finalResultOut.push({
+      name: data[i],
+      지출: intFormat(sumMoneyOut[i] / countRecords[i])
     });
   };
 
-  return finalResult
+  return {
+    in: finalResultIn,
+    out: finalResultOut
+  }
 };

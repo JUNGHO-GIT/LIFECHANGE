@@ -57,7 +57,6 @@ export const list = {
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit:  Number(limit_param)},
     ]);
-
     return finalResult;
   },
 };
@@ -116,7 +115,6 @@ export const save = {
       sleep_regDt: fmtDate,
       sleep_updateDt: "",
     });
-
     return finalResult;
   },
   update: async (

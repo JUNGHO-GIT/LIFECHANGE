@@ -23,6 +23,7 @@ export const barToday = {
     .lean();
     return finalResult;
   },
+
   findReal: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
@@ -75,6 +76,7 @@ export const pieToday = {
     ]);
     return finalResult;
   },
+
   findNut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -139,6 +141,7 @@ export const pieWeek = {
     ]);
     return finalResult;
   },
+
   findNut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -203,6 +206,7 @@ export const pieMonth = {
     ]);
     return finalResult;
   },
+
   findNut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {

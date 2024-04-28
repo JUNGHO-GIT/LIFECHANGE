@@ -68,32 +68,17 @@ export const SleepDashAvgMonth = () => {
             ></YAxis>
             {LINE.includes("취침") && (
               <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
-                onMouseEnter={(data, index) => {
-                  data.payload.opacity = 0.5;
-                }}
-                onMouseLeave={(data, index) => {
-                  data.payload.opacity = 1.0;
-                }}>
+                >
               </Bar>
             )}
             {LINE.includes("기상") && (
               <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
-                onMouseEnter={(data, index) => {
-                  data.payload.opacity = 0.5;
-                }}
-                onMouseLeave={(data, index) => {
-                  data.payload.opacity = 1.0;
-                }}>
+                >
               </Bar>
             )}
             {LINE.includes("수면") && (
               <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}
-                onMouseEnter={(data, index) => {
-                  data.payload.opacity = 0.5;
-                }}
-                onMouseLeave={(data, index) => {
-                  data.payload.opacity = 1.0;
-                }}>
+                >
               </Bar>
             )}
             <Tooltip

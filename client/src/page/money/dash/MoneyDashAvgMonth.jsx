@@ -21,14 +21,18 @@ export const MoneyDashAvgMonth = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:LINE, set:setLINE} = useStorage(
-    `LINE (avg-month) (${PATH})`, ["수입", "지출"]
+    `LINE (avg-month) (${PATH})`, "in"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = [
-    {name:"", 수입: 0, 지출: 0},
+  const OBJECT_IN_DEFAULT = [
+    {name:"", 수입: 0},
   ];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const OBJECT_OUT_DEFAULT = [
+    {name:"", 지출: 0},
+  ];
+  const [OBJECT_IN, setOBJECT_IN] = useState(OBJECT_IN_DEFAULT);
+  const [OBJECT_OUT, setOBJECT_OUT] = useState(OBJECT_OUT_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -37,8 +41,8 @@ export const MoneyDashAvgMonth = () => {
         customer_id: customer_id
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
-
+    setOBJECT_IN(response.data.result.in || OBJECT_IN_DEFAULT);
+    setOBJECT_OUT(response.data.result.out || OBJECT_OUT_DEFAULT);
   })()}, [customer_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -78,12 +82,12 @@ export const MoneyDashAvgMonth = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNode = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT);
+  const chartNodeIn = () => {
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_IN);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          <ComposedChart data={OBJECT_IN} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -102,26 +106,8 @@ export const MoneyDashAvgMonth = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {LINE.includes("수입") && (
-              <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
-                onMouseEnter={(data, index) => {
-                  data.payload.opacity = 0.5;
-                }}
-                onMouseLeave={(data, index) => {
-                  data.payload.opacity = 1.0;
-                }}>
-              </Bar>
-            )}
-            {LINE.includes("지출") && (
-              <Bar dataKey={"지출"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
-                onMouseEnter={(data, index) => {
-                  data.payload.opacity = 0.5;
-                }}
-                onMouseLeave={(data, index) => {
-                  data.payload.opacity = 1.0;
-                }}>
-              </Bar>
-            )}
+            <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
             <Tooltip
               formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -148,28 +134,55 @@ export const MoneyDashAvgMonth = () => {
     );
   };
 
-  // 6-1. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
+  // 5-2. chart ----------------------------------------------------------------------------------->
+  const chartNodeOut = () => {
+    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_OUT);
     return (
       <React.Fragment>
-        {["수입", "지출"]?.map((key, index) => (
-          <div key={index} className={"dash-checkbox flex-column mb-20"}>
-            <FormCheck
-              inline
-              type={"switch"}
-              checked={LINE.includes(key)}
-              onChange={() => {
-                if (LINE.includes(key)) {
-                  setLINE(LINE?.filter((item) => (item !== key)));
-                }
-                else {
-                  setLINE([...LINE, key]);
-                }
+        <ResponsiveContainer width={"100%"} height={350}>
+          <ComposedChart data={OBJECT_OUT} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          barGap={8} barCategoryGap={"20%"}>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <XAxis
+              type={"category"}
+              dataKey={"name"}
+              tickLine={false}
+              axisLine={{stroke:"#e0e0e0"}}
+              tick={{fill:"#666", fontSize:14}}
+            ></XAxis>
+            <YAxis
+              type={"number"}
+              domain={domain}
+              ticks={ticks}
+              tickFormatter={tickFormatter}
+              tickLine={false}
+              axisLine={{stroke:"#e0e0e0"}}
+              tick={{fill:"#666", fontSize:14}}
+            ></YAxis>
+            <Bar dataKey={"지출"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+            <Tooltip
+              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+              cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
+              contentStyle={{
+                borderRadius:"10px",
+                boxShadow:"0 2px 4px 0 rgba(0, 0, 0, 0.1)",
+                padding:"10px",
+                border:"none",
+                background:"#fff",
+                color:"#666"
               }}
-            ></FormCheck>
-            <span>{key}</span>
-          </div>
-        ))}
+            ></Tooltip>
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
+            ></Legend>
+          </ComposedChart>
+        </ResponsiveContainer>
       </React.Fragment>
     );
   };
@@ -181,16 +194,23 @@ export const MoneyDashAvgMonth = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12}>
+              <Col lg={8} md={8} sm={6} xs={6}>
                 <span className={"dash-title"}>월간 지출/수입 평균</span>
+              </Col>
+              <Col lg={4} md={4} sm={6} xs={6}>
+                <div className={"text-end"}>
+                  <span className={`${LINE === "in" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("in"))}>
+                    수입
+                  </span>
+                  <span className={`${LINE === "out" ? "text-danger" : "text-outline-danger"} dash-title-sub`} onClick={() => (setLINE("out"))}>
+                    지출
+                  </span>
+                </div>
               </Col>
             </Row>
             <Row>
-              <Col lg={10} md={10} sm={10} xs={10}>
-                {chartNode()}
-              </Col>
-              <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-                {tableNode()}
+              <Col lg={12} md={12} sm={12} xs={12}>
+                {LINE === "in" ? chartNodeIn() : chartNodeOut()}
               </Col>
             </Row>
           </Container>

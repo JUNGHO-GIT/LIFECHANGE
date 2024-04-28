@@ -73,7 +73,6 @@ export const list = {
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
-
     return finalResult;
   }
 };
@@ -136,7 +135,6 @@ export const save = {
       food_regDt: fmtDate,
       food_updateDt: "",
     });
-
     return finalResult;
   },
   update: async (

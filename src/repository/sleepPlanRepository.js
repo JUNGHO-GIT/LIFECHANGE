@@ -47,6 +47,7 @@ export const list = {
     ]);
     return finalResult;
   },
+
   findReal: async (
     customer_id_param, startDt_param, endDt_param,
   ) => {
@@ -78,7 +79,6 @@ export const list = {
       }},
       {$limit: 1},
     ]);
-
     return finalResult;
   }
 };
@@ -139,7 +139,6 @@ export const save = {
       sleep_plan_regDt: fmtDate,
       sleep_plan_updateDt: "",
     });
-
     return finalResult;
   },
   update: async (

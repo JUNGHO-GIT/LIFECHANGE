@@ -37,7 +37,6 @@ export const list = {
         },
       }}
     ]);
-
     return finalResult;
   },
 };
@@ -60,7 +59,6 @@ export const detail = {
       },
     })
     .lean();
-
     return finalResult;
   }
 };
@@ -97,7 +95,6 @@ export const save = {
       diary_regDt: fmtDate,
       diary_updateDt: "",
     });
-
     return finalResult;
   },
   update: async (

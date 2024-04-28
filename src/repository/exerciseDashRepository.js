@@ -25,6 +25,7 @@ export const scatterToday = {
     ]);
     return finalResult;
   },
+
   findReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -69,6 +70,7 @@ export const scatterWeek = {
     ]);
     return finalResult;
   },
+
   findReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -113,6 +115,7 @@ export const scatterMonth = {
     ]);
     return finalResult;
   },
+
   findReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -167,6 +170,7 @@ export const pieWeek = {
     ]);
     return finalResult;
   },
+
   findTitle: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -231,6 +235,7 @@ export const pieMonth = {
     ]);
     return finalResult;
   },
+
   findTitle: async (
     customer_id_param, startDt_param, endDt_param
   ) => {

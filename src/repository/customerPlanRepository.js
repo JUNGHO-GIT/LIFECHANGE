@@ -38,6 +38,7 @@ export const percent = {
     ]);
     return finalResult;
   },
+
   findFoodReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -88,6 +89,7 @@ export const percent = {
     ]);
     return finalResult;
   },
+
   findMoneyReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -137,6 +139,7 @@ export const percent = {
     ]);
     return finalResult;
   },
+
   findSleepReal: async (
     customer_id_param, startDt_param, endDt_param,
   ) => {
@@ -190,6 +193,7 @@ export const percent = {
     ]);
     return finalResult;
   },
+
   findExerciseReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {

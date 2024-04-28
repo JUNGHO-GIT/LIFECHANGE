@@ -19,6 +19,9 @@ export const FoodDashPieWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (pie-week) (${PATH})`, "kcal"
+  );
   const {val:radius, set:setRadius} = useStorage(
     `RADIUS (pie-week) (${PATH})`, 120
   );
@@ -69,34 +72,40 @@ export const FoodDashPieWeek = () => {
         customer_id: customer_id
       },
     });
-    setOBJECT_KCAL(response.data.result.kcal.length > 0 ? response.data.result.kcal : OBJECT_KCAL_DEFAULT);
-    setOBJECT_NUT(response.data.result.nut.length > 0 ? response.data.result.nut : OBJECT_NUT_DEFAULT);
+    setOBJECT_KCAL(response.data.result.kcal || OBJECT_KCAL_DEFAULT);
+    setOBJECT_NUT(response.data.result.nut || OBJECT_NUT_DEFAULT);
   })()}, [customer_id]);
 
-  // 4-1. render ---------------------------------------------------------------------------------->
+  // 4-1. renderKcal ------------------------------------------------------------------------------>
   const renderKcal = ({
-    cx, cy, midAngle, innerRadius, outerRadius, percent, index
+    cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
-    const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) / 2;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
-        {`${(percent * 100).toFixed(0)}%`}
+      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
+      className={"dash-pie-text"}>
+        {`${OBJECT_KCAL[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}kcal`}
       </text>
     );
   };
 
-  // 4-2. render ---------------------------------------------------------------------------------->
+  // 4-2. renderNut ------------------------------------------------------------------------------->
   const renderNut = ({
-    cx, cy, midAngle, innerRadius, outerRadius, percent, index
+    cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
-    const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) / 2;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
-        {`${(percent * 100).toFixed(0)}%`}
+      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
+      className={"dash-pie-text"}>
+        {`${OBJECT_NUT[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}g`}
       </text>
     );
   };
@@ -180,29 +189,23 @@ export const FoodDashPieWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={6} md={6} sm={12} xs={12}>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    <span className={"dash-title"}>주간 칼로리 비율</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    {chartNodeKcal()}
-                  </Col>
-                </Row>
+              <Col lg={8} md={8} sm={6} xs={6}>
+                <span className={"dash-title"}>주간 칼로리/영양소 비율</span>
               </Col>
-              <Col lg={6} md={6} sm={12} xs={12}>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    <span className={"dash-title"}>주간 영양소 비율</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    {chartNodeNut()}
-                  </Col>
-                </Row>
+              <Col lg={4} md={4} sm={6} xs={6}>
+                <div className={"text-end"}>
+                  <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("kcal"))}>
+                    칼로리
+                  </span>
+                  <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("nut"))}>
+                    영양소
+                  </span>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12}>
+                {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
             </Row>
           </Container>

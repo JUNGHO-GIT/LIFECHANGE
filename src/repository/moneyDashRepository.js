@@ -21,6 +21,7 @@ export const barToday = {
     .lean();
     return finalResult;
   },
+
   findReal: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
@@ -72,9 +73,9 @@ export const pieToday = {
       {$sort: {value: -1}},
       {$limit: 10}
     ]);
-
     return finalResult;
   },
+
   findOut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -104,7 +105,6 @@ export const pieToday = {
       {$sort: {value: -1}},
       {$limit: 10}
     ]);
-
     return finalResult;
   }
 };
@@ -140,9 +140,9 @@ export const pieWeek = {
       {$sort: {value: -1}},
       {$limit: 10}
     ]);
-
     return finalResult;
   },
+
   findOut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -172,7 +172,6 @@ export const pieWeek = {
       {$sort: {value: -1}},
       {$limit: 10}
     ]);
-
     return finalResult;
   }
 };
@@ -208,9 +207,9 @@ export const pieMonth = {
       {$sort: {value: -1}},
       {$limit: 10}
     ]);
-
     return finalResult;
   },
+
   findOut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -240,7 +239,6 @@ export const pieMonth = {
       {$sort: {value: -1}},
       {$limit: 10}
     ]);
-
     return finalResult;
   }
 };

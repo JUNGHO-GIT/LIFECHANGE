@@ -19,6 +19,9 @@ export const ExerciseDashPieWeek = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const {val:LINE, set:setLINE} = useStorage(
+    `LINE (pie-week) (${PATH})`, "part"
+  );
   const {val:radius, set:setRadius} = useStorage(
     `RADIUS (pie-week) (${PATH})`, 120
   );
@@ -69,34 +72,40 @@ export const ExerciseDashPieWeek = () => {
         customer_id: customer_id
       },
     });
-    setOBJECT_PART(response.data.result.part.length > 0 ? response.data.result.part : OBJECT_PART_DEFAULT);
-    setOBJECT_TITLE(response.data.result.title.length > 0 ? response.data.result.title : OBJECT_TITLE_DEFAULT);
+    setOBJECT_PART(response.data.result.part || OBJECT_PART_DEFAULT);
+    setOBJECT_TITLE(response.data.result.title || OBJECT_TITLE_DEFAULT);
   })()}, [customer_id]);
 
   // 4-1. renderPart ------------------------------------------------------------------------------>
   const renderPart = ({
-    cx, cy, midAngle, innerRadius, outerRadius, percent, index
+    cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
-    const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) / 2;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
-        {`${OBJECT_PART[index].name} ${Math.round(percent * 100)}%`}
+      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
+      className={"dash-pie-text"}>
+        {`${OBJECT_PART[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
       </text>
     );
   };
 
   // 4-2. renderTitle ----------------------------------------------------------------------------->
   const renderTitle = ({
-    cx, cy, midAngle, innerRadius, outerRadius, percent, index
+    cx, cy, midAngle, innerRadius, outerRadius, value, index
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
-    const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) / 2;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
-        {`${OBJECT_TITLE[index].name} ${Math.round(percent * 100)}%`}
+      <text x={x} y={y} fill="white" textAnchor={"middle"} dominantBaseline={"central"}
+      className={"dash-pie-text"}>
+        {`${OBJECT_TITLE[index]?.name.substring(0, 5)} ${Number(value).toLocaleString()}%`}
       </text>
     );
   };
@@ -124,7 +133,7 @@ export const ExerciseDashPieWeek = () => {
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()}%`)}
               contentStyle={{
                 backgroundColor:"rgba(255, 255, 255, 0.8)",
                 border:"none",
@@ -160,7 +169,7 @@ export const ExerciseDashPieWeek = () => {
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()}%`)}
               contentStyle={{
                 backgroundColor:"rgba(255, 255, 255, 0.8)",
                 border:"none",
@@ -180,29 +189,23 @@ export const ExerciseDashPieWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={6} md={6} sm={12} xs={12}>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    <span className={"dash-title"}>주간 상위 5개 부위/운동 비율</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    {chartNodePart()}
-                  </Col>
-                </Row>
+              <Col lg={8} md={8} sm={6} xs={6}>
+                <span className={"dash-title"}>주간 부위/운동 비율</span>
               </Col>
-              <Col lg={6} md={6} sm={12} xs={12}>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    <span className={"dash-title"}>주간 상위 5개 부위/운동 비율</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg={12} md={12} sm={12} xs={12}>
-                    {chartNodeTitle()}
-                  </Col>
-                </Row>
+              <Col lg={4} md={4} sm={6} xs={6}>
+                <div className={"text-end"}>
+                  <span className={`${LINE === "part" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("part"))}>
+                    부위
+                  </span>
+                  <span className={`${LINE === "title" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("title"))}>
+                    운동
+                  </span>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12}>
+                {LINE === "part" ? chartNodePart() : chartNodeTitle()}
               </Col>
             </Row>
           </Container>
