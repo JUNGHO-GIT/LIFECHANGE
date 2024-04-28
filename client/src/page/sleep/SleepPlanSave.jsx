@@ -121,7 +121,7 @@ export const SleepPlanSave = () => {
   const tableNode = () => {
     return (
       <Row className={"d-center"}>
-        <Col xs={12}>
+        <Col lg={12} md={12} sm={12} xs={12}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>취침</span>
             <TimePicker
@@ -143,7 +143,7 @@ export const SleepPlanSave = () => {
             ></TimePicker>
           </div>
         </Col>
-        <Col xs={12}>
+        <Col lg={12} md={12} sm={12} xs={12}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>기상</span>
             <TimePicker
@@ -165,7 +165,7 @@ export const SleepPlanSave = () => {
             ></TimePicker>
           </div>
         </Col>
-        <Col xs={12}>
+        <Col lg={12} md={12} sm={12} xs={12}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>수면</span>
             <TimePicker
@@ -202,13 +202,13 @@ export const SleepPlanSave = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

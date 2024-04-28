@@ -87,7 +87,7 @@ export const ExerciseDashLineWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_VOLUME} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <LineChart data={OBJECT_VOLUME} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -120,10 +120,12 @@ export const ExerciseDashLineWeek = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
           </LineChart>
         </ResponsiveContainer>
@@ -137,7 +139,7 @@ export const ExerciseDashLineWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT_CARDIO} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <LineChart data={OBJECT_CARDIO} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -170,10 +172,12 @@ export const ExerciseDashLineWeek = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
           </LineChart>
         </ResponsiveContainer>
@@ -203,23 +207,23 @@ export const ExerciseDashLineWeek = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={10} className={"text-center mb-20"}>
-                <span className={"fs-20"}>주간 총볼륨 / 유산소시간</span>
+            <Row>
+              <Col lg={8} md={8} sm={6} xs={6}>
+                <span className={"dash-title"}>주간 볼륨 / 유산소시간</span>
               </Col>
-              <Col xs={1} className={"text-end"}>
-                <span className={`${LINE === "볼륨" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("볼륨"))}>
-                  볼륨
-                </span>
-              </Col>
-              <Col xs={1} className={"text-end"}>
-                <span className={`${LINE === "시간" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("시간"))}>
-                  시간
-                </span>
+              <Col lg={4} md={4} sm={6} xs={6}>
+                <div className={"text-end"}>
+                  <span className={`${LINE === "볼륨" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("볼륨"))}>
+                    볼륨
+                  </span>
+                  <span className={`${LINE === "시간" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("시간"))}>
+                    시간
+                  </span>
+                </div>
               </Col>
             </Row>
-            <Row className={"d-center"}>
-              <Col xs={12}>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12}>
                 {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
             </Row>

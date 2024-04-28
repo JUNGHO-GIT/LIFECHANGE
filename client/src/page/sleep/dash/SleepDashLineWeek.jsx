@@ -45,7 +45,7 @@ export const SleepDashLineWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <LineChart data={OBJECT} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -90,10 +90,12 @@ export const SleepDashLineWeek = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
           </LineChart>
         </ResponsiveContainer>
@@ -105,26 +107,24 @@ export const SleepDashLineWeek = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <div className={"mt-20 ms-30 text-start"}>
-          {["취침", "수면", "기상"]?.map((key, index) => (
-            <div key={index} className={"fw-bold mb-10"}>
-              <FormCheck
-                inline
-                type={"switch"}
-                checked={LINE.includes(key)}
-                onChange={() => {
-                  if (LINE.includes(key)) {
-                    setLINE(LINE?.filter((item) => (item !== key)));
-                  }
-                  else {
-                    setLINE([...LINE, key]);
-                  }
-                }}
-              ></FormCheck>
-              <span>{key}</span>
-            </div>
-          ))}
-        </div>
+        {["취침", "수면", "기상"]?.map((key, index) => (
+          <div key={index} className={"dash-checkbox"}>
+            <FormCheck
+              inline
+              type={"switch"}
+              checked={LINE.includes(key)}
+              onChange={() => {
+                if (LINE.includes(key)) {
+                  setLINE(LINE?.filter((item) => (item !== key)));
+                }
+                else {
+                  setLINE([...LINE, key]);
+                }
+              }}
+            ></FormCheck>
+            <span>{key}</span>
+          </div>
+        ))}
       </React.Fragment>
     );
   };
@@ -135,13 +135,13 @@ export const SleepDashLineWeek = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"text-center mb-20"}>
-                <span className={"fs-20"}>주간 수면</span>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12}>
+                <span className={"dash-title"}>주간 수면</span>
               </Col>
             </Row>
-            <Row className={"d-center"}>
-              <Col xs={10}>
+            <Row>
+              <Col xs={10} className={"text-center"}>
                 {chartNode()}
               </Col>
               <Col xs={2}>

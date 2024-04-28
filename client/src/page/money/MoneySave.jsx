@@ -217,7 +217,7 @@ export const MoneySave = () => {
       return (
         <div key={i} className={"mb-20"}>
           <Row>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
                 <select
@@ -248,7 +248,7 @@ export const MoneySave = () => {
                 </select>
               </div>
             </Col>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>타이틀</span>
                 <select
@@ -282,7 +282,7 @@ export const MoneySave = () => {
             </Col>
           </Row>
           <Row>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>금액</span>
                 <NumericFormat
@@ -316,7 +316,7 @@ export const MoneySave = () => {
                 ></NumericFormat>
               </div>
             </Col>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>메모</span>
                 <InputMask
@@ -349,7 +349,7 @@ export const MoneySave = () => {
     function tableFragment () {
       return (
         <Row className={"d-center"}>
-          <Col xs={12}>
+          <Col lg={12} md={12} sm={12} xs={12}>
             {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
           </Col>
         </Row>
@@ -358,7 +358,7 @@ export const MoneySave = () => {
     function tableRemain () {
       return (
         <Row className={"d-center"}>
-          <Col xs={6}>
+          <Col lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총수입</span>
               <NumericFormat
@@ -381,7 +381,7 @@ export const MoneySave = () => {
               ></NumericFormat>
             </div>
           </Col>
-          <Col xs={6}>
+          <Col lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총지출</span>
               <NumericFormat
@@ -432,16 +432,16 @@ export const MoneySave = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {handlerSectionCount()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

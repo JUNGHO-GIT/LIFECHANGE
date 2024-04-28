@@ -118,7 +118,7 @@ export const MoneyPlanSave = () => {
   const tableNode = () => {
     return (
       <Row className={"mb-20"}>
-        <Col xs={6}>
+        <Col lg={6} md={6} sm={6} xs={6}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 수입</span>
             <NumericFormat
@@ -148,7 +148,7 @@ export const MoneyPlanSave = () => {
             ></NumericFormat>
           </div>
         </Col>
-        <Col xs={6}>
+        <Col lg={6} md={6} sm={6} xs={6}>
           <div className={"input-group"}>
             <span className={"input-group-text"}>목표 지출</span>
             <NumericFormat
@@ -199,13 +199,13 @@ export const MoneyPlanSave = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

@@ -162,13 +162,13 @@ export const FoodDashPieToday = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={6} className={"text-center mb-20"}>
-                <span className={"fs-20"}>오늘 칼로리</span>
+            <Row>
+              <Col lg={6} md={6} sm={6} xs={6} className={"text-start mb-20"}>
+                <span className={"dash-title"}>오늘 칼로리</span>
                 {chartNodeKcal()}
               </Col>
-              <Col xs={6} className={"text-center mb-20"}>
-                <span className={"fs-20"}>오늘 영양소</span>
+              <Col lg={6} md={6} sm={6} xs={6} className={"text-start mb-20"}>
+                <span className={"dash-title"}>오늘 영양소</span>
                 {chartNodeNut()}
               </Col>
             </Row>

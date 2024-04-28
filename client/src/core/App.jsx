@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-resizable/css/styles.css";
 import "react-calendar/dist/Calendar.css";
 
+import "../assets/css/custom/Chart.css";
 import "../assets/css/custom/Custom.css";
 import "../assets/css/custom/Jstyle.css";
 

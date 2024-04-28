@@ -249,7 +249,7 @@ export const ExerciseSave = () => {
       return (
         <React.Fragment key={i}>
           <Row>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>부위</span>
                 <select
@@ -281,7 +281,7 @@ export const ExerciseSave = () => {
                 </select>
               </div>
             </Col>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>타이틀</span>
                 <select
@@ -451,7 +451,7 @@ export const ExerciseSave = () => {
             </Row>
           )}
           <Row className={"mb-20"}>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>볼륨</span>
                 <NumericFormat
@@ -473,7 +473,7 @@ export const ExerciseSave = () => {
                 ></NumericFormat>
               </div>
             </Col>
-            <Col xs={6}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>유산소</span>
                 <TimePicker
@@ -508,7 +508,7 @@ export const ExerciseSave = () => {
     function tableFragment () {
       return (
         <Row className={"d-center"}>
-          <Col xs={12}>
+          <Col lg={12} md={12} sm={12} xs={12}>
             {Array.from({length: COUNT.sectionCnt}, (_, i) => tableSection(i))}
           </Col>
         </Row>
@@ -518,7 +518,7 @@ export const ExerciseSave = () => {
       return (
         <React.Fragment>
           <Row>
-            <Col xs={12}>
+            <Col lg={12} md={12} sm={12} xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>총 볼륨</span>
                   <NumericFormat
@@ -540,7 +540,7 @@ export const ExerciseSave = () => {
                   ></NumericFormat>
               </div>
             </Col>
-            <Col xs={12}>
+            <Col lg={12} md={12} sm={12} xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>총 유산소 시간</span>
                 <TimePicker
@@ -556,7 +556,7 @@ export const ExerciseSave = () => {
                 ></TimePicker>
               </div>
             </Col>
-            <Col xs={12}>
+            <Col lg={12} md={12} sm={12} xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>체중</span>
                 <NumericFormat
@@ -614,16 +614,16 @@ export const ExerciseSave = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {handlerSectionCount()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

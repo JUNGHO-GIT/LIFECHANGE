@@ -162,13 +162,13 @@ export const MoneyDashPieToday = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={6} className={"text-center mb-20"}>
-                <span className={"fs-20"}>오늘 수입 항목별 비율</span>
+            <Row>
+              <Col lg={6} md={6} sm={6} xs={6}>
+                <span className={"dash-title"}>오늘 수입 항목별 비율</span>
                 {chartNodeIn()}
               </Col>
-              <Col xs={6} className={"text-center mb-20"}>
-                <span className={"fs-20"}>오늘 지출 항목별 비율</span>
+              <Col lg={6} md={6} sm={6} xs={6}>
+                <span className={"dash-title"}>오늘 지출 항목별 비율</span>
                 {chartNodeOut()}
               </Col>
             </Row>

@@ -147,7 +147,7 @@ export const CustomerDataset = () => {
               >
                 <td>
                   <Row>
-                    <Col xs={12} className={"p-5"}>
+                    <Col lg={12} md={12} sm={12} xs={12} className={"p-5"}>
                       <div className={"pointer me-2"}>
                         {item}
                       </div>
@@ -464,7 +464,7 @@ export const CustomerDataset = () => {
               <Col xs={4} className={"mb-20 text-center"}>
                 {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableNode3())}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 <span className={"me-5 d-inline-flex"}>{buttonDefault()}</span>
                 {buttonNode()}
               </Col>

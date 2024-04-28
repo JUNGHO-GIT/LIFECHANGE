@@ -162,14 +162,30 @@ export const ExerciseDashPieMonth = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={6} className={"text-center mb-20"}>
-                <span className={"fs-20"}>월간 상위 5개 부위 / 운동</span>
-                {chartNodePart()}
+            <Row>
+              <Col lg={6} md={6} sm={6} xs={6}>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    <span className={"dash-title"}>월간 상위 5개 부위 / 운동</span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    {chartNodePart()}
+                  </Col>
+                </Row>
               </Col>
-              <Col xs={6} className={"text-center mb-20"}>
-                <span className={"fs-20"}>월간 상위 5개 부위 / 운동</span>
-                {chartNodeTitle()}
+              <Col lg={6} md={6} sm={6} xs={6}>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    <span className={"dash-title"}>월간 상위 5개 부위 / 운동</span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    {chartNodeTitle()}
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Container>

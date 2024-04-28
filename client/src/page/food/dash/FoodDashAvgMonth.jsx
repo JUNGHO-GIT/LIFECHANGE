@@ -4,9 +4,9 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {BarChart, Bar} from "recharts";
+import {Bar, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Row, Col, Card, FormCheck, Button} from "react-bootstrap";
+import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashAvgMonth = () => {
@@ -90,7 +90,7 @@ export const FoodDashAvgMonth = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <BarChart data={OBJECT_KCAL} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          <ComposedChart data={OBJECT_KCAL} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -126,12 +126,14 @@ export const FoodDashAvgMonth = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
-          </BarChart>
+          </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
     );
@@ -143,7 +145,7 @@ export const FoodDashAvgMonth = () => {
       return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <BarChart data={OBJECT_NUT} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          <ComposedChart data={OBJECT_NUT} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -187,12 +189,14 @@ export const FoodDashAvgMonth = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
-          </BarChart>
+          </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
     );
@@ -202,26 +206,24 @@ export const FoodDashAvgMonth = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <div className={"mt-20 ms-30 text-start"}>
-          {["탄수화물", "단백질", "지방"]?.map((key, index) => (
-            <div key={index} className={"fw-bold mb-10"}>
-              <FormCheck
-                inline
-                type={"switch"}
-                checked={LINE.includes(key)}
-                onChange={() => {
-                  if (LINE.includes(key)) {
-                    setLINE(LINE?.filter((item) => (item !== key)));
-                  }
-                  else {
-                    setLINE([...LINE, key]);
-                  }
-                }}
-              ></FormCheck>
-              <span>{key}</span>
-            </div>
-          ))}
-        </div>
+        {["탄수화물", "단백질", "지방"]?.map((key, index) => (
+          <div key={index} className={"dash-checkbox"}>
+            <FormCheck
+              inline
+              type={"switch"}
+              checked={LINE.includes(key)}
+              onChange={() => {
+                if (LINE.includes(key)) {
+                  setLINE(LINE?.filter((item) => (item !== key)));
+                }
+                else {
+                  setLINE([...LINE, key]);
+                }
+              }}
+            ></FormCheck>
+            <span>{key}</span>
+          </div>
+        ))}
       </React.Fragment>
     );
   };
@@ -232,26 +234,26 @@ export const FoodDashAvgMonth = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={10} className={"text-center mb-20"}>
-                <span className={"fs-20"}>월간 칼로리 / 영양소 평균</span>
+            <Row>
+              <Col lg={8} md={8} sm={6} xs={6}>
+                <span className={"dash-title"}>월간 칼로리 / 영양소 평균</span>
               </Col>
-              <Col xs={1} className={"text-end"}>
-                <span className={`${PART === "kcal" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setPART("kcal"))}>
+              <Col lg={2} md={2} sm={3} xs={3}>
+                <span className={`${PART === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("kcal"))}>
                   칼로리
                 </span>
               </Col>
-              <Col xs={1} className={"text-end"}>
-                <span className={`${PART === "nut" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setPART("nut"))}>
+              <Col lg={2} md={2} sm={3} xs={3}>
+                <span className={`${PART === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("nut"))}>
                   영양소
                 </span>
               </Col>
             </Row>
-            <Row className={"d-center"}>
-              <Col xs={10}>
+            <Row>
+              <Col lg={10} md={10} sm={10} xs={10}>
                 {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
-              <Col xs={2}>
+              <Col lg={2} md={2} sm={2} xs={2}>
                 {tableNode()}
               </Col>
             </Row>

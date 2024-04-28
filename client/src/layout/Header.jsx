@@ -85,7 +85,7 @@ export const Header = () => {
                 Sidebar
               </Button>
             </Col>
-            <Col xs={6} className={"d-center"}>
+            <Col lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
             </Col>
             <Col xs={3} className={"d-center"}>

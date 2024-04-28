@@ -200,13 +200,13 @@ export const FoodDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {OBJECT?.food_startDt}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

@@ -227,7 +227,7 @@ export const DiaryDetail = () => {
       return (
         <div key={i}>
           <Row className={"text-center mb-20"}>
-            <Col xs={12}>
+            <Col lg={12} md={12} sm={12} xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
                 <select
@@ -261,7 +261,7 @@ export const DiaryDetail = () => {
           <Row className={"text-center mb-20"}>
             {OBJECT?.diary_section[i]?.diary_part_val === "일정" ? (
               <React.Fragment>
-                <Col xs={12}>
+                <Col lg={12} md={12} sm={12} xs={12}>
                   <div className={"input-group"}>
                     <span className={"input-group-text"}>타이틀</span>
                     <InputMask
@@ -287,7 +287,7 @@ export const DiaryDetail = () => {
                     ></InputMask>
                   </div>
                 </Col>
-                <Col xs={12}>
+                <Col lg={12} md={12} sm={12} xs={12}>
                   <div className={"input-group"}>
                     <span className={"input-group-text"}>내용</span>
                     <InputMask
@@ -313,7 +313,7 @@ export const DiaryDetail = () => {
                     ></InputMask>
                   </div>
                 </Col>
-                <Col xs={12}>
+                <Col lg={12} md={12} sm={12} xs={12}>
                   <div className={"input-group"}>
                     <span className={"input-group-text"}>색상</span>
                     <select
@@ -346,7 +346,7 @@ export const DiaryDetail = () => {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <Col xs={12}>
+                <Col lg={12} md={12} sm={12} xs={12}>
                   <div className={"input-group"}>
                     <span className={"input-group-text"}>타이틀</span>
                     <InputMask
@@ -381,7 +381,7 @@ export const DiaryDetail = () => {
     function tableFragment () {
       return (
         <Row className={"d-center"}>
-          <Col xs={12}>
+          <Col lg={12} md={12} sm={12} xs={12}>
             {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
           </Col>
         </Row>
@@ -419,16 +419,16 @@ export const DiaryDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row className={"d-center mb-20"}>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {dateNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {handlerSectionCount()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>
-              <Col xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
                 {buttonNode()}
               </Col>
             </Row>

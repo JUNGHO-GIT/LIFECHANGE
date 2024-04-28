@@ -119,10 +119,12 @@ export const MoneyDashBarToday = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
           </ComposedChart>
         </ResponsiveContainer>
@@ -137,8 +139,8 @@ export const MoneyDashBarToday = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={12} className={"text-center mb-20"}>
-                <span className={"fs-20"}>오늘 지출 / 수입 실제 / 목표</span>
+              <Col lg={12} md={12} sm={12} xs={12}>
+                <span className={"dash-title"}>오늘 지출 / 수입 실제 / 목표</span>
                 {chartNode()}
               </Col>
             </Row>

@@ -82,7 +82,7 @@ export const ExerciseDashScatterWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT} margin={{top: 20, right: 30, bottom: 20, left: 20}}>
+          <ComposedChart data={OBJECT} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -125,10 +125,12 @@ export const ExerciseDashScatterWeek = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
           </ComposedChart>
         </ResponsiveContainer>
@@ -142,11 +144,11 @@ export const ExerciseDashScatterWeek = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"text-center mb-20"}>
-                <span className={"fs-20"}>주간 몸무게 목표 / 실제</span>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12}>
+                <span className={"dash-title"}>주간 몸무게 목표 / 실제</span>
               </Col>
-              <Col xs={12}>
+              <Col lg={12} md={12} sm={12} xs={12}>
                 {chartNode()}
               </Col>
             </Row>

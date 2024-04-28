@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {BarChart, Bar} from "recharts";
+import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 
@@ -83,7 +83,7 @@ export const MoneyDashAvgWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <BarChart data={OBJECT} margin={{top: 10, right: 30, bottom: 20, left: 20}}
+          <ComposedChart data={OBJECT} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -135,12 +135,14 @@ export const MoneyDashAvgWeek = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
-          </BarChart>
+          </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
     );
@@ -150,26 +152,24 @@ export const MoneyDashAvgWeek = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <div className={"mt-20 ms-30 text-start"}>
-          {["수입", "지출"]?.map((key, index) => (
-            <div key={index} className={"fw-bold mb-10"}>
-              <FormCheck
-                inline
-                type={"switch"}
-                checked={LINE.includes(key)}
-                onChange={() => {
-                  if (LINE.includes(key)) {
-                    setLINE(LINE?.filter((item) => (item !== key)));
-                  }
-                  else {
-                    setLINE([...LINE, key]);
-                  }
-                }}
-              ></FormCheck>
-              <span>{key}</span>
-            </div>
-          ))}
-        </div>
+        {["수입", "지출"]?.map((key, index) => (
+          <div key={index} className={"dash-checkbox"}>
+            <FormCheck
+              inline
+              type={"switch"}
+              checked={LINE.includes(key)}
+              onChange={() => {
+                if (LINE.includes(key)) {
+                  setLINE(LINE?.filter((item) => (item !== key)));
+                }
+                else {
+                  setLINE([...LINE, key]);
+                }
+              }}
+            ></FormCheck>
+            <span>{key}</span>
+          </div>
+        ))}
       </React.Fragment>
     );
   };
@@ -180,13 +180,13 @@ export const MoneyDashAvgWeek = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={12} className={"text-center mb-20"}>
-                <span className={"fs-20"}>주간 지출 / 수입 평균</span>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12}>
+                <span className={"dash-title"}>주간 지출 / 수입 평균</span>
               </Col>
             </Row>
-            <Row className={"d-center"}>
-              <Col xs={10}>
+            <Row>
+              <Col xs={10} className={"text-center"}>
                 {chartNode()}
               </Col>
               <Col xs={2}>

@@ -123,10 +123,12 @@ export const FoodDashBarToday = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
           </ComposedChart>
         </ResponsiveContainer>
@@ -177,10 +179,12 @@ export const FoodDashBarToday = () => {
               }}
             ></Tooltip>
             <Legend
+              iconType={"circle"}
               verticalAlign={"bottom"}
               align={"center"}
-              wrapperStyle={{lineHeight:"40px", paddingTop:'10px'}}
-              iconType={"circle"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
+              }}
             ></Legend>
           </ComposedChart>
         </ResponsiveContainer>
@@ -194,23 +198,23 @@ export const FoodDashBarToday = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
-            <Row className={"d-center"}>
-              <Col xs={10} className={"text-center mb-20"}>
-                <span className={"fs-20"}>오늘 칼로리 / 영양소</span>
+            <Row>
+              <Col xs={10}>
+                <span className={"dash-title"}>오늘 칼로리 / 영양소</span>
               </Col>
-              <Col xs={1} className={"text-end"}>
-                <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("kcal"))}>
+              <Col xs={1}>
+                <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("kcal"))}>
                   칼로리
                 </span>
               </Col>
-              <Col xs={1} className={"text-end"}>
-                <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} fw-bolder pointer fs-20`} onClick={() => (setLINE("nut"))}>
+              <Col xs={1}>
+                <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("nut"))}>
                   영양소
                 </span>
               </Col>
             </Row>
-            <Row className={"d-center"}>
-              <Col xs={12}>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12}>
                 {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
             </Row>
