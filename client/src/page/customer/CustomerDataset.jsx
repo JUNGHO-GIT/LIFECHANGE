@@ -118,7 +118,7 @@ export const CustomerDataset = () => {
   const tableNode1 = () => {
     return (
       <React.Fragment>
-        <Table hover variant="light" border={2}>
+        <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
               <th>Section</th>
@@ -147,7 +147,7 @@ export const CustomerDataset = () => {
               >
                 <td>
                   <Row>
-                    <Col xs={12} className={"fs-20 p-5"}>
+                    <Col xs={12} className={"p-5"}>
                       <div className={"pointer me-2"}>
                         {item}
                       </div>
@@ -214,7 +214,7 @@ export const CustomerDataset = () => {
     };
     return (
       <React.Fragment>
-        <Table hover variant={"light"} border={2}>
+        <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
               <th>Part</th>
@@ -235,7 +235,7 @@ export const CustomerDataset = () => {
               >
                 <td>
                   <Row>
-                    <Col xs={7} className={"fs-20 p-5"}>
+                    <Col xs={7} className={"p-5"}>
                       <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
                         ...prev,
                         partIdx: index
@@ -243,13 +243,13 @@ export const CustomerDataset = () => {
                         {item[`${dataType}_part`]}
                       </div>
                     </Col>
-                    <Col xs={3} className={"fs-15 p-5"}>
+                    <Col xs={3} className={"p-5"}>
                       <div className={"pointer d-center text-success"}
                       onClick={renamePart(index)}>
                         변경
                       </div>
                     </Col>
-                    <Col xs={2} className={"fs-15 p-5"}>
+                    <Col xs={2} className={"p-5"}>
                       <div className={"pointer d-center text-danger fw-bolder"}
                       onClick={rmPart(index)}>
                         x
@@ -261,9 +261,9 @@ export const CustomerDataset = () => {
             ))}
             <tr>
               <td colSpan={3} className={"d-inline-flex"}>
-                <div className={"pointer btn btn-outline-primary button"}  onClick={addPart}>
+                <p className={"pointer btn btn-outline-primary button"}  onClick={addPart}>
                   추가
-                </div>
+                </p>
               </td>
             </tr>
           </tbody>
@@ -338,7 +338,7 @@ export const CustomerDataset = () => {
     };
     return (
       <React.Fragment>
-        <Table hover variant={"light"} border={2}>
+        <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
               <th>Title</th>
@@ -359,7 +359,7 @@ export const CustomerDataset = () => {
               >
                 <td>
                   <Row>
-                    <Col xs={7} className={"fs-20 p-5"}>
+                    <Col xs={7} className={"p-5"}>
                       <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
@@ -367,13 +367,13 @@ export const CustomerDataset = () => {
                         {item}
                       </div>
                     </Col>
-                    <Col xs={3} className={"fs-15 p-5"}>
+                    <Col xs={3} className={"p-5"}>
                       <div className={"pointer d-center text-success"}
                       onClick={renameTitle(index)}>
                         변경
                       </div>
                     </Col>
-                    <Col xs={2} className={"fs-15 p-5"}>
+                    <Col xs={2} className={"p-5"}>
                       <div className={"pointer d-center text-danger fw-bolder"}
                       onClick={rmTitle(index)}>
                         x
@@ -385,9 +385,9 @@ export const CustomerDataset = () => {
             ))}
             <tr>
               <td colSpan={3} className={"d-inline-flex"}>
-                <div className={"pointer btn btn-outline-primary button"} onClick={addTitle}>
+                <p className={"pointer btn btn-outline-primary button"} onClick={addTitle}>
                   추가
-                </div>
+                </p>
               </td>
             </tr>
           </tbody>
