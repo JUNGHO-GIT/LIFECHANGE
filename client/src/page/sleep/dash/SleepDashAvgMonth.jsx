@@ -20,8 +20,8 @@ export const SleepDashAvgMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (avg-month) (${PATH})`, ["취침", "수면", "기상"]
+  const {val:PART, set:setPART} = useStorage(
+    `PART (avg-month) (${PATH})`, ["취침", "수면", "기상"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -66,17 +66,17 @@ export const SleepDashAvgMonth = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {LINE.includes("취침") && (
+            {PART.includes("취침") && (
               <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
                 >
               </Bar>
             )}
-            {LINE.includes("기상") && (
+            {PART.includes("기상") && (
               <Bar dataKey={"기상"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
                 >
               </Bar>
             )}
-            {LINE.includes("수면") && (
+            {PART.includes("수면") && (
               <Bar dataKey={"수면"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}
                 >
               </Bar>
@@ -116,13 +116,13 @@ export const SleepDashAvgMonth = () => {
             <FormCheck
               inline
               type={"switch"}
-              checked={LINE.includes(key)}
+              checked={PART.includes(key)}
               onChange={() => {
-                if (LINE.includes(key)) {
-                  setLINE(LINE?.filter((item) => (item !== key)));
+                if (PART.includes(key)) {
+                  setPART(PART?.filter((item) => (item !== key)));
                 }
                 else {
-                  setLINE([...LINE, key]);
+                  setPART([...PART, key]);
                 }
               }}
             ></FormCheck>

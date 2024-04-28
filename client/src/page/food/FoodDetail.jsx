@@ -8,7 +8,7 @@ import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
+import {Container, Row, Col, Card, Table} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDetail = () => {
@@ -137,12 +137,10 @@ export const FoodDetail = () => {
               <th className={"w-10"}>날짜</th>
               <th>분류</th>
               <th>식품</th>
-              <th>수량</th>
-              <th>중량</th>
-              <th>칼로리</th>
-              <th>탄수화물</th>
-              <th>단백질</th>
-              <th>지방</th>
+              <th>kcal</th>
+              <th>carb</th>
+              <th>protein</th>
+              <th>fat</th>
               <th>삭제</th>
             </tr>
           </thead>
@@ -155,22 +153,21 @@ export const FoodDetail = () => {
                   </td>
                 )}
                 <td>{section.food_part_val}</td>
-                <td>{`${section.food_title} (${section.food_brand || ""})`}</td>
-                <td>{section.food_count} {section.food_serv}</td>
-                <td>{section.food_gram}</td>
+                <td>
+                  <p>{`${section.food_title} (${section.food_brand || ""})`}</p>
+                  <p>{`${numeral(section.food_gram * section.food_count).format('0,0')} g`}</p>
+                </td>
                 <td>{`${numeral(section.food_kcal).format('0,0')}`}</td>
                 <td>{`${numeral(section.food_carb).format('0,0')}`}</td>
                 <td>{`${numeral(section.food_protein).format('0,0')}`}</td>
                 <td>{`${numeral(section.food_fat).format('0,0')}`}</td>
-                <td>
-                  <p className={"del-btn"} onClick={() => (
-                    flowDelete(OBJECT._id, section._id)
-                  )}>x</p>
-                </td>
+                <td><p className={"del-btn"} onClick={() => (
+                  flowDelete(OBJECT._id, section._id)
+                )}>x</p></td>
               </tr>
             ))}
             <tr>
-              <td colSpan={4}>합계</td>
+              <td colSpan={3}>합계</td>
               <td>{`${numeral(OBJECT?.food_total_kcal).format('0,0')} kcal`}</td>
               <td>{`${numeral(OBJECT?.food_total_carb).format('0,0')} g`}</td>
               <td>{`${numeral(OBJECT?.food_total_protein).format('0,0')} g`}</td>

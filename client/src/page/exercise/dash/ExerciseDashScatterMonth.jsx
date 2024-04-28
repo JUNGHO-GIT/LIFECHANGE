@@ -19,11 +19,6 @@ export const ExerciseDashScatterMonth = () => {
   const customer_id = sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (scatter-month) (${PATH})`, ["목표", "실제"]
-  );
-
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = [
     {name:"", 목표: 0, 실제: 0},

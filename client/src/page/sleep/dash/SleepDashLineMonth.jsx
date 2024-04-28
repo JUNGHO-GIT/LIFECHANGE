@@ -20,8 +20,8 @@ export const SleepDashLineMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (line-month) (${PATH})`, ["취침", "수면", "기상"]
+  const {val:PART, set:setPART} = useStorage(
+    `PART (line-month) (${PATH})`, ["취침", "수면", "기상"]
   );
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -65,15 +65,15 @@ export const SleepDashLineMonth = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {LINE.includes("취침") && (
+            {PART.includes("취침") && (
               <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
               strokeWidth={2}></Line>
             )}
-            {LINE.includes("수면") && (
+            {PART.includes("수면") && (
               <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
               strokeWidth={2}></Line>
             )}
-            {LINE.includes("기상") && (
+            {PART.includes("기상") && (
               <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
               strokeWidth={2}></Line>
             )}
@@ -112,13 +112,13 @@ export const SleepDashLineMonth = () => {
             <FormCheck
               inline
               type={"switch"}
-              checked={LINE.includes(key)}
+              checked={PART.includes(key)}
               onChange={() => {
-                if (LINE.includes(key)) {
-                  setLINE(LINE?.filter((item) => (item !== key)));
+                if (PART.includes(key)) {
+                  setPART(PART?.filter((item) => (item !== key)));
                 }
                 else {
-                  setLINE([...LINE, key]);
+                  setPART([...PART, key]);
                 }
               }}
             ></FormCheck>

@@ -21,10 +21,10 @@ export const FoodDashAvgWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:LINE, set:setLINE} = useStorage(
-    `LINE (avg-week) (${PATH})`, ["칼로리", "탄수화물", "단백질", "지방"]
+    `LINE (avg-week) (${PATH})`, "kcal"
   );
   const {val:PART, set:setPART} = useStorage(
-    `PART (avg-week) (${PATH})`, "kcal"
+    `PART (avg-week) (${PATH})`, ["칼로리", "탄수화물", "단백질", "지방"]
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -109,7 +109,7 @@ export const FoodDashAvgWeek = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {LINE.includes("칼로리") && (
+            {PART.includes("칼로리") && (
               <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
               </Bar>
             )}
@@ -164,15 +164,15 @@ export const FoodDashAvgWeek = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {LINE.includes("탄수화물") && (
+            {PART.includes("탄수화물") && (
               <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
               </Bar>
             )}
-            {LINE.includes("단백질") && (
+            {PART.includes("단백질") && (
               <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
               </Bar>
             )}
-            {LINE.includes("지방") && (
+            {PART.includes("지방") && (
               <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
               </Bar>
             )}
@@ -211,13 +211,13 @@ export const FoodDashAvgWeek = () => {
             <FormCheck
               inline
               type={"switch"}
-              checked={LINE.includes(key)}
+              checked={PART.includes(key)}
               onChange={() => {
-                if (LINE.includes(key)) {
-                  setLINE(LINE?.filter((item) => (item !== key)));
+                if (PART.includes(key)) {
+                  setPART(PART?.filter((item) => (item !== key)));
                 }
                 else {
-                  setLINE([...LINE, key]);
+                  setPART([...PART, key]);
                 }
               }}
             ></FormCheck>
@@ -240,10 +240,10 @@ export const FoodDashAvgWeek = () => {
               </Col>
               <Col lg={4} md={4} sm={6} xs={6}>
                 <div className={"text-end"}>
-                  <span className={`${PART === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("kcal"))}>
+                  <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("kcal"))}>
                     칼로리
                   </span>
-                  <span className={`${PART === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("nut"))}>
+                  <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("nut"))}>
                     영양소
                   </span>
                 </div>
@@ -251,7 +251,7 @@ export const FoodDashAvgWeek = () => {
             </Row>
             <Row>
               <Col lg={10} md={10} sm={10} xs={10}>
-                {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
+                {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
               <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
                 {tableNode()}

@@ -6,7 +6,7 @@ import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDashLineMonth = () => {

@@ -21,7 +21,7 @@ export const ExerciseDashAvgMonth = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:LINE, set:setLINE} = useStorage(
-    `LINE (avg-month) (${PATH})`, "볼륨"
+    `LINE (avg-month) (${PATH})`, "volume"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -41,8 +41,8 @@ export const ExerciseDashAvgMonth = () => {
         customer_id: customer_id
       },
     });
-    setOBJECT_VOLUME(response.data.result.volume);
-    setOBJECT_CARDIO(response.data.result.cardio);
+    setOBJECT_VOLUME(response.data.result.volume || OBJECT_VOLUME_DEFAULT);
+    setOBJECT_CARDIO(response.data.result.cardio || OBJECT_CARDIO_DEFAULT);
   })()}, [customer_id]);
 
   // 4. handler ----------------------------------------------------------------------------------->
@@ -205,10 +205,10 @@ export const ExerciseDashAvgMonth = () => {
               </Col>
               <Col lg={4} md={4} sm={6} xs={6}>
                 <div className={"text-end"}>
-                  <span className={`${LINE === "볼륨" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("볼륨"))}>
+                  <span className={`${LINE === "volume" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("volume"))}>
                     볼륨
                   </span>
-                  <span className={`${LINE === "시간" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("시간"))}>
+                  <span className={`${LINE === "cardio" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("cardio"))}>
                     시간
                   </span>
                 </div>
@@ -216,7 +216,7 @@ export const ExerciseDashAvgMonth = () => {
             </Row>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12}>
-                {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
+                {LINE === "volume" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
             </Row>
           </Container>

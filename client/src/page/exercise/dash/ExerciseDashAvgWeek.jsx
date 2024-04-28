@@ -21,7 +21,7 @@ export const ExerciseDashAvgWeek = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:LINE, set:setLINE} = useStorage(
-    `LINE (avg-week) (${PATH})`, "볼륨"
+    `LINE (avg-week) (${PATH})`, "volume"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -205,10 +205,10 @@ export const ExerciseDashAvgWeek = () => {
               </Col>
               <Col lg={4} md={4} sm={6} xs={6}>
                 <div className={"text-end"}>
-                  <span className={`${LINE === "볼륨" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("볼륨"))}>
+                  <span className={`${LINE === "volume" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("volume"))}>
                     볼륨
                   </span>
-                  <span className={`${LINE === "시간" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("시간"))}>
+                  <span className={`${LINE === "time" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("time"))}>
                     시간
                   </span>
                 </div>
@@ -216,7 +216,7 @@ export const ExerciseDashAvgWeek = () => {
             </Row>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12}>
-                {LINE === "볼륨" ? chartNodeVolume() : chartNodeCardio()}
+                {LINE === "volume" ? chartNodeVolume() : chartNodeCardio()}
               </Col>
             </Row>
           </Container>
