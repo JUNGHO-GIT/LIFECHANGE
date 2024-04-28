@@ -163,13 +163,29 @@ export const FoodDashPieWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={6} md={6} sm={6} xs={6} className={"text-start mb-20"}>
-                <span className={"dash-title"}>주간 칼로리</span>
-                {chartNodeKcal()}
+              <Col lg={6} md={6} sm={6} xs={6}>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    <span className={"dash-title"}>주간 칼로리 비율</span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    {chartNodeKcal()}
+                  </Col>
+                </Row>
               </Col>
-              <Col lg={6} md={6} sm={6} xs={6} className={"text-start mb-20"}>
-                <span className={"dash-title"}>주간 영양소</span>
-                {chartNodeNut()}
+              <Col lg={6} md={6} sm={6} xs={6}>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    <span className={"dash-title"}>주간 영양소 비율</span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    {chartNodeNut()}
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Container>

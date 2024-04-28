@@ -164,12 +164,28 @@ export const MoneyDashPieToday = () => {
           <Container>
             <Row>
               <Col lg={6} md={6} sm={6} xs={6}>
-                <span className={"dash-title"}>오늘 수입 항목별 비율</span>
-                {chartNodeIn()}
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    <span className={"dash-title"}>오늘 수입 항목별 비율</span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    {chartNodeIn()}
+                  </Col>
+                </Row>
               </Col>
               <Col lg={6} md={6} sm={6} xs={6}>
-                <span className={"dash-title"}>오늘 지출 항목별 비율</span>
-                {chartNodeOut()}
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    <span className={"dash-title"}>오늘 지출 항목별 비율</span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12} md={12} sm={12} xs={12}>
+                    {chartNodeOut()}
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Container>

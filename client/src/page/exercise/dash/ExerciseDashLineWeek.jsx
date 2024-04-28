@@ -209,7 +209,7 @@ export const ExerciseDashLineWeek = () => {
           <Container>
             <Row>
               <Col lg={8} md={8} sm={6} xs={6}>
-                <span className={"dash-title"}>주간 볼륨 / 유산소시간</span>
+                <span className={"dash-title"}>주간 볼륨 / 유산소시간 추이</span>
               </Col>
               <Col lg={4} md={4} sm={6} xs={6}>
                 <div className={"text-end"}>

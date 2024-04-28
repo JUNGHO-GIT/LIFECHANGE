@@ -200,7 +200,7 @@ export const FoodDashBarToday = () => {
           <Container>
             <Row>
               <Col xs={10}>
-                <span className={"dash-title"}>오늘 칼로리 / 영양소</span>
+                <span className={"dash-title"}>오늘 칼로리/영양소</span>
               </Col>
               <Col xs={1}>
                 <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("kcal"))}>

@@ -202,17 +202,17 @@ export const FoodDashBarToday = () => {
           <Container>
             <Row>
               <Col lg={8} md={8} sm={6} xs={6}>
-                <span className={"dash-title"}>오늘 칼로리 / 영양소</span>
+                <span className={"dash-title"}>오늘 칼로리/영양소</span>
               </Col>
-              <Col lg={2} md={2} sm={3} xs={3}>
-                <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("kcal"))}>
-                  칼로리
-                </span>
-              </Col>
-              <Col lg={2} md={2} sm={3} xs={3}>
-                <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("nut"))}>
-                  영양소
-                </span>
+              <Col lg={4} md={4} sm={6} xs={6}>
+                <div className={"text-end"}>
+                  <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("kcal"))}>
+                    칼로리
+                  </span>
+                  <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("nut"))}>
+                    영양소
+                  </span>
+                </div>
               </Col>
             </Row>
             <Row>

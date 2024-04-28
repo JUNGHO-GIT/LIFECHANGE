@@ -140,7 +140,7 @@ export const MoneyDashBarToday = () => {
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12}>
-                <span className={"dash-title"}>오늘 지출 / 수입 실제 / 목표</span>
+                <span className={"dash-title"}>오늘 지출/수입 실제 / 목표</span>
                 {chartNode()}
               </Col>
             </Row>

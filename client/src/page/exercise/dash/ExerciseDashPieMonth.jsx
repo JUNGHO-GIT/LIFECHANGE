@@ -166,7 +166,7 @@ export const ExerciseDashPieMonth = () => {
               <Col lg={6} md={6} sm={6} xs={6}>
                 <Row>
                   <Col lg={12} md={12} sm={12} xs={12}>
-                    <span className={"dash-title"}>월간 상위 5개 부위 / 운동</span>
+                    <span className={"dash-title"}>월간 상위 5개 부위/운동 비율</span>
                   </Col>
                 </Row>
                 <Row>
@@ -178,7 +178,7 @@ export const ExerciseDashPieMonth = () => {
               <Col lg={6} md={6} sm={6} xs={6}>
                 <Row>
                   <Col lg={12} md={12} sm={12} xs={12}>
-                    <span className={"dash-title"}>월간 상위 5개 부위 / 운동</span>
+                    <span className={"dash-title"}>월간 상위 5개 부위/운동 비율</span>
                   </Col>
                 </Row>
                 <Row>

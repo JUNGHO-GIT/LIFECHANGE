@@ -153,7 +153,7 @@ export const MoneyDashAvgMonth = () => {
     return (
       <React.Fragment>
         {["수입", "지출"]?.map((key, index) => (
-          <div key={index} className={"dash-checkbox"}>
+          <div key={index} className={"dash-checkbox flex-column mb-20"}>
             <FormCheck
               inline
               type={"switch"}
@@ -182,14 +182,14 @@ export const MoneyDashAvgMonth = () => {
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12}>
-                <span className={"dash-title"}>월간 지출 / 수입 평균</span>
+                <span className={"dash-title"}>월간 지출/수입 평균</span>
               </Col>
             </Row>
             <Row>
-              <Col xs={10} className={"text-center"}>
+              <Col lg={10} md={10} sm={10} xs={10}>
                 {chartNode()}
               </Col>
-              <Col xs={2}>
+              <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
                 {tableNode()}
               </Col>
             </Row>

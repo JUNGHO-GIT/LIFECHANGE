@@ -202,7 +202,7 @@ export const FoodDashLineMonth = () => {
     return (
       <React.Fragment>
         {["탄수화물", "단백질", "지방"]?.map((key, index) => (
-          <div key={index} className={"dash-checkbox"}>
+          <div key={index} className={"dash-checkbox flex-column mb-20"}>
             <FormCheck
               inline
               type={"switch"}
@@ -231,24 +231,24 @@ export const FoodDashLineMonth = () => {
           <Container>
             <Row>
               <Col lg={8} md={8} sm={6} xs={6}>
-                <span className={"dash-title"}>주간 칼로리 / 영양소</span>
+                <span className={"dash-title"}>주간 칼로리/영양소 추이</span>
               </Col>
-              <Col lg={2} md={2} sm={3} xs={3}>
-                <span className={`${PART === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("kcal"))}>
-                  칼로리
-                </span>
-              </Col>
-              <Col lg={2} md={2} sm={3} xs={3}>
-                <span className={`${PART === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("nut"))}>
-                  영양소
-                </span>
+              <Col lg={4} md={4} sm={6} xs={6}>
+                <div className={"text-end"}>
+                  <span className={`${PART === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("kcal"))}>
+                    칼로리
+                  </span>
+                  <span className={`${PART === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setPART("nut"))}>
+                    영양소
+                  </span>
+                </div>
               </Col>
             </Row>
             <Row>
               <Col lg={10} md={10} sm={10} xs={10}>
                 {PART === "kcal" ? chartNodeKcal() : chartNodeNut()}
               </Col>
-              <Col lg={2} md={2} sm={2} xs={2}>
+              <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
                 {tableNode()}
               </Col>
             </Row>
