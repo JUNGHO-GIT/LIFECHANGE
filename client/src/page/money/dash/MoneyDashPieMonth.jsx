@@ -19,8 +19,8 @@ export const MoneyDashPieMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (pie-month) (${PATH})`, ["수입", "지출"]
+  const {val:radius, set:setRadius} = useStorage(
+    `RADIUS (pie-month) (${PATH})`, 120
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -32,6 +32,35 @@ export const MoneyDashPieMonth = () => {
   ];
   const [OBJECT_IN, setOBJECT_IN] = useState(OBJECT_IN_DEFAULT);
   const [OBJECT_OUT, setOBJECT_OUT] = useState(OBJECT_OUT_DEFAULT);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const updateRadius = () => {
+      // lg
+      if (window.innerWidth >= 1200) {
+        setRadius(120);
+      }
+      // md
+      else if (window.innerWidth >= 992) {
+        setRadius(110);
+      }
+      // sm
+      else if (window.innerWidth >= 768) {
+        setRadius(100);
+      }
+      // xs
+      else {
+        setRadius(90);
+      }
+    };
+
+    window.addEventListener('resize', updateRadius);
+    updateRadius();
+
+    return () => {
+      window.removeEventListener('resize', updateRadius);
+    }
+  }, []);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -52,7 +81,7 @@ export const MoneyDashPieMonth = () => {
     const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
         {`${OBJECT_IN[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -66,7 +95,7 @@ export const MoneyDashPieMonth = () => {
     const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
         {`${OBJECT_OUT[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -85,16 +114,10 @@ export const MoneyDashPieMonth = () => {
               cy={"50%"}
               label={renderIn}
               labelLine={false}
-              outerRadius={120}
+              outerRadius={radius}
               fill={"#8884d8"}
               dataKey={"value"}
               minAngle={15}
-              onMouseEnter={(data, index) => {
-                data.payload.opacity = 0.5;
-              }}
-              onMouseLeave={(data, index) => {
-                data.payload.opacity = 1.0;
-              }}
             >
               {OBJECT_IN?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_IN[index % COLORS_IN.length]} />
@@ -127,16 +150,10 @@ export const MoneyDashPieMonth = () => {
               cy={"50%"}
               label={renderOut}
               labelLine={false}
-              outerRadius={120}
+              outerRadius={radius}
               fill={"#8884d8"}
               dataKey={"value"}
               minAngle={15}
-              onMouseEnter={(data, index) => {
-                data.payload.opacity = 0.5;
-              }}
-              onMouseLeave={(data, index) => {
-                data.payload.opacity = 1.0;
-              }}
             >
               {OBJECT_OUT?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_OUT[index % COLORS_OUT.length]} />

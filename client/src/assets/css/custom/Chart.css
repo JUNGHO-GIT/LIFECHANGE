@@ -39,6 +39,11 @@
     font-weight: 500 !important;
     padding: 0px 0px 0px 0px !important;
   }
+  .dash-pie-text {
+    font-size: 1.000rem !important;
+    font-weight: 500 !important;
+    padding: 0px 0px 0px 0px !important;
+  }
 }
 
 /** Tablet Device = 992px ~ 1199px ****************************************************************/
@@ -78,6 +83,11 @@
     cursor: pointer !important;
   }
   .dash-checkbox {
+    font-size: 0.900rem !important;
+    font-weight: 500 !important;
+    padding: 0px 0px 0px 0px !important;
+  }
+  .dash-pie-text {
     font-size: 0.900rem !important;
     font-weight: 500 !important;
     padding: 0px 0px 0px 0px !important;
@@ -125,6 +135,11 @@
     font-weight: 500 !important;
     padding: 0px 0px 0px 0px !important;
   }
+  .dash-pie-text {
+    font-size: 0.800rem !important;
+    font-weight: 500 !important;
+    padding: 0px 0px 0px 0px !important;
+  }
 }
 
 /** Mobile Device = 480px ~ 767px *****************************************************************/
@@ -168,6 +183,11 @@
     font-weight: 500 !important;
     padding: 0px 0px 0px 0px !important;
   }
+  .dash-pie-text {
+    font-size: 0.700rem !important;
+    font-weight: 500 !important;
+    padding: 0px 0px 0px 0px !important;
+  }
 }
 
 /** Small devices = ~ 479px ***********************************************************************/
@@ -207,6 +227,11 @@
     cursor: pointer !important;
   }
   .dash-checkbox {
+    font-size: 0.600rem !important;
+    font-weight: 500 !important;
+    padding: 0px 0px 0px 0px !important;
+  }
+  .dash-pie-text {
     font-size: 0.600rem !important;
     font-weight: 500 !important;
     padding: 0px 0px 0px 0px !important;

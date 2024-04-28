@@ -19,8 +19,8 @@ export const ExerciseDashPieMonth = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (pie-month) (${PATH})`, ["파트", "타이틀"]
+  const {val:radius, set:setRadius} = useStorage(
+    `RADIUS (pie-month) (${PATH})`, 120
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -32,6 +32,35 @@ export const ExerciseDashPieMonth = () => {
   ];
   const [OBJECT_PART, setOBJECT_PART] = useState(OBJECT_PART_DEFAULT);
   const [OBJECT_TITLE, setOBJECT_TITLE] = useState(OBJECT_TITLE_DEFAULT);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const updateRadius = () => {
+      // lg
+      if (window.innerWidth >= 1200) {
+        setRadius(120);
+      }
+      // md
+      else if (window.innerWidth >= 992) {
+        setRadius(110);
+      }
+      // sm
+      else if (window.innerWidth >= 768) {
+        setRadius(100);
+      }
+      // xs
+      else {
+        setRadius(90);
+      }
+    };
+
+    window.addEventListener('resize', updateRadius);
+    updateRadius();
+
+    return () => {
+      window.removeEventListener('resize', updateRadius);
+    }
+  }, []);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
@@ -52,7 +81,7 @@ export const ExerciseDashPieMonth = () => {
     const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
         {`${OBJECT_PART[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -66,7 +95,7 @@ export const ExerciseDashPieMonth = () => {
     const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
     return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central">
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" className={"dash-pie-text"}>
         {`${OBJECT_TITLE[index].name} ${Math.round(percent * 100)}%`}
       </text>
     );
@@ -85,23 +114,17 @@ export const ExerciseDashPieMonth = () => {
               cy={"50%"}
               label={renderPart}
               labelLine={false}
-              outerRadius={120}
+              outerRadius={radius}
               fill={"#8884d8"}
               dataKey={"value"}
               minAngle={15}
-              onMouseEnter={(data, index) => {
-                data.payload.opacity = 0.5;
-              }}
-              onMouseLeave={(data, index) => {
-                data.payload.opacity = 1.0;
-              }}
             >
               {OBJECT_PART?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_PART[index % COLORS_PART.length]} />
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()}`)}
               contentStyle={{
                 backgroundColor:"rgba(255, 255, 255, 0.8)",
                 border:"none",
@@ -127,23 +150,17 @@ export const ExerciseDashPieMonth = () => {
               cy={"50%"}
               label={renderTitle}
               labelLine={false}
-              outerRadius={120}
+              outerRadius={radius}
               fill={"#8884d8"}
               dataKey={"value"}
               minAngle={15}
-              onMouseEnter={(data, index) => {
-                data.payload.opacity = 0.5;
-              }}
-              onMouseLeave={(data, index) => {
-                data.payload.opacity = 1.0;
-              }}
             >
               {OBJECT_TITLE?.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS_TITLE[index % COLORS_TITLE.length]} />
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`${Number(value).toLocaleString()}`)}
               contentStyle={{
                 backgroundColor:"rgba(255, 255, 255, 0.8)",
                 border:"none",
