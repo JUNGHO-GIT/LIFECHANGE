@@ -113,19 +113,17 @@ export const FoodPlanDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th>시작일</th>
-              <th>종료일</th>
-              <th>칼로리</th>
-              <th>탄수화물</th>
-              <th>단백질</th>
-              <th>지방</th>
+              <th className={"w-20"}>날짜</th>
+              <th>칼로리 목표</th>
+              <th>탄수화물 목표</th>
+              <th>단백질 목표</th>
+              <th>지방 목표</th>
               <th>삭제</th>
             </tr>
           </thead>
           <tbody>
-            <tr className={"fs-20 pt-20"}>
-              <td>{OBJECT?.food_plan_startDt}</td>
-              <td>{OBJECT?.food_plan_endDt}</td>
+            <tr>
+              <td>{`${OBJECT?.food_plan_startDt.substring(5, 10)} ~ ${OBJECT?.food_plan_endDt.substring(5, 10)}`}</td>
               <td>{OBJECT?.food_plan_kcal}</td>
               <td>{OBJECT?.food_plan_carb}</td>
               <td>{OBJECT?.food_plan_protein}</td>

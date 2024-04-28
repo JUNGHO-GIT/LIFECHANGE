@@ -257,18 +257,15 @@ export const ExercisePlanSave = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-            <Col xs={12} className={"mb-20 text-center"}>
-              <h1>Save</h1>
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {dateNode()}
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {dateNode()}
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>

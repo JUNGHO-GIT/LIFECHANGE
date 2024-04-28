@@ -1,6 +1,7 @@
 // MoneyPlanDetail.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
@@ -112,19 +113,17 @@ export const MoneyPlanDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
           <tr>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>수입목표</th>
-            <th>지출목표</th>
+            <th className={"w-20"}>날짜</th>
+            <th>수입 목표</th>
+            <th>지출 목표</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          <tr className={"fs-20 pt-20"}>
-            <td>{OBJECT?.money_plan_startDt}</td>
-            <td>{OBJECT?.money_plan_endDt}</td>
-            <td>{OBJECT?.money_plan_in}</td>
-            <td>{OBJECT?.money_plan_out}</td>
+          <tr>
+            <td>{`${OBJECT?.money_plan_startDt.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt.substring(5, 10)}`}</td>
+            <td>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</td>
+            <td>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</td>
             <td>
               <p className={"del-btn"} onClick={() => (
                 flowDelete(OBJECT._id)
@@ -154,15 +153,12 @@ export const MoneyPlanDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-            <Col xs={12} className={"mb-20 text-center"}>
-              <h1>Detail</h1>
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>

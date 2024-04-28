@@ -1,6 +1,7 @@
 // ExerciseDetail.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
@@ -61,9 +62,6 @@ export const ExerciseDetail = () => {
     exercise_number: 0,
     exercise_startDt: "0000-00-00",
     exercise_endDt: "0000-00-00",
-    exercise_start: "00:00",
-    exercise_end: "00:00",
-    exercise_time: "00:00",
     exercise_total_volume: 0,
     exercise_total_cardio: "00:00",
     exercise_body_weight: 0,
@@ -132,60 +130,36 @@ export const ExerciseDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th className={"w-20"}>날짜</th>
-              <th>시작</th>
-              <th>종료</th>
-              <th>시간</th>
+              <th className={"w-10"}>날짜</th>
               <th>부위</th>
               <th>종목</th>
-              <th>세트</th>
-              <th>횟수</th>
-              <th>중량</th>
-              <th>휴식</th>
-              <th>볼륨</th>
+              <th>볼륨 or 시간</th>
               <th>삭제</th>
             </tr>
           </thead>
           <tbody>
             {OBJECT?.exercise_section?.map((section, index) => (
-              <tr key={index} className={"fs-20 pt-20"}>
+              <tr key={index}>
                 {index === 0 && (
-                  <React.Fragment>
-                    <td rowSpan={OBJECT?.exercise_section?.length}>
-                      {OBJECT?.exercise_startDt}
-                    </td>
-                    <td rowSpan={OBJECT?.exercise_section?.length}>
-                      {OBJECT?.exercise_start}
-                    </td>
-                    <td rowSpan={OBJECT?.exercise_section?.length}>
-                      {OBJECT?.exercise_end}
-                    </td>
-                    <td rowSpan={OBJECT?.exercise_section?.length}>
-                      {OBJECT?.exercise_time}
-                    </td>
-                  </React.Fragment>
-                )}
-                <React.Fragment>
-                  <td>{section.exercise_part_val}</td>
-                  <td>
-                    {section.exercise_title_val}
+                  <td rowSpan={OBJECT?.exercise_section?.length}>
+                    {OBJECT?.exercise_startDt.substring(5, 10)}
                   </td>
-                </React.Fragment>
+                )}
+                <td>{section.exercise_part_val}</td>
                 {(section.exercise_part_val !== "유산소") ? (
                   <React.Fragment>
-                    <td>{section.exercise_set}</td>
-                    <td>{section.exercise_rep}</td>
-                    <td>{section.exercise_kg}</td>
-                    <td>{section.exercise_rest}</td>
+                    <td>
+                      <p>{section.exercise_title_val}</p>
+                      <p>{section.exercise_set} x {section.exercise_rep} x {section.exercise_kg} x {section.exercise_rest}</p>
+                    </td>
                     <td>{section.exercise_volume}</td>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <td></td>
-                    <td></td>
+                    <td>
+                      <p>{section.exercise_title_val}</p>
+                    </td>
                     <td>{section.exercise_cardio}</td>
-                    <td></td>
-                    <td></td>
                   </React.Fragment>
                 )}
                 <td>
@@ -196,22 +170,16 @@ export const ExerciseDetail = () => {
               </tr>
             ))}
             <tr>
-              <td colSpan={4}>총 볼륨</td>
-              <td colSpan={3}></td>
-              <td colSpan={4}>{OBJECT?.exercise_total_volume}</td>
-              <td></td>
+              <td colSpan={2}>총 볼륨</td>
+              <td colSpan={3}>{`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}</td>
             </tr>
             <tr>
-              <td colSpan={4}>총 유산소 시간</td>
-              <td colSpan={3}></td>
-              <td colSpan={4}>{OBJECT?.exercise_total_cardio}</td>
-              <td></td>
+              <td colSpan={2}>총 유산소 시간</td>
+              <td colSpan={3}>{`${OBJECT?.exercise_total_cardio}`}</td>
             </tr>
             <tr>
-              <td colSpan={4}>체중</td>
-              <td colSpan={3}></td>
-              <td colSpan={4}>{OBJECT?.exercise_body_weight}</td>
-              <td></td>
+              <td colSpan={2}>체중</td>
+              <td colSpan={3}>{`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}</td>
             </tr>
           </tbody>
         </Table>
@@ -236,15 +204,12 @@ export const ExerciseDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-            <Col xs={12} className={"mb-20 text-center"}>
-              <h1>Detail</h1>
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>

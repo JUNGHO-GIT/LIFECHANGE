@@ -426,6 +426,7 @@
   /** display **/
   html {
     scroll-behavior: smooth;
+    font-size: 16px;
   }
   html, body {
     width: 100%;
@@ -515,6 +516,10 @@
     --bs-table-hover-color: #000000;
     color: var(--bs-table-color);
     border-color: var(--bs-table-border-color);
+  }
+  p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
 }

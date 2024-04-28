@@ -1,6 +1,7 @@
 // FoodDetail.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
@@ -131,38 +132,34 @@ export const FoodDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th className={"w-20"}>날짜</th>
+              <th className={"w-10"}>날짜</th>
               <th>분류</th>
-              <th>식품명</th>
-              <th>브랜드</th>
+              <th>식품</th>
               <th>수량</th>
-              <th>그램(g)</th>
-              <th>칼로리(kcal)</th>
-              <th>탄수화물(g)</th>
-              <th>단백질(g)</th>
-              <th>지방(g)</th>
+              <th>중량</th>
+              <th>칼로리</th>
+              <th>탄수화물</th>
+              <th>단백질</th>
+              <th>지방</th>
               <th>삭제</th>
             </tr>
           </thead>
           <tbody>
             {OBJECT?.food_section?.map((section, index) => (
-              <tr key={index} className={"fs-20 pt-20"}>
+              <tr key={index}>
                 {index === 0 && (
-                  <React.Fragment>
-                    <td rowSpan={OBJECT?.food_section?.length}>
-                      {OBJECT?.food_startDt}
-                    </td>
-                  </React.Fragment>
+                  <td rowSpan={OBJECT?.food_section?.length}>
+                    {OBJECT?.food_startDt.substring(5, 10)}
+                  </td>
                 )}
                 <td>{section.food_part_val}</td>
-                <td>{section.food_title}</td>
-                <td>{section.food_brand}</td>
+                <td>{`${section.food_title} (${section.food_brand || ""})`}</td>
                 <td>{section.food_count} {section.food_serv}</td>
                 <td>{section.food_gram}</td>
-                <td>{section.food_kcal}</td>
-                <td>{section.food_carb}</td>
-                <td>{section.food_protein}</td>
-                <td>{section.food_fat}</td>
+                <td>{`${numeral(section.food_kcal).format('0,0')}`}</td>
+                <td>{`${numeral(section.food_carb).format('0,0')}`}</td>
+                <td>{`${numeral(section.food_protein).format('0,0')}`}</td>
+                <td>{`${numeral(section.food_fat).format('0,0')}`}</td>
                 <td>
                   <p className={"del-btn"} onClick={() => (
                     flowDelete(OBJECT._id, section._id)
@@ -172,10 +169,10 @@ export const FoodDetail = () => {
             ))}
             <tr>
               <td colSpan={4}>합계</td>
-              <td>{OBJECT?.food_total_kcal}</td>
-              <td>{OBJECT?.food_total_carb}</td>
-              <td>{OBJECT?.food_total_protein}</td>
-              <td>{OBJECT?.food_total_fat}</td>
+              <td>{`${numeral(OBJECT?.food_total_kcal).format('0,0')} kcal`}</td>
+              <td>{`${numeral(OBJECT?.food_total_carb).format('0,0')} g`}</td>
+              <td>{`${numeral(OBJECT?.food_total_protein).format('0,0')} g`}</td>
+              <td>{`${numeral(OBJECT?.food_total_fat).format('0,0')} g`}</td>
               <td></td>
             </tr>
           </tbody>
@@ -201,6 +198,9 @@ export const FoodDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {OBJECT?.food_startDt}
+              </Col>
               <Col xs={12} className={"mb-20 text-center"}>
                 {tableNode()}
               </Col>

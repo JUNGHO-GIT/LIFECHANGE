@@ -78,9 +78,6 @@ export const ExerciseList = () => {
     exercise_number: 0,
     exercise_startDt: "0000-00-00",
     exercise_endDt: "0000-00-00",
-    exercise_start: "00:00",
-    exercise_end: "00:00",
-    exercise_time: "00:00",
     exercise_total_volume: 0,
     exercise_total_cardio: "00:00",
     exercise_body_weight: 0,
@@ -124,10 +121,12 @@ export const ExerciseList = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th className={"w-20"}>날짜</th>
+              <th className={"w-10"}>날짜</th>
               <th>부위</th>
               <th>종목</th>
-              <th>set x rep x kg</th>
+              <th>세트</th>
+              <th>횟수</th>
+              <th>중량</th>
             </tr>
           </thead>
           <tbody>
@@ -151,15 +150,17 @@ export const ExerciseList = () => {
                     )}
                     <td>{section.exercise_part_val.substring(0, 6)}</td>
                     <td>{section.exercise_title_val.substring(0, 6)}</td>
-                    <td>
-                      {section.exercise_part_val !== "유산소" ? (
-                        `${numeral(section.exercise_set).format('0,0')}`
-                        + ' x ' + `${numeral(section.exercise_rep).format('0,0')}`
-                        + ' x ' + `${numeral(section.exercise_kg).format('0,0')}`
-                      ) : (
-                        section.exercise_cardio
-                      )}
-                    </td>
+                    {section.exercise_part_val !== "유산소" ? (
+                      <React.Fragment>
+                        <td>{`${numeral(section.exercise_set).format('0,0')}`}</td>
+                        <td>{`${numeral(section.exercise_rep).format('0,0')}`}</td>
+                        <td>{`${numeral(section.exercise_kg).format('0,0')}`}</td>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <td colSpan={3}>{section.exercise_cardio}</td>
+                      </React.Fragment>
+                    )}
                   </tr>
                 ))}
               </React.Fragment>

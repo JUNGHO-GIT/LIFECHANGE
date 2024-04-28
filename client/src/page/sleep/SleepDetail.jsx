@@ -119,29 +119,33 @@ export const SleepDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th className={"w-20"}>날짜</th>
-              <th>취침시간</th>
-              <th>기상시간</th>
-              <th>수면시간</th>
+              <th className={"w-10"}>날짜</th>
+              <th>취침</th>
+              <th>기상</th>
+              <th>수면</th>
               <th>삭제</th>
             </tr>
           </thead>
           <tbody>
-            <tr className={"fs-20 pt-20"}>
-              <td>{OBJECT?.sleep_startDt}</td>
-              {OBJECT?.sleep_section?.map((section, index) => (
-                <React.Fragment key={index}>
-                  <td>{section.sleep_night}</td>
-                  <td>{section.sleep_morning}</td>
-                  <td>{section.sleep_time}</td>
-                  <td>
-                    <p className={"del-btn"} onClick={() => (
-                      flowDelete(OBJECT._id, section._id)
-                    )}>x</p>
-                  </td>
-                </React.Fragment>
-              ))}
-            </tr>
+            {OBJECT?.sleep_section?.map((section, index) => (
+              <tr key={index}>
+                {index === 0 && (
+                  <React.Fragment>
+                    <td rowSpan={OBJECT?.sleep_section?.length}>
+                      {OBJECT?.sleep_startDt.substring(5, 10)}
+                    </td>
+                  </React.Fragment>
+                )}
+                <td>{section.sleep_night}</td>
+                <td>{section.sleep_morning}</td>
+                <td>{section.sleep_time}</td>
+                <td>
+                  <p className={"del-btn"} onClick={() => (
+                    flowDelete(OBJECT._id, section._id)
+                  )}>x</p>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </React.Fragment>

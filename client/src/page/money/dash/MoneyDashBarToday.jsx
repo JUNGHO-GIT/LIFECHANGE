@@ -72,7 +72,7 @@ export const MoneyDashBarToday = () => {
     return {
       domain: [0, topValue],
       ticks: ticks,
-      tickFormatter: (tick) => (`₩  ${Number(tick).toLocaleString()}`)
+      tickFormatter: (tick) => (`₩ ${Number(tick).toLocaleString()}`)
     };
   };
 
@@ -107,7 +107,7 @@ export const MoneyDashBarToday = () => {
             <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
               barSize={20}></Bar>
             <Tooltip
-              formatter={(value) => (`₩  ${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",

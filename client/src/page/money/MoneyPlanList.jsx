@@ -138,15 +138,15 @@ export const MoneyPlanList = () => {
                 </tr>
                 <tr>
                   <td>수입</td>
-                  <td>{`₩  ${numeral(item.money_plan_in).format('0,0')}`}</td>
-                  <td>{`₩  ${numeral(item.money_total_in).format('0,0')}`}</td>
-                  <td className={item.money_diff_in_color}>{`₩  ${numeral(item.money_diff_in).format('0,0')}`}</td>
+                  <td>{`₩ ${numeral(item.money_plan_in).format('0,0')}`}</td>
+                  <td>{`₩ ${numeral(item.money_total_in).format('0,0')}`}</td>
+                  <td className={item.money_diff_in_color}>{`₩ ${numeral(item.money_diff_in).format('0,0')}`}</td>
                 </tr>
                 <tr>
                   <td>지출</td>
-                  <td>{`₩  ${numeral(item.money_plan_out).format('0,0')}`}</td>
-                  <td>{`₩  ${numeral(item.money_total_out).format('0,0')}`}</td>
-                  <td className={item.money_diff_out_color}>{`₩  ${numeral(item.money_diff_out).format('0,0')}`}</td>
+                  <td>{`₩ ${numeral(item.money_plan_out).format('0,0')}`}</td>
+                  <td>{`₩ ${numeral(item.money_total_out).format('0,0')}`}</td>
+                  <td className={item.money_diff_out_color}>{`₩ ${numeral(item.money_diff_out).format('0,0')}`}</td>
                 </tr>
               </React.Fragment>
             ))}

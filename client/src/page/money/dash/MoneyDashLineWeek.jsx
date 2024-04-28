@@ -109,7 +109,7 @@ export const MoneyDashLineWeek = () => {
               strokeWidth={2}></Line>
             )}
             <Tooltip
-              formatter={(value) => (`₩  ${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",

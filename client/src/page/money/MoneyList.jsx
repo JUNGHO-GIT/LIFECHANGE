@@ -116,7 +116,7 @@ export const MoneyList = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
           <tr>
-            <th>날짜</th>
+            <th className={"w-10"}>날짜</th>
             <th>분류</th>
             <th>항목</th>
             <th>금액</th>
@@ -144,7 +144,7 @@ export const MoneyList = () => {
                     )}
                     <td>{section.money_part_val}</td>
                     <td>{section.money_title_val}</td>
-                    <td>{`₩  ${numeral(section.money_amount).format('0,0')}`}</td>
+                    <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
                   </tr>
                 </React.Fragment>
               ))}

@@ -1,6 +1,7 @@
 // MoneyDetail.jsx
 
 import axios from "axios";
+import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useDate} from "../../assets/hooks/useDate.jsx";
@@ -125,7 +126,7 @@ export const MoneyDetail = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
             <tr>
-              <th className={"w-20"}>날짜</th>
+              <th className={"w-10"}>날짜</th>
               <th>분류</th>
               <th>항목</th>
               <th>금액</th>
@@ -135,17 +136,17 @@ export const MoneyDetail = () => {
           </thead>
           <tbody>
             {OBJECT?.money_section?.map((section, index) => (
-              <tr key={index} className={"fs-20 pt-20"}>
+              <tr key={index}>
                 {index === 0 && (
                   <React.Fragment>
                     <td rowSpan={OBJECT?.money_section?.length}>
-                      {OBJECT?.money_startDt}
+                      {OBJECT?.money_startDt.substring(5, 10)}
                     </td>
                   </React.Fragment>
                 )}
                 <td>{section.money_part_val}</td>
                 <td>{section.money_title_val}</td>
-                <td>{section.money_amount}</td>
+                <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
                 <td>{section.money_content}</td>
                 <td>
                   <p className={"del-btn"} onClick={() => (
@@ -156,12 +157,12 @@ export const MoneyDetail = () => {
             ))}
             <tr>
               <td colSpan={3}>수입 합계</td>
-              <td>{OBJECT?.money_total_in}</td>
+              <td>{`₩ ${numeral(OBJECT?.money_total_in).format('0,0')}`}</td>
               <td colSpan={3}></td>
             </tr>
             <tr>
               <td colSpan={3}>지출 합계</td>
-              <td>{OBJECT?.money_total_out}</td>
+              <td>{`₩ ${numeral(OBJECT?.money_total_out).format('0,0')}`}</td>
               <td colSpan={3}></td>
             </tr>
           </tbody>

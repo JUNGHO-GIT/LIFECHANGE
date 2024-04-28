@@ -101,7 +101,7 @@ export const MoneyDashPieMonth = () => {
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => (`₩  ${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
               contentStyle={{
                 backgroundColor:"rgba(255, 255, 255, 0.8)",
                 border:"none",
@@ -143,7 +143,7 @@ export const MoneyDashPieMonth = () => {
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => (`₩  ${Number(value).toLocaleString()}`)}
+              formatter={(value) => (`₩ ${Number(value).toLocaleString()}`)}
               contentStyle={{
                 backgroundColor:"rgba(255, 255, 255, 0.8)",
                 border:"none",

@@ -35,31 +35,6 @@ export const useTime = (
       }
     }
 
-    // 1-2. exercise
-    if (type === "real" && strLow === "exercise") {
-      const startTime = OBJECT?.exercise_start;
-      const endTime = OBJECT?.exercise_end;
-
-      if (startTime && endTime) {
-        const startDate = new Date(`${koreanDate}T${startTime}Z`);
-        const endDate = new Date(`${koreanDate}T${endTime}Z`);
-
-        if (endDate < startDate) {
-          endDate.setDate(endDate.getDate() + 1);
-        }
-
-        const diff = endDate.getTime() - startDate.getTime();
-        const hours = Math.floor(diff / 3600000);
-        const minutes = Math.floor((diff % 3600000) / 60000);
-        const time = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-
-        setOBJECT((prev) => ({
-          ...prev,
-          exercise_time: time,
-        }));
-      }
-    }
-
     // 4-1. sleep
     if (type === "plan" && strLow === "sleep") {
       const nightTime = OBJECT?.sleep_plan_night;
@@ -115,13 +90,11 @@ export const useTime = (
 
   }, [
     strLow,
+    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_startDt : "",
+    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_endDt : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_night : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_morning : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
     type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
-    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_startDt : "",
-    type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_endDt : "",
-    type === "real" && strLow === "exercise" ? OBJECT?.exercise_start : "",
-    type === "real" && strLow === "exercise" ? OBJECT?.exercise_end : "",
   ]);
 };

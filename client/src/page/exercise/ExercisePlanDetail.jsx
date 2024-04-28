@@ -114,19 +114,17 @@ export const ExercisePlanDetail = () => {
         <Table striped hover responsive variant={"light"}>
           <thead className={"table-primary"}>
           <tr>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>목표 운동 횟수</th>
-            <th>목표 볼륨</th>
-            <th>목표 유산소 시간</th>
-            <th>목표 체중</th>
+            <th className={"w-20"}>날짜</th>
+            <th>횟수 목표</th>
+            <th>볼륨 목표</th>
+            <th>유산소 목표</th>
+            <th>체중 목표</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{OBJECT?.exercise_plan_startDt}</td>
-            <td>{OBJECT?.exercise_plan_endDt}</td>
+            <td>{`${OBJECT?.exercise_plan_startDt.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt.substring(5, 10)}`}</td>
             <td>{OBJECT?.exercise_plan_count}</td>
             <td>{OBJECT?.exercise_plan_volume}</td>
             <td>{OBJECT?.exercise_plan_cardio}</td>
@@ -160,15 +158,12 @@ export const ExercisePlanDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-            <Col xs={12} className={"mb-20 text-center"}>
-              <h1>Detail</h1>
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {tableNode()}
-            </Col>
-            <Col xs={12} className={"mb-20 text-center"}>
-              {buttonNode()}
-            </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {tableNode()}
+              </Col>
+              <Col xs={12} className={"mb-20 text-center"}>
+                {buttonNode()}
+              </Col>
             </Row>
           </Container>
         </Card>

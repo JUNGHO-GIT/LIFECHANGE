@@ -67,9 +67,6 @@ export const ExerciseSave = () => {
     exercise_number: 0,
     exercise_startDt: "0000-00-00",
     exercise_endDt: "0000-00-00",
-    exercise_start: "00:00",
-    exercise_end: "00:00",
-    exercise_time: "00:00",
     exercise_total_volume: 0,
     exercise_total_cardio: "00:00",
     exercise_body_weight: 0,
@@ -517,77 +514,6 @@ export const ExerciseSave = () => {
         </Row>
       );
     };
-    function tableTime () {
-      return (
-        <React.Fragment>
-          <Row>
-            <Col xs={4}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>시작시간</span>
-                <TimePicker
-                  locale={"ko"}
-                  format={"HH:mm"}
-                  id={"exercise_start"}
-                  name={"exercise_start"}
-                  className={"form-control"}
-                  disabled={false}
-                  clockIcon={null}
-                  disableClock={false}
-                  value={OBJECT?.exercise_start}
-                  onChange={(e) => {
-                    const timeValue = e ? e.toString() : "00:00";
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_start: timeValue,
-                    }));
-                  }}
-                ></TimePicker>
-              </div>
-            </Col>
-            <Col xs={4}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>종료시간</span>
-                <TimePicker
-                  locale={"ko"}
-                  format={"HH:mm"}
-                  id={"exercise_end"}
-                  name={"exercise_end"}
-                  className={"form-control"}
-                  disabled={false}
-                  clockIcon={null}
-                  disableClock={false}
-                  value={OBJECT?.exercise_end}
-                  onChange={(e) => {
-                    const timeValue = e ? e.toString() : "00:00";
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_end: timeValue,
-                    }));
-                  }}
-                ></TimePicker>
-              </div>
-            </Col>
-            <Col xs={4}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>운동시간</span>
-                <TimePicker
-                  locale={"ko"}
-                  format={"HH:mm"}
-                  id={"exercise_time"}
-                  name={"exercise_time"}
-                  className={"form-control"}
-                  disabled={true}
-                  clockIcon={null}
-                  disableClock={false}
-                  value={OBJECT?.exercise_time}
-                ></TimePicker>
-              </div>
-            </Col>
-          </Row>
-        </React.Fragment>
-      );
-    };
-
     function tableRemain () {
       return (
         <React.Fragment>
@@ -665,8 +591,6 @@ export const ExerciseSave = () => {
     return (
       <React.Fragment>
         {tableFragment()}
-        <br />
-        {tableTime()}
         <br />
         {tableRemain()}
       </React.Fragment>

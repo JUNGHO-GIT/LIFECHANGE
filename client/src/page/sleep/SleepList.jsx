@@ -110,7 +110,7 @@ export const SleepList = () => {
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
           <tr>
-            <th>날짜</th>
+            <th className={"w-10"}>날짜</th>
             <th>취침</th>
             <th>기상</th>
             <th>수면</th>

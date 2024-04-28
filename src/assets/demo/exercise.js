@@ -133,10 +133,6 @@ for (let i = 1; i <= 100; i++) {
     exercise_startDt: formatDate1(startDate),
     exercise_endDt: formatDate1(startDate),
 
-    exercise_start: randomTime(),
-    exercise_end: randomTime(),
-    exercise_time: calcDate(randomTime(), randomTime()),
-
     exercise_total_volume: randomNumber(10000),
     exercise_total_cardio: randomTime(),
     exercise_body_weight: randomNumber(100),

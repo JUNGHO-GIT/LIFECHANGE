@@ -27,22 +27,6 @@ const schema = new mongoose.Schema({
     required: false
   },
 
-  exercise_start: {
-    type: String,
-    default: "00:00",
-    required: false,
-  },
-  exercise_end: {
-    type: String,
-    default: "00:00",
-    required: false,
-  },
-  exercise_time: {
-    type: String,
-    default: "00:00",
-    required: false,
-  },
-
   exercise_total_volume: {
     type: Number,
     default: 0,

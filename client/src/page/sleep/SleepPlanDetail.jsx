@@ -114,14 +114,14 @@ export const SleepPlanDetail = () => {
           <tr>
             <th>시작일</th>
             <th>종료일</th>
-            <th>취침시간</th>
-            <th>기상시간</th>
-            <th>수면시간</th>
+            <th>취침 목표</th>
+            <th>기상 목표</th>
+            <th>수면 목표</th>
             <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          <tr className={"fs-20 pt-20"}>
+          <tr>
             <td>{OBJECT?.sleep_plan_startDt}</td>
             <td>{OBJECT?.sleep_plan_endDt}</td>
             <td>{OBJECT?.sleep_plan_night}</td>
