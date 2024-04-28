@@ -133,7 +133,7 @@ export const MoneyPlanList = () => {
                       state: SEND
                     });
                   }}>
-                    {`${item.money_plan_startDt.substring(5, 10)} ~ ${item.money_plan_endDt.substring(5, 10)}`}
+                    {`${item.money_plan_startDt?.substring(5, 10)} ~ ${item.money_plan_endDt?.substring(5, 10)}`}
                   </td>
                 </tr>
                 <tr>

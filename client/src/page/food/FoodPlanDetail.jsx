@@ -4,6 +4,7 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -99,6 +100,7 @@ export const FoodPlanDetail = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       setOBJECT(response.data.result);
       navParam(SEND.toList);
     }
@@ -124,7 +126,7 @@ export const FoodPlanDetail = () => {
           </thead>
           <tbody>
             <tr>
-              <td>{`${OBJECT?.food_plan_startDt.substring(5, 10)} ~ ${OBJECT?.food_plan_endDt.substring(5, 10)}`}</td>
+              <td>{`${OBJECT?.food_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.food_plan_endDt?.substring(5, 10)}`}</td>
               <td>{`${numeral(OBJECT?.food_plan_kcal).format("0,0")} kcal`}</td>
               <td>{`${numeral(OBJECT?.food_plan_carb).format("0,0")} g`}</td>
               <td>{`${numeral(OBJECT?.food_plan_protein).format("0,0")} g`}</td>

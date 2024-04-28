@@ -1,66 +1,56 @@
 {
-    _id: ObjectId("662412e5359d6764ce9da78c"),
-    customer_id: "123",
-    exercise_number: 155,
-    exercise_startDt: "2024-04-27",
-    exercise_endDt: "2024-04-27",
-    exercise_start: "17:01",
-    exercise_end: "17:46",
-    exercise_time: "00:45",
-    exercise_total_volume: 0,
-    exercise_total_cardio: "00:00",
-    exercise_body_weight: 75,
-    exercise_section: [
-    {
-            exercise_part_idx: 2,
-            exercise_part_val: "하체",
-            exercise_title_idx: 2,
-            exercise_title_val: "프론트스쿼트",
-            exercise_kg: 73,
-            exercise_set: 8,
-            exercise_rep: 7,
-            exercise_rest: 27,
-            exercise_volume: 4088,
-            exercise_cardio: "19:06",
-            _id: ObjectId("662412e5359d6764ce9da787")
-    },
-    {
-            exercise_part_idx: 5,
-            exercise_part_val: "삼두",
-            exercise_title_idx: 7,
-            exercise_title_val: "킥백",
-            exercise_kg: 97,
-            exercise_set: 3,
-            exercise_rep: 5,
-            exercise_rest: 21,
-            exercise_volume: 1455,
-            exercise_cardio: "14:10",
-            _id: ObjectId("662412e5359d6764ce9da788")
-    },
-    {
-            exercise_part_idx: 4,
-            exercise_part_val: "어깨",
-            exercise_title_idx: 5,
-            exercise_title_val: "비하인드넥프레스",
-            exercise_kg: 46,
-            exercise_set: 9,
-            exercise_rep: 1,
-            exercise_rest: 70,
-            exercise_volume: 414,
-            exercise_cardio: "01:29",
-            _id: ObjectId("662412e5359d6764ce9da789")
-    },
-    {
-            exercise_part_idx: 5,
-            exercise_part_val: "삼두",
-            exercise_title_idx: 3,
-            exercise_title_val: "오버헤드트라이셉스익스텐션",
-            exercise_kg: 79,
-            exercise_set: 6,
-            exercise_rep: 7,
-            exercise_rest: 67,
-            exercise_volume: 3318,
-            exercise_cardio: "08:44",
-            _id: ObjectId("662412e5359d6764ce9da78b")
-    }
-  ]
+  "exercisePlan": {
+    "_id": "662412def4a5eb8e04adcc58",
+    "exercise_plan_startDt": "2024-04-28",
+    "exercise_plan_endDt": "2024-04-28",
+    "exercise_plan_count": 68,
+    "exercise_plan_volume": 158,
+    "exercise_plan_cardio": "14:09",
+    "exercise_plan_weight": 479
+  },
+  "exerciseReal": {
+    "exercise_total_count": 0,
+    "exercise_total_volume": 0,
+    "exercise_total_cardio": "00:00",
+    "exercise_body_weight": null
+  },
+  "foodPlan": {
+    "_id": "662412d0036d588fb430ed62",
+    "food_plan_startDt": "2024-04-28",
+    "food_plan_endDt": "2024-04-28",
+    "food_plan_kcal": 609,
+    "food_plan_carb": 10,
+    "food_plan_protein": 15,
+    "food_plan_fat": 32
+  },
+  "foodReal": {
+    "food_total_kcal": 4408,
+    "food_total_carb": 52,
+    "food_total_protein": 30,
+    "food_total_fat": 95
+  },
+  "moneyPlan": {
+    "_id": "662db0b84654b2b48486a088",
+    "money_plan_startDt": "2024-04-28",
+    "money_plan_endDt": "2024-04-28",
+    "money_plan_in": 222,
+    "money_plan_out": 333
+  },
+  "moneyReal": {
+    "money_total_in": 47342,
+    "money_total_out": 58734
+  },
+  "sleepPlan": {
+    "_id": "662412b55c0e055d052b9dad",
+    "sleep_plan_startDt": "2024-04-28",
+    "sleep_plan_endDt": "2024-04-28",
+    "sleep_plan_night": "19:28",
+    "sleep_plan_morning": "21:44",
+    "sleep_plan_time": "02:07"
+  },
+  "sleepReal": {
+    "sleep_night": "11:39",
+    "sleep_morning": "05:48",
+    "sleep_time": "04:11"
+  }
+}

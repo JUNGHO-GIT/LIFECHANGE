@@ -4,6 +4,7 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -107,6 +108,7 @@ export const MoneyDetail = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       if (Object.keys(response.data.result).length > 0) {
         setOBJECT(response.data.result);
       }
@@ -140,7 +142,7 @@ export const MoneyDetail = () => {
                 {index === 0 && (
                   <React.Fragment>
                     <td rowSpan={OBJECT?.money_section?.length}>
-                      {OBJECT?.money_startDt.substring(5, 10)}
+                      {OBJECT?.money_startDt?.substring(5, 10)}
                     </td>
                   </React.Fragment>
                 )}

@@ -3,6 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -97,6 +98,7 @@ export const SleepPlanDetail = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       setOBJECT(response.data.result);
       navParam(SEND.toList);
     }
@@ -121,7 +123,7 @@ export const SleepPlanDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{`${OBJECT?.sleep_plan_startDt.substring(5, 10)} ~ ${OBJECT?.sleep_plan_endDt.substring(5, 10)}`}</td>
+            <td>{`${OBJECT?.sleep_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.sleep_plan_endDt?.substring(5, 10)}`}</td>
             <td>{OBJECT?.sleep_plan_night}</td>
             <td>{OBJECT?.sleep_plan_morning}</td>
             <td>{OBJECT?.sleep_plan_time}</td>

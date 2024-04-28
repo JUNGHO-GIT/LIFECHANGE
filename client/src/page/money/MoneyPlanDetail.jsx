@@ -4,6 +4,7 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -98,6 +99,7 @@ export const MoneyPlanDetail = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       setOBJECT(response.data.result);
       navParam(SEND.toList);
     }
@@ -121,7 +123,7 @@ export const MoneyPlanDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{`${OBJECT?.money_plan_startDt.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt.substring(5, 10)}`}</td>
+            <td>{`${OBJECT?.money_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt?.substring(5, 10)}`}</td>
             <td>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</td>
             <td>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</td>
             <td>

@@ -7,57 +7,101 @@ export const list = async (object) => {
     return [];
   }
 
-  const compareCount = (plan, real) => {
-    const diff = Math.abs(plan - real);
-    return diff;
-  };
+  const compareCount = (plan, real, extra) => {
+    if (extra === "in") {
+      return Math.abs(plan - real);
+    }
+    if (extra === "out") {
+      return Math.abs(real - plan);
+    }
+  }
 
   const makeColor = (plan, real, extra) => {
-    let percent = 0;
-    if (extra === "in") {
-      percent = ((plan - real) / plan) * 100;
-      // 1. ~ 1%
-      if (percent <= 1) {
-        return "text-danger";
+    let percent = (Math.abs(plan - real) / plan) * 100;
+    if (plan === undefined || real === undefined) {
+      return "text-danger";
+    }
+    else if (extra === "in") {
+      if (plan > real) {
+        if (percent > 0 && percent <= 1) {
+          return "text-primary";
+        }
+        // 2. 1% ~ 10%
+        else if (percent > 1 && percent <= 10) {
+          return "text-success";
+        }
+        // 3. 10% ~ 50%
+        else if (percent > 10 && percent <= 50) {
+          return "text-warning";
+        }
+        // 4. 50% ~
+        else {
+          return "text-danger";
+        }
       }
-      // 2. 1% ~ 10%
-      else if (percent > 1 && percent <= 10) {
-        return "text-warning";
-      }
-      // 3. 10% ~ 50%
-      else if (percent > 10 && percent <= 30) {
-        return "text-success";
-      }
-      // 4. 50% ~
       else {
-        return "text-primary";
+        // 1. 0% ~ 1%
+        if (percent > 0 && percent <= 1) {
+          return "text-danger";
+        }
+        // 2. 1% ~ 10%
+        else if (percent > 1 && percent <= 10) {
+          return "text-warning";
+        }
+        // 3. 10% ~ 50%
+        else if (percent > 10 && percent <= 50) {
+          return "text-success";
+        }
+        // 4. 50% ~
+        else {
+          return "text-primary";
+        }
       }
     }
     if (extra === "out") {
-      percent = ((real - plan) / plan) * 100;
-      // 1. ~ 1%
-      if (percent <= 1) {
-        return "text-primary";
+      if (plan > real) {
+        // 1. 0% ~ 1%
+        if (percent > 0 && percent <= 1) {
+          return "text-danger";
+        }
+        // 2. 1% ~ 10%
+        else if (percent > 1 && percent <= 10) {
+          return "text-warning";
+        }
+        // 3. 10% ~ 50%
+        else if (percent > 10 && percent <= 50) {
+          return "text-success";
+        }
+        // 4. 50% ~
+        else {
+          return "text-primary";
+        }
       }
-      // 2. 1% ~ 10%
-      else if (percent > 1 && percent <= 10) {
-        return "text-success";
-      }
-      // 3. 10% ~ 50%
-      else if (percent > 10 && percent <= 30) {
-        return "text-warning";
-      }
-      // 4. 50% ~
       else {
-        return "text-danger";
+        // 1. 0% ~ 1%
+        if (percent > 0 && percent <= 1) {
+          return "text-primary";
+        }
+        // 2. 1% ~ 10%
+        else if (percent > 1 && percent <= 10) {
+          return "text-success";
+        }
+        // 3. 10% ~ 50%
+        else if (percent > 10 && percent <= 50) {
+          return "text-warning";
+        }
+        // 4. 50% ~
+        else {
+          return "text-danger";
+        }
       }
     }
-  };
+  }
 
   object?.result?.map((item) => {
     Object.assign((item), {
-      money_diff_in: compareCount(item?.money_plan_in, item?.money_total_in),
-      money_diff_out: compareCount(item?.money_plan_out, item?.money_total_out),
+      money_diff_in: compareCount(item?.money_plan_in, item?.money_total_in, "in"),
+      money_diff_out: compareCount(item?.money_plan_out, item?.money_total_out, "out"),
 
       money_diff_in_color: makeColor(item?.money_plan_in, item?.money_total_in, "in"),
       money_diff_out_color: makeColor(item?.money_plan_out, item?.money_total_out, "out"),

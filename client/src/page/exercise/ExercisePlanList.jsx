@@ -141,7 +141,7 @@ export const ExercisePlanList = () => {
                       state: SEND
                     });
                   }}>
-                    {`${item.exercise_plan_startDt.substring(5, 10)} ~ ${item.exercise_plan_endDt.substring(5, 10)}`}
+                    {`${item.exercise_plan_startDt?.substring(5, 10)} ~ ${item.exercise_plan_endDt?.substring(5, 10)}`}
                   </td>
                 </tr>
                 <tr>

@@ -144,7 +144,7 @@ export const FoodList = () => {
                             state: SEND
                           });
                         }}>
-                          {item.food_startDt.substring(5, 10)}
+                          {item.food_startDt?.substring(5, 10)}
                           {item.food_section.length > 3 && (<div>더보기</div>)}
                         </td>
                       )}

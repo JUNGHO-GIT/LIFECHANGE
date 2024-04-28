@@ -25,6 +25,15 @@ export const percent = {
         food_plan_endDt: {
           $gte: startDt_param,
         },
+      }},
+      {$project: {
+        _id: 1,
+        food_plan_startDt: "$food_plan_startDt",
+        food_plan_endDt: "$food_plan_endDt",
+        food_plan_kcal: "$food_plan_kcal",
+        food_plan_carb: "$food_plan_carb",
+        food_plan_protein: "$food_plan_protein",
+        food_plan_fat: "$food_plan_fat",
       }}
     ]);
     return finalResult;
@@ -68,6 +77,13 @@ export const percent = {
         money_plan_endDt: {
           $gte: startDt_param,
         }
+      }},
+      {$project: {
+        _id: 1,
+        money_plan_startDt: "$money_plan_startDt",
+        money_plan_endDt: "$money_plan_endDt",
+        money_plan_in: "$money_plan_in",
+        money_plan_out: "$money_plan_out",
       }}
     ]);
     return finalResult;
@@ -109,7 +125,15 @@ export const percent = {
         sleep_plan_endDt: {
           $gte: startDt_param,
         }
-      }}
+      }},
+      {$project: {
+        _id: 1,
+        sleep_plan_startDt: "$sleep_plan_startDt",
+        sleep_plan_endDt: "$sleep_plan_endDt",
+        sleep_plan_night: "$sleep_plan_night",
+        sleep_plan_morning: "$sleep_plan_morning",
+        sleep_plan_time: "$sleep_plan_time",
+      }},
     ]);
     return finalResult;
   },
@@ -120,12 +144,10 @@ export const percent = {
       {$match: {
         customer_id: customer_id_param,
         sleep_startDt: {
-          $gte: startDt_param,
           $lte: endDt_param,
         },
         sleep_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
+          $gte: startDt_param
         },
       }},
       {$unwind: "$sleep_section"
@@ -156,6 +178,15 @@ export const percent = {
           $gte: startDt_param,
         }
       }},
+      {$project: {
+        _id: 1,
+        exercise_plan_startDt: "$exercise_plan_startDt",
+        exercise_plan_endDt: "$exercise_plan_endDt",
+        exercise_plan_count: "$exercise_plan_count",
+        exercise_plan_volume: "$exercise_plan_volume",
+        exercise_plan_cardio: "$exercise_plan_cardio",
+        exercise_plan_weight: "$exercise_plan_weight",
+      }}
     ]);
     return finalResult;
   },

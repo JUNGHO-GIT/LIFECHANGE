@@ -132,7 +132,7 @@ export const SleepList = () => {
                           state: SEND
                         });
                       }}>
-                        {item.sleep_startDt.substring(5, 10)}
+                        {item.sleep_startDt?.substring(5, 10)}
                         {item.sleep_section.length > 3 && (<div>더보기</div>)}
                       </td>
                     )}

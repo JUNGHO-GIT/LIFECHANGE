@@ -144,7 +144,7 @@ export const ExerciseList = () => {
                             state: SEND
                           });
                         }}>
-                        {item.exercise_startDt.substring(5, 10)}
+                        {item.exercise_startDt?.substring(5, 10)}
                         {item.exercise_section.length > 3 && (<div>더보기</div>)}
                       </td>
                     )}

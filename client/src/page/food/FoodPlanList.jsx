@@ -141,7 +141,7 @@ export const FoodPlanList = () => {
                       state: SEND
                     });
                   }}>
-                    {`${item.food_plan_startDt.substring(5, 10)} ~ ${item.food_plan_endDt.substring(5, 10)}`}
+                    {`${item.food_plan_startDt?.substring(5, 10)} ~ ${item.food_plan_endDt?.substring(5, 10)}`}
                   </td>
                 </tr>
                 <tr>

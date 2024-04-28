@@ -36,7 +36,6 @@ export const percent = async (
     ), null);
 
     return {
-      ...plan,
       exercise_total_count: exerciseTotalCount,
       exercise_total_volume: exerciseTotalVolume,
       exercise_total_cardio: decimalToStr(exerciseTotalCardio),
@@ -53,7 +52,7 @@ export const percent = async (
     const endDt = plan.food_plan_endDt;
 
     const findReal = await repository.percent.findFoodReal(
-      customer_id_param, startDt_param, endDt_param
+      customer_id_param, startDt, endDt
     );
 
     const foodTotalKcal = findReal.reduce((acc, curr) => (
@@ -70,7 +69,6 @@ export const percent = async (
     ), 0);
 
     return {
-      ...plan,
       food_total_kcal: foodTotalKcal,
       food_total_carb: foodTotalCarb,
       food_total_protein: foodTotalProtein,
@@ -87,7 +85,7 @@ export const percent = async (
     const endDt = plan.money_plan_endDt;
 
     const findReal = await repository.percent.findMoneyReal(
-      customer_id_param, startDt_param, endDt_param
+      customer_id_param, startDt, endDt
     );
 
     const moneyTotalIn = findReal.reduce((acc, curr) => (
@@ -98,7 +96,6 @@ export const percent = async (
     ), 0);
 
     return {
-      ...plan,
       money_total_in: moneyTotalIn,
       money_total_out: moneyTotalOut
     };
@@ -113,7 +110,7 @@ export const percent = async (
     const endDt = plan.sleep_plan_endDt;
 
     const findReal = await repository.percent.findSleepReal(
-      customer_id_param, startDt_param, endDt_param
+      customer_id_param, startDt, endDt
     );
 
     const sleepNight = findReal.reduce((acc, curr) => (
@@ -127,7 +124,6 @@ export const percent = async (
     ), 0);
 
     return {
-      ...plan,
       sleep_night: decimalToStr(sleepNight),
       sleep_morning: decimalToStr(sleepMorning),
       sleep_time: decimalToStr(sleepTime)

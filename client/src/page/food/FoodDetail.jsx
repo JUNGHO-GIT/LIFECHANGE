@@ -4,6 +4,7 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -113,6 +114,7 @@ export const FoodDetail = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       if (Object.keys(response.data.result).length > 0) {
         setOBJECT(response.data.result);
       }
@@ -149,7 +151,7 @@ export const FoodDetail = () => {
               <tr key={index}>
                 {index === 0 && (
                   <td rowSpan={OBJECT?.food_section?.length}>
-                    {OBJECT?.food_startDt.substring(5, 10)}
+                    {OBJECT?.food_startDt?.substring(5, 10)}
                   </td>
                 )}
                 <td>{section.food_part_val}</td>

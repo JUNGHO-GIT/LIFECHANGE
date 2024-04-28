@@ -4,6 +4,7 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -100,6 +101,7 @@ export const ExercisePlanDetail = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       setOBJECT(response.data.result);
       navParam(SEND.toList);
     }
@@ -125,7 +127,7 @@ export const ExercisePlanDetail = () => {
         </thead>
         <tbody>
           <tr>
-            <td>{`${OBJECT?.exercise_plan_startDt.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt.substring(5, 10)}`}</td>
+            <td>{`${OBJECT?.exercise_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt?.substring(5, 10)}`}</td>
             <td>{`${numeral(OBJECT?.exercise_plan_count).format("0,0")} 회`}</td>
             <td>{`${numeral(OBJECT?.exercise_plan_volume).format("0,0")} vol`}</td>
             <td>{OBJECT?.exercise_plan_cardio}</td>

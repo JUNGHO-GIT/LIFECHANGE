@@ -3,6 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
+import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../assets/hooks/useDate.jsx";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -100,6 +101,7 @@ export const SleepDetail = () => {
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
+      percent();
       if (Object.keys(response.data.result).length > 0) {
         setOBJECT(response.data.result);
       }
@@ -132,7 +134,7 @@ export const SleepDetail = () => {
                 {index === 0 && (
                   <React.Fragment>
                     <td rowSpan={OBJECT?.sleep_section?.length}>
-                      {OBJECT?.sleep_startDt.substring(5, 10)}
+                      {OBJECT?.sleep_startDt?.substring(5, 10)}
                     </td>
                   </React.Fragment>
                 )}
