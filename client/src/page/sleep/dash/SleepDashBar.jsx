@@ -1,51 +1,52 @@
-// SleepDashLineWeek.jsx
+// SleepDashBar.jsx
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {Line, LineChart} from "recharts";
+import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Row, Col, Card, FormCheck} from "react-bootstrap"
+import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const SleepDashLineWeek = () => {
+export const SleepDashBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
-  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT_TODAY = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:PART, set:setPART} = useStorage(
-    `PART (line-week) (${PATH})`, ["취침", "수면", "기상"]
+  const {val:SECTION, set:setSECTION} = useStorage(
+    `SECTION (bar) (${PATH})`, "today"
   );
 
-  // 2-1. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = [
-    {name:"", 취침: 0, 수면: 0, 기상: 0},
+  // 2-2. useState -------------------------------------------------------------------------------->
+  const OBJECT_TODAY_DEFAULT = [
+    {name:"", 목표: 0, 실제: 0}
   ];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/dash/line/week`, {
+    const responseToday = await axios.get(`${URL_OBJECT_TODAY}/dash/bar/today`, {
       params: {
         customer_id: customer_id
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT_TODAY(responseToday.data.result || OBJECT_TODAY_DEFAULT);
   })()}, [customer_id]);
 
-  // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNode = () => {
+  // 5-1. chart ----------------------------------------------------------------------------------->
+  const chartNodeToday = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <LineChart data={OBJECT} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
+          <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+          barGap={20} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -65,18 +66,11 @@ export const SleepDashLineWeek = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {PART.includes("취침") && (
-              <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
-            )}
-            {PART.includes("수면") && (
-              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
-            )}
-            {PART.includes("기상") && (
-              <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
-            )}
+            <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
+              activeDot={{r: 6}}
+            ></Line>
+            <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
+              barSize={20}></Bar>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -97,34 +91,8 @@ export const SleepDashLineWeek = () => {
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
             ></Legend>
-          </LineChart>
+          </ComposedChart>
         </ResponsiveContainer>
-      </React.Fragment>
-    );
-  };
-
-  // 5-3. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
-    return (
-      <React.Fragment>
-        {["취침", "수면", "기상"]?.map((key, index) => (
-          <div key={index} className={"dash-checkbox flex-column mb-20"}>
-            <FormCheck
-              inline
-              type={"switch"}
-              checked={PART.includes(key)}
-              onChange={() => {
-                if (PART.includes(key)) {
-                  setPART(PART?.filter((item) => (item !== key)));
-                }
-                else {
-                  setPART([...PART, key]);
-                }
-              }}
-            ></FormCheck>
-            <span>{key}</span>
-          </div>
-        ))}
       </React.Fragment>
     );
   };
@@ -136,16 +104,24 @@ export const SleepDashLineWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12}>
-                <span className={"dash-title"}>주간 수면 추이</span>
+              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+                <select className={"form-select form-select-sm"}
+                  onChange={(e) => (setSECTION(e.target.value))}
+                  value={SECTION}
+                >
+                  <option value={"today"}>오늘</option>
+                </select>
+              </Col>
+              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+                <span className={"dash-title"}>수면 목표</span>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3}>
+                <span></span>
               </Col>
             </Row>
             <Row>
-              <Col lg={10} md={10} sm={10} xs={10}>
-                {chartNode()}
-              </Col>
-              <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-                {tableNode()}
+              <Col lg={12} md={12} sm={12} xs={12}>
+                {SECTION === "today" && chartNodeToday()}
               </Col>
             </Row>
           </Container>

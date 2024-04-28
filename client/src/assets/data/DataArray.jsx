@@ -3,7 +3,6 @@ export const dataArray = [
   {
     label: "Customer",
     items: [
-      {to: "/customer/dash", label: "CustomerDash"},
       {to: "/customer/dataset", label: "CustomerDataset"},
     ]
   },

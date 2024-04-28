@@ -1,97 +1,66 @@
-// FoodDashAvgWeek.tsx
+// SleepDashLine.jsx
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
-import {Bar, ComposedChart} from "recharts";
+import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const FoodDashAvgWeek = () => {
+export const SleepDashLine = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_FOOD || "";
+  const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();
+  const array = ["취침", "수면", "기상"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (avg-week) (${PATH})`, "kcal"
+  const {val:SECTION, set:setSECTION} = useStorage(
+    `SECTION (line) (${PATH})`, "week"
   );
   const {val:PART, set:setPART} = useStorage(
-    `PART (avg-week) (${PATH})`, ["칼로리", "탄수화물", "단백질", "지방"]
+    `PART (line) (${PATH})`, array
   );
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_KCAL_DEFAULT = [
-    {name:"", 칼로리: 0},
+  // 2-1. useState -------------------------------------------------------------------------------->
+  const OBJECT_WEEK_DEFAULT = [
+    {name:"", 취침: 0, 수면: 0, 기상: 0},
   ];
-  const OBJECT_NUT_DEFAULT = [
-    {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+  const OBJECT_MONTH_DEFAULT = [
+    {name:"", 취침: 0, 수면: 0, 기상: 0},
   ];
-  const [OBJECT_KCAL, setOBJECT_KCAL] = useState(OBJECT_KCAL_DEFAULT);
-  const [OBJECT_NUT, setOBJECT_NUT] = useState(OBJECT_NUT_DEFAULT);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEFAULT);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/dash/avg/week`, {
+    const responseWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
         customer_id: customer_id
       },
     });
-    setOBJECT_KCAL(response.data.result.kcal);
-    setOBJECT_NUT(response.data.result.nut);
+    setOBJECT_WEEK(responseWeek.data.result || OBJECT_WEEK_DEFAULT);
+
+    const responseMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
+      params: {
+        customer_id: customer_id
+      },
+    });
+    setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
   })()}, [customer_id]);
 
-  // 4. handler ----------------------------------------------------------------------------------->
-  const handlerCalcY = (value) => {
-    const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item?.칼로리, item?.탄수화물, item?.단백질, item?.지방)));
-    let topValue = Math.ceil(maxValue / 100) * 100;
-
-    // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 10;
-    if (topValue > 50) {
-      tickInterval = 50;
-    }
-    else if (topValue > 100) {
-      tickInterval = 100;
-    }
-    else if (topValue > 500) {
-      tickInterval = 500;
-    }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
-    }
-    else if (topValue > 5000) {
-      tickInterval = 5000;
-    }
-    else if (topValue > 10000) {
-      tickInterval = 10000;
-    }
-    for (let i = 0; i <= topValue; i += tickInterval) {
-      ticks.push(i);
-    }
-    return {
-      domain: [0, topValue],
-      ticks: ticks,
-      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
-    };
-  };
-
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcal = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_KCAL);
+  const chartNodeWeek = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_KCAL} margin={{top: 60, right: 20, bottom: 20, left: -20}}
-          barGap={8} barCategoryGap={"20%"}>
+          <LineChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -102,19 +71,29 @@ export const FoodDashAvgWeek = () => {
             ></XAxis>
             <YAxis
               type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
+              domain={[0, 30]}
+              ticks={[0, 6, 12, 18, 24, 30]}
+              tickFormatter={(tick) => {
+                return tick > 24 ? tick -= 24 : tick;
+              }}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {PART.includes("칼로리") && (
-              <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
+            {PART.includes("취침") && (
+              <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
+            )}
+            {PART.includes("수면") && (
+              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
+            )}
+            {PART.includes("기상") && (
+              <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
             )}
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
+              formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",
@@ -133,20 +112,18 @@ export const FoodDashAvgWeek = () => {
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
             ></Legend>
-          </ComposedChart>
+          </LineChart>
         </ResponsiveContainer>
       </React.Fragment>
     );
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeNut = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT_NUT);
-      return (
+  const chartNodeMonth = () => {
+    return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_NUT} margin={{top: 60, right: 20, bottom: 20, left: -20}}
-          barGap={8} barCategoryGap={"20%"}>
+          <LineChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
               type={"category"}
@@ -157,27 +134,29 @@ export const FoodDashAvgWeek = () => {
             ></XAxis>
             <YAxis
               type={"number"}
-              domain={domain}
-              ticks={ticks}
-              tickFormatter={tickFormatter}
+              domain={[0, 30]}
+              ticks={[0, 6, 12, 18, 24, 30]}
+              tickFormatter={(tick) => {
+                return tick > 24 ? tick -= 24 : tick;
+              }}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {PART.includes("탄수화물") && (
-              <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
+            {PART.includes("취침") && (
+              <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
             )}
-            {PART.includes("단백질") && (
-              <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
+            {PART.includes("수면") && (
+              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
             )}
-            {PART.includes("지방") && (
-              <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
+            {PART.includes("기상") && (
+              <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
             )}
             <Tooltip
-              formatter={(value) => (`${Number(value).toLocaleString()}g`)}
+              formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
               contentStyle={{
                 borderRadius:"10px",
@@ -196,17 +175,17 @@ export const FoodDashAvgWeek = () => {
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
             ></Legend>
-          </ComposedChart>
+          </LineChart>
         </ResponsiveContainer>
       </React.Fragment>
     );
   };
 
-  // 6-1. table ----------------------------------------------------------------------------------->
+  // 5-3. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     return (
       <React.Fragment>
-        {["탄수화물", "단백질", "지방"]?.map((key, index) => (
+        {["취침", "수면", "기상"]?.map((key, index) => (
           <div key={index} className={"dash-checkbox flex-column mb-20"}>
             <FormCheck
               inline
@@ -235,23 +214,26 @@ export const FoodDashAvgWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={8} md={8} sm={6} xs={6}>
-                <span className={"dash-title"}>주간 칼로리/영양소 평균</span>
+              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+                <select className={"form-select form-select-sm"}
+                  onChange={(e) => (setSECTION(e.target.value))}
+                  value={SECTION}
+                >
+                  <option value={"week"}>주간</option>
+                  <option value={"month"}>월간</option>
+                </select>
               </Col>
-              <Col lg={4} md={4} sm={6} xs={6}>
-                <div className={"text-end"}>
-                  <span className={`${LINE === "kcal" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("kcal"))}>
-                    칼로리
-                  </span>
-                  <span className={`${LINE === "nut" ? "text-primary" : "text-outline-primary"} dash-title-sub`} onClick={() => (setLINE("nut"))}>
-                    영양소
-                  </span>
-                </div>
+              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+                <span className={"dash-title"}>수면 추이</span>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3}>
+                <span></span>
               </Col>
             </Row>
             <Row>
               <Col lg={10} md={10} sm={10} xs={10}>
-                {LINE === "kcal" ? chartNodeKcal() : chartNodeNut()}
+                {SECTION === "week" && chartNodeWeek()}
+                {SECTION === "month" && chartNodeMonth()}
               </Col>
               <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
                 {tableNode()}

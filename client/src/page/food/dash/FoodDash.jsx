@@ -1,14 +1,10 @@
 // FoodDash.jsx
 
 import React from "react";
-import {FoodDashBarToday} from "./FoodDashBarToday.jsx";
-import {FoodDashPieToday} from "./FoodDashPieToday.jsx";
-import {FoodDashPieWeek} from "./FoodDashPieWeek.jsx";
-import {FoodDashPieMonth} from "./FoodDashPieMonth.jsx";
-import {FoodDashLineWeek} from "./FoodDashLineWeek.jsx";
-import {FoodDashLineMonth} from "./FoodDashLineMonth.jsx";
-import {FoodDashAvgWeek} from "./FoodDashAvgWeek.jsx";
-import {FoodDashAvgMonth} from "./FoodDashAvgMonth.jsx";
+import {FoodDashBar} from "./FoodDashBar.jsx";
+import {FoodDashPie} from "./FoodDashPie.jsx";
+import {FoodDashLine} from "./FoodDashLine.jsx";
+import {FoodDashAvg} from "./FoodDashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDash = () => {
@@ -16,21 +12,13 @@ export const FoodDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {FoodDashBarToday()}
+      {FoodDashBar()}
       <br />
-      {FoodDashPieToday()}
+      {FoodDashPie()}
       <br />
-      {FoodDashPieWeek()}
+      {FoodDashLine()}
       <br />
-      {FoodDashPieMonth()}
-      <br />
-      {FoodDashLineWeek()}
-      <br />
-      {FoodDashLineMonth()}
-      <br />
-      {FoodDashAvgWeek()}
-      <br />
-      {FoodDashAvgMonth()}
+      {FoodDashAvg()}
       <br />
     </React.Fragment>
   );

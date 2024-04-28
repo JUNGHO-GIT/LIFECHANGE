@@ -1,15 +1,16 @@
-// MoneyDashBarToday.jsx
+// MoneyDashBar.jsx
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import {handlerY} from "../../../assets/js/handlerY.js";
 import {useStorage} from "../../../assets/hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const MoneyDashBarToday = () => {
+export const MoneyDashBar = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -18,71 +19,36 @@ export const MoneyDashBarToday = () => {
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();
+  const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (bar-today) (${PATH})`, ["목표", "실제"]
+  const {val:SECTION, set:setSECTION} = useStorage(
+    `SECTION (bar) (${PATH})`, "today"
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = [
+  const OBJECT_TODAY_DEFAULT = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
+    const responseToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         customer_id: customer_id
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT_TODAY(responseToday.data.result || OBJECT_TODAY_DEFAULT);
   })()}, [customer_id]);
 
-  // 4. handler ----------------------------------------------------------------------------------->
-  const handlerCalcY = (value) => {
-    const ticks = [];
-    const maxValue = Math.max(...value?.map((item) => Math.max(item?.수입, item?.지출)));
-    let topValue = Math.ceil(maxValue / 100) * 100;
-
-    // topValue에 따른 동적 틱 간격 설정
-    let tickInterval = 10;
-    if (topValue > 50) {
-      tickInterval = 50;
-    }
-    else if (topValue > 100) {
-      tickInterval = 100;
-    }
-    else if (topValue > 500) {
-      tickInterval = 500;
-    }
-    else if (topValue > 1000) {
-      tickInterval = 1000;
-    }
-    else if (topValue > 5000) {
-      tickInterval = 5000;
-    }
-    else if (topValue > 10000) {
-      tickInterval = 10000;
-    }
-    for (let i = 0; i <= topValue; i += tickInterval) {
-      ticks.push(i);
-    }
-    return {
-      domain: [0, topValue],
-      ticks: ticks,
-      tickFormatter: (tick) => (`${Number(tick).toLocaleString()}`)
-    };
-  };
-
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNode = () => {
-    const {domain, ticks, tickFormatter} = handlerCalcY(OBJECT);
+  const chartNodeToday = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT} margin={{top: 60, right: 60, bottom: 20, left: 20}}
+          <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
           barGap={20} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -139,9 +105,24 @@ export const MoneyDashBarToday = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
+              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+                <select className={"form-select form-select-sm"}
+                  onChange={(e) => (setSECTION(e.target.value))}
+                  value={SECTION}
+                >
+                  <option value={"today"}>오늘</option>
+                </select>
+              </Col>
+              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+                <span className={"dash-title"}>수입/지출 목표</span>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+                <span></span>
+              </Col>
+            </Row>
+            <Row>
               <Col lg={12} md={12} sm={12} xs={12}>
-                <span className={"dash-title"}>오늘 지출/수입 실제 / 목표</span>
-                {chartNode()}
+                {SECTION === "today" && chartNodeToday()}
               </Col>
             </Row>
           </Container>

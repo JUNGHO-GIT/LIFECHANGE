@@ -1,15 +1,10 @@
 // ExerciseDash.jsx
 
 import React from "react";
-import {ExerciseDashBarToday} from "./ExerciseDashBarToday.jsx";
-import {ExerciseDashScatterWeek} from "./ExerciseDashScatterWeek.jsx";
-import {ExerciseDashScatterMonth} from "./ExerciseDashScatterMonth.jsx";
-import {ExerciseDashPieWeek} from "./ExerciseDashPieWeek.jsx";
-import {ExerciseDashPieMonth} from "./ExerciseDashPieMonth.jsx";
-import {ExerciseDashLineWeek} from "./ExerciseDashLineWeek.jsx";
-import {ExerciseDashLineMonth} from "./ExerciseDashLineMonth.jsx";
-import {ExerciseDashAvgWeek} from "./ExerciseDashAvgWeek.jsx";
-import {ExerciseDashAvgMonth} from "./ExerciseDashAvgMonth.jsx";
+import {ExerciseDashScatter} from "./ExerciseDashScatter.jsx";
+import {ExerciseDashPie} from "./ExerciseDashPie.jsx";
+import {ExerciseDashLine} from "./ExerciseDashLine.jsx";
+import {ExerciseDashAvg} from "./ExerciseDashAvg.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDash = () => {
@@ -17,24 +12,13 @@ export const ExerciseDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {ExerciseDashBarToday()}
+      {ExerciseDashScatter()}
       <br />
-      {ExerciseDashScatterWeek()}
+      {ExerciseDashPie()}
       <br />
-      {ExerciseDashScatterMonth()}
+      {ExerciseDashLine()}
       <br />
-      {ExerciseDashPieWeek()}
-      <br />
-      {ExerciseDashPieMonth()}
-      <br />
-      {ExerciseDashLineWeek()}
-      <br />
-      {ExerciseDashLineMonth()}
-      <br />
-      {ExerciseDashAvgWeek()}
-      <br />
-      {ExerciseDashAvgMonth()}
-      <br />
+      {ExerciseDashAvg()}
     </React.Fragment>
   );
 };

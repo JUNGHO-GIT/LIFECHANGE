@@ -31,12 +31,10 @@ import "../assets/css/layout/SideBar.css";
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
 import {NavBar} from "../layout/NavBar.jsx";
-import {Empty} from "../layout/Empty.jsx";
 
 import {CustomerSignup} from "../page/customer/CustomerSignup.jsx";
 import {CustomerLogin} from "../page/customer/CustomerLogin.jsx";
 import {CustomerDataset} from "../page/customer/CustomerDataset.jsx";
-import {CustomerDash} from "../page/customer/dash/CustomerDash.jsx";
 
 import {DiaryList} from "../page/diary/DiaryList.jsx";
 import {DiaryDetail} from "../page/diary/DiaryDetail.jsx";
@@ -79,7 +77,6 @@ const Customer = () => {
   return (
     <React.Fragment>
       <Routes>
-        <Route path="/dash" element={<CustomerDash />} />
         <Route path="/signup" element={<CustomerSignup />} />
         <Route path="/login" element={<CustomerLogin />} />
         <Route path="/dataset" element={<CustomerDataset />} />
@@ -186,7 +183,6 @@ export const App = () => {
             <Route path="/money/*" element={<Money />} />
             <Route path="/sleep/*" element={<Sleep />} />
           </Routes>
-          <Empty />
         </DeveloperModeProvider>
       </div>
     </React.Fragment>

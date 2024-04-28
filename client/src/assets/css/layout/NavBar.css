@@ -6,12 +6,12 @@
   /** display **/
   .nav-text {
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
   .nav-icon-text {
     font-size: 1.2rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
 }
@@ -24,12 +24,12 @@
   /** display **/
   .nav-text {
     font-size: 1.0rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
   .nav-icon-text {
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
 }
@@ -42,12 +42,12 @@
   /** display **/
   .nav-text {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
   .nav-icon-text {
     font-size: 1.0rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
 }
@@ -60,12 +60,12 @@
   /** display **/
   .nav-text {
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
   .nav-icon-text {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
 }
@@ -78,12 +78,12 @@
   /** display **/
   .nav-text {
     font-size: 0.7rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
   .nav-icon-text {
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
 }
