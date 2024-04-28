@@ -46,23 +46,10 @@ export const FoodSearch = () => {
       limit: 10,
     }
   );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 5
-    }
-  );
   const {val:COUNT, set:setCOUNT} = useStorage(
     `COUNT(${PATH})`, {
       totalCnt: 0,
       sectionCnt: 0
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
     }
   );
 
@@ -133,35 +120,35 @@ export const FoodSearch = () => {
       <React.Fragment>
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
-          <tr>
-            <th>Title</th>
-            <th>Brand</th>
-            <th>Serving</th>
-            <th>Gram</th>
-            <th>Kcal</th>
-            <th>Fat</th>
-            <th>Carbohydrate</th>
-            <th>Protein</th>
-          </tr>
-        </thead>
-        <tbody>
-          {OBJECT?.food_section?.map((item, index) => (
-            <tr key={index}>
-              <td className={"pointer"} onClick={() => {
-                handleStorage(item);
-              }}>
-                {item.food_title}
-              </td>
-              <td>{item.food_brand}</td>
-              <td>{item.food_count} {item.food_serv}</td>
-              <td>{item.food_gram}</td>
-              <td>{item.food_kcal}</td>
-              <td>{item.food_fat}</td>
-              <td>{item.food_carb}</td>
-              <td>{item.food_protein}</td>
+            <tr>
+              <th>식품명</th>
+              <th>브랜드</th>
+              <th>1회 제공량</th>
+              <th>1회 중량</th>
+              <th>칼로리</th>
+              <th>지방</th>
+              <th>탄수화물</th>
+              <th>단백질</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
+          <tbody>
+            {OBJECT?.food_section?.map((item, index) => (
+              <tr key={index}>
+                <td className={"pointer"} onClick={() => {
+                  handleStorage(item);
+                }}>
+                  {item.food_title}
+                </td>
+                <td>{item.food_brand}</td>
+                <td>{item.food_count} {item.food_serv}</td>
+                <td>{item.food_gram}</td>
+                <td>{item.food_kcal}</td>
+                <td>{item.food_fat}</td>
+                <td>{item.food_carb}</td>
+                <td>{item.food_protein}</td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
       </React.Fragment>
     );
@@ -170,7 +157,7 @@ export const FoodSearch = () => {
   // 5-2. search ---------------------------------------------------------------------------------->
   const searchNode = () => {
     return (
-      <div className={"d-inline-flex"}>
+      <div className={"input-group"}>
         <InputMask
           mask={""}
           id={"food_content"}
@@ -186,15 +173,15 @@ export const FoodSearch = () => {
             }));
           }}
         ></InputMask>
-        <Button variant={"secondary"} className={"ms-2"} size={"sm"} onClick={() => {
+        <span className={"input-group-text pointer"} onClick={() => {
           setFILTER((prev) => ({
             ...prev,
             page: 0
           }));
           flowSearch();
         }}>
-          Search
-        </Button>
+          <i className={"bi bi-search"}></i>
+        </span>
       </div>
     );
   };
@@ -202,7 +189,8 @@ export const FoodSearch = () => {
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => {
     return (
-    <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+      <PagingNode PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
+        part={"food"} plan={""} type={"search"}
       />
     );
   };

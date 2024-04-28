@@ -175,6 +175,7 @@ export const FoodList = () => {
   const pagingNode = () => {
     return (
       <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+        part={"food"} plan={""} type={"list"}
       />
     );
   };

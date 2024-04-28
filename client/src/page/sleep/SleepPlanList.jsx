@@ -183,6 +183,7 @@ export const SleepPlanList = () => {
   const pagingNode = () => {
     return (
       <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+        part={"sleep"} plan={"plan"} type={"list"}
       />
     );
   };

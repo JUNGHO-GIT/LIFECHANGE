@@ -5,14 +5,26 @@ import {Button} from "react-bootstrap";
 
 // 7. paging -------------------------------------------------------------------------------------->
 export const PagingNode = ({
-  PAGING, setPAGING, COUNT, setCOUNT
+  PAGING, setPAGING, COUNT, setCOUNT, part, plan, type
 }) => {
 
-  const pages = [];
-  const totalPages = Math.ceil(COUNT.totalCnt / PAGING.limit);
-  let startPage = Math.max(1, PAGING.page - 2);
-  let endPage = Math.min(startPage + 4, totalPages);
-  startPage = Math.max(endPage - 4, 1);
+  let pages = [];
+  let totalPages = 0;
+  let startPage = 0;
+  let endPage = 0;
+
+  if (type !== "search") {
+    totalPages = Math.ceil(COUNT.totalCnt / PAGING.limit);
+    startPage = Math.max(1, PAGING.page - 2);
+    endPage = Math.min(startPage + 4, totalPages);
+    startPage = Math.max(endPage - 4, 1);
+  }
+  else {
+    totalPages = Math.ceil(COUNT.totalCnt / PAGING.limit);
+    startPage = Math.max(0, PAGING.page - 2);
+    endPage = Math.min(startPage + 4, totalPages);
+    startPage = Math.max(endPage - 4, 0);
+  }
 
   // prev
   function btnPrev() {

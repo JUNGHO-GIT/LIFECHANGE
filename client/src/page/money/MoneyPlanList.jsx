@@ -174,6 +174,7 @@ export const MoneyPlanList = () => {
   const pagingNode = () => {
     return (
       <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+        part={"money"} plan={"plan"} type={"list"}
       />
     );
   };

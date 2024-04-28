@@ -184,6 +184,7 @@ export const ExerciseList = () => {
   const pagingNode = () => {
     return (
       <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+        part={"exercise"} plan={""} type={"list"}
       />
     );
   };

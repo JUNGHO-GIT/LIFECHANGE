@@ -18,12 +18,6 @@ export const ExerciseDashPieMonth = () => {
   const customer_id = sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();
 
-  // pie
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  const textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  document.body.appendChild(svg);
-  svg.appendChild(textElement);
-
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:LINE, set:setLINE} = useStorage(
     `LINE (pie-month) (${PATH})`, "part"
