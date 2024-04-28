@@ -1,20 +1,23 @@
 // 1. dataArray ---------------------------------------------------------------------------------->
 export const dataArray = [
   {
-    label: "Customer",
+    icon: "bi bi-house-fill",
+    title: "Customer",
     items: [
       {to: "/customer/dataset", label: "CustomerDataset"},
     ]
   },
   {
-    label: "Diary",
+    icon: "bi bi-calendar-check-fill",
+    title: "Diary",
     items: [
       {to: "/diary/list", label: "DiaryList"},
       {to: "/diary/detail", label: "DiaryDetail"},
     ]
   },
   {
-    label: "Exercise",
+    icon: "bi bi-person-arms-up",
+    title: "Exercise",
     items: [
       {to: "/exercise/dash", label: "ExerciseDash"},
       {to: "/exercise/list", label: "ExerciseList"},
@@ -24,7 +27,8 @@ export const dataArray = [
     ]
   },
   {
-    label: "Food",
+    icon: "bi bi-egg-fried",
+    title: "Food",
     items: [
       {to: "/food/dash", label: "FoodDash"},
       {to: "/food/search", label: "FoodSearch"},
@@ -35,7 +39,8 @@ export const dataArray = [
     ]
   },
   {
-    label: "Money",
+    icon: "bi bi-currency-exchange",
+    title: "Money",
     items: [
       {to: "/money/dash", label: "MoneyDash"},
       {to: "/money/list", label: "MoneyList"},
@@ -45,7 +50,8 @@ export const dataArray = [
     ]
   },
   {
-    label: "Sleep",
+    icon: "bi bi-moon-stars-fill",
+    title: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
       {to: "/sleep/list", label: "SleepList"},

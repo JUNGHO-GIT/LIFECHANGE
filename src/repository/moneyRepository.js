@@ -4,11 +4,10 @@ import mongoose from "mongoose";
 import {Money} from "../schema/Money.js";
 import {fmtDate} from "../assets/js/date.js";
 
-// 0-1. totalCnt ---------------------------------------------------------------------------------->
+// 0. totalCnt ------------------------------------------------------------------------------------>
 export const totalCnt = async (
   customer_id_param, part_param, title_param, startDt_param, endDt_param
 ) => {
-
   const finalResult = await Money.countDocuments({
     customer_id: customer_id_param,
     money_startDt: {
@@ -75,6 +74,22 @@ export const list = {
       {$limit: Number(limit_param)}
     ]);
     return finalResult;
+  },
+
+  property: async (
+    customer_id_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param
+      }},
+      {$group: {
+        _id: null,
+        money_total_in: {$sum: "$money_total_in"},
+        money_total_out: {$sum: "$money_total_out"}
+      }}
+    ]);
+    return finalResult;
   }
 };
 
@@ -120,6 +135,7 @@ export const save = {
     .lean();
     return finalResult;
   },
+
   create: async (
     customer_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
@@ -136,6 +152,7 @@ export const save = {
     });
     return finalResult;
   },
+
   update: async (
     customer_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
   ) => {

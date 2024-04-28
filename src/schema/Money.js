@@ -37,6 +37,11 @@ const schema = new mongoose.Schema({
     default: 0,
     required: false
   },
+  money_property: {
+    type: Number,
+    default: 0,
+    required: false
+  },
 
   money_section: [{
     money_part_idx : {

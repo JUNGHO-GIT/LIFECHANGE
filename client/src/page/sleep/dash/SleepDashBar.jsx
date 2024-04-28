@@ -14,7 +14,7 @@ export const SleepDashBar = () => {
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
-  const URL_OBJECT_TODAY = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
+  const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();
@@ -32,7 +32,7 @@ export const SleepDashBar = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseToday = await axios.get(`${URL_OBJECT_TODAY}/dash/bar/today`, {
+    const responseToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         customer_id: customer_id
       },

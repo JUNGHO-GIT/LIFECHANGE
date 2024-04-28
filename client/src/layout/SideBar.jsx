@@ -51,24 +51,25 @@ export const SideBar = ({ sidebar, onClose }) => {
   let lowFix;
 
   dataArray.forEach((menu) => {
-    if (isActive.includes(menu.label.toLowerCase())) {
-      preFix = menu.label;
+    if (isActive.includes(menu.title.toLowerCase())) {
+      preFix = menu.title;
       lowFix = preFix.toLowerCase()
     }
   });
 
   // 5. node -------------------------------------------------------------------------------------->
-  const sidBarItem = (label, items) => {
+  const sidBarItem = (icon, title, items) => {
     return (
       <React.Fragment>
         <ul className={"sidebar-ul-text"}>
           <li className={"sidebar-li-text"}>
-            <div className={`${isActive === label ? "highlight" : ""}`} onClick={() => (
-              toggleExpand(label)
+            <div className={`${isActive === title ? "highlight" : ""}`} onClick={() => (
+              toggleExpand(title)
             )}>
-              {label}
+              <i className={`${icon} me-5`}/>
+              <span>{title}</span>
             </div>
-            <Collapse in={isExpended === label}>
+            <Collapse in={isExpended === title}>
               <ul>
                 {items?.map(({ to, label }) => (
                   <li key={to} className={`sidebar-li-ul-text ${isActive === to ? "highlight" : ""}`}>
@@ -103,7 +104,7 @@ export const SideBar = ({ sidebar, onClose }) => {
         </div>
         <div>
           {dataArray?.map((menu) => (
-            sidBarItem(menu.label, menu.items)
+            sidBarItem(menu.icon, menu.title, menu.items)
           ))}
         </div>
         <div className={"btn btn-sm btn-danger pointer"} onClick={() => (

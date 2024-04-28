@@ -80,6 +80,7 @@ export const MoneyList = () => {
     money_endDt: "0000-00-00",
     money_total_in: 0,
     money_total_out: 0,
+    money_property: 0,
     money_section: [{
       money_part_idx: 0,
       money_part_val: "전체",
@@ -115,17 +116,16 @@ export const MoneyList = () => {
       <React.Fragment>
         <Table hover responsive variant={"light"} border={1}>
           <thead className={"table-primary"}>
-          <tr>
-            <th className={"w-10"}>날짜</th>
-            <th>분류</th>
-            <th>항목</th>
-            <th>금액</th>
-          </tr>
-        </thead>
-        <tbody>
-          {OBJECT?.map((item, index) => (
-            <React.Fragment key={item._id}>
-              {item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
+            <tr>
+              <th className={"w-10"}>날짜</th>
+              <th>분류</th>
+              <th>항목</th>
+              <th>금액</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.map((item, index) => (
+              item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
                 <React.Fragment key={sectionIndex}>
                   <tr>
                     {sectionIndex === 0 && (
@@ -147,10 +147,9 @@ export const MoneyList = () => {
                     <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
                   </tr>
                 </React.Fragment>
-              ))}
-            </React.Fragment>
-          ))}
-        </tbody>
+              ))
+            ))}
+          </tbody>
         </Table>
       </React.Fragment>
     );

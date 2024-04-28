@@ -33,8 +33,8 @@ export const NavBar = () => {
   let subFix = isActive.split("/").pop();
 
   dataArray.forEach((menu) => {
-    if (isActive.includes(menu.label.toLowerCase())) {
-      preFix = menu.label;
+    if (isActive.includes(menu.title.toLowerCase())) {
+      preFix = menu.title;
     }
   });
 
