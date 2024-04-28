@@ -163,7 +163,7 @@ export const ExerciseDashPieWeek = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={6} md={6} sm={6} xs={6}>
+              <Col lg={6} md={6} sm={12} xs={12}>
                 <Row>
                   <Col lg={12} md={12} sm={12} xs={12}>
                     <span className={"dash-title"}>주간 상위 5개 부위/운동 비율</span>
@@ -175,7 +175,7 @@ export const ExerciseDashPieWeek = () => {
                   </Col>
                 </Row>
               </Col>
-              <Col lg={6} md={6} sm={6} xs={6}>
+              <Col lg={6} md={6} sm={12} xs={12}>
                 <Row>
                   <Col lg={12} md={12} sm={12} xs={12}>
                     <span className={"dash-title"}>주간 상위 5개 부위/운동 비율</span>

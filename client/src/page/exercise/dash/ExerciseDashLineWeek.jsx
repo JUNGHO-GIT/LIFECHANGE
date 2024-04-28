@@ -185,22 +185,6 @@ export const ExerciseDashLineWeek = () => {
     );
   };
 
-  // 6-1. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
-    return (
-      <React.Fragment>
-        <Button variant={`${LINE === "볼륨" ? "primary" : "outline-primary"}`} className={"me-5"}
-          onClick={() => setLINE("볼륨")}>
-          볼륨
-        </Button>
-        <Button variant={`${LINE === "시간" ? "primary" : "outline-primary"}`} className={"ms-5"}
-          onClick={() => setLINE("시간")}>
-          시간
-        </Button>
-      </React.Fragment>
-    );
-  };
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
