@@ -114,25 +114,25 @@ export const MoneyPlanDetail = () => {
       <React.Fragment>
         <Table hover responsive border={1}>
           <thead>
-          <tr>
-            <th className={"w-20"}>날짜</th>
-            <th>수입 목표</th>
-            <th>지출 목표</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{`${OBJECT?.money_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt?.substring(5, 10)}`}</td>
-            <td>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</td>
-            <td>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</td>
-            <td>
-              <p className={"del-btn"} onClick={() => (
-                flowDelete(OBJECT._id)
-              )}>x</p>
-            </td>
-          </tr>
-        </tbody>
+            <tr>
+              <th className={"table-thead w-20"}>날짜</th>
+              <th className={"table-thead"}>수입 목표</th>
+              <th className={"table-thead"}>지출 목표</th>
+              <th className={"table-thead"}>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{`${OBJECT?.money_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt?.substring(5, 10)}`}</td>
+              <td>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</td>
+              <td>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</td>
+              <td>
+                <p className={"del-btn"} onClick={() => (
+                  flowDelete(OBJECT._id)
+                )}>x</p>
+              </td>
+            </tr>
+          </tbody>
         </Table>
       </React.Fragment>
     );

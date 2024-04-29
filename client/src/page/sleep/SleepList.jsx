@@ -109,42 +109,42 @@ export const SleepList = () => {
       <React.Fragment>
         <Table hover responsive border={1}>
           <thead>
-          <tr>
-            <th className={"w-10"}>날짜</th>
-            <th>취침</th>
-            <th>기상</th>
-            <th>수면</th>
-          </tr>
-        </thead>
-        <tbody>
-          {OBJECT?.map((item, index) => (
-            <React.Fragment key={item._id}>
-              {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={sectionIndex}>
-                  <tr>
-                    {sectionIndex === 0 && (
-                      <td rowSpan={Math.min(item.sleep_section.length, 3)}
-                      className={"pointer"} onClick={() => {
-                        SEND.id = item._id;
-                        SEND.startDt = item.sleep_startDt;
-                        SEND.endDt = item.sleep_endDt;
-                        navParam(SEND.toDetail, {
-                          state: SEND
-                        });
-                      }}>
-                        {item.sleep_startDt?.substring(5, 10)}
-                        {item.sleep_section.length > 3 && (<div>더보기</div>)}
-                      </td>
-                    )}
-                    <td>{section.sleep_night}</td>
-                    <td>{section.sleep_morning}</td>
-                    <td>{section.sleep_time}</td>
-                  </tr>
-                </React.Fragment>
-              ))}
-            </React.Fragment>
-          ))}
-        </tbody>
+            <tr>
+              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead"}>취침</th>
+              <th className={"table-thead"}>기상</th>
+              <th className={"table-thead"}>수면</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.map((item, index) => (
+              <React.Fragment key={item._id}>
+                {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
+                  <React.Fragment key={sectionIndex}>
+                    <tr>
+                      {sectionIndex === 0 && (
+                        <td rowSpan={Math.min(item.sleep_section.length, 3)}
+                        className={"pointer"} onClick={() => {
+                          SEND.id = item._id;
+                          SEND.startDt = item.sleep_startDt;
+                          SEND.endDt = item.sleep_endDt;
+                          navParam(SEND.toDetail, {
+                            state: SEND
+                          });
+                        }}>
+                          {item.sleep_startDt?.substring(5, 10)}
+                          {item.sleep_section.length > 3 && (<div>더보기</div>)}
+                        </td>
+                      )}
+                      <td>{section.sleep_night}</td>
+                      <td>{section.sleep_morning}</td>
+                      <td>{section.sleep_time}</td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+              </React.Fragment>
+            ))}
+          </tbody>
         </Table>
       </React.Fragment>
     );

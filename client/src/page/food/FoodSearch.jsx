@@ -121,14 +121,14 @@ export const FoodSearch = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th>식품명</th>
-              <th>브랜드</th>
-              <th>1회 제공량</th>
-              <th>1회 중량</th>
-              <th>칼로리</th>
-              <th>지방</th>
-              <th>탄수화물</th>
-              <th>단백질</th>
+              <th className={"table-thead"}>식품명</th>
+              <th className={"table-thead"}>브랜드</th>
+              <th className={"table-thead"}>1회 제공량</th>
+              <th className={"table-thead"}>1회 중량</th>
+              <th className={"table-thead"}>칼로리</th>
+              <th className={"table-thead"}>지방</th>
+              <th className={"table-thead"}>탄수화물</th>
+              <th className={"table-thead"}>단백질</th>
             </tr>
           </thead>
           <tbody>

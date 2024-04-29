@@ -117,12 +117,12 @@ export const ExercisePlanDetail = () => {
         <Table striped hover responsive variant={"light"}>
           <thead className={"table-primary"}>
           <tr>
-            <th className={"w-20"}>날짜</th>
-            <th>횟수 목표</th>
-            <th>볼륨 목표</th>
-            <th>유산소 목표</th>
-            <th>체중 목표</th>
-            <th>삭제</th>
+            <th className={"table-thead w-20"}>날짜</th>
+            <th className={"table-thead"}>횟수 목표</th>
+            <th className={"table-thead"}>볼륨 목표</th>
+            <th className={"table-thead"}>유산소 목표</th>
+            <th className={"table-thead"}>체중 목표</th>
+            <th className={"table-thead"}>삭제</th>
           </tr>
         </thead>
         <tbody>

@@ -24,28 +24,28 @@
   color: #ff0000;
 }
 .selected {
-  background-color: #0d6efd !important;
-  color: #fff !important;
+  background-color: #336699;
+  color: #ffffff;
 }
 .selected:not([disabled]) {
-  background-color: #0d6efd !important;
-  color: #fff !important;
+  background-color: #336699;
+  color: #ffffff;
 }
 .selected:hover {
-  background-color: #0d6efd !important;
-  color: #fff !important;
+  background-color: #336699;
+  color: #ffffff;
 }
 .selected:hover:not([disabled]) {
-  background-color: #0d6efd !important;
-  color: #fff !important;
+  background-color: #336699;
+  color: #ffffff;
 }
 .rdp-day:focus {
-  background-color: #0d6efd !important;
-  color: #fff !important;
+  background-color: #336699;
+  color: #ffffff;
 }
 .rdp-day:active {
-  background-color: #0d6efd !important;
-  color: #fff !important;
+  background-color: #336699;
+  color: #ffffff;
 }
 .disabled {
   color: #999;
@@ -81,7 +81,8 @@
   height: var(--rdp-cell-size);
   padding: 0;
   text-transform: uppercase;
-  background-color: #cfe2ff;
+  background-color: #336699;
+  color: #ffffff;
 }
 .today,
 .rdp-caption_label {
@@ -94,7 +95,7 @@
 }
 .dayPicker-container {
   position: absolute;
-  top: 70%;
+  top: 50%;
   left: 50%;
   z-index: 1000;
   background-color: #ffffff;

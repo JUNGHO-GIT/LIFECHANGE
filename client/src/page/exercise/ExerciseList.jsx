@@ -121,7 +121,7 @@ export const ExerciseList = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead w-20"}>날짜</th>
               <th className={"table-thead"}>부위</th>
               <th className={"table-thead"}>종목</th>
               <th className={"table-thead"}>세트</th>

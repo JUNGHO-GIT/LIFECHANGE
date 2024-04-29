@@ -17,15 +17,12 @@ export const ButtonNode = ({
   function buttonCalendar () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={`${CALENDAR.calOpen ? "danger" : "primary"}`}
-        className={"custom-btn me-5"} type={"button"}
-          onClick={() => {
-            setCALENDAR((prev) => ({
-              ...prev,
-              calOpen: !prev.calOpen,
-            }));
-          }}
-        >
+        <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+          setCALENDAR((prev) => ({
+            ...prev,
+            calOpen: !prev.calOpen,
+          }));
+        }}>
           달력
         </Button>
       </React.Fragment>
@@ -34,23 +31,21 @@ export const ButtonNode = ({
   function buttonToday () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"success"} className={"custom-btn me-5"} type={"button"}
-          onClick={() => {
-            setFILTER((prev) => ({
-              ...prev,
-              type: "day",
-            }));
-            setPAGING((prev) => ({
-              ...prev,
-              page: 1,
-            }));
-            setDATE((prev) => ({
-              ...prev,
-              startDt: koreanDate,
-              endDt: koreanDate,
-            }));
-          }}
-        >
+        <Button size={"sm"} className={"success-btn"} type={"button"} onClick={() => {
+          setFILTER((prev) => ({
+            ...prev,
+            type: "day",
+          }));
+          setPAGING((prev) => ({
+            ...prev,
+            page: 1,
+          }));
+          setDATE((prev) => ({
+            ...prev,
+            startDt: koreanDate,
+            endDt: koreanDate,
+          }));
+        }}>
           Today
         </Button>
       </React.Fragment>
@@ -59,9 +54,9 @@ export const ButtonNode = ({
   function buttonSave () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"primary"} className={"custom-btn me-5"} type={"button"}
-          onClick={() => (flowSave())}
-        >
+        <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+          flowSave();
+        }}>
           Save
         </Button>
       </React.Fragment>
@@ -70,15 +65,13 @@ export const ButtonNode = ({
   function buttonUpdate () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"primary"} className={"custom-btn me-5"} type={"button"}
-          onClick={() => {
-            SEND.startDt = DATE.startDt;
-            SEND.endDt = DATE.endDt;
-            navParam(SEND.toUpdate, {
-              state: SEND,
-            });
-          }}
-        >
+        <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+          SEND.startDt = DATE.startDt;
+          SEND.endDt = DATE.endDt;
+          navParam(SEND.toUpdate, {
+            state: SEND,
+          });
+        }}>
           Update
         </Button>
       </React.Fragment>
@@ -87,15 +80,13 @@ export const ButtonNode = ({
   function buttonList () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"secondary"} className={"custom-btn me-5"} type={"button"}
-          onClick={() => {
-            SEND.startDt = DATE.startDt;
-            SEND.endDt = DATE.endDt;
-            navParam(SEND.toList, {
-              state: SEND,
-            });
-          }}
-        >
+        <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
+          SEND.startDt = DATE.startDt;
+          SEND.endDt = DATE.endDt;
+          navParam(SEND.toList, {
+            state: SEND,
+          });
+        }}>
           List
         </Button>
       </React.Fragment>
@@ -104,15 +95,13 @@ export const ButtonNode = ({
   function buttonSearch () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"secondary"} className={"custom-btn me-5"} type={"button"}
-          onClick={() => {
-            SEND.startDt = DATE.startDt;
-            SEND.endDt = DATE.endDt;
-            navParam(SEND.toSearch, {
-              state: SEND,
-            });
-          }}
-        >
+        <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
+          SEND.startDt = DATE.startDt;
+          SEND.endDt = DATE.endDt;
+          navParam(SEND.toSearch, {
+            state: SEND,
+          });
+        }}>
           Search
         </Button>
       </React.Fragment>

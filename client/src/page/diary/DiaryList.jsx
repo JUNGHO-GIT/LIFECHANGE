@@ -122,7 +122,7 @@ export const DiaryList = () => {
           showNavigation={true}
           showNeighboringMonth={true}
           showDoubleView={false}
-          prevLabel={<i className={"bx bxs-left-arrow"}></i>}
+          prevLabel={<div><i className={"bx bxs-left-arrow"}></i></div>}
           nextLabel={<i className={"bx bxs-right-arrow"}></i>}
           prev2Label={null}
           next2Label={null}

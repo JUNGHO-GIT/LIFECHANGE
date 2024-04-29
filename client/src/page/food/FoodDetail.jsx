@@ -134,7 +134,7 @@ export const FoodDetail = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead w-20"}>날짜</th>
               <th className={"table-thead"}>분류</th>
               <th className={"table-thead"}>식품</th>
               <th className={"table-thead"}>kcal</th>

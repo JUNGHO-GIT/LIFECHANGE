@@ -114,11 +114,11 @@ export const SleepPlanDetail = () => {
         <Table hover responsive border={1}>
           <thead>
           <tr>
-            <th className={"w-20"}>날짜</th>
-            <th>취침 목표</th>
-            <th>기상 목표</th>
-            <th>수면 목표</th>
-            <th>삭제</th>
+            <th className={"table-thead w-20"}>날짜</th>
+            <th className={"table-thead"}>취침 목표</th>
+            <th className={"table-thead"}>기상 목표</th>
+            <th className={"table-thead"}>수면 목표</th>
+            <th className={"table-thead"}>삭제</th>
           </tr>
         </thead>
         <tbody>

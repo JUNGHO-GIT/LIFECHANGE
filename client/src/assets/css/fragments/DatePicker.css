@@ -10,16 +10,16 @@
 }
 .react-datepicker__header {
   background-color: #007bff;
-  color: white;
+  color: #ffffff;
 }
 .react-datepicker__navigation {
   top: 10px;
-  color: white;
+  color: #ffffff;
   transition: background-color 0.3s, color 0.3s;
 }
 .react-datepicker__day--selected {
   background-color : #007bff;
-  color: white;
+  color: #ffffff;
   transition: background-color 0.3s, color 0.3s;
 }
 .react-datepicker__day--selected:hover {
@@ -42,7 +42,7 @@
   width: -webkit-fill-available !important;
 }
 .react-datepicker__current-month {
-  color: white;
+  color: #ffffff;
   transition: background-color 0.3s, color 0.3s;
 }
 .react-datepicker__month-container {

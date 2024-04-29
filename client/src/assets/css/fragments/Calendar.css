@@ -13,11 +13,11 @@
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
   background: #ffffff;
-  color: #0080ff;
+  color: #336699;
 }
 .react-calendar__tile--active {
   background: #ffffff;
-  color: #0080ff;
+  color: #336699;
 }
 .react-calendar__navigation button {
   min-width: 44px;
@@ -29,7 +29,7 @@
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
   background-color: #ffffff;
-  color: #0080ff;
+  color: #336699;
 }
 .react-calendar__month-view__days {
   display: flex;
@@ -50,7 +50,8 @@
   padding: 0.5rem;
   border-top: 0.3px solid #dadada;
   border-left: 0.3px solid #dadada;
-  background-color: #cfe2ff;
+  background-color: #336699;
+  color: #ffffff;
 }
 .calendar-cell {
   display: flex;
@@ -75,13 +76,22 @@
 .calendar-tile-text abbr {
   text-decoration: none;
   color: #000000;
-  font-size: 0.5rem;
   font-weight: 500;
 }
-.calendar-category {
-  margin: 0px 0px 0px 3px;
-  color: #ffffff;
-  font-size: 0.6rem !important;
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+  justify-content: center !important;
+  text-align: center !important;
+  border: none !important;
+}
+.react-calendar__navigation__label {
+  justify-content: center !important;
+  text-align: center !important;
+  border: none !important;
+}
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+  justify-content: center !important;
+  text-align: center !important;
+  border: none !important;
 }
 
 /** 0. Media **************************************************************************************/
@@ -118,7 +128,7 @@
   padding: 0px 0px 0px 0px;
   opacity: 0.7;
   border-radius: 5px;
-  background-color: #0080ff;
+  background-color: #336699;
 }
 .calendar-unfilled {
   width: -webkit-fill-available !important;
@@ -132,9 +142,13 @@
   border-radius: 5px;
   background-color: #ffffff;
 }
+.calendar-category {
+  margin: 0px 0px 0px 3px;
+  color: #ffffff;
+}
 abbr[title] {
   text-decoration: none !important;
-  color: #000000;
+  color: #ffffff;
   font-weight: 700;
   cursor: pointer;
 }
@@ -160,6 +174,12 @@ abbr[title] {
   }
   .calendar-unfilled {
     max-width: 1.6rem;
+  }
+  .calendar-category {
+    font-size: 0.6rem !important;
+  }
+  .calendar-tile-text abbr {
+    font-size: 0.6rem;
   }
   abbr[title] {
     font-size: 0.5rem;
@@ -187,60 +207,14 @@ abbr[title] {
   .calendar-unfilled {
     max-width: 2.6rem;
   }
-  abbr[title] {
+  .calendar-category {
+    font-size: 0.7rem !important;
+  }
+  .calendar-tile-text abbr {
     font-size: 0.7rem;
   }
-}
-
-/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
-
-  /** non display **/
-
-  /** display **/
-  .react-calendar button {
-    max-height: 8.0rem;
-  }
-  .react-calendar__tile {
-    font-size: 1.0rem;
-  }
-  .react-calendar__navigation__label__labelText--from {
-    font-size: 1.7rem;
-  }
-  .calendar-filled {
-    max-width: 5.0rem;
-  }
-  .calendar-unfilled {
-    max-width: 5.0rem;
-  }
   abbr[title] {
-    font-size: 1.0rem;
-  }
-}
-
-/** 4. Tablet (992px ~ 1199px) ********************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-  /** non display **/
-
-  /** display **/
-  .react-calendar button {
-    max-height: 7.5rem;
-  }
-  .react-calendar__tile {
-    font-size: 0.9rem;
-  }
-  .react-calendar__navigation__label__labelText--from {
-    font-size: 1.6rem;
-  }
-  .calendar-filled {
-    max-width: 4.2rem;
-  }
-  .calendar-unfilled {
-    max-width: 4.2rem;
-  }
-  abbr[title] {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -265,10 +239,77 @@ abbr[title] {
   .calendar-unfilled {
     max-width: 3.4rem;
   }
+  .calendar-category {
+    font-size: 0.8rem !important;
+  }
+  .calendar-tile-text abbr {
+    font-size: 0.8rem;
+  }
   abbr[title] {
     font-size: 0.8rem;
   }
 }
 
+/** 4. Tablet (992px ~ 1199px) ********************************************************************/
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
 
+  /** non display **/
 
+  /** display **/
+  .react-calendar button {
+    max-height: 7.5rem;
+  }
+  .react-calendar__tile {
+    font-size: 0.9rem;
+  }
+  .react-calendar__navigation__label__labelText--from {
+    font-size: 1.6rem;
+  }
+  .calendar-filled {
+    max-width: 4.2rem;
+  }
+  .calendar-unfilled {
+    max-width: 4.2rem;
+  }
+  .calendar-category {
+    font-size: 0.9rem !important;
+  }
+  .calendar-tile-text abbr {
+    font-size: 0.9rem;
+  }
+  abbr[title] {
+    font-size: 0.9rem;
+  }
+}
+
+/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
+@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+
+  /** non display **/
+
+  /** display **/
+  .react-calendar button {
+    max-height: 8.0rem;
+  }
+  .react-calendar__tile {
+    font-size: 1.0rem;
+  }
+  .react-calendar__navigation__label__labelText--from {
+    font-size: 1.7rem;
+  }
+  .calendar-filled {
+    max-width: 5.0rem;
+  }
+  .calendar-unfilled {
+    max-width: 5.0rem;
+  }
+  .calendar-category {
+    font-size: 1.0rem !important;
+  }
+  .calendar-tile-text abbr {
+    font-size: 1.0rem;
+  }
+  abbr[title] {
+    font-size: 1.0rem;
+  }
+}

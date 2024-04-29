@@ -83,7 +83,7 @@ p {
 }
 .table-thead {
   background-color: #336699 !important;
-  color: white !important;
+  color: #ffffff !important;
 }
 
 /** 0. Media **************************************************************************************/
@@ -129,33 +129,95 @@ p {
   border-radius: var(--bs-border-radius);
   color: #042337;
 }
-.custom-input {
-  cursor: pointer;
-  font-weight: 500;
-  border-radius: 5px;
-  border-color: darkgrey;
-  padding: 5px 5px 5px 5px;
-  color: #042337;
-}
-.del-btn {
-  cursor: pointer;
-  font-weight: 700;
-  color: red;
-}
-.page-btn {
-  cursor: pointer;
-  font-weight: 700;
-  margin: 0rem 0.15rem 0rem 0.15rem;
-}
 tbody, td, tfoot, th, thead, tr {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
   max-width: 180px !important;
-  color: #042337 !important;
 }
 .btn-group-sm>.btn, .btn-sm {
   --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
+}
+.page-btn {
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0rem 0.15rem 0rem 0.15rem;
+  background-color: #336699;
+  color: #ffffff;
+  border: 1px solid #336699;
+}
+.page-btn:hover {
+  background-color: #042337 !important;
+}
+.page-btn:active {
+  background-color: #042337 !important;
+}
+.page-btn:disabled {
+  background-color: #042337 !important;
+  border: none !important;
+}
+.del-btn {
+  cursor: pointer;
+  font-weight: 600;
+  color: #dc3545;
+}
+.del-btn:hover {
+  color: #8b202b !important;
+}
+.primary-btn {
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0rem 0.15rem 0rem 0.15rem;
+  background-color: #336699;
+  color: #ffffff;
+  border: 1px solid #336699;
+}
+.primary-btn:hover {
+  background-color: #23486f !important;
+}
+.success-btn {
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0rem 0.15rem 0rem 0.15rem;
+  background-color: #28a745;
+  color: #ffffff;
+  border: 1px solid #28a745;
+}
+.success-btn:hover {
+  background-color: #218838 !important;
+}
+.warning-btn {
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0rem 0.15rem 0rem 0.15rem;
+  background-color: #ffc107;
+  color: #ffffff;
+  border: 1px solid #ffc107;
+}
+.warning-btn:hover {
+  background-color: #d39e00 !important;
+}
+.danger-btn {
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0rem 0.15rem 0rem 0.15rem;
+  background-color: #dc3545;
+  color: #ffffff;
+  border: 1px solid #dc3545;
+}
+.danger-btn:hover {
+  background-color: #bd2130 !important;
+}
+.secondary-btn {
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0rem 0.15rem 0rem 0.15rem;
+  background-color: #6c757d;
+  color: #ffffff;
+  border: 1px solid #6c757d;
+}
+.secondary-btn:hover {
+  background-color: #5a6268 !important;
 }
 
 /** 1. Small (0 ~ 479px) **************************************************************************/
@@ -184,18 +246,6 @@ tbody, td, tfoot, th, thead, tr {
     font-size: 0.75rem;
     line-height: 0.75rem;
   }
-  .custom-input {
-    font-size: 0.75rem;
-  }
-  .del-btn {
-    font-size: 0.7rem;
-  }
-  .page-btn {
-    font-size: 0.5rem;
-    line-height: 0.5rem;
-    width: 1.2rem;
-    height: 1.2rem;
-  }
   tbody, td, tfoot, th, thead, tr {
     font-size: 0.5rem;
   }
@@ -203,6 +253,35 @@ tbody, td, tfoot, th, thead, tr {
     --bs-btn-padding-y: 0.21rem !important;
     --bs-btn-padding-x: 0.2rem !important;
     --bs-btn-font-size: 0.7rem !important;
+  }
+  .page-btn {
+    font-size: 0.5rem;
+    line-height: 0.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  .del-btn {
+    font-size: 0.7rem;
+  }
+  .primary-btn {
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+  }
+  .success-btn {
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+  }
+  .warning-btn {
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+  }
+  .danger-btn {
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+  }
+  .secondary-btn {
+    font-size: 0.7rem;
+    line-height: 0.7rem;
   }
 }
 
@@ -232,18 +311,6 @@ tbody, td, tfoot, th, thead, tr {
     font-size: 0.8rem;
     line-height: 0.8rem;
   }
-  .custom-input {
-    font-size: 0.8rem;
-  }
-  .del-btn {
-    font-size: 0.9rem;
-  }
-  .page-btn {
-    font-size: 0.6rem;
-    line-height: 0.6rem;
-    width: 1.3rem;
-    height: 1.3rem;
-  }
   tbody, td, tfoot, th, thead, tr {
     font-size: 0.6rem;
   }
@@ -251,6 +318,35 @@ tbody, td, tfoot, th, thead, tr {
     --bs-btn-padding-y: 0.22rem !important;
     --bs-btn-padding-x: 0.3rem !important;
     --bs-btn-font-size: 0.8rem !important;
+  }
+  .page-btn {
+    font-size: 0.6rem;
+    line-height: 0.6rem;
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  .del-btn {
+    font-size: 0.9rem;
+  }
+  .primary-btn {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+  .success-btn {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+  .warning-btn {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+  .danger-btn {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+  .secondary-btn {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
   }
 }
 
@@ -280,18 +376,6 @@ tbody, td, tfoot, th, thead, tr {
     font-size: 0.85rem;
     line-height: 0.85rem;
   }
-  .custom-input {
-    font-size: 0.85rem;
-  }
-  .del-btn {
-    font-size: 1.0rem;
-  }
-  .page-btn {
-    font-size: 0.7rem;
-    line-height: 0.7rem;
-    width: 1.4rem;
-    height: 1.4rem;
-  }
   tbody, td, tfoot, th, thead, tr {
     font-size: 0.7rem;
   }
@@ -299,6 +383,35 @@ tbody, td, tfoot, th, thead, tr {
     --bs-btn-padding-y: 0.23rem !important;
     --bs-btn-padding-x: 0.3rem !important;
     --bs-btn-font-size: 0.8rem !important;
+  }
+  .page-btn {
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  .del-btn {
+    font-size: 1.0rem;
+  }
+  .primary-btn {
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+  }
+  .success-btn {
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+  }
+  .warning-btn {
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+  }
+  .danger-btn {
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+  }
+  .secondary-btn {
+    font-size: 0.9rem;
+    line-height: 0.9rem;
   }
 }
 
@@ -328,18 +441,6 @@ tbody, td, tfoot, th, thead, tr {
     font-size: 0.875rem;
     line-height: 0.875rem;
   }
-  .custom-input {
-    font-size: 0.875rem;
-  }
-  .del-btn {
-    font-size: 1.1rem;
-  }
-  .page-btn {
-    font-size: 0.8rem;
-    line-height: 0.8rem;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
   tbody, td, tfoot, th, thead, tr {
     font-size: 0.8rem;
   }
@@ -347,6 +448,35 @@ tbody, td, tfoot, th, thead, tr {
     --bs-btn-padding-y: 0.24rem !important;
     --bs-btn-padding-x: 0.4rem !important;
     --bs-btn-font-size: 0.85rem !important;
+  }
+  .page-btn {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .del-btn {
+    font-size: 1.1rem;
+  }
+  .primary-btn {
+    font-size: 1.0rem;
+    line-height: 1.0rem;
+  }
+  .success-btn {
+    font-size: 1.0rem;
+    line-height: 1.0rem;
+  }
+  .warning-btn {
+    font-size: 1.0rem;
+    line-height: 1.0rem;
+  }
+  .danger-btn {
+    font-size: 1.0rem;
+    line-height: 1.0rem;
+  }
+  .secondary-btn {
+    font-size: 1.0rem;
+    line-height: 1.0rem;
   }
 }
 
@@ -376,18 +506,6 @@ tbody, td, tfoot, th, thead, tr {
     font-size: 1rem;
     line-height: 1rem;
   }
-  .custom-input {
-    font-size: 1rem;
-  }
-  .del-btn {
-    font-size: 1.2rem;
-  }
-  .page-btn {
-    font-size: 1.0rem;
-    line-height: 1.0rem;
-    width: 1.6rem;
-    height: 1.6rem;
-  }
   tbody, td, tfoot, th, thead, tr {
     font-size: 1.0rem;
   }
@@ -395,5 +513,34 @@ tbody, td, tfoot, th, thead, tr {
     --bs-btn-padding-y: 0.25rem !important;
     --bs-btn-padding-x: 0.5rem !important;
     --bs-btn-font-size: 0.875rem !important;
+  }
+  .page-btn {
+    font-size: 1.0rem;
+    line-height: 1.0rem;
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .del-btn {
+    font-size: 1.2rem;
+  }
+  .primary-btn {
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+  }
+  .success-btn {
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+  }
+  .warning-btn {
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+  }
+  .danger-btn {
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+  }
+  .secondary-btn {
+    font-size: 1.1rem;
+    line-height: 1.1rem;
   }
 }
