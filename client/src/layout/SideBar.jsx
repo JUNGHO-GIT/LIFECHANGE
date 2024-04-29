@@ -6,6 +6,12 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
 import {Collapse} from "react-bootstrap";
+// @ts-ignore
+import logo1 from "../assets/images/logo1.png";
+// @ts-ignore
+import logo2 from "../assets/images/logo2.png";
+// @ts-ignore
+import logo3 from "../assets/images/logo3-1.png";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({ sidebar, onClose }) => {
@@ -98,10 +104,14 @@ export const SideBar = ({ sidebar, onClose }) => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white rounded box-right`}>
+      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white`}>
         <div className={"sidebar-head-group"}>
-          <span className={"sidebar-head-title"}>Changer</span>
-          <span className={"sidebar-head-close"} onClick={onClose}>X</span>
+          <span>
+            <img src={logo3} className={"sidebar-image-logo"} alt="Logo 1" />
+          </span>
+          <span className={"sidebar-head-close"} onClick={onClose}>
+            X
+          </span>
         </div>
         <div>
           {dataArray?.map((menu) => (

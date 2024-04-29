@@ -1,3 +1,8 @@
+/** All Device ************************************************************************************/
+.head-text {
+  display: flex;
+}
+
 /** Desktop Device = 1200px ***********************************************************************/
 @media only screen and (min-width: 1200px) and (max-width: 10000px) {
 
@@ -56,13 +61,4 @@
     font-size: 1.1rem;
     font-weight: 600;
   }
-}
-
-/** All Device ************************************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 10000px) {
-
-  /** non display **/
-
-  /** display **/
-
 }

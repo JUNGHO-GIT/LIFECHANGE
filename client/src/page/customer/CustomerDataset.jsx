@@ -452,7 +452,7 @@ export const CustomerDataset = () => {
   return (
     <React.Fragment>
       <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"} border={"light"}>
+        <Card className={"container-wrapper"}>
           <Container>
             <Row>
               <Col xs={4} className={"mb-20 p-0 text-center"}>

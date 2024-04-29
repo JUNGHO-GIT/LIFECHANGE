@@ -3,15 +3,15 @@
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {dataArray} from "../assets/data/DataArray.jsx";
-import {Container, Row, Col, Card, Button} from "react-bootstrap";
+import {Container, Row, Col, Card} from "react-bootstrap";
 // @ts-ignore
-import img1 from "../assets/images/1.png";
+import smile1 from "../assets/images/smile1.png";
 // @ts-ignore
-import img2 from "../assets/images/2.png";
+import smile2 from "../assets/images/smile2.png";
 // @ts-ignore
-import img3 from "../assets/images/3.png";
+import smile3 from "../assets/images/smile3.png";
 // @ts-ignore
-import img4 from "../assets/images/4.png";
+import smile4 from "../assets/images/smile4.png";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {
@@ -29,7 +29,7 @@ export const NavBar = () => {
     setIsActive(location.pathname);
   }, [location.pathname]);
 
-  let preFix;
+  let preFix = "";
   let subFix = isActive.split("/").pop();
 
   dataArray.forEach((menu) => {
@@ -41,16 +41,16 @@ export const NavBar = () => {
   // 3. function ---------------------------------------------------------------------------------->
   const makeIcon = (label) => {
     if (percent?.[`${label}`] < 2) {
-      return <img src={img1} className={"image"} alt="Icon 1" />;
+      return <img src={smile1} className={"nav-image-smile"} alt="Icon 1" />;
     }
     else if (percent?.[`${label}`] < 3) {
-      return <img src={img2} className={"image"} alt="Icon 2" />;
+      return <img src={smile2} className={"nav-image-smile"} alt="Icon 2" />;
     }
     else if (percent?.[`${label}`] < 4) {
-      return <img src={img3} className={"image"} alt="Icon 3" />;
+      return <img src={smile3} className={"nav-image-smile"} alt="Icon 3" />;
     }
     else {
-      return <img src={img4} className={"image"} alt="Icon 4" />;
+      return <img src={smile4} className={"nav-image-smile"} alt="Icon 4" />;
     }
   };
 
@@ -58,7 +58,7 @@ export const NavBar = () => {
   return (
     <React.Fragment>
       <div className={"root-wrapper mb-10"}>
-        <Card className={"container-wrapper"} border={"light"}>
+        <Card className={"container-wrapper"}>
           <Container fluid className={"p-0"}>
             <Row>
               <Col lg={6} md={6} sm={4} xs={4} className={"d-left"}>

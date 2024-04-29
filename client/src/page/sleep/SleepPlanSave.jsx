@@ -199,7 +199,7 @@ export const SleepPlanSave = () => {
   return (
     <React.Fragment>
       <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"} border={"light"}>
+        <Card className={"container-wrapper"}>
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-20"}>

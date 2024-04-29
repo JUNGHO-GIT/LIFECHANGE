@@ -1,3 +1,42 @@
+/** All Device ************************************************************************************/
+svg.recharts-surface {
+  width: 10px;
+  height: 10px;
+}
+.recharts-cartesian-axis-tick-value {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+}
+.recharts-tooltip-label {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+}
+.recharts-tooltip-item-list {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+}
+.dash-title {
+  text-align: start !important;
+  font-weight: 600 !important;
+  padding: 0px 5px 0px 5px !important;
+  margin: 0px 0px 0px 5px !important;
+}
+.dash-title-sub {
+  text-align: center !important;
+  font-weight: 600 !important;
+  padding: 0px 5px 0px 5px !important;
+  margin: 0px 0px 0px 5px !important;
+  cursor: pointer !important;
+}
+.dash-checkbox {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+}
+.dash-pie-text {
+  font-weight: 500 !important;
+  padding: 0px 0px 0px 0px !important;
+}
+
 /** Desktop Device = 1200px ***********************************************************************/
 @media only screen and (min-width: 1200px) and (max-width: 10000px) {
 
@@ -6,43 +45,24 @@
   /** display **/
   .recharts-cartesian-axis-tick-value {
     font-size: 1.000rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-label {
     font-size: 1.300rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-item-list {
     font-size: 1.000rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-title {
-    text-align: start !important;
     font-size: 1.2rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
   }
   .dash-title-sub {
-    text-align: center !important;
     font-size: 1.0rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
-    cursor: pointer !important;
   }
   .dash-checkbox {
     font-size: 1.000rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-pie-text {
     font-size: 1.000rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
 }
 
@@ -54,43 +74,24 @@
   /** display **/
   .recharts-cartesian-axis-tick-value {
     font-size: 0.900rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-label {
     font-size: 1.200rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-item-list {
     font-size: 0.900rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-title {
-    text-align: start !important;
     font-size: 1.1rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
   }
   .dash-title-sub {
-    text-align: center !important;
     font-size: 1.0rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
-    cursor: pointer !important;
   }
   .dash-checkbox {
     font-size: 0.900rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-pie-text {
     font-size: 0.900rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
 }
 
@@ -102,43 +103,24 @@
   /** display **/
   .recharts-cartesian-axis-tick-value {
     font-size: 0.800rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-label {
     font-size: 1.100rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-item-list {
     font-size: 0.800rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-title {
-    text-align: start !important;
     font-size: 1.0rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
   }
   .dash-title-sub {
-    text-align: center !important;
     font-size: 0.9rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
-    cursor: pointer !important;
   }
   .dash-checkbox {
     font-size: 0.800rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-pie-text {
     font-size: 0.800rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
 }
 
@@ -150,43 +132,24 @@
   /** display **/
   .recharts-cartesian-axis-tick-value {
     font-size: 0.700rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-label {
     font-size: 1.000rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-item-list {
     font-size: 0.700rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-title {
-    text-align: start !important;
     font-size: 0.9rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
   }
   .dash-title-sub {
-    text-align: center !important;
     font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
-    cursor: pointer !important;
   }
   .dash-checkbox {
     font-size: 0.700rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-pie-text {
     font-size: 0.700rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
 }
 
@@ -198,55 +161,23 @@
   /** display **/
   .recharts-cartesian-axis-tick-value {
     font-size: 0.600rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-label {
     font-size: 0.900rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .recharts-tooltip-item-list {
     font-size: 0.600rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-title {
-    text-align: start !important;
     font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
   }
   .dash-title-sub {
-    text-align: center !important;
     font-size: 0.7rem !important;
-    font-weight: 600 !important;
-    padding: 0px 5px 0px 5px !important;
-    margin: 0px 0px 0px 5px !important;
-    cursor: pointer !important;
   }
   .dash-checkbox {
     font-size: 0.600rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
   .dash-pie-text {
     font-size: 0.600rem !important;
-    font-weight: 500 !important;
-    padding: 0px 0px 0px 0px !important;
   }
-}
-
-/** All Device ************************************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 10000px) {
-
-  /** non display **/
-
-  /** display **/
-  svg.recharts-surface {
-    width: 10px;
-    height: 10px;
-  }
-
 }

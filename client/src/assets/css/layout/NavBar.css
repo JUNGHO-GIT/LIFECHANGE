@@ -1,3 +1,15 @@
+/** All Device ************************************************************************************/
+.nav-text {
+  display: flex;
+}
+.nav-icon-text {
+  display: flex;
+}
+.nav-image-smile {
+  display: inline-block;
+  object-fit: cover;
+}
+
 /** Desktop Device = 1200px ***********************************************************************/
 @media only screen and (min-width: 1200px) and (max-width: 10000px) {
 
@@ -13,6 +25,10 @@
     font-size: 1.2rem;
     font-weight: 600;
     padding: 0px 5px 0px 5px;
+  }
+  .nav-nav-image-smile {
+    width: 25px;
+    height: 25px;
   }
 }
 
@@ -32,6 +48,10 @@
     font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
+  .nav-image-smile {
+    width: 23px;
+    height: 23px;
+  }
 }
 
 /** Mobile Device = 768px ~ 991px *****************************************************************/
@@ -49,6 +69,10 @@
     font-size: 1.0rem;
     font-weight: 600;
     padding: 0px 5px 0px 5px;
+  }
+  .nav-image-smile {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -68,6 +92,10 @@
     font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
+  .nav-image-smile {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 /** Small devices = ~ 479px ***********************************************************************/
@@ -86,13 +114,8 @@
     font-weight: 600;
     padding: 0px 5px 0px 5px;
   }
-}
-
-/** All Device ************************************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 10000px) {
-
-  /** non display **/
-
-  /** display **/
-
+  .nav-image-smile {
+    width: 15px;
+    height: 15px;
+  }
 }

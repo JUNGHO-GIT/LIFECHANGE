@@ -76,10 +76,10 @@ export const Header = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"container-wrapper mb-10"} border={"light"}>
+      <Card className={"container-wrapper mb-10"}>
         <Container fluid className={"p-0"}>
           <Row>
-            <Col xs={3} className={"d-center"}>
+            <Col lg={3} md={3} sm={3} xs={3} className={"d-left"}>
               <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
               <Button type={"button"} size={"sm"} variant={"secondary"} onClick={toggleSidebar}>
                 Sidebar
@@ -88,7 +88,7 @@ export const Header = () => {
             <Col lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
             </Col>
-            <Col xs={3} className={"d-center"}>
+            <Col lg={3} md={3} sm={3} xs={3} className={"d-right"}>
               {buttonNode()}
             </Col>
           </Row>

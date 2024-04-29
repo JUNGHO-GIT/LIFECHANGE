@@ -282,7 +282,7 @@ export const MoneyDashAvg = () => {
   return (
     <React.Fragment>
       <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"} border={"light"}>
+        <Card className={"container-wrapper"}>
           <Container>
             <Row>
               <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
