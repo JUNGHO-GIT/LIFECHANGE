@@ -9,7 +9,7 @@ import {CalendarNode} from "../../fragments/CalendarNode.jsx";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {FilterNode} from "../../fragments/FilterNode.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {Container, Table, Row, Col, Card} from "react-bootstrap";
+
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseList = () => {

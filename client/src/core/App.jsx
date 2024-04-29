@@ -3,7 +3,7 @@
 import React from "react";
 import {Routes, Route} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/hooks/useDeveloperMode.jsx";
-import CssBaseline from "@mui/material/CssBaseline";
+import {CssBaseline} from '@mui/material';
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -37,7 +37,6 @@ import {NavBar} from "../layout/NavBar.jsx";
 import {CustomerSignup} from "../page/customer/CustomerSignup.jsx";
 import {CustomerLogin} from "../page/customer/CustomerLogin.jsx";
 import {CustomerDataset} from "../page/customer/CustomerDataset.jsx";
-import {CustomerTest} from "../page/customer/CustomerTest.jsx";
 
 import {DiaryList} from "../page/diary/DiaryList.jsx";
 import {DiaryDetail} from "../page/diary/DiaryDetail.jsx";
@@ -75,6 +74,8 @@ import {SleepList} from "../page/sleep/SleepList.jsx";
 import {SleepDetail} from "../page/sleep/SleepDetail.jsx";
 import {SleepSave} from "../page/sleep/SleepSave.jsx";
 
+import {Test} from "../page/Test.jsx";
+
 // ------------------------------------------------------------------------------------------------>
 const Customer = () => {
   return (
@@ -83,7 +84,6 @@ const Customer = () => {
         <Route path="/signup" element={<CustomerSignup />} />
         <Route path="/login" element={<CustomerLogin />} />
         <Route path="/dataset" element={<CustomerDataset />} />
-        <Route path="/test" element={<CustomerTest />} />
       </Routes>
     </React.Fragment>
   );
@@ -176,7 +176,7 @@ export const App = () => {
     <React.Fragment>
       <div className={"App"}>
         <DeveloperModeProvider>
-          <CssBaseline />
+          {/*<CssBaseline /> */}
           <Loader />
           <Header />
           <NavBar />
@@ -187,6 +187,7 @@ export const App = () => {
             <Route path="/food/*" element={<Food />} />
             <Route path="/money/*" element={<Money />} />
             <Route path="/sleep/*" element={<Sleep />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
         </DeveloperModeProvider>
       </div>

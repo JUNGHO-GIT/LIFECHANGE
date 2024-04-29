@@ -26,6 +26,8 @@ import {router as foodRouter} from "./src/router/foodRouter.js";
 import {router as moneyRouter} from "./src/router/moneyRouter.js";
 import {router as sleepRouter} from "./src/router/sleepRouter.js";
 
+import {router as testRouter} from "./src/router/testRouter.js";
+
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
   const message = util.format(
@@ -40,7 +42,7 @@ const customLogger = (collectionName, method, query, doc) => {
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://127.0.0.1:27017");
-/* mongoose.set("debug", customLogger); */
+mongoose.set("debug", customLogger);
 mongoose.set("autoIndex", true);
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -75,6 +77,8 @@ app.use("/exercise", exerciseRouter);
 app.use("/food", foodRouter);
 app.use("/money", moneyRouter);
 app.use("/sleep", sleepRouter);
+
+app.use("/test", testRouter);
 
 // ------------------------------------------------------------------------------------------------>
 app.listen(app.get("port"), () => {

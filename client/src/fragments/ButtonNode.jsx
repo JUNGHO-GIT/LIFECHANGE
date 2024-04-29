@@ -6,13 +6,28 @@ import {Button} from "react-bootstrap";
 
 // 9. button -------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  DATE, setDATE, SEND, FILTER, setFILTER, flowSave, navParam, part, plan, type
+  CALENDAR, setCALENDAR, DATE, setDATE, SEND, FILTER, setFILTER, PAGING, setPAGING,
+  flowSave, navParam, part, plan, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 9. button ------------------------------------------------------------------------------------>
+  function buttonCalendar () {
+    return (
+      <React.Fragment>
+        <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+          setCALENDAR((prev) => ({
+            ...prev,
+            calOpen: !prev.calOpen,
+          }));
+        }}>
+          달력
+        </Button>
+      </React.Fragment>
+    );
+  };
   function buttonToday () {
     return (
       <React.Fragment>
@@ -20,6 +35,10 @@ export const ButtonNode = ({
           setFILTER((prev) => ({
             ...prev,
             type: "day",
+          }));
+          setPAGING((prev) => ({
+            ...prev,
+            page: 1,
           }));
           setDATE((prev) => ({
             ...prev,
@@ -92,6 +111,7 @@ export const ButtonNode = ({
     <React.Fragment>
       {part === "food" && type === "list" ? (
         <div className={"d-inline-flex"}>
+          {buttonCalendar()}
           {buttonToday()}
         </div>
       ) : part === "food" && type === "detail" ? (
@@ -106,10 +126,12 @@ export const ButtonNode = ({
         </div>
       ) : part === "food" && type === "list" ? (
         <div className={"d-inline-flex"}>
+          {buttonCalendar()}
           {buttonToday()}
         </div>
       ) : part !== "food" && type === "list" ? (
         <div className={"d-inline-flex"}>
+          {buttonCalendar()}
           {buttonToday()}
         </div>
       ) : part !== "food" && type === "detail" ? (
@@ -124,6 +146,7 @@ export const ButtonNode = ({
         </div>
       ) : part !== "food" && type === "list" ? (
         <div className={"d-inline-flex"}>
+          {buttonCalendar()}
           {buttonToday()}
         </div>
       ) : null}

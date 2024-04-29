@@ -6,7 +6,6 @@ export const dataArray = [
     title: "Customer",
     items: [
       {to: "/customer/dataset", label: "CustomerDataset"},
-      {to: "/customer/test", label: "CustomerTest"},
     ]
   },
   // diary
@@ -65,6 +64,14 @@ export const dataArray = [
       {to: "/sleep/save", label: "SleepSave"},
       {to: "/sleep/plan/list", label: "SleepPlanList"},
       {to: "/sleep/plan/save", label: "SleepPlanSave"},
+    ]
+  },
+  // test
+  {
+    icon: "bx bx-check-shield",
+    title: "Test",
+    items: [
+      {to: "/test", label: "Test"},
     ]
   },
 ];

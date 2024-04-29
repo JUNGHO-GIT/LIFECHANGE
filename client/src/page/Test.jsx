@@ -1,23 +1,30 @@
-// CustomerTest.jsx
+// Test.jsx
 
 import axios from "axios";
 import numeral from 'numeral';
+import moment from "moment-timezone";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
-import {CalendarNode} from "../../fragments/CalendarNode.jsx";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
+import {useStorage} from "../assets/hooks/useStorage.jsx";
+import {CalendarNode} from "../fragments/CalendarNode.jsx";
+import {ButtonNode} from "../fragments/ButtonNode.jsx";
+import Grid from '@mui/material/Unstable_Grid2';
+import Container from '@mui/material/Container';
+import Card from '@mui/material/Card';
+import IconButton from '@mui/material/IconButton';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { DataGrid, GridToolbarContainer, GridPagination } from '@mui/x-data-grid';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 // ------------------------------------------------------------------------------------------------>
-export const CustomerTest = () => {
+export const Test = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_EXERCISE || "";
+  const SUBFIX = process.env.REACT_APP_TEST || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
@@ -25,6 +32,7 @@ export const CustomerTest = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname;
+  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -139,17 +147,23 @@ export const CustomerTest = () => {
       }))
     )).flat();
 
-    function selectNode () {
+    function selectBtn () {
       return (
-        <Select value={FILTER.type} defaultValue={"day"}
-        displayEmpty
-        renderValue={(value) => `View: ${value}`}
-        onChange={(e) => {
-          setFILTER((prev) => ({
-            ...prev,
-            type: e.target.value
-          }));
-        }}>
+        <Select
+          value={FILTER.type}
+          defaultValue={"day"}
+          displayEmpty
+          className={"h-4"}
+          autoWidth={true}
+          renderValue={(value) => (
+            `${value}`
+          )}
+          onChange={(e) => {
+            setFILTER((prev) => ({
+              ...prev,
+              type: e.target.value
+            }));
+          }}>
           {["day", "week", "month", "year", "select"].map((item) => (
             <MenuItem key={item} value={item}>{item}</MenuItem>
           ))}
@@ -157,15 +171,33 @@ export const CustomerTest = () => {
       );
     };
 
-    function calendarNode () {
+    function calendarBtn () {
       return (
-        <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
+        <IconButton className={"ms-10 pb-10"} onClick={() => {
           setCALENDAR((prev) => ({
             ...prev,
             calOpen: !prev.calOpen,
           }));
         }}>
-          달력
+          <CalendarTodayIcon />
+        </IconButton>
+      );
+    };
+
+    function todayBtn () {
+      return (
+        <Button type={"button"} size={"small"} variant={"contained"} color={"primary"} onClick={() => {
+          setFILTER((prev) => ({
+            ...prev,
+            type: "day",
+          }));
+          setDATE((prev) => ({
+            ...prev,
+            startDt: koreanDate,
+            endDt: koreanDate,
+          }));
+        }}>
+          Today
         </Button>
       );
     };
@@ -174,11 +206,19 @@ export const CustomerTest = () => {
       return (
         <React.Fragment>
           <GridToolbarContainer>
-            <div style={{display:"flex", justifyContent:"space-between", width:"100%"}}>
-              {selectNode()}
-              {calendarNode()}
-              <GridPagination />
-            </div>
+            <Container>
+              <Grid container spacing={2} className={"d-center"}>
+                <Grid lg={4} md={4} sm={4} xs={4}>
+                  {selectBtn()}
+                  {calendarBtn()}
+                  {todayBtn()}
+                </Grid>
+                <Grid lg={2} md={2} sm={2} xs={2}></Grid>
+                <Grid lg={6} md={6} sm={6} xs={6}>
+                  <GridPagination />
+                </Grid>
+              </Grid>
+            </Container>
           </GridToolbarContainer>
         </React.Fragment>
       );
@@ -193,7 +233,8 @@ export const CustomerTest = () => {
             pageSize={5}
             rowsPerPageOptions={[5]}
             pagination={true}
-            checkboxSelection
+            checkboxSelection={true}
+            scrollbarSize={10}
             slots={{
               footer: customFooter,
             }}
@@ -212,31 +253,18 @@ export const CustomerTest = () => {
     );
   };
 
-  // 9. button ------------------------------------------------------------------------------------>
-  const buttonNode = () => {
-    return (
-      <ButtonNode DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} flowSave={""}
-        navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
-      />
-    );
-  };
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"}>
           <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
-                {calendarNode()}
+            <Grid container spacing={2}>
+              <Grid lg={12} md={12} sm={12} xs={12} className={"mb-20"}>
                 {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
-                {buttonNode()}
-              </Col>
-            </Row>
+                {calendarNode()}
+              </Grid>
+            </Grid>
           </Container>
         </Card>
       </div>
