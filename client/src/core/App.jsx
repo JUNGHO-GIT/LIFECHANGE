@@ -14,14 +14,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-resizable/css/styles.css";
 import "react-calendar/dist/Calendar.css";
 
-import "../assets/css/custom/Chart.css";
-import "../assets/css/custom/Custom.css";
-import "../assets/css/custom/Jstyle.css";
-
 import "../assets/css/fragments/DatePicker.css";
 import "../assets/css/fragments/TimePicker.css";
 import "../assets/css/fragments/DayPicker.css";
 import "../assets/css/fragments/Calendar.css";
+
+import "../assets/css/custom/Chart.css";
+import "../assets/css/custom/Custom.css";
+import "../assets/css/custom/Jstyle.css";
 
 import "../assets/css/layout/Header.css";
 import "../assets/css/layout/Loader.css";

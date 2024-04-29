@@ -213,6 +213,7 @@ export const CalendarNode = ({
 
     return (
       <DayPicker
+
         weekStartsOn={1}
         showOutsideDays={true}
         locale={ko}
@@ -232,7 +233,7 @@ export const CalendarNode = ({
   return (
     <React.Fragment>
       <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
-        <span className={"d-right fw-700 x-button"} onClick={() => (
+        <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => (
           setCALENDAR((prev) => ({
             ...prev,
             calOpen: false

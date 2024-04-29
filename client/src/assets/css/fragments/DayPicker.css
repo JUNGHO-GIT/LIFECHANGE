@@ -5,8 +5,8 @@
 
   /** display **/
   .rdp {
-    --rdp-cell-size: 34px;
-    --rdp-caption-font-size: 12px;
+    --rdp-cell-size: 4.2rem;
+    --rdp-caption-font-size: 14px;
     --rdp-accent-color: #0000ff;
     --rdp-background-color: #e7edff;
     --rdp-accent-color-dark: #3003e1;
@@ -16,8 +16,45 @@
     --rdp-selected-color: #fff;
     margin: 1em;
   }
-  .rdp-head {
-    font-size: 1.5rem;
+  .rdp-head_cell {
+    vertical-align: middle;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    height: var(--rdp-cell-size);
+    padding: 0;
+    text-transform: uppercase;
+    background-color: #cfe2ff;
+  }
+  .today,
+  .rdp-caption_label {
+    font-size: 1.8rem;
+    font-weight: bolder;
+  }
+  .rdp-cell {
+    width: var(--rdp-cell-size);
+    height: var(--rdp-cell-size);
+    padding: 0px 0px 0px 12px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  .dayPicker-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 500px;
+    height: 540px;
+    z-index: 1000;
+    background-color: #ffffff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 15px;
+  }
+  .dayPicker-x-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
   }
 }
 
@@ -28,8 +65,8 @@
 
   /** display **/
   .rdp {
-    --rdp-cell-size: 33px;
-    --rdp-caption-font-size: 11px;
+    --rdp-cell-size: 4.0rem;
+    --rdp-caption-font-size: 13px;
     --rdp-accent-color: #0000ff;
     --rdp-background-color: #e7edff;
     --rdp-accent-color-dark: #3003e1;
@@ -37,7 +74,47 @@
     --rdp-outline: 2px solid var(--rdp-accent-color);
     --rdp-outline-selected: 3px solid var(--rdp-accent-color);
     --rdp-selected-color: #fff;
-    margin: 0.9em;
+    margin: 1em;
+  }
+  .rdp-head_cell {
+    vertical-align: middle;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    height: var(--rdp-cell-size);
+    padding: 0;
+    text-transform: uppercase;
+    background-color: #cfe2ff;
+  }
+  .today,
+  .rdp-caption_label {
+    font-size: 1.7rem;
+    font-weight: bolder;
+  }
+  .rdp-cell {
+    width: var(--rdp-cell-size);
+    height: var(--rdp-cell-size);
+    padding: 0px 0px 0px 11px;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  .dayPicker-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 450px;
+    height: 490px;
+    z-index: 1000;
+    background-color: #ffffff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 15px;
+  }
+  .dayPicker-x-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
   }
 }
 
@@ -48,8 +125,8 @@
 
   /** display **/
   .rdp {
-    --rdp-cell-size: 32px;
-    --rdp-caption-font-size: 10px;
+    --rdp-cell-size: 3.8rem;
+    --rdp-caption-font-size: 12px;
     --rdp-accent-color: #0000ff;
     --rdp-background-color: #e7edff;
     --rdp-accent-color-dark: #3003e1;
@@ -57,7 +134,47 @@
     --rdp-outline: 2px solid var(--rdp-accent-color);
     --rdp-outline-selected: 3px solid var(--rdp-accent-color);
     --rdp-selected-color: #fff;
-    margin: 0.8em;
+    margin: 1em;
+  }
+  .rdp-head_cell {
+    vertical-align: middle;
+    font-size: 1.0rem;
+    font-weight: 700;
+    text-align: center;
+    height: var(--rdp-cell-size);
+    padding: 0;
+    text-transform: uppercase;
+    background-color: #cfe2ff;
+  }
+  .today,
+  .rdp-caption_label {
+    font-size: 1.6rem;
+    font-weight: bolder;
+  }
+  .rdp-cell {
+    width: var(--rdp-cell-size);
+    height: var(--rdp-cell-size);
+    padding: 0px 0px 0px 10px;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .dayPicker-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 400px;
+    height: 500px;
+    z-index: 1000;
+    background-color: #ffffff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 15px;
+  }
+  .dayPicker-x-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
   }
 }
 
@@ -68,8 +185,8 @@
 
   /** display **/
   .rdp {
-    --rdp-cell-size: 31px;
-    --rdp-caption-font-size: 9px;
+    --rdp-cell-size: 2.4rem;
+    --rdp-caption-font-size: 14px;
     --rdp-accent-color: #0000ff;
     --rdp-background-color: #e7edff;
     --rdp-accent-color-dark: #3003e1;
@@ -77,7 +194,47 @@
     --rdp-outline: 2px solid var(--rdp-accent-color);
     --rdp-outline-selected: 3px solid var(--rdp-accent-color);
     --rdp-selected-color: #fff;
-    margin: 0.7em;
+    margin: 1em;
+  }
+  .rdp-head_cell {
+    vertical-align: middle;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    height: var(--rdp-cell-size);
+    padding: 0;
+    text-transform: uppercase;
+    background-color: #cfe2ff;
+  }
+  .today,
+  .rdp-caption_label {
+    font-size: 1.5rem;
+    font-weight: bolder;
+  }
+  .rdp-cell {
+    width: var(--rdp-cell-size);
+    height: var(--rdp-cell-size);
+    padding: 0px 0px 0px 9px;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+  .dayPicker-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 300px;
+    height: 340px;
+    z-index: 1000;
+    background-color: #ffffff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 15px;
+  }
+  .dayPicker-x-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
   }
 }
 
@@ -88,8 +245,8 @@
 
   /** display **/
   .rdp {
-    --rdp-cell-size: 30px;
-    --rdp-caption-font-size: 8px;
+    --rdp-cell-size: 2.2rem;
+    --rdp-caption-font-size: 12px;
     --rdp-accent-color: #0000ff;
     --rdp-background-color: #e7edff;
     --rdp-accent-color-dark: #3003e1;
@@ -97,11 +254,47 @@
     --rdp-outline: 2px solid var(--rdp-accent-color);
     --rdp-outline-selected: 3px solid var(--rdp-accent-color);
     --rdp-selected-color: #fff;
-    margin: 0.6em;
+    margin: 1em;
   }
   .rdp-head_cell {
-    font-size: 150%;
+    vertical-align: middle;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    height: var(--rdp-cell-size);
+    padding: 0;
+    text-transform: uppercase;
+    background-color: #cfe2ff;
+  }
+  .today,
+  .rdp-caption_label {
+    font-size: 1.4rem;
     font-weight: bolder;
+  }
+  .rdp-cell {
+    width: var(--rdp-cell-size);
+    height: var(--rdp-cell-size);
+    padding: 0px 0px 0px 5px;
+    text-align: center;
+    font-size: 0.7rem;
+  }
+  .dayPicker-container {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 250px;
+    height: 310px;
+    z-index: 1000;
+    background-color: #ffffff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 15px;
+  }
+  .dayPicker-x-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    cursor: pointer;
   }
 }
 
@@ -111,13 +304,26 @@
   /** non display **/
 
   /** display **/
-  .today,
-  .rdp-caption_label {
-    font-weight: bolder;
+  .rdp-table {
+    margin: 0;
+    max-width: calc(var(--rdp-cell-size) * 7);
+    border-collapse: collapse;
+    border: 1px solid  var(--rdp-background-color);
   }
-  .today,
-  .rdp-caption_label {
-    font-size: 150%;
+  .rdp-weeknumber,
+  .rdp-day {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    width: calc(var(--rdp-cell-size) * 0.7);
+    max-width: calc(var(--rdp-cell-size) * 0.7);
+    height: calc(var(--rdp-cell-size) * 0.7);
+    margin: 0;
+    border: 2px solid transparent;
+    border-radius: 100%;
   }
   .today {
     color: #ff0000;
@@ -154,17 +360,5 @@
   }
   .inside {
     color: #000;
-  }
-  .dayPicker-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 500px;
-    height: 600px;
-    z-index: 1000;
-    background-color: #ffffff;
-    transform: translate(-50%, -50%);
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    border-radius: 15px;
   }
 }

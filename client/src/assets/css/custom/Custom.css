@@ -519,17 +519,6 @@
     display: none;
     -ms-overflow-style: none;
   }
-  .button {
-    padding: 4px 7px 2px 7px;
-    height: auto !important;
-    width: auto !important;
-  }
-  .x-button {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    cursor: pointer;
-  }
   .popup {
     width: 700px;
     height: 700px;

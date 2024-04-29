@@ -17,7 +17,8 @@ export const ButtonNode = ({
   function buttonCalendar () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"primary"} className={"button me-5"} type={"button"}
+        <Button size={"sm"} variant={`${CALENDAR.calOpen ? "danger" : "primary"}`}
+        className={"custom-btn me-5"} type={"button"}
           onClick={() => {
             setCALENDAR((prev) => ({
               ...prev,
@@ -25,7 +26,7 @@ export const ButtonNode = ({
             }));
           }}
         >
-          {CALENDAR.calOpen ? "o" : "x"}
+          달력
         </Button>
       </React.Fragment>
     );
@@ -33,7 +34,7 @@ export const ButtonNode = ({
   function buttonToday () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"success"} className={"button me-5"} type={"button"}
+        <Button size={"sm"} variant={"success"} className={"custom-btn me-5"} type={"button"}
           onClick={() => {
             setFILTER((prev) => ({
               ...prev,
@@ -58,7 +59,7 @@ export const ButtonNode = ({
   function buttonSave () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"primary"} className={"button me-5"} type={"button"}
+        <Button size={"sm"} variant={"primary"} className={"custom-btn me-5"} type={"button"}
           onClick={() => (flowSave())}
         >
           Save
@@ -69,7 +70,7 @@ export const ButtonNode = ({
   function buttonUpdate () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"primary"} className={"button me-5"} type={"button"}
+        <Button size={"sm"} variant={"primary"} className={"custom-btn me-5"} type={"button"}
           onClick={() => {
             SEND.startDt = DATE.startDt;
             SEND.endDt = DATE.endDt;
@@ -86,7 +87,7 @@ export const ButtonNode = ({
   function buttonList () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"secondary"} className={"button me-5"} type={"button"}
+        <Button size={"sm"} variant={"secondary"} className={"custom-btn me-5"} type={"button"}
           onClick={() => {
             SEND.startDt = DATE.startDt;
             SEND.endDt = DATE.endDt;
@@ -103,7 +104,7 @@ export const ButtonNode = ({
   function buttonSearch () {
     return (
       <React.Fragment>
-        <Button size={"sm"} variant={"secondary"} className={"button me-5"} type={"button"}
+        <Button size={"sm"} variant={"secondary"} className={"custom-btn me-5"} type={"button"}
           onClick={() => {
             SEND.startDt = DATE.startDt;
             SEND.endDt = DATE.endDt;
