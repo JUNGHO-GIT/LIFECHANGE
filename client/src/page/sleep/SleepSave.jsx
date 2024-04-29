@@ -205,7 +205,7 @@ export const SleepSave = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode DATE={DATE} setDATE={setDATE}
         SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
         flowSave={flowSave} navParam={navParam} part={"sleep"} plan={""} type={"save"}
       />

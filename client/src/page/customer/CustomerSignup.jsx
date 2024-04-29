@@ -33,6 +33,11 @@ export const CustomerSignup = () => {
       alert(response.data.msg);
       navParam("/customer/login");
     }
+    else if (response.data.status === "duplicated") {
+      alert(response.data.msg);
+      setCustomerId("");
+      setCustomerPw("");
+    }
     else if (response.data.status === "fail") {
       alert(response.data.msg);
       setCustomerId("");
@@ -53,7 +58,7 @@ export const CustomerSignup = () => {
             mask={""}
             type={"text"}
             className={"form-control"}
-            placeholder={"location_id"}
+            placeholder={"ID"}
             value={customer_id}
             onChange={(e) => (
               setCustomerId(e.target.value)
@@ -61,12 +66,12 @@ export const CustomerSignup = () => {
           ></InputMask>
         </div>
         <div className={"input-group mb-10"}>
-          <span className={"input-group-text"}>Password</span>
+          <span className={"input-group-text"}>PW</span>
           <InputMask
             mask={""}
             type={"password"}
             className={"form-control"}
-            placeholder={"Password"}
+            placeholder={"PW"}
             value={customer_pw}
             onChange={(e) => (
               setCustomerPw(e.target.value)

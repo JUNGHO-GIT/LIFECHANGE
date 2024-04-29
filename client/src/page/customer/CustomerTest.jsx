@@ -1,4 +1,4 @@
-// ExerciseList.jsx
+// CustomerTest.jsx
 
 import axios from "axios";
 import numeral from 'numeral';
@@ -6,13 +6,14 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../assets/hooks/useStorage.jsx";
 import {CalendarNode} from "../../fragments/CalendarNode.jsx";
-import {PagingNode} from "../../fragments/PagingNode.jsx";
-import {FilterNode} from "../../fragments/FilterNode.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {Container, Table, Row, Col, Card} from "react-bootstrap";
+import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
+import { DataGrid, GridToolbarContainer, GridPagination } from '@mui/x-data-grid';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 // ------------------------------------------------------------------------------------------------>
-export const ExerciseList = () => {
+export const CustomerTest = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -38,24 +39,12 @@ export const ExerciseList = () => {
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
-      endDt: location_endDt
+      endDt: location_endDt,
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
-      order: "asc",
       type: "day",
-      limit: 5,
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
-    }
-  );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 5
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -101,9 +90,7 @@ export const ExerciseList = () => {
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         customer_id: customer_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
-        FILTER: FILTER,
-        PAGING: PAGING
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
@@ -112,61 +99,106 @@ export const ExerciseList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [customer_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
+  })()}, [customer_id, DATE.startDt, DATE.endDt, FILTER.type]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+
+    const columns = [
+      {field: 'exercise_startDt', headerName: '시작일', flex: 1.5 },
+      {field: 'exercise_endDt', headerName: '종료일', flex: 1.5 },
+      {field: 'exercise_part_val', headerName: '부위', flex: 1.5 },
+      {field: 'exercise_title_val', headerName: '운동', flex: 2 },
+      {field: 'exercise_set', headerName: '세트', flex: 1 },
+      {field: 'exercise_rep', headerName: '횟수', flex: 1 },
+      {field: 'exercise_kg', headerName: '중량', flex: 1 },
+      {field: 'exercise_rest', headerName: '휴식', flex: 1 },
+      {field: 'exercise_volume', headerName: '볼륨', flex: 1 },
+      {field: 'exercise_cardio', headerName: '유산소', flex: 1 },
+      {field: 'exercise_total_volume', headerName: '총 볼륨', flex: 1 },
+      {field: 'exercise_total_cardio', headerName: '총 유산소', flex: 1 },
+      {field: 'exercise_body_weight', headerName: '체중', flex: 1 },
+    ];
+
+    const rows = OBJECT?.map((item, idx) => (
+      item?.exercise_section?.map((item2, idx2) => ({
+        id: `${idx}-${idx2}`,
+        exercise_startDt: item?.exercise_startDt,
+        exercise_endDt: item?.exercise_endDt,
+        exercise_part_val: item2?.exercise_part_val,
+        exercise_title_val: item2?.exercise_title_val,
+        exercise_set: item2?.exercise_set,
+        exercise_rep: item2?.exercise_rep,
+        exercise_kg: item2?.exercise_kg,
+        exercise_rest: item2?.exercise_rest,
+        exercise_volume: item2?.exercise_volume,
+        exercise_cardio: item2?.exercise_cardio,
+        exercise_total_volume: item?.exercise_total_volume,
+        exercise_total_cardio: item?.exercise_total_cardio,
+        exercise_body_weight: item?.exercise_body_weight,
+      }))
+    )).flat();
+
+    function selectNode () {
+      return (
+        <Select value={FILTER.type} defaultValue={"day"}
+        displayEmpty
+        renderValue={(value) => `View: ${value}`}
+        onChange={(e) => {
+          setFILTER((prev) => ({
+            ...prev,
+            type: e.target.value
+          }));
+        }}>
+          {["day", "week", "month", "year", "select"].map((item) => (
+            <MenuItem key={item} value={item}>{item}</MenuItem>
+          ))}
+        </Select>
+      );
+    };
+
+    function calendarNode () {
+      return (
+        <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
+          setCALENDAR((prev) => ({
+            ...prev,
+            calOpen: !prev.calOpen,
+          }));
+        }}>
+          달력
+        </Button>
+      );
+    };
+
+    function customFooter() {
+      return (
+        <React.Fragment>
+          <GridToolbarContainer>
+            <div style={{display:"flex", justifyContent:"space-between", width:"100%"}}>
+              {selectNode()}
+              {calendarNode()}
+              <GridPagination />
+            </div>
+          </GridToolbarContainer>
+        </React.Fragment>
+      );
+    }
+
     return (
       <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>부위</th>
-              <th className={"table-thead"}>종목</th>
-              <th className={"table-thead"}>세트</th>
-              <th className={"table-thead"}>횟수</th>
-              <th className={"table-thead"}>중량</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                {item.exercise_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <tr key={sectionIndex}>
-                    {sectionIndex === 0 && (
-                      <td rowSpan={Math.min(item.exercise_section.length, 3)}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.exercise_startDt;
-                          SEND.endDt = item.exercise_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                        {item.exercise_startDt?.substring(5, 10)}
-                        {item.exercise_section.length > 3 && (<div>더보기</div>)}
-                      </td>
-                    )}
-                    <td>{section.exercise_part_val.substring(0, 6)}</td>
-                    <td>{section.exercise_title_val.substring(0, 6)}</td>
-                    {section.exercise_part_val !== "유산소" ? (
-                      <React.Fragment>
-                        <td>{`${numeral(section.exercise_set).format('0,0')}`}</td>
-                        <td>{`${numeral(section.exercise_rep).format('0,0')}`}</td>
-                        <td>{`${numeral(section.exercise_kg).format('0,0')}`}</td>
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        <td colSpan={3}>{section.exercise_cardio}</td>
-                      </React.Fragment>
-                    )}
-                  </tr>
-                ))}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </Table>
+        <div style={{width:"100%", height:700}}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            pagination={true}
+            checkboxSelection
+            slots={{
+              footer: customFooter,
+            }}
+          ></DataGrid>
+        </div>
       </React.Fragment>
     );
   };
@@ -180,30 +212,12 @@ export const ExerciseList = () => {
     );
   };
 
-  // 7. paging ------------------------------------------------------------------------------------>
-  const pagingNode = () => {
-    return (
-      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-        part={"exercise"} plan={""} type={"list"}
-      />
-    );
-  };
-
-  // 8. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
-    return (
-      <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        part={"exercise"} plan={""} type={"list"}
-      />
-    );
-  };
-
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
       <ButtonNode DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
+        SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} flowSave={""}
+        navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
       />
     );
   };
@@ -218,12 +232,6 @@ export const ExerciseList = () => {
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {calendarNode()}
                 {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
-                {filterNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
-                {pagingNode()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {buttonNode()}

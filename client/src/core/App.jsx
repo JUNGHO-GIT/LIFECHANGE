@@ -3,6 +3,7 @@
 import React from "react";
 import {Routes, Route} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/hooks/useDeveloperMode.jsx";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +20,7 @@ import "../assets/css/fragments/TimePicker.css";
 import "../assets/css/fragments/DayPicker.css";
 import "../assets/css/fragments/Calendar.css";
 
+import "../assets/css/custom/Mui.css";
 import "../assets/css/custom/Chart.css";
 import "../assets/css/custom/Custom.css";
 import "../assets/css/custom/Jstyle.css";
@@ -35,6 +37,7 @@ import {NavBar} from "../layout/NavBar.jsx";
 import {CustomerSignup} from "../page/customer/CustomerSignup.jsx";
 import {CustomerLogin} from "../page/customer/CustomerLogin.jsx";
 import {CustomerDataset} from "../page/customer/CustomerDataset.jsx";
+import {CustomerTest} from "../page/customer/CustomerTest.jsx";
 
 import {DiaryList} from "../page/diary/DiaryList.jsx";
 import {DiaryDetail} from "../page/diary/DiaryDetail.jsx";
@@ -80,6 +83,7 @@ const Customer = () => {
         <Route path="/signup" element={<CustomerSignup />} />
         <Route path="/login" element={<CustomerLogin />} />
         <Route path="/dataset" element={<CustomerDataset />} />
+        <Route path="/test" element={<CustomerTest />} />
       </Routes>
     </React.Fragment>
   );
@@ -172,6 +176,7 @@ export const App = () => {
     <React.Fragment>
       <div className={"App"}>
         <DeveloperModeProvider>
+          <CssBaseline />
           <Loader />
           <Header />
           <NavBar />

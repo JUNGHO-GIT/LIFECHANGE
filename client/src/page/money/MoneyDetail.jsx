@@ -129,7 +129,7 @@ export const MoneyDetail = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th className={"table-thead w-20"}>날짜</th>
+              <th className={"table-thead"}>날짜</th>
               <th className={"table-thead"}>분류</th>
               <th className={"table-thead"}>항목</th>
               <th className={"table-thead"}>금액</th>
@@ -177,7 +177,7 @@ export const MoneyDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode DATE={DATE} setDATE={setDATE}
         SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
         flowSave={""} navParam={navParam} part={"money"} plan={""} type={"detail"}
       />

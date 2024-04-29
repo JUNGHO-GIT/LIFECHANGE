@@ -17,16 +17,16 @@ export const CalendarNode = ({
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (FILTER.type === "day") {
-      setDATE({
+      setDATE((prev) => ({
         startDt: moment(koreanDate).format("YYYY-MM-DD"),
         endDt: moment(koreanDate).format("YYYY-MM-DD"),
-      });
+      }));
     }
     else if (FILTER.type === "week") {
-      setDATE({
+      setDATE((prev) => ({
         startDt: moment(koreanDate).startOf("isoWeek").format("YYYY-MM-DD"),
         endDt: moment(koreanDate).endOf("isoWeek").format("YYYY-MM-DD")
-      });
+      }));
     }
     else if (FILTER.type === "month") {
       setDATE((prev) => ({
@@ -36,16 +36,16 @@ export const CalendarNode = ({
       }));
     }
     else if (FILTER.type === "year") {
-      setDATE({
+      setDATE((prev) => ({
         startDt: moment(koreanDate).startOf("year").format("YYYY-MM-DD"),
         endDt: moment(koreanDate).endOf("year").format("YYYY-MM-DD")
-      });
+      }));
     }
     else if (FILTER.type === "select") {
-      setDATE({
+      setDATE((prev) => ({
         startDt: moment(koreanDate).format("YYYY-MM-DD"),
         endDt: moment(koreanDate).format("YYYY-MM-DD"),
-      });
+      }));
     }
   }, [FILTER.type]);
 
@@ -213,7 +213,6 @@ export const CalendarNode = ({
 
     return (
       <DayPicker
-
         weekStartsOn={1}
         showOutsideDays={true}
         locale={ko}
@@ -233,7 +232,7 @@ export const CalendarNode = ({
   return (
     <React.Fragment>
       <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
-        <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => (
+        <span className={"d-right fw-700 x-button"} onClick={() => (
           setCALENDAR((prev) => ({
             ...prev,
             calOpen: false

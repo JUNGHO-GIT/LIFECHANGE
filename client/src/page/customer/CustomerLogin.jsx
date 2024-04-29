@@ -69,7 +69,7 @@ export const CustomerLogin = () => {
           ></InputMask>
         </div>
         <div className={"input-group mb-10"}>
-          <span className={"input-group-text"}>Password</span>
+          <span className={"input-group-text"}>PW</span>
           <InputMask
             mask={""}
             type={"text"}

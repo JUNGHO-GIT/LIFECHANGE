@@ -121,7 +121,7 @@ export const CustomerDataset = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th>Section</th>
+              <th className={"table-thead"}>Section</th>
             </tr>
           </thead>
           <tbody>
@@ -217,13 +217,12 @@ export const CustomerDataset = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th>Part</th>
+              <th className={"table-thead"}>Part</th>
             </tr>
           </thead>
           <tbody>
             {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
-              <tr
-                key={index}
+              <tr key={index}
                 className={selectedIdx.partIdx === index ? "table-secondary" : ""}
                 style={{border: "1px solid #dee2e6"}}
                 onClick={() => {
@@ -261,9 +260,9 @@ export const CustomerDataset = () => {
             ))}
             <tr>
               <td colSpan={3} className={"d-inline-flex"}>
-                <p className={"pointer btn btn-sm btn-outline-primary button"}  onClick={addPart}>
-                  추가
-                </p>
+                <div className={"text-center pointer btn btn-sm btn-outline-primary button"} onClick={addPart}>
+                  Add
+                </div>
               </td>
             </tr>
           </tbody>
@@ -341,7 +340,7 @@ export const CustomerDataset = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th>Title</th>
+              <th className={"table-thead"}>Title</th>
             </tr>
           </thead>
           <tbody>
@@ -360,10 +359,10 @@ export const CustomerDataset = () => {
                 <td>
                   <Row>
                     <Col xs={7} className={"p-5"}>
-                      <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
+                      <div className={"pointer me-2"} onClick={() => (setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
-                      }))}>
+                      })))}>
                         {item}
                       </div>
                     </Col>
@@ -386,7 +385,7 @@ export const CustomerDataset = () => {
             <tr>
               <td colSpan={3} className={"d-inline-flex"}>
                 <p className={"pointer btn btn-sm btn-outline-primary button"} onClick={addTitle}>
-                  추가
+                  Add
                 </p>
               </td>
             </tr>

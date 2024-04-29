@@ -56,6 +56,11 @@ const schema = new mongoose.Schema({
     default: "",
     required : false
   },
+  customer_image: {
+    type : String,
+    default: "",
+    required : false
+  },
 
   customer_dataset: {
     diary: {

@@ -135,6 +135,9 @@ tbody, td, tfoot, th, thead, tr {
   border-width: 0;
   max-width: 180px !important;
 }
+table tbody tr td {
+  color: #042337 !important;
+}
 .btn-group-sm>.btn, .btn-sm {
   --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
 }
@@ -146,8 +149,7 @@ tbody, td, tfoot, th, thead, tr {
   background-color: #336699 !important;
   border: 1px solid #336699 !important;
 }
-.page-btn:hover, .page-btn:focus,
-.page-btn:active, .page-btn:disabled {
+.page-btn:hover, .page-btn:active, .page-btn:disabled {
   color: #ffffff !important;
   background-color: #042337 !important;
   border: 1px solid #042337 !important;
@@ -157,8 +159,7 @@ tbody, td, tfoot, th, thead, tr {
   font-weight: 600;
   color: #dc3545 !important;
 }
-.del-btn:hover, .del-btn:focus,
-.del-btn:active, .del-btn:disabled {
+.del-btn:hover, .del-btn:active, .del-btn:disabled {
   color: #8b202b !important;
   border: 1px solid #8b202b !important;
 }
@@ -170,8 +171,7 @@ tbody, td, tfoot, th, thead, tr {
   background-color: #042337 !important;
   border: 1px solid #042337 !important;
 }
-.dark-btn:hover, .dark-btn:focus,
-.dark-btn:active, .dark-btn:disabled {
+.dark-btn:hover, .dark-btn:active, .dark-btn:disabled {
   color: #ffffff !important;
   background-color: #000b15 !important;
   border: 1px solid #000b15 !important;
@@ -184,8 +184,7 @@ tbody, td, tfoot, th, thead, tr {
   background-color: #336699 !important;
   border: 1px solid #336699 !important;
 }
-.primary-btn:hover, .primary-btn:focus,
-.primary-btn:active, .primary-btn:disabled {
+.primary-btn:hover, .primary-btn:active, .primary-btn:disabled {
   color: #ffffff !important;
   background-color: #23486f !important;
   border: 1px solid #23486f !important;
@@ -198,8 +197,7 @@ tbody, td, tfoot, th, thead, tr {
   background-color: #28a745;
   border: 1px solid #28a745;
 }
-.success-btn:hover, .success-btn:focus,
-.success-btn:active, .success-btn:disabled {
+.success-btn:hover, .success-btn:active, .success-btn:disabled {
   color: #ffffff !important;
   background-color: #1d7430 !important;
   border: 1px solid #1d7430 !important;
@@ -212,8 +210,7 @@ tbody, td, tfoot, th, thead, tr {
   background-color: #ffc107 !important;
   border: 1px solid #ffc107 !important;
 }
-.warning-btn:hover, .warning-btn:focus,
-.warning-btn:active, .warning-btn:disabled {
+.warning-btn:hover, .warning-btn:active, .warning-btn:disabled {
   color: #ffffff !important;
   background-color: #d39e00 !important;
   border: 1px solid #d39e00 !important;
@@ -226,8 +223,7 @@ tbody, td, tfoot, th, thead, tr {
   background-color: #dc3545 !important;
   border: 1px solid #dc3545 !important;
 }
-.danger-btn:hover, .danger-btn:focus,
-.danger-btn:active, .danger-btn:disabled {
+.danger-btn:hover, .danger-btn:active, .danger-btn:disabled {
   color: #ffffff !important;
   background-color: #bd2130 !important;
   border: 1px solid #bd2130 !important;
@@ -240,8 +236,7 @@ tbody, td, tfoot, th, thead, tr {
   background-color: #6c757d !important;
   border: 1px solid #6c757d !important;
 }
-.secondary-btn:hover, .secondary-btn:focus,
-.secondary-btn:active, .secondary-btn:disabled {
+.secondary-btn:hover, .secondary-btn:active, .secondary-btn:disabled {
   color: #ffffff !important;
   background-color: #4b5156 !important;
   border: 1px solid #4b5156 !important;

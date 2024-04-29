@@ -34,27 +34,40 @@ export const SideBar = ({ sidebar, onClose }) => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [isSidebar, setIsSidebar] = useState(sidebar);
+  const [isOpen, setIsOpen] = useState(sidebar);
   const [isActive, setIsActive] = useState(PATH);
   const [isExpended, setIsExpended] = useState({});
 
   // 3-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setIsSidebar(sidebar);
+    setIsOpen(sidebar);
   }, [sidebar]);
 
-  // 3-1. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     setIsActive(location.pathname);
   }, [location.pathname]);
+
+  // 3-1. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const closeSidebar = (event) => {
+      if (isOpen && !event.target.closest(".sidebar")) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("click", closeSidebar);
+    return () => {
+      document.removeEventListener("click", closeSidebar);
+    };
+  }, [isOpen, onClose]);
 
   // 4. toggle ------------------------------------------------------------------------------------>
   const toggleExpand = (menuLabel) => {
     setIsExpended(isExpended === menuLabel ? null : menuLabel);
   };
 
-  let preFix;
-  let lowFix;
+  let preFix = "";
+  let lowFix = "";
 
   dataArray.forEach((menu) => {
     if (isActive.includes(menu.title.toLowerCase())) {
@@ -104,7 +117,7 @@ export const SideBar = ({ sidebar, onClose }) => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={`sidebar ${isSidebar ? "sidebar-open" : "sidebar-closed"} bg-white`}>
+      <div className={`sidebar ${isOpen ? "sidebar-open" : "sidebar-closed"} bg-white`}>
         <div className={"sidebar-head-group"}>
           <span>
             <img src={logo3} className={"sidebar-image-logo"} alt="Logo 1" />
@@ -118,7 +131,7 @@ export const SideBar = ({ sidebar, onClose }) => {
             sidBarItem(menu.icon, menu.title, menu.items)
           ))}
         </div>
-        <div className={"btn btn-sm btn-danger pointer"} onClick={() => (
+        <div className={"btn btn-sm danger-btn"} onClick={() => (
           localStorage.clear()
         )}>
           Clear

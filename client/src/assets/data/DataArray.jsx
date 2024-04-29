@@ -6,6 +6,7 @@ export const dataArray = [
     title: "Customer",
     items: [
       {to: "/customer/dataset", label: "CustomerDataset"},
+      {to: "/customer/test", label: "CustomerTest"},
     ]
   },
   // diary

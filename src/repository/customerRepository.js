@@ -116,6 +116,7 @@ export const create = async (
     customer_weight: OBJECT_param.customer_weight,
     customer_email: OBJECT_param.customer_email,
     customer_phone: OBJECT_param.customer_phone,
+    customer_image: OBJECT_param.customer_image,
     customer_dataset: OBJECT_param.customer_dataset,
     customer_regDt: fmtDate,
     customer_updateDt: "",

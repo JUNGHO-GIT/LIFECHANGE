@@ -11,11 +11,17 @@ router.post("/signup", async (req, res) => {
       req.body.customer_id,
       req.body.customer_pw
     );
-    if (result) {
+    if (result && result !== "duplicated") {
       res.json({
         status: "success",
         msg: "회원가입 성공",
         result: result
+      });
+    }
+    else if (result === "duplicated") {
+      res.json({
+        status: "duplicated",
+        msg: "아이디 중복"
       });
     }
     else {
@@ -51,7 +57,7 @@ router.post("/login", async (req, res) => {
     else {
       res.json({
         status: "fail",
-        msg: "로그인 실패"
+        msg: "아이디 또는 비밀번호가 일치하지 않습니다."
       });
     }
   }

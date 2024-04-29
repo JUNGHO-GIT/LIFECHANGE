@@ -110,7 +110,7 @@ export const SleepList = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead"}>날짜</th>
               <th className={"table-thead"}>취침</th>
               <th className={"table-thead"}>기상</th>
               <th className={"table-thead"}>수면</th>
@@ -180,7 +180,7 @@ export const SleepList = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode DATE={DATE} setDATE={setDATE}
         SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
         flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
       />

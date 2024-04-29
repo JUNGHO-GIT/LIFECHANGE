@@ -116,7 +116,7 @@ export const FoodPlanDetail = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th className={"table-thead w-20"}>날짜</th>
+              <th className={"table-thead"}>날짜</th>
               <th className={"table-thead"}>칼로리 목표</th>
               <th className={"table-thead"}>탄수화물 목표</th>
               <th className={"table-thead"}>단백질 목표</th>
@@ -146,7 +146,7 @@ export const FoodPlanDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode DATE={DATE} setDATE={setDATE}
         SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
         flowSave={""} navParam={navParam} part={"food"} plan={"plan"} type={"detail"}
       />

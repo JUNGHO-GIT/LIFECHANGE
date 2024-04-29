@@ -132,7 +132,7 @@ export const ExerciseDetail = () => {
         <Table hover responsive border={1}>
           <thead>
             <tr>
-              <th className={"table-thead w-20"}>날짜</th>
+              <th className={"table-thead"}>날짜</th>
               <th className={"table-thead"}>부위</th>
               <th className={"table-thead"}>종목</th>
               <th className={"table-thead"}>볼륨 or 시간</th>
@@ -192,7 +192,7 @@ export const ExerciseDetail = () => {
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
     return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      <ButtonNode DATE={DATE} setDATE={setDATE}
         SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
         flowSave={""} navParam={navParam} part={"exercise"} plan={""} type={"detail"}
       />

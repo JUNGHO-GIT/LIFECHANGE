@@ -18,7 +18,7 @@ export const signup = async (
     );
   }
   else {
-    finalResult = null;
+    finalResult = "duplicated";
   }
 
   return finalResult;
