@@ -3,7 +3,6 @@
 import React, {useEffect} from "react";
 import {DayPicker} from "react-day-picker";
 import moment from "moment-timezone";
-import Draggable from "react-draggable";
 import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
 
@@ -232,20 +231,18 @@ export const CalendarNode = ({
 
   return (
     <React.Fragment>
-      <Draggable>
-        <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
-          <span className={"d-right fw-700 x-button"} onClick={() => (
-            setCALENDAR((prev) => ({
-              ...prev,
-              calOpen: false
-            }))
-          )}>
-            X
-          </span>
-          <div className={"h-2"}></div>
-          <div>{calendarType()}</div>
-        </div>
-      </Draggable>
+      <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
+        <span className={"d-right fw-700 x-button"} onClick={() => (
+          setCALENDAR((prev) => ({
+            ...prev,
+            calOpen: false
+          }))
+        )}>
+          X
+        </span>
+        <div className={"h-2"}></div>
+        <div>{calendarType()}</div>
+      </div>
     </React.Fragment>
   );
 };

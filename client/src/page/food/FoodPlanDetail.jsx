@@ -160,10 +160,10 @@ export const FoodPlanDetail = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {buttonNode()}
               </Col>
             </Row>

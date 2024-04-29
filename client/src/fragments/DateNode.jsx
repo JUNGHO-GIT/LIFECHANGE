@@ -4,7 +4,7 @@ import React, {useEffect} from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
-import {Container, Row, Col} from "react-bootstrap";
+import {Row, Col} from "react-bootstrap";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
@@ -12,8 +12,8 @@ export const DateNode = ({
 }) => {
 
   // 0. useEffect --------------------------------------------------------------------------------->
+  // endDt가 startDt보다 작을 경우 endDt를 startDt로 설정
   useEffect(() => {
-    // endDt가 startDt보다 작을 경우 endDt를 startDt로 설정
     if (moment(DATE.endDt).isBefore(DATE.startDt)) {
       setDATE((prev) => ({
         ...prev,
@@ -71,28 +71,24 @@ export const DateNode = ({
   // 2. realDate
   const realDate = () => (
     <React.Fragment>
-      <Row className={"d-center"}>
-        <Col lg={12} md={12} sm={12} xs={12}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>날짜</span>
-            <DatePicker
-              className={"form-control pointer"}
-              locale={ko}
-              dateFormat={"yyyy-MM-dd"}
-              selected={new Date(DATE.startDt)}
-              onChangeRaw={(e) => e.preventDefault()}
-              onChange={(date) => {
-                setDATE((prev) => ({
-                  ...prev,
-                  startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
-                  endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
-                }));
-              }}
-              popperPlacement={"bottom-start"}
-            ></DatePicker>
-          </div>
-        </Col>
-      </Row>
+      <div className={"input-group"}>
+        <span className={"input-group-text"}>날짜</span>
+        <DatePicker
+          className={"form-control pointer"}
+          locale={ko}
+          dateFormat={"yyyy-MM-dd"}
+          selected={new Date(DATE.startDt)}
+          onChangeRaw={(e) => e.preventDefault()}
+          onChange={(date) => {
+            setDATE((prev) => ({
+              ...prev,
+              startDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
+              endDt: moment(date).tz("Asia/Seoul").format("YYYY-MM-DD")
+            }));
+          }}
+          popperPlacement={"bottom-start"}
+        ></DatePicker>
+      </div>
     </React.Fragment>
   );
 

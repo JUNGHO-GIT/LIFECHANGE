@@ -30,14 +30,14 @@ export const PagingNode = ({
   function btnPrev() {
     return (
       <React.Fragment>
-        <Button key={"prev"} size={"sm"} variant={"primary"} className={"button me-5"}
+        <Button key={"prev"} size={"sm"} variant={"primary"} className={"page-btn"}
           disabled={PAGING.page <= 1} onClick={() => (
           setPAGING((prev) => ({
             ...prev,
             page: Math.max(1, PAGING.page - 1)
           })
         ))}>
-          <i className={"bi bi-chevron-left"}></i>
+          <i className={"bx bx-caret-left"}></i>
       </Button>
       </React.Fragment>
     );
@@ -47,7 +47,7 @@ export const PagingNode = ({
   function btnNumber() {
     for (let i = startPage; i <= endPage; i++) {
       pages.push(
-        <Button key={i} size={"sm"} variant={"primary"} className={"button me-5"}
+        <Button key={i} size={"sm"} variant={"primary"} className={"page-btn"}
           disabled={PAGING.page === i} onClick={() => (
           setPAGING((prev) => ({
             ...prev,
@@ -65,14 +65,14 @@ export const PagingNode = ({
   function btnNext() {
     return (
       <React.Fragment>
-        <Button key={"next"} size={"sm"} variant={"primary"} className={"button me-5"}
+        <Button key={"next"} size={"sm"} variant={"primary"} className={"page-btn"}
           disabled={PAGING.page >= totalPages} onClick={() => (
           setPAGING((prev) => ({
             ...prev,
             page: Math.min(totalPages, PAGING.page + 1)
           })
         ))}>
-          <i className={"bi bi-chevron-right"}></i>
+          <i className={"bx bx-caret-right"}></i>
         </Button>
       </React.Fragment>
     );

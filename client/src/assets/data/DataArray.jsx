@@ -1,22 +1,25 @@
 // 1. dataArray ---------------------------------------------------------------------------------->
 export const dataArray = [
+  // customer
   {
-    icon: "bi bi-house-fill",
+    icon: "bx bx-user",
     title: "Customer",
     items: [
       {to: "/customer/dataset", label: "CustomerDataset"},
     ]
   },
+  // diary
   {
-    icon: "bi bi-calendar-check-fill",
+    icon: "bx bx-calendar",
     title: "Diary",
     items: [
       {to: "/diary/list", label: "DiaryList"},
       {to: "/diary/detail", label: "DiaryDetail"},
     ]
   },
+  // exercise
   {
-    icon: "bi bi-person-arms-up",
+    icon: "bx bx-run",
     title: "Exercise",
     items: [
       {to: "/exercise/dash", label: "ExerciseDash"},
@@ -26,8 +29,9 @@ export const dataArray = [
       {to: "/exercise/plan/save", label: "ExercisePlanSave"},
     ]
   },
+  // food
   {
-    icon: "bi bi-egg-fried",
+    icon: "bx bx-bowl-hot",
     title: "Food",
     items: [
       {to: "/food/dash", label: "FoodDash"},
@@ -38,8 +42,9 @@ export const dataArray = [
       {to: "/food/plan/save", label: "FoodPlanSave"},
     ]
   },
+  // money
   {
-    icon: "bi bi-currency-exchange",
+    icon: "bx bx-wallet",
     title: "Money",
     items: [
       {to: "/money/dash", label: "MoneyDash"},
@@ -49,8 +54,9 @@ export const dataArray = [
       {to: "/money/plan/save", label: "MoneyPlanSave"},
     ]
   },
+  // sleep
   {
-    icon: "bi bi-moon-stars-fill",
+    icon: "bx bx-bed",
     title: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},

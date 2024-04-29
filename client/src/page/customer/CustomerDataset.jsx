@@ -464,7 +464,7 @@ export const CustomerDataset = () => {
               <Col xs={4} className={"mb-20 p-0 text-center"}>
                 {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableNode3())}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {buttonNode()}
                 <span className={"me-1 d-inline-flex"}>{buttonDefault()}</span>
               </Col>

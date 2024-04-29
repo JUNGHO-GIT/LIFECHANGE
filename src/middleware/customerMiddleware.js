@@ -7,10 +7,6 @@ export const percent = async (object) => {
     return [];
   }
 
-  console.log("===================================");
-  console.log(JSON.stringify(object, null, 2));
-  console.log("===================================");
-
   // 1. exercise
   const diffExercise = (plan, real, extra) => {
     const percent = ((real - plan) / plan) * 100;

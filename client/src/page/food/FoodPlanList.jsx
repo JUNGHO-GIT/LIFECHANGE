@@ -225,17 +225,17 @@ export const FoodPlanList = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {calendarNode()}
                 {tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {filterNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {pagingNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {buttonNode()}
               </Col>
             </Row>

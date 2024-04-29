@@ -119,10 +119,6 @@ export const save = async (object) => {
     return {};
   }
 
-  console.log("===============================");
-  console.log("object : ", JSON.stringify(object));
-  console.log("===============================");
-
   let totalVolume = 0;
   let totalTime = 0.0;
 

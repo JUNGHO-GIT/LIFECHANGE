@@ -63,10 +63,11 @@ export const SideBar = ({ sidebar, onClose }) => {
       <React.Fragment>
         <ul className={"sidebar-ul-text"}>
           <li className={"sidebar-li-text"}>
-            <div className={`${isActive === title ? "highlight" : ""}`} onClick={() => (
+            <div className={`${isActive === title ? "highlight" : ""} d-inline-flex`}
+            onClick={() => (
               toggleExpand(title)
             )}>
-              <i className={`${icon} me-5`}/>
+              <div className={"pt-2 me-5"}><i className={`${icon}`}></i></div>
               <span>{title}</span>
             </div>
             <Collapse in={isExpended === title}>

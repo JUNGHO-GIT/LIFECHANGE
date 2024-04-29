@@ -230,7 +230,7 @@
     align-items: center;
     justify-content: space-around;
     width: -webkit-fill-available !important;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
   }
   .react-datepicker__header {
@@ -250,5 +250,10 @@
   .react-datepicker__day--selected:hover {
     background-color : #007bff;
     transition: background-color 0.3s, color 0.3s;
+  }
+  .react-datepicker__input-container {
+    position: relative;
+    display: inline-block;
+    width: -webkit-fill-available !important;
   }
 }
