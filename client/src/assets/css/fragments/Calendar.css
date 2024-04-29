@@ -1,4 +1,4 @@
-/** All Device ************************************************************************************/
+/** None Media ************************************************************************************/
 .react-calendar {
   width: 100%;
   height: 100%;
@@ -52,6 +52,39 @@
   border-left: 0.3px solid #dadada;
   background-color: #cfe2ff;
 }
+.calendar-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.calendar-entry {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.calendar-tile {
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+}
+.calendar-tile-text abbr {
+  text-decoration: none;
+  color: #000000;
+  font-size: 0.5rem;
+  font-weight: 500;
+}
+.calendar-category {
+  margin: 0px 0px 0px 3px;
+  color: #ffffff;
+  font-size: 0.6rem !important;
+}
+
+/** Media *****************************************************************************************/
 .react-calendar button {
   display: inline-grid;
   align-items: center;
@@ -99,44 +132,12 @@
   border-radius: 5px;
   background-color: #ffffff;
 }
-.calendar-cell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-.calendar-entry {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-.calendar-tile {
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  padding: 5px;
-}
-.calendar-tile-text abbr {
-  text-decoration: none;
-  color: #000000;
-  font-size: 0.5rem;
-  font-weight: 500;
-}
-.calendar-category {
-  margin: 0px 0px 0px 3px;
-  color: #ffffff;
-  font-size: 0.6rem !important;
-}
 abbr[title] {
   text-decoration: none !important;
   color: #000000;
   font-weight: 700;
   cursor: pointer;
 }
-
 
 /** Desktop Device = 1200px ***********************************************************************/
 @media only screen and (min-width: 1200px) and (max-width: 10000px) {

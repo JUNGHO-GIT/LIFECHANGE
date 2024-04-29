@@ -1,4 +1,4 @@
-/** All Device ************************************************************************************/
+/** None Media ************************************************************************************/
 .react-time-picker {
   display: inline-block;
   position: relative;
@@ -36,6 +36,8 @@
   color: #ccc;
   cursor: pointer;
 }
+
+/** Media *****************************************************************************************/
 .react-time-picker__wrapper {
   display: flex;
   flex-direction: row;

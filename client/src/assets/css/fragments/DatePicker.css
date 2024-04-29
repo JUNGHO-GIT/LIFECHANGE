@@ -1,4 +1,4 @@
-/** All Device ************************************************************************************/
+/** None Media ************************************************************************************/
 .react-datepicker-wrapper {
   display: flex;
   flex-wrap: nowrap;
@@ -31,6 +31,8 @@
   display: inline-block;
   width: -webkit-fill-available !important;
 }
+
+/** Media *****************************************************************************************/
 .react-datepicker__input-container input {
   border: 1px solid #ccc;
   border-radius: 4px;

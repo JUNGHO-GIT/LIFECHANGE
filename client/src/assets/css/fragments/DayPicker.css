@@ -1,32 +1,5 @@
-/** All Device ************************************************************************************/
-.rdp {
-  --rdp-accent-color: #0000ff;
-  --rdp-background-color: #e7edff;
-  --rdp-accent-color-dark: #3003e1;
-  --rdp-background-color-dark: #180270;
-  --rdp-outline: 2px solid var(--rdp-accent-color);
-  --rdp-outline-selected: 3px solid var(--rdp-accent-color);
-  --rdp-selected-color: #fff;
-  margin: 1em;
-}
-.rdp-head_cell {
-  vertical-align: middle;
-  font-weight: 700;
-  text-align: center;
-  height: var(--rdp-cell-size);
-  padding: 0;
-  text-transform: uppercase;
-  background-color: #cfe2ff;
-}
-.today,
-.rdp-caption_label {
-  font-weight: bolder;
-}
-.rdp-cell {
-  width: var(--rdp-cell-size);
-  height: var(--rdp-cell-size);
-  text-align: center;
-}
+/** None Media ************************************************************************************/
+
 .rdp-table {
   margin: 0;
   max-width: calc(var(--rdp-cell-size) * 7);
@@ -83,6 +56,42 @@
 .inside {
   color: #000;
 }
+.dayPicker-x-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+}
+
+/** Media *****************************************************************************************/
+.rdp {
+  --rdp-accent-color: #0000ff;
+  --rdp-background-color: #e7edff;
+  --rdp-accent-color-dark: #3003e1;
+  --rdp-background-color-dark: #180270;
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  --rdp-outline-selected: 3px solid var(--rdp-accent-color);
+  --rdp-selected-color: #fff;
+  margin: 1em;
+}
+.rdp-head_cell {
+  vertical-align: middle;
+  font-weight: 700;
+  text-align: center;
+  height: var(--rdp-cell-size);
+  padding: 0;
+  text-transform: uppercase;
+  background-color: #cfe2ff;
+}
+.today,
+.rdp-caption_label {
+  font-weight: bolder;
+}
+.rdp-cell {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  text-align: center;
+}
 .dayPicker-container {
   position: absolute;
   top: 70%;
@@ -93,13 +102,6 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 15px;
 }
-.dayPicker-x-btn {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  cursor: pointer;
-}
-
 
 /** Desktop Device = 1200px ***********************************************************************/
 @media only screen and (min-width: 1200px) and (max-width: 10000px) {
