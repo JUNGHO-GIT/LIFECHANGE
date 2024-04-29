@@ -1,4 +1,4 @@
-/** None Media ************************************************************************************/
+/** 0. Non Media **********************************************************************************/
 
 .rdp-table {
   margin: 0;
@@ -63,7 +63,7 @@
   cursor: pointer;
 }
 
-/** Media *****************************************************************************************/
+/** 0. Media **************************************************************************************/
 .rdp {
   --rdp-accent-color: #0000ff;
   --rdp-background-color: #e7edff;
@@ -103,88 +103,34 @@
   border-radius: 15px;
 }
 
-/** Desktop Device = 1200px ***********************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+/** 1. Small (0 ~ 479px) **************************************************************************/
+@media only screen and (min-width: 0px) and (max-width: 479px) {
 
   /** non display **/
 
   /** display **/
   .rdp {
-    --rdp-cell-size: 4.2rem;
-    --rdp-caption-font-size: 14px;
-  }
-  .rdp-head_cell {
-    font-size: 1.2rem;
-  }
-  .today,
-  .rdp-caption_label {
-    font-size: 1.8rem;
-  }
-  .rdp-cell {
-    padding: 0px 0px 0px 12px;
-    font-size: 0.9rem;
-  }
-  .dayPicker-container {
-    width: 500px;
-    height: 540px;
-  }
-}
-
-/** Tablet Device = 992px ~ 1199px ****************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-  /** non display **/
-
-  /** display **/
-  .rdp {
-    --rdp-cell-size: 4.0rem;
-    --rdp-caption-font-size: 13px;
-  }
-  .rdp-head_cell {
-    font-size: 1.1rem;
-  }
-  .today,
-  .rdp-caption_label {
-    font-size: 1.7rem;
-  }
-  .rdp-cell {
-    padding: 0px 0px 0px 11px;
-    font-size: 0.85rem;
-  }
-  .dayPicker-container {
-    width: 450px;
-    height: 490px;
-  }
-}
-
-/** Mobile Device = 768px ~ 991px *****************************************************************/
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  /** non display **/
-
-  /** display **/
-  .rdp {
-    --rdp-cell-size: 3.8rem;
+    --rdp-cell-size: 2.2rem;
     --rdp-caption-font-size: 12px;
   }
   .rdp-head_cell {
-    font-size: 1.0rem;
+    font-size: 0.8rem;
   }
   .today,
   .rdp-caption_label {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   .rdp-cell {
-    padding: 0px 0px 0px 10px;
-    font-size: 0.8rem;
+    padding: 0px 0px 0px 5px;
+    font-size: 0.7rem;
   }
   .dayPicker-container {
-    width: 400px;
-    height: 500px;
+    width: 250px;
+    height: 310px;
   }
 }
 
-/** Mobile Device = 480px ~ 767px *****************************************************************/
+/** 2. Mobile (480px ~ 767px) *********************************************************************/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
   /** non display **/
@@ -211,29 +157,83 @@
   }
 }
 
-/** Small devices = ~ 479px ***********************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 479px) {
+/** 3. Pablet (768px ~ 991px) *********************************************************************/
+@media only screen and (min-width: 768px) and (max-width: 991px) {
 
   /** non display **/
 
   /** display **/
   .rdp {
-    --rdp-cell-size: 2.2rem;
+    --rdp-cell-size: 3.8rem;
     --rdp-caption-font-size: 12px;
   }
   .rdp-head_cell {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
   }
   .today,
   .rdp-caption_label {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
   .rdp-cell {
-    padding: 0px 0px 0px 5px;
-    font-size: 0.7rem;
+    padding: 0px 0px 0px 10px;
+    font-size: 0.8rem;
   }
   .dayPicker-container {
-    width: 250px;
-    height: 310px;
+    width: 400px;
+    height: 500px;
+  }
+}
+
+/** 4. Tablet (992px ~ 1199px) ********************************************************************/
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+  /** non display **/
+
+  /** display **/
+  .rdp {
+    --rdp-cell-size: 4.0rem;
+    --rdp-caption-font-size: 13px;
+  }
+  .rdp-head_cell {
+    font-size: 1.1rem;
+  }
+  .today,
+  .rdp-caption_label {
+    font-size: 1.7rem;
+  }
+  .rdp-cell {
+    padding: 0px 0px 0px 11px;
+    font-size: 0.85rem;
+  }
+  .dayPicker-container {
+    width: 450px;
+    height: 490px;
+  }
+}
+
+/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
+@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+
+  /** non display **/
+
+  /** display **/
+  .rdp {
+    --rdp-cell-size: 4.2rem;
+    --rdp-caption-font-size: 14px;
+  }
+  .rdp-head_cell {
+    font-size: 1.2rem;
+  }
+  .today,
+  .rdp-caption_label {
+    font-size: 1.8rem;
+  }
+  .rdp-cell {
+    padding: 0px 0px 0px 12px;
+    font-size: 0.9rem;
+  }
+  .dayPicker-container {
+    width: 500px;
+    height: 540px;
   }
 }

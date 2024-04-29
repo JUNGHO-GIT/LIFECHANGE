@@ -1,10 +1,10 @@
-/** None Media ************************************************************************************/
+/** 0. Non Media **********************************************************************************/
 svg.recharts-surface {
   width: 10px;
   height: 10px;
 }
 
-/** Media *****************************************************************************************/
+/** 0. Media **************************************************************************************/
 .recharts-cartesian-axis-tick-value {
   font-weight: 500 !important;
   padding: 0px 0px 0px 0px !important;
@@ -39,94 +39,36 @@ svg.recharts-surface {
   padding: 0px 0px 0px 0px !important;
 }
 
-/** Desktop Device = 1200px ***********************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+/** 1. Small (0 ~ 479px) **************************************************************************/
+@media only screen and (min-width: 0px) and (max-width: 479px) {
 
   /** non display **/
 
   /** display **/
   .recharts-cartesian-axis-tick-value {
-    font-size: 1.000rem !important;
+    font-size: 0.600rem !important;
   }
   .recharts-tooltip-label {
-    font-size: 1.300rem !important;
+    font-size: 0.900rem !important;
   }
   .recharts-tooltip-item-list {
-    font-size: 1.000rem !important;
+    font-size: 0.600rem !important;
   }
   .dash-title {
-    font-size: 1.2rem !important;
+    font-size: 0.8rem !important;
   }
   .dash-title-sub {
-    font-size: 1.0rem !important;
+    font-size: 0.7rem !important;
   }
   .dash-checkbox {
-    font-size: 1.000rem !important;
+    font-size: 0.600rem !important;
   }
   .dash-pie-text {
-    font-size: 1.000rem !important;
+    font-size: 0.600rem !important;
   }
 }
 
-/** Tablet Device = 992px ~ 1199px ****************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-  /** non display **/
-
-  /** display **/
-  .recharts-cartesian-axis-tick-value {
-    font-size: 0.900rem !important;
-  }
-  .recharts-tooltip-label {
-    font-size: 1.200rem !important;
-  }
-  .recharts-tooltip-item-list {
-    font-size: 0.900rem !important;
-  }
-  .dash-title {
-    font-size: 1.1rem !important;
-  }
-  .dash-title-sub {
-    font-size: 1.0rem !important;
-  }
-  .dash-checkbox {
-    font-size: 0.900rem !important;
-  }
-  .dash-pie-text {
-    font-size: 0.900rem !important;
-  }
-}
-
-/** Mobile Device = 768px ~ 991px *****************************************************************/
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  /** non display **/
-
-  /** display **/
-  .recharts-cartesian-axis-tick-value {
-    font-size: 0.800rem !important;
-  }
-  .recharts-tooltip-label {
-    font-size: 1.100rem !important;
-  }
-  .recharts-tooltip-item-list {
-    font-size: 0.800rem !important;
-  }
-  .dash-title {
-    font-size: 1.0rem !important;
-  }
-  .dash-title-sub {
-    font-size: 0.9rem !important;
-  }
-  .dash-checkbox {
-    font-size: 0.800rem !important;
-  }
-  .dash-pie-text {
-    font-size: 0.800rem !important;
-  }
-}
-
-/** Mobile Device = 480px ~ 767px *****************************************************************/
+/** 2. Mobile (480px ~ 767px) *********************************************************************/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
   /** non display **/
@@ -155,31 +97,89 @@ svg.recharts-surface {
   }
 }
 
-/** Small devices = ~ 479px ***********************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 479px) {
+/** 3. Pablet (768px ~ 991px) *********************************************************************/
+@media only screen and (min-width: 768px) and (max-width: 991px) {
 
   /** non display **/
 
   /** display **/
   .recharts-cartesian-axis-tick-value {
-    font-size: 0.600rem !important;
+    font-size: 0.800rem !important;
   }
   .recharts-tooltip-label {
-    font-size: 0.900rem !important;
+    font-size: 1.100rem !important;
   }
   .recharts-tooltip-item-list {
-    font-size: 0.600rem !important;
+    font-size: 0.800rem !important;
   }
   .dash-title {
-    font-size: 0.8rem !important;
+    font-size: 1.0rem !important;
   }
   .dash-title-sub {
-    font-size: 0.7rem !important;
+    font-size: 0.9rem !important;
   }
   .dash-checkbox {
-    font-size: 0.600rem !important;
+    font-size: 0.800rem !important;
   }
   .dash-pie-text {
-    font-size: 0.600rem !important;
+    font-size: 0.800rem !important;
+  }
+}
+
+/** 4. Tablet (992px ~ 1199px) ********************************************************************/
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+  /** non display **/
+
+  /** display **/
+  .recharts-cartesian-axis-tick-value {
+    font-size: 0.900rem !important;
+  }
+  .recharts-tooltip-label {
+    font-size: 1.200rem !important;
+  }
+  .recharts-tooltip-item-list {
+    font-size: 0.900rem !important;
+  }
+  .dash-title {
+    font-size: 1.1rem !important;
+  }
+  .dash-title-sub {
+    font-size: 1.0rem !important;
+  }
+  .dash-checkbox {
+    font-size: 0.900rem !important;
+  }
+  .dash-pie-text {
+    font-size: 0.900rem !important;
+  }
+}
+
+/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
+@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+
+  /** non display **/
+
+  /** display **/
+  .recharts-cartesian-axis-tick-value {
+    font-size: 1.000rem !important;
+  }
+  .recharts-tooltip-label {
+    font-size: 1.300rem !important;
+  }
+  .recharts-tooltip-item-list {
+    font-size: 1.000rem !important;
+  }
+  .dash-title {
+    font-size: 1.2rem !important;
+  }
+  .dash-title-sub {
+    font-size: 1.0rem !important;
+  }
+  .dash-checkbox {
+    font-size: 1.000rem !important;
+  }
+  .dash-pie-text {
+    font-size: 1.000rem !important;
   }
 }

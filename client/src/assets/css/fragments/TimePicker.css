@@ -1,4 +1,4 @@
-/** None Media ************************************************************************************/
+/** 0. Non Media **********************************************************************************/
 .react-time-picker {
   display: inline-block;
   position: relative;
@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 
-/** Media *****************************************************************************************/
+/** 0. Media **************************************************************************************/
 .react-time-picker__wrapper {
   display: flex;
   flex-direction: row;
@@ -94,97 +94,37 @@
   fill: #555;
 }
 
-/** Desktop Device = 1200px ***********************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+/** 1. Small (0 ~ 479px) **************************************************************************/
+@media only screen and (min-width: 0px) and (max-width: 479px) {
 
   /** non display **/
 
   /** display **/
   .react-time-picker__wrapper {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .react-time-picker__inputGroup__divider {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
   }
   .react-time-picker__inputGroup__input {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
   }
   .react-time-picker__button {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
   }
   .react-time-picker__clear-button {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
   }
   .react-time-picker__inputGroup__leadingZero {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
   }
   .react-time-picker__button__icon {
-    height: 1rem;
-    width: 1rem;
+    height: 0.6rem;
+    width: 0.6rem;
   }
 }
 
-/** Tablet Device = 992px ~ 1199px ****************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-  /** non display **/
-
-  /** display **/
-  .react-time-picker__wrapper {
-    font-size: 1.1rem;
-  }
-  .react-time-picker__inputGroup__divider {
-    font-size: 1.1rem;
-  }
-  .react-time-picker__inputGroup__input {
-    font-size: 1.1rem;
-  }
-  .react-time-picker__button {
-    font-size: 1.1rem;
-  }
-  .react-time-picker__clear-button {
-    font-size: 1.1rem;
-  }
-  .react-time-picker__inputGroup__leadingZero {
-    font-size: 1.1rem;
-  }
-  .react-time-picker__button__icon {
-    height: 0.9rem;
-    width: 0.9rem;
-  }
-}
-
-/** Mobile Device = 768px ~ 991px *****************************************************************/
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  /** non display **/
-
-  /** display **/
-  .react-time-picker__wrapper {
-    font-size: 1.0rem;
-  }
-  .react-time-picker__inputGroup__divider {
-    font-size: 1.0rem;
-  }
-  .react-time-picker__inputGroup__input {
-    font-size: 1.0rem;
-  }
-  .react-time-picker__button {
-    font-size: 1.0rem;
-  }
-  .react-time-picker__clear-button {
-    font-size: 1.0rem;
-  }
-  .react-time-picker__inputGroup__leadingZero {
-    font-size: 1.0rem;
-  }
-  .react-time-picker__button__icon {
-    height: 0.8rem;
-    width: 0.8rem;
-  }
-}
-
-/** Mobile Device = 480px ~ 767px *****************************************************************/
+/** 2. Mobile (480px ~ 767px) *********************************************************************/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
   /** non display **/
@@ -214,32 +154,92 @@
   }
 }
 
-/** Small devices = ~ 479px ***********************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 479px) {
+/** 3. Pablet (768px ~ 991px) *********************************************************************/
+@media only screen and (min-width: 768px) and (max-width: 991px) {
 
   /** non display **/
 
   /** display **/
   .react-time-picker__wrapper {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
   }
   .react-time-picker__inputGroup__divider {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
   }
   .react-time-picker__inputGroup__input {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
   }
   .react-time-picker__button {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
   }
   .react-time-picker__clear-button {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
   }
   .react-time-picker__inputGroup__leadingZero {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
   }
   .react-time-picker__button__icon {
-    height: 0.6rem;
-    width: 0.6rem;
+    height: 0.8rem;
+    width: 0.8rem;
+  }
+}
+
+/** 4. Tablet (992px ~ 1199px) ********************************************************************/
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+  /** non display **/
+
+  /** display **/
+  .react-time-picker__wrapper {
+    font-size: 1.1rem;
+  }
+  .react-time-picker__inputGroup__divider {
+    font-size: 1.1rem;
+  }
+  .react-time-picker__inputGroup__input {
+    font-size: 1.1rem;
+  }
+  .react-time-picker__button {
+    font-size: 1.1rem;
+  }
+  .react-time-picker__clear-button {
+    font-size: 1.1rem;
+  }
+  .react-time-picker__inputGroup__leadingZero {
+    font-size: 1.1rem;
+  }
+  .react-time-picker__button__icon {
+    height: 0.9rem;
+    width: 0.9rem;
+  }
+}
+
+/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
+@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+
+  /** non display **/
+
+  /** display **/
+  .react-time-picker__wrapper {
+    font-size: 1rem;
+  }
+  .react-time-picker__inputGroup__divider {
+    font-size: 1.2rem;
+  }
+  .react-time-picker__inputGroup__input {
+    font-size: 1.2rem;
+  }
+  .react-time-picker__button {
+    font-size: 1.2rem;
+  }
+  .react-time-picker__clear-button {
+    font-size: 1.2rem;
+  }
+  .react-time-picker__inputGroup__leadingZero {
+    font-size: 1.2rem;
+  }
+  .react-time-picker__button__icon {
+    height: 1rem;
+    width: 1rem;
   }
 }

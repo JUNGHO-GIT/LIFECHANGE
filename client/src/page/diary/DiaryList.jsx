@@ -152,7 +152,7 @@ export const DiaryList = () => {
           tileClassName={({date, view}) => {
             return "calendar-tile-text";
           }}
-          tileContent={({activeStartDate, date, view}) => {
+          tileContent={({date, view}) => {
             const diaryForDates = OBJECT?.filter((diary) => (
               dateInRange(date, diary.diary_startDt, diary.diary_endDt)
             ));

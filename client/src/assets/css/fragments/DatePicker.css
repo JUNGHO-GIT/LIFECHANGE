@@ -1,4 +1,4 @@
-/** None Media ************************************************************************************/
+/** 0. Non Media **********************************************************************************/
 .react-datepicker-wrapper {
   display: flex;
   flex-wrap: nowrap;
@@ -32,7 +32,7 @@
   width: -webkit-fill-available !important;
 }
 
-/** Media *****************************************************************************************/
+/** 0. Media **************************************************************************************/
 .react-datepicker__input-container input {
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -61,91 +61,35 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-/** Desktop Device = 1200px ***********************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+/** 1. Small (0 ~ 479px) **************************************************************************/
+@media only screen and (min-width: 0px) and (max-width: 479px) {
 
   /** non display **/
 
   /** display **/
   .react-datepicker__input-container input {
-    font-size: 1.1rem;
-    max-width: 180px;
+    font-size: 0.7rem;
+    max-width: 100px;
   }
   .react-datepicker__current-month {
-    font-size: 1.5rem;
-  }
-  .react-datepicker__month-container {
     font-size: 1.1rem;
   }
-  .react-datepicker__day {
-    width: 1.8rem;
-    height: 1.8rem;
-    line-height: 1.8rem;
-  }
-  .react-datepicker__day-name {
-    width: 1.8rem;
-    height: 1.8rem;
-    line-height: 1.8rem;
-  }
-}
-
-/** Tablet Device = 992px ~ 1199px ****************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-  /** non display **/
-
-  /** display **/
-  .react-datepicker__input-container input {
-    font-size: 1.0rem;
-    max-width: 160px;
-  }
-  .react-datepicker__current-month {
-    font-size: 1.4rem;
-  }
   .react-datepicker__month-container {
-    font-size: 1.0rem;
+    font-size: 0.7rem;
   }
   .react-datepicker__day {
-    width: 1.7rem;
-    height: 1.7rem;
-    line-height: 1.7rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    line-height: 1.4rem;
   }
   .react-datepicker__day-name {
-    width: 1.7rem;
-    height: 1.7rem;
-    line-height: 1.7rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    line-height: 1.4rem;
   }
 }
 
-/** Mobile Device = 768px ~ 991px *****************************************************************/
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  /** non display **/
-
-  /** display **/
-  .react-datepicker__input-container input {
-    font-size: 0.9rem;
-    max-width: 140px;
-  }
-  .react-datepicker__current-month {
-    font-size: 1.3rem;
-  }
-  .react-datepicker__month-container {
-    font-size: 0.9rem;
-  }
-  .react-datepicker__day {
-    width: 1.6rem;
-    height: 1.6rem;
-    line-height: 1.6rem;
-  }
-  .react-datepicker__day-name {
-    width: 1.6rem;
-    height: 1.6rem;
-    line-height: 1.6rem;
-  }
-}
-
-/** Mobile Device = 480px ~ 767px *****************************************************************/
+/** 2. Mobile (480px ~ 767px) *********************************************************************/
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
   /** non display **/
@@ -173,30 +117,86 @@
   }
 }
 
-/** Small devices = ~ 479px ***********************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 479px) {
+/** 3. Pablet (768px ~ 991px) *********************************************************************/
+@media only screen and (min-width: 768px) and (max-width: 991px) {
 
   /** non display **/
 
   /** display **/
   .react-datepicker__input-container input {
-    font-size: 0.7rem;
-    max-width: 100px;
+    font-size: 0.9rem;
+    max-width: 140px;
   }
   .react-datepicker__current-month {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
   .react-datepicker__month-container {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
   }
   .react-datepicker__day {
-    width: 1.4rem;
-    height: 1.4rem;
-    line-height: 1.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
   }
   .react-datepicker__day-name {
-    width: 1.4rem;
-    height: 1.4rem;
-    line-height: 1.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    line-height: 1.6rem;
+  }
+}
+
+/** 4. Tablet (992px ~ 1199px) ********************************************************************/
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+  /** non display **/
+
+  /** display **/
+  .react-datepicker__input-container input {
+    font-size: 1.0rem;
+    max-width: 160px;
+  }
+  .react-datepicker__current-month {
+    font-size: 1.4rem;
+  }
+  .react-datepicker__month-container {
+    font-size: 1.0rem;
+  }
+  .react-datepicker__day {
+    width: 1.7rem;
+    height: 1.7rem;
+    line-height: 1.7rem;
+  }
+  .react-datepicker__day-name {
+    width: 1.7rem;
+    height: 1.7rem;
+    line-height: 1.7rem;
+  }
+}
+
+/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
+@media only screen and (min-width: 1200px) and (max-width: 10000px) {
+
+  /** non display **/
+
+  /** display **/
+  .react-datepicker__input-container input {
+    font-size: 1.1rem;
+    max-width: 180px;
+  }
+  .react-datepicker__current-month {
+    font-size: 1.5rem;
+  }
+  .react-datepicker__month-container {
+    font-size: 1.1rem;
+  }
+  .react-datepicker__day {
+    width: 1.8rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+  }
+  .react-datepicker__day-name {
+    width: 1.8rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
   }
 }
