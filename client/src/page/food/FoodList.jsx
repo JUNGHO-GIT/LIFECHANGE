@@ -119,13 +119,13 @@ export const FoodList = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
-              <th className={"w-10"}>날짜</th>
-              <th>분류</th>
-              <th>식품명</th>
-              <th>칼로리</th>
+              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead"}>분류</th>
+              <th className={"table-thead"}>식품명</th>
+              <th className={"table-thead"}>칼로리</th>
             </tr>
           </thead>
           <tbody>

@@ -263,8 +263,8 @@ export const FoodSave = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
           <tr>
             <th>part</th>
             <th>title</th>

@@ -118,8 +118,8 @@ export const FoodSearch = () => {
     };
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
               <th>식품명</th>
               <th>브랜드</th>

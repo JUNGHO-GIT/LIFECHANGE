@@ -118,8 +118,8 @@ export const CustomerDataset = () => {
   const tableNode1 = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
               <th>Section</th>
             </tr>
@@ -214,8 +214,8 @@ export const CustomerDataset = () => {
     };
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
               <th>Part</th>
             </tr>
@@ -338,8 +338,8 @@ export const CustomerDataset = () => {
     };
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
               <th>Title</th>
             </tr>

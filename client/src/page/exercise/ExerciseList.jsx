@@ -118,15 +118,15 @@ export const ExerciseList = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
-              <th className={"w-10"}>날짜</th>
-              <th>부위</th>
-              <th>종목</th>
-              <th>세트</th>
-              <th>횟수</th>
-              <th>중량</th>
+              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead"}>부위</th>
+              <th className={"table-thead"}>종목</th>
+              <th className={"table-thead"}>세트</th>
+              <th className={"table-thead"}>횟수</th>
+              <th className={"table-thead"}>중량</th>
             </tr>
           </thead>
           <tbody>

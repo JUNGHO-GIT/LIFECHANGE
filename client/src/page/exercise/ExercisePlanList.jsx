@@ -119,14 +119,14 @@ export const ExercisePlanList = () => {
   const tableNode = () => {
     function tableFragment () {
       return (
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
-              <th className={"w-20"}>날짜</th>
-              <th>분류</th>
-              <th>목표</th>
-              <th>실제</th>
-              <th>비교</th>
+              <th className={"table-thead w-20"}>날짜</th>
+              <th className={"table-thead"}>분류</th>
+              <th className={"table-thead"}>목표</th>
+              <th className={"table-thead"}>실제</th>
+              <th className={"table-thead"}>비교</th>
             </tr>
           </thead>
           <tbody>

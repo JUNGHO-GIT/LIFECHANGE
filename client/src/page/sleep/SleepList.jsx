@@ -107,8 +107,8 @@ export const SleepList = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
           <tr>
             <th className={"w-10"}>날짜</th>
             <th>취침</th>

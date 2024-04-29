@@ -113,15 +113,15 @@ export const FoodPlanDetail = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
-              <th className={"w-20"}>날짜</th>
-              <th>칼로리 목표</th>
-              <th>탄수화물 목표</th>
-              <th>단백질 목표</th>
-              <th>지방 목표</th>
-              <th>삭제</th>
+              <th className={"table-thead w-20"}>날짜</th>
+              <th className={"table-thead"}>칼로리 목표</th>
+              <th className={"table-thead"}>탄수화물 목표</th>
+              <th className={"table-thead"}>단백질 목표</th>
+              <th className={"table-thead"}>지방 목표</th>
+              <th className={"table-thead"}>삭제</th>
             </tr>
           </thead>
           <tbody>

@@ -126,15 +126,15 @@ export const MoneyDetail = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
-              <th className={"w-10"}>날짜</th>
-              <th>분류</th>
-              <th>항목</th>
-              <th>금액</th>
-              <th>내용</th>
-              <th>삭제</th>
+              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead"}>분류</th>
+              <th className={"table-thead"}>항목</th>
+              <th className={"table-thead"}>금액</th>
+              <th className={"table-thead"}>내용</th>
+              <th className={"table-thead"}>삭제</th>
             </tr>
           </thead>
           <tbody>

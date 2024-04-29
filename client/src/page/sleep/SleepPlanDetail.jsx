@@ -111,8 +111,8 @@ export const SleepPlanDetail = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
           <tr>
             <th className={"w-20"}>날짜</th>
             <th>취침 목표</th>

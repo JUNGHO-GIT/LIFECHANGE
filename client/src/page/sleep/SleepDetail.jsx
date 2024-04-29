@@ -118,14 +118,14 @@ export const SleepDetail = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        <Table hover responsive variant={"light"} border={1}>
-          <thead className={"table-primary"}>
+        <Table hover responsive border={1}>
+          <thead>
             <tr>
-              <th className={"w-10"}>날짜</th>
-              <th>취침</th>
-              <th>기상</th>
-              <th>수면</th>
-              <th>삭제</th>
+              <th className={"table-thead w-10"}>날짜</th>
+              <th className={"table-thead"}>취침</th>
+              <th className={"table-thead"}>기상</th>
+              <th className={"table-thead"}>수면</th>
+              <th className={"table-thead"}>삭제</th>
             </tr>
           </thead>
           <tbody>
