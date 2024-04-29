@@ -81,9 +81,9 @@ export const CustomerSignup = () => {
   const btnRefresh = () => {
     return (
       <React.Fragment>
-        <Button type={"button"} variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
-        navParam(0);
-      }}>
+        <Button type={"button"} size={"sm"} className={"success-btn"} onClick={() => {
+          navParam(0);
+        }}>
         Refresh
       </Button>
       </React.Fragment>
@@ -92,20 +92,22 @@ export const CustomerSignup = () => {
   const btnSignUp = () => {
     return (
       <React.Fragment>
-        <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowCustomerSave}>
-        Submit
-      </Button>
+        <Button type={"button"} size={"sm"} className={"primary-btn"} onClick={() => {
+          flowCustomerSave();
+        }}>
+          Submit
+        </Button>
       </React.Fragment>
     );
   };
   const btnCustomerList = () => {
     return (
       <React.Fragment>
-        <Button type={"button"} variant={"primary"} size={"sm"} className={"ms-2"} onClick={() => {
-        navParam("/customer/list");
-      }}>
-        List
-      </Button>
+        <Button type={"button"} size={"sm"} className={"secondary-btn"} onClick={() => {
+          navParam("/customer/list");
+        }}>
+          List
+        </Button>
       </React.Fragment>
     );
   };

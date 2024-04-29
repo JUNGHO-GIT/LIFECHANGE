@@ -43,7 +43,7 @@
   color: #000000;
   font-weight: 600;
   margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 25px;
+  padding: 20px 0px 0px 25px;
   cursor: pointer;
 }
 .sidebar-ul-text {
@@ -130,7 +130,7 @@
     font-size: 0.7rem;
   }
   .sidebar-image-logo {
-    width: 180px;
+    width: 175px;
     height: 45px;
   }
 }
@@ -157,7 +157,7 @@
     font-size: 0.8rem;
   }
   .sidebar-image-logo {
-    width: 190px;
+    width: 195px;
     height: 55px;
   }
 }
@@ -184,7 +184,7 @@
     font-size: 0.8rem;
   }
   .sidebar-image-logo {
-    width: 200px;
+    width: 215px;
     height: 60px;
   }
 }
@@ -211,7 +211,7 @@
     font-size: 0.8rem;
   }
   .sidebar-image-logo {
-    width: 210px;
+    width: 235px;
     height: 65px;
   }
 }

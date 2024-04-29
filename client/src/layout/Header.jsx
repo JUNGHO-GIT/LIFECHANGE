@@ -32,7 +32,7 @@ export const Header = () => {
   const buttonNode = () => {
     function btnLogIn () {
       return (
-        <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
+        <Button size={"sm"} className={"dark-btn"} onClick={() => {
           navParam("/customer/login");
         }}>
           Login
@@ -41,7 +41,7 @@ export const Header = () => {
     };
     function btnSignUp () {
       return (
-        <Button variant={"secondary"} size={"sm"} className={"me-2"} onClick={() => {
+        <Button size={"sm"} className={"dark-btn"} onClick={() => {
           navParam("/customer/signup");
         }}>
           Signup
@@ -50,7 +50,7 @@ export const Header = () => {
     };
     function btnLogOut () {
       return (
-        <Button variant={"secondary"} size={"sm"} className={"me-5"} onClick={() => {
+        <Button size={"sm"} className={"dark-btn"} onClick={() => {
           sessionStorage.clear();
           sessionStorage.setItem("customer_id", "false");
           window.location.reload();
@@ -81,7 +81,7 @@ export const Header = () => {
           <Row>
             <Col lg={3} md={3} sm={3} xs={3} className={"d-left"}>
               <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
-              <Button type={"button"} size={"sm"} variant={"secondary"} onClick={toggleSidebar}>
+              <Button type={"button"} size={"sm"} className={"dark-btn"} onClick={toggleSidebar}>
                 Sidebar
               </Button>
             </Col>

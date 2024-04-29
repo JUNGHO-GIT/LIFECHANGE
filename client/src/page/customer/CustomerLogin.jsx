@@ -88,20 +88,22 @@ export const CustomerLogin = () => {
   const buttonCustomerLogin = () => {
     return (
       <React.Fragment>
-        <Button variant={"primary"} size={"sm"} className={"ms-2"} onClick={flowCustomerLogin}>
-        Log In
-      </Button>
+        <Button size={"sm"} className={"primary-btn"} onClick={() => {
+          flowCustomerLogin();
+        }}>
+          Log In
+        </Button>
       </React.Fragment>
     );
   };
   const buttonRefreshPage = () => {
     return (
       <React.Fragment>
-        <Button variant={"success"} size={"sm"} className={"ms-2"} onClick={() => {
-        navParam(0);
-      }}>
-        Refresh
-      </Button>
+        <Button size={"sm"} className={"success-btn"} onClick={() => {
+          navParam(0);
+        }}>
+          Refresh
+        </Button>
       </React.Fragment>
     );
   };

@@ -350,12 +350,12 @@ export const DiaryDetail = () => {
   const buttonNode = () => {
     return (
       <React.Fragment>
-        <Button variant={"primary"} className={"me-10"} size={"sm"} onClick={() => {
+        <Button size={"sm"} className={"primary-btn"} onClick={() => {
           flowSave();
         }}>
           저장
         </Button>
-        <Button variant={"danger"} className={"ms-10"} size={"sm"} onClick={() => {
+        <Button size={"sm"} className={"danger-btn"} onClick={() => {
           flowDelete(OBJECT._id);
         }}>
           삭제
