@@ -156,12 +156,10 @@ export const MoneySave = () => {
         money_amount: 0,
         money_content: ""
       };
-
       setCOUNT((prev) => ({
         ...prev,
         sectionCnt: newCount
       }));
-
       if (newCount > 0) {
         let updatedSection = Array(newCount).fill(null).map((_, idx) => (
           idx < OBJECT.money_section.length ? OBJECT.money_section[idx] : defaultSection
@@ -178,36 +176,30 @@ export const MoneySave = () => {
         }));
       }
     };
-    function inputFragment () {
-      return (
-        <Row className={"d-center"}>
-          <Col xs={4}>
-            <NumericFormat
-              min={0}
-              max={10}
-              minLength={1}
-              maxLength={2}
-              datatype={"number"}
-              displayType={"input"}
-              id={"sectionCnt"}
-              name={"sectionCnt"}
-              className={"form-control mb-30"}
-              disabled={false}
-              thousandSeparator={false}
-              fixedDecimalScale={true}
-              value={Math.min(10, COUNT?.sectionCnt)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(10, parseInt(values?.value));
-                handlerCount(limitedValue.toString());
-              }}
-            ></NumericFormat>
-          </Col>
-        </Row>
-      );
-    };
     return (
       <React.Fragment>
-        {inputFragment()}
+        <div className={"input-group"}>
+          <span className={"input-group-text"}>섹션 갯수</span>
+          <NumericFormat
+            min={0}
+            max={10}
+            minLength={1}
+            maxLength={2}
+            datatype={"number"}
+            displayType={"input"}
+            id={"sectionCnt"}
+            name={"sectionCnt"}
+            className={"form-control"}
+            disabled={false}
+            thousandSeparator={false}
+            fixedDecimalScale={true}
+            value={Math.min(10, COUNT?.sectionCnt)}
+            onValueChange={(values) => {
+              const limitedValue = Math.min(10, parseInt(values?.value));
+              handlerCount(limitedValue.toString());
+            }}
+          ></NumericFormat>
+        </div>
       </React.Fragment>
     );
   };
@@ -251,7 +243,7 @@ export const MoneySave = () => {
             </Col>
             <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
-                <span className={"input-group-text"}>타이틀</span>
+                <span className={"input-group-text"}>제목</span>
                 <select
                   id={`money_title_idx-${i}`}
                   className={"form-select"}
@@ -349,11 +341,9 @@ export const MoneySave = () => {
     };
     function tableFragment () {
       return (
-        <Row className={"d-center"}>
-          <Col lg={12} md={12} sm={12} xs={12}>
-            {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
-          </Col>
-        </Row>
+        <React.Fragment>
+          {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
+        </React.Fragment>
       );
     };
     function tableRemain () {

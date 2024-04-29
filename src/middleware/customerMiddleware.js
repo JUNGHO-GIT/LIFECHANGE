@@ -7,6 +7,10 @@ export const percent = async (object) => {
     return [];
   }
 
+  console.log("===================================");
+  console.log(JSON.stringify(object, null, 2));
+  console.log("===================================");
+
   // 1. exercise
   const diffExercise = (plan, real, extra) => {
     const percent = ((real - plan) / plan) * 100;
@@ -198,80 +202,30 @@ export const percent = async (object) => {
     return Number((sum / Object.keys(object).length).toFixed(1));
   }
 
-  let exercise = {};
-  let food = {};
-  let money = {};
-  let sleep = {};
+  const exercise = {
+    diff_count: diffExercise(object.exercisePlan.exercise_plan_count, object.exerciseReal.exercise_total_count, "") || 1,
+    diff_volume: diffExercise(object.exercisePlan.exercise_plan_volume, object.exerciseReal.exercise_total_volume, "volume") || 1,
+    diff_cardio: diffExercise(object.exercisePlan.exercise_plan_cardio, object.exerciseReal.exercise_total_cardio, "time") || 1,
+    diff_weight:  diffExercise(object.exercisePlan.exercise_plan_weight, object.exerciseReal.exercise_body_weight, "") || 1,
+  };
 
-  // exercisePlan 과 exerciseReal 이 빈객체가 아닌경우
-  if (object.exercisePlan && object.exerciseReal) {
-    exercise = {
-      diff_count: diffExercise(object.exercisePlan.exercise_plan_count, object.exerciseReal.exercise_total_count, ""),
-      diff_volume: diffExercise(object.exercisePlan.exercise_plan_volume, object.exerciseReal.exercise_total_volume, "volume"),
-      diff_cardio: diffExercise(object.exercisePlan.exercise_plan_cardio, object.exerciseReal.exercise_total_cardio, "time"),
-      diff_weight:  diffExercise(object.exercisePlan.exercise_plan_weight, object.exerciseReal.exercise_body_weight, ""),
-    };
-  }
-  // exercisePlan 과 exerciseReal 이 빈객체인경우
-  else if (!object.exercisePlan || !object.exerciseReal) {
-    exercise = {
-      diff_count: 1,
-      diff_volume: 1,
-      diff_cardio: 1,
-      diff_weight: 1,
-    };
-  }
+  const food = {
+    diff_kcal: diffFood(object.foodPlan.food_plan_kcal, object.foodReal.food_total_kcal) || 1,
+    diff_carb: diffFood(object.foodPlan.food_plan_carb, object.foodReal.food_total_carb) || 1,
+    diff_protein: diffFood(object.foodPlan.food_plan_protein, object.foodReal.food_total_protein) || 1,
+    diff_fat: diffFood(object.foodPlan.food_plan_fat, object.foodReal.food_total_fat) || 1,
+  };
 
-  // foodPlan 과 foodReal 이 빈객체가 아닌경우
-  if (object.foodPlan && object.foodReal) {
-    food = {
-      diff_kcal: diffFood(object.foodPlan.food_plan_kcal, object.foodReal.food_total_kcal),
-      diff_carb: diffFood(object.foodPlan.food_plan_carb, object.foodReal.food_total_carb),
-      diff_protein: diffFood(object.foodPlan.food_plan_protein, object.foodReal.food_total_protein),
-      diff_fat: diffFood(object.foodPlan.food_plan_fat, object.foodReal.food_total_fat),
-    };
-  }
-  // foodPlan 과 foodReal 이 빈객체인경우
-  else if (!object.foodPlan || !object.foodReal) {
-    food = {
-      diff_kcal: 1,
-      diff_carb: 1,
-      diff_protein: 1,
-      diff_fat: 1,
-    };
-  }
+  const money = {
+    diff_in: diffMoney(object.moneyPlan.money_plan_in, object.moneyReal.money_total_in, "in") || 1,
+    diff_out: diffMoney(object.moneyPlan.money_plan_out, object.moneyReal.money_total_out, "out") || 1,
+  };
 
-  // moneyPlan 과 moneyReal 이 빈객체가 아닌경우
-  if (object.moneyPlan && object.moneyReal) {
-    money = {
-      diff_in: diffMoney(object.moneyPlan.money_plan_in, object.moneyReal.money_total_in, "in"),
-      diff_out: diffMoney(object.moneyPlan.money_plan_out, object.moneyReal.money_total_out, "out"),
-    };
-  }
-  // moneyPlan 과 moneyReal 이 빈객체인경우
-  else if (!object.moneyPlan || !object.moneyReal) {
-    money = {
-      diff_in: 1,
-      diff_out: 1,
-    };
-  }
-
-  // sleepPlan 과 sleepReal 이 빈객체가 아닌경우
-  if (object.sleepPlan && object.sleepReal) {
-    sleep = {
-      diff_night: diffSleep(object.sleepPlan.sleep_plan_night, object.sleepReal.sleep_night),
-      diff_morning: diffSleep(object.sleepPlan.sleep_plan_morning, object.sleepReal.sleep_morning),
-      diff_time: diffSleep(object.sleepPlan.sleep_plan_time, object.sleepReal.sleep_time),
-    };
-  }
-  // sleepPlan 과 sleepReal 이 빈객체인경우
-  else if (!object.sleepPlan || !object.sleepReal) {
-    sleep = {
-      diff_night: 1,
-      diff_morning: 1,
-      diff_time: 1,
-    };
-  }
+  const sleep = {
+    diff_night: diffSleep(object.sleepPlan.sleep_plan_night, object.sleepReal.sleep_night) || 1,
+    diff_morning: diffSleep(object.sleepPlan.sleep_plan_morning, object.sleepReal.sleep_morning) || 1,
+    diff_time: diffSleep(object.sleepPlan.sleep_plan_time, object.sleepReal.sleep_time) || 1,
+  };
 
   const newObject = {
     exercise: calcAvg(exercise),

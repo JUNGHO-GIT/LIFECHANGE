@@ -61,7 +61,7 @@ export const NavBar = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container fluid className={"p-0"}>
             <Row>
-              <Col lg={6} md={6} sm={4} xs={4} className={"d-center"}>
+              <Col lg={6} md={6} sm={4} xs={4} className={"d-left"}>
                 {!preFix ? (
                   <span className={"nav-text"}>Home</span>
                 ) : (

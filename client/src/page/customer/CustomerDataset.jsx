@@ -261,7 +261,7 @@ export const CustomerDataset = () => {
             ))}
             <tr>
               <td colSpan={3} className={"d-inline-flex"}>
-                <p className={"pointer btn btn-outline-primary button"}  onClick={addPart}>
+                <p className={"pointer btn btn-sm btn-outline-primary button"}  onClick={addPart}>
                   추가
                 </p>
               </td>
@@ -385,7 +385,7 @@ export const CustomerDataset = () => {
             ))}
             <tr>
               <td colSpan={3} className={"d-inline-flex"}>
-                <p className={"pointer btn btn-outline-primary button"} onClick={addTitle}>
+                <p className={"pointer btn btn-sm btn-outline-primary button"} onClick={addTitle}>
                   추가
                 </p>
               </td>
@@ -430,7 +430,7 @@ export const CustomerDataset = () => {
     }
     return (
       <React.Fragment>
-        <Button variant={"outline-primary"} size={"sm"} className={"button me-5"}
+        <Button variant={"danger"} size={"sm"} className={"button me-5"}
         onClick={confirmDefault}>
           기본값
         </Button>
@@ -455,18 +455,18 @@ export const CustomerDataset = () => {
         <Card className={"container-wrapper"} border={"light"}>
           <Container>
             <Row>
-              <Col xs={4} className={"mb-20 text-center"}>
+              <Col xs={4} className={"mb-20 p-0 text-center"}>
                 {tableNode1()}
               </Col>
-              <Col xs={4} className={"mb-20 text-center"}>
+              <Col xs={4} className={"mb-20 p-0 text-center"}>
                 {tableNode2()}
               </Col>
-              <Col xs={4} className={"mb-20 text-center"}>
+              <Col xs={4} className={"mb-20 p-0 text-center"}>
                 {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableNode3())}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"mb-20 text-center"}>
-                <span className={"me-5 d-inline-flex"}>{buttonDefault()}</span>
                 {buttonNode()}
+                <span className={"me-1 d-inline-flex"}>{buttonDefault()}</span>
               </Col>
             </Row>
           </Container>

@@ -83,19 +83,6 @@ export const ButtonNode = ({
       </React.Fragment>
     );
   };
-  function buttonRefresh () {
-    return (
-      <React.Fragment>
-        <Button size={"sm"} variant={"success"} className={"button me-5"} type={"button"}
-        onClick={() => {
-          navParam(SEND.refresh);
-        }}
-      >
-        Refresh
-      </Button>
-      </React.Fragment>
-    );
-  };
   function buttonList () {
     return (
       <React.Fragment>
@@ -136,49 +123,41 @@ export const ButtonNode = ({
         <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
-          {buttonRefresh()}
         </div>
       ) : part === "food" && type === "detail" ? (
         <div className={"d-inline-flex"}>
           {buttonUpdate()}
           {buttonList()}
-          {buttonRefresh()}
         </div>
       ) : part === "food" && type === "save" ? (
         <div className={"d-inline-flex"}>
           {buttonSave()}
           {buttonSearch()}
-          {buttonRefresh()}
         </div>
       ) : part === "food" && type === "list" ? (
         <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
-          {buttonRefresh()}
         </div>
       ) : part !== "food" && type === "list" ? (
         <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
-          {buttonRefresh()}
         </div>
       ) : part !== "food" && type === "detail" ? (
         <div className={"d-inline-flex"}>
           {buttonUpdate()}
           {buttonList()}
-          {buttonRefresh()}
         </div>
       ) : part !== "food" && type === "save" ? (
         <div className={"d-inline-flex"}>
           {buttonSave()}
           {buttonList()}
-          {buttonRefresh()}
         </div>
       ) : part !== "food" && type === "list" ? (
         <div className={"d-inline-flex"}>
           {buttonCalendar()}
           {buttonToday()}
-          {buttonRefresh()}
         </div>
       ) : null}
     </React.Fragment>

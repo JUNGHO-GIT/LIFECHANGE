@@ -71,11 +71,6 @@ export const DiaryDetail = () => {
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
-  useEffect(() => {
-    console.log(JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
-
-  // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -154,12 +149,10 @@ export const DiaryDetail = () => {
         diary_color: "#000000",
         diary_detail: ""
       };
-
       setCOUNT((prev) => ({
         ...prev,
         sectionCnt: newCount
       }));
-
       if (newCount > 0) {
         let updatedSection = Array(newCount).fill(null).map((_, idx) => (
           idx < OBJECT.diary_section.length ? OBJECT.diary_section[idx] : {...defaultSection}
@@ -176,36 +169,30 @@ export const DiaryDetail = () => {
         }));
       }
     };
-    function inputFragment () {
-      return (
-        <Row className={"d-center"}>
-          <Col xs={4}>
-            <NumericFormat
-              min={0}
-              max={10}
-              minLength={1}
-              maxLength={2}
-              datatype={"number"}
-              displayType={"input"}
-              id={"sectionCnt"}
-              name={"sectionCnt"}
-              className={"form-control mb-30"}
-              disabled={false}
-              thousandSeparator={false}
-              fixedDecimalScale={true}
-              value={Math.min(10, COUNT?.sectionCnt)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(10, parseInt(values?.value));
-                handlerCount(limitedValue.toString());
-              }}
-            ></NumericFormat>
-          </Col>
-        </Row>
-      );
-    };
     return (
       <React.Fragment>
-        {inputFragment()}
+        <div className={"input-group"}>
+          <span className={"input-group-text"}>섹션 갯수</span>
+          <NumericFormat
+            min={0}
+            max={10}
+            minLength={1}
+            maxLength={2}
+            datatype={"number"}
+            displayType={"input"}
+            id={"sectionCnt"}
+            name={"sectionCnt"}
+            className={"form-control"}
+            disabled={false}
+            thousandSeparator={false}
+            fixedDecimalScale={true}
+            value={Math.min(10, COUNT?.sectionCnt)}
+            onValueChange={(values) => {
+              const limitedValue = Math.min(10, parseInt(values?.value));
+              handlerCount(limitedValue.toString());
+            }}
+          ></NumericFormat>
+        </div>
       </React.Fragment>
     );
   };
@@ -227,7 +214,7 @@ export const DiaryDetail = () => {
       return (
         <div key={i}>
           <Row className={"text-center mb-20"}>
-            <Col lg={12} md={12} sm={12} xs={12}>
+            <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
                 <select
@@ -257,134 +244,99 @@ export const DiaryDetail = () => {
                 </select>
               </div>
             </Col>
+            <Col lg={6} md={6} sm={6} xs={6}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>색상</span>
+                <select
+                  id={`diary_color-${i}`}
+                  name={`diary_color-${i}`}
+                  className={"form-select"}
+                  value={OBJECT?.diary_section[i]?.diary_color}
+                  style={{color: OBJECT?.diary_section[i]?.diary_color}}
+                  onChange={(e) => {
+                    const newColor = e.target.value;
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      diary_section: prev.diary_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          diary_color: newColor
+                        } : item
+                      ))
+                    }));
+                  }}
+                >
+                  {colors.map((color, index) => (
+                    <option key={index} value={color.value} style={{color: color.value}}>
+                      ● {color.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </Col>
           </Row>
           <Row className={"text-center mb-20"}>
-            {OBJECT?.diary_section[i]?.diary_part_val === "일정" ? (
-              <React.Fragment>
-                <Col lg={12} md={12} sm={12} xs={12}>
-                  <div className={"input-group"}>
-                    <span className={"input-group-text"}>타이틀</span>
-                    <InputMask
-                      mask={""}
-                      placeholder={"제목"}
-                      id={`diary_title-${i}`}
-                      name={`diary_title-${i}`}
-                      className={"form-control"}
-                      maskChar={null}
-                      value={OBJECT?.diary_section[i]?.diary_title}
-                      onChange={(e) => {
-                        const newTitle = e.target.value;
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          diary_section: prev.diary_section.map((item, idx) => (
-                            idx === i ? {
-                              ...item,
-                              diary_title: newTitle
-                            } : item
-                          ))
-                        }));
-                      }}
-                    ></InputMask>
-                  </div>
-                </Col>
-                <Col lg={12} md={12} sm={12} xs={12}>
-                  <div className={"input-group"}>
-                    <span className={"input-group-text"}>내용</span>
-                    <InputMask
-                      mask={""}
-                      placeholder={"내용"}
-                      id={`diary_detail-${i}`}
-                      name={`diary_detail-${i}`}
-                      className={"form-control"}
-                      maskChar={null}
-                      value={OBJECT?.diary_section[i]?.diary_detail}
-                      onChange={(e) => {
-                        const newDetail = e.target.value;
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          diary_section: prev.diary_section.map((item, idx) => (
-                            idx === i ? {
-                              ...item,
-                              diary_detail: newDetail
-                            } : item
-                          ))
-                        }));
-                      }}
-                    ></InputMask>
-                  </div>
-                </Col>
-                <Col lg={12} md={12} sm={12} xs={12}>
-                  <div className={"input-group"}>
-                    <span className={"input-group-text"}>색상</span>
-                    <select
-                      id={`diary_color-${i}`}
-                      name={`diary_color-${i}`}
-                      className={"form-select"}
-                      value={OBJECT?.diary_section[i]?.diary_color}
-                      style={{color: OBJECT?.diary_section[i]?.diary_color}}
-                      onChange={(e) => {
-                        const newColor = e.target.value;
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          diary_section: prev.diary_section.map((item, idx) => (
-                            idx === i ? {
-                              ...item,
-                              diary_color: newColor
-                            } : item
-                          ))
-                        }));
-                      }}
-                    >
-                      {colors.map((color, index) => (
-                        <option key={index} value={color.value} style={{color: color.value}}>
-                          ● {color.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </Col>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <Col lg={12} md={12} sm={12} xs={12}>
-                  <div className={"input-group"}>
-                    <span className={"input-group-text"}>타이틀</span>
-                    <InputMask
-                      mask={""}
-                      placeholder={"제목"}
-                      id={`diary_title-${i}`}
-                      name={`diary_title-${i}`}
-                      className={"form-control"}
-                      maskChar={null}
-                      value={OBJECT?.diary_section[i]?.diary_title}
-                      onChange={(e) => {
-                        const newTitle = e.target.value;
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          diary_section: prev.diary_section.map((item, idx) => (
-                            idx === i ? {
-                              ...item,
-                              diary_title: newTitle
-                            } : item
-                          ))
-                        }));
-                      }}
-                    ></InputMask>
-                  </div>
-                </Col>
-              </React.Fragment>
-            )}
+            <Col lg={12} md={12} sm={12} xs={12}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>제목</span>
+                <InputMask
+                  mask={""}
+                  placeholder={"제목"}
+                  id={`diary_title-${i}`}
+                  name={`diary_title-${i}`}
+                  className={"form-control"}
+                  maskChar={null}
+                  value={OBJECT?.diary_section[i]?.diary_title}
+                  onChange={(e) => {
+                    const newTitle = e.target.value;
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      diary_section: prev.diary_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          diary_title: newTitle
+                        } : item
+                      ))
+                    }));
+                  }}
+                ></InputMask>
+              </div>
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12}>
+              <div className={"input-group"}>
+                <span className={"input-group-text"}>내용</span>
+                <InputMask
+                  mask={""}
+                  placeholder={"내용"}
+                  id={`diary_detail-${i}`}
+                  name={`diary_detail-${i}`}
+                  className={"form-control"}
+                  maskChar={null}
+                  value={OBJECT?.diary_section[i]?.diary_detail}
+                  onChange={(e) => {
+                    const newDetail = e.target.value;
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      diary_section: prev.diary_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          diary_detail: newDetail
+                        } : item
+                      ))
+                    }));
+                  }}
+                ></InputMask>
+              </div>
+            </Col>
           </Row>
         </div>
       );
     };
     function tableFragment () {
       return (
-        <Row className={"d-center"}>
-          <Col lg={12} md={12} sm={12} xs={12}>
-            {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
-          </Col>
-        </Row>
+        <React.Fragment>
+          {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
+        </React.Fragment>
       );
     };
     return (

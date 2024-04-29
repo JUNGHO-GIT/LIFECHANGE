@@ -122,8 +122,8 @@ export const DiaryList = () => {
           showNavigation={true}
           showNeighboringMonth={true}
           showDoubleView={false}
-          prevLabel={"이전"}
-          nextLabel={"다음"}
+          prevLabel={<i className={"bx bxs-left-arrow"}></i>}
+          nextLabel={<i className={"bx bxs-right-arrow"}></i>}
           prev2Label={null}
           next2Label={null}
           formatDay={(locale, date) => (moment(date).format("D"))}

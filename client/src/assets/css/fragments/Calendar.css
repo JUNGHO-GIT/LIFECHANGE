@@ -25,7 +25,7 @@
   }
   .react-calendar__navigation__label__labelText--from {
     color: #000000;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -34,11 +34,11 @@
     text-decoration: none !important;
     color: #000000;
     font-size: 1.0rem;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
   }
   .calendar-filled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 5.0rem;
     height: auto;
     max-height: 1.0rem;
@@ -46,12 +46,12 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #0080ff;
   }
   .calendar-unfilled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 5.0rem;
     height: auto;
     max-height: 1.0rem;
@@ -59,14 +59,9 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #ffffff;
-  }
-  .calendar-category {
-    margin: 0px 0px 0px 3px;
-    color: #ffffff;
-    font-size: 1.0rem !important;
   }
 }
 
@@ -97,7 +92,7 @@
   }
   .react-calendar__navigation__label__labelText--from {
     color: #000000;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -106,11 +101,11 @@
     text-decoration: none !important;
     color: #000000;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
   }
   .calendar-filled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 4.2rem;
     height: auto;
     max-height: 1.0rem;
@@ -118,12 +113,12 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #0080ff;
   }
   .calendar-unfilled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 4.2rem;
     height: auto;
     max-height: 1.0rem;
@@ -131,14 +126,9 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #ffffff;
-  }
-  .calendar-category {
-    margin: 0px 0px 0px 3px;
-    color: #ffffff;
-    font-size: 0.9rem !important;
   }
 }
 
@@ -169,7 +159,7 @@
   }
   .react-calendar__navigation__label__labelText--from {
     color: #000000;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -178,11 +168,11 @@
     text-decoration: none !important;
     color: #000000;
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
   }
   .calendar-filled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 3.4rem;
     height: auto;
     max-height: 1.0rem;
@@ -190,12 +180,12 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #0080ff;
   }
   .calendar-unfilled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 3.4rem;
     height: auto;
     max-height: 1.0rem;
@@ -203,14 +193,9 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #ffffff;
-  }
-  .calendar-category {
-    margin: 0px 0px 0px 3px;
-    color: #ffffff;
-    font-size: 0.8rem !important;
   }
 }
 
@@ -241,7 +226,7 @@
   }
   .react-calendar__navigation__label__labelText--from {
     color: #000000;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -250,11 +235,11 @@
     text-decoration: none !important;
     color: #000000;
     font-size: 0.7rem;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
   }
   .calendar-filled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 2.6rem;
     height: auto;
     max-height: 1.0rem;
@@ -262,12 +247,12 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #0080ff;
   }
   .calendar-unfilled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 2.6rem;
     height: auto;
     max-height: 1.0rem;
@@ -275,14 +260,9 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #ffffff;
-  }
-  .calendar-category {
-    margin: 0px 0px 0px 3px;
-    color: #ffffff;
-    font-size: 0.7rem !important;
   }
 }
 
@@ -307,7 +287,7 @@
   }
   .react-calendar__navigation__label__labelText--from {
     color: #000000;
-    font-size: 1.0rem;
+    font-size: 1.2rem;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -322,11 +302,11 @@
     text-decoration: none !important;
     color: #000000;
     font-size: 0.5rem;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
   }
   .calendar-filled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 1.6rem;
     height: auto;
     max-height: 1.0rem;
@@ -334,12 +314,12 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #0080ff;
   }
   .calendar-unfilled {
-    width: auto;
+    width: -webkit-fill-available !important;
     max-width: 1.6rem;
     height: auto;
     max-height: 1.0rem;
@@ -347,14 +327,9 @@
     color: #ffffff;
     margin: 3px 0px 3px 0px;
     padding: 0px 0px 0px 0px;
-    opacity: 0.8;
+    opacity: 0.7;
     border-radius: 5px;
     background-color: #ffffff;
-  }
-  .calendar-category {
-    margin: 0px 0px 0px 3px;
-    color: #ffffff;
-    font-size: 0.5rem !important;
   }
 }
 
@@ -415,6 +390,7 @@
     padding: 0.5rem;
     border-top: 0.3px solid #dadada;
     border-left: 0.3px solid #dadada;
+    background-color: #cfe2ff;
   }
   .calendar-cell {
     display: flex;
@@ -441,5 +417,10 @@
     color: #000000;
     font-size: 0.5rem;
     font-weight: 500;
+  }
+  .calendar-category {
+    margin: 0px 0px 0px 3px;
+    color: #ffffff;
+    font-size: 0.6rem !important;
   }
 }
