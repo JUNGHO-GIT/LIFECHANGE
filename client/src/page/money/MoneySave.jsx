@@ -182,7 +182,7 @@ export const MoneySave = () => {
     function countNode () {
       return (
         <React.Fragment>
-          <div className={"input-group"}>
+          <div className={"input-group mb-10"}>
             <span className={"input-group-text"}>섹션 갯수</span>
             <NumericFormat
               min={0}
@@ -209,8 +209,8 @@ export const MoneySave = () => {
     };
     function tableFragment (i) {
       return (
-        <div key={i} className={"mb-10"}>
-          <Row>
+        <React.Fragment key={i}>
+          <Row className={"mb-10"}>
             <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
@@ -337,7 +337,7 @@ export const MoneySave = () => {
               </div>
             </Col>
           </Row>
-        </div>
+        </React.Fragment>
       );
     };
     function tableSection () {
@@ -403,9 +403,7 @@ export const MoneySave = () => {
       <React.Fragment>
         <div className={"save-wrapper"}>
           {countNode()}
-          <br />
           {tableSection()}
-          <br />
           {tableRemain()}
         </div>
       </React.Fragment>

@@ -271,14 +271,14 @@ table tbody tr td {
   .table-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 335px;
-    max-height: 335px;
+    min-height: 378px;
+    max-height: 378px;
   }
   .save-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 370px;
-    max-height: 370px;
+    min-height: 403px;
+    max-height: 403px;
   }
   .diary-wrapper {
     overflow-x: hidden;
@@ -289,8 +289,8 @@ table tbody tr td {
   .dataset-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 425px;
-    max-height: 425px;
+    min-height: 445px;
+    max-height: 445px;
   }
   thead {
     font-size: 0.8rem;
@@ -367,14 +367,14 @@ table tbody tr td {
   .table-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 310px;
-    max-height: 310px;
+    min-height: 345px;
+    max-height: 345px;
   }
   .save-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 338px;
-    max-height: 338px;
+    min-height: 368px;
+    max-height: 368px;
   }
   .diary-wrapper {
     overflow-x: hidden;
@@ -385,8 +385,8 @@ table tbody tr td {
   .dataset-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 395px;
-    max-height: 395px;
+    min-height: 415px;
+    max-height: 415px;
   }
   thead {
     font-size: 0.9rem;
@@ -463,14 +463,14 @@ table tbody tr td {
   .table-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 285px;
-    max-height: 285px;
+    min-height: 324px;
+    max-height: 324px;
   }
   .save-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 318px;
-    max-height: 318px;
+    min-height: 347px;
+    max-height: 347px;
   }
   .diary-wrapper {
     overflow-x: hidden;
@@ -481,8 +481,8 @@ table tbody tr td {
   .dataset-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 375px;
-    max-height: 375px;
+    min-height: 395px;
+    max-height: 395px;
   }
   thead {
     font-size: 1.0rem;
@@ -559,14 +559,14 @@ table tbody tr td {
   .table-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 263px;
-    max-height: 263px;
+    min-height: 304px;
+    max-height: 304px;
   }
   .save-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 296px;
-    max-height: 296px;
+    min-height: 326px;
+    max-height: 326px;
   }
   .diary-wrapper {
     overflow-x: hidden;
@@ -577,8 +577,8 @@ table tbody tr td {
   .dataset-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 355px;
-    max-height: 355px;
+    min-height: 376px;
+    max-height: 376px;
   }
   thead {
     font-size: 1.1rem;
@@ -655,14 +655,14 @@ table tbody tr td {
   .table-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 200px;
-    max-height: 200px;
+    min-height: 280px;
+    max-height: 280px;
   }
   .save-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 200px;
-    max-height: 200px;
+    min-height: 303px;
+    max-height: 303px;
   }
   .diary-wrapper {
     overflow-x: hidden;
@@ -673,8 +673,8 @@ table tbody tr td {
   .dataset-wrapper {
     overflow-x: hidden;
     overflow-y: auto;
-    min-height: 335px;
-    max-height: 335px;
+    min-height: 356px;
+    max-height: 356px;
   }
   thead {
     font-size: 1.2rem;

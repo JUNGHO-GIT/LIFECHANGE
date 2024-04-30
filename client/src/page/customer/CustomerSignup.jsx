@@ -129,7 +129,8 @@ export const CustomerSignup = () => {
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {tableCustomerSave()}
-                <br/>
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {btnSignUp()}
                 {btnCustomerList()}
                 {btnRefresh()}
