@@ -156,7 +156,7 @@ export const FoodSearch = () => {
     };
     return (
       <React.Fragment>
-        <div className={"table-wrapper2"}>
+        <div className={"save-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>
@@ -211,13 +211,13 @@ export const FoodSearch = () => {
         <Card className={"container-wrapper"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {searchNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {pagingNode()}
               </Col>
             </Row>

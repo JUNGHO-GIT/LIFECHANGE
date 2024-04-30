@@ -124,10 +124,10 @@ export const CustomerSignup = () => {
         <Card className={"container-wrapper"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 <h1>Sign Up</h1>
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {tableCustomerSave()}
                 <br/>
                 {btnSignUp()}

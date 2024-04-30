@@ -195,7 +195,7 @@ export const SleepSave = () => {
     };
     return (
       <React.Fragment>
-        <div className={"table-wrapper2"}>
+        <div className={"save-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>
@@ -219,13 +219,13 @@ export const SleepSave = () => {
         <Card className={"container-wrapper"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-10"}>
                 {dateNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {buttonNode()}
               </Col>
             </Row>

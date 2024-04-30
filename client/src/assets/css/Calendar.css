@@ -110,6 +110,7 @@
   border-left: 0.3px solid #dadada;
   outline: none;
   text-align: left;
+  padding: 5px 20px 50px 5px;
 }
 .react-calendar__tile {
   font-weight: 500;
@@ -165,7 +166,6 @@ abbr[title] {
   /** display **/
   .react-calendar button {
     max-height: 6.0rem;
-    padding: 5px 20px 50px 5px;
   }
   .react-calendar__navigation__label__labelText--from {
     font-size: 1.2rem;
@@ -199,7 +199,6 @@ abbr[title] {
   /** display **/
   .react-calendar button {
     max-height: 6.5rem;
-    padding: 5px 20px 44px 5px;
   }
   .react-calendar__tile {
     font-size: 0.7rem;
@@ -232,7 +231,6 @@ abbr[title] {
   /** display **/
   .react-calendar button {
     max-height: 7.0rem;
-    padding: 5px 20px 40px 5px;
   }
   .react-calendar__tile {
     font-size: 0.8rem;
@@ -265,7 +263,6 @@ abbr[title] {
   /** display **/
   .react-calendar button {
     max-height: 7.5rem;
-    padding: 5px 20px 36px 5px;
   }
   .react-calendar__tile {
     font-size: 0.9rem;
@@ -298,7 +295,6 @@ abbr[title] {
   /** display **/
   .react-calendar button {
     max-height: 8.0rem;
-    padding: 5px 20px 32px 5px;
   }
   .react-calendar__tile {
     font-size: 1.0rem;

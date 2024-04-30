@@ -213,7 +213,7 @@ export const DiaryDetail = () => {
     function tableFragment (i) {
       return (
         <div key={i}>
-          <Row className={"text-center mb-20"}>
+          <Row className={"text-center mb-10"}>
             <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
@@ -275,7 +275,7 @@ export const DiaryDetail = () => {
               </div>
             </Col>
           </Row>
-          <Row className={"text-center mb-20"}>
+          <Row className={"text-center mb-10"}>
             <Col lg={12} md={12} sm={12} xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>제목</span>
@@ -370,17 +370,17 @@ export const DiaryDetail = () => {
       <div className={"root-wrapper"}>
         <Card className={"container-wrapper"}>
           <Container>
-            <Row className={"d-center mb-20"}>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-20"}>
+            <Row className={"d-center mb-10"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-10"}>
                 {dateNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {handlerSectionCount()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {buttonNode()}
               </Col>
             </Row>

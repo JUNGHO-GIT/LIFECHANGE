@@ -270,16 +270,25 @@ table tbody tr td {
   }
   .table-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 335px;
     max-height: 335px;
   }
-  .table-wrapper2 {
+  .save-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 370px;
     max-height: 370px;
   }
-  .table-wrapper3 {
+  .diary-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 480px;
+    max-height: 480px;
+  }
+  .dataset-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
     min-height: 425px;
     max-height: 425px;
   }
@@ -357,16 +366,25 @@ table tbody tr td {
   }
   .table-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 310px;
     max-height: 310px;
   }
-  .table-wrapper2 {
+  .save-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 338px;
     max-height: 338px;
   }
-  .table-wrapper3 {
+  .diary-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 448px;
+    max-height: 448px;
+  }
+  .dataset-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
     min-height: 395px;
     max-height: 395px;
   }
@@ -444,16 +462,25 @@ table tbody tr td {
   }
   .table-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 285px;
     max-height: 285px;
   }
-  .table-wrapper2 {
+  .save-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 318px;
     max-height: 318px;
   }
-  .table-wrapper3 {
+  .diary-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 430px;
+    max-height: 430px;
+  }
+  .dataset-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
     min-height: 375px;
     max-height: 375px;
   }
@@ -531,16 +558,25 @@ table tbody tr td {
   }
   .table-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 263px;
     max-height: 263px;
   }
-  .table-wrapper2 {
+  .save-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 296px;
     max-height: 296px;
   }
-  .table-wrapper3 {
+  .diary-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 411px;
+    max-height: 411px;
+  }
+  .dataset-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
     min-height: 355px;
     max-height: 355px;
   }
@@ -618,16 +654,25 @@ table tbody tr td {
   }
   .table-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 200px;
     max-height: 200px;
   }
-  .table-wrapper2 {
+  .save-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
     min-height: 200px;
     max-height: 200px;
   }
-  .table-wrapper3 {
+  .diary-wrapper {
     overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 390px;
+    max-height: 390px;
+  }
+  .dataset-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
     min-height: 335px;
     max-height: 335px;
   }

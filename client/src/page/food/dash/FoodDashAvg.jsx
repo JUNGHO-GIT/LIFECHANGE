@@ -310,7 +310,7 @@ export const FoodDashAvg = () => {
     return (
       <React.Fragment>
         {["탄수화물", "단백질", "지방"]?.map((key, index) => (
-          <div key={index} className={"dash-checkbox flex-column mb-20"}>
+          <div key={index} className={"dash-checkbox flex-column mb-10"}>
             <FormCheck
               inline
               type={"switch"}

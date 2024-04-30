@@ -468,7 +468,7 @@ export const ExerciseSave = () => {
               </div>
             </Col>
           </Row>
-          <Row className={"mb-20"}>
+          <Row className={"mb-10"}>
             <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>볼륨</span>
@@ -606,7 +606,7 @@ export const ExerciseSave = () => {
     };
     return (
       <React.Fragment>
-        <div className={"table-wrapper2"}>
+        <div className={"save-wrapper"}>
           {countNode()}
           <br />
           {tableSection()}
@@ -634,13 +634,13 @@ export const ExerciseSave = () => {
         <Card className={"container-wrapper"}>
           <Container>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-10"}>
                 {dateNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
                 {buttonNode()}
               </Col>
             </Row>

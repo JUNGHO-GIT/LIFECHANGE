@@ -188,7 +188,7 @@ export const SleepDashAvg = () => {
     return (
       <React.Fragment>
         {["취침", "수면", "기상"]?.map((key, index) => (
-          <div key={index} className={"dash-checkbox flex-column mb-20"}>
+          <div key={index} className={"dash-checkbox flex-column mb-10"}>
             <FormCheck
               inline
               type={"switch"}
