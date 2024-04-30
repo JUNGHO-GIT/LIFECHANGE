@@ -5,7 +5,7 @@ import {SleepPlan} from "../schema/SleepPlan.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
-  findPlan: async (
+  listPlan: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.findOne({
@@ -24,7 +24,7 @@ export const barToday = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
@@ -46,7 +46,7 @@ export const barToday = {
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
@@ -68,7 +68,7 @@ export const lineWeek = {
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
@@ -90,7 +90,7 @@ export const lineMonth = {
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 export const avgWeek = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.findOne({
@@ -112,7 +112,7 @@ export const avgWeek = {
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.findOne({

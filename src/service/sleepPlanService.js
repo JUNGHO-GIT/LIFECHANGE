@@ -14,28 +14,28 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repository.list.cnt(
     customer_id_param, startDtPlan, endDtPlan
   );
-  const findPlan = await repository.list.findPlan(
+  const listPlan = await repository.list.listPlan(
     customer_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
 
-  const finalResult = await Promise.all(findPlan.map(async (plan) => {
+  const finalResult = await Promise.all(listPlan.map(async (plan) => {
     const startDt = plan.sleep_plan_startDt;
     const endDt = plan.sleep_plan_endDt;
 
-    const findReal = await repository.list.findReal(
+    const listReal = await repository.list.listReal(
       customer_id_param, startDt, endDt
     );
 
-    const sleepNight = findReal.reduce((acc, curr) => (
+    const sleepNight = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_night)
     ), 0);
-    const sleepMorning = findReal.reduce((acc, curr) => (
+    const sleepMorning = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_morning)
     ), 0);
-    const sleepTime = findReal.reduce((acc, curr) => (
+    const sleepTime = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_time)
     ), 0);
 
@@ -74,19 +74,19 @@ export const save = async (
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
-  const findPlan = await repository.save.detail(
+  const listPlan = await repository.save.detail(
     customer_id_param, "", startDt_param, endDt_param
   );
 
   let finalResult = null;
-  if (!findPlan) {
+  if (!listPlan) {
     finalResult = await repository.save.create(
       customer_id_param, OBJECT_param, startDt_param, endDt_param
     );
   }
   else {
     finalResult = await repository.save.update(
-      customer_id_param, findPlan._id, OBJECT_param, startDt_param, endDt_param
+      customer_id_param, listPlan._id, OBJECT_param, startDt_param, endDt_param
     );
   }
 

@@ -39,7 +39,7 @@ export const checkId = async (
   customer_id_param
 ) => {
 
-  const finalResult = await Customer.find({
+  const finalResult = await Customer.findOne({
     customer_id: customer_id_param
   })
   .lean();
@@ -61,30 +61,6 @@ export const find = async (
   .lean();
 
   return finalResult;
-};
-
-// 1-2. aggregate (dataset) ----------------------------------------------------------------------->
-export const aggregateDataset = async (
-  customer_id_param
-) => {
-
-  const finalResult = await Customer.aggregate([
-    {$match: {
-      customer_id: customer_id_param,
-    }},
-    {$project: {
-      _id: 0,
-      customer_dataset: {
-        diary: 1,
-        food: 1,
-        money: 1,
-        exercise: 1,
-        sleep: 1,
-      }
-    }}
-  ]);
-
-  return finalResult[0];
 };
 
 // 2-1. detail ------------------------------------------------------------------------------------>

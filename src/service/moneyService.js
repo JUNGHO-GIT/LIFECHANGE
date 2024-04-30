@@ -15,11 +15,11 @@ export const list = async (
   const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
   const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repository.list.cnt(
     customer_id_param, part, title, startDt_param, endDt_param
   );
 
-  const findResult1 = await repository.list.find(
+  const findResult1 = await repository.list.list(
     customer_id_param, part, title, sort, limit, page, startDt_param, endDt_param
   );
 

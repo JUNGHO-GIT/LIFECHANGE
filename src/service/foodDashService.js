@@ -35,25 +35,25 @@ export const barToday = async (
   // carb, protein, fat
   let finalResultNut = [];
 
-  const findPlan = await repository.barToday.findPlan(
+  const listPlan = await repository.barToday.listPlan(
     customer_id_param, "", koreanDate, koreanDate
   );
-  const findReal = await repository.barToday.findReal(
+  const listReal = await repository.barToday.listReal(
     customer_id_param, "", koreanDate, koreanDate
   );
 
   for (let key in dataKcal) {
     finalResultKcal.push({
       name: key,
-      목표: intFormat(findPlan?.[dataKcal[key].plan]),
-      실제: intFormat(findReal?.[dataKcal[key].real])
+      목표: intFormat(listPlan?.[dataKcal[key].plan]),
+      실제: intFormat(listReal?.[dataKcal[key].real])
     });
   };
   for (let key in dataNut) {
     finalResultNut.push({
       name: key,
-      목표: intFormat(findPlan?.[dataNut[key].plan]),
-      실제: intFormat(findReal?.[dataNut[key].real])
+      목표: intFormat(listPlan?.[dataNut[key].plan]),
+      실제: intFormat(listReal?.[dataNut[key].real])
     });
   };
 
@@ -69,12 +69,12 @@ export const pieToday = async (
 ) => {
 
   // kcal
-  const findResultKcal = await repository.pieToday.findKcal(
+  const findResultKcal = await repository.pieToday.listKcal(
     customer_id_param, koreanDate, koreanDate
   );
 
   // carb, protein, fat
-  const findResultNut = await repository.pieToday.findNut(
+  const findResultNut = await repository.pieToday.listNut(
     customer_id_param, koreanDate, koreanDate
   );
 
@@ -101,12 +101,12 @@ export const pieWeek = async (
 ) => {
 
   // kcal
-  const findResultKcal = await repository.pieWeek.findKcal(
+  const findResultKcal = await repository.pieWeek.listKcal(
     customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
 
   // carb, protein, fat
-  const findResultNut = await repository.pieWeek.findNut(
+  const findResultNut = await repository.pieWeek.listNut(
     customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
 
@@ -133,12 +133,12 @@ export const pieMonth = async (
 ) => {
 
   // kcal
-  const findResultKcal = await repository.pieMonth.findKcal(
+  const findResultKcal = await repository.pieMonth.listKcal(
     customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
 
   // carb, protein, fat
-  const findResultNut = await repository.pieMonth.findNut(
+  const findResultNut = await repository.pieMonth.listNut(
     customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
 
@@ -176,7 +176,7 @@ export const lineWeek = async (
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
-    const findResult = await repository.lineWeek.find(
+    const findResult = await repository.lineWeek.list(
       customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -221,7 +221,7 @@ export const lineMonth = async (
     day.isBefore(curMonthEnd);
     day.add(1, "days")
   ) {
-    const findResult = await repository.lineMonth.find(
+    const findResult = await repository.lineMonth.list(
       customer_id_param, "", day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
@@ -273,7 +273,7 @@ export const avgWeek = async (
     const weekNum = week.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repository.avgWeek.find(
+      const findResult = await repository.avgWeek.list(
         customer_id_param, "", week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
@@ -334,7 +334,7 @@ export const avgMonth = async (
   ) {
     const monthNum = month.month();
 
-    const findResult = await repository.avgMonth.find(
+    const findResult = await repository.avgMonth.list(
       customer_id_param, "", month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 

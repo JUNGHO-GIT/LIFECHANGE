@@ -11,27 +11,27 @@ export const percent = async (
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   // 1. exercise
-  const findExercisePlan = await repository.percent.findExercisePlan(
+  const listExercisePlan = await repository.percent.listExercisePlan(
     customer_id_param, startDt_param, endDt_param
   );
-  const findExerciseReal = await Promise.all(findExercisePlan.map(async (plan) => {
+  const listExerciseReal = await Promise.all(listExercisePlan.map(async (plan) => {
     const startDt = plan.exercise_plan_startDt;
     const endDt = plan.exercise_plan_endDt;
 
-    const findReal = await repository.percent.findExerciseReal(
+    const listReal = await repository.percent.listExerciseReal(
       customer_id_param, startDt, endDt
     );
 
-    const exerciseTotalCount = findReal.reduce((acc, curr) => (
+    const exerciseTotalCount = listReal.reduce((acc, curr) => (
       acc + (curr?.exercise_total_volume !== 1 ? 1 : 0)
     ), 0);
-    const exerciseTotalVolume = findReal.reduce((acc, curr) => (
+    const exerciseTotalVolume = listReal.reduce((acc, curr) => (
       acc + (curr?.exercise_total_volume ?? 0)
     ), 0);
-    const exerciseTotalCardio = findReal.reduce((acc, curr) => (
+    const exerciseTotalCardio = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
     ), 0);
-    const exerciseLessWeight = findReal.reduce((acc, curr) => (
+    const exerciseLessWeight = listReal.reduce((acc, curr) => (
       (curr.exercise_body_weight !== null && (acc === null || curr.exercise_body_weight < acc)) ? curr.exercise_body_weight : acc
     ), null);
 
@@ -44,27 +44,27 @@ export const percent = async (
   }));
 
   // 2. food
-  const findFoodPlan = await repository.percent.findFoodPlan(
+  const listFoodPlan = await repository.percent.listFoodPlan(
     customer_id_param, startDt_param, endDt_param
   );
-  const findFoodReal = await Promise.all(findFoodPlan.map(async (plan) => {
+  const listFoodReal = await Promise.all(listFoodPlan.map(async (plan) => {
     const startDt = plan.food_plan_startDt;
     const endDt = plan.food_plan_endDt;
 
-    const findReal = await repository.percent.findFoodReal(
+    const listReal = await repository.percent.listFoodReal(
       customer_id_param, startDt, endDt
     );
 
-    const foodTotalKcal = findReal.reduce((acc, curr) => (
+    const foodTotalKcal = listReal.reduce((acc, curr) => (
       acc + (curr?.food_total_kcal ?? 0)
     ), 0);
-    const foodTotalCarb = findReal.reduce((acc, curr) => (
+    const foodTotalCarb = listReal.reduce((acc, curr) => (
       acc + (curr?.food_total_carb ?? 0)
     ), 0);
-    const foodTotalProtein = findReal.reduce((acc, curr) => (
+    const foodTotalProtein = listReal.reduce((acc, curr) => (
       acc + (curr?.food_total_protein ?? 0)
     ), 0);
-    const foodTotalFat = findReal.reduce((acc, curr) => (
+    const foodTotalFat = listReal.reduce((acc, curr) => (
       acc + (curr?.food_total_fat ?? 0)
     ), 0);
 
@@ -77,21 +77,21 @@ export const percent = async (
   }));
 
   // 3. money
-  const findMoneyPlan = await repository.percent.findMoneyPlan(
+  const listMoneyPlan = await repository.percent.listMoneyPlan(
     customer_id_param, startDt_param, endDt_param
   );
-  const findMoneyReal = await Promise.all(findMoneyPlan.map(async (plan) => {
+  const listMoneyReal = await Promise.all(listMoneyPlan.map(async (plan) => {
     const startDt = plan.money_plan_startDt;
     const endDt = plan.money_plan_endDt;
 
-    const findReal = await repository.percent.findMoneyReal(
+    const listReal = await repository.percent.listMoneyReal(
       customer_id_param, startDt, endDt
     );
 
-    const moneyTotalIn = findReal.reduce((acc, curr) => (
+    const moneyTotalIn = listReal.reduce((acc, curr) => (
       acc + (curr?.money_total_in ?? 0)
     ), 0);
-    const moneyTotalOut = findReal.reduce((acc, curr) => (
+    const moneyTotalOut = listReal.reduce((acc, curr) => (
       acc + (curr?.money_total_out ?? 0)
     ), 0);
 
@@ -102,24 +102,24 @@ export const percent = async (
   }));
 
   // 4. sleep
-  const findSleepPlan = await repository.percent.findSleepPlan(
+  const listSleepPlan = await repository.percent.listSleepPlan(
     customer_id_param, startDt_param, endDt_param
   );
-  const findSleepReal = await Promise.all(findSleepPlan.map(async (plan) => {
+  const listSleepReal = await Promise.all(listSleepPlan.map(async (plan) => {
     const startDt = plan.sleep_plan_startDt;
     const endDt = plan.sleep_plan_endDt;
 
-    const findReal = await repository.percent.findSleepReal(
+    const listReal = await repository.percent.listSleepReal(
       customer_id_param, startDt, endDt
     );
 
-    const sleepNight = findReal.reduce((acc, curr) => (
+    const sleepNight = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_night)
     ), 0);
-    const sleepMorning = findReal.reduce((acc, curr) => (
+    const sleepMorning = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_morning)
     ), 0);
-    const sleepTime = findReal.reduce((acc, curr) => (
+    const sleepTime = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.sleep_time)
     ), 0);
 
@@ -131,13 +131,13 @@ export const percent = async (
   }));
 
   return {
-    exercisePlan: findExercisePlan[0] || {},
-    exerciseReal: findExerciseReal[0] || {},
-    foodPlan: findFoodPlan[0] || {},
-    foodReal: findFoodReal[0] || {},
-    moneyPlan: findMoneyPlan[0] || {},
-    moneyReal: findMoneyReal[0] || {},
-    sleepPlan: findSleepPlan[0] || {},
-    sleepReal: findSleepReal[0] || {},
+    exercisePlan: listExercisePlan[0] || {},
+    exerciseReal: listExerciseReal[0] || {},
+    foodPlan: listFoodPlan[0] || {},
+    foodReal: listFoodReal[0] || {},
+    moneyPlan: listMoneyPlan[0] || {},
+    moneyReal: listMoneyReal[0] || {},
+    sleepPlan: listSleepPlan[0] || {},
+    sleepReal: listSleepReal[0] || {},
   };
 };

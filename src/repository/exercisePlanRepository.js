@@ -5,27 +5,24 @@ import {Exercise} from "../schema/Exercise.js";
 import {ExercisePlan} from "../schema/ExercisePlan.js";
 import {fmtDate} from "../assets/js/date.js";
 
-// 0-1. totalCnt ---------------------------------------------------------------------------------->
-export const totalCnt = async (
-  customer_id_param, startDt_param, endDt_param
-) => {
-
-  const finalResult = await ExercisePlan.countDocuments({
-    customer_id: customer_id_param,
-    exercise_plan_startDt: {
-      $lte: endDt_param,
-    },
-    exercise_plan_endDt: {
-      $gte: startDt_param,
-    },
-  });
-
-  return finalResult;
-};
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
-  findPlan: async (
+  cnt: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await ExercisePlan.countDocuments({
+      customer_id: customer_id_param,
+      exercise_plan_startDt: {
+        $lte: endDt_param,
+      },
+      exercise_plan_endDt: {
+        $gte: startDt_param,
+      },
+    });
+    return finalResult;
+  },
+
+  listPlan: async (
     customer_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
@@ -48,7 +45,7 @@ export const list = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -98,7 +95,7 @@ export const detail = {
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.findOne({

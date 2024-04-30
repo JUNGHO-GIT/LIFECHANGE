@@ -5,27 +5,24 @@ import {Sleep} from "../schema/Sleep.js";
 import {SleepPlan} from "../schema/SleepPlan.js";
 import {fmtDate} from "../assets/js/date.js";
 
-// 0-1. totalCnt ---------------------------------------------------------------------------------->
-export const totalCnt = async (
-  customer_id_param, startDt_param, endDt_param
-) => {
-
-  const finalResult = await SleepPlan.countDocuments({
-    customer_id: customer_id_param,
-    sleep_plan_startDt: {
-      $lte: endDt_param,
-    },
-    sleep_plan_endDt: {
-      $gte: startDt_param,
-    },
-  });
-
-  return finalResult;
-};
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
-  findPlan: async (
+  cnt: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await SleepPlan.countDocuments({
+      customer_id: customer_id_param,
+      sleep_plan_startDt: {
+        $lte: endDt_param,
+      },
+      sleep_plan_endDt: {
+        $gte: startDt_param,
+      },
+    });
+    return finalResult;
+  },
+
+  listPlan: async (
     customer_id_param, sort_param, limit_param, page_param, startDt_param,  endDt_param,
   ) => {
     const finalResult = await SleepPlan.aggregate([
@@ -48,7 +45,7 @@ export const list = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, startDt_param, endDt_param,
   ) => {
     const finalResult = await Sleep.aggregate([

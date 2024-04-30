@@ -9,11 +9,11 @@ export const list = async (
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repository.list.cnt(
     customer_id_param, startDt_param, endDt_param
   );
 
-  const finalResult = await repository.list.find(
+  const finalResult = await repository.list.list(
     customer_id_param, startDt_param, endDt_param
   );
 

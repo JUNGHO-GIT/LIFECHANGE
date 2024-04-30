@@ -13,7 +13,7 @@ import {ExercisePlan} from "../schema/ExercisePlan.js";
 export const percent = {
 
   // 1. food
-  findFoodPlan: async (
+  listFoodPlan: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
@@ -39,7 +39,7 @@ export const percent = {
     return finalResult;
   },
 
-  findFoodReal: async (
+  listFoodReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
@@ -66,7 +66,7 @@ export const percent = {
   },
 
   // 2. money
-  findMoneyPlan: async (
+  listMoneyPlan: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.aggregate([
@@ -90,7 +90,7 @@ export const percent = {
     return finalResult;
   },
 
-  findMoneyReal: async (
+  listMoneyReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -115,7 +115,7 @@ export const percent = {
   },
 
   // 3. sleep
-  findSleepPlan: async (
+  listSleepPlan: async (
     customer_id_param, startDt_param,  endDt_param,
   ) => {
     const finalResult = await SleepPlan.aggregate([
@@ -140,7 +140,7 @@ export const percent = {
     return finalResult;
   },
 
-  findSleepReal: async (
+  listSleepReal: async (
     customer_id_param, startDt_param, endDt_param,
   ) => {
     const finalResult = await Sleep.aggregate([
@@ -168,7 +168,7 @@ export const percent = {
   },
 
   // 4. exercise
-  findExercisePlan: async (
+  listExercisePlan: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
@@ -194,7 +194,7 @@ export const percent = {
     return finalResult;
   },
 
-  findExerciseReal: async (
+  listExerciseReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([

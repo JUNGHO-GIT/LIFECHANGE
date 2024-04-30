@@ -14,31 +14,31 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repository.list.cnt(
     customer_id_param, startDtPlan, endDtPlan
   );
-  const findPlan = await repository.list.findPlan(
+  const listPlan = await repository.list.listPlan(
     customer_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
 
-  const finalResult = await Promise.all(findPlan.map(async (plan) => {
+  const finalResult = await Promise.all(listPlan.map(async (plan) => {
     const startDt = plan.exercise_plan_startDt;
     const endDt = plan.exercise_plan_endDt;
 
-    const findReal = await repository.list.findReal(
+    const listReal = await repository.list.listReal(
       customer_id_param, startDt, endDt
     );
 
-    const exerciseTotalCount = findReal.reduce((acc, curr) => (
+    const exerciseTotalCount = listReal.reduce((acc, curr) => (
       acc + (curr?.exercise_total_volume !== 1 ? 1 : 0)
     ), 0);
-    const exerciseTotalVolume = findReal.reduce((acc, curr) => (
+    const exerciseTotalVolume = listReal.reduce((acc, curr) => (
       acc + (curr?.exercise_total_volume ?? 0)
     ), 0);
-    const exerciseTotalCardio = findReal.reduce((acc, curr) => (
+    const exerciseTotalCardio = listReal.reduce((acc, curr) => (
       acc + strToDecimal(curr?.exercise_total_cardio ?? "00:00")
     ), 0);
-    const exerciseLessWeight = findReal.reduce((acc, curr) => (
+    const exerciseLessWeight = listReal.reduce((acc, curr) => (
       (curr.exercise_body_weight !== null && (acc === null || curr.exercise_body_weight < acc)) ? curr.exercise_body_weight : acc
     ), null);
 
@@ -78,19 +78,19 @@ export const save = async (
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
-  const findPlan = await repository.save.find(
+  const listPlan = await repository.save.list(
     customer_id_param, "", startDt_param, endDt_param
   );
 
   let finalResult;
-  if (!findPlan) {
+  if (!listPlan) {
     finalResult = await repository.save.create(
       customer_id_param, OBJECT_param, startDt_param, endDt_param
     );
   }
   else {
     finalResult = await repository.save.update(
-      customer_id_param, findPlan._id, OBJECT_param, startDt_param, endDt_param
+      customer_id_param, listPlan._id, OBJECT_param, startDt_param, endDt_param
     );
   }
 

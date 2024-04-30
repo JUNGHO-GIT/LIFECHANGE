@@ -4,26 +4,24 @@ import mongoose from "mongoose";
 import {Diary} from "../schema/Diary.js";
 import {fmtDate} from "../assets/js/date.js";
 
-// 0-1. totalCnt ---------------------------------------------------------------------------------->
-export const totalCnt = async (
-  customer_id_param, startDt_param, endDt_param
-) => {
-  const finalResult = await Diary.countDocuments({
-    customer_id: customer_id_param,
-    diary_startDt: {
-      $lte: endDt_param,
-    },
-    diary_endDt: {
-      $gte: startDt_param,
-    },
-  });
-
-  return finalResult;
-}
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
-  find: async (
+  cnt: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Diary.countDocuments({
+      customer_id: customer_id_param,
+      diary_startDt: {
+        $lte: endDt_param,
+      },
+      diary_endDt: {
+        $gte: startDt_param,
+      },
+    });
+    return finalResult;
+  },
+
+  list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Diary.aggregate([

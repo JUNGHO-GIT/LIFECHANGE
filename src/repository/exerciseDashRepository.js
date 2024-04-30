@@ -5,7 +5,7 @@ import {ExercisePlan} from "../schema/ExercisePlan.js";
 
 // 1-1. dash (scatter - today) -------------------------------------------------------------------->
 export const scatterToday = {
-  findPlan: async (
+  listPlan: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
@@ -26,7 +26,7 @@ export const scatterToday = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -50,7 +50,7 @@ export const scatterToday = {
 
 // 1-2. dash (scatter - week) --------------------------------------------------------------------->
 export const scatterWeek = {
-  findPlan: async (
+  listPlan: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
@@ -71,7 +71,7 @@ export const scatterWeek = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -95,7 +95,7 @@ export const scatterWeek = {
 
 // 1-3. dash (scatter - month) -------------------------------------------------------------------->
 export const scatterMonth = {
-  findPlan: async (
+  listPlan: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
@@ -116,7 +116,7 @@ export const scatterMonth = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -140,7 +140,7 @@ export const scatterMonth = {
 
 // 2-1. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = {
-  findPart: async (
+  listPart: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -171,7 +171,7 @@ export const pieWeek = {
     return finalResult;
   },
 
-  findTitle: async (
+  listTitle: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -205,7 +205,7 @@ export const pieWeek = {
 
 // 2-2. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = {
-  findPart: async (
+  listPart: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -236,7 +236,7 @@ export const pieMonth = {
     return finalResult;
   },
 
-  findTitle: async (
+  listTitle: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -270,7 +270,7 @@ export const pieMonth = {
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
@@ -292,7 +292,7 @@ export const lineWeek = {
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
@@ -314,7 +314,7 @@ export const lineMonth = {
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 export const avgWeek = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.findOne({
@@ -336,7 +336,7 @@ export const avgWeek = {
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.findOne({

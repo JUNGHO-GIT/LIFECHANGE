@@ -14,25 +14,25 @@ export const list = async (
   const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repository.list.cnt(
     customer_id_param, startDtPlan, endDtPlan
   );
-  const findPlan = await repository.list.findPlan(
+  const listPlan = await repository.list.listPlan(
     customer_id_param, sort, limit, page, startDtPlan, endDtPlan
   );
 
-  const finalResult = await Promise.all(findPlan.map(async (plan) => {
+  const finalResult = await Promise.all(listPlan.map(async (plan) => {
     const startDt = plan.money_plan_startDt;
     const endDt = plan.money_plan_endDt;
 
-    const findReal = await repository.list.findReal(
+    const listReal = await repository.list.listReal(
       customer_id_param, startDt, endDt
     );
 
-    const moneyTotalIn = findReal.reduce((acc, curr) => (
+    const moneyTotalIn = listReal.reduce((acc, curr) => (
       acc + (curr?.money_total_in ?? 0)
     ), 0);
-    const moneyTotalOut = findReal.reduce((acc, curr) => (
+    const moneyTotalOut = listReal.reduce((acc, curr) => (
       acc + (curr?.money_total_out ?? 0)
     ), 0);
 

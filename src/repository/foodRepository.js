@@ -4,33 +4,32 @@ import mongoose from "mongoose";
 import {Food} from "../schema/Food.js";
 import {fmtDate} from "../assets/js/date.js";
 
-// 0-1. totalCnt ---------------------------------------------------------------------------------->
-export const totalCnt = async (
-  customer_id_param, part_param, title_param, startDt_param, endDt_param
-) => {
-
-  const finalResult = await Food.countDocuments({
-    customer_id: customer_id_param,
-    food_startDt: {
-      $gte: startDt_param,
-    },
-    food_endDt: {
-      $lte: endDt_param,
-    },
-    ...(part_param !== "전체" && {
-      "food_section.food_part_val": part_param
-    }),
-    ...(title_param !== "전체" && {
-      "food_section.food_title": title_param
-    }),
-  });
-
-  return finalResult;
-};
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
-  find: async (
+  cnt: async (
+    customer_id_param, part_param, title_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Food.countDocuments({
+      customer_id: customer_id_param,
+      food_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      food_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      ...(part_param !== "전체" && {
+        "food_section.food_part_val": part_param
+      }),
+      ...(title_param !== "전체" && {
+        "food_section.food_title": title_param
+      }),
+    });
+    return finalResult;
+  },
+
+  list: async (
     customer_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([

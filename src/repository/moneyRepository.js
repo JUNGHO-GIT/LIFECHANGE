@@ -4,32 +4,32 @@ import mongoose from "mongoose";
 import {Money} from "../schema/Money.js";
 import {fmtDate} from "../assets/js/date.js";
 
-// 0. totalCnt ------------------------------------------------------------------------------------>
-export const totalCnt = async (
-  customer_id_param, part_param, title_param, startDt_param, endDt_param
-) => {
-  const finalResult = await Money.countDocuments({
-    customer_id: customer_id_param,
-    money_startDt: {
-      $gte: startDt_param,
-    },
-    money_endDt: {
-      $lte: endDt_param,
-    },
-    ...(part_param !== "전체" && {
-      "money_section.money_part_val": part_param
-    }),
-    ...(title_param !== "전체" && {
-      "money_section.money_title_val": title_param
-    }),
-  });
-
-  return finalResult;
-};
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
-  find: async (
+  cnt: async (
+    customer_id_param, part_param, title_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Money.countDocuments({
+      customer_id: customer_id_param,
+      money_startDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      money_endDt: {
+        $gte: startDt_param,
+        $lte: endDt_param,
+      },
+      ...(part_param === "전체" ? {} : {
+        "money_section.money_part_val": part_param
+      }),
+      ...(title_param === "전체" ? {} : {
+        "money_section.money_title_val": title_param
+      }),
+    });
+    return finalResult;
+  },
+
+  list: async (
     customer_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([

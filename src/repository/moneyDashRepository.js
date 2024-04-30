@@ -5,7 +5,7 @@ import {MoneyPlan} from "../schema/MoneyPlan.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
-  findPlan: async (
+  listPlan: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
@@ -22,7 +22,7 @@ export const barToday = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
@@ -44,7 +44,7 @@ export const barToday = {
 
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
 export const pieToday = {
-  findIn: async (
+  listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -76,7 +76,7 @@ export const pieToday = {
     return finalResult;
   },
 
-  findOut: async (
+  listOut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -111,7 +111,7 @@ export const pieToday = {
 
 // 2-2. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = {
-  findIn: async (
+  listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -143,7 +143,7 @@ export const pieWeek = {
     return finalResult;
   },
 
-  findOut: async (
+  listOut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -178,7 +178,7 @@ export const pieWeek = {
 
 // 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = {
-  findIn: async (
+  listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -210,7 +210,7 @@ export const pieMonth = {
     return finalResult;
   },
 
-  findOut: async (
+  listOut: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -245,7 +245,7 @@ export const pieMonth = {
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
@@ -267,7 +267,7 @@ export const lineWeek = {
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
@@ -289,7 +289,7 @@ export const lineMonth = {
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 export const avgWeek = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
@@ -311,7 +311,7 @@ export const avgWeek = {
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
-  find: async (
+  list: async (
     customer_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({

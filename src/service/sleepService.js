@@ -13,11 +13,11 @@ export const list = async (
   const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
   const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
 
-  const totalCnt = await repository.totalCnt(
+  const totalCnt = await repository.list.cnt(
     customer_id_param, startDt_param, endDt_param
   );
 
-  const finalResult = await repository.list.find(
+  const finalResult = await repository.list.list(
     customer_id_param, sort, limit, page, startDt_param, endDt_param
   );
 

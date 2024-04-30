@@ -5,27 +5,24 @@ import {Money} from "../schema/Money.js";
 import {MoneyPlan} from "../schema/MoneyPlan.js";
 import {fmtDate} from "../assets/js/date.js";
 
-// 0-1. totalCnt ---------------------------------------------------------------------------------->
-export const totalCnt = async (
-  customer_id_param, startDt_param, endDt_param
-) => {
-
-  const finalResult = await MoneyPlan.countDocuments({
-    customer_id: customer_id_param,
-    money_plan_startDt: {
-      $lte: endDt_param,
-    },
-    money_plan_endDt: {
-      $gte: startDt_param,
-    },
-  });
-
-  return finalResult;
-};
-
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
-  findPlan: async (
+  cnt: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await MoneyPlan.countDocuments({
+      customer_id: customer_id_param,
+      money_plan_startDt: {
+        $lte: endDt_param,
+      },
+      money_plan_endDt: {
+        $gte: startDt_param,
+      },
+    });
+    return finalResult;
+  },
+
+  listPlan: async (
     customer_id_param,
     sort_param,
     limit_param,
@@ -53,7 +50,7 @@ export const list = {
     return finalResult;
   },
 
-  findReal: async (
+  listReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([

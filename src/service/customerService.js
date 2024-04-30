@@ -50,24 +50,12 @@ export const checkId = async (
   return findResult;
 };
 
-// 1-1. dataset ----------------------------------------------------------------------------------->
-export const dataset = async (
-  customer_id_param
-) => {
-
-  const findResult = await repository.aggregateDataset (
-    customer_id_param
-  );
-
-  return findResult;
-};
-
-// 1-2. list -------------------------------------------------------------------------------------->
+// 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
   customer_id_param, sort_param, limit_param, page_param
 ) => {
 
-  const finalResult = await repository.find(
+  const finalResult = await repository.list(
     customer_id_param, sort_param, limit_param, page_param
   );
 

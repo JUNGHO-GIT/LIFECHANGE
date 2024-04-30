@@ -17,7 +17,7 @@ export const TweakDataset = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_CUSTOMER || "";
+  const SUBFIX = process.env.REACT_APP_TWEAK || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
@@ -393,15 +393,15 @@ export const TweakDataset = () => {
     };
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
+        <div className={"table-wrapper3"}>
           <Row>
-            <Col lg={4} md={4} sm={4} xs={4} className={"mb-20 pe-0"}>
+            <Col lg={4} md={4} sm={4} xs={4} className={"pe-0"}>
               {tableSection1()}
             </Col>
-            <Col lg={4} md={4} sm={4} xs={4} className={"mb-20 ps-0 pe-0"}>
+            <Col lg={4} md={4} sm={4} xs={4} className={"ps-0 pe-0"}>
               {tableSection2()}
             </Col>
-            <Col lg={4} md={4} sm={4} xs={4} className={"mb-20 ps-0"}>
+            <Col lg={4} md={4} sm={4} xs={4} className={"ps-0"}>
               {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableSection3())}
             </Col>
           </Row>
@@ -444,7 +444,7 @@ export const TweakDataset = () => {
     }
     return (
       <React.Fragment>
-        <Button variant={"danger"} size={"sm"} className={"button me-5"}
+        <Button variant={"danger"} size={"sm"} className={"danger-btn"}
         onClick={confirmDefault}>
           기본값
         </Button>
@@ -453,14 +453,12 @@ export const TweakDataset = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonNode = () => {
-    return (
-      <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
-        SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-        flowSave={flowSave} navParam={navParam} part={"customer"} plan={""} type={"save"}
-      />
-    );
-  };
+  const buttonNode = () => (
+    <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
+      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={flowSave} navParam={navParam} part={"customer"} plan={""} type={"save"}
+    />
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (

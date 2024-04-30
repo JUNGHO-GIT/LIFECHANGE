@@ -26,17 +26,17 @@ export const barToday = async (
   let finalResult = [];
 
   for (let key in data) {
-    const findPlan = await repository.barToday.findPlan(
+    const listPlan = await repository.barToday.listPlan(
       customer_id_param, "", koreanDate, koreanDate
     );
-    const findReal = await repository.barToday.findReal(
+    const listReal = await repository.barToday.listReal(
       customer_id_param, "", koreanDate, koreanDate
     );
 
     finalResult.push({
       name: key,
-      목표: timeFormat(findPlan?.[data[key].plan]),
-      실제: timeFormat(findReal?.sleep_section?.[0]?.[data[key].real]),
+      목표: timeFormat(listPlan?.[data[key].plan]),
+      실제: timeFormat(listReal?.sleep_section?.[0]?.[data[key].real]),
     });
   };
 
@@ -56,7 +56,7 @@ export const lineWeek = async (
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().add(i, "days");
-    const findResult = await repository.lineWeek.find(
+    const findResult = await repository.lineWeek.list(
       customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -86,7 +86,7 @@ export const lineMonth = async (
 
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
-    const findResult = await repository.lineMonth.find(
+    const findResult = await repository.lineMonth.list(
       customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -125,7 +125,7 @@ export const avgWeek = async (
     const weekNum = week.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repository.avgWeek.find(
+      const findResult = await repository.avgWeek.list(
         customer_id_param, "", week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
@@ -173,7 +173,7 @@ export const avgMonth = async (
   ) {
     const monthNum = month.month();
 
-    const findResult = await repository.avgMonth.find(
+    const findResult = await repository.avgMonth.list(
       customer_id_param, "", month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 

@@ -63,7 +63,6 @@ export const dataArray = [
     icon: "bx bx-cog",
     title: "Tweak",
     items: [
-      {to: "/tweak/test", label: "TweakTest"},
       {to: "/tweak/dataset", label: "TweakDataset"},
     ]
   },

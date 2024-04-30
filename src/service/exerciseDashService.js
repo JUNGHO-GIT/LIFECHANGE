@@ -17,19 +17,19 @@ export const scatterToday = async (
 
   let finalResult = [];
 
-  const findPlan = await repository.scatterToday.findPlan(
+  const listPlan = await repository.scatterToday.listPlan(
     customer_id_param, koreanDate, koreanDate
   );
 
-  const findReal = await repository.scatterToday.findReal(
+  const listReal = await repository.scatterToday.listReal(
     customer_id_param, koreanDate, koreanDate
   );
 
   for (let key in data) {
     finalResult.push({
       name: koreanDate,
-      목표: intFormat(findPlan?.[0]?.[data[key].plan]),
-      실제: intFormat(findReal?.[0]?.[data[key].real])
+      목표: intFormat(listPlan?.[0]?.[data[key].plan]),
+      실제: intFormat(listReal?.[0]?.[data[key].real])
     });
   };
 
@@ -56,19 +56,19 @@ export const scatterWeek = async (
     day.add(1, "days")
   ) {
 
-    const findPlan = await repository.scatterWeek.findPlan(
+    const listPlan = await repository.scatterWeek.listPlan(
       customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
-    const findReal = await repository.scatterWeek.findReal(
+    const listReal = await repository.scatterWeek.listReal(
       customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
     for (let key in data) {
       finalResult.push({
         name: day.format("MM/DD"),
-        목표: intFormat(findPlan?.[0]?.[data[key].plan]),
-        실제: intFormat(findReal?.[0]?.[data[key].real])
+        목표: intFormat(listPlan?.[0]?.[data[key].plan]),
+        실제: intFormat(listReal?.[0]?.[data[key].real])
       });
     };
   };
@@ -96,19 +96,19 @@ export const scatterMonth = async (
     day.add(1, "days")
   ) {
 
-    const findPlan = await  repository.scatterMonth.findPlan(
+    const listPlan = await  repository.scatterMonth.listPlan(
       customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
-    const findReal = await repository.scatterMonth.findReal(
+    const listReal = await repository.scatterMonth.listReal(
       customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
     );
 
     for (let key in data) {
       finalResult.push({
         name: day.format("MM/DD"),
-        목표: intFormat(findPlan?.[0]?.[data[key].plan]),
-        실제: intFormat(findReal?.[0]?.[data[key].real])
+        목표: intFormat(listPlan?.[0]?.[data[key].plan]),
+        실제: intFormat(listReal?.[0]?.[data[key].real])
       });
     };
   };
@@ -127,10 +127,10 @@ export const pieWeek = async (
   // top title
   let finalResultTitle = [];
 
-  const findResultPart = await repository.pieWeek.findPart(
+  const findResultPart = await repository.pieWeek.listPart(
     customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
-  const findResultTitle = await repository.pieWeek.findTitle(
+  const findResultTitle = await repository.pieWeek.listTitle(
     customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
   );
 
@@ -165,10 +165,10 @@ export const pieMonth = async (
   // top title
   let finalResultTitle = [];
 
-  const findResultPart = await repository.pieMonth.findPart(
+  const findResultPart = await repository.pieMonth.listPart(
     customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
-  const findResultTitle = await repository.pieMonth.findTitle(
+  const findResultTitle = await repository.pieMonth.listTitle(
     customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
   );
 
@@ -209,7 +209,7 @@ export const lineWeek = async (
 
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().add(i, "days");
-    const findResult = await repository.lineWeek.find(
+    const findResult = await repository.lineWeek.list(
       customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -249,7 +249,7 @@ export const lineMonth = async (
 
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
-    const findResult = await repository.lineMonth.find(
+    const findResult = await repository.lineMonth.list(
       customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
@@ -301,7 +301,7 @@ export const avgWeek = async (
     const weekNum = week.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repository.lineWeek.find(
+      const findResult = await repository.lineWeek.list(
         customer_id_param, "", week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
@@ -356,7 +356,7 @@ export const avgMonth = async (
   ) {
     const monthNum = month.month();
 
-    const findResult = await repository.lineMonth.find(
+    const findResult = await repository.lineMonth.list(
       customer_id_param, "", month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 

@@ -278,6 +278,11 @@ table tbody tr td {
     min-height: 370px;
     max-height: 370px;
   }
+  .table-wrapper3 {
+    overflow-x: hidden;
+    min-height: 425px;
+    max-height: 425px;
+  }
   thead {
     font-size: 0.8rem;
   }
@@ -359,6 +364,11 @@ table tbody tr td {
     overflow-x: hidden;
     min-height: 338px;
     max-height: 338px;
+  }
+  .table-wrapper3 {
+    overflow-x: hidden;
+    min-height: 395px;
+    max-height: 395px;
   }
   thead {
     font-size: 0.9rem;
@@ -442,6 +452,11 @@ table tbody tr td {
     min-height: 318px;
     max-height: 318px;
   }
+  .table-wrapper3 {
+    overflow-x: hidden;
+    min-height: 375px;
+    max-height: 375px;
+  }
   thead {
     font-size: 1.0rem;
   }
@@ -524,6 +539,11 @@ table tbody tr td {
     min-height: 296px;
     max-height: 296px;
   }
+  .table-wrapper3 {
+    overflow-x: hidden;
+    min-height: 355px;
+    max-height: 355px;
+  }
   thead {
     font-size: 1.1rem;
   }
@@ -605,6 +625,11 @@ table tbody tr td {
     overflow-x: hidden;
     min-height: 200px;
     max-height: 200px;
+  }
+  .table-wrapper3 {
+    overflow-x: hidden;
+    min-height: 335px;
+    max-height: 335px;
   }
   thead {
     font-size: 1.2rem;
