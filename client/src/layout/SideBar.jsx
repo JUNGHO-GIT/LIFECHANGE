@@ -3,8 +3,8 @@
 import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
-import {dataArray} from "../assets/data/DataArray.jsx";
-import {useStorage} from "../assets/hooks/useStorage.jsx";
+import {dataArray} from "../assets/array/dataArray.js";
+import {useStorage} from "../hooks/useStorage.jsx";
 import {Collapse} from "react-bootstrap";
 // @ts-ignore
 import logo1 from "../assets/images/logo1.png";

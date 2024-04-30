@@ -1,6 +1,6 @@
 // testService.js
 
-import * as repository from "../repository/testRepository.js";
+import * as repository from "../repository/tweakRepository.js";
 
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = async (

@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Routes, Route} from "react-router-dom";
-import {DeveloperModeProvider} from "../assets/hooks/useDeveloperMode.jsx";
+import {DeveloperModeProvider} from "../hooks/useDeveloperMode.jsx";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,19 +14,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-resizable/css/styles.css";
 import "react-calendar/dist/Calendar.css";
 
-import "../assets/css/fragments/DatePicker.css";
-import "../assets/css/fragments/TimePicker.css";
-import "../assets/css/fragments/DayPicker.css";
-import "../assets/css/fragments/Calendar.css";
+import "../assets/css/DatePicker.css";
+import "../assets/css/TimePicker.css";
+import "../assets/css/DayPicker.css";
+import "../assets/css/Calendar.css";
 
-import "../assets/css/custom/Chart.css";
-import "../assets/css/custom/Custom.css";
-import "../assets/css/custom/Jstyle.css";
+import "../assets/css/Header.css";
+import "../assets/css/Loader.css";
+import "../assets/css/NavBar.css";
+import "../assets/css/SideBar.css";
 
-import "../assets/css/layout/Header.css";
-import "../assets/css/layout/Loader.css";
-import "../assets/css/layout/NavBar.css";
-import "../assets/css/layout/SideBar.css";
+import "../assets/css/Chart.css";
+import "../assets/css/Custom.css";
+import "../assets/css/Jstyle.css";
 
 import {Loader} from "../layout/Loader.jsx";
 import {Header} from "../layout/Header.jsx";
@@ -34,7 +34,6 @@ import {NavBar} from "../layout/NavBar.jsx";
 
 import {CustomerSignup} from "../page/customer/CustomerSignup.jsx";
 import {CustomerLogin} from "../page/customer/CustomerLogin.jsx";
-import {CustomerDataset} from "../page/customer/CustomerDataset.jsx";
 
 import {DiaryList} from "../page/diary/DiaryList.jsx";
 import {DiaryDetail} from "../page/diary/DiaryDetail.jsx";
@@ -72,7 +71,8 @@ import {SleepList} from "../page/sleep/SleepList.jsx";
 import {SleepDetail} from "../page/sleep/SleepDetail.jsx";
 import {SleepSave} from "../page/sleep/SleepSave.jsx";
 
-import {Test} from "../page/Test.jsx";
+import {TweakTest} from "../page/tweak/TweakTest.jsx";
+import {TweakDataset} from "../page/tweak/TweakDataset.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 const Customer = () => {
@@ -81,7 +81,6 @@ const Customer = () => {
       <Routes>
         <Route path="/signup" element={<CustomerSignup />} />
         <Route path="/login" element={<CustomerLogin />} />
-        <Route path="/dataset" element={<CustomerDataset />} />
       </Routes>
     </React.Fragment>
   );
@@ -169,6 +168,18 @@ const Sleep = () => {
 };
 
 // ------------------------------------------------------------------------------------------------>
+const Tweak = () => {
+  return (
+    <React.Fragment>
+      <Routes>
+        <Route path="/test" element={<TweakTest />} />
+        <Route path="/dataset" element={<TweakDataset />} />
+      </Routes>
+    </React.Fragment>
+  );
+};
+
+// ------------------------------------------------------------------------------------------------>
 export const App = () => {
   return (
     <React.Fragment>
@@ -184,7 +195,7 @@ export const App = () => {
             <Route path="/food/*" element={<Food />} />
             <Route path="/money/*" element={<Money />} />
             <Route path="/sleep/*" element={<Sleep />} />
-            <Route path="/test" element={<Test />} />
+            <Route path="/tweak/*" element={<Tweak />} />
           </Routes>
         </DeveloperModeProvider>
       </div>

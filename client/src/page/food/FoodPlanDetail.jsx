@@ -5,8 +5,8 @@ import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {percent} from "../../assets/js/percent.js";
-import {useDate} from "../../assets/hooks/useDate.jsx";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useDate} from "../../hooks/useDate.jsx";
+import {useStorage} from "../../hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {Container, Table, Button, Row, Col, Card} from "react-bootstrap";
 

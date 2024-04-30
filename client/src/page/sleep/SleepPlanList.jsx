@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useStorage} from "../../hooks/useStorage.jsx";
 import {CalendarNode} from "../../fragments/CalendarNode.jsx";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {FilterNode} from "../../fragments/FilterNode.jsx";

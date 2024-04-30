@@ -2,11 +2,11 @@
 
 import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
-import {diaryArray} from "../assets/data/DiaryArray.js";
-import {exerciseArray} from "../assets/data/ExerciseArray.js";
-import {moneyArray} from "../assets/data/MoneyArray.js";
-import {foodArray} from "../assets/data/FoodArray.js";
-import {sleepArray} from "../assets/data/SleepArray.js";
+import {diaryArray} from "../assets/array/diaryArray.js";
+import {exerciseArray} from "../assets/array/exerciseArray.js";
+import {moneyArray} from "../assets/array/moneyArray.js";
+import {foodArray} from "../assets/array/foodArray.js";
+import {sleepArray} from "../assets/array/sleepArray.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({

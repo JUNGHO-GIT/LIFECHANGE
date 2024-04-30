@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useStorage} from "../../../hooks/useStorage.jsx";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 

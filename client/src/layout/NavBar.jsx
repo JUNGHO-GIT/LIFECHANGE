@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
-import {dataArray} from "../assets/data/DataArray.jsx";
+import {dataArray} from "../assets/array/dataArray.js";
 import {Container, Row, Col, Card} from "react-bootstrap";
 // @ts-ignore
 import smile1 from "../assets/images/smile1.png";

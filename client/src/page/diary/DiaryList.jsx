@@ -6,7 +6,7 @@ import Calendar from "react-calendar";
 import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Container, Row, Col, Card} from "react-bootstrap";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useStorage} from "../../hooks/useStorage.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const DiaryList = () => {

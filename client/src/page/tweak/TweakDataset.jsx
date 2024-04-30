@@ -1,19 +1,19 @@
-// CustomerDataset.jsx
+// TweakDataset.jsx
 
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useStorage} from "../../hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {diaryArray} from "../../assets/data/DiaryArray.jsx";
-import {exerciseArray} from "../../assets/data/ExerciseArray.jsx";
-import {foodArray} from "../../assets/data/FoodArray.jsx";
-import {moneyArray} from "../../assets/data/MoneyArray.jsx";
-import {sleepArray} from "../../assets/data/SleepArray.jsx";
+import {diaryArray} from "../../assets/array/diaryArray.js";
+import {exerciseArray} from "../../assets/array/exerciseArray.js";
+import {foodArray} from "../../assets/array/foodArray.js";
+import {moneyArray} from "../../assets/array/moneyArray.js";
+import {sleepArray} from "../../assets/array/sleepArray.js";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const CustomerDataset = () => {
+export const TweakDataset = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";

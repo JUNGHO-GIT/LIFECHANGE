@@ -4,9 +4,9 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import InputMask from "react-input-mask";
 import {NumericFormat} from "react-number-format";
-import {useDate} from "../../assets/hooks/useDate.jsx";
+import {useDate} from "../../hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useStorage} from "../../hooks/useStorage.jsx";
 import {DateNode} from "../../fragments/DateNode.jsx";
 import {Button, Col, Row, Container, Card} from "react-bootstrap";
 

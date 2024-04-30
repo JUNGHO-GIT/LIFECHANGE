@@ -4,7 +4,7 @@ import {SideBar} from "./SideBar.jsx";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import moment from "moment-timezone";
-import {useDeveloperMode} from "../assets/hooks/useDeveloperMode.jsx";
+import {useDeveloperMode} from "../hooks/useDeveloperMode.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>

@@ -26,7 +26,7 @@ import {router as foodRouter} from "./src/router/foodRouter.js";
 import {router as moneyRouter} from "./src/router/moneyRouter.js";
 import {router as sleepRouter} from "./src/router/sleepRouter.js";
 
-import {router as testRouter} from "./src/router/testRouter.js";
+import {router as tweakRouter} from "./src/router/tweakRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
@@ -78,7 +78,7 @@ app.use("/food", foodRouter);
 app.use("/money", moneyRouter);
 app.use("/sleep", sleepRouter);
 
-app.use("/test", testRouter);
+app.use("/tweak", tweakRouter);
 
 // ------------------------------------------------------------------------------------------------>
 app.listen(app.get("port"), () => {

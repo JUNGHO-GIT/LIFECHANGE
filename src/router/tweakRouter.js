@@ -1,7 +1,7 @@
 // router.js
 
 import express from "express";
-import * as service from "../service/testService.js";
+import * as service from "../service/tweakService.js";
 export const router = express.Router();
 
 // 1-1. list -------------------------------------------------------------------------------------->

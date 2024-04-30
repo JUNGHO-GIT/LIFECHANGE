@@ -1,13 +1,5 @@
 // 1. dataArray ---------------------------------------------------------------------------------->
 export const dataArray = [
-  // customer
-  {
-    icon: "bx bx-user",
-    title: "Customer",
-    items: [
-      {to: "/customer/dataset", label: "CustomerDataset"},
-    ]
-  },
   // diary
   {
     icon: "bx bx-calendar",
@@ -66,12 +58,13 @@ export const dataArray = [
       {to: "/sleep/plan/save", label: "SleepPlanSave"},
     ]
   },
-  // test
+  // tweak
   {
-    icon: "bx bx-check-shield",
-    title: "Test",
+    icon: "bx bx-cog",
+    title: "Tweak",
     items: [
-      {to: "/test", label: "Test"},
+      {to: "/tweak/test", label: "TweakTest"},
+      {to: "/tweak/dataset", label: "TweakDataset"},
     ]
   },
 ];

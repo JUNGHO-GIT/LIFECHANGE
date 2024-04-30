@@ -4,7 +4,7 @@ import axios from "axios";
 import {ComposedChart, Bar} from "recharts";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../assets/hooks/useStorage.jsx";
+import {useStorage} from "../../../hooks/useStorage.jsx";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 

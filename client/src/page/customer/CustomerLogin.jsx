@@ -5,7 +5,7 @@ import moment from "moment-timezone";
 import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../assets/hooks/useStorage.jsx";
+import {useStorage} from "../../hooks/useStorage.jsx";
 import {percent} from "../../assets/js/percent.js";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
