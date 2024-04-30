@@ -101,9 +101,9 @@ export const ExerciseList = () => {
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         customer_id: customer_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
-        PAGING: PAGING
+        PAGING: PAGING,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
@@ -112,7 +112,7 @@ export const ExerciseList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [customer_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
+  })()}, [customer_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -203,7 +203,7 @@ export const ExerciseList = () => {
     return (
       <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
         SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
+        flowSave={""} navParam={navParam} part={"exercise"} plan={"plan"} type={"list"}
       />
     );
   };

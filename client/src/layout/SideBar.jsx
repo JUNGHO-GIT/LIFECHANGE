@@ -11,7 +11,7 @@ import logo1 from "../assets/images/logo1.png";
 // @ts-ignore
 import logo2 from "../assets/images/logo2.png";
 // @ts-ignore
-import logo3 from "../assets/images/logo3-1.png";
+import logo3 from "../assets/images/logo3.png";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({ sidebar, onClose }) => {

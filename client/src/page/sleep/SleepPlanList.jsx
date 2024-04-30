@@ -97,9 +97,9 @@ export const SleepPlanList = () => {
     const response = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         customer_id: customer_id,
-        duration: `${DATE.startDt} ~ ${DATE.endDt}`,
         FILTER: FILTER,
-        PAGING: PAGING
+        PAGING: PAGING,
+        duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
@@ -108,7 +108,7 @@ export const SleepPlanList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [customer_id, DATE.startDt, DATE.endDt, FILTER, PAGING]);
+  })()}, [customer_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {

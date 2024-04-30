@@ -41,8 +41,11 @@ export const FilterNode = ({
               order: e.target.value
             }))
           )}>
-            <option value="asc" selected>오름차순</option>
-            <option value="desc">내림차순</option>
+            {["asc", "desc"]?.map((item) => (
+              <option key={item} value={item} selected={FILTER.order === item}>
+                {item}
+              </option>
+            ))}
           </select>
         </React.Fragment>
       );
@@ -60,8 +63,11 @@ export const FilterNode = ({
               limit: parseInt(e.target.value)
             }))
           )}>
-            <option value="5" selected>5</option>
-            <option value="10">10</option>
+            {["5", "10"]?.map((item) => (
+              <option key={item} value={item} selected={FILTER.limit === parseInt(item)}>
+                {item}
+              </option>
+            ))}
           </select>
         </React.Fragment>
       );

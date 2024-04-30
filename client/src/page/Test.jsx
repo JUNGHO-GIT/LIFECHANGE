@@ -1,13 +1,9 @@
 // Test.jsx
 
 import axios from "axios";
-import numeral from 'numeral';
-import moment from "moment-timezone";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../assets/hooks/useStorage.jsx";
-import {CalendarNode} from "../fragments/CalendarNode.jsx";
-import {ButtonNode} from "../fragments/ButtonNode.jsx";
 import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
@@ -18,6 +14,10 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import {CalendarNode} from "../fragments/CalendarNode.jsx";
+import {ButtonNode} from "../fragments/ButtonNode.jsx";
+import {PagingNode} from "../fragments/PagingNode.jsx";
+import {FilterNode} from "../fragments/FilterNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const Test = () => {
@@ -32,7 +32,6 @@ export const Test = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname;
-  const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -41,18 +40,30 @@ export const Test = () => {
       refresh: 0,
       startDt: "0000-00-00",
       endDt: "0000-00-00",
-      toDetail: "/exercise/detail",
+      toDetail: "/exercise/detail"
     }
   );
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
-      endDt: location_endDt,
+      endDt: location_endDt
     }
   );
   const {val:FILTER, set:setFILTER} = useStorage(
     `FILTER(${PATH})`, {
+      order: "asc",
       type: "day",
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
+  const {val:PAGING, set:setPAGING} = useStorage(
+    `PAGING(${PATH})`, {
+      page: 1,
+      limit: 5
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -98,6 +109,8 @@ export const Test = () => {
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         customer_id: customer_id,
+        FILTER: FILTER,
+        PAGING: PAGING,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
@@ -107,7 +120,44 @@ export const Test = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [customer_id, DATE.startDt, DATE.endDt, FILTER.type]);
+  })()}, [customer_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
+
+  // 6. calendar ---------------------------------------------------------------------------------->
+  const calendarNode = () => {
+    return (
+      <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+        CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
+      />
+    );
+  };
+
+  // 7. paging ------------------------------------------------------------------------------------>
+  const pagingNode = () => {
+    return (
+      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+        part={"exercise"} plan={""} type={"list"}
+      />
+    );
+  };
+
+  // 8. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => {
+    return (
+      <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+        part={"exercise"} plan={""} type={"list"}
+      />
+    );
+  };
+
+  // 9. button ------------------------------------------------------------------------------------>
+  const buttonNode = () => {
+    return (
+      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+        SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+        flowSave={""} navParam={navParam} part={"exercise"} plan={"plan"} type={"list"}
+      />
+    );
+  };
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -147,61 +197,6 @@ export const Test = () => {
       }))
     )).flat();
 
-    function selectBtn () {
-      return (
-        <Select
-          value={FILTER.type}
-          defaultValue={"day"}
-          displayEmpty
-          className={"h-4"}
-          autoWidth={true}
-          renderValue={(value) => (
-            `${value}`
-          )}
-          onChange={(e) => {
-            setFILTER((prev) => ({
-              ...prev,
-              type: e.target.value
-            }));
-          }}>
-          {["day", "week", "month", "year", "select"].map((item) => (
-            <MenuItem key={item} value={item}>{item}</MenuItem>
-          ))}
-        </Select>
-      );
-    };
-
-    function calendarBtn () {
-      return (
-        <IconButton className={"ms-10 pb-10"} onClick={() => {
-          setCALENDAR((prev) => ({
-            ...prev,
-            calOpen: !prev.calOpen,
-          }));
-        }}>
-          <CalendarTodayIcon />
-        </IconButton>
-      );
-    };
-
-    function todayBtn () {
-      return (
-        <Button type={"button"} size={"small"} variant={"contained"} color={"primary"} onClick={() => {
-          setFILTER((prev) => ({
-            ...prev,
-            type: "day",
-          }));
-          setDATE((prev) => ({
-            ...prev,
-            startDt: koreanDate,
-            endDt: koreanDate,
-          }));
-        }}>
-          Today
-        </Button>
-      );
-    };
-
     function customFooter() {
       return (
         <React.Fragment>
@@ -209,13 +204,13 @@ export const Test = () => {
             <Container>
               <Grid container spacing={2} className={"d-center"}>
                 <Grid lg={4} md={4} sm={4} xs={4}>
-                  {selectBtn()}
-                  {calendarBtn()}
-                  {todayBtn()}
+                  {buttonNode()}
                 </Grid>
-                <Grid lg={2} md={2} sm={2} xs={2}></Grid>
+                <Grid lg={2} md={2} sm={2} xs={2}>
+                  {pagingNode()}
+                </Grid>
                 <Grid lg={6} md={6} sm={6} xs={6}>
-                  <GridPagination />
+                  {filterNode()}
                 </Grid>
               </Grid>
             </Container>
@@ -244,15 +239,6 @@ export const Test = () => {
     );
   };
 
-  // 6. calendar ---------------------------------------------------------------------------------->
-  const calendarNode = () => {
-    return (
-      <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
-        CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-      />
-    );
-  };
-
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -261,8 +247,8 @@ export const Test = () => {
           <Container>
             <Grid container spacing={2}>
               <Grid lg={12} md={12} sm={12} xs={12} className={"mb-20"}>
-                {tableNode()}
                 {calendarNode()}
+                {tableNode()}
               </Grid>
             </Grid>
           </Container>

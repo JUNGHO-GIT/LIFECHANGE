@@ -24,27 +24,27 @@
   color: #ff0000;
 }
 .selected {
-  background-color: #336699;
+  background-color: #164a60;
   color: #ffffff;
 }
 .selected:not([disabled]) {
-  background-color: #336699;
+  background-color: #164a60;
   color: #ffffff;
 }
 .selected:hover {
-  background-color: #336699;
+  background-color: #164a60;
   color: #ffffff;
 }
 .selected:hover:not([disabled]) {
-  background-color: #336699;
+  background-color: #164a60;
   color: #ffffff;
 }
 .rdp-day:focus {
-  background-color: #336699;
+  background-color: #164a60;
   color: #ffffff;
 }
 .rdp-day:active {
-  background-color: #336699;
+  background-color: #164a60;
   color: #ffffff;
 }
 .disabled {
@@ -81,7 +81,7 @@
   height: var(--rdp-cell-size);
   padding: 0;
   text-transform: uppercase;
-  background-color: #336699;
+  background-color: #164a60;
   color: #ffffff;
 }
 .today,

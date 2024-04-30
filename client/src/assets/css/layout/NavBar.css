@@ -3,16 +3,16 @@
 /** 0. Media **************************************************************************************/
 .nav-text {
   display: flex;
-  color: #042337;
+  color: #0b2730;
 }
 .nav-icon-text {
   display: flex;
-  color: #042337;
+  color: #0b2730;
 }
 .nav-image-smile {
   display: inline-block;
   object-fit: cover;
-  color: #042337;
+  color: #0b2730;
 }
 
 /** 1. Small (0 ~ 479px) **************************************************************************/

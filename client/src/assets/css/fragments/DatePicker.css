@@ -9,7 +9,7 @@
   padding: 0;
 }
 .react-datepicker__header {
-  background-color: #042337;
+  background-color: #0b2730;
   color: #ffffff;
 }
 .react-datepicker__navigation {
@@ -18,12 +18,12 @@
   transition: background-color 0.3s, color 0.3s;
 }
 .react-datepicker__day--selected {
-  background-color : #042337;
+  background-color : #0b2730;
   color: #ffffff;
   transition: background-color 0.3s, color 0.3s;
 }
 .react-datepicker__day--selected:hover {
-  background-color : #042337;
+  background-color : #0b2730;
   transition: background-color 0.3s, color 0.3s;
 }
 .react-datepicker__input-container {

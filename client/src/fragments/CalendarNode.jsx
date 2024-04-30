@@ -18,12 +18,14 @@ export const CalendarNode = ({
   useEffect(() => {
     if (FILTER.type === "day") {
       setDATE((prev) => ({
+        ...prev,
         startDt: moment(koreanDate).format("YYYY-MM-DD"),
         endDt: moment(koreanDate).format("YYYY-MM-DD"),
       }));
     }
     else if (FILTER.type === "week") {
       setDATE((prev) => ({
+        ...prev,
         startDt: moment(koreanDate).startOf("isoWeek").format("YYYY-MM-DD"),
         endDt: moment(koreanDate).endOf("isoWeek").format("YYYY-MM-DD")
       }));
@@ -37,12 +39,14 @@ export const CalendarNode = ({
     }
     else if (FILTER.type === "year") {
       setDATE((prev) => ({
+        ...prev,
         startDt: moment(koreanDate).startOf("year").format("YYYY-MM-DD"),
         endDt: moment(koreanDate).endOf("year").format("YYYY-MM-DD")
       }));
     }
     else if (FILTER.type === "select") {
       setDATE((prev) => ({
+        ...prev,
         startDt: moment(koreanDate).format("YYYY-MM-DD"),
         endDt: moment(koreanDate).format("YYYY-MM-DD"),
       }));

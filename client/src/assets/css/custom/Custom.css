@@ -82,7 +82,7 @@ p {
   position: relative;
 }
 .table-thead {
-  background-color: #336699 !important;
+  background-color: #164a60 !important;
   color: #ffffff !important;
 }
 
@@ -104,7 +104,7 @@ p {
   display: block;
   width: 100%;
   font-weight: 400;
-  color: #042337;
+  color: #0b2730;
   appearance: none;
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
@@ -116,7 +116,7 @@ p {
 .form-select {
   font-weight: 400;
   max-height: 40px !important;
-  color: #042337;
+  color: #0b2730;
 }
 .input-group-text {
   display: flex;
@@ -127,7 +127,7 @@ p {
   background-color: var(--bs-tertiary-bg);
   border: var(--bs-border-width) solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
-  color: #042337;
+  color: #0b2730;
 }
 tbody, td, tfoot, th, thead, tr {
   border-color: inherit;
@@ -136,7 +136,7 @@ tbody, td, tfoot, th, thead, tr {
   max-width: 180px !important;
 }
 table tbody tr td {
-  color: #042337 !important;
+  color: #0b2730 !important;
 }
 .btn-group-sm>.btn, .btn-sm {
   --bs-btn-border-radius: var(--bs-border-radius-sm) !important;
@@ -146,13 +146,13 @@ table tbody tr td {
   font-weight: 600;
   margin: 0rem 0.15rem 0rem 0.15rem;
   color: #ffffff !important;
-  background-color: #336699 !important;
-  border: 1px solid #336699 !important;
+  background-color: #164a60 !important;
+  border: 1px solid #164a60 !important;
 }
 .page-btn:hover, .page-btn:active, .page-btn:disabled {
   color: #ffffff !important;
-  background-color: #042337 !important;
-  border: 1px solid #042337 !important;
+  background-color: #0b2730 !important;
+  border: 1px solid #0b2730 !important;
 }
 .del-btn {
   cursor: pointer;
@@ -168,8 +168,8 @@ table tbody tr td {
   font-weight: 600;
   margin: 0rem 0.15rem 0rem 0.15rem;
   color: #ffffff !important;
-  background-color: #042337 !important;
-  border: 1px solid #042337 !important;
+  background-color: #0b2730 !important;
+  border: 1px solid #0b2730 !important;
 }
 .dark-btn:hover, .dark-btn:active, .dark-btn:disabled {
   color: #ffffff !important;
@@ -181,8 +181,8 @@ table tbody tr td {
   font-weight: 500;
   margin: 0rem 0.15rem 0rem 0.15rem;
   color: #ffffff !important;
-  background-color: #336699 !important;
-  border: 1px solid #336699 !important;
+  background-color: #164a60 !important;
+  border: 1px solid #164a60 !important;
 }
 .primary-btn:hover, .primary-btn:active, .primary-btn:disabled {
   color: #ffffff !important;
@@ -194,13 +194,13 @@ table tbody tr td {
   font-weight: 500;
   margin: 0rem 0.15rem 0rem 0.15rem;
   color: #ffffff;
-  background-color: #28a745;
-  border: 1px solid #28a745;
+  background-color: #3fc820;
+  border: 1px solid #3fc820;
 }
 .success-btn:hover, .success-btn:active, .success-btn:disabled {
   color: #ffffff !important;
-  background-color: #1d7430 !important;
-  border: 1px solid #1d7430 !important;
+  background-color: #2e7b18 !important;
+  border: 1px solid #2e7b18 !important;
 }
 .warning-btn {
   cursor: pointer;
