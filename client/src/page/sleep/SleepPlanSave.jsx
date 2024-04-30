@@ -119,69 +119,78 @@ export const SleepPlanSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection () {
+      return (
+        <Row className={"d-center"}>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>취침</span>
+              <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
+                id={"sleep_plan_night"}
+                name={"sleep_plan_night"}
+                className={"form-control"}
+                clockIcon={null}
+                disabled={false}
+                disableClock={false}
+                value={OBJECT?.sleep_plan_night}
+                onChange={(e) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_plan_night: e ? e.toString() : "",
+                  }));
+                }}
+              ></TimePicker>
+            </div>
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>기상</span>
+              <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
+                id={"sleep_plan_morning"}
+                name={"sleep_plan_morning"}
+                className={"form-control"}
+                clockIcon={null}
+                disabled={false}
+                disableClock={false}
+                value={OBJECT?.sleep_plan_morning}
+                onChange={(e) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_plan_morning: e ? e.toString() : "",
+                  }));
+                }}
+              ></TimePicker>
+            </div>
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>수면</span>
+              <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
+                id={"sleep_plan_time"}
+                name={"sleep_plan_time"}
+                className={"form-control"}
+                disabled={true}
+                clockIcon={null}
+                disableClock={false}
+                value={OBJECT?.sleep_plan_time}
+              ></TimePicker>
+            </div>
+          </Col>
+        </Row>
+      );
+    };
     return (
-      <Row className={"d-center"}>
-        <Col lg={12} md={12} sm={12} xs={12}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>취침</span>
-            <TimePicker
-              locale={"ko"}
-              format={"HH:mm"}
-              id={"sleep_plan_night"}
-              name={"sleep_plan_night"}
-              className={"form-control"}
-              clockIcon={null}
-              disabled={false}
-              disableClock={false}
-              value={OBJECT?.sleep_plan_night}
-              onChange={(e) => {
-                setOBJECT((prev) => ({
-                  ...prev,
-                  sleep_plan_night: e ? e.toString() : "",
-                }));
-              }}
-            ></TimePicker>
-          </div>
-        </Col>
-        <Col lg={12} md={12} sm={12} xs={12}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>기상</span>
-            <TimePicker
-              locale={"ko"}
-              format={"HH:mm"}
-              id={"sleep_plan_morning"}
-              name={"sleep_plan_morning"}
-              className={"form-control"}
-              clockIcon={null}
-              disabled={false}
-              disableClock={false}
-              value={OBJECT?.sleep_plan_morning}
-              onChange={(e) => {
-                setOBJECT((prev) => ({
-                  ...prev,
-                  sleep_plan_morning: e ? e.toString() : "",
-                }));
-              }}
-            ></TimePicker>
-          </div>
-        </Col>
-        <Col lg={12} md={12} sm={12} xs={12}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>수면</span>
-            <TimePicker
-              locale={"ko"}
-              format={"HH:mm"}
-              id={"sleep_plan_time"}
-              name={"sleep_plan_time"}
-              className={"form-control"}
-              disabled={true}
-              clockIcon={null}
-              disableClock={false}
-              value={OBJECT?.sleep_plan_time}
-            ></TimePicker>
-          </div>
-        </Col>
-      </Row>
+      <React.Fragment>
+        <div className={"table-wrapper2"}>
+          {tableSection()}
+        </div>
+      </React.Fragment>
     );
   };
 

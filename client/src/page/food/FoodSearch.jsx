@@ -116,40 +116,49 @@ export const FoodSearch = () => {
         state: SEND
       });
     };
+    function tableSection () {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+              <thead>
+              <tr>
+                <th className={"table-thead"}>식품명</th>
+                <th className={"table-thead"}>브랜드</th>
+                <th className={"table-thead"}>1회 제공량</th>
+                <th className={"table-thead"}>1회 중량</th>
+                <th className={"table-thead"}>칼로리</th>
+                <th className={"table-thead"}>지방</th>
+                <th className={"table-thead"}>탄수화물</th>
+                <th className={"table-thead"}>단백질</th>
+              </tr>
+            </thead>
+            <tbody>
+              {OBJECT?.food_section?.map((item, index) => (
+                <tr key={index}>
+                  <td className={"pointer"} onClick={() => {
+                    handleStorage(item);
+                  }}>
+                    {item.food_title}
+                  </td>
+                  <td>{item.food_brand}</td>
+                  <td>{item.food_count} {item.food_serv}</td>
+                  <td>{item.food_gram}</td>
+                  <td>{item.food_kcal}</td>
+                  <td>{item.food_fat}</td>
+                  <td>{item.food_carb}</td>
+                  <td>{item.food_protein}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
     return (
       <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>식품명</th>
-              <th className={"table-thead"}>브랜드</th>
-              <th className={"table-thead"}>1회 제공량</th>
-              <th className={"table-thead"}>1회 중량</th>
-              <th className={"table-thead"}>칼로리</th>
-              <th className={"table-thead"}>지방</th>
-              <th className={"table-thead"}>탄수화물</th>
-              <th className={"table-thead"}>단백질</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.food_section?.map((item, index) => (
-              <tr key={index}>
-                <td className={"pointer"} onClick={() => {
-                  handleStorage(item);
-                }}>
-                  {item.food_title}
-                </td>
-                <td>{item.food_brand}</td>
-                <td>{item.food_count} {item.food_serv}</td>
-                <td>{item.food_gram}</td>
-                <td>{item.food_kcal}</td>
-                <td>{item.food_fat}</td>
-                <td>{item.food_carb}</td>
-                <td>{item.food_protein}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <div className={"table-wrapper2"}>
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };

@@ -118,125 +118,134 @@ export const FoodPlanSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection () {
+      return (
+        <Row className={"d-center"}>
+          <Col lg={6} md={6} sm={6} xs={6} className={"mb-20"}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>칼로리</span>
+              <NumericFormat
+                min={1}
+                max={9999}
+                minLength={1}
+                maxLength={9}
+                suffix={" kcal"}
+                id={"food_plan_kcal"}
+                name={"food_plan_kcal"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                disabled={false}
+                allowNegative={false}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                value={Math.min(9999, OBJECT?.food_plan_kcal)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(9999, parseInt(values.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_plan_kcal: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>탄수화물</span>
+              <NumericFormat
+                min={0}
+                max={9999}
+                minLength={1}
+                maxLength={6}
+                suffix={" g"}
+                id={"food_plan_carb"}
+                name={"food_plan_carb"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                disabled={false}
+                allowNegative={false}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                value={Math.min(999, OBJECT?.food_plan_carb)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999, parseInt(values.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_plan_carb: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>단백질</span>
+              <NumericFormat
+                min={0}
+                max={9999}
+                minLength={1}
+                maxLength={6}
+                suffix={" g"}
+                id={"food_plan_protein"}
+                name={"food_plan_protein"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                disabled={false}
+                allowNegative={false}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                value={Math.min(999, OBJECT?.food_plan_protein)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999, parseInt(values.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_plan_protein: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>지방</span>
+              <NumericFormat
+                min={0}
+                max={9999}
+                minLength={1}
+                maxLength={6}
+                suffix={" g"}
+                id={"food_plan_fat"}
+                name={"food_plan_fat"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                disabled={false}
+                allowNegative={false}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                value={Math.min(999, OBJECT?.food_plan_fat)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999, parseInt(values.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    food_plan_fat: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+        </Row>
+      );
+    };
     return (
-      <Row className={"d-center"}>
-        <Col lg={6} md={6} sm={6} xs={6} className={"mb-20"}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>칼로리</span>
-            <NumericFormat
-              min={1}
-              max={9999}
-              minLength={1}
-              maxLength={9}
-              suffix={" kcal"}
-              id={"food_plan_kcal"}
-              name={"food_plan_kcal"}
-              datatype={"number"}
-              displayType={"input"}
-              className={"form-control"}
-              disabled={false}
-              allowNegative={false}
-              fixedDecimalScale={true}
-              thousandSeparator={true}
-              value={Math.min(9999, OBJECT?.food_plan_kcal)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(9999, parseInt(values.value));
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_plan_kcal: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-        <Col lg={6} md={6} sm={6} xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>탄수화물</span>
-            <NumericFormat
-              min={0}
-              max={9999}
-              minLength={1}
-              maxLength={6}
-              suffix={" g"}
-              id={"food_plan_carb"}
-              name={"food_plan_carb"}
-              datatype={"number"}
-              displayType={"input"}
-              className={"form-control"}
-              disabled={false}
-              allowNegative={false}
-              fixedDecimalScale={true}
-              thousandSeparator={true}
-              value={Math.min(999, OBJECT?.food_plan_carb)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(999, parseInt(values.value));
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_plan_carb: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-        <Col lg={6} md={6} sm={6} xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>단백질</span>
-            <NumericFormat
-              min={0}
-              max={9999}
-              minLength={1}
-              maxLength={6}
-              suffix={" g"}
-              id={"food_plan_protein"}
-              name={"food_plan_protein"}
-              datatype={"number"}
-              displayType={"input"}
-              className={"form-control"}
-              disabled={false}
-              allowNegative={false}
-              fixedDecimalScale={true}
-              thousandSeparator={true}
-              value={Math.min(999, OBJECT?.food_plan_protein)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(999, parseInt(values.value));
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_plan_protein: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-        <Col lg={6} md={6} sm={6} xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>지방</span>
-            <NumericFormat
-              min={0}
-              max={9999}
-              minLength={1}
-              maxLength={6}
-              suffix={" g"}
-              id={"food_plan_fat"}
-              name={"food_plan_fat"}
-              datatype={"number"}
-              displayType={"input"}
-              className={"form-control"}
-              disabled={false}
-              allowNegative={false}
-              fixedDecimalScale={true}
-              thousandSeparator={true}
-              value={Math.min(999, OBJECT?.food_plan_fat)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(999, parseInt(values.value));
-                setOBJECT((prev) => ({
-                  ...prev,
-                  food_plan_fat: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-      </Row>
+      <React.Fragment>
+        <div className={"table-wrapper2"}>
+          {tableSection()}
+        </div>
+      </React.Fragment>
     );
   };
 

@@ -268,8 +268,21 @@ table tbody tr td {
     font-size: 0.75rem;
     line-height: 0.75rem;
   }
-  tbody, td, tfoot, th, thead, tr {
-    font-size: 0.5rem;
+  .table-wrapper {
+    overflow-x: hidden;
+    min-height: 335px;
+    max-height: 335px;
+  }
+  .table-wrapper2 {
+    overflow-x: hidden;
+    min-height: 370px;
+    max-height: 370px;
+  }
+  thead {
+    font-size: 0.8rem;
+  }
+  tbody {
+    font-size: 0.6rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.21rem !important;
@@ -337,8 +350,21 @@ table tbody tr td {
     font-size: 0.8rem;
     line-height: 0.8rem;
   }
-  tbody, td, tfoot, th, thead, tr {
-    font-size: 0.6rem;
+  .table-wrapper {
+    overflow-x: hidden;
+    min-height: 310px;
+    max-height: 310px;
+  }
+  .table-wrapper2 {
+    overflow-x: hidden;
+    min-height: 338px;
+    max-height: 338px;
+  }
+  thead {
+    font-size: 0.9rem;
+  }
+  tbody {
+    font-size: 0.7rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.22rem !important;
@@ -406,8 +432,21 @@ table tbody tr td {
     font-size: 0.85rem;
     line-height: 0.85rem;
   }
-  tbody, td, tfoot, th, thead, tr {
-    font-size: 0.700rem;
+  .table-wrapper {
+    overflow-x: hidden;
+    min-height: 285px;
+    max-height: 285px;
+  }
+  .table-wrapper2 {
+    overflow-x: hidden;
+    min-height: 318px;
+    max-height: 318px;
+  }
+  thead {
+    font-size: 1.0rem;
+  }
+  tbody {
+    font-size: 0.8rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.23rem !important;
@@ -475,8 +514,21 @@ table tbody tr td {
     font-size: 0.875rem;
     line-height: 0.875rem;
   }
-  tbody, td, tfoot, th, thead, tr {
-    font-size: 0.8rem;
+  .table-wrapper {
+    overflow-x: hidden;
+    min-height: 263px;
+    max-height: 263px;
+  }
+  .table-wrapper2 {
+    overflow-x: hidden;
+    min-height: 296px;
+    max-height: 296px;
+  }
+  thead {
+    font-size: 1.1rem;
+  }
+  tbody {
+    font-size: 0.9rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.24rem !important;
@@ -544,7 +596,20 @@ table tbody tr td {
     font-size: 1rem;
     line-height: 1rem;
   }
-  tbody, td, tfoot, th, thead, tr {
+  .table-wrapper {
+    overflow-x: hidden;
+    min-height: 200px;
+    max-height: 200px;
+  }
+  .table-wrapper2 {
+    overflow-x: hidden;
+    min-height: 200px;
+    max-height: 200px;
+  }
+  thead {
+    font-size: 1.2rem;
+  }
+  tbody {
     font-size: 1.0rem;
   }
   .btn-group-sm>.btn, .btn-sm {

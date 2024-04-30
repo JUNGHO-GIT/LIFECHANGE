@@ -109,32 +109,41 @@ export const SleepPlanDetail = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection() {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+            <thead>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>취침 목표</th>
+              <th className={"table-thead"}>기상 목표</th>
+              <th className={"table-thead"}>수면 목표</th>
+              <th className={"table-thead"}>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{`${OBJECT?.sleep_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.sleep_plan_endDt?.substring(5, 10)}`}</td>
+              <td>{OBJECT?.sleep_plan_night}</td>
+              <td>{OBJECT?.sleep_plan_morning}</td>
+              <td>{OBJECT?.sleep_plan_time}</td>
+              <td>
+                <p className={"del-btn"} onClick={() => (
+                  flowDelete(OBJECT._id)
+                )}>x</p>
+              </td>
+            </tr>
+          </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
     return (
       <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-          <tr>
-            <th className={"table-thead"}>날짜</th>
-            <th className={"table-thead"}>취침 목표</th>
-            <th className={"table-thead"}>기상 목표</th>
-            <th className={"table-thead"}>수면 목표</th>
-            <th className={"table-thead"}>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{`${OBJECT?.sleep_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.sleep_plan_endDt?.substring(5, 10)}`}</td>
-            <td>{OBJECT?.sleep_plan_night}</td>
-            <td>{OBJECT?.sleep_plan_morning}</td>
-            <td>{OBJECT?.sleep_plan_time}</td>
-            <td>
-              <p className={"del-btn"} onClick={() => (
-                flowDelete(OBJECT._id)
-              )}>x</p>
-            </td>
-          </tr>
-        </tbody>
-        </Table>
+        <div className={"table-wrapper"}>
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };

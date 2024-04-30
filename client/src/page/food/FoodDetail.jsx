@@ -129,53 +129,62 @@ export const FoodDetail = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection () {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+            <thead>
+              <tr>
+                <th className={"table-thead"}>날짜</th>
+                <th className={"table-thead"}>분류</th>
+                <th className={"table-thead"}>식품</th>
+                <th className={"table-thead"}>kcal</th>
+                <th className={"table-thead"}>carb</th>
+                <th className={"table-thead"}>protein</th>
+                <th className={"table-thead"}>fat</th>
+                <th className={"table-thead"}>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              {OBJECT?.food_section?.map((section, index) => (
+                <tr key={index}>
+                  {index === 0 && (
+                    <td rowSpan={OBJECT?.food_section?.length}>
+                      {OBJECT?.food_startDt?.substring(5, 10)}
+                    </td>
+                  )}
+                  <td>{section.food_part_val}</td>
+                  <td>
+                    <p>{`${section.food_title} (${section.food_brand || ""})`}</p>
+                    <p>{`${numeral(section.food_gram * section.food_count).format('0,0')} g`}</p>
+                  </td>
+                  <td>{`${numeral(section.food_kcal).format('0,0')}`}</td>
+                  <td>{`${numeral(section.food_carb).format('0,0')}`}</td>
+                  <td>{`${numeral(section.food_protein).format('0,0')}`}</td>
+                  <td>{`${numeral(section.food_fat).format('0,0')}`}</td>
+                  <td><p className={"del-btn"} onClick={() => (
+                    flowDelete(OBJECT._id, section._id)
+                  )}>x</p></td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan={3}>합계</td>
+                <td>{`${numeral(OBJECT?.food_total_kcal).format('0,0')} kcal`}</td>
+                <td>{`${numeral(OBJECT?.food_total_carb).format('0,0')} g`}</td>
+                <td>{`${numeral(OBJECT?.food_total_protein).format('0,0')} g`}</td>
+                <td>{`${numeral(OBJECT?.food_total_fat).format('0,0')} g`}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
     return (
       <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>식품</th>
-              <th className={"table-thead"}>kcal</th>
-              <th className={"table-thead"}>carb</th>
-              <th className={"table-thead"}>protein</th>
-              <th className={"table-thead"}>fat</th>
-              <th className={"table-thead"}>삭제</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.food_section?.map((section, index) => (
-              <tr key={index}>
-                {index === 0 && (
-                  <td rowSpan={OBJECT?.food_section?.length}>
-                    {OBJECT?.food_startDt?.substring(5, 10)}
-                  </td>
-                )}
-                <td>{section.food_part_val}</td>
-                <td>
-                  <p>{`${section.food_title} (${section.food_brand || ""})`}</p>
-                  <p>{`${numeral(section.food_gram * section.food_count).format('0,0')} g`}</p>
-                </td>
-                <td>{`${numeral(section.food_kcal).format('0,0')}`}</td>
-                <td>{`${numeral(section.food_carb).format('0,0')}`}</td>
-                <td>{`${numeral(section.food_protein).format('0,0')}`}</td>
-                <td>{`${numeral(section.food_fat).format('0,0')}`}</td>
-                <td><p className={"del-btn"} onClick={() => (
-                  flowDelete(OBJECT._id, section._id)
-                )}>x</p></td>
-              </tr>
-            ))}
-            <tr>
-              <td colSpan={3}>합계</td>
-              <td>{`${numeral(OBJECT?.food_total_kcal).format('0,0')} kcal`}</td>
-              <td>{`${numeral(OBJECT?.food_total_carb).format('0,0')} g`}</td>
-              <td>{`${numeral(OBJECT?.food_total_protein).format('0,0')} g`}</td>
-              <td>{`${numeral(OBJECT?.food_total_fat).format('0,0')} g`}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </Table>
+        <div className={"table-wrapper"}>
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };

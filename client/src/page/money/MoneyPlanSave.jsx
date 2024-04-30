@@ -116,69 +116,78 @@ export const MoneyPlanSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection() {
+      return (
+        <Row className={"mb-20"}>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 수입</span>
+              <NumericFormat
+                min={0}
+                max={99999999999999}
+                minLength={1}
+                maxLength={17}
+                prefix={"₩  "}
+                datatype={"number"}
+                displayType={"input"}
+                id={"money_plan_in"}
+                name={"money_plan_in"}
+                className={"form-control"}
+                readOnly={false}
+                disabled={false}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={Math.min(99999999999999, OBJECT?.money_plan_in)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(99999999999999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    money_plan_in: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>목표 지출</span>
+              <NumericFormat
+                min={0}
+                max={99999999999999}
+                minLength={1}
+                maxLength={17}
+                prefix={"₩  "}
+                datatype={"number"}
+                displayType={"input"}
+                id={"money_plan_out"}
+                name={"money_plan_out"}
+                className={"form-control"}
+                readOnly={false}
+                disabled={false}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={Math.min(99999999999999, OBJECT?.money_plan_out)}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(99999999999999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    money_plan_out: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+        </Row>
+      );
+    };
     return (
-      <Row className={"mb-20"}>
-        <Col lg={6} md={6} sm={6} xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 수입</span>
-            <NumericFormat
-              min={0}
-              max={99999999999999}
-              minLength={1}
-              maxLength={17}
-              prefix={"₩  "}
-              datatype={"number"}
-              displayType={"input"}
-              id={"money_plan_in"}
-              name={"money_plan_in"}
-              className={"form-control"}
-              readOnly={false}
-              disabled={false}
-              allowNegative={false}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              value={Math.min(99999999999999, OBJECT?.money_plan_in)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                setOBJECT((prev) => ({
-                  ...prev,
-                  money_plan_in: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-        <Col lg={6} md={6} sm={6} xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>목표 지출</span>
-            <NumericFormat
-              min={0}
-              max={99999999999999}
-              minLength={1}
-              maxLength={17}
-              prefix={"₩  "}
-              datatype={"number"}
-              displayType={"input"}
-              id={"money_plan_out"}
-              name={"money_plan_out"}
-              className={"form-control"}
-              readOnly={false}
-              disabled={false}
-              allowNegative={false}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              value={Math.min(99999999999999, OBJECT?.money_plan_out)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                setOBJECT((prev) => ({
-                  ...prev,
-                  money_plan_out: limitedValue
-                }));
-              }}
-            ></NumericFormat>
-          </div>
-        </Col>
-      </Row>
+      <React.Fragment>
+        <div className={"table-wrapper2"}>
+          {tableSection()}
+        </div>
+      </React.Fragment>
     );
   };
 

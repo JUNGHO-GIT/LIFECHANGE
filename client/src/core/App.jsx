@@ -3,7 +3,6 @@
 import React from "react";
 import {Routes, Route} from "react-router-dom";
 import {DeveloperModeProvider} from "../assets/hooks/useDeveloperMode.jsx";
-import {CssBaseline} from '@mui/material';
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,7 +19,6 @@ import "../assets/css/fragments/TimePicker.css";
 import "../assets/css/fragments/DayPicker.css";
 import "../assets/css/fragments/Calendar.css";
 
-import "../assets/css/custom/Mui.css";
 import "../assets/css/custom/Chart.css";
 import "../assets/css/custom/Custom.css";
 import "../assets/css/custom/Jstyle.css";
@@ -176,7 +174,6 @@ export const App = () => {
     <React.Fragment>
       <div className={"App"}>
         <DeveloperModeProvider>
-          {/*<CssBaseline /> */}
           <Loader />
           <Header />
           <NavBar />

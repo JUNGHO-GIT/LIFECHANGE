@@ -117,9 +117,9 @@ export const ExercisePlanList = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function tableFragment () {
+    function tableSection () {
       return (
-        <Table hover responsive border={1}>
+        <Table hover border={1}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -184,7 +184,9 @@ export const ExercisePlanList = () => {
     };
     return (
       <React.Fragment>
-        {tableFragment()}
+        <div className={"table-wrapper"}>
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };

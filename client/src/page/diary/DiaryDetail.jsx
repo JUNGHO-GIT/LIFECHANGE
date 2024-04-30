@@ -210,7 +210,7 @@ export const DiaryDetail = () => {
       {name: "black", value: "#000000"},
       {name: "gray", value: "#808080"}
     ];
-    function tableSection (i) {
+    function tableFragment (i) {
       return (
         <div key={i}>
           <Row className={"text-center mb-20"}>
@@ -332,16 +332,16 @@ export const DiaryDetail = () => {
         </div>
       );
     };
-    function tableFragment () {
+    function tableSection () {
       return (
         <React.Fragment>
-          {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
+          {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
         </React.Fragment>
       );
     };
     return (
       <React.Fragment>
-        {tableFragment()}
+        {tableSection()}
       </React.Fragment>
     );
   };

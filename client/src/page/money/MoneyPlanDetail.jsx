@@ -110,30 +110,39 @@ export const MoneyPlanDetail = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection () {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+            <thead>
+              <tr>
+                <th className={"table-thead"}>날짜</th>
+                <th className={"table-thead"}>수입 목표</th>
+                <th className={"table-thead"}>지출 목표</th>
+                <th className={"table-thead"}>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{`${OBJECT?.money_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt?.substring(5, 10)}`}</td>
+                <td>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</td>
+                <td>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</td>
+                <td>
+                  <p className={"del-btn"} onClick={() => (
+                    flowDelete(OBJECT._id)
+                  )}>x</p>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
     return (
       <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>수입 목표</th>
-              <th className={"table-thead"}>지출 목표</th>
-              <th className={"table-thead"}>삭제</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{`${OBJECT?.money_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt?.substring(5, 10)}`}</td>
-              <td>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</td>
-              <td>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</td>
-              <td>
-                <p className={"del-btn"} onClick={() => (
-                  flowDelete(OBJECT._id)
-                )}>x</p>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+        <div className={"table-wrapper"}>
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };

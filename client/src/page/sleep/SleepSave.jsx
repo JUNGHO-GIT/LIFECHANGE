@@ -121,7 +121,7 @@ export const SleepSave = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function sleepNode () {
+    function tableSection() {
       return (
         <Row className={"d-center"}>
           <Col lg={12} md={12} sm={12} xs={12}>
@@ -194,11 +194,11 @@ export const SleepSave = () => {
       );
     };
     return (
-      <Row className={"d-center"}>
-        <Col xs={8} className={"mb-20"}>
-          {sleepNode()}
-        </Col>
-      </Row>
+      <React.Fragment>
+        <div className={"table-wrapper2"}>
+          {tableSection()}
+        </div>
+      </React.Fragment>
     );
   };
 

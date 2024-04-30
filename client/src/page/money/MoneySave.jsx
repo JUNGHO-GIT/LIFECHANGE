@@ -145,7 +145,10 @@ export const MoneySave = () => {
   };
 
   // 5. handler ----------------------------------------------------------------------------------->
-  const handlerSectionCount = () => {
+
+
+  // 5. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
     function handlerCount(e) {
       let newCount = parseInt(e, 10);
       let defaultSection = {
@@ -176,37 +179,35 @@ export const MoneySave = () => {
         }));
       }
     };
-    return (
-      <React.Fragment>
-        <div className={"input-group"}>
-          <span className={"input-group-text"}>섹션 갯수</span>
-          <NumericFormat
-            min={0}
-            max={10}
-            minLength={1}
-            maxLength={2}
-            datatype={"number"}
-            displayType={"input"}
-            id={"sectionCnt"}
-            name={"sectionCnt"}
-            className={"form-control"}
-            disabled={false}
-            thousandSeparator={false}
-            fixedDecimalScale={true}
-            value={Math.min(10, COUNT?.sectionCnt)}
-            onValueChange={(values) => {
-              const limitedValue = Math.min(10, parseInt(values?.value));
-              handlerCount(limitedValue.toString());
-            }}
-          ></NumericFormat>
-        </div>
-      </React.Fragment>
-    );
-  };
-
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
-    function tableSection (i) {
+    function countNode () {
+      return (
+        <React.Fragment>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>섹션 갯수</span>
+            <NumericFormat
+              min={0}
+              max={10}
+              minLength={1}
+              maxLength={2}
+              datatype={"number"}
+              displayType={"input"}
+              id={"sectionCnt"}
+              name={"sectionCnt"}
+              className={"form-control"}
+              disabled={false}
+              thousandSeparator={false}
+              fixedDecimalScale={true}
+              value={Math.min(10, COUNT?.sectionCnt)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(10, parseInt(values?.value));
+                handlerCount(limitedValue.toString());
+              }}
+            ></NumericFormat>
+          </div>
+        </React.Fragment>
+      );
+    };
+    function tableFragment (i) {
       return (
         <div key={i} className={"mb-20"}>
           <Row>
@@ -339,10 +340,10 @@ export const MoneySave = () => {
         </div>
       );
     };
-    function tableFragment () {
+    function tableSection () {
       return (
         <React.Fragment>
-          {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableSection(i))}
+          {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
         </React.Fragment>
       );
     };
@@ -400,8 +401,13 @@ export const MoneySave = () => {
     };
     return (
       <React.Fragment>
-        {tableFragment()}
-        {tableRemain()}
+        <div className={"table-wrapper2"}>
+          {countNode()}
+          <br />
+          {tableSection()}
+          <br />
+          {tableRemain()}
+        </div>
       </React.Fragment>
     );
   };
@@ -425,9 +431,6 @@ export const MoneySave = () => {
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-20"}>
                 {dateNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
-                {handlerSectionCount()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {tableNode()}

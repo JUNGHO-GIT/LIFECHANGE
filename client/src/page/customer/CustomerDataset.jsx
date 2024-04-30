@@ -115,55 +115,7 @@ export const CustomerDataset = () => {
   };
 
   // 6. table ------------------------------------------------------------------------------------->
-  const tableNode1 = () => {
-    return (
-      <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>Section</th>
-            </tr>
-          </thead>
-          <tbody>
-            {datasetArray.map((item, index) => (
-              <tr
-                key={index}
-                className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
-                style={{border: "1px solid #dee2e6"}}
-                onClick={() => {
-                  setDataType(item);
-                  setSelectedIdx((prev) => ({
-                    ...prev,
-                    sectionIdx: index,
-                    partIdx: 1,
-                    titleIdx: 1
-                  }));
-                  setIdx((prev) => ({
-                    ...prev,
-                    partIdx: 1,
-                    titleIdx: 1
-                  }));
-                }}
-              >
-                <td>
-                  <Row>
-                    <Col lg={12} md={12} sm={12} xs={12} className={"p-5"}>
-                      <div className={"pointer me-2"}>
-                        {item}
-                      </div>
-                    </Col>
-                  </Row>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </React.Fragment>
-    );
-  };
-
-  // 6. table ------------------------------------------------------------------------------------->
-  const tableNode2 = () => {
+  const tableNode = () => {
     function addPart() {
       setOBJECT((prev) => ({
         ...prev,
@@ -212,67 +164,6 @@ export const CustomerDataset = () => {
         }));
       };
     };
-    return (
-      <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>Part</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
-              <tr key={index}
-                className={selectedIdx.partIdx === index ? "table-secondary" : ""}
-                style={{border: "1px solid #dee2e6"}}
-                onClick={() => {
-                  setSelectedIdx((prev) => ({
-                    ...prev,
-                    partIdx: index
-                  }));
-                }}
-              >
-                <td>
-                  <Row>
-                    <Col xs={7} className={"p-5"}>
-                      <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
-                        ...prev,
-                        partIdx: index
-                      }))}>
-                        {item[`${dataType}_part`]}
-                      </div>
-                    </Col>
-                    <Col xs={3} className={"p-5"}>
-                      <div className={"pointer d-center text-success"}
-                      onClick={renamePart(index)}>
-                        변경
-                      </div>
-                    </Col>
-                    <Col xs={2} className={"p-5"}>
-                      <div className={"pointer d-center text-danger fw-bolder"}
-                      onClick={rmPart(index)}>
-                        x
-                      </div>
-                    </Col>
-                  </Row>
-                </td>
-              </tr>
-            ))}
-            <tr>
-              <td colSpan={3} className={"d-inline-flex"}>
-                <div className={"text-center pointer btn btn-sm btn-outline-primary button"} onClick={addPart}>
-                  Add
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </React.Fragment>
-    );
-  };
-
-  // 6. table ------------------------------------------------------------------------------------->
-  const tableNode3 = () => {
     function addTitle () {
       setOBJECT((prev) => ({
         ...prev,
@@ -335,62 +226,186 @@ export const CustomerDataset = () => {
         }));
       };
     };
-    return (
-      <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>Title</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-              <tr
-                key={index}
-                className={selectedIdx.titleIdx === index ? "table-secondary" : ""}
-                style={{border: "1px solid #dee2e6"}}
-                onClick={() => {
-                  setSelectedIdx((prev) => ({
-                    ...prev,
-                    titleIdx: index
-                  }));
-                }}
-              >
-                <td>
-                  <Row>
-                    <Col xs={7} className={"p-5"}>
-                      <div className={"pointer me-2"} onClick={() => (setIdx((prev) => ({
+    function tableSection1 () {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+              <thead>
+              <tr>
+                <th className={"table-thead"}>Section</th>
+              </tr>
+            </thead>
+            <tbody>
+              {datasetArray.map((item, index) => (
+                <tr
+                  key={index}
+                  className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
+                  style={{border: "1px solid #dee2e6"}}
+                  onClick={() => {
+                    setDataType(item);
+                    setSelectedIdx((prev) => ({
+                      ...prev,
+                      sectionIdx: index,
+                      partIdx: 1,
+                      titleIdx: 1
+                    }));
+                    setIdx((prev) => ({
+                      ...prev,
+                      partIdx: 1,
+                      titleIdx: 1
+                    }));
+                  }}
+                >
+                  <td>
+                    <Row>
+                      <Col lg={12} md={12} sm={12} xs={12} className={"p-5"}>
+                        <div className={"pointer me-2"}>
+                          {item}
+                        </div>
+                      </Col>
+                    </Row>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
+    function tableSection2 () {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+              <thead>
+                <tr>
+                  <th className={"table-thead"}>Part</th>
+                </tr>
+              </thead>
+              <tbody>
+                {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
+                  <tr key={index}
+                    className={selectedIdx.partIdx === index ? "table-secondary" : ""}
+                    style={{border: "1px solid #dee2e6"}}
+                    onClick={() => {
+                      setSelectedIdx((prev) => ({
                         ...prev,
-                        titleIdx: index
-                      })))}>
-                        {item}
-                      </div>
-                    </Col>
-                    <Col xs={3} className={"p-5"}>
-                      <div className={"pointer d-center text-success"}
-                      onClick={renameTitle(index)}>
-                        변경
-                      </div>
-                    </Col>
-                    <Col xs={2} className={"p-5"}>
-                      <div className={"pointer d-center text-danger fw-bolder"}
-                      onClick={rmTitle(index)}>
-                        x
-                      </div>
-                    </Col>
-                  </Row>
+                        partIdx: index
+                      }));
+                    }}
+                  >
+                    <td>
+                      <Row>
+                        <Col xs={7} className={"p-5"}>
+                          <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
+                            ...prev,
+                            partIdx: index
+                          }))}>
+                            {item[`${dataType}_part`]}
+                          </div>
+                        </Col>
+                        <Col xs={3} className={"p-5"}>
+                          <div className={"pointer d-center text-success"}
+                          onClick={renamePart(index)}>
+                            변경
+                          </div>
+                        </Col>
+                        <Col xs={2} className={"p-5"}>
+                          <div className={"pointer d-center text-danger fw-bolder"}
+                          onClick={rmPart(index)}>
+                            x
+                          </div>
+                        </Col>
+                      </Row>
+                    </td>
+                  </tr>
+                ))}
+                <tr>
+                  <td colSpan={3} className={"d-inline-flex"}>
+                    <div className={"text-center pointer btn btn-sm btn-outline-primary button"} onClick={addPart}>
+                      Add
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
+    function tableSection3 () {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+              <thead>
+              <tr>
+                <th className={"table-thead"}>Title</th>
+              </tr>
+            </thead>
+            <tbody>
+              {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+                <tr
+                  key={index}
+                  className={selectedIdx.titleIdx === index ? "table-secondary" : ""}
+                  style={{border: "1px solid #dee2e6"}}
+                  onClick={() => {
+                    setSelectedIdx((prev) => ({
+                      ...prev,
+                      titleIdx: index
+                    }));
+                  }}
+                >
+                  <td>
+                    <Row>
+                      <Col xs={7} className={"p-5"}>
+                        <div className={"pointer me-2"} onClick={() => (setIdx((prev) => ({
+                          ...prev,
+                          titleIdx: index
+                        })))}>
+                          {item}
+                        </div>
+                      </Col>
+                      <Col xs={3} className={"p-5"}>
+                        <div className={"pointer d-center text-success"}
+                        onClick={renameTitle(index)}>
+                          변경
+                        </div>
+                      </Col>
+                      <Col xs={2} className={"p-5"}>
+                        <div className={"pointer d-center text-danger fw-bolder"}
+                        onClick={rmTitle(index)}>
+                          x
+                        </div>
+                      </Col>
+                    </Row>
+                  </td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan={3} className={"d-inline-flex"}>
+                  <p className={"pointer btn btn-sm btn-outline-primary button"} onClick={addTitle}>
+                    Add
+                  </p>
                 </td>
               </tr>
-            ))}
-            <tr>
-              <td colSpan={3} className={"d-inline-flex"}>
-                <p className={"pointer btn btn-sm btn-outline-primary button"} onClick={addTitle}>
-                  Add
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+            </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
+    return (
+      <React.Fragment>
+        <div className={"table-wrapper"}>
+          <Row>
+            <Col lg={4} md={4} sm={4} xs={4} className={"mb-20 pe-0"}>
+              {tableSection1()}
+            </Col>
+            <Col lg={4} md={4} sm={4} xs={4} className={"mb-20 ps-0 pe-0"}>
+              {tableSection2()}
+            </Col>
+            <Col lg={4} md={4} sm={4} xs={4} className={"mb-20 ps-0"}>
+              {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableSection3())}
+            </Col>
+          </Row>
+        </div>
       </React.Fragment>
     );
   };
@@ -454,14 +469,8 @@ export const CustomerDataset = () => {
         <Card className={"container-wrapper"}>
           <Container>
             <Row>
-              <Col xs={4} className={"mb-20 p-0 text-center"}>
-                {tableNode1()}
-              </Col>
-              <Col xs={4} className={"mb-20 p-0 text-center"}>
-                {tableNode2()}
-              </Col>
-              <Col xs={4} className={"mb-20 p-0 text-center"}>
-                {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableNode3())}
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
+                {tableNode()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-20"}>
                 {buttonNode()}

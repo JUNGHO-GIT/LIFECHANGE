@@ -124,52 +124,61 @@ export const MoneyDetail = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection () {
+      return (
+        <React.Fragment>
+          <Table hover border={1}>
+            <thead>
+              <tr>
+                <th className={"table-thead"}>날짜</th>
+                <th className={"table-thead"}>분류</th>
+                <th className={"table-thead"}>항목</th>
+                <th className={"table-thead"}>금액</th>
+                <th className={"table-thead"}>내용</th>
+                <th className={"table-thead"}>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              {OBJECT?.money_section?.map((section, index) => (
+                <tr key={index}>
+                  {index === 0 && (
+                    <React.Fragment>
+                      <td rowSpan={OBJECT?.money_section?.length}>
+                        {OBJECT?.money_startDt?.substring(5, 10)}
+                      </td>
+                    </React.Fragment>
+                  )}
+                  <td>{section.money_part_val}</td>
+                  <td>{section.money_title_val}</td>
+                  <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
+                  <td>{section.money_content}</td>
+                  <td>
+                    <p className={"del-btn"} onClick={() => (
+                      flowDelete(OBJECT._id, section._id)
+                    )}>x</p>
+                  </td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan={3}>수입 합계</td>
+                <td>{`₩ ${numeral(OBJECT?.money_total_in).format('0,0')}`}</td>
+                <td colSpan={3}></td>
+              </tr>
+              <tr>
+                <td colSpan={3}>지출 합계</td>
+                <td>{`₩ ${numeral(OBJECT?.money_total_out).format('0,0')}`}</td>
+                <td colSpan={3}></td>
+              </tr>
+            </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
     return (
       <React.Fragment>
-        <Table hover responsive border={1}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>항목</th>
-              <th className={"table-thead"}>금액</th>
-              <th className={"table-thead"}>내용</th>
-              <th className={"table-thead"}>삭제</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.money_section?.map((section, index) => (
-              <tr key={index}>
-                {index === 0 && (
-                  <React.Fragment>
-                    <td rowSpan={OBJECT?.money_section?.length}>
-                      {OBJECT?.money_startDt?.substring(5, 10)}
-                    </td>
-                  </React.Fragment>
-                )}
-                <td>{section.money_part_val}</td>
-                <td>{section.money_title_val}</td>
-                <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
-                <td>{section.money_content}</td>
-                <td>
-                  <p className={"del-btn"} onClick={() => (
-                    flowDelete(OBJECT._id, section._id)
-                  )}>x</p>
-                </td>
-              </tr>
-            ))}
-            <tr>
-              <td colSpan={3}>수입 합계</td>
-              <td>{`₩ ${numeral(OBJECT?.money_total_in).format('0,0')}`}</td>
-              <td colSpan={3}></td>
-            </tr>
-            <tr>
-              <td colSpan={3}>지출 합계</td>
-              <td>{`₩ ${numeral(OBJECT?.money_total_out).format('0,0')}`}</td>
-              <td colSpan={3}></td>
-            </tr>
-          </tbody>
-        </Table>
+        <div className={"table-wrapper"}>
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };

@@ -112,34 +112,43 @@ export const ExercisePlanDetail = () => {
 
   // 5. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function tableSection () {
+      return (
+        <React.Fragment>
+          <Table striped hover responsive variant={"light"}>
+            <thead className={"table-primary"}>
+              <tr>
+                <th className={"table-thead"}>날짜</th>
+                <th className={"table-thead"}>횟수 목표</th>
+                <th className={"table-thead"}>볼륨 목표</th>
+                <th className={"table-thead"}>유산소 목표</th>
+                <th className={"table-thead"}>체중 목표</th>
+                <th className={"table-thead"}>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{`${OBJECT?.exercise_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt?.substring(5, 10)}`}</td>
+                <td>{`${numeral(OBJECT?.exercise_plan_count).format("0,0")} 회`}</td>
+                <td>{`${numeral(OBJECT?.exercise_plan_volume).format("0,0")} vol`}</td>
+                <td>{OBJECT?.exercise_plan_cardio}</td>
+                <td>{`${numeral(OBJECT?.exercise_plan_weight).format("0,0")} kg`}</td>
+                <td>
+                  <p className={"del-btn"} onClick={() => (
+                    flowDelete(OBJECT._id)
+                  )}>x</p>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </React.Fragment>
+      );
+    };
     return (
       <React.Fragment>
-        <Table striped hover responsive variant={"light"}>
-          <thead className={"table-primary"}>
-          <tr>
-            <th className={"table-thead"}>날짜</th>
-            <th className={"table-thead"}>횟수 목표</th>
-            <th className={"table-thead"}>볼륨 목표</th>
-            <th className={"table-thead"}>유산소 목표</th>
-            <th className={"table-thead"}>체중 목표</th>
-            <th className={"table-thead"}>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{`${OBJECT?.exercise_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt?.substring(5, 10)}`}</td>
-            <td>{`${numeral(OBJECT?.exercise_plan_count).format("0,0")} 회`}</td>
-            <td>{`${numeral(OBJECT?.exercise_plan_volume).format("0,0")} vol`}</td>
-            <td>{OBJECT?.exercise_plan_cardio}</td>
-            <td>{`${numeral(OBJECT?.exercise_plan_weight).format("0,0")} kg`}</td>
-            <td>
-              <p className={"del-btn"} onClick={() => (
-                flowDelete(OBJECT._id)
-              )}>x</p>
-            </td>
-          </tr>
-        </tbody>
-        </Table>
+        <div className={"table-wrapper"}>
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };
