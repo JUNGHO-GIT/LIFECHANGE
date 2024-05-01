@@ -30,10 +30,10 @@ export const SleepDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const OBJECT_WEEK_DEFAULT = [
-    {name:"", 취침: 0, 수면: 0, 기상: 0},
+    {name:"", 취침: 0, 기상: 0, 수면: 0},
   ];
   const OBJECT_MONTH_DEFAULT = [
-    {name:"", 취침: 0, 수면: 0, 기상: 0},
+    {name:"", 취침: 0, 기상: 0, 수면: 0},
   ];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEFAULT);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEFAULT);
@@ -84,12 +84,12 @@ export const SleepDashLine = () => {
               <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
               strokeWidth={2}></Line>
             )}
-            {PART.includes("수면") && (
-              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
-            )}
             {PART.includes("기상") && (
               <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
+            )}
+            {PART.includes("수면") && (
+              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
               strokeWidth={2}></Line>
             )}
             <Tooltip
@@ -147,12 +147,12 @@ export const SleepDashLine = () => {
               <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
               strokeWidth={2}></Line>
             )}
-            {PART.includes("수면") && (
-              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
-            )}
             {PART.includes("기상") && (
               <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
+              strokeWidth={2}></Line>
+            )}
+            {PART.includes("수면") && (
+              <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
               strokeWidth={2}></Line>
             )}
             <Tooltip
@@ -185,7 +185,7 @@ export const SleepDashLine = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        {["취침", "수면", "기상"]?.map((key, index) => (
+        {["취침", "기상", "수면"]?.map((key, index) => (
           <div key={index} className={"dash-checkbox flex-column mb-10"}>
             <FormCheck
               inline
@@ -234,7 +234,7 @@ export const SleepDashLine = () => {
               {SECTION === "week" && chartNodeWeek()}
               {SECTION === "month" && chartNodeMonth()}
             </Col>
-            <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
+            <Col lg={2} md={2} sm={2} xs={2}>
               {tableNode()}
             </Col>
           </Row>

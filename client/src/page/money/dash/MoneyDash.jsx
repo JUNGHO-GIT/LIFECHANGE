@@ -12,16 +12,10 @@ export const MoneyDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"mb-10"}>
+      <div className={"d-block"}>
         {MoneyDashBar()}
-      </div>
-      <div className={"mb-10"}>
         {MoneyDashPie()}
-      </div>
-      <div className={"mb-10"}>
         {MoneyDashLine()}
-      </div>
-      <div>
         {MoneyDashAvg()}
       </div>
     </React.Fragment>

@@ -1,7 +1,7 @@
 // moneyDashService.js
 
 import * as repository from "../repository/moneyDashRepository.js";
-import {intFormat, timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../assets/js/date.js";
+import {intFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeekStart, curWeekEnd, koreanDate} from "../assets/js/date.js";
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
@@ -23,10 +23,10 @@ export const barToday = async (
 
   for (let key in data) {
     const listPlan = await repository.barToday.listPlan(
-      customer_id_param, "", koreanDate, koreanDate
+      customer_id_param, koreanDate, koreanDate
     );
     const listReal = await repository.barToday.listReal(
-      customer_id_param, "", koreanDate, koreanDate
+      customer_id_param, koreanDate, koreanDate
     );
 
     finalResult.push({
@@ -144,7 +144,7 @@ export const lineWeek = async (
   for (let i = 0; i < 7; i++) {
     const dayNum = curWeekStart.clone().day(i);
     const findResult = await repository.lineWeek.list(
-      customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+      customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResultIn.push({
@@ -184,7 +184,7 @@ export const lineMonth = async (
   for (let i = 0; i < 31; i++) {
     const dayNum = curMonthStart.clone().add(i, "days");
     const findResult = await repository.lineMonth.list(
-      customer_id_param, "", dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
+      customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
     );
 
     finalResultIn.push({
@@ -232,7 +232,7 @@ export const avgWeek = async (
 
     if (weekNum >= 1 && weekNum <= 5) {
       const findResult = await repository.avgWeek.list(
-        customer_id_param, "", week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
+        customer_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
       if (findResult) {
@@ -287,7 +287,7 @@ export const avgMonth = async (
     const monthNum = month.month();
 
     const findResult = await repository.avgMonth.list(
-      customer_id_param, "", month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
+      customer_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 
     if (findResult) {

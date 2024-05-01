@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {useStorage} from "../../../hooks/useStorage.jsx";
-import {Bar, ComposedChart} from "recharts";
+import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 

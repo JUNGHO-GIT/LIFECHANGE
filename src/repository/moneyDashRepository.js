@@ -6,11 +6,10 @@ import {MoneyPlan} from "../schema/MoneyPlan.js";
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
   listPlan: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
       customer_id: customer_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
       money_plan_startDt: {
         $lte: endDt_param
       },
@@ -23,11 +22,10 @@ export const barToday = {
   },
 
   listReal: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       customer_id: customer_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param
@@ -246,11 +244,10 @@ export const pieMonth = {
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
   list: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       customer_id: customer_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -268,11 +265,10 @@ export const lineWeek = {
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
   list: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       customer_id: customer_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -290,11 +286,10 @@ export const lineMonth = {
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 export const avgWeek = {
   list: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       customer_id: customer_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -312,11 +307,10 @@ export const avgWeek = {
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
   list: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.findOne({
       customer_id: customer_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param,
       money_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,

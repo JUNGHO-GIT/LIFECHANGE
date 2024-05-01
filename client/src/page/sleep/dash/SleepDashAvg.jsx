@@ -1,10 +1,10 @@
 // SleepDashAvg.tsx
 
 import axios from "axios";
-import {ComposedChart, Bar} from "recharts";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {useStorage} from "../../../hooks/useStorage.jsx";
+import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -30,10 +30,10 @@ export const SleepDashAvg = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_WEEK_DEFAULT = [
-    {name:"", 취침: 0, 수면: 0, 기상: 0}
+    {name:"", 취침: 0, 기상: 0, 수면: 0}
   ];
   const OBJECT_MONTH_DEFAULT = [
-    {name:"", 취침: 0, 수면: 0, 기상: 0}
+    {name:"", 취침: 0, 기상: 0, 수면: 0}
   ];
   const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEFAULT);
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEFAULT);
@@ -236,7 +236,7 @@ export const SleepDashAvg = () => {
               {SECTION === "week" && chartNodeWeek()}
               {SECTION === "month" && chartNodeMonth()}
             </Col>
-            <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
+            <Col lg={2} md={2} sm={2} xs={2}>
               {tableNode()}
             </Col>
           </Row>
