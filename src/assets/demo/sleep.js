@@ -1,5 +1,5 @@
-// MongoDB Playground
-use('test');
+import mongodb from 'mongodb';
+import {Sleep} from '../../schema/Sleep.js';
 
 // array ----------------------------------------------------------------------------------------->
 const randomNumber = (data) => {
@@ -35,13 +35,13 @@ for (let i = 1; i <= 100; i++) {
   const updateDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
 
   const record = {
-    _id: new ObjectId(),
+    _id: new mongodb.ObjectId(),
     customer_id: "123",
     sleep_number: i + 100,
     sleep_startDt: formatDate1(startDate),
     sleep_endDt: formatDate1(startDate),
     sleep_section: [{
-      _id: new ObjectId(),
+      _id: new mongodb.ObjectId(),
       sleep_night: randomTime(),
       sleep_morning: randomTime(),
       sleep_time: calcDate(randomTime(), randomTime()),
@@ -53,21 +53,20 @@ for (let i = 1; i <= 100; i++) {
   demoData.push(record);
 };
 
-// Create a new document in the collection.
-const insertDataAndRemoveDuplicates = async () => {
+// Create a new document in the Sleep.
+export const addSleep = async () => {
   try {
-    const collection = db.getCollection('sleep')
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await collection.deleteMany({});
+    const deleteResult = await Sleep.deleteMany({});
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입
-    const insertResult = await collection.insertMany(demoData);
+    const insertResult = await Sleep.insertMany(demoData);
     console.log('Inserted documents:', insertResult.insertedCount);
 
     // 중복된 날짜 항목 삭제 로직
-    const docs = await collection.aggregate([
+    const docs = await Sleep.aggregate([
       {
         $group: {
           _id: "$sleep_startDt",
@@ -92,14 +91,12 @@ const insertDataAndRemoveDuplicates = async () => {
     // 필터링된 문서 ID로 deleteMany 실행
     for (const doc of docs) {
       if (doc.toDelete.length > 0) {
-        const deleteResult = await collection.deleteMany({ _id: { $in: doc.toDelete } });
+        const deleteResult = await Sleep.deleteMany({ _id: { $in: doc.toDelete } });
         console.log("Deleted documents:", deleteResult.deletedCount);
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error during database operations:', error);
   }
 }
-
-// 함수 호출
-insertDataAndRemoveDuplicates();

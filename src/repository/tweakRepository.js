@@ -227,44 +227,19 @@ export const update = async (
   return finalResult;
 };
 
-// 4-1. delete ------------------------------------------------------------------------------------>
-export const deletes = async (
-  customer_id_param, _id_param
-) => {
+// 4-1. add --------------------------------------------------------------------------------------->
 
-  const updateResult = await Customer.updateOne(
-    {customer_id: customer_id_param,
-      _id: !_id_param ? {$exists:true} : _id_param
-    },
-    {$pull: {
-      customer_section: {
-        _id: !_id_param ? {$exists:true} : _id_param
-      },
-    },
-    $set: {
-      customer_updateDt: fmtDate,
-    }},
-    {arrayFilters: [{
-      "elem._id": _id_param
-    }]}
-  )
-  .lean();
 
-  let finalResult;
+// 4-2. delete ------------------------------------------------------------------------------------>
+export const deletes = {
 
-  if (updateResult.modifiedCount > 0) {
-    const doc = await Customer.findOne({
+  deletes: async (
+    customer_id_param, typeStr_param, typeUpper_param
+  ) => {
+    const finalResult = await eval(typeUpper_param).deleteMany({
       customer_id: customer_id_param
-    })
-    .lean();
+    });
 
-    if (doc) {
-      finalResult = await Customer.deleteOne({
-        _id: doc._id
-      })
-      .lean();
-    }
-  };
-
-  return finalResult;
+    return finalResult;
+  }
 };

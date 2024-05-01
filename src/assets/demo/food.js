@@ -1,5 +1,5 @@
-// MongoDB Playground
-use('test');
+import mongodb from 'mongodb';
+import {Food} from '../../schema/Food.js';
 
 // array ----------------------------------------------------------------------------------------->
 const foodArray = [
@@ -70,7 +70,7 @@ for (let i = 1; i <= 100; i++) {
   const sectionCount = randomNumber(5) + 1;
   for (let j = 0; j < sectionCount; j++) {
     sections.push({
-      _id: new ObjectId(),
+      _id: new mongodb.ObjectId(),
       food_part_idx: partIndex,
       food_part_val: part.food_part,
       food_title : title,
@@ -85,7 +85,7 @@ for (let i = 1; i <= 100; i++) {
   }
 
   const record = {
-    _id: new ObjectId(),
+    _id: new mongodb.ObjectId(),
     customer_id: "123",
     food_number: i + 300,
     food_startDt: formatDate1(startDate),
@@ -105,21 +105,20 @@ for (let i = 1; i <= 100; i++) {
   demoData.push(record);
 };
 
-// Create a new document in the collection.
-const insertDataAndRemoveDuplicates = async () => {
+// Create a new document in the Food.
+export const addFood = async () => {
   try {
-    const collection = db.getCollection('food')
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await collection.deleteMany({});
+    const deleteResult = await Food.deleteMany({});
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입
-    const insertResult = await collection.insertMany(demoData);
+    const insertResult = await Food.insertMany(demoData);
     console.log('Inserted documents:', insertResult.insertedCount);
 
     // 중복된 날짜 항목 삭제 로직
-    const docs = await collection.aggregate([
+    const docs = await Food.aggregate([
       {
         $group: {
           _id: "$food_startDt",
@@ -144,14 +143,12 @@ const insertDataAndRemoveDuplicates = async () => {
     // 필터링된 문서 ID로 deleteMany 실행
     for (const doc of docs) {
       if (doc.toDelete.length > 0) {
-        const deleteResult = await collection.deleteMany({ _id: { $in: doc.toDelete } });
+        const deleteResult = await Food.deleteMany({ _id: { $in: doc.toDelete } });
         console.log("Deleted documents:", deleteResult.deletedCount);
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error during database operations:', error);
   }
 }
-
-// 함수 호출
-insertDataAndRemoveDuplicates();

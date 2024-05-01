@@ -95,3 +95,65 @@ router.post("/save", async (req, res) => {
     });
   }
 });
+
+// 4-1. add --------------------------------------------------------------------------------------->
+router.post("/add", async (req, res) => {
+  try {
+    let result = await service.add (
+      req.body.customer_id,
+      req.body.TYPE
+    );
+    if (result !== "fail") {
+      res.json({
+        status: "success",
+        msg: "추가 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "추가 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});
+
+// 4-2. delete ------------------------------------------------------------------------------------>
+router.delete("/delete", async (req, res) => {
+  try {
+    let result = await service.deletes(
+      req.query.customer_id,
+      req.query.TYPE
+    );
+    if (result) {
+      res.json({
+        status: "success",
+        msg: "삭제 성공",
+        result: result
+      });
+    }
+    else {
+      res.json({
+        status: "fail",
+        msg: "삭제 실패",
+        result: null
+      });
+    }
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({
+      status: "error",
+      error: err.toString()
+    });
+  }
+});

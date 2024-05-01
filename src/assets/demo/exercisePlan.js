@@ -1,5 +1,5 @@
-// MongoDB Playground
-use('test');
+import mongodb from 'mongodb';
+import {ExercisePlan} from '../../schema/ExercisePlan.js';
 
 // array ----------------------------------------------------------------------------------------->
 const randomNumber = (data) => {
@@ -35,7 +35,7 @@ for (let i = 1; i <= 100; i++) {
   const updateDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
 
   const record = {
-    _id: new ObjectId(),
+    _id: new mongodb.ObjectId(),
     customer_id: "123",
     exercise_plan_number: i + 100,
     exercise_plan_startDt: formatDate1(startDate),
@@ -53,23 +53,20 @@ for (let i = 1; i <= 100; i++) {
   demoData.push(record);
 };
 
-
-
-// Create a new document in the collection.
-const insertDataAndRemoveDuplicates = async () => {
+// Create a new document in the ExercisePlan.
+export const addExercisePlan = async () => {
   try {
-    const collection = db.getCollection('exercisePlan')
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await collection.deleteMany({});
+    const deleteResult = await ExercisePlan.deleteMany({});
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입
-    const insertResult = await collection.insertMany(demoData);
+    const insertResult = await ExercisePlan.insertMany(demoData);
     console.log('Inserted documents:', insertResult.insertedCount);
 
     // 중복된 날짜 항목 삭제 로직
-    const docs = await collection.aggregate([
+    const docs = await ExercisePlan.aggregate([
       {
         $group: {
           _id: "$exercise_plan_startDt",
@@ -94,14 +91,12 @@ const insertDataAndRemoveDuplicates = async () => {
     // 필터링된 문서 ID로 deleteMany 실행
     for (const doc of docs) {
       if (doc.toDelete.length > 0) {
-        const deleteResult = await collection.deleteMany({ _id: { $in: doc.toDelete } });
+        const deleteResult = await ExercisePlan.deleteMany({ _id: { $in: doc.toDelete } });
         console.log("Deleted documents:", deleteResult.deletedCount);
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error during database operations:', error);
   }
 }
-
-// 함수 호출
-insertDataAndRemoveDuplicates();

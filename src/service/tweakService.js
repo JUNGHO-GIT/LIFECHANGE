@@ -1,6 +1,14 @@
 // testService.js
 
 import * as repository from "../repository/tweakRepository.js";
+import {addExercisePlan} from "../assets/demo/exercisePlan.js";
+import {addFoodPlan} from "../assets/demo/foodPlan.js";
+import {addMoneyPlan} from "../assets/demo/moneyPlan.js";
+import {addSleepPlan} from "../assets/demo/sleepPlan.js";
+import {addExercise} from "../assets/demo/exercise.js";
+import {addFood} from "../assets/demo/food.js";
+import {addMoney} from "../assets/demo/money.js";
+import {addSleep} from "../assets/demo/sleep.js";
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = async (
@@ -103,4 +111,64 @@ export const save = async (
   }
 
   return finalResult
+};
+
+// 4-1. add --------------------------------------------------------------------------------------->
+export const add = async (
+  customer_id_param, TYPE_param
+) => {
+
+  const typeStr = TYPE_param.toString();
+  const typeUpper = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
+  let result = "";
+  let finalResult = null;
+
+  try {
+    if (typeStr === "exercisePlan") {
+      finalResult = await addExercisePlan();
+    }
+    else if (typeStr === "foodPlan") {
+      finalResult = await addFoodPlan();
+    }
+    else if (typeStr === "moneyPlan") {
+      finalResult = await addMoneyPlan();
+    }
+    else if (typeStr === "sleepPlan") {
+      finalResult = await addSleepPlan();
+    }
+    else if (typeStr === "exercise") {
+      finalResult = await addExercise();
+    }
+    else if (typeStr === "food") {
+      finalResult = await addFood();
+    }
+    else if (typeStr === "money") {
+      finalResult = await addMoney();
+    }
+    else if (typeStr === "sleep") {
+      finalResult = await addSleep();
+    }
+    result = "success";
+  }
+  catch (err) {
+    console.error(err);
+    result = "fail";
+  }
+
+  return finalResult;
+};
+
+// 4-2. delete ------------------------------------------------------------------------------------>
+export const deletes = async (
+  customer_id_param, TYPE_param
+) => {
+
+  const typeStr = TYPE_param.toString();
+  const typeUpper = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
+
+  const finalResult = await repository.deletes.deletes(
+    customer_id_param, typeStr, typeUpper
+  );
+
+  return finalResult;
 };

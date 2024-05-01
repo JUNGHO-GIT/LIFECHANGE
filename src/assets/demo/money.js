@@ -1,5 +1,5 @@
-// MongoDB Playground
-use('test');
+import mongodb from 'mongodb';
+import {Money} from '../../schema/Money.js';
 
 // array ----------------------------------------------------------------------------------------->
 const moneyArray = [
@@ -65,7 +65,7 @@ for (let i = 1; i <= 100; i++) {
   const sectionCount = randomNumber(5) + 1;
   for (let j = 0; j < sectionCount; j++) {
     sections.push({
-      _id: new ObjectId(),
+      _id: new mongodb.ObjectId(),
       money_part_idx: partIndex,
       money_part_val: part.money_part,
       money_title_idx: titleIndex,
@@ -76,7 +76,7 @@ for (let i = 1; i <= 100; i++) {
   }
 
   const record = {
-    _id: new ObjectId(),
+    _id: new mongodb.ObjectId(),
     customer_id: "123",
     money_number: i + 200,
     money_startDt: formatDate1(startDate),
@@ -91,21 +91,20 @@ for (let i = 1; i <= 100; i++) {
   demoData.push(record);
 };
 
-// Create a new document in the collection.
-const insertDataAndRemoveDuplicates = async () => {
+// Create a new document in the Money.
+export const addMoney = async () => {
   try {
-    const collection = db.getCollection('money')
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await collection.deleteMany({});
+    const deleteResult = await Money.deleteMany({});
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입
-    const insertResult = await collection.insertMany(demoData);
+    const insertResult = await Money.insertMany(demoData);
     console.log('Inserted documents:', insertResult.insertedCount);
 
     // 중복된 날짜 항목 삭제 로직
-    const docs = await collection.aggregate([
+    const docs = await Money.aggregate([
       {
         $group: {
           _id: "$money_startDt",
@@ -130,14 +129,12 @@ const insertDataAndRemoveDuplicates = async () => {
     // 필터링된 문서 ID로 deleteMany 실행
     for (const doc of docs) {
       if (doc.toDelete.length > 0) {
-        const deleteResult = await collection.deleteMany({ _id: { $in: doc.toDelete } });
+        const deleteResult = await Money.deleteMany({ _id: { $in: doc.toDelete } });
         console.log("Deleted documents:", deleteResult.deletedCount);
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error during database operations:', error);
   }
 }
-
-// 함수 호출
-insertDataAndRemoveDuplicates();

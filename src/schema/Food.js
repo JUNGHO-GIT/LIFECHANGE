@@ -10,6 +10,11 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
+  food_demo: {
+    type: Boolean,
+    default: false,
+    required: false
+  },
   food_number: {
     type: Number,
     default: 0,

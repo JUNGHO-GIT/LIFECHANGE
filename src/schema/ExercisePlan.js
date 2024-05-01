@@ -10,6 +10,11 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
+  exercise_plan_demo: {
+    type: Boolean,
+    default: false,
+    required: false
+  },
   exercise_plan_number: {
     type : Number,
     default: 0,

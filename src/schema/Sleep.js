@@ -10,6 +10,11 @@ const schema = new mongoose.Schema({
     default: "",
     required: true
   },
+  sleep_demo: {
+    type: Boolean,
+    default: false,
+    required: false
+  },
   sleep_number: {
     type : Number,
     default : 0,

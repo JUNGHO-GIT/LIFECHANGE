@@ -4,6 +4,7 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
@@ -16,6 +17,7 @@ export const TweakDemo = () => {
   const SUBFIX = process.env.REACT_APP_TWEAK || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const customer_id = sessionStorage.getItem("customer_id");
+  const navParam = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname;
 
@@ -189,6 +191,48 @@ export const TweakDemo = () => {
       sleepCnt: response.data.result.sleepCnt,
     }));
   })()}, [customer_id, PAGING]);
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowAdd = async (type) => {
+    const response = await axios.post(`${URL_OBJECT}/add`, {
+      customer_id: customer_id,
+      TYPE: type
+    });
+    if (response.data.status === "success") {
+      alert(response.data.msg);
+      setCOUNT((prev) => ({
+        ...prev,
+        [`${type}Cnt`]: prev[`${type}Cnt`] + 1
+      }));
+      setPAGING((prev) => ({
+        ...prev,
+        page: 1
+      }));
+      navParam("/tweak/demo");
+    }
+  };
+
+  // 3. flow -------------------------------------------------------------------------------------->
+  const flowDelete = async (type) => {
+    const response = await axios.delete(`${URL_OBJECT}/delete`, {
+      params: {
+        customer_id: customer_id,
+        TYPE: type
+      }
+    });
+    if (response.data.status === "success") {
+      alert(response.data.msg);
+      setCOUNT((prev) => ({
+        ...prev,
+        [`${type}Cnt`]: 0
+      }));
+      setPAGING((prev) => ({
+        ...prev,
+        page: 1
+      }));
+      navParam("/tweak/demo");
+    }
+  };
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -455,6 +499,24 @@ export const TweakDemo = () => {
         </Table>
       </React.Fragment>
     );
+    const btnAdd = () => (
+      <React.Fragment>
+        <Button variant={"outline-secondary"} size={"sm"} onClick={() => (
+          flowAdd(TYPE)
+        )}>
+          추가
+        </Button>
+      </React.Fragment>
+    );
+    const btnDelete = () => (
+      <React.Fragment>
+        <Button variant={"outline-secondary"} size={"sm"} onClick={() => (
+          flowDelete(TYPE)
+        )}>
+          삭제
+        </Button>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"date-wrapper"}>
@@ -469,6 +531,10 @@ export const TweakDemo = () => {
           {TYPE === "food" && tableFood()}
           {TYPE === "money" && tableMoney()}
           {TYPE === "sleep" && tableSleep()}
+        </div>
+        <div className={"btn-wrapper"}>
+          {btnAdd()}
+          {btnDelete()}
         </div>
       </React.Fragment>
     );
