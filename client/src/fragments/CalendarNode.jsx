@@ -53,14 +53,26 @@ export const CalendarNode = ({
     }
   }, [FILTER.type]);
 
-  // 4. calendarType ------------------------------------------------------------------------------>
-  const calendarType = () => {
+  // 3. closeBtn ---------------------------------------------------------------------------------->
+  const closeBtn = () => (
+    <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => (
+      setCALENDAR((prev) => ({
+        ...prev,
+        calOpen: false
+      }))
+    )}>
+      X
+    </span>
+  );
 
-    let mode;
-    let selected;
-    let month;
-    let onDayClick;
-    let onMonthChange;
+  // 4. calendar ---------------------------------------------------------------------------------->
+  const calendar = () => {
+
+    let mode = "";
+    let selected = undefined;
+    let month = new Date(DATE.startDt);
+    let onDayClick = undefined;
+    let onMonthChange = undefined;
 
     // 1. day
     if (FILTER.type === "day") {
@@ -217,14 +229,13 @@ export const CalendarNode = ({
 
     return (
       <DayPicker
-
         weekStartsOn={1}
         showOutsideDays={true}
         locale={ko}
         modifiersClassNames={{
           selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
         }}
-        // @ts-ignore
+        //@ts-ignore
         mode={mode}
         selected={selected}
         month={month}
@@ -237,16 +248,9 @@ export const CalendarNode = ({
   return (
     <React.Fragment>
       <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
-        <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => (
-          setCALENDAR((prev) => ({
-            ...prev,
-            calOpen: false
-          }))
-        )}>
-          X
-        </span>
+        {closeBtn()}
         <div className={"h-2vh"}></div>
-        <div>{calendarType()}</div>
+        {calendar()}
       </div>
     </React.Fragment>
   );

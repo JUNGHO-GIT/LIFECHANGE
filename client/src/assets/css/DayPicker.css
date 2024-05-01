@@ -6,6 +6,20 @@
   border-collapse: collapse;
   border: 1px solid  var(--rdp-background-color);
 }
+.rdp-nav_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  padding: 0.25em;
+  border-radius: 25px;
+  border: 1px;
+}
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: #f0f0f0;
+  color: #0b2730
+}
 .rdp-weeknumber, .rdp-day {
   display: flex;
   overflow: hidden;

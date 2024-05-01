@@ -10,7 +10,7 @@ textarea.form-control {
   background-color: #ffffff;
 }
 .input-group {
-  margin-bottom: 10px;
+  margin: 1vh 1vw 1vh 1vw;
   position: relative;
   flex-wrap: nowrap !important;
   align-items: stretch;

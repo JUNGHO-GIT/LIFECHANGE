@@ -50,6 +50,13 @@ export const DiaryDetail = () => {
       sectionCnt: 0
     }
   );
+  const {val:CALENDAR, set:setCALENDAR} = useStorage(
+    `CALENDAR(${PATH})`, {
+      calStartOpen: false,
+      calEndOpen: false,
+      calOpen: false
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
@@ -144,6 +151,52 @@ export const DiaryDetail = () => {
       {name: "black", value: "#000000"},
       {name: "gray", value: "#808080"}
     ];
+    const dateSection = () => (
+      <React.Fragment>
+        <Row className={"d-center"}>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>시작일</span>
+              <InputMask
+                mask={"9999-99-99"}
+                id={"diary_startDt"}
+                name={"diary_startDt"}
+                className={"form-control"}
+                maskChar={null}
+                value={DATE?.startDt}
+                readOnly={true}
+                onClick={() => {
+                  setCALENDAR((prev) => ({
+                    ...prev,
+                    calStartOpen: !prev.calStartOpen
+                  }));
+                }}
+              ></InputMask>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>종료일</span>
+              <InputMask
+                mask={"9999-99-99"}
+                id={"diary_endDt"}
+                name={"diary_endDt"}
+                className={"form-control"}
+                maskChar={null}
+                value={DATE?.endDt}
+                readOnly={true}
+                onClick={() => {
+                  setCALENDAR((prev) => ({
+                    ...prev,
+                    calEndOpen: !prev.calEndOpen
+                  }));
+                }}
+              ></InputMask>
+            </div>
+          </Col>
+        </Row>
+      </React.Fragment>
+    );
     const handlerCount = (e) => {
       let newCount = parseInt(e, 10);
       let defaultSection = {
@@ -199,7 +252,7 @@ export const DiaryDetail = () => {
         </div>
       </React.Fragment>
     );
-  const tableFragment = (i) => (
+    const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Row>
           <Col lg={6} md={6} sm={6} xs={6}>
@@ -326,6 +379,9 @@ export const DiaryDetail = () => {
     );
     return (
       <React.Fragment>
+        <div className={"date-wrapper"}>
+          {dateSection()}
+        </div>
         <div className={"diary-detail-wrapper"}>
           {countNode()}
           {tableSection()}
@@ -336,7 +392,9 @@ export const DiaryDetail = () => {
 
   // 5. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
-    <DateNode DATE={DATE} setDATE={setDATE} part={"diary"} plan={""} type={"detail"} />
+    <DateNode DATE={DATE} setDATE={setDATE} CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
+      part={"diary"} plan={""} type={"detail"}
+    />
   );
 
   // 9. button ------------------------------------------------------------------------------------>
@@ -360,8 +418,8 @@ export const DiaryDetail = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row className={"d-center"}>
-            <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+          <Row>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
               {dateNode()}
             </Col>
             <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>

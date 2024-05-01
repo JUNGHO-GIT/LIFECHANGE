@@ -4,9 +4,10 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-around;
-  width: -webkit-fill-available !important;
   margin: 0;
   padding: 0;
+  width: -webkit-fill-available !important;
+  max-width: 95px !important;
 }
 .react-datepicker__header {
   background-color: #0b2730;

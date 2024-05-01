@@ -161,7 +161,7 @@
 
   /** display **/
   .react-time-picker__wrapper {
-    font-size: 1.0rem;
+    font-size: 0.9rem;
   }
   .react-time-picker__inputGroup__divider {
     font-size: 1.0rem;
@@ -191,7 +191,7 @@
 
   /** display **/
   .react-time-picker__wrapper {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
   .react-time-picker__inputGroup__divider {
     font-size: 1.1rem;
@@ -221,7 +221,7 @@
 
   /** display **/
   .react-time-picker__wrapper {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   .react-time-picker__inputGroup__divider {
     font-size: 1.2rem;
