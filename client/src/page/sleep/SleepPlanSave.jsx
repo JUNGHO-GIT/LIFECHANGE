@@ -203,9 +203,9 @@ export const SleepPlanSave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0"}>
-        <Container fluid>
-          <Row className={"w-100vw"}>
+      <Card className={"card-wrapper"}>
+        <Container fluid={true}>
+          <Row>
             <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
               {dateNode()}
             </Col>

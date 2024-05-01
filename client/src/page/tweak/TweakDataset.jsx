@@ -220,7 +220,7 @@ export const TweakDataset = () => {
     });
     const tableSection1 = () => (
       <React.Fragment>
-        <Table hover border={1}>
+        <Table hover responsive className={"border-1"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
@@ -272,7 +272,7 @@ export const TweakDataset = () => {
     );
     const tableSection2 = () => (
       <React.Fragment>
-        <Table hover border={1}>
+        <Table hover responsive className={"border-1"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
@@ -333,7 +333,7 @@ export const TweakDataset = () => {
     );
     const tableSection3 = () => (
       <React.Fragment>
-        <Table hover border={1}>
+        <Table hover responsive className={"border-1"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
@@ -396,7 +396,7 @@ export const TweakDataset = () => {
     return (
       <React.Fragment>
         <div className={"dataset-wrapper"}>
-          <Row className={"w-100vw"}>
+          <Row>
             <Col lg={3} md={3} sm={3} xs={3} className={"pe-0"}>
               {tableSection1()}
             </Col>
@@ -466,9 +466,9 @@ export const TweakDataset = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0"}>
-        <Container fluid>
-          <Row className={"w-100vw"}>
+      <Card className={"card-wrapper"}>
+        <Container fluid={true}>
+          <Row>
             <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
               {tableNode()}
             </Col>

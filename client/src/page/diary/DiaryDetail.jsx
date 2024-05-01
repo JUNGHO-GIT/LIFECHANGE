@@ -201,7 +201,7 @@ export const DiaryDetail = () => {
     );
   const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Row className={"w-100vw"}>
+        <Row>
           <Col lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>파트</span>
@@ -358,8 +358,8 @@ export const DiaryDetail = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0"}>
-        <Container fluid>
+      <Card className={"card-wrapper"}>
+        <Container fluid={true}>
           <Row className={"d-center"}>
             <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
               {dateNode()}

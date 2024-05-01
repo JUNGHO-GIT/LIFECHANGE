@@ -87,16 +87,19 @@
   justify-content: center !important;
   text-align: center !important;
   border: none !important;
+  padding: 0px 0px 0px 0px !important;
 }
 .react-calendar__navigation__label {
   justify-content: center !important;
   text-align: center !important;
   border: none !important;
+  padding: 0px 0px 0px 0px !important;
 }
 .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
   justify-content: center !important;
   text-align: center !important;
   border: none !important;
+  padding: 0px 0px 0px 0px !important;
 }
 
 /** 0. Media **************************************************************************************/
@@ -124,7 +127,7 @@
   display: flex;
 }
 .calendar-filled {
-  width: -webkit-fill-available !important;
+  width: -webkit-fill-available;
   height: auto;
   max-height: 1.0rem;
   text-align: left;
@@ -136,7 +139,7 @@
   background-color: #164a60;
 }
 .calendar-unfilled {
-  width: -webkit-fill-available !important;
+  width: -webkit-fill-available;
   height: auto;
   max-height: 1.0rem;
   text-align: left;
@@ -152,7 +155,7 @@
   color: #ffffff;
 }
 abbr[title] {
-  text-decoration: none !important;
+  text-decoration: none;
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;

@@ -57,8 +57,8 @@ export const NavBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0"}>
-        <Container fluid>
+      <Card className={"card-wrapper"}>
+        <Container fluid={true}>
           <Row className={"w-100vw"}>
             <Col lg={4} md={4} sm={4} xs={4} className={"d-left"}>
               <span className={"w-1vw"}></span>

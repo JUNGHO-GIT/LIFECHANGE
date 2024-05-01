@@ -118,7 +118,7 @@ export const FoodSearch = () => {
     };
     const tableSection = () => (
       <React.Fragment>
-        <Table hover border={1}>
+        <Table hover responsive className={"border-1"}>
           <thead>
             <tr>
               <th className={"table-thead"}>식품명</th>
@@ -201,9 +201,9 @@ export const FoodSearch = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0"}>
-        <Container fluid>
-          <Row className={"w-100vw"}>
+      <Card className={"card-wrapper"}>
+        <Container fluid={true}>
+          <Row>
             <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
               {tableNode()}
             </Col>
