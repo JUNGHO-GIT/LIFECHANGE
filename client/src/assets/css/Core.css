@@ -92,6 +92,7 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 58vh;
+  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
@@ -101,6 +102,17 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 60vh;
+  max-width: 95vw;
+  margin: 1vh 0vw 1vh 0vw;
+  padding: 0vh 0vw 0vh 0vw;
+  animation: fadeIn 0.5s;
+}
+.detail-wrapper {
+  border: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 68vh;
+  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
@@ -110,30 +122,27 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 68vh;
+  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
 }
 .diary-list-wrapper {
-  display: flex;
-  flex-direction: column; /* 수직 정렬 */
-  justify-content: flex-start; /* 시작 지점에서 정렬 */
-  align-items: stretch; /* 모든 자녀 항목들이 컨테이너의 너비에 맞춰 늘어나도록 함 */
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
   height: 74vh;
-  width: 100%;
-  margin: 1vh 0vw 1vh 0vw !important;
-  padding: 0vh 0vw 0vh 0vw !important;
+  max-width: 95vw;
+  margin: 1vh 0vw 1vh 0vw;
+  padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
 }
-
 .diary-detail-wrapper {
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
   height: 61vh;
+  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;

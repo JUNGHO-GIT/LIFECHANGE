@@ -134,7 +134,7 @@ export const MoneyDetail = () => {
                 <th className={"table-thead"}>항목</th>
                 <th className={"table-thead"}>금액</th>
                 <th className={"table-thead"}>내용</th>
-                <th className={"table-thead"}>삭제</th>
+                <th className={"table-thead"}>X</th>
               </tr>
             </thead>
             <tbody>
@@ -174,7 +174,7 @@ export const MoneyDetail = () => {
       );
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
+        <div className={"detail-wrapper over-x-auto"}>
           {tableSection()}
         </div>
       </React.Fragment>

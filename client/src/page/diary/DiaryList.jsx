@@ -164,9 +164,7 @@ export const DiaryList = () => {
     return (
       <React.Fragment>
         <div className={"diary-list-wrapper"}>
-          <div className={"d-center"}>
-            {tableSection()}
-          </div>
+          {tableSection()}
         </div>
       </React.Fragment>
     );

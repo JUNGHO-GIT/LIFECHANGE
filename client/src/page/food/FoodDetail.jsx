@@ -141,7 +141,7 @@ export const FoodDetail = () => {
                 <th className={"table-thead"}>carb</th>
                 <th className={"table-thead"}>protein</th>
                 <th className={"table-thead"}>fat</th>
-                <th className={"table-thead"}>삭제</th>
+                <th className={"table-thead"}>X</th>
               </tr>
             </thead>
             <tbody>
@@ -180,7 +180,7 @@ export const FoodDetail = () => {
       );
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
+        <div className={"detail-wrapper over-x-auto"}>
           {tableSection()}
         </div>
       </React.Fragment>
@@ -201,9 +201,6 @@ export const FoodDetail = () => {
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
           <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {OBJECT?.food_startDt}
-            </Col>
             <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
               {tableNode()}
             </Col>

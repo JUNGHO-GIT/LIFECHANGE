@@ -4458,12 +4458,19 @@
   display: -webkit-inline-box !important;
 }
 
-.over-hidden {
-  overflow: hidden !important;
+.over-x-hidden {
+  overflow-x: hidden !important;
 }
-.over-auto {
-  overflow: auto !important;
+.over-y-hidden {
+  overflow-y: hidden !important;
 }
+.over-x-auto {
+  overflow-x: auto !important;
+}
+.over-y-auto {
+  overflow-y: auto !important;
+}
+
 .pointer {
   cursor: pointer !important;
   caret-color: transparent;

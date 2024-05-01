@@ -122,7 +122,7 @@ export const ExercisePlanDetail = () => {
                 <th className={"table-thead"}>볼륨 목표</th>
                 <th className={"table-thead"}>유산소 목표</th>
                 <th className={"table-thead"}>체중 목표</th>
-                <th className={"table-thead"}>삭제</th>
+                <th className={"table-thead"}>X</th>
               </tr>
             </thead>
             <tbody>
@@ -144,7 +144,7 @@ export const ExercisePlanDetail = () => {
       );
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
+        <div className={"detail-wrapper over-x-auto"}>
           {tableSection()}
         </div>
       </React.Fragment>

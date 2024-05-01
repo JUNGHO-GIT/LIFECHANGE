@@ -121,7 +121,7 @@ export const FoodPlanDetail = () => {
               <th className={"table-thead"}>탄수화물 목표</th>
               <th className={"table-thead"}>단백질 목표</th>
               <th className={"table-thead"}>지방 목표</th>
-              <th className={"table-thead"}>삭제</th>
+              <th className={"table-thead"}>X</th>
             </tr>
           </thead>
           <tbody>
@@ -143,7 +143,7 @@ export const FoodPlanDetail = () => {
     );
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
+        <div className={"detail-wrapper over-x-auto"}>
           {tableSection()}
         </div>
       </React.Fragment>

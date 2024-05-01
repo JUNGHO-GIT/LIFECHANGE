@@ -257,10 +257,10 @@ table tbody tr td {
     line-height: 0.75rem;
   }
   thead {
-    font-size: 0.8rem;
+    font-size: 0.650rem;
   }
   tbody {
-    font-size: 0.6rem;
+    font-size: 0.600rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.21rem !important;
@@ -326,10 +326,10 @@ table tbody tr td {
     line-height: 0.8rem;
   }
   thead {
-    font-size: 0.9rem;
+    font-size: 0.750rem;
   }
   tbody {
-    font-size: 0.7rem;
+    font-size: 0.700rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.22rem !important;
@@ -395,10 +395,10 @@ table tbody tr td {
     line-height: 0.85rem;
   }
   thead {
-    font-size: 1.0rem;
+    font-size: 0.850rem;
   }
   tbody {
-    font-size: 0.8rem;
+    font-size: 0.800rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.23rem !important;
@@ -464,10 +464,10 @@ table tbody tr td {
     line-height: 0.875rem;
   }
   thead {
-    font-size: 1.1rem;
+    font-size: 0.950rem;
   }
   tbody {
-    font-size: 0.9rem;
+    font-size: 0.900rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.24rem !important;
@@ -533,10 +533,10 @@ table tbody tr td {
     line-height: 1rem;
   }
   thead {
-    font-size: 1.2rem;
+    font-size: 1.500rem;
   }
   tbody {
-    font-size: 1.0rem;
+    font-size: 1.000rem;
   }
   .btn-group-sm>.btn, .btn-sm {
     --bs-btn-padding-y: 0.25rem !important;
