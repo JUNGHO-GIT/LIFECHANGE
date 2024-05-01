@@ -54,6 +54,7 @@ html, body {
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
+  width: 100%;
   height: 80vh;
   border-radius: 0.1rem;
   margin: 0vh 0vw 0vh 0vw;

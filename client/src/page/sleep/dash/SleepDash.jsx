@@ -11,11 +11,11 @@ export const SleepDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"d-block"}>
-        {SleepDashBar()}
-        {SleepDashLine()}
-        {/* {SleepDashAvg()} */}
-      </div>
+      {SleepDashBar()}
+      <br/>
+      {SleepDashLine()}
+      <br/>
+      {SleepDashAvg()}
     </React.Fragment>
   );
 };

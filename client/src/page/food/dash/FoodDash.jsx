@@ -12,18 +12,13 @@ export const FoodDash = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"mb-10"}>
-        {FoodDashBar()}
-      </div>
-      <div className={"mb-10"}>
-        {FoodDashPie()}
-      </div>
-      <div className={"mb-10"}>
-        {FoodDashLine()}
-      </div>
-      <div>
-        {FoodDashAvg()}
-      </div>
+      {FoodDashBar()}
+      <br/>
+      {FoodDashPie()}
+      <br/>
+      {FoodDashLine()}
+      <br/>
+      {FoodDashAvg()}
     </React.Fragment>
   );
 };

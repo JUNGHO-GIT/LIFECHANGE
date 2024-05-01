@@ -100,7 +100,7 @@ export const SleepDashBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0"}>
+      <Card className={"border-0 border-bottom ms-2vw"}>
         <Container fluid>
           <Row>
             <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
@@ -119,7 +119,7 @@ export const SleepDashBar = () => {
             </Col>
           </Row>
           <Row>
-            <Col lg={12} md={12} sm={12} xs={12}>
+            <Col lg={12} md={12} sm={12} xs={12} style={{alignSelf:"center"}}>
               {SECTION === "today" && chartNodeToday()}
             </Col>
           </Row>

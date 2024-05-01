@@ -212,7 +212,7 @@ export const SleepDashAvg = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0"}>
+      <Card className={"border-0 border-bottom ms-2vw"}>
         <Container fluid>
           <Row>
             <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
@@ -236,7 +236,7 @@ export const SleepDashAvg = () => {
               {SECTION === "week" && chartNodeWeek()}
               {SECTION === "month" && chartNodeMonth()}
             </Col>
-            <Col lg={2} md={2} sm={2} xs={2}>
+            <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
               {tableNode()}
             </Col>
           </Row>
