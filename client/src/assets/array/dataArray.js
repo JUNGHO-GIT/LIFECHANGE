@@ -64,6 +64,7 @@ export const dataArray = [
     title: "Tweak",
     items: [
       {to: "/tweak/dataset", label: "TweakDataset"},
+      {to: "/tweak/demo", label: "TweakDemo"},
     ]
   },
 ];

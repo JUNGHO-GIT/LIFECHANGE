@@ -16,28 +16,68 @@ export const dataset = async (
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
-  customer_id_param, FILTER_param, PAGING_param, duration_param
+  customer_id_param, PAGING_param
 ) => {
 
-  const [startDt_param, endDt_param] = duration_param.split(` ~ `);
-
-  const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
   const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
-  const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
-  const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
-  const totalCnt = await repository.list.cnt(
-    customer_id_param, part, title, startDt_param, endDt_param
+  const findExercisePlan = await repository.list.listExercisePlan(
+    customer_id_param, page
+  );
+  const findFoodPlan = await repository.list.listFoodPlan(
+    customer_id_param, page
+  );
+  const findMoneyPlan = await repository.list.listMoneyPlan(
+    customer_id_param, page
+  );
+  const findSleepPlan = await repository.list.listSleepPlan(
+    customer_id_param, page
   );
 
-  const finalResult = await repository.list.list(
-    customer_id_param, sort, limit, page
+  const findExerciseReal = await repository.list.listExerciseReal(
+    customer_id_param, page
   );
+  const findFoodReal = await repository.list.listFoodReal(
+    customer_id_param, page
+  );
+  const findMoneyReal = await repository.list.listMoneyReal(
+    customer_id_param, page
+  );
+  const findSleepReal = await repository.list.listSleepReal(
+    customer_id_param, page
+  );
+
+  const exercisePlanCnt = findExercisePlan.length;
+  const foodPlanCnt = findFoodPlan.length;
+  const moneyPlanCnt = findMoneyPlan.length;
+  const sleepPlanCnt = findSleepPlan.length;
+
+  const exerciseCnt = findExerciseReal.length;
+  const foodCnt = findFoodReal.length;
+  const moneyCnt = findMoneyReal.length;
+  const sleepCnt = findSleepReal.length;
+
+  const finalResult = {
+    exercisePlan: findExercisePlan,
+    foodPlan: findFoodPlan,
+    moneyPlan: findMoneyPlan,
+    sleepPlan: findSleepPlan,
+    exercise: findExerciseReal,
+    food: findFoodReal,
+    money: findMoneyReal,
+    sleep: findSleepReal,
+    exercisePlanCnt: exercisePlanCnt,
+    foodPlanCnt: foodPlanCnt,
+    moneyPlanCnt: moneyPlanCnt,
+    sleepPlanCnt: sleepPlanCnt,
+    exerciseCnt: exerciseCnt,
+    foodCnt: foodCnt,
+    moneyCnt: moneyCnt,
+    sleepCnt: sleepCnt
+  };
 
   return {
-    totalCnt: totalCnt,
-    result: finalResult,
+    result: finalResult
   };
 };
 

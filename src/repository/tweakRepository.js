@@ -1,32 +1,16 @@
 // exercisePlanRepository.js
 
 import mongoose from "mongoose";
+import {ExercisePlan} from "../schema/ExercisePlan.js";
+import {FoodPlan} from "../schema/FoodPlan.js";
+import {MoneyPlan} from "../schema/MoneyPlan.js";
+import {SleepPlan} from "../schema/SleepPlan.js";
 import {Exercise} from "../schema/Exercise.js";
+import {Food} from "../schema/Food.js";
+import {Money} from "../schema/Money.js";
+import {Sleep} from "../schema/Sleep.js";
 import {Customer} from "../schema/Customer.js";
 import {fmtDate} from "../assets/js/date.js";
-
-// 0-1. totalCnt ---------------------------------------------------------------------------------->
-export const totalCnt = async (
-  customer_id_param, part_param, title_param, startDt_param, endDt_param
-) => {
-
-  const finalResult = await Exercise.countDocuments({
-    customer_id: customer_id_param,
-    exercise_startDt: {
-      $gte: startDt_param,
-    },
-    exercise_endDt: {
-      $lte: endDt_param,
-    },
-    ...(part_param !== "전체" && {
-      "exercise_section.exercise_part_val": part_param
-    }),
-    ...(title_param !== "전체" && {
-      "exercise_section.exercise_title_val": title_param
-    }),
-  });
-  return finalResult;
-};
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = {
@@ -54,18 +38,132 @@ export const dataset = {
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = {
-  list: async (
-    customer_id_param, sort_param, limit_param, page_param
+
+  listExercisePlan: async (
+    customer_id_param, page_param
   ) => {
+    const finalResult = await ExercisePlan.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        exercise_plan_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
+    return finalResult;
+  },
 
-    const finalResult = await Customer.find({
-      customer_id: customer_id_param,
-    })
-    .sort({customer_regDt: sort_param})
-    .skip((page_param - 1) * limit_param)
-    .limit(limit_param)
-    .lean();
+  listFoodPlan: async (
+    customer_id_param, page_param
+  ) => {
+    const finalResult = await FoodPlan.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        food_plan_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
+    return finalResult;
+  },
 
+  listMoneyPlan: async (
+    customer_id_param, page_param
+  ) => {
+    const finalResult = await MoneyPlan.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        money_plan_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
+    return finalResult;
+  },
+
+  listSleepPlan: async (
+    customer_id_param, page_param
+  ) => {
+    const finalResult = await SleepPlan.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        sleep_plan_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
+    return finalResult;
+  },
+
+  listExerciseReal: async (
+    customer_id_param, page_param
+  ) => {
+    const finalResult = await Exercise.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        exercise_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
+    return finalResult;
+  },
+
+  listFoodReal: async (
+    customer_id_param, page_param
+  ) => {
+    const finalResult = await Food.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        food_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
+    return finalResult;
+  },
+
+  listMoneyReal: async (
+    customer_id_param, page_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        money_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
+    return finalResult;
+  },
+
+  listSleepReal: async (
+    customer_id_param, page_param
+  ) => {
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+      }},
+      {$sort: {
+        sleep_startDt: -1
+      }},
+      {$skip: (Number(page_param) - 1) * 10},
+      {$limit: 10}
+    ]);
     return finalResult;
   }
 };

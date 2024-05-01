@@ -1,7 +1,4 @@
 // MongoDB Playground
-// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
-
-// The current database to use.
 use('test');
 
 // array ----------------------------------------------------------------------------------------->
@@ -98,6 +95,10 @@ for (let i = 1; i <= 100; i++) {
 const insertDataAndRemoveDuplicates = async () => {
   try {
     const collection = db.getCollection('money')
+
+    // 일단 전체 데이터 삭제
+    const deleteResult = await collection.deleteMany({});
+    console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입
     const insertResult = await collection.insertMany(demoData);

@@ -71,6 +71,7 @@ import {SleepDetail} from "../page/sleep/SleepDetail.jsx";
 import {SleepSave} from "../page/sleep/SleepSave.jsx";
 
 import {TweakDataset} from "../page/tweak/TweakDataset.jsx";
+import {TweakDemo} from "../page/tweak/TweakDemo.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 const Customer = () => (
@@ -155,9 +156,10 @@ const Sleep = () => (
 
 // ------------------------------------------------------------------------------------------------>
 const Tweak = () => (
-    <React.Fragment>
+  <React.Fragment>
     <Routes>
       <Route path="/dataset" element={<TweakDataset />} />
+      <Route path="/demo" element={<TweakDemo />} />
     </Routes>
   </React.Fragment>
 );
