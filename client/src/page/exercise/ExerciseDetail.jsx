@@ -127,68 +127,66 @@ export const ExerciseDetail = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function tableSection () {
-      return (
-        <React.Fragment>
-          <Table hover border={1}>
-            <thead>
-              <tr>
-                <th className={"table-thead"}>날짜</th>
-                <th className={"table-thead"}>부위</th>
-                <th className={"table-thead"}>종목</th>
-                <th className={"table-thead"}>볼륨 or 시간</th>
-                <th className={"table-thead"}>삭제</th>
-              </tr>
-            </thead>
-            <tbody>
-              {OBJECT?.exercise_section?.map((section, index) => (
-                <tr key={index}>
-                  {index === 0 && (
-                    <td rowSpan={OBJECT?.exercise_section?.length}>
-                      {OBJECT?.exercise_startDt?.substring(5, 10)}
-                    </td>
-                  )}
-                  <td>{section.exercise_part_val}</td>
-                  {(section.exercise_part_val !== "유산소") ? (
-                    <React.Fragment>
-                      <td>
-                        <p>{section.exercise_title_val}</p>
-                        <p>{section.exercise_set} x {section.exercise_rep} x {section.exercise_kg} x {section.exercise_rest}</p>
-                      </td>
-                      <td>{section.exercise_volume}</td>
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                      <td>
-                        <p>{section.exercise_title_val}</p>
-                      </td>
-                      <td>{section.exercise_cardio}</td>
-                    </React.Fragment>
-                  )}
-                  <td>
-                    <p className={"del-btn"} onClick={() => (
-                      flowDelete(OBJECT._id, section._id)
-                    )}>x</p>
+    const tableSection = () => (
+      <React.Fragment>
+        <Table hover border={1}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>부위</th>
+              <th className={"table-thead"}>종목</th>
+              <th className={"table-thead"}>볼륨 or 시간</th>
+              <th className={"table-thead"}>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.exercise_section?.map((section, index) => (
+              <tr key={index}>
+                {index === 0 && (
+                  <td rowSpan={OBJECT?.exercise_section?.length}>
+                    {OBJECT?.exercise_startDt?.substring(5, 10)}
                   </td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan={2}>총 볼륨</td>
-                <td colSpan={3}>{`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}</td>
+                )}
+                <td>{section.exercise_part_val}</td>
+                {(section.exercise_part_val !== "유산소") ? (
+                  <React.Fragment>
+                    <td>
+                      <p>{section.exercise_title_val}</p>
+                      <p>{section.exercise_set} x {section.exercise_rep} x {section.exercise_kg} x {section.exercise_rest}</p>
+                    </td>
+                    <td>{section.exercise_volume}</td>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <td>
+                      <p>{section.exercise_title_val}</p>
+                    </td>
+                    <td>{section.exercise_cardio}</td>
+                  </React.Fragment>
+                )}
+                <td>
+                  <p className={"del-btn"} onClick={() => (
+                    flowDelete(OBJECT._id, section._id)
+                  )}>x</p>
+                </td>
               </tr>
-              <tr>
-                <td colSpan={2}>총 유산소 시간</td>
-                <td colSpan={3}>{`${OBJECT?.exercise_total_cardio}`}</td>
-              </tr>
-              <tr>
-                <td colSpan={2}>체중</td>
-                <td colSpan={3}>{`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}</td>
-              </tr>
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
-    };
+            ))}
+            <tr>
+              <td colSpan={2}>총 볼륨</td>
+              <td colSpan={3}>{`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}</td>
+            </tr>
+            <tr>
+              <td colSpan={2}>총 유산소 시간</td>
+              <td colSpan={3}>{`${OBJECT?.exercise_total_cardio}`}</td>
+            </tr>
+            <tr>
+              <td colSpan={2}>체중</td>
+              <td colSpan={3}>{`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}</td>
+            </tr>
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"table-wrapper"}>

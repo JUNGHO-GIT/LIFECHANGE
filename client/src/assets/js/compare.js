@@ -8,7 +8,7 @@ export const compare = (
 ) => {
 
   // 1. food
-  function foodCompare (plan, real, extra) {
+  const foodCompare = (plan, real, extra) => {
     const abs = Math.abs(plan - real);
     if (real < plan) {
       return (<span className={"text-danger"}>{abs}</span>);
@@ -22,7 +22,7 @@ export const compare = (
   }
 
   // 2. money
-  function moneyCompare (plan, real, extra) {
+  const moneyCompare = (plan, real, extra) => {
     const abs = Math.abs(plan - real);
     // 1. 수입 항목인 경우
     if (extra === "in") {
@@ -51,7 +51,7 @@ export const compare = (
   }
 
   // 3. sleep
-  function sleepCompare (plan, real, extra) {
+  const sleepCompare = (plan, real, extra) => {
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
 
@@ -90,7 +90,7 @@ export const compare = (
   }
 
   // 4. exercise
-  function exerciseCompare (plan, real, extra) {
+  const exerciseCompare = (plan, real, extra) => {
     const abs = Math.abs(plan - real);
     if (real < plan) {
       return (<span className={"text-danger"}>{abs}</span>);

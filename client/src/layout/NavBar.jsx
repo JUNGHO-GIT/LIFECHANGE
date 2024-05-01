@@ -38,7 +38,7 @@ export const NavBar = () => {
     }
   });
 
-  // 3. function ---------------------------------------------------------------------------------->
+  // 3. logic ------------------------------------------------------------------------------------->
   const makeIcon = (label) => {
     if (percent?.[`${label}`] < 2) {
       return <img src={smile1} className={"nav-image-smile"} alt="Icon 1" />;

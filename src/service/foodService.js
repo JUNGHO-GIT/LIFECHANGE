@@ -22,7 +22,7 @@ export const search = async (
     "개", "회", "알", "통", "봉", "컵", "팩", "줄", "장", "마리", "인분", "봉지", "한컵", "대접", "접시", "소접시", "테이블스푼"
   ];
 
-  function getSearchResult () {
+  const getSearchResult = () => {
     return new Promise((resolve, reject) => {
       axios.get(URL_SEARCH, {
         params: {
@@ -43,7 +43,7 @@ export const search = async (
   const document = new JSDOM(searchResult).window.document;
   const tables = document.querySelectorAll(`table.generic.searchResult`);
 
-  function calcServ(param) {
+  const calcServ = (param) => {
     const regex = /(\s*)(\d+\s*.*\n*)(\s*당\s*-\s*)(\s*칼\s*로\s*리\s*[:]\s*)(\d+\s*.*\n*)(kcal)(\s*[|]\s*)(\s*지\s*방\s*[:]\s*)(\d+\s*.*\n*)(g)(\s*[|]\s*)(\s*탄\s*수\s*화\s*물\s*[:]\s*)(\d+\s*.*\n*)(g)(\s*[|]\s*)(\s*단\s*백\s*질\s*[:]\s*)(\d+\s*.*\n*)(g)/;
     const matches = param.match(regex);
 

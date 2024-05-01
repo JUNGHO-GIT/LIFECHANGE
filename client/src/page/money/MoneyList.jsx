@@ -112,49 +112,47 @@ export const MoneyList = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function tableSection() {
-      return (
-        <React.Fragment>
-          <Table hover border={1}>
-            <thead>
-              <tr>
-                <th className={"table-thead"}>날짜</th>
-                <th className={"table-thead"}>분류</th>
-                <th className={"table-thead"}>항목</th>
-                <th className={"table-thead"}>금액</th>
-              </tr>
-            </thead>
-            <tbody>
-              {OBJECT?.map((item, index) => (
-                item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={sectionIndex}>
-                    <tr>
-                      {sectionIndex === 0 && (
-                        <td rowSpan={Math.min(item.money_section.length, 3)}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.money_startDt;
-                          SEND.endDt = item.money_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                          {item.money_startDt?.substring(5, 10)}
-                          {item.money_section.length > 3 && (<div>더보기</div>)}
-                        </td>
-                      )}
-                      <td>{section.money_part_val}</td>
-                      <td>{section.money_title_val}</td>
-                      <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
-                    </tr>
-                  </React.Fragment>
-                ))
-              ))}
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
-    };
+    const tableSection = () => (
+      <React.Fragment>
+        <Table hover border={1}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>분류</th>
+              <th className={"table-thead"}>항목</th>
+              <th className={"table-thead"}>금액</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.map((item, index) => (
+              item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
+                <React.Fragment key={sectionIndex}>
+                  <tr>
+                    {sectionIndex === 0 && (
+                      <td rowSpan={Math.min(item.money_section.length, 3)}
+                      className={"pointer"} onClick={() => {
+                        SEND.id = item._id;
+                        SEND.startDt = item.money_startDt;
+                        SEND.endDt = item.money_endDt;
+                        navParam(SEND.toDetail, {
+                          state: SEND
+                        });
+                      }}>
+                        {item.money_startDt?.substring(5, 10)}
+                        {item.money_section.length > 3 && (<div>더보기</div>)}
+                      </td>
+                    )}
+                    <td>{section.money_part_val}</td>
+                    <td>{section.money_title_val}</td>
+                    <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
+                  </tr>
+                </React.Fragment>
+              ))
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"table-wrapper"}>

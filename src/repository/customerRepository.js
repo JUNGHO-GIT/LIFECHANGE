@@ -39,7 +39,7 @@ export const checkId = async (
   customer_id_param
 ) => {
 
-  const finalResult = await Customer.findOne({
+  const finalResult = await Customer.find({
     customer_id: customer_id_param
   })
   .lean();

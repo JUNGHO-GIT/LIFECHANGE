@@ -108,7 +108,7 @@ export const FoodSearch = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function handleStorage (param) {
+    const handleStorage = (param) => {
       localStorage.setItem("food_section", JSON.stringify(param));
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
@@ -116,44 +116,42 @@ export const FoodSearch = () => {
         state: SEND
       });
     };
-    function tableSection () {
-      return (
-        <React.Fragment>
-          <Table hover border={1}>
-              <thead>
-              <tr>
-                <th className={"table-thead"}>식품명</th>
-                <th className={"table-thead"}>브랜드</th>
-                <th className={"table-thead"}>1회 제공량</th>
-                <th className={"table-thead"}>1회 중량</th>
-                <th className={"table-thead"}>칼로리</th>
-                <th className={"table-thead"}>지방</th>
-                <th className={"table-thead"}>탄수화물</th>
-                <th className={"table-thead"}>단백질</th>
+    const tableSection = () => (
+      <React.Fragment>
+        <Table hover border={1}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>식품명</th>
+              <th className={"table-thead"}>브랜드</th>
+              <th className={"table-thead"}>1회 제공량</th>
+              <th className={"table-thead"}>1회 중량</th>
+              <th className={"table-thead"}>칼로리</th>
+              <th className={"table-thead"}>지방</th>
+              <th className={"table-thead"}>탄수화물</th>
+              <th className={"table-thead"}>단백질</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.food_section?.map((item, index) => (
+              <tr key={index}>
+                <td className={"pointer"} onClick={() => {
+                  handleStorage(item);
+                }}>
+                  {item.food_title}
+                </td>
+                <td>{item.food_brand}</td>
+                <td>{item.food_count} {item.food_serv}</td>
+                <td>{item.food_gram}</td>
+                <td>{item.food_kcal}</td>
+                <td>{item.food_fat}</td>
+                <td>{item.food_carb}</td>
+                <td>{item.food_protein}</td>
               </tr>
-            </thead>
-            <tbody>
-              {OBJECT?.food_section?.map((item, index) => (
-                <tr key={index}>
-                  <td className={"pointer"} onClick={() => {
-                    handleStorage(item);
-                  }}>
-                    {item.food_title}
-                  </td>
-                  <td>{item.food_brand}</td>
-                  <td>{item.food_count} {item.food_serv}</td>
-                  <td>{item.food_gram}</td>
-                  <td>{item.food_kcal}</td>
-                  <td>{item.food_fat}</td>
-                  <td>{item.food_carb}</td>
-                  <td>{item.food_protein}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
-    };
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"table-wrapper"}>
@@ -164,36 +162,34 @@ export const FoodSearch = () => {
   };
 
   // 5-2. search ---------------------------------------------------------------------------------->
-  const searchNode = () => {
-    return (
-      <div className={"input-group"}>
-        <InputMask
-          mask={""}
-          id={"food_content"}
-          name={"food_content"}
-          className={"form-control"}
-          readOnly={false}
-          disabled={false}
-          value={FILTER.query}
-          onChange={(e) => {
-            setFILTER((prev) => ({
-              ...prev,
-              query: e.target.value
-            }));
-          }}
-        ></InputMask>
-        <span className={"input-group-text pointer"} onClick={() => {
+  const searchNode = () => (
+    <div className={"input-group"}>
+      <InputMask
+        mask={""}
+        id={"food_content"}
+        name={"food_content"}
+        className={"form-control"}
+        readOnly={false}
+        disabled={false}
+        value={FILTER.query}
+        onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,
-            page: 0
+            query: e.target.value
           }));
-          flowSearch();
-        }}>
-          <i className={"bi bi-search"}></i>
-        </span>
-      </div>
-    );
-  };
+        }}
+      ></InputMask>
+      <span className={"input-group-text pointer"} onClick={() => {
+        setFILTER((prev) => ({
+          ...prev,
+          page: 0
+        }));
+        flowSearch();
+      }}>
+        <i className={"bi bi-search"}></i>
+      </span>
+    </div>
+  );
 
   // 7. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => (

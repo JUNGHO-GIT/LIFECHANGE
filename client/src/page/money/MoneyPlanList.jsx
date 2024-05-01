@@ -109,8 +109,8 @@ export const MoneyPlanList = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function tableSection () {
-      return (
+    const tableSection = () => (
+      <React.Fragment>
         <Table hover border={1}>
           <thead>
             <tr>
@@ -152,8 +152,8 @@ export const MoneyPlanList = () => {
             ))}
           </tbody>
         </Table>
-      );
-    };
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"table-wrapper"}>

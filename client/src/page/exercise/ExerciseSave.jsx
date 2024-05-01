@@ -165,7 +165,7 @@ export const ExerciseSave = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function handlerCount (e) {
+    const handlerCount = (e) => {
       let newCount = parseInt(e, 10);
       let defaultSection = {
         exercise_part_idx: 0,
@@ -199,269 +199,327 @@ export const ExerciseSave = () => {
         }));
       }
     };
-    function countNode () {
-      return (
-        <React.Fragment>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>섹션 갯수</span>
-            <NumericFormat
-              min={0}
-              max={10}
-              minLength={1}
-              maxLength={2}
-              datatype={"number"}
-              displayType={"input"}
-              className={"form-control"}
-              id={"sectionCnt"}
-              name={"sectionCnt"}
-              disabled={false}
-              thousandSeparator={false}
-              fixedDecimalScale={true}
-              value={Math.min(10, COUNT?.sectionCnt)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(10, parseInt(values?.value));
-                handlerCount(limitedValue.toString());
-              }}
-            ></NumericFormat>
-          </div>
-        </React.Fragment>
-      );
-    };
-    function tableFragment (i) {
-      return (
-        <React.Fragment key={i}>
-          <Row>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>부위</span>
-                <select
-                  id={`exercise_part_idx-${i}`}
-                  name={`exercise_part_idx-${i}`}
-                  className={"form-select"}
-                  value={OBJECT?.exercise_section[i]?.exercise_part_idx}
-                  onChange={(e) => {
-                    const newIndex = parseInt(e.target.value);
+    const countNode = () => (
+      <React.Fragment>
+        <div className={"input-group"}>
+          <span className={"input-group-text"}>섹션 갯수</span>
+          <NumericFormat
+            min={0}
+            max={10}
+            minLength={1}
+            maxLength={2}
+            datatype={"number"}
+            displayType={"input"}
+            className={"form-control"}
+            id={"sectionCnt"}
+            name={"sectionCnt"}
+            disabled={false}
+            thousandSeparator={false}
+            fixedDecimalScale={true}
+            value={Math.min(10, COUNT?.sectionCnt)}
+            onValueChange={(values) => {
+              const limitedValue = Math.min(10, parseInt(values?.value));
+              handlerCount(limitedValue.toString());
+            }}
+          ></NumericFormat>
+        </div>
+      </React.Fragment>
+    );
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Row>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>부위</span>
+              <select
+                id={`exercise_part_idx-${i}`}
+                name={`exercise_part_idx-${i}`}
+                className={"form-select"}
+                value={OBJECT?.exercise_section[i]?.exercise_part_idx}
+                onChange={(e) => {
+                  const newIndex = parseInt(e.target.value);
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_part_idx: newIndex,
+                        exercise_part_val: exerciseArray[newIndex]?.exercise_part,
+                        exercise_title_idx: 0,
+                        exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
+                      } : item
+                    ))
+                  }));
+                }}
+              >
+                {exerciseArray?.map((item, idx) => (
+                  <option key={idx} value={idx}>
+                    {item.exercise_part}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>제목</span>
+              <select
+                id={`exercise_title_idx-${i}`}
+                name={`exercise_title_idx-${i}`}
+                className={"form-select"}
+                value={OBJECT?.exercise_section[i]?.exercise_title_idx}
+                onChange={(e) => {
+                  const newTitleIdx = parseInt(e.target.value);
+                  const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
+                  if (newTitleIdx >= 0 && newTitleVal) {
                     setOBJECT((prev) => ({
                       ...prev,
                       exercise_section: prev.exercise_section.map((item, idx) => (
                         idx === i ? {
                           ...item,
-                          exercise_part_idx: newIndex,
-                          exercise_part_val: exerciseArray[newIndex]?.exercise_part,
-                          exercise_title_idx: 0,
-                          exercise_title_val: exerciseArray[newIndex]?.exercise_title[0],
+                          exercise_title_idx: newTitleIdx,
+                          exercise_title_val: newTitleVal
                         } : item
                       ))
                     }));
-                  }}
-                >
-                  {exerciseArray?.map((item, idx) => (
-                    <option key={idx} value={idx}>
-                      {item.exercise_part}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>제목</span>
-                <select
-                  id={`exercise_title_idx-${i}`}
-                  name={`exercise_title_idx-${i}`}
-                  className={"form-select"}
-                  value={OBJECT?.exercise_section[i]?.exercise_title_idx}
-                  onChange={(e) => {
-                    const newTitleIdx = parseInt(e.target.value);
-                    const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
-                    if (newTitleIdx >= 0 && newTitleVal) {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        exercise_section: prev.exercise_section.map((item, idx) => (
-                          idx === i ? {
-                            ...item,
-                            exercise_title_idx: newTitleIdx,
-                            exercise_title_val: newTitleVal
-                          } : item
-                        ))
-                      }));
-                    }
-                  }}
-                >
-                  {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
-                    <option key={idx} value={idx}>
-                      {title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={3}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>세트</span>
-                <NumericFormat
-                  min={1}
-                  max={99}
-                  minLength={1}
-                  maxLength={6}
-                  suffix={" set"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_set-${i}`}
-                  name={`exercise_set-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  fixedDecimalScale={false}
-                  disabled={
-                    OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
                   }
-                  value={
-                    OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
-                    ? Math.min(99, OBJECT?.exercise_section[i]?.exercise_set)
-                    : 0
-                  }
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(99, parseInt(values?.value));
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_set: limitedValue
-                        } : item
-                      ))
-                    }));
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-            <Col xs={3}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>횟수</span>
-                <NumericFormat
-                  min={1}
-                  max={99}
-                  minLength={1}
-                  maxLength={4}
-                  suffix={" 회"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_rep-${i}`}
-                  name={`exercise_rep-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  fixedDecimalScale={false}
-                  disabled={
-                    OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
-                  }
-                  value={
-                    OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
-                    ? Math.min(99, OBJECT?.exercise_section[i]?.exercise_rep)
-                    : 0
-                  }
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(99, parseInt(values?.value));
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_rep: limitedValue
-                        } : item
-                      ))
-                    }));
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-            <Col xs={3}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>무게</span>
-                <NumericFormat
-                  min={1}
-                  max={999}
-                  minLength={1}
-                  maxLength={6}
-                  suffix={" kg"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_kg-${i}`}
-                  name={`exercise_kg-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  fixedDecimalScale={true}
-                  disabled={
-                    OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
-                  }
-                  value={
-                    OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
-                    ? Math.min(999, OBJECT?.exercise_section[i]?.exercise_kg)
-                    : 0
-                  }
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(999, parseInt(values?.value));
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_kg: limitedValue
-                        } : item
-                      ))
-                    }));
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-            <Col xs={3}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>휴식</span>
-                <NumericFormat
-                  min={1}
-                  max={999}
-                  minLength={1}
-                  maxLength={7}
-                  suffix={" min"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  className={"form-control"}
-                  id={`exercise_rest-${i}`}
-                  name={`exercise_rest-${i}`}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  disabled={
-                    OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
-                  }
-                  value={
-                    OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
-                    ? Math.min(999, OBJECT?.exercise_section[i]?.exercise_rest)
-                    : 0
-                  }
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(999, parseInt(values?.value));
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_rest: limitedValue
-                        } : item
-                      ))
-                    }));
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>볼륨</span>
+                }}
+              >
+                {exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title?.map((title, idx) => (
+                  <option key={idx} value={idx}>
+                    {title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={3}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>세트</span>
+              <NumericFormat
+                min={1}
+                max={99}
+                minLength={1}
+                maxLength={6}
+                suffix={" set"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                id={`exercise_set-${i}`}
+                name={`exercise_set-${i}`}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={false}
+                disabled={
+                  OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
+                }
+                value={
+                  OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
+                  ? Math.min(99, OBJECT?.exercise_section[i]?.exercise_set)
+                  : 0
+                }
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(99, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_set: limitedValue
+                      } : item
+                    ))
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col xs={3}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>횟수</span>
+              <NumericFormat
+                min={1}
+                max={99}
+                minLength={1}
+                maxLength={4}
+                suffix={" 회"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                id={`exercise_rep-${i}`}
+                name={`exercise_rep-${i}`}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={false}
+                disabled={
+                  OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
+                }
+                value={
+                  OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
+                  ? Math.min(99, OBJECT?.exercise_section[i]?.exercise_rep)
+                  : 0
+                }
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(99, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_rep: limitedValue
+                      } : item
+                    ))
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col xs={3}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>무게</span>
+              <NumericFormat
+                min={1}
+                max={999}
+                minLength={1}
+                maxLength={6}
+                suffix={" kg"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                id={`exercise_kg-${i}`}
+                name={`exercise_kg-${i}`}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                disabled={
+                  OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
+                }
+                value={
+                  OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
+                  ? Math.min(999, OBJECT?.exercise_section[i]?.exercise_kg)
+                  : 0
+                }
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_kg: limitedValue
+                      } : item
+                    ))
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col xs={3}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>휴식</span>
+              <NumericFormat
+                min={1}
+                max={999}
+                minLength={1}
+                maxLength={7}
+                suffix={" min"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                id={`exercise_rest-${i}`}
+                name={`exercise_rest-${i}`}
+                allowNegative={false}
+                thousandSeparator={true}
+                disabled={
+                  OBJECT?.exercise_section[i]?.exercise_part_val === "유산소"
+                }
+                value={
+                  OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"
+                  ? Math.min(999, OBJECT?.exercise_section[i]?.exercise_rest)
+                  : 0
+                }
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_rest: limitedValue
+                      } : item
+                    ))
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>볼륨</span>
+              <NumericFormat
+                min={1}
+                max={999999999}
+                minLength={1}
+                maxLength={13}
+                suffix={" vol"}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                id={`exercise_volume-${i}`}
+                name={`exercise_volume-${i}`}
+                disabled={true}
+                allowNegative={false}
+                fixedDecimalScale={true}
+                thousandSeparator={true}
+                value={Math.min(999999999, OBJECT?.exercise_section[i]?.exercise_volume)}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>유산소</span>
+              <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
+                className={"form-control"}
+                id={"exercise_cardio"}
+                name={"exercise_cardio"}
+                clockIcon={null}
+                disableClock={false}
+                disabled={OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"}
+                value={OBJECT?.exercise_section[i]?.exercise_part_val === "유산소" ? OBJECT?.exercise_section[i]?.exercise_cardio : "00:00"}
+                onChange={(e) => {
+                  const timeValue = e ? e.toString() : "00:00";
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_section: prev.exercise_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        exercise_cardio: timeValue
+                      } : item
+                    ))
+                  }));
+                }}
+              ></TimePicker>
+            </div>
+          </Col>
+        </Row>
+      </React.Fragment>
+    );
+    const tableSection = () => (
+      <React.Fragment>
+        {Array.from({length: COUNT.sectionCnt}, (_, i) => tableFragment(i))}
+      </React.Fragment>
+    );
+    const tableRemain = () => (
+      <React.Fragment>
+        <Row>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>총 볼륨</span>
                 <NumericFormat
                   min={1}
                   max={999999999}
@@ -470,130 +528,64 @@ export const ExerciseSave = () => {
                   suffix={" vol"}
                   datatype={"number"}
                   displayType={"input"}
+                  id={"exercise_total_volume"}
+                  name={"exercise_total_volume"}
                   className={"form-control"}
-                  id={`exercise_volume-${i}`}
-                  name={`exercise_volume-${i}`}
                   disabled={true}
                   allowNegative={false}
+                  thousandSeparator={true}
                   fixedDecimalScale={true}
-                  thousandSeparator={true}
-                  value={Math.min(999999999, OBJECT?.exercise_section[i]?.exercise_volume)}
+                  value={Math.min(9999999999, OBJECT?.exercise_total_volume)}
                 ></NumericFormat>
-              </div>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>유산소</span>
-                <TimePicker
-                  locale={"ko"}
-                  format={"HH:mm"}
-                  className={"form-control"}
-                  id={"exercise_cardio"}
-                  name={"exercise_cardio"}
-                  clockIcon={null}
-                  disableClock={false}
-                  disabled={OBJECT?.exercise_section[i]?.exercise_part_val !== "유산소"}
-                  value={OBJECT?.exercise_section[i]?.exercise_part_val === "유산소" ? OBJECT?.exercise_section[i]?.exercise_cardio : "00:00"}
-                  onChange={(e) => {
-                    const timeValue = e ? e.toString() : "00:00";
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_section: prev.exercise_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          exercise_cardio: timeValue
-                        } : item
-                      ))
-                    }));
-                  }}
-                ></TimePicker>
-              </div>
-            </Col>
-          </Row>
-        </React.Fragment>
-      );
-    };
-    function tableSection () {
-      return (
-        <React.Fragment>
-          {Array.from({length: COUNT.sectionCnt}, (_, i) => tableFragment(i))}
-        </React.Fragment>
-      );
-    };
-    function tableRemain () {
-      return (
-        <React.Fragment>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>총 볼륨</span>
-                  <NumericFormat
-                    min={1}
-                    max={999999999}
-                    minLength={1}
-                    maxLength={13}
-                    suffix={" vol"}
-                    datatype={"number"}
-                    displayType={"input"}
-                    id={"exercise_total_volume"}
-                    name={"exercise_total_volume"}
-                    className={"form-control"}
-                    disabled={true}
-                    allowNegative={false}
-                    thousandSeparator={true}
-                    fixedDecimalScale={true}
-                    value={Math.min(9999999999, OBJECT?.exercise_total_volume)}
-                  ></NumericFormat>
-              </div>
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>총 유산소 시간</span>
-                <TimePicker
-                  locale={"ko"}
-                  format={"HH:mm"}
-                  id={"exercise_total_cardio"}
-                  name={"exercise_total_cardio"}
-                  className={"form-control"}
-                  disabled={true}
-                  clockIcon={null}
-                  disableClock={false}
-                  value={OBJECT?.exercise_total_cardio}
-                ></TimePicker>
-              </div>
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>체중</span>
-                <NumericFormat
-                  min={1}
-                  max={9999}
-                  minLength={1}
-                  maxLength={7}
-                  suffix={" kg"}
-                  datatype={"number"}
-                  displayType={"input"}
-                  id={"exercise_body_weight"}
-                  name={"exercise_body_weight"}
-                  className={"form-control"}
-                  disabled={false}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  value={OBJECT?.exercise_body_weight}
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(9999, parseInt(values?.value));
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      exercise_body_weight: limitedValue
-                    }));
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-          </Row>
-        </React.Fragment>
-      );
-    };
+            </div>
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>총 유산소 시간</span>
+              <TimePicker
+                locale={"ko"}
+                format={"HH:mm"}
+                id={"exercise_total_cardio"}
+                name={"exercise_total_cardio"}
+                className={"form-control"}
+                disabled={true}
+                clockIcon={null}
+                disableClock={false}
+                value={OBJECT?.exercise_total_cardio}
+              ></TimePicker>
+            </div>
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>체중</span>
+              <NumericFormat
+                min={1}
+                max={9999}
+                minLength={1}
+                maxLength={7}
+                suffix={" kg"}
+                datatype={"number"}
+                displayType={"input"}
+                id={"exercise_body_weight"}
+                name={"exercise_body_weight"}
+                className={"form-control"}
+                disabled={false}
+                allowNegative={false}
+                thousandSeparator={true}
+                value={OBJECT?.exercise_body_weight}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(9999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    exercise_body_weight: limitedValue
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+        </Row>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"save-wrapper"}>

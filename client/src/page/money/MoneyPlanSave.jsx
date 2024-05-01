@@ -109,8 +109,8 @@ export const MoneyPlanSave = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function tableSection() {
-      return (
+    const tableSection = () => (
+      <React.Fragment>
         <Row>
           <Col lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
@@ -173,8 +173,8 @@ export const MoneyPlanSave = () => {
             </div>
           </Col>
         </Row>
-      );
-    };
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"save-wrapper"}>

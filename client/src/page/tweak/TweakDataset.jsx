@@ -116,7 +116,7 @@ export const TweakDataset = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function addPart() {
+    const addPart = () => (
       setOBJECT((prev) => ({
         ...prev,
         customer_dataset: {
@@ -128,43 +128,39 @@ export const TweakDataset = () => {
             }
           ]
         }
-      }));
-    };
-    function renamePart(index) {
-      return function() {
-        const newPart = prompt("새로운 이름을 입력하세요.");
-        if (newPart) {
-          setOBJECT((prev) => ({
-            ...prev,
-            customer_dataset: {
-              ...prev.customer_dataset,
-              [dataType]: [
-                ...prev.customer_dataset[dataType]?.slice(0, index), {
-                  ...prev.customer_dataset[dataType]?.[index],
-                  [`${dataType}_part`]: newPart
-                },
-                ...prev.customer_dataset[dataType]?.slice(index + 1)
-              ]
-            }
-          }));
-        }
-      };
-    };
-    function rmPart(index) {
-      return function() {
+      }))
+    );
+    const renamePart = (index) => (() => {
+      const newPart = prompt("새로운 이름을 입력하세요.");
+      if (newPart) {
         setOBJECT((prev) => ({
           ...prev,
           customer_dataset: {
             ...prev.customer_dataset,
             [dataType]: [
-              ...prev.customer_dataset[dataType].slice(0, index),
-              ...prev.customer_dataset[dataType].slice(index + 1)
+              ...prev.customer_dataset[dataType]?.slice(0, index), {
+                ...prev.customer_dataset[dataType]?.[index],
+                [`${dataType}_part`]: newPart
+              },
+              ...prev.customer_dataset[dataType]?.slice(index + 1)
             ]
           }
         }));
-      };
-    };
-    function addTitle () {
+      }
+    });
+    const rmPart = (index) => (() => {
+      setOBJECT((prev) => ({
+        ...prev,
+        customer_dataset: {
+          ...prev.customer_dataset,
+          [dataType]: [
+            ...prev.customer_dataset[dataType]?.slice(0, index),
+            ...prev.customer_dataset[dataType]?.slice(index + 1)
+          ]
+        }
+      }));
+    });
+    const addTitle = () => (
       setOBJECT((prev) => ({
         ...prev,
         customer_dataset: {
@@ -180,34 +176,11 @@ export const TweakDataset = () => {
             ...prev.customer_dataset[dataType]?.slice(idx.partIdx + 1)
           ]
         }
-      }));
-    };
-    function renameTitle(index) {
-      return function() {
-        const newTitle = prompt("새로운 이름을 입력하세요.");
-        if (newTitle) {
-          setOBJECT((prev) => ({
-            ...prev,
-            customer_dataset: {
-              ...prev.customer_dataset,
-              [dataType]: [
-                ...prev.customer_dataset[dataType]?.slice(0, idx.partIdx), {
-                  ...prev.customer_dataset[dataType]?.[idx.partIdx],
-                  [`${dataType}_title`]: [
-                    ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
-                    newTitle,
-                    ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
-                  ]
-                },
-                ...prev.customer_dataset[dataType]?.slice(idx.partIdx + 1)
-              ]
-            }
-          }));
-        }
-      };
-    };
-    function rmTitle(index) {
-      return function() {
+      }))
+    );
+    const renameTitle = (index) => (() => {
+      const newTitle = prompt("새로운 이름을 입력하세요.");
+      if (newTitle) {
         setOBJECT((prev) => ({
           ...prev,
           customer_dataset: {
@@ -217,6 +190,7 @@ export const TweakDataset = () => {
                 ...prev.customer_dataset[dataType]?.[idx.partIdx],
                 [`${dataType}_title`]: [
                   ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                  newTitle,
                   ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
                 ]
               },
@@ -224,189 +198,201 @@ export const TweakDataset = () => {
             ]
           }
         }));
-      };
-    };
-    function tableSection1 () {
-      return (
-        <React.Fragment>
-          <Table hover border={1}>
-            <thead>
-              <tr>
-                <th className={"table-thead"}>
+      }
+    });
+    const rmTitle = (index) => (() => {
+      setOBJECT((prev) => ({
+        ...prev,
+        customer_dataset: {
+          ...prev.customer_dataset,
+          [dataType]: [
+            ...prev.customer_dataset[dataType]?.slice(0, idx.partIdx), {
+              ...prev.customer_dataset[dataType]?.[idx.partIdx],
+              [`${dataType}_title`]: [
+                ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
+              ]
+            },
+            ...prev.customer_dataset[dataType]?.slice(idx.partIdx + 1)
+          ]
+        }
+      }));
+    });
+    const tableSection1 = () => (
+      <React.Fragment>
+        <Table hover border={1}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>
+                <Row>
+                  <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
+                    <div>
+                      Dataset
+                    </div>
+                  </Col>
+                </Row>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {datasetArray.map((item, index) => (
+              <tr
+                key={index}
+                className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
+                style={{border: "1px solid #dee2e6"}}
+                onClick={() => {
+                  setDataType(item);
+                  setSelectedIdx((prev) => ({
+                    ...prev,
+                    sectionIdx: index,
+                    partIdx: 1,
+                    titleIdx: 1
+                  }));
+                  setIdx((prev) => ({
+                    ...prev,
+                    partIdx: 1,
+                    titleIdx: 1
+                  }));
+                }}
+              >
+                <td>
                   <Row>
-                    <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                      <div>
-                        Dataset
+                    <Col lg={12} md={12} sm={12} xs={12} className={"p-5"}>
+                      <div className={"dataset-title"}>
+                        {item}
                       </div>
                     </Col>
                   </Row>
-                </th>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {datasetArray.map((item, index) => (
-                <tr
-                  key={index}
-                  className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
-                  style={{border: "1px solid #dee2e6"}}
-                  onClick={() => {
-                    setDataType(item);
-                    setSelectedIdx((prev) => ({
-                      ...prev,
-                      sectionIdx: index,
-                      partIdx: 1,
-                      titleIdx: 1
-                    }));
-                    setIdx((prev) => ({
-                      ...prev,
-                      partIdx: 1,
-                      titleIdx: 1
-                    }));
-                  }}
-                >
-                  <td>
-                    <Row>
-                      <Col lg={12} md={12} sm={12} xs={12} className={"p-5"}>
-                        <div className={"dataset-title"}>
-                          {item}
-                        </div>
-                      </Col>
-                    </Row>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
-    };
-    function tableSection2 () {
-      return (
-        <React.Fragment>
-          <Table hover border={1}>
-            <thead>
-              <tr>
-                <th className={"table-thead"}>
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
+    const tableSection2 = () => (
+      <React.Fragment>
+        <Table hover border={1}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>
+                <Row>
+                  <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
+                    <div>
+                      Part
+                    </div>
+                  </Col>
+                  <Col lg={3} md={3} sm={3} xs={3} className={"d-center"}>
+                    <div className={"dataset-add"} onClick={addPart}>
+                      +
+                    </div>
+                  </Col>
+                </Row>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
+              <tr key={index}
+                className={selectedIdx.partIdx === index ? "table-secondary" : ""}
+                style={{border: "1px solid #dee2e6"}}
+                onClick={() => {
+                  setSelectedIdx((prev) => ({
+                    ...prev,
+                    partIdx: index
+                  }));
+                }}
+              >
+                <td>
                   <Row>
-                    <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                      <div>
-                        Part
+                    <Col xs={7} className={"p-5 d-center"}>
+                      <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
+                        ...prev,
+                        partIdx: index
+                      })))}>
+                        {item[`${dataType}_part`]}
                       </div>
                     </Col>
-                    <Col lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                      <div className={"dataset-add"} onClick={addPart}>
-                        +
+                    <Col xs={3} className={"p-5 d-center"}>
+                      <div className={"dataset-rename"} onClick={renamePart(index)}>
+                        re
+                      </div>
+                    </Col>
+                    <Col xs={2} className={"p-5 d-center"}>
+                      <div className={"dataset-delete"} onClick={rmPart(index)}>
+                        x
                       </div>
                     </Col>
                   </Row>
-                </th>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
-                <tr key={index}
-                  className={selectedIdx.partIdx === index ? "table-secondary" : ""}
-                  style={{border: "1px solid #dee2e6"}}
-                  onClick={() => {
-                    setSelectedIdx((prev) => ({
-                      ...prev,
-                      partIdx: index
-                    }));
-                  }}
-                >
-                  <td>
-                    <Row>
-                      <Col xs={7} className={"p-5 d-center"}>
-                        <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
-                          ...prev,
-                          partIdx: index
-                        })))}>
-                          {item[`${dataType}_part`]}
-                        </div>
-                      </Col>
-                      <Col xs={3} className={"p-5 d-center"}>
-                        <div className={"dataset-rename"} onClick={renamePart(index)}>
-                          re
-                        </div>
-                      </Col>
-                      <Col xs={2} className={"p-5 d-center"}>
-                        <div className={"dataset-delete"} onClick={rmPart(index)}>
-                          x
-                        </div>
-                      </Col>
-                    </Row>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
-    };
-    function tableSection3 () {
-      return (
-        <React.Fragment>
-          <Table hover border={1}>
-            <thead>
-              <tr>
-                <th className={"table-thead"}>
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
+    const tableSection3 = () => (
+      <React.Fragment>
+        <Table hover border={1}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>
+                <Row>
+                  <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
+                    <div>
+                      Title
+                    </div>
+                  </Col>
+                  <Col lg={3} md={3} sm={3} xs={3} className={"d-center"}>
+                    <div className={"dataset-add"} onClick={addTitle}>
+                      +
+                    </div>
+                  </Col>
+                </Row>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+              <tr
+                key={index}
+                className={selectedIdx.titleIdx === index ? "table-secondary" : ""}
+                style={{border: "1px solid #dee2e6"}}
+                onClick={() => {
+                  setSelectedIdx((prev) => ({
+                    ...prev,
+                    titleIdx: index
+                  }));
+                }}
+              >
+                <td>
                   <Row>
-                    <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                      <div>
-                        Title
+                    <Col xs={7} className={"p-5 d-center"}>
+                      <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
+                        ...prev,
+                        titleIdx: index
+                      })))}>
+                        {item}
                       </div>
                     </Col>
-                    <Col lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                      <div className={"dataset-add"} onClick={addTitle}>
-                        +
+                    <Col xs={3} className={"p-5 d-center"}>
+                      <div className={"dataset-rename"} onClick={renameTitle(index)}>
+                        re
+                      </div>
+                    </Col>
+                    <Col xs={2} className={"p-5 d-center"}>
+                      <div className={"dataset-delete"} onClick={rmTitle(index)}>
+                        x
                       </div>
                     </Col>
                   </Row>
-                </th>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
-                <tr
-                  key={index}
-                  className={selectedIdx.titleIdx === index ? "table-secondary" : ""}
-                  style={{border: "1px solid #dee2e6"}}
-                  onClick={() => {
-                    setSelectedIdx((prev) => ({
-                      ...prev,
-                      titleIdx: index
-                    }));
-                  }}
-                >
-                  <td>
-                    <Row>
-                      <Col xs={7} className={"p-5 d-center"}>
-                        <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
-                          ...prev,
-                          titleIdx: index
-                        })))}>
-                          {item}
-                        </div>
-                      </Col>
-                      <Col xs={3} className={"p-5 d-center"}>
-                        <div className={"dataset-rename"} onClick={renameTitle(index)}>
-                          re
-                        </div>
-                      </Col>
-                      <Col xs={2} className={"p-5 d-center"}>
-                        <div className={"dataset-delete"} onClick={rmTitle(index)}>
-                          x
-                        </div>
-                      </Col>
-                    </Row>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
-    };
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"dataset-wrapper"}>
@@ -429,7 +415,7 @@ export const TweakDataset = () => {
 
   // 4. button ------------------------------------------------------------------------------------>
   const buttonDefault = () => {
-    function confirmDefault() {
+    const confirmDefault = () => {
       const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
       let defaultArray = [];

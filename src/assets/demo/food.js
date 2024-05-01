@@ -28,7 +28,7 @@ const foodArray = [
   },
 ];
 
-// function --------------------------------------------------------------------------------------->
+// logic ------------------------------------------------------------------------------------------>
 const randomNumber = (data) => {
   return Math.floor(Math.random() * data);
 }
@@ -109,7 +109,7 @@ for (let i = 1; i <= 100; i++) {
 };
 
 // Create a new document in the collection.
-async function insertDataAndRemoveDuplicates() {
+const insertDataAndRemoveDuplicates = async () => {
   try {
     const collection = db.getCollection('food')
 

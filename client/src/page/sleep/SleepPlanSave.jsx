@@ -112,8 +112,8 @@ export const SleepPlanSave = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function tableSection () {
-      return (
+    const tableSection = () => (
+      <React.Fragment>
         <Row className={"d-center"}>
           <Col lg={12} md={12} sm={12} xs={12}>
             <div className={"input-group"}>
@@ -176,8 +176,8 @@ export const SleepPlanSave = () => {
             </div>
           </Col>
         </Row>
-      );
-    };
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"save-wrapper"}>

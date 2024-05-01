@@ -139,7 +139,7 @@ export const MoneySave = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    function handlerCount(e) {
+    const handlerCount = (e) => {
       let newCount = parseInt(e, 10);
       let defaultSection = {
         money_part_idx: 0,
@@ -169,226 +169,218 @@ export const MoneySave = () => {
         }));
       }
     };
-    function countNode () {
-      return (
-        <React.Fragment>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>섹션 갯수</span>
-            <NumericFormat
-              min={0}
-              max={10}
-              minLength={1}
-              maxLength={2}
-              datatype={"number"}
-              displayType={"input"}
-              id={"sectionCnt"}
-              name={"sectionCnt"}
-              className={"form-control"}
-              disabled={false}
-              thousandSeparator={false}
-              fixedDecimalScale={true}
-              value={Math.min(10, COUNT?.sectionCnt)}
-              onValueChange={(values) => {
-                const limitedValue = Math.min(10, parseInt(values?.value));
-                handlerCount(limitedValue.toString());
-              }}
-            ></NumericFormat>
-          </div>
-        </React.Fragment>
-      );
-    };
-    function tableFragment (i) {
-      return (
-        <React.Fragment key={i}>
-          <Row>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>파트</span>
-                <select
-                  id={`money_part_idx-${i}`}
-                  className={"form-select"}
-                  value={OBJECT?.money_section[i]?.money_part_idx}
-                  onChange={(e) => {
-                    const newIndex = parseInt(e.target.value);
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_section: prev.money_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          money_part_idx: newIndex,
-                          money_part_val: moneyArray[newIndex]?.money_part,
-                          money_title_idx: 0,
-                          money_title_val: moneyArray[newIndex]?.money_title[0],
-                        } : item
-                      ))
-                    }));
-                  }}
-                >
-                  {moneyArray?.map((item, idx) => (
-                    <option key={idx} value={idx}>
-                      {item.money_part}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>제목</span>
-                <select
-                  id={`money_title_idx-${i}`}
-                  className={"form-select"}
-                  value={OBJECT?.money_section[i]?.money_title_idx}
-                  onChange={(e) => {
-                    const newTitleIdx = parseInt(e.target.value);
-                    const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
-                    if (newTitleIdx >= 0 && newTitleVal) {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        money_section: prev.money_section.map((item, idx) => (
-                          idx === i ? {
-                            ...item,
-                            money_title_idx: newTitleIdx,
-                            money_title_val: newTitleVal,
-                          } : item
-                        ))
-                      }));
-                    }
-                  }}
-                >
-                  {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
-                    <option key={idx} value={idx}>
-                      {title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>금액</span>
-                <NumericFormat
-                  min={0}
-                  max={9999999999}
-                  minLength={1}
-                  maxLength={14}
-                  prefix={"₩  "}
-                  datatype={"number"}
-                  displayType={"input"}
-                  id={`money_amount-${i}`}
-                  name={`money_amount-${i}`}
-                  className={`form-control ${OBJECT?.money_section[i]?.money_part_val === "수입" ? "text-primary" : "text-danger"}`}
-                  disabled={false}
-                  allowNegative={false}
-                  thousandSeparator={true}
-                  fixedDecimalScale={true}
-                  value={OBJECT?.money_section[i]?.money_amount}
-                  onValueChange={(values) => {
-                    const limitedValue = Math.min(9999999999, parseInt(values?.value));
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_section: prev.money_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          money_amount: limitedValue
-                        } : item
-                      ))
-                    }));
-                  }}
-                ></NumericFormat>
-              </div>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>메모</span>
-                <InputMask
-                  mask={""}
-                  placeholder={"메모"}
-                  id={`money_content-${i}`}
-                  name={`money_content-${i}`}
-                  className={"form-control"}
-                  maskChar={null}
-                  value={OBJECT?.money_section[i]?.money_content}
-                  onChange={(e) => {
-                    const limitedContent = e.target.value.slice(0, 100);
-                    setOBJECT((prev) =>({
-                      ...prev,
-                      money_section: prev.money_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          money_content: limitedContent
-                        } : item
-                      ))
-                    }));
-                  }}
-                ></InputMask>
-              </div>
-            </Col>
-          </Row>
-        </React.Fragment>
-      );
-    };
-    function tableSection () {
-      return (
-        <React.Fragment>
-          {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
-        </React.Fragment>
-      );
-    };
-    function tableRemain () {
-      return (
-        <Row className={"d-center"}>
+    const countNode = () => (
+      <React.Fragment>
+        <div className={"input-group"}>
+          <span className={"input-group-text"}>섹션 갯수</span>
+          <NumericFormat
+            min={0}
+            max={10}
+            minLength={1}
+            maxLength={2}
+            datatype={"number"}
+            displayType={"input"}
+            id={"sectionCnt"}
+            name={"sectionCnt"}
+            className={"form-control"}
+            disabled={false}
+            thousandSeparator={false}
+            fixedDecimalScale={true}
+            value={Math.min(10, COUNT?.sectionCnt)}
+            onValueChange={(values) => {
+              const limitedValue = Math.min(10, parseInt(values?.value));
+              handlerCount(limitedValue.toString());
+            }}
+          ></NumericFormat>
+        </div>
+      </React.Fragment>
+    );
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Row>
           <Col lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
-              <span className={"input-group-text"}>총수입</span>
-              <NumericFormat
-                min={0}
-                max={9999999999}
-                minLength={1}
-                maxLength={14}
-                prefix={"₩  "}
-                datatype={"number"}
-                displayType={"input"}
-                id={"money_total_in"}
-                name={"money_total_in"}
-                className={`form-control text-primary`}
-                readOnly={true}
-                disabled={true}
-                allowNegative={false}
-                thousandSeparator={true}
-                fixedDecimalScale={true}
-                value={Math.min(9999999999, OBJECT?.money_total_in)}
-              ></NumericFormat>
+              <span className={"input-group-text"}>파트</span>
+              <select
+                id={`money_part_idx-${i}`}
+                className={"form-select"}
+                value={OBJECT?.money_section[i]?.money_part_idx}
+                onChange={(e) => {
+                  const newIndex = parseInt(e.target.value);
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    money_section: prev.money_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        money_part_idx: newIndex,
+                        money_part_val: moneyArray[newIndex]?.money_part,
+                        money_title_idx: 0,
+                        money_title_val: moneyArray[newIndex]?.money_title[0],
+                      } : item
+                    ))
+                  }));
+                }}
+              >
+                {moneyArray?.map((item, idx) => (
+                  <option key={idx} value={idx}>
+                    {item.money_part}
+                  </option>
+                ))}
+              </select>
             </div>
           </Col>
           <Col lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
-              <span className={"input-group-text"}>총지출</span>
-              <NumericFormat
-                min={0}
-                max={9999999999}
-                minLength={1}
-                maxLength={14}
-                prefix={"₩  "}
-                datatype={"number"}
-                displayType={"input"}
-                id={"money_total_out"}
-                name={"money_total_out"}
-                className={`form-control text-danger`}
-                readOnly={true}
-                disabled={true}
-                allowNegative={false}
-                thousandSeparator={true}
-                fixedDecimalScale={true}
-                value={Math.min(9999999999, OBJECT?.money_total_out)}
-              ></NumericFormat>
+              <span className={"input-group-text"}>제목</span>
+              <select
+                id={`money_title_idx-${i}`}
+                className={"form-select"}
+                value={OBJECT?.money_section[i]?.money_title_idx}
+                onChange={(e) => {
+                  const newTitleIdx = parseInt(e.target.value);
+                  const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                  if (newTitleIdx >= 0 && newTitleVal) {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section.map((item, idx) => (
+                        idx === i ? {
+                          ...item,
+                          money_title_idx: newTitleIdx,
+                          money_title_val: newTitleVal,
+                        } : item
+                      ))
+                    }));
+                  }
+                }}
+              >
+                {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
+                  <option key={idx} value={idx}>
+                    {title}
+                  </option>
+                ))}
+              </select>
             </div>
           </Col>
         </Row>
-      );
-    };
+        <Row>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>금액</span>
+              <NumericFormat
+                min={0}
+                max={9999999999}
+                minLength={1}
+                maxLength={14}
+                prefix={"₩  "}
+                datatype={"number"}
+                displayType={"input"}
+                id={`money_amount-${i}`}
+                name={`money_amount-${i}`}
+                className={`form-control ${OBJECT?.money_section[i]?.money_part_val === "수입" ? "text-primary" : "text-danger"}`}
+                disabled={false}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={OBJECT?.money_section[i]?.money_amount}
+                onValueChange={(values) => {
+                  const limitedValue = Math.min(9999999999, parseInt(values?.value));
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    money_section: prev.money_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        money_amount: limitedValue
+                      } : item
+                    ))
+                  }));
+                }}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>메모</span>
+              <InputMask
+                mask={""}
+                placeholder={"메모"}
+                id={`money_content-${i}`}
+                name={`money_content-${i}`}
+                className={"form-control"}
+                maskChar={null}
+                value={OBJECT?.money_section[i]?.money_content}
+                onChange={(e) => {
+                  const limitedContent = e.target.value.slice(0, 100);
+                  setOBJECT((prev) =>({
+                    ...prev,
+                    money_section: prev.money_section.map((item, idx) => (
+                      idx === i ? {
+                        ...item,
+                        money_content: limitedContent
+                      } : item
+                    ))
+                  }));
+                }}
+              ></InputMask>
+            </div>
+          </Col>
+        </Row>
+      </React.Fragment>
+    );
+    const tableSection = () => (
+      <React.Fragment>
+        {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
+      </React.Fragment>
+    );
+    const tableRemain = () => (
+      <Row className={"d-center"}>
+        <Col lg={6} md={6} sm={6} xs={6}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>총수입</span>
+            <NumericFormat
+              min={0}
+              max={9999999999}
+              minLength={1}
+              maxLength={14}
+              prefix={"₩  "}
+              datatype={"number"}
+              displayType={"input"}
+              id={"money_total_in"}
+              name={"money_total_in"}
+              className={`form-control text-primary`}
+              readOnly={true}
+              disabled={true}
+              allowNegative={false}
+              thousandSeparator={true}
+              fixedDecimalScale={true}
+              value={Math.min(9999999999, OBJECT?.money_total_in)}
+            ></NumericFormat>
+          </div>
+        </Col>
+        <Col lg={6} md={6} sm={6} xs={6}>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>총지출</span>
+            <NumericFormat
+              min={0}
+              max={9999999999}
+              minLength={1}
+              maxLength={14}
+              prefix={"₩  "}
+              datatype={"number"}
+              displayType={"input"}
+              id={"money_total_out"}
+              name={"money_total_out"}
+              className={`form-control text-danger`}
+              readOnly={true}
+              disabled={true}
+              allowNegative={false}
+              thousandSeparator={true}
+              fixedDecimalScale={true}
+              value={Math.min(9999999999, OBJECT?.money_total_out)}
+            ></NumericFormat>
+          </div>
+        </Col>
+      </Row>
+    );
     return (
       <React.Fragment>
         <div className={"save-wrapper"}>

@@ -68,105 +68,99 @@ export const DiaryList = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const formatDate = (date) => {
-      return moment(date).format("YYYY-MM-DD");
-    };
+    const formatDate = (date) => (
+      moment(date).format("YYYY-MM-DD")
+    );
     const dateInRange = (date, startDt, endDt) => {
       const currDate = formatDate(date);
       return currDate >= startDt && currDate <= endDt;
     };
-    const activeLine = (diaryForDates) => {
-      return (
-        <React.Fragment>
-          {diaryForDates?.map((diary) => (
-            diary.diary_section.map((section) => (
-              <div key={diary._id} className={"calendar-filled"}
-                style={{
-                  backgroundColor: section.diary_color,
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  SEND.id = diary._id;
-                  SEND.section_id = section._id;
-                  SEND.startDt = diary.diary_startDt;
-                  SEND.endDt = diary.diary_endDt;
-                  navParam(SEND.toDetail, {
-                    state: SEND
-                  });
-                }}
-              >
-                <span className={"calendar-category"}>{section.diary_title}</span>
-              </div>
-            ))
-          ))}
-        </React.Fragment>
-      );
-    };
-    const unActiveLine = (diaryForDates) => {
-      return (
-        <React.Fragment>
-          {diaryForDates?.map((diary) => (
-            diary.diary_section.map((section) => (
-              <div key={diary._id} className={"calendar-unfilled"}>
-                <span className={"calendar-category"}>{section.diary_title}</span>
-              </div>
-            ))
-          ))}
-        </React.Fragment>
-      );
-    };
-    const tableSection = () => {
-      return (
-        <React.Fragment>
-          <Calendar
-            value={new Date()}
-            showNavigation={true}
-            showNeighboringMonth={true}
-            showDoubleView={false}
-            prevLabel={<div><i className={"bx bxs-left-arrow"}></i></div>}
-            nextLabel={<i className={"bx bxs-right-arrow"}></i>}
-            prev2Label={null}
-            next2Label={null}
-            formatDay={(locale, date) => (moment(date).format("D"))}
-            formatWeekday={(locale, date) => (moment(date).format("D"))}
-            formatMonth={(locale, date) => (moment(date).format("MM"))}
-            formatYear={(locale, date) => (moment(date).format("YYYY"))}
-            formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
-            formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
-            // 월화수목금토일 한글로 표시
-            formatShortWeekday={(locale, date) => {
-              const day = moment(date).format("d");
-              const week = ["일", "월", "화", "수", "목", "금", "토"];
-              return week[day];
-            }}
-            view={"month"}
-            onClickDay={(date) => {
-              SEND.id = "";
-              SEND.startDt = formatDate(date);
-              SEND.endDt = formatDate(date);
-              SEND.category = "";
-              SEND.toDetail = "/diary/detail";
-              navParam(SEND.toDetail, {
-                state: SEND
-              });
-            }}
-            tileClassName={({date, view}) => {
-              return "calendar-tile-text";
-            }}
-            tileContent={({date, view}) => {
-              const diaryForDates = OBJECT?.filter((diary) => (
-                dateInRange(date, diary.diary_startDt, diary.diary_endDt)
-              ));
-              return (
-                <React.Fragment>
-                  {diaryForDates.length > 0 ? activeLine(diaryForDates) : unActiveLine(diaryForDates)}
-                </React.Fragment>
-              );
-            }}
-          />
-        </React.Fragment>
-      );
-    };
+    const activeLine = (diaryForDates) => (
+      <React.Fragment>
+        {diaryForDates?.map((diary) => (
+          diary.diary_section.map((section) => (
+            <div key={diary._id} className={"calendar-filled"}
+              style={{
+                backgroundColor: section.diary_color,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                SEND.id = diary._id;
+                SEND.section_id = section._id;
+                SEND.startDt = diary.diary_startDt;
+                SEND.endDt = diary.diary_endDt;
+                navParam(SEND.toDetail, {
+                  state: SEND
+                });
+              }}
+            >
+              <span className={"calendar-category"}>{section.diary_title}</span>
+            </div>
+          ))
+        ))}
+      </React.Fragment>
+    );
+    const unActiveLine = (diaryForDates) => (
+      <React.Fragment>
+        {diaryForDates?.map((diary) => (
+          diary.diary_section.map((section) => (
+            <div key={diary._id} className={"calendar-unfilled"}>
+              <span className={"calendar-category"}>{section.diary_title}</span>
+            </div>
+          ))
+        ))}
+      </React.Fragment>
+    );
+    const tableSection = () => (
+      <React.Fragment>
+        <Calendar
+          value={new Date()}
+          showNavigation={true}
+          showNeighboringMonth={true}
+          showDoubleView={false}
+          prevLabel={<div><i className={"bx bxs-left-arrow"}></i></div>}
+          nextLabel={<i className={"bx bxs-right-arrow"}></i>}
+          prev2Label={null}
+          next2Label={null}
+          formatDay={(locale, date) => (moment(date).format("D"))}
+          formatWeekday={(locale, date) => (moment(date).format("D"))}
+          formatMonth={(locale, date) => (moment(date).format("MM"))}
+          formatYear={(locale, date) => (moment(date).format("YYYY"))}
+          formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
+          formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
+          // 월화수목금토일 한글로 표시
+          formatShortWeekday={(locale, date) => {
+            const day = moment(date).format("d");
+            const week = ["일", "월", "화", "수", "목", "금", "토"];
+            return week[day];
+          }}
+          view={"month"}
+          onClickDay={(date) => {
+            SEND.id = "";
+            SEND.startDt = formatDate(date);
+            SEND.endDt = formatDate(date);
+            SEND.category = "";
+            SEND.toDetail = "/diary/detail";
+            navParam(SEND.toDetail, {
+              state: SEND
+            });
+          }}
+          tileClassName={({date, view}) => {
+            return "calendar-tile-text";
+          }}
+          tileContent={({date, view}) => {
+            const diaryForDates = OBJECT?.filter((diary) => (
+              dateInRange(date, diary.diary_startDt, diary.diary_endDt)
+            ));
+            return (
+              <React.Fragment>
+                {diaryForDates.length > 0 ? activeLine(diaryForDates) : unActiveLine(diaryForDates)}
+              </React.Fragment>
+            );
+          }}
+        />
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"diary-list-wrapper"}>

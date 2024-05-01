@@ -54,7 +54,7 @@ export const CalendarNode = ({
   }, [FILTER.type]);
 
   // 4. calendarType ------------------------------------------------------------------------------>
-  function calendarType() {
+  const calendarType = () => {
 
     let mode;
     let selected;

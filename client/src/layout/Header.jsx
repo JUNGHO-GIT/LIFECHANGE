@@ -30,13 +30,11 @@ export const Header = () => {
 
   // 6-1. button ---------------------------------------------------------------------------------->
   const buttonNode1 = () => {
-    function btnSideBar () {
-      return (
-        <Button type={"button"} size={"sm"} className={"dark-btn"} onClick={toggleSidebar}>
-          Sidebar
-        </Button>
-      );
-    };
+    const btnSideBar = () => (
+      <Button type={"button"} size={"sm"} className={"dark-btn"} onClick={toggleSidebar}>
+        Sidebar
+      </Button>
+    );
     return (
       <React.Fragment>
         <span className={"w-1vw"}></span>
@@ -47,35 +45,29 @@ export const Header = () => {
   };
   // 6-2. button ---------------------------------------------------------------------------------->
   const buttonNode2 = () => {
-    function btnLogIn () {
-      return (
-        <Button size={"sm"} className={"dark-btn"} onClick={() => {
-          navParam("/customer/login");
-        }}>
-          Login
-        </Button>
-      );
-    };
-    function btnSignUp () {
-      return (
-        <Button size={"sm"} className={"dark-btn"} onClick={() => {
-          navParam("/customer/signup");
-        }}>
-          Signup
-        </Button>
-      );
-    };
-    function btnLogOut () {
-      return (
-        <Button size={"sm"} className={"dark-btn"} onClick={() => {
-          sessionStorage.clear();
-          sessionStorage.setItem("customer_id", "false");
-          window.location.reload();
-        }}>
-          Logout
-        </Button>
-      );
-    };
+    const btnLogIn = () => (
+      <Button size={"sm"} className={"dark-btn"} onClick={() => {
+        navParam("/customer/login");
+      }}>
+        Login
+      </Button>
+    );
+    const btnSignUp = () => (
+      <Button size={"sm"} className={"dark-btn"} onClick={() => {
+        navParam("/customer/signup");
+      }}>
+        Signup
+      </Button>
+    );
+    const btnLogOut = () => (
+      <Button size={"sm"} className={"dark-btn"} onClick={() => {
+        sessionStorage.clear();
+        sessionStorage.setItem("customer_id", "false");
+        navParam("/diary/list");
+      }}>
+        Logout
+      </Button>
+    );
     return (
       (!customer_id || customer_id === "false") ? (
         <React.Fragment>
