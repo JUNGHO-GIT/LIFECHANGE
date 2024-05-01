@@ -1,15 +1,14 @@
 // substring.js
 
 export const substring = (str, max) => {
-
   // 1. Small (0 ~ 479px)
   if (window.innerWidth > 0 && window.innerWidth <= 479) {
-    return str.length > 8 ? str.substring(0, 8) + ".." : str;
+    return str.length > 6 ? str.substring(0, 6) + ".." : str;
   }
 
   // 2. Medium (480 ~ 767px)
   else if (window.innerWidth >= 480 && window.innerWidth <= 767) {
-    return str.length > 10 ? str.substring(0, 10) + ".." : str;
+    return str.length > 8 ? str.substring(0, 8) + ".." : str;
   }
 
   // 3. Large (768 ~ 991px)

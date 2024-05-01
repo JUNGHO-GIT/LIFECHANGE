@@ -5,7 +5,6 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {substring} from "../../assets/js/substring.js";
 import {diaryArray} from "../../assets/array/diaryArray.js";
 import {exerciseArray} from "../../assets/array/exerciseArray.js";
 import {foodArray} from "../../assets/array/foodArray.js";
@@ -386,7 +385,7 @@ export const TweakDataset = () => {
                           ...prev,
                           titleIdx: index
                         })))}>
-                          {substring(item, 10)}
+                          {item}
                         </div>
                       </Col>
                       <Col xs={3} className={"p-5 d-center"}>
@@ -415,10 +414,10 @@ export const TweakDataset = () => {
             <Col lg={3} md={3} sm={3} xs={3} className={"pe-0"}>
               {tableSection1()}
             </Col>
-            <Col lg={3} md={3} sm={3} xs={3} className={"ps-0 pe-0"}>
+            <Col lg={4} md={4} sm={4} xs={4} className={"ps-0 pe-0"}>
               {tableSection2()}
             </Col>
-            <Col lg={6} md={6} sm={6} xs={6} className={"ps-0"}>
+            <Col lg={5} md={5} sm={5} xs={5} className={"ps-0"}>
               {(dataType !== "diary" && dataType !== "food" && dataType !== "sleep")
                 && (tableSection3())}
             </Col>

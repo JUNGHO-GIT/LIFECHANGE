@@ -18,7 +18,7 @@ export const SleepDashAvg = () => {
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
   const PATH = location.pathname?.trim()?.toString();
-  const array = ["취침", "수면", "기상"];
+  const array = ["취침", "기상", "수면"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SECTION, set:setSECTION} = useStorage(
@@ -187,7 +187,7 @@ export const SleepDashAvg = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        {["취침", "수면", "기상"]?.map((key, index) => (
+        {["취침", "기상", "수면"].map((key, index) => (
           <div key={index} className={"dash-checkbox flex-column mb-10"}>
             <FormCheck
               inline
