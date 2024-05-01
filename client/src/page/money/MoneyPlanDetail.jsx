@@ -118,7 +118,7 @@ export const MoneyPlanDetail = () => {
                 <th className={"table-thead"}>날짜</th>
                 <th className={"table-thead"}>수입 목표</th>
                 <th className={"table-thead"}>지출 목표</th>
-                <th className={"table-thead"}>X</th>
+                <th className={"table-thead"}>x</th>
               </tr>
             </thead>
             <tbody>

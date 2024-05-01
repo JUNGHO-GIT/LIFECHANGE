@@ -16,7 +16,6 @@ import "react-calendar/dist/Calendar.css";
 import "../assets/css/TimePicker.css";
 import "../assets/css/DayPicker.css";
 import "../assets/css/Calendar.css";
-import "../assets/css/Scroll.css";
 
 import "../assets/css/Header.css";
 import "../assets/css/Loader.css";

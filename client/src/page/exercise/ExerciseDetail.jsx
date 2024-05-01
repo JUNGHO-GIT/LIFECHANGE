@@ -136,7 +136,7 @@ export const ExerciseDetail = () => {
               <th className={"table-thead"}>부위</th>
               <th className={"table-thead"}>종목</th>
               <th className={"table-thead"}>볼륨 or 시간</th>
-              <th className={"table-thead"}>X</th>
+              <th className={"table-thead"}>x</th>
             </tr>
           </thead>
           <tbody>

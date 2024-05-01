@@ -145,7 +145,6 @@ export const FoodPlanSave = () => {
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.endDt}
-                readOnly={true}
                 onClick={() => {
                   setCALENDAR((prev) => ({
                     ...prev,

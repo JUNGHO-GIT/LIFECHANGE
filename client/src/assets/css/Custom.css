@@ -42,11 +42,53 @@ p {
   margin-bottom: 0 !important;
 }
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 2px;
   background: #ccc;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #ccc;
+}
+::-webkit-scrollbar-track:window-inactive {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+}
+::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: #ccc;
+}
+::-webkit-scrollbar-thumb:vertical {
+  background-color: #ccc;
+}
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background-color: #aaa;
+}
+::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: #aaa;
+}
+::-webkit-scrollbar-thumb:horizontal:active {
+  background-color: #999;
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background-color: #999;
 }
 
 /** 0. Media **************************************************************************************/

@@ -1,10 +1,10 @@
 // MoneySave.jsx
 
 import axios from "axios";
+import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
-import InputMask from "react-input-mask";
 import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
@@ -26,7 +26,7 @@ export const MoneySave = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location.pathname?.trim()?.toString();
+  const PATH = location?.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -226,9 +226,9 @@ export const MoneySave = () => {
             maxLength={2}
             datatype={"number"}
             displayType={"input"}
+            className={"form-control"}
             id={"sectionCnt"}
             name={"sectionCnt"}
-            className={"form-control"}
             disabled={false}
             thousandSeparator={false}
             fixedDecimalScale={true}
@@ -249,6 +249,7 @@ export const MoneySave = () => {
               <span className={"input-group-text"}>파트</span>
               <select
                 id={`money_part_idx-${i}`}
+                name={`money_part_idx-${i}`}
                 className={"form-select"}
                 value={OBJECT?.money_section[i]?.money_part_idx}
                 onChange={(e) => {
@@ -280,6 +281,7 @@ export const MoneySave = () => {
               <span className={"input-group-text"}>제목</span>
               <select
                 id={`money_title_idx-${i}`}
+                name={`money_title_idx-${i}`}
                 className={"form-select"}
                 value={OBJECT?.money_section[i]?.money_title_idx}
                 onChange={(e) => {
@@ -374,58 +376,60 @@ export const MoneySave = () => {
     );
     const tableSection = () => (
       <React.Fragment>
-        {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
+        {Array.from({length: COUNT.sectionCnt}, (_, i) => tableFragment(i))}
       </React.Fragment>
     );
     const tableRemain = () => (
-      <Row className={"d-center"}>
-        <Col lg={6} md={6} sm={6} xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>총수입</span>
-            <NumericFormat
-              min={0}
-              max={9999999999}
-              minLength={1}
-              maxLength={14}
-              prefix={"₩  "}
-              datatype={"number"}
-              displayType={"input"}
-              id={"money_total_in"}
-              name={"money_total_in"}
-              className={`form-control text-primary`}
-              readOnly={true}
-              disabled={true}
-              allowNegative={false}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              value={Math.min(9999999999, OBJECT?.money_total_in)}
-            ></NumericFormat>
-          </div>
-        </Col>
-        <Col lg={6} md={6} sm={6} xs={6}>
-          <div className={"input-group"}>
-            <span className={"input-group-text"}>총지출</span>
-            <NumericFormat
-              min={0}
-              max={9999999999}
-              minLength={1}
-              maxLength={14}
-              prefix={"₩  "}
-              datatype={"number"}
-              displayType={"input"}
-              id={"money_total_out"}
-              name={"money_total_out"}
-              className={`form-control text-danger`}
-              readOnly={true}
-              disabled={true}
-              allowNegative={false}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              value={Math.min(9999999999, OBJECT?.money_total_out)}
-            ></NumericFormat>
-          </div>
-        </Col>
-      </Row>
+      <React.Fragment>
+        <Row>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>총수입</span>
+              <NumericFormat
+                min={0}
+                max={9999999999}
+                minLength={1}
+                maxLength={14}
+                prefix={"₩  "}
+                datatype={"number"}
+                displayType={"input"}
+                id={"money_total_in"}
+                name={"money_total_in"}
+                className={`form-control text-primary`}
+                readOnly={true}
+                disabled={true}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={Math.min(9999999999, OBJECT?.money_total_in)}
+              ></NumericFormat>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>총지출</span>
+              <NumericFormat
+                min={0}
+                max={9999999999}
+                minLength={1}
+                maxLength={14}
+                prefix={"₩  "}
+                datatype={"number"}
+                displayType={"input"}
+                id={"money_total_out"}
+                name={"money_total_out"}
+                className={`form-control text-danger`}
+                readOnly={true}
+                disabled={true}
+                allowNegative={false}
+                thousandSeparator={true}
+                fixedDecimalScale={true}
+                value={Math.min(9999999999, OBJECT?.money_total_out)}
+              ></NumericFormat>
+            </div>
+          </Col>
+        </Row>
+      </React.Fragment>
     );
     return (
       <React.Fragment>

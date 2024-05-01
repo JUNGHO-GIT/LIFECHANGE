@@ -118,7 +118,7 @@ export const SleepPlanDetail = () => {
             <th className={"table-thead"}>취침 목표</th>
             <th className={"table-thead"}>기상 목표</th>
             <th className={"table-thead"}>수면 목표</th>
-            <th className={"table-thead"}>X</th>
+            <th className={"table-thead"}>x</th>
           </tr>
         </thead>
         <tbody>
@@ -139,7 +139,7 @@ export const SleepPlanDetail = () => {
     );
     return (
       <React.Fragment>
-        <div className={"detail-wrapper over-x-auto"}>
+        <div className={"detail-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>

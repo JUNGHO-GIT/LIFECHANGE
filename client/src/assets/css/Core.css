@@ -50,9 +50,6 @@ html, body {
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
 }
 .content-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
@@ -60,7 +57,7 @@ html, body {
   height: 80vh;
   border-radius: 0.1rem;
   margin: 0vh 0vw 0vh 0vw;
-  padding: 1vh 0vw 1vh 0vw;
+  padding: 1vh 2vw 1vh 2vw;
   background-color: #fff;
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
 }
@@ -88,27 +85,24 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 58vh;
-  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
 }
 .save-wrapper {
-  border: none;
+  border: 1px solid #dee2e6;
   overflow-x: hidden;
   overflow-y: auto;
   height: 60vh;
-  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
 }
 .detail-wrapper {
-  border: none;
+  border: 1px solid #dee2e6;
   overflow-x: hidden;
   overflow-y: auto;
   height: 68vh;
-  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
@@ -118,7 +112,6 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 68vh;
-  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
@@ -128,7 +121,6 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 74vh;
-  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
@@ -138,7 +130,6 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 61vh;
-  max-width: 95vw;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;

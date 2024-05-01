@@ -29,7 +29,7 @@ export const ExerciseSave = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location?.pathname.trim().toString();
+  const PATH = location?.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SEND, set:setSEND} = useStorage(
@@ -102,7 +102,7 @@ export const ExerciseSave = () => {
     setCOUNT((prev) => ({
       ...prev,
       totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
   })()}, [customer_id, DATE.startDt, DATE.endDt]);
 
@@ -433,9 +433,9 @@ export const ExerciseSave = () => {
                 suffix={" kg"}
                 datatype={"number"}
                 displayType={"input"}
-                className={"form-control"}
                 id={`exercise_kg-${i}`}
                 name={`exercise_kg-${i}`}
+                className={"form-control"}
                 allowNegative={false}
                 thousandSeparator={true}
                 fixedDecimalScale={true}

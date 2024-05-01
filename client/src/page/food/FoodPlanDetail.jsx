@@ -121,7 +121,7 @@ export const FoodPlanDetail = () => {
               <th className={"table-thead"}>탄수화물 목표</th>
               <th className={"table-thead"}>단백질 목표</th>
               <th className={"table-thead"}>지방 목표</th>
-              <th className={"table-thead"}>X</th>
+              <th className={"table-thead"}>x</th>
             </tr>
           </thead>
           <tbody>

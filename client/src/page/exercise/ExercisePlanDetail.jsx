@@ -122,7 +122,7 @@ export const ExercisePlanDetail = () => {
                 <th className={"table-thead"}>볼륨 목표</th>
                 <th className={"table-thead"}>유산소 목표</th>
                 <th className={"table-thead"}>체중 목표</th>
-                <th className={"table-thead"}>X</th>
+                <th className={"table-thead"}>x</th>
               </tr>
             </thead>
             <tbody>

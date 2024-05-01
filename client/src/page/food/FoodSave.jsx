@@ -310,7 +310,7 @@ export const FoodSave = () => {
               <th className={"table-thead"}>fat</th>
               <th className={"table-thead"}>carb</th>
               <th className={"table-thead"}>protein</th>
-              <th className={"table-thead"}>X</th>
+              <th className={"table-thead"}>x</th>
             </tr>
           </thead>
           <tbody>

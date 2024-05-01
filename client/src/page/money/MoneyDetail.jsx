@@ -134,7 +134,7 @@ export const MoneyDetail = () => {
                 <th className={"table-thead"}>항목</th>
                 <th className={"table-thead"}>금액</th>
                 <th className={"table-thead"}>내용</th>
-                <th className={"table-thead"}>X</th>
+                <th className={"table-thead"}>x</th>
               </tr>
             </thead>
             <tbody>

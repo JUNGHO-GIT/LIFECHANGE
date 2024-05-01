@@ -127,7 +127,7 @@ export const SideBar = ({ sidebar, onClose }) => {
             sidBarItem(menu.icon, menu.title, menu.items)
           ))}
         </div>
-        <div className={"btn btn-sm danger-btn"} onClick={() => (
+        <div className={"btn btn-sm danger-btn mt-30"} onClick={() => (
           localStorage.clear()
         )}>
           Clear

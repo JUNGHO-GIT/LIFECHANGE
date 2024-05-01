@@ -87,7 +87,7 @@ export const DateNode = ({
 
   // 닫기 버튼 ------------------------------------------------------------------------------------>
   const closeBtn = (type) => (
-    <span className="d-right fw-700 dayPicker-x-btn" onClick={() => {
+    <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => {
       setCALENDAR((prev) => ({
         ...prev,
         [`cal${type}Open`]: false,
@@ -100,7 +100,7 @@ export const DateNode = ({
   // 달력 본체 ------------------------------------------------------------------------------------>
   const calendar = (type) => (
     <React.Fragment>
-      <h5 className="text-center drag">{type === "Start" ? "시작일" : "종료일"}</h5>
+      <h5 className={"text-center drag"}>{type === "Start" ? "시작일" : "종료일"}</h5>
       <DayPicker
         weekStartsOn={1}
         showOutsideDays={true}
