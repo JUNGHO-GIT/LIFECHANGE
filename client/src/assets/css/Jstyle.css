@@ -4475,6 +4475,11 @@
   cursor: pointer !important;
   caret-color: transparent;
 }
+.drag {
+  cursor: grab !important;
+  caret-color: transparent;
+}
+
 .resize-none {
   resize: none !important;
 }

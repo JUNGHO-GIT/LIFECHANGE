@@ -41,6 +41,13 @@ p {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #ccc;
+}
 
 /** 0. Media **************************************************************************************/
 .form-control {

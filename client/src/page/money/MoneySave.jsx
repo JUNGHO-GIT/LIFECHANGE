@@ -149,7 +149,7 @@ export const MoneySave = () => {
                 mask={"9999-99-99"}
                 id={"diary_startDt"}
                 name={"diary_startDt"}
-                className={"form-control"}
+                className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.startDt}
                 readOnly={true}
@@ -169,7 +169,7 @@ export const MoneySave = () => {
                 mask={"9999-99-99"}
                 id={"diary_endDt"}
                 name={"diary_endDt"}
-                className={"form-control"}
+                className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.endDt}
                 readOnly={true}

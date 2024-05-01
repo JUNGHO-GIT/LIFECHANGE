@@ -7,10 +7,6 @@ import {dataArray} from "../assets/array/dataArray.js";
 import {useStorage} from "../hooks/useStorage.jsx";
 import {Collapse} from "react-bootstrap";
 // @ts-ignore
-import logo1 from "../assets/images/logo1.png";
-// @ts-ignore
-import logo2 from "../assets/images/logo2.png";
-// @ts-ignore
 import logo3 from "../assets/images/logo3.png";
 
 // ------------------------------------------------------------------------------------------------>

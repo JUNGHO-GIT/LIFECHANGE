@@ -17,8 +17,8 @@
   border: 1px;
 }
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
-  background-color: #f0f0f0;
-  color: #0b2730
+  background-color: #0b2730;
+  color: #ffffff;
 }
 .rdp-weeknumber, .rdp-day {
   display: flex;
