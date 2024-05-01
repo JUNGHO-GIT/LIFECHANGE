@@ -95,13 +95,25 @@ export const DateNode = ({
   // 3. return
   return (
     <React.Fragment>
-      {part === "diary" && plan === "" ? (
-        planDate()
-      ) : part !== "diary" && plan === "" ? (
-        realDate()
-      ) : part !== "diary" && plan === "plan" ? (
-        planDate()
-      ) : null}
+      <div className={"date-wrapper"}>
+        {part === "diary" && plan === "" ? (
+          <React.Fragment>
+            {planDate()}
+          </React.Fragment>
+        ) : part === "diary" && plan === "plan" ? (
+          <React.Fragment>
+            {realDate()}
+          </React.Fragment>
+        ) : part !== "diary" && plan === "" ? (
+          <React.Fragment>
+            {realDate()}
+          </React.Fragment>
+        ) : part !== "diary" && plan === "plan" ? (
+          <React.Fragment>
+            {planDate()}
+          </React.Fragment>
+        ) : null}
+      </div>
     </React.Fragment>
   );
 };

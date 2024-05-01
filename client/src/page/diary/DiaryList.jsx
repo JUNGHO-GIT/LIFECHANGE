@@ -66,7 +66,7 @@ export const DiaryList = () => {
     setOBJECT(response.data.result || OBJECT_DEFAULT);
   })()}, [customer_id, DATE.startDt, DATE.endDt]);
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const formatDate = (date) => {
       return moment(date).format("YYYY-MM-DD");
@@ -169,7 +169,7 @@ export const DiaryList = () => {
     };
     return (
       <React.Fragment>
-        <div className={"diary-wrapper"}>
+        <div className={"diary-list-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>
@@ -179,17 +179,15 @@ export const DiaryList = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
-}
+};

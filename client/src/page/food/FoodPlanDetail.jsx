@@ -109,7 +109,7 @@ export const FoodPlanDetail = () => {
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function tableSection() {
       return (
@@ -153,32 +153,28 @@ export const FoodPlanDetail = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonNode = () => {
-    return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-        flowSave={""} navParam={navParam} part={"food"} plan={"plan"} type={"detail"}
-      />
-    );
-  };
+  const buttonNode = () => (
+    <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={""} navParam={navParam} part={"food"} plan={"plan"} type={"detail"}
+    />
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

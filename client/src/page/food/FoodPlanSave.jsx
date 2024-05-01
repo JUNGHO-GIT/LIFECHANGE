@@ -109,19 +109,12 @@ export const FoodPlanSave = () => {
     }
   };
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} part={"food"} plan={"plan"} type={"save"} />
-    );
-  };
-
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function tableSection () {
       return (
         <Row className={"d-center"}>
-          <Col lg={6} md={6} sm={6} xs={6} className={"mb-10"}>
+          <Col lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>칼로리</span>
               <NumericFormat
@@ -249,6 +242,11 @@ export const FoodPlanSave = () => {
     );
   };
 
+  // 5. date -------------------------------------------------------------------------------------->
+  const dateNode = () => (
+    <DateNode DATE={DATE} setDATE={setDATE} part={"food"} plan={"plan"} type={"save"} />
+  );
+
   // 9. button ------------------------------------------------------------------------------------>
   const buttonNode = () => {
   return (
@@ -262,23 +260,21 @@ export const FoodPlanSave = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-10"}>
-                {dateNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {dateNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

@@ -79,7 +79,7 @@ export const PagingNode = ({
 
   return (
     <React.Fragment>
-      <div className={"d-inline-flex"}>
+      <div className={"paging-wrapper d-inline-flex"}>
         {btnPrev()}
         {btnNumber()}
         {btnNext()}

@@ -5,6 +5,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
+import {substring} from "../../assets/js/substring.js";
 import {diaryArray} from "../../assets/array/diaryArray.js";
 import {exerciseArray} from "../../assets/array/exerciseArray.js";
 import {foodArray} from "../../assets/array/foodArray.js";
@@ -230,9 +231,17 @@ export const TweakDataset = () => {
       return (
         <React.Fragment>
           <Table hover border={1}>
-              <thead>
+            <thead>
               <tr>
-                <th className={"table-thead"}>Section</th>
+                <th className={"table-thead"}>
+                  <Row>
+                    <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
+                      <div>
+                        Dataset
+                      </div>
+                    </Col>
+                  </Row>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -259,7 +268,7 @@ export const TweakDataset = () => {
                   <td>
                     <Row>
                       <Col lg={12} md={12} sm={12} xs={12} className={"p-5"}>
-                        <div className={"pointer me-2"}>
+                        <div className={"dataset-title"}>
                           {item}
                         </div>
                       </Col>
@@ -276,57 +285,61 @@ export const TweakDataset = () => {
       return (
         <React.Fragment>
           <Table hover border={1}>
-              <thead>
-                <tr>
-                  <th className={"table-thead"}>Part</th>
-                </tr>
-              </thead>
-              <tbody>
-                {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
-                  <tr key={index}
-                    className={selectedIdx.partIdx === index ? "table-secondary" : ""}
-                    style={{border: "1px solid #dee2e6"}}
-                    onClick={() => {
-                      setSelectedIdx((prev) => ({
-                        ...prev,
-                        partIdx: index
-                      }));
-                    }}
-                  >
-                    <td>
-                      <Row>
-                        <Col xs={7} className={"p-5"}>
-                          <div className={"pointer me-2"} onClick={() => setIdx((prev) => ({
-                            ...prev,
-                            partIdx: index
-                          }))}>
-                            {item[`${dataType}_part`]}
-                          </div>
-                        </Col>
-                        <Col xs={3} className={"p-5"}>
-                          <div className={"pointer d-center text-success"}
-                          onClick={renamePart(index)}>
-                            변경
-                          </div>
-                        </Col>
-                        <Col xs={2} className={"p-5"}>
-                          <div className={"pointer d-center text-danger fw-bolder"}
-                          onClick={rmPart(index)}>
-                            x
-                          </div>
-                        </Col>
-                      </Row>
-                    </td>
-                  </tr>
-                ))}
-                <tr>
-                  <td colSpan={3} className={"d-inline-flex"}>
-                    <div className={"text-center pointer btn btn-sm btn-outline-primary button"} onClick={addPart}>
-                      Add
-                    </div>
+            <thead>
+              <tr>
+                <th className={"table-thead"}>
+                  <Row>
+                    <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
+                      <div>
+                        Part
+                      </div>
+                    </Col>
+                    <Col lg={3} md={3} sm={3} xs={3} className={"d-center"}>
+                      <div className={"dataset-add"} onClick={addPart}>
+                        +
+                      </div>
+                    </Col>
+                  </Row>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
+                <tr key={index}
+                  className={selectedIdx.partIdx === index ? "table-secondary" : ""}
+                  style={{border: "1px solid #dee2e6"}}
+                  onClick={() => {
+                    setSelectedIdx((prev) => ({
+                      ...prev,
+                      partIdx: index
+                    }));
+                  }}
+                >
+                  <td>
+                    <Row>
+                      <Col xs={7} className={"p-5 d-center"}>
+                        <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
+                          ...prev,
+                          partIdx: index
+                        })))}>
+                          {item[`${dataType}_part`]}
+                        </div>
+                      </Col>
+                      <Col xs={3} className={"p-5 d-center"}>
+                        <div className={"dataset-rename"} onClick={renamePart(index)}>
+                          re
+                        </div>
+                      </Col>
+                      <Col xs={2} className={"p-5 d-center"}>
+                        <div className={"dataset-delete"} onClick={rmPart(index)}>
+                          x
+                        </div>
+                      </Col>
+                    </Row>
                   </td>
                 </tr>
-              </tbody>
+              ))}
+            </tbody>
           </Table>
         </React.Fragment>
       );
@@ -335,9 +348,22 @@ export const TweakDataset = () => {
       return (
         <React.Fragment>
           <Table hover border={1}>
-              <thead>
+            <thead>
               <tr>
-                <th className={"table-thead"}>Title</th>
+                <th className={"table-thead"}>
+                  <Row>
+                    <Col lg={9} md={9} sm={9} xs={9} className={"d-center"}>
+                      <div>
+                        Title
+                      </div>
+                    </Col>
+                    <Col lg={3} md={3} sm={3} xs={3} className={"d-center"}>
+                      <div className={"dataset-add"} onClick={addTitle}>
+                        +
+                      </div>
+                    </Col>
+                  </Row>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -355,23 +381,21 @@ export const TweakDataset = () => {
                 >
                   <td>
                     <Row>
-                      <Col xs={7} className={"p-5"}>
-                        <div className={"pointer me-2"} onClick={() => (setIdx((prev) => ({
+                      <Col xs={7} className={"p-5 d-center"}>
+                        <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
                           ...prev,
                           titleIdx: index
                         })))}>
-                          {item}
+                          {substring(item, 10)}
                         </div>
                       </Col>
-                      <Col xs={3} className={"p-5"}>
-                        <div className={"pointer d-center text-success"}
-                        onClick={renameTitle(index)}>
-                          변경
+                      <Col xs={3} className={"p-5 d-center"}>
+                        <div className={"dataset-rename"} onClick={renameTitle(index)}>
+                          re
                         </div>
                       </Col>
-                      <Col xs={2} className={"p-5"}>
-                        <div className={"pointer d-center text-danger fw-bolder"}
-                        onClick={rmTitle(index)}>
+                      <Col xs={2} className={"p-5 d-center"}>
+                        <div className={"dataset-delete"} onClick={rmTitle(index)}>
                           x
                         </div>
                       </Col>
@@ -379,13 +403,6 @@ export const TweakDataset = () => {
                   </td>
                 </tr>
               ))}
-              <tr>
-                <td colSpan={3} className={"d-inline-flex"}>
-                  <p className={"pointer btn btn-sm btn-outline-primary button"} onClick={addTitle}>
-                    Add
-                  </p>
-                </td>
-              </tr>
             </tbody>
           </Table>
         </React.Fragment>
@@ -394,15 +411,16 @@ export const TweakDataset = () => {
     return (
       <React.Fragment>
         <div className={"dataset-wrapper"}>
-          <Row>
-            <Col lg={4} md={4} sm={4} xs={4} className={"pe-0"}>
+          <Row className={"w-100vw"}>
+            <Col lg={3} md={3} sm={3} xs={3} className={"pe-0"}>
               {tableSection1()}
             </Col>
-            <Col lg={4} md={4} sm={4} xs={4} className={"ps-0 pe-0"}>
+            <Col lg={3} md={3} sm={3} xs={3} className={"ps-0 pe-0"}>
               {tableSection2()}
             </Col>
-            <Col lg={4} md={4} sm={4} xs={4} className={"ps-0"}>
-              {(dataType !== "diary") && (dataType !== "food") && (dataType !== "sleep") && (tableSection3())}
+            <Col lg={6} md={6} sm={6} xs={6} className={"ps-0"}>
+              {(dataType !== "diary" && dataType !== "food" && dataType !== "sleep")
+                && (tableSection3())}
             </Col>
           </Row>
         </div>
@@ -463,21 +481,19 @@ export const TweakDataset = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonNode()}
-                <span className={"me-1 d-inline-flex"}>{buttonDefault()}</span>
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonNode()}
+              <span className={"me-1 d-inline-flex"}>{buttonDefault()}</span>
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

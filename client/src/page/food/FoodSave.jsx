@@ -212,55 +212,44 @@ export const FoodSave = () => {
     }
   };
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} part={"food"} plan={""} type={"save"} />
-    );
-  };
-
-  // 4. handle ------------------------------------------------------------------------------------>
-  const handleCountChange = (index, newValue) => {
-    const newCountValue = Number(newValue);
-
-    setOBJECT((prev) => {
-      const newFoodSection = [...prev.food_section];
-      const section = newFoodSection[index];
-      const defaultSection = OBJECT_BEFORE.food_section[index];
-      const ratio = newCountValue / (defaultSection.food_count || 1);
-
-      if (defaultSection) {
-        newFoodSection[index] = {
-          ...section,
-          food_count: newCountValue,
-          food_gram: Number(((defaultSection?.food_gram) * ratio).toFixed(1)),
-          food_kcal: Number(((defaultSection?.food_kcal) * ratio).toFixed(1)),
-          food_carb: Number(((defaultSection?.food_carb) * ratio).toFixed(1)),
-          food_protein: Number(((defaultSection?.food_protein) * ratio).toFixed(1)),
-          food_fat: Number(((defaultSection?.food_fat) * ratio).toFixed(1)),
-        };
-      }
-      return {
-        ...prev,
-        food_section: newFoodSection,
-      };
-    });
-  };
-
-  // 4. handler ----------------------------------------------------------------------------------->
-  const handlerFoodDelete = (index) => {
-    setOBJECT((prev) => {
-      const newFoodSection = [...prev.food_section];
-      newFoodSection.splice(index, 1);
-      return {
-        ...prev,
-        food_section: newFoodSection,
-      };
-    });
-  };
-
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    function handleCountChange (index, newValue) {
+      const newCountValue = Number(newValue);
+
+      setOBJECT((prev) => {
+        const newFoodSection = [...prev.food_section];
+        const section = newFoodSection[index];
+        const defaultSection = OBJECT_BEFORE.food_section[index];
+        const ratio = newCountValue / (defaultSection.food_count || 1);
+
+        if (defaultSection) {
+          newFoodSection[index] = {
+            ...section,
+            food_count: newCountValue,
+            food_gram: Number(((defaultSection?.food_gram) * ratio).toFixed(1)),
+            food_kcal: Number(((defaultSection?.food_kcal) * ratio).toFixed(1)),
+            food_carb: Number(((defaultSection?.food_carb) * ratio).toFixed(1)),
+            food_protein: Number(((defaultSection?.food_protein) * ratio).toFixed(1)),
+            food_fat: Number(((defaultSection?.food_fat) * ratio).toFixed(1)),
+          };
+        }
+        return {
+          ...prev,
+          food_section: newFoodSection,
+        };
+      });
+    };
+    function handlerFoodDelete (index) {
+      setOBJECT((prev) => {
+        const newFoodSection = [...prev.food_section];
+        newFoodSection.splice(index, 1);
+        return {
+          ...prev,
+          food_section: newFoodSection,
+        };
+      });
+    };
     function tableSection () {
       return (
         <React.Fragment>
@@ -378,36 +367,37 @@ export const FoodSave = () => {
     );
   };
 
+  // 5. date -------------------------------------------------------------------------------------->
+  const dateNode = () => (
+    <DateNode DATE={DATE} setDATE={setDATE} part={"food"} plan={""} type={"save"} />
+  );
+
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonNode = () => {
-    return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-        flowSave={flowSave} navParam={navParam} part={"food"} plan={""} type={"save"}
-      />
-    );
-  };
+  const buttonNode = () => (
+    <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={flowSave} navParam={navParam} part={"food"} plan={""} type={"save"}
+    />
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-10"}>
-                {dateNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {dateNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

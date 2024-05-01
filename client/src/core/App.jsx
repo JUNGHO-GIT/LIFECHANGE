@@ -26,6 +26,7 @@ import "../assets/css/SideBar.css";
 
 import "../assets/css/Chart.css";
 import "../assets/css/Custom.css";
+import "../assets/css/Core.css";
 import "../assets/css/Jstyle.css";
 
 import {Loader} from "../layout/Loader.jsx";
@@ -183,18 +184,24 @@ export const App = () => {
     <React.Fragment>
       <div className={"App"}>
         <DeveloperModeProvider>
-          <Loader />
-          <Header />
-          <NavBar />
-          <Routes>
-            <Route path="/customer/*" element={<Customer />} />
-            <Route path="/diary/*" element={<Diary />} />
-            <Route path="/exercise/*" element={<Exercise />} />
-            <Route path="/food/*" element={<Food />} />
-            <Route path="/money/*" element={<Money />} />
-            <Route path="/sleep/*" element={<Sleep />} />
-            <Route path="/tweak/*" element={<Tweak />} />
-          </Routes>
+          <div className={"header-wrapper"}>
+            <Header />
+          </div>
+          <div className={"nav-wrapper"}>
+            <NavBar />
+          </div>
+          <div className={"content-wrapper"}>
+            <Loader />
+            <Routes>
+              <Route path="/customer/*" element={<Customer />} />
+              <Route path="/diary/*" element={<Diary />} />
+              <Route path="/exercise/*" element={<Exercise />} />
+              <Route path="/food/*" element={<Food />} />
+              <Route path="/money/*" element={<Money />} />
+              <Route path="/sleep/*" element={<Sleep />} />
+              <Route path="/tweak/*" element={<Tweak />} />
+            </Routes>
+          </div>
         </DeveloperModeProvider>
       </div>
     </React.Fragment>

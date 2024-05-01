@@ -57,29 +57,32 @@ export const NavBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper mb-10"}>
-        <Card className={"container-wrapper"}>
-          <Container fluid className={"p-0"}>
-            <Row>
-              <Col lg={6} md={6} sm={4} xs={4} className={"d-left"}>
-                {!preFix ? (
-                  <span className={"nav-text"}>Home</span>
-                ) : (
-                  <span className={"nav-text"}>{preFix} / {subFix}</span>
-                )}
-              </Col>
-              <Col lg={3} md={3} sm={4} xs={4} className={"d-left"}>
-                <span className={"nav-icon-text"}>{`Total`}</span>
-                <span className={"nav-icon-text"}>{makeIcon("total")}</span>
-              </Col>
-              <Col lg={3} md={3} sm={4} xs={4} className={"d-left"}>
-                <span className={"nav-icon-text"}>{`${preFix}`}</span>
-                <span className={"nav-icon-text"}>{makeIcon(`${preFix?.toLowerCase()}`)}</span>
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={4} md={4} sm={4} xs={4} className={"d-left"}>
+              <span className={"w-1vw"}></span>
+              {!preFix ? (
+                <span className={"nav-text"}>Home</span>
+              ) : (
+                <span className={"nav-text"}>{preFix} / {subFix}</span>
+              )}
+            </Col>
+            <Col lg={4} md={4} sm={4} xs={4} className={"d-center"}>
+              <span className={"w-1vw"}></span>
+              <span className={"nav-icon-text"}>{`Total`}</span>
+              <span className={"w-1vw"}></span>
+              <span className={"nav-icon-text"}>{makeIcon("total")}</span>
+            </Col>
+            <Col lg={4} md={4} sm={4} xs={4} className={"d-right"}>
+              <span className={"w-1vw"}></span>
+              <span className={"nav-icon-text"}>{`${preFix}`}</span>
+              <span className={"w-1vw"}></span>
+              <span className={"nav-icon-text"}>{makeIcon(`${preFix?.toLowerCase()}`)}</span>
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

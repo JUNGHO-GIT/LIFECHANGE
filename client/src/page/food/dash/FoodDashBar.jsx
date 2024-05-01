@@ -165,40 +165,38 @@ export const FoodDashBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setSECTION(e.target.value))}
-                  value={SECTION}
-                >
-                  <option value={"today"}>오늘</option>
-                </select>
-              </Col>
-              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-                <span className={"dash-title"}>칼로리/영양소</span>
-              </Col>
-              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setLINE(e.target.value))}
-                  value={LINE}
-                >
-                  <option value={"kcal"}>칼로리</option>
-                  <option value={"nut"}>영양소</option>
-                </select>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12}>
-                {LINE === "kcal" && chartNodeKcalToday()}
-                {LINE === "nut" && chartNodeNutToday()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row>
+            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setSECTION(e.target.value))}
+                value={SECTION}
+              >
+                <option value={"today"}>오늘</option>
+              </select>
+            </Col>
+            <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+              <span className={"dash-title"}>칼로리/영양소</span>
+            </Col>
+            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setLINE(e.target.value))}
+                value={LINE}
+              >
+                <option value={"kcal"}>칼로리</option>
+                <option value={"nut"}>영양소</option>
+              </select>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={12} md={12} sm={12} xs={12}>
+              {LINE === "kcal" && chartNodeKcalToday()}
+              {LINE === "nut" && chartNodeNutToday()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

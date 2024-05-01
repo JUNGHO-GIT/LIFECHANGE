@@ -131,15 +131,19 @@ export const DiaryDetail = () => {
     }
   };
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} part={"diary"} plan={""} type={"detail"} />
-    );
-  };
-
-  // 5. handler ----------------------------------------------------------------------------------->
-  const handlerSectionCount = () => {
+  // 4. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
+    const colors = [
+      {name: "red", value: "#ff0000"},
+      {name: "orange", value: "#ffa500"},
+      {name: "yellow", value: "#ffff00"},
+      {name: "green", value: "#008000"},
+      {name: "blue", value: "#0000ff"},
+      {name: "navy", value: "#000080"},
+      {name: "purple", value: "#800080"},
+      {name: "black", value: "#000000"},
+      {name: "gray", value: "#808080"}
+    ];
     function handlerCount(e) {
       let newCount = parseInt(e, 10);
       let defaultSection = {
@@ -169,51 +173,38 @@ export const DiaryDetail = () => {
         }));
       }
     };
-    return (
-      <React.Fragment>
-        <div className={"input-group"}>
-          <span className={"input-group-text"}>섹션 갯수</span>
-          <NumericFormat
-            min={0}
-            max={10}
-            minLength={1}
-            maxLength={2}
-            datatype={"number"}
-            displayType={"input"}
-            id={"sectionCnt"}
-            name={"sectionCnt"}
-            className={"form-control"}
-            disabled={false}
-            thousandSeparator={false}
-            fixedDecimalScale={true}
-            value={Math.min(10, COUNT?.sectionCnt)}
-            onValueChange={(values) => {
-              const limitedValue = Math.min(10, parseInt(values?.value));
-              handlerCount(limitedValue.toString());
-            }}
-          ></NumericFormat>
-        </div>
-      </React.Fragment>
-    );
-  };
-
-  // 5. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
-    const colors = [
-      {name: "red", value: "#ff0000"},
-      {name: "orange", value: "#ffa500"},
-      {name: "yellow", value: "#ffff00"},
-      {name: "green", value: "#008000"},
-      {name: "blue", value: "#0000ff"},
-      {name: "navy", value: "#000080"},
-      {name: "purple", value: "#800080"},
-      {name: "black", value: "#000000"},
-      {name: "gray", value: "#808080"}
-    ];
+    function countNode () {
+      return (
+        <React.Fragment>
+          <div className={"input-group"}>
+            <span className={"input-group-text"}>섹션 갯수</span>
+            <NumericFormat
+              min={0}
+              max={10}
+              minLength={1}
+              maxLength={2}
+              datatype={"number"}
+              displayType={"input"}
+              id={"sectionCnt"}
+              name={"sectionCnt"}
+              className={"form-control"}
+              disabled={false}
+              thousandSeparator={false}
+              fixedDecimalScale={true}
+              value={Math.min(10, COUNT?.sectionCnt)}
+              onValueChange={(values) => {
+                const limitedValue = Math.min(10, parseInt(values?.value));
+                handlerCount(limitedValue.toString());
+              }}
+            ></NumericFormat>
+          </div>
+        </React.Fragment>
+      );
+    }
     function tableFragment (i) {
       return (
-        <div key={i}>
-          <Row className={"text-center mb-10"}>
+        <React.Fragment key={i}>
+          <Row className={"w-100vw"}>
             <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>파트</span>
@@ -275,7 +266,7 @@ export const DiaryDetail = () => {
               </div>
             </Col>
           </Row>
-          <Row className={"text-center mb-10"}>
+          <Row className={"text-center"}>
             <Col lg={12} md={12} sm={12} xs={12}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>제목</span>
@@ -329,7 +320,7 @@ export const DiaryDetail = () => {
               </div>
             </Col>
           </Row>
-        </div>
+        </React.Fragment>
       );
     };
     function tableSection () {
@@ -341,52 +332,53 @@ export const DiaryDetail = () => {
     };
     return (
       <React.Fragment>
-        {tableSection()}
+        <div className={"diary-detail-wrapper"}>
+          {countNode()}
+          {tableSection()}
+        </div>
       </React.Fragment>
     );
   };
 
+  // 5. date -------------------------------------------------------------------------------------->
+  const dateNode = () => (
+    <DateNode DATE={DATE} setDATE={setDATE} part={"diary"} plan={""} type={"detail"} />
+  );
+
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonNode = () => {
-    return (
-      <React.Fragment>
-        <Button size={"sm"} className={"primary-btn"} onClick={() => {
-          flowSave();
-        }}>
-          저장
-        </Button>
-        <Button size={"sm"} className={"danger-btn"} onClick={() => {
-          flowDelete(OBJECT._id);
-        }}>
-          삭제
-        </Button>
-      </React.Fragment>
-    );
-  }
+  const buttonNode = () => (
+    <React.Fragment>
+      <Button size={"sm"} className={"primary-btn"} onClick={() => {
+        flowSave();
+      }}>
+        저장
+      </Button>
+      <Button size={"sm"} className={"danger-btn"} onClick={() => {
+        flowDelete(OBJECT._id);
+      }}>
+        삭제
+      </Button>
+    </React.Fragment>
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row className={"d-center mb-10"}>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-10"}>
-                {dateNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {handlerSectionCount()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"d-center"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {dateNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 }

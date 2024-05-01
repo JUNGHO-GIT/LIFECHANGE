@@ -1,21 +1,4 @@
 /** 0. Non Media **********************************************************************************/
-html, body {
-  scroll-behavior: smooth;
-  font-size: 16px;
-  width: -webkit-fill-available;
-  height: -webkit-fill-available;
-  overflow-x: hidden;
-  background-color: #f5f5f9;
-}
-/* ::-webkit-scrollbar {
-  width: 0;
-  display: none;
-  -ms-overflow-style: none;
-} */
-.main {
-  margin-top: 50px;
-  margin-bottom : 50px;
-}
 textarea {
   resize: none;
 }
@@ -31,32 +14,15 @@ textarea.form-control {
   position: relative;
   flex-wrap: nowrap !important;
   align-items: stretch;
-  width: auto !important;
+  width: auto;
   display: flex;
-}
-.popup {
-  width: 700px;
-  height: 700px;
-  position: fixed;
-  z-index: 1000;
-  background-color: #ffffff;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.container {
-  --bs-gutter-x: 1.0rem;
-  --bs-gutter-y: 0;
-  width: 100%;
-  padding-right: calc(var(--bs-gutter-x)* .5);
-  padding-left: calc(var(--bs-gutter-x)* .5);
-  margin-right: auto;
-  margin-left: auto;
 }
 thead {
   border: 1px solid #dee2e6 !important;
+}
+.table-thead {
+  background-color: #164a60 !important;
+  color: #ffffff !important;
 }
 .table-light {
   --bs-table-color: #000000;
@@ -75,31 +41,8 @@ p {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-.root-wrapper {
-  max-width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-.table-thead {
-  background-color: #164a60 !important;
-  color: #ffffff !important;
-}
 
 /** 0. Media **************************************************************************************/
-.root-wrapper {
-  max-width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-.container-wrapper {
-  margin: 0 auto;
-  box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
-  background-color: #fff;
-  border-radius: 0.1rem;
-  border: none;
-}
 .form-control {
   display: block;
   width: 100%;
@@ -242,15 +185,61 @@ table tbody tr td {
   border: 1px solid #4b5156 !important;
 }
 
+.dataset-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.800rem;
+};
+.dataset-add:hover {
+  color: #ffffff !important;
+}
+.dataset-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #0b2730 !important;
+  font-weight: 500;
+  font-size: 0.600rem;
+};
+.dataset-title:hover {
+  color: #164a60 !important;
+}
+.dataset-rename {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #164a60 !important;
+  font-weight: 500;
+  font-size: 0.400rem;
+};
+.dataset-rename:hover {
+  color: #23486f !important;
+}
+.dataset-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #dc3545 !important;
+  font-weight: 600;
+  font-size: 0.500rem;
+};
+.dataset-delete:hover {
+  color: #bd2130 !important;
+}
+
 /** 1. Small (0 ~ 479px) **************************************************************************/
 @media only screen and (min-width: 0px) and (max-width: 479px) {
 
   /** non display **/
 
   /** display **/
-  .container-wrapper {
-    padding: 10px 4px 10px 4px;
-  }
   .form-control {
     padding: .275rem .5rem;
     font-size: 0.75rem;
@@ -267,30 +256,6 @@ table tbody tr td {
     padding: .275rem .5rem;
     font-size: 0.75rem;
     line-height: 0.75rem;
-  }
-  .table-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 378px;
-    max-height: 378px;
-  }
-  .save-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 403px;
-    max-height: 403px;
-  }
-  .diary-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 480px;
-    max-height: 480px;
-  }
-  .dataset-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 445px;
-    max-height: 445px;
   }
   thead {
     font-size: 0.8rem;
@@ -344,9 +309,6 @@ table tbody tr td {
   /** non display **/
 
   /** display **/
-  .container-wrapper {
-    padding: 14px 6px 14px 6px;
-  }
   .form-control {
     padding: .3rem .5rem;
     font-size: 0.8rem;
@@ -363,30 +325,6 @@ table tbody tr td {
     padding: .3rem .5rem;
     font-size: 0.8rem;
     line-height: 0.8rem;
-  }
-  .table-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 345px;
-    max-height: 345px;
-  }
-  .save-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 368px;
-    max-height: 368px;
-  }
-  .diary-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 448px;
-    max-height: 448px;
-  }
-  .dataset-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 415px;
-    max-height: 415px;
   }
   thead {
     font-size: 0.9rem;
@@ -440,9 +378,6 @@ table tbody tr td {
   /** non display **/
 
   /** display **/
-  .container-wrapper {
-    padding: 16px 8px 16px 8px;
-  }
   .form-control {
     padding: .325rem .5rem;
     font-size: 0.85rem;
@@ -459,30 +394,6 @@ table tbody tr td {
     padding: .325rem .5rem;
     font-size: 0.85rem;
     line-height: 0.85rem;
-  }
-  .table-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 324px;
-    max-height: 324px;
-  }
-  .save-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 347px;
-    max-height: 347px;
-  }
-  .diary-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 430px;
-    max-height: 430px;
-  }
-  .dataset-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 395px;
-    max-height: 395px;
   }
   thead {
     font-size: 1.0rem;
@@ -536,9 +447,6 @@ table tbody tr td {
   /** non display **/
 
   /** display **/
-  .container-wrapper {
-    padding: 18px 10px 18px 10px;
-  }
   .form-control {
     padding: .350rem .5rem;
     font-size: 0.875rem;
@@ -555,30 +463,6 @@ table tbody tr td {
     padding: .350rem .500rem;
     font-size: 0.875rem;
     line-height: 0.875rem;
-  }
-  .table-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 304px;
-    max-height: 304px;
-  }
-  .save-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 326px;
-    max-height: 326px;
-  }
-  .diary-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 411px;
-    max-height: 411px;
-  }
-  .dataset-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 376px;
-    max-height: 376px;
   }
   thead {
     font-size: 1.1rem;
@@ -632,9 +516,6 @@ table tbody tr td {
   /** non display **/
 
   /** display **/
-  .container-wrapper {
-    padding: 20px 12px 20px 12px;
-  }
   .form-control {
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -651,30 +532,6 @@ table tbody tr td {
     padding: .375rem 0.750rem;
     font-size: 1rem;
     line-height: 1rem;
-  }
-  .table-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 280px;
-    max-height: 280px;
-  }
-  .save-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 303px;
-    max-height: 303px;
-  }
-  .diary-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 390px;
-    max-height: 390px;
-  }
-  .dataset-wrapper {
-    overflow-x: hidden;
-    overflow-y: auto;
-    min-height: 356px;
-    max-height: 356px;
   }
   thead {
     font-size: 1.2rem;

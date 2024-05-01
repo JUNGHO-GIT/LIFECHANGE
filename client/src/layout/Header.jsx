@@ -29,7 +29,24 @@ export const Header = () => {
   };
 
   // 6-1. button ---------------------------------------------------------------------------------->
-  const buttonNode = () => {
+  const buttonNode1 = () => {
+    function btnSideBar () {
+      return (
+        <Button type={"button"} size={"sm"} className={"dark-btn"} onClick={toggleSidebar}>
+          Sidebar
+        </Button>
+      );
+    };
+    return (
+      <React.Fragment>
+        <span className={"w-1vw"}></span>
+        <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
+        {btnSideBar()}
+      </React.Fragment>
+    );
+  };
+  // 6-2. button ---------------------------------------------------------------------------------->
+  const buttonNode2 = () => {
     function btnLogIn () {
       return (
         <Button size={"sm"} className={"dark-btn"} onClick={() => {
@@ -64,10 +81,12 @@ export const Header = () => {
         <React.Fragment>
           {btnLogIn()}
           {btnSignUp()}
+          <span className={"w-1vw"}></span>
         </React.Fragment>
       ) : (
         <React.Fragment>
           {btnLogOut()}
+          <span className={"w-1vw"}></span>
         </React.Fragment>
       )
     );
@@ -76,20 +95,17 @@ export const Header = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"container-wrapper mb-10"}>
-        <Container fluid className={"p-0"}>
-          <Row>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
             <Col lg={3} md={3} sm={3} xs={3} className={"d-left"}>
-              <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
-              <Button type={"button"} size={"sm"} className={"dark-btn"} onClick={toggleSidebar}>
-                Sidebar
-              </Button>
+              {buttonNode1()}
             </Col>
             <Col lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
             </Col>
             <Col lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {buttonNode()}
+              {buttonNode2()}
             </Col>
           </Row>
         </Container>

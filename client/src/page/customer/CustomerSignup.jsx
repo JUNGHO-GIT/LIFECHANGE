@@ -48,11 +48,11 @@ export const CustomerSignup = () => {
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableCustomerSave = () => {
     return (
       <div>
-        <div className={"input-group mb-10"}>
+        <div className={"input-group"}>
           <span className={"input-group-text"}>ID</span>
           <InputMask
             mask={""}
@@ -65,7 +65,7 @@ export const CustomerSignup = () => {
             )}
           ></InputMask>
         </div>
-        <div className={"input-group mb-10"}>
+        <div className={"input-group"}>
           <span className={"input-group-text"}>PW</span>
           <InputMask
             mask={""}
@@ -120,25 +120,23 @@ export const CustomerSignup = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
+      <Card className={"border-0"}>
+          <Container fluid>
+            <Row className={"w-100vw"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 <h1>Sign Up</h1>
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {tableCustomerSave()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {btnSignUp()}
                 {btnCustomerList()}
                 {btnRefresh()}
               </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

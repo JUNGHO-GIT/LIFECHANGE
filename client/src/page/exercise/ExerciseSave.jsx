@@ -163,17 +163,7 @@ export const ExerciseSave = () => {
     }
   };
 
-  // 4. date -------------------------------------------------------------------------------------->
-  const dateNode = () => {
-    return (
-      <DateNode DATE={DATE} setDATE={setDATE} part={"exercise"} plan={""} type={"save"} />
-    );
-  };
-
-  // 5. handler ----------------------------------------------------------------------------------->
-
-
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function handlerCount (e) {
       let newCount = parseInt(e, 10);
@@ -212,7 +202,7 @@ export const ExerciseSave = () => {
     function countNode () {
       return (
         <React.Fragment>
-          <div className={"input-group mb-10"}>
+          <div className={"input-group"}>
             <span className={"input-group-text"}>섹션 갯수</span>
             <NumericFormat
               min={0}
@@ -240,7 +230,7 @@ export const ExerciseSave = () => {
     function tableFragment (i) {
       return (
         <React.Fragment key={i}>
-          <Row className={"mb-10"}>
+          <Row>
             <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>부위</span>
@@ -468,7 +458,7 @@ export const ExerciseSave = () => {
               </div>
             </Col>
           </Row>
-          <Row className={"mb-10"}>
+          <Row>
             <Col lg={6} md={6} sm={6} xs={6}>
               <div className={"input-group"}>
                 <span className={"input-group-text"}>볼륨</span>
@@ -615,36 +605,37 @@ export const ExerciseSave = () => {
     );
   };
 
+  // 5. date -------------------------------------------------------------------------------------->
+  const dateNode = () => (
+    <DateNode DATE={DATE} setDATE={setDATE} part={"exercise"} plan={""} type={"save"} />
+  );
+
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonNode = () => {
-    return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-        flowSave={flowSave} navParam={navParam} part={"exercise"} plan={""} type={"save"}
-      />
-    );
-  };
+  const buttonNode = () => (
+    <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={flowSave} navParam={navParam} part={"exercise"} plan={""} type={"save"}
+    />
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-10"}>
-                {dateNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {dateNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

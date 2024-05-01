@@ -52,11 +52,11 @@ export const CustomerLogin = () => {
     }
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableCustomerLogin = () => {
     return (
       <div>
-        <div className={"input-group mb-10"}>
+        <div className={"input-group"}>
           <span className={"input-group-text"}>ID</span>
           <InputMask
             mask={""}
@@ -68,7 +68,7 @@ export const CustomerLogin = () => {
             )}
           ></InputMask>
         </div>
-        <div className={"input-group mb-10"}>
+        <div className={"input-group"}>
           <span className={"input-group-text"}>PW</span>
           <InputMask
             mask={""}
@@ -111,24 +111,22 @@ export const CustomerLogin = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                <h1>Login</h1>
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableCustomerLogin()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonCustomerLogin()}
-                {buttonRefreshPage()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              <h1>Login</h1>
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableCustomerLogin()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonCustomerLogin()}
+              {buttonRefreshPage()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

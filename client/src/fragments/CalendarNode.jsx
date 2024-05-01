@@ -245,7 +245,7 @@ export const CalendarNode = ({
         )}>
           X
         </span>
-        <div className={"h-2"}></div>
+        <div className={"h-2vh"}></div>
         <div>{calendarType()}</div>
       </div>
     </React.Fragment>

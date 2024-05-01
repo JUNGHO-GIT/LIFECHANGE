@@ -281,43 +281,41 @@ export const MoneyDashAvg = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setSECTION(e.target.value))}
-                  value={SECTION}
-                >
-                  <option value={"week"}>주간</option>
-                  <option value={"month"}>월간</option>
-                </select>
-              </Col>
-              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-                <span className={"dash-title"}>수입/지출 평균</span>
-              </Col>
-              <Col lg={3} md={3} sm={3} xs={3}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setLINE(e.target.value))}
-                  value={LINE}
-                >
-                  <option value={"in"}>수입</option>
-                  <option value={"out"}>지출</option>
-                </select>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12}>
-                {SECTION === "week" && LINE === "in" && chartNodeInWeek()}
-                {SECTION === "week" && LINE === "out" && chartNodeOutWeek()}
-                {SECTION === "month" && LINE === "in" && chartNodeInMonth()}
-                {SECTION === "month" && LINE === "out" && chartNodeOutMonth()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row>
+            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setSECTION(e.target.value))}
+                value={SECTION}
+              >
+                <option value={"week"}>주간</option>
+                <option value={"month"}>월간</option>
+              </select>
+            </Col>
+            <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+              <span className={"dash-title"}>수입/지출 평균</span>
+            </Col>
+            <Col lg={3} md={3} sm={3} xs={3}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setLINE(e.target.value))}
+                value={LINE}
+              >
+                <option value={"in"}>수입</option>
+                <option value={"out"}>지출</option>
+              </select>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={12} md={12} sm={12} xs={12}>
+              {SECTION === "week" && LINE === "in" && chartNodeInWeek()}
+              {SECTION === "week" && LINE === "out" && chartNodeOutWeek()}
+              {SECTION === "month" && LINE === "in" && chartNodeInMonth()}
+              {SECTION === "month" && LINE === "out" && chartNodeOutMonth()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

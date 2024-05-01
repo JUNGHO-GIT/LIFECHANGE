@@ -281,9 +281,8 @@ export const ExerciseDashAvg = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
+      <Card className={"border-0"}>
+          <Container fluid>
             <Row>
               <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
                 <select className={"form-select form-select-sm"}
@@ -314,10 +313,9 @@ export const ExerciseDashAvg = () => {
                 {SECTION === "month" && LINE === "volume" && chartNodeVolumeMonth()}
                 {SECTION === "month" && LINE === "cardio" && chartNodeCardioMonth()}
               </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

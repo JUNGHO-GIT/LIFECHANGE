@@ -100,33 +100,31 @@ export const SleepDashBar = () => {
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setSECTION(e.target.value))}
-                  value={SECTION}
-                >
-                  <option value={"today"}>오늘</option>
-                </select>
-              </Col>
-              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-                <span className={"dash-title"}>수면 목표</span>
-              </Col>
-              <Col lg={3} md={3} sm={3} xs={3}>
-                <span></span>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12}>
-                {SECTION === "today" && chartNodeToday()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row>
+            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setSECTION(e.target.value))}
+                value={SECTION}
+              >
+                <option value={"today"}>오늘</option>
+              </select>
+            </Col>
+            <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+              <span className={"dash-title"}>수면 목표</span>
+            </Col>
+            <Col lg={3} md={3} sm={3} xs={3}>
+              <span></span>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={12} md={12} sm={12} xs={12}>
+              {SECTION === "today" && chartNodeToday()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

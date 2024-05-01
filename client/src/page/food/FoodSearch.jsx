@@ -106,7 +106,7 @@ export const FoodSearch = () => {
     }));
   };
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function handleStorage (param) {
       localStorage.setItem("food_section", JSON.stringify(param));
@@ -156,7 +156,7 @@ export const FoodSearch = () => {
     };
     return (
       <React.Fragment>
-        <div className={"save-wrapper"}>
+        <div className={"table-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>
@@ -196,34 +196,30 @@ export const FoodSearch = () => {
   };
 
   // 7. paging ------------------------------------------------------------------------------------>
-  const pagingNode = () => {
-    return (
-      <PagingNode PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
-        part={"food"} plan={""} type={"search"}
-      />
-    );
-  };
+  const pagingNode = () => (
+    <PagingNode PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
+      part={"food"} plan={""} type={"search"}
+    />
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {searchNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {pagingNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {searchNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {pagingNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

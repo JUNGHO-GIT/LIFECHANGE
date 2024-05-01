@@ -107,49 +107,53 @@ export const ButtonNode = ({
       </React.Fragment>
     );
   };
+
+  // 5. return ------------------------------------------------------------------------------------>
   return (
     <React.Fragment>
-      {part === "food" && type === "list" ? (
-        <div className={"d-inline-flex"}>
-          {buttonCalendar()}
-          {buttonToday()}
-        </div>
-      ) : part === "food" && type === "detail" ? (
-        <div className={"d-inline-flex"}>
-          {buttonUpdate()}
-          {buttonList()}
-        </div>
-      ) : part === "food" && type === "save" ? (
-        <div className={"d-inline-flex"}>
-          {buttonSave()}
-          {buttonSearch()}
-        </div>
-      ) : part === "food" && type === "list" ? (
-        <div className={"d-inline-flex"}>
-          {buttonCalendar()}
-          {buttonToday()}
-        </div>
-      ) : part !== "food" && type === "list" ? (
-        <div className={"d-inline-flex"}>
-          {buttonCalendar()}
-          {buttonToday()}
-        </div>
-      ) : part !== "food" && type === "detail" ? (
-        <div className={"d-inline-flex"}>
-          {buttonUpdate()}
-          {buttonList()}
-        </div>
-      ) : part !== "food" && type === "save" ? (
-        <div className={"d-inline-flex"}>
-          {buttonSave()}
-          {buttonList()}
-        </div>
-      ) : part !== "food" && type === "list" ? (
-        <div className={"d-inline-flex"}>
-          {buttonCalendar()}
-          {buttonToday()}
-        </div>
-      ) : null}
+      <div className={"btn-wrapper d-inline-flex"}>
+        {part === "food" && type === "list" ? (
+          <React.Fragment>
+            {buttonCalendar()}
+            {buttonToday()}
+          </React.Fragment>
+        ) : part === "food" && type === "detail" ? (
+          <React.Fragment>
+            {buttonUpdate()}
+            {buttonList()}
+          </React.Fragment>
+        ) : part === "food" && type === "save" ? (
+          <React.Fragment>
+            {buttonSave()}
+            {buttonSearch()}
+          </React.Fragment>
+        ) : part === "food" && type === "list" ? (
+          <React.Fragment>
+            {buttonCalendar()}
+            {buttonToday()}
+          </React.Fragment>
+        ) : part !== "food" && type === "list" ? (
+          <React.Fragment>
+            {buttonCalendar()}
+            {buttonToday()}
+          </React.Fragment>
+        ) : part !== "food" && type === "detail" ? (
+          <React.Fragment>
+            {buttonUpdate()}
+            {buttonList()}
+          </React.Fragment>
+        ) : part !== "food" && type === "save" ? (
+          <React.Fragment>
+            {buttonSave()}
+            {buttonList()}
+          </React.Fragment>
+        ) : part !== "food" && type === "list" ? (
+          <React.Fragment>
+            {buttonCalendar()}
+            {buttonToday()}
+          </React.Fragment>
+        ) : null}
+      </div>
     </React.Fragment>
   );
 };

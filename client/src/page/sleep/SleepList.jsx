@@ -103,7 +103,7 @@ export const SleepList = () => {
     }));
   })()}, [customer_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
 
-  // 5. table ------------------------------------------------------------------------------------->
+  // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     function tableSection() {
       return (
@@ -160,66 +160,56 @@ export const SleepList = () => {
   };
 
   // 6. calendar ---------------------------------------------------------------------------------->
-  const calendarNode = () => {
-    return (
-      <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
-        CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-      />
-    );
-  };
+  const calendarNode = () => (
+    <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+      CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
+    />
+  );
 
   // 7. paging ------------------------------------------------------------------------------------>
-  const pagingNode = () => {
-    return (
-      <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-        part={"sleep"} plan={""} type={"list"}
-      />
-    );
-  };
+  const pagingNode = () => (
+    <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+      part={"sleep"} plan={""} type={"list"}
+    />
+  );
 
   // 8. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => {
-    return (
-      <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        part={"sleep"} plan={""} type={"list"}
-      />
-    );
-  };
+  const filterNode = () => (
+    <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+      part={"sleep"} plan={""} type={"list"}
+    />
+  );
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonNode = () => {
-    return (
-      <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
-        SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-        flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
-      />
-    );
-  };
+  const buttonNode = () => (
+    <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+      flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
+    />
+  );
 
   // 10. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"root-wrapper"}>
-        <Card className={"container-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {calendarNode()}
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {filterNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {pagingNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center mb-10"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"border-0"}>
+        <Container fluid>
+          <Row className={"w-100vw"}>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {calendarNode()}
+              {tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {filterNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {pagingNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {buttonNode()}
+            </Col>
+          </Row>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };
