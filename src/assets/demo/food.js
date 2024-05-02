@@ -41,6 +41,7 @@ for (let i = 1; i <= 100; i++) {
     _id: new mongodb.ObjectId(),
     customer_id: "123",
     food_number: i + 300,
+    food_demo: true,
     food_startDt: formatDate1(startDate),
     food_endDt: formatDate1(startDate),
 
@@ -63,7 +64,10 @@ export const addFood = async () => {
   try {
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await Food.deleteMany({});
+    const deleteResult = await Food.deleteMany({
+      customer_id: "123",
+      food_demo: true
+    });
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입

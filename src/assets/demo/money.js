@@ -33,6 +33,7 @@ for (let i = 1; i <= 100; i++) {
     _id: new mongodb.ObjectId(),
     customer_id: "123",
     money_number: i + 200,
+    money_demo: true,
     money_startDt: formatDate1(startDate),
     money_endDt: formatDate1(startDate),
     money_total_in: randomNumber(100000),
@@ -50,7 +51,10 @@ export const addMoney = async () => {
   try {
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await Money.deleteMany({});
+    const deleteResult = await Money.deleteMany({
+      customer_id: "123",
+      money_demo: true
+    });
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입

@@ -103,8 +103,8 @@
   font-weight: bolder;
 }
 .rdp-cell {
-  width: var(--rdp-cell-size);
-  height: var(--rdp-cell-size);
+  width:  auto;
+  height:  auto;
   text-align: center;
 }
 .dayPicker-container {
@@ -140,8 +140,10 @@
     font-size: 0.7rem;
   }
   .dayPicker-container {
-    width: 250px;
-    height: 310px;
+    width: auto;
+    height: auto;
+    max-width: 70vw;
+    max-height: 50vh;
   }
 }
 
@@ -167,8 +169,10 @@
     font-size: 0.75rem;
   }
   .dayPicker-container {
-    width: 300px;
-    height: 340px;
+    width: auto;
+    height: auto;
+    max-width: 60vw;
+    max-height: 45vh;
   }
 }
 
@@ -194,8 +198,10 @@
     font-size: 0.8rem;
   }
   .dayPicker-container {
-    width: 400px;
-    height: 500px;
+    width: auto;
+    height: auto;
+    max-width: 70vw;
+    max-height: 65vh;
   }
 }
 
@@ -221,8 +227,10 @@
     font-size: 0.85rem;
   }
   .dayPicker-container {
-    width: 450px;
-    height: 490px;
+    width: auto;
+    height: auto;
+    max-width: 45vw;
+    max-height: 70vh;
   }
 }
 
@@ -248,7 +256,9 @@
     font-size: 0.9rem;
   }
   .dayPicker-container {
-    width: 500px;
-    height: 540px;
+    width: auto;
+    height: auto;
+    max-width: 40vw;
+    max-height: 75vh;
   }
 }

@@ -14,14 +14,13 @@ for (let i = 1; i <= 100; i++) {
     _id: new mongodb.ObjectId(),
     customer_id: "123",
     food_plan_number: i + 100,
+    food_plan_demo: true,
     food_plan_startDt: formatDate1(startDate),
     food_plan_endDt: formatDate1(endDate),
-
     food_plan_kcal: randomNumber(1000),
     food_plan_carb: randomNumber(100),
     food_plan_protein:  randomNumber(100),
     food_plan_fat: randomNumber(100),
-
     food_plan_regDt: formatDate2(regDate),
     food_plan_updateDt: formatDate2(updateDate),
   };
@@ -34,7 +33,10 @@ export const addFoodPlan = async () => {
   try {
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await FoodPlan.deleteMany({});
+    const deleteResult = await FoodPlan.deleteMany({
+      customer_id: "123",
+      food_plan_demo: true
+    });
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입

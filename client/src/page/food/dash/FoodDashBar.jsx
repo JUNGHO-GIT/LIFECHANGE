@@ -40,15 +40,6 @@ export const FoodDashBar = () => {
   const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState(OBJECT_NUT_TODAY_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    console.log("===================================");
-    console.log(JSON.stringify(OBJECT_KCAL_TODAY));
-
-    console.log("===================================");
-    console.log(JSON.stringify(OBJECT_NUT_TODAY));
-  }, [OBJECT_KCAL_TODAY, OBJECT_NUT_TODAY]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const responseToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {

@@ -14,6 +14,7 @@ for (let i = 1; i <= 100; i++) {
     _id: new mongodb.ObjectId(),
     customer_id: "123",
     exercise_plan_number: i + 100,
+    exercise_plan_demo: true,
     exercise_plan_startDt: formatDate1(startDate),
     exercise_plan_endDt: formatDate1(endDate),
 
@@ -34,7 +35,10 @@ export const addExercisePlan = async () => {
   try {
 
     // 일단 전체 데이터 삭제
-    const deleteResult = await ExercisePlan.deleteMany({});
+    const deleteResult = await ExercisePlan.deleteMany({
+      customer_id: "123",
+      exercise_plan_demo: true
+    });
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입

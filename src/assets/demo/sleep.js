@@ -14,6 +14,7 @@ for (let i = 1; i <= 100; i++) {
     _id: new mongodb.ObjectId(),
     customer_id: "123",
     sleep_number: i + 100,
+    sleep_demo: true,
     sleep_startDt: formatDate1(startDate),
     sleep_endDt: formatDate1(startDate),
     sleep_section: [{
@@ -33,7 +34,10 @@ for (let i = 1; i <= 100; i++) {
 export const addSleep = async () => {
   try {
     // 전체 데이터 삭제
-    const deleteResult = await Sleep.deleteMany({});
+    const deleteResult = await Sleep.deleteMany({
+      customer_id: "123",
+      sleep_demo: true
+    });
     console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입

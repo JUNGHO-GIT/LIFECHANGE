@@ -14,12 +14,11 @@ for (let i = 1; i <= 100; i++) {
     _id: new mongodb.ObjectId(),
     customer_id: "123",
     money_plan_number: i + 100,
+    money_plan_demo: true,
     money_plan_startDt: formatDate1(startDate),
     money_plan_endDt: formatDate1(endDate),
-
     money_plan_in: randomNumber(100000),
     money_plan_out: randomNumber(100000),
-
     money_plan_regDt: formatDate2(regDate),
     money_plan_updateDt: formatDate2(updateDate),
   };
@@ -30,6 +29,13 @@ for (let i = 1; i <= 100; i++) {
 // Create a new document in the MoneyPlan.
 export const addMoneyPlan = async () => {
   try {
+
+    // 일단 전체 데이터 삭제
+    const deleteResult = await MoneyPlan.deleteMany({
+      customer_id: "123",
+      money_plan_demo: true
+    });
+    console.log('Deleted documents:', deleteResult.deletedCount);
 
     // 데이터 삽입
     const insertResult = await MoneyPlan.insertMany(demoData);
