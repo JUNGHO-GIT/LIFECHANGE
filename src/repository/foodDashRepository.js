@@ -11,18 +11,20 @@ export const barToday = {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
         customer_id: customer_id_param,
-        foodPlan_startDt: {
+        food_plan_startDt: {
           $lte: endDt_param,
         },
-        foodPlan_endDt: {
+        food_plan_endDt: {
           $gte: startDt_param
         },
       }},
       {$project: {
         food_plan_startDt: 1,
         food_plan_endDt: 1,
-        food_plan_in: 1,
-        food_plan_out: 1
+        food_plan_kcal: 1,
+        food_plan_carb: 1,
+        food_plan_protein: 1,
+        food_plan_fat: 1
       }},
       {$sort: {food_plan_startDt: -1}},
     ]);
@@ -45,9 +47,12 @@ export const barToday = {
         },
       }},
       {$project: {
-        _id: 0,
-        food_total_in: "$food_total_in",
-        food_total_out: "$food_total_out"
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_kcal: 1,
+        food_total_carb: 1,
+        food_total_protein: 1,
+        food_total_fat: 1
       }},
       {$sort: {food_startDt: -1}},
     ]);
@@ -271,8 +276,9 @@ export const lineWeek = {
         },
       }},
       {$project: {
-        _id: 0,
-        food_total_kcal: "$food_total_kcal"
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_kcal: 1
       }},
       {$sort: {food_startDt: -1}},
     ]);
@@ -295,10 +301,11 @@ export const lineWeek = {
         },
       }},
       {$project: {
-        _id: 0,
-        food_total_carb: "$food_total_carb",
-        food_total_protein: "$food_total_protein",
-        food_total_fat: "$food_total_fat"
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_carb: 1,
+        food_total_protein: 1,
+        food_total_fat: 1
       }},
       {$sort: {food_startDt: -1}},
     ]);
@@ -324,8 +331,9 @@ export const lineMonth = {
         },
       }},
       {$project: {
-        _id: 0,
-        food_total_kcal: "$food_total_kcal"
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_kcal: 1
       }},
       {$sort: {food_startDt: -1}},
     ]);
@@ -348,10 +356,11 @@ export const lineMonth = {
         },
       }},
       {$project: {
-        _id: 0,
-        food_total_carb: "$food_total_carb",
-        food_total_protein: "$food_total_protein",
-        food_total_fat: "$food_total_fat"
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_carb: 1,
+        food_total_protein: 1,
+        food_total_fat: 1
       }},
       {$sort: {food_startDt: -1}},
     ]);
@@ -359,60 +368,7 @@ export const lineMonth = {
   }
 };
 
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-export const avgWeek = {
-  listKcal: async (
-    customer_id_param, startDt_param, endDt_param
-  ) => {
-    const finalResult = await Food.aggregate([
-      {$match: {
-        customer_id: customer_id_param,
-        food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-        food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-      }},
-      {$project: {
-        _id: 0,
-        food_total_kcal: "$food_total_kcal"
-      }},
-      {$sort: {food_startDt: -1}},
-    ]);
-    return finalResult;
-  },
-
-  listNut: async (
-    customer_id_param, startDt_param, endDt_param
-  ) => {
-    const finalResult = await Food.aggregate([
-      {$match: {
-        customer_id: customer_id_param,
-        food_startDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-        food_endDt: {
-          $gte: startDt_param,
-          $lte: endDt_param,
-        },
-      }},
-      {$project: {
-        _id: 0,
-        food_total_carb: "$food_total_carb",
-        food_total_protein: "$food_total_protein",
-        food_total_fat: "$food_total_fat"
-      }},
-      {$sort: {food_startDt: -1}},
-    ]);
-    return finalResult;
-  }
-};
-
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
+// 4-1. dash (avg - month) ------------------------------------------------------------------------->
 export const avgMonth = {
   listKcal: async (
     customer_id_param, startDt_param, endDt_param
@@ -430,8 +386,9 @@ export const avgMonth = {
         },
       }},
       {$project: {
-        _id: 0,
-        food_total_kcal: "$food_total_kcal"
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_kcal: 1
       }},
       {$sort: {food_startDt: -1}},
     ]);
@@ -454,10 +411,66 @@ export const avgMonth = {
         },
       }},
       {$project: {
-        _id: 0,
-        food_total_carb: "$food_total_carb",
-        food_total_protein: "$food_total_protein",
-        food_total_fat: "$food_total_fat"
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_carb: 1,
+        food_total_protein: 1,
+        food_total_fat: 1
+      }},
+      {$sort: {food_startDt: -1}},
+    ]);
+    return finalResult;
+  }
+};
+
+// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+export const avgYear = {
+  listKcal: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Food.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_kcal: 1
+      }},
+      {$sort: {food_startDt: -1}},
+    ]);
+    return finalResult;
+  },
+
+  listNut: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Food.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        food_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        food_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        food_startDt: 1,
+        food_endDt: 1,
+        food_total_carb: 1,
+        food_total_protein: 1,
+        food_total_fat: 1
       }},
       {$sort: {food_startDt: -1}},
     ]);

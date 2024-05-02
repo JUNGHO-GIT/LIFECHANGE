@@ -22,7 +22,7 @@ export const SleepDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (line) (${PATH})`, "week"
+    `SECTION (line) (${PATH})`, "month"
   );
   const {val:PART, set:setPART} = useStorage(
     `PART (line) (${PATH})`, array

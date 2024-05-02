@@ -23,7 +23,7 @@ export const FoodDashAvg = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (avg) (${PATH})`, "week"
+    `SECTION (avg) (${PATH})`, "month"
   );
   const {val:LINE, set:setLINE} = useStorage(
     `LINE (avg) (${PATH})`, "kcal"
@@ -33,33 +33,25 @@ export const FoodDashAvg = () => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_KCAL_WEEK_DEFAULT = [
-    {name:"", 칼로리: 0},
-  ];
-  const OBJECT_NUT_WEEK_DEFAULT = [
-    {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
-  ];
   const OBJECT_KCAL_MONTH_DEFAULT = [
     {name:"", 칼로리: 0},
   ];
   const OBJECT_NUT_MONTH_DEFAULT = [
     {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
   ];
-  const [OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK] = useState(OBJECT_KCAL_WEEK_DEFAULT);
-  const [OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK] = useState(OBJECT_NUT_WEEK_DEFAULT);
+  const OBJECT_KCAL_YEAR_DEFAULT = [
+    {name:"", 칼로리: 0},
+  ];
+  const OBJECT_NUT_YEAR_DEFAULT = [
+    {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
+  ];
   const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEFAULT);
   const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEFAULT);
+  const [OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR] = useState(OBJECT_KCAL_YEAR_DEFAULT);
+  const [OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR] = useState(OBJECT_NUT_YEAR_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/avg/week`, {
-      params: {
-        customer_id: customer_id
-      },
-    });
-    setOBJECT_KCAL_WEEK(responseWeek.data.result.kcal || OBJECT_KCAL_WEEK_DEFAULT);
-    setOBJECT_NUT_WEEK(responseWeek.data.result.nut || OBJECT_NUT_WEEK_DEFAULT);
-
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         customer_id: customer_id
@@ -67,15 +59,23 @@ export const FoodDashAvg = () => {
     });
     setOBJECT_KCAL_MONTH(responseMonth.data.result.kcal || OBJECT_KCAL_MONTH_DEFAULT);
     setOBJECT_NUT_MONTH(responseMonth.data.result.nut || OBJECT_NUT_MONTH_DEFAULT);
+
+    const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
+      params: {
+        customer_id: customer_id
+      },
+    });
+    setOBJECT_KCAL_YEAR(responseYear.data.result.kcal || OBJECT_KCAL_YEAR_DEFAULT);
+    setOBJECT_NUT_YEAR(responseYear.data.result.nut || OBJECT_NUT_YEAR_DEFAULT);
   })()}, [customer_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcalWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_WEEK, array);
+  const chartNodeKcalMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_KCAL_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          <ComposedChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -125,12 +125,12 @@ export const FoodDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeNutWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array);
+  const chartNodeNutMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_NUT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -188,12 +188,12 @@ export const FoodDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcalMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
+  const chartNodeKcalYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_YEAR, array);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          <ComposedChart data={OBJECT_KCAL_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -243,12 +243,12 @@ export const FoodDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeNutMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
+  const chartNodeNutYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_YEAR, array);
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          <ComposedChart data={OBJECT_NUT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -342,8 +342,8 @@ export const FoodDashAvg = () => {
                 onChange={(e) => (setSECTION(e.target.value))}
                 value={SECTION}
               >
-                <option value={"week"}>주간</option>
                 <option value={"month"}>월간</option>
+                <option value={"year"}>연간</option>
               </select>
             </Col>
             <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
@@ -361,10 +361,10 @@ export const FoodDashAvg = () => {
           </Row>
           <Row>
             <Col lg={10} md={10} sm={10} xs={10}>
-              {SECTION === "week" && LINE === "kcal" && chartNodeKcalWeek()}
-              {SECTION === "week" && LINE === "nut" && chartNodeNutWeek()}
               {SECTION === "month" && LINE === "kcal" && chartNodeKcalMonth()}
               {SECTION === "month" && LINE === "nut" && chartNodeNutMonth()}
+              {SECTION === "year" && LINE === "kcal" && chartNodeKcalYear()}
+              {SECTION === "year" && LINE === "nut" && chartNodeNutYear()}
             </Col>
             <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
               {tableNode()}

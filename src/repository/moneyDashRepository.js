@@ -47,7 +47,8 @@ export const barToday = {
       {$project: {
         money_startDt: 1,
         money_endDt: 1,
-        money_section: 1,
+        money_total_in: 1,
+        money_total_out: 1,
       }},
       {$sort: {money_startDt: 1}}
     ]);
@@ -362,8 +363,8 @@ export const lineMonth = {
   }
 };
 
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-export const avgWeek = {
+// 4-1. dash (avg - month) ------------------------------------------------------------------------->
+export const avgMonth = {
   listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -415,8 +416,8 @@ export const avgWeek = {
   }
 };
 
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
-export const avgMonth = {
+// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+export const avgYear = {
   listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {

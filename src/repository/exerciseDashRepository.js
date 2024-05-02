@@ -380,8 +380,8 @@ export const lineMonth = {
   }
 };
 
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-export const avgWeek = {
+// 4-1. dash (avg - month) ------------------------------------------------------------------------->
+export const avgMonth = {
   listVolume: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
@@ -433,8 +433,8 @@ export const avgWeek = {
   }
 };
 
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
-export const avgMonth = {
+// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+export const avgYear = {
   listVolume: async (
     customer_id_param, startDt_param, endDt_param
   ) => {

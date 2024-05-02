@@ -118,12 +118,12 @@ export const pieWeek = async (
   // part
   finalResultPart = findResultPart?.map((item) => ({
     name: item._id,
-    value: item.count
+    value: intFormat(item.count)
   }));
   // title
   finalResultTitle = findResultTitle?.map((item) => ({
     name: item._id,
-    value: item.count
+    value: intFormat(item.count)
   }));
 
   return {
@@ -157,12 +157,12 @@ export const pieMonth = async (
   // part
   finalResultPart = findResultPart?.map((item) => ({
     name: item._id,
-    value: item.count
+    value: intFormat(item.count)
   }));
   // title
   finalResultTitle = findResultTitle?.map((item) => ({
     name: item._id,
-    value: item.count
+    value: intFormat(item.count)
   }));
 
   return {
@@ -199,19 +199,19 @@ export const lineWeek = async (
   );
 
   data.forEach((item, index) => {
-    const findItemVolume = findResultVolume?.findIndex((item) => (
+    const findIndexVolume = findResultVolume?.findIndex((item) => (
       new Date(item.exercise_startDt).getDate() === index
     ));
-    const findItemCardio = findResultCardio?.findIndex((item) => (
+    const findIndexCardio = findResultCardio?.findIndex((item) => (
       new Date(item.exercise_startDt).getDate() === index
     ));
     finalResultVolume.push({
       name: item,
-      볼륨: findItemVolume !== -1 ? intFormat(findResultVolume[findItemVolume].exercise_total_volume) : 0
+      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume].exercise_total_volume) : 0
     });
     finalResultCardio.push({
       name: item,
-      시간: findItemCardio !== -1 ? intFormat(findResultCardio[findItemCardio].exercise_total_cardio) : 0
+      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio].exercise_total_cardio) : 0
     });
   });
 
@@ -271,18 +271,17 @@ export const lineMonth = async (
   };
 };
 
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-export const avgWeek = async (
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+export const avgMonth = async (
   customer_id_param
 ) => {
 
-  const startDt = curWeekStart.format("YYYY-MM-DD");
-  const endDt = curWeekEnd.format("YYYY-MM-DD");
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: 5 }, (_, i) => {
-    const weekStart = curWeekStart.clone().add(i * 7, 'days').format("MM-DD");
-    const weekEnd = curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD");
-    return `${i + 1}주차 (${weekStart} ~ ${weekEnd})`;
+  // ex. 00주차 (00-00 ~ 00-00)
+  const data  = Array.from({ length: 5 }, (_, i) => {
+    return `${i + 1}주차 (${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")})`;
   });
 
   let sumExerciseVolume = Array(5).fill(0);
@@ -295,25 +294,36 @@ export const avgWeek = async (
   let finalResultCardio = [];
 
   // volume
-  findResultVolume = await repository.avgWeek.listVolume(
+  findResultVolume = await repository.avgMonth.listVolume(
     customer_id_param, startDt, endDt
   );
   // cardio
-  findResultCardio = await repository.avgWeek.listCardio(
+  findResultCardio = await repository.avgMonth.listCardio(
     customer_id_param, startDt, endDt
   );
 
   // volume
   findResultVolume.forEach((item) => {
-    const weekNum = Math.floor(new Date(item.exercise_startDt).getDate() / 7);
-    sumExerciseVolume[weekNum] += intFormat(item.exercise_total_volume);
-    countRecords[weekNum]++;
+    const exerciseDate = new Date(item.exercise_startDt);
+    const diffTime = Math.abs(exerciseDate.getTime() - curWeekStart.toDate().getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const weekNum = Math.floor(diffDays / 7);
+    if (weekNum >= 0 && weekNum < 5) {
+      sumExerciseVolume[weekNum] += intFormat(item.exercise_total_volume);
+      countRecords[weekNum]++;
+    }
   });
+
   // cardio
   findResultCardio.forEach((item) => {
-    const weekNum = Math.floor(new Date(item.exercise_startDt).getDate() / 7);
-    sumExerciseCardio[weekNum] += intFormat(item.exercise_total_cardio);
-    countRecords[weekNum]++;
+    const exerciseDate = new Date(item.exercise_startDt);
+    const diffTime = Math.abs(exerciseDate.getTime() - curWeekStart.toDate().getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const weekNum = Math.floor(diffDays / 7);
+    if (weekNum >= 0 && weekNum < 5) {
+      sumExerciseCardio[weekNum] += intFormat(item.exercise_total_cardio);
+      countRecords[weekNum]++;
+    }
   });
 
   data.forEach((data, index) => {
@@ -333,13 +343,13 @@ export const avgWeek = async (
   };
 };
 
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
-export const avgMonth = async (
+// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+export const avgYear = async (
   customer_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const startDt = curYearStart.format("YYYY-MM-DD");
+  const endDt = curYearEnd.format("YYYY-MM-DD");
 
   const data = Array.from({ length: 12 }, (_, i) => {
     return `${i + 1}월`;
@@ -355,23 +365,25 @@ export const avgMonth = async (
   let finalResultCardio = [];
 
   // volume
-  findResultVolume = await repository.avgMonth.listVolume(
+  findResultVolume = await repository.avgYear.listVolume(
     customer_id_param, startDt, endDt
   );
   // cardio
-  findResultCardio = await repository.avgMonth.listCardio(
+  findResultCardio = await repository.avgYear.listCardio(
     customer_id_param, startDt, endDt
   );
 
   // volume
   findResultVolume.forEach((item) => {
-    const monthNum = new Date(item.exercise_startDt).getMonth();
+    const exerciseDate = new Date(item.exercise_startDt);
+    const monthNum = exerciseDate.getMonth();
     sumExerciseVolume[monthNum] += intFormat(item.exercise_total_volume);
     countRecords[monthNum]++;
   });
   // cardio
   findResultCardio.forEach((item) => {
-    const monthNum = new Date(item.exercise_startDt).getMonth();
+    const exerciseDate = new Date(item.exercise_startDt);
+    const monthNum = exerciseDate.getMonth();
     sumExerciseCardio[monthNum] += intFormat(item.exercise_total_cardio);
     countRecords[monthNum]++;
   });

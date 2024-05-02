@@ -18,7 +18,6 @@ export const barToday = async (
   findPlan = await repository.barToday.listPlan(
     customer_id_param, startDt, endDt
   );
-
   findReal = await repository.barToday.listReal(
     customer_id_param, startDt, endDt
   );
@@ -65,7 +64,7 @@ export const lineWeek = async (
   );
 
   data.forEach((data, index) => {
-    const findIndex = findResult.findIndex((item) => (
+    const findIndex = findResult?.findIndex((item) => (
       new Date(item.sleep_startDt).getDay() === index
     ));
 
@@ -115,18 +114,17 @@ export const lineMonth = async (
   return finalResult;
 }
 
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-export const avgWeek = async (
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+export const avgMonth = async (
   customer_id_param
 ) => {
 
-  const startDt = curWeekStart.format("YYYY-MM-DD");
-  const endDt = curWeekEnd.format("YYYY-MM-DD");
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  const data = Array.from({ length: 5 }, (_, i) => {
-    const weekStart = curWeekStart.clone().add(i * 7, 'days').format("MM-DD");
-    const weekEnd = curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD");
-    return `${i + 1}주차 (${weekStart} ~ ${weekEnd})`;
+  // ex. 00주차 (00-00 ~ 00-00)
+  const data  = Array.from({ length: 5 }, (_, i) => {
+    return `${i + 1}주차 (${curWeekStart.clone().add(i * 7, 'days').format("MM-DD")} ~ ${curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD")})`;
   });
 
   let sumSleepStart = Array(5).fill(0);
@@ -137,17 +135,20 @@ export const avgWeek = async (
   let findResult = [];
   let finalResult = [];
 
-  findResult = await repository.avgWeek.list(
+  findResult = await repository.avgMonth.list(
     customer_id_param, startDt, endDt
   );
-
-  findResult.forEach((element) => {
-    const weekNum = Math.floor(new Date(element.sleep_startDt).getDate() / 7);
-
-    sumSleepStart[weekNum] += timeFormat(element.sleep_section[0].sleep_night);
-    sumSleepEnd[weekNum] += timeFormat(element.sleep_section[0].sleep_morning);
-    sumSleepTime[weekNum] += timeFormat(element.sleep_section[0].sleep_time);
-    countRecords[weekNum]++;
+  findResult.forEach((item) => {
+    const sleepDate = new Date(item.sleep_startDt);
+    const diffTime = Math.abs(sleepDate.getTime() - curWeekStart.toDate().getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const weekNum = Math.floor(diffDays / 7);
+    if (weekNum >= 0 && weekNum < 5) {
+      sumSleepStart[weekNum] += timeFormat(item.sleep_section[0].sleep_night);
+      sumSleepEnd[weekNum] += timeFormat(item.sleep_section[0].sleep_morning);
+      sumSleepTime[weekNum] += timeFormat(item.sleep_section[0].sleep_time);
+      countRecords[weekNum]++;
+    }
   });
 
   data.forEach((data, index) => {
@@ -162,13 +163,13 @@ export const avgWeek = async (
   return finalResult;
 };
 
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
-export const avgMonth = async (
+// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+export const avgYear = async (
   customer_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const startDt = curYearStart.format("YYYY-MM-DD");
+  const endDt = curYearEnd.format("YYYY-MM-DD");
 
   const data = Array.from({ length: 12 }, (_, i) => {
     return `${i + 1}월`;
@@ -182,13 +183,12 @@ export const avgMonth = async (
   let findResult = [];
   let finalResult = [];
 
-  findResult = await repository.avgMonth.list(
+  findResult = await repository.avgYear.list(
     customer_id_param, startDt, endDt
   );
-
   findResult.forEach((element) => {
-    const monthNum = new Date(element.sleep_startDt).getMonth();
-
+    const sleepDate = new Date(element.sleep_startDt);
+    const monthNum = sleepDate.getMonth();
     sumSleepStart[monthNum] += timeFormat(element.sleep_section[0].sleep_night);
     sumSleepEnd[monthNum] += timeFormat(element.sleep_section[0].sleep_morning);
     sumSleepTime[monthNum] += timeFormat(element.sleep_section[0].sleep_time);

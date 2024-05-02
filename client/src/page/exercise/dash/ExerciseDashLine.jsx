@@ -23,7 +23,7 @@ export const ExerciseDashLine = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (line) (${PATH})`, "week"
+    `SECTION (line) (${PATH})`, "month"
   );
   const {val:LINE, set:setLINE} = useStorage(
     `LINE (line) (${PATH})`, "volume"

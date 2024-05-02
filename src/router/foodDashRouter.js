@@ -184,10 +184,10 @@ router.get("/line/month", async (req, res) => {
   }
 });
 
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-router.get("/avg/week", async (req, res) => {
+// 4-1. dash (avg - month) ------------------------------------------------------------------------->
+router.get("/avg/month", async (req, res) => {
   try {
-    let result = await service.avgWeek (
+    let result = await service.avgMonth (
       req.query.customer_id
     );
     if (result) {
@@ -214,10 +214,10 @@ router.get("/avg/week", async (req, res) => {
   }
 });
 
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
-router.get("/avg/month", async (req, res) => {
+// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+router.get("/avg/year", async (req, res) => {
   try {
-    let result = await service.avgMonth (
+    let result = await service.avgYear (
       req.query.customer_id
     );
     if (result) {

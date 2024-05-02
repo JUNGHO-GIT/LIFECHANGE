@@ -22,45 +22,45 @@ export const SleepDashAvg = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (avg) (${PATH})`, "week"
+    `SECTION (avg) (${PATH})`, "month"
   );
   const {val:PART, set:setPART} = useStorage(
     `PART (avg) (${PATH})`, array
   );
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_WEEK_DEFAULT = [
-    {name:"", 취침: 0, 기상: 0, 수면: 0}
-  ];
   const OBJECT_MONTH_DEFAULT = [
     {name:"", 취침: 0, 기상: 0, 수면: 0}
   ];
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEFAULT);
+  const OBJECT_YEAR_DEFAULT = [
+    {name:"", 취침: 0, 기상: 0, 수면: 0}
+  ];
   const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEFAULT);
+  const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/avg/week`, {
-      params: {
-        customer_id: customer_id
-      },
-    });
-    setOBJECT_WEEK(responseWeek.data.result || OBJECT_WEEK_DEFAULT);
-
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         customer_id: customer_id
       },
     });
     setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
+
+    const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
+      params: {
+        customer_id: customer_id
+      },
+    });
+    setOBJECT_YEAR(responseYear.data.result || OBJECT_YEAR_DEFAULT);
   })()}, [customer_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeWeek = () => {
+  const chartNodeMonth = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -120,11 +120,11 @@ export const SleepDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeMonth = () => {
+  const chartNodeYear = () => {
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
-          <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
+          <ComposedChart data={OBJECT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
             <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
             <XAxis
@@ -220,8 +220,8 @@ export const SleepDashAvg = () => {
                 onChange={(e) => (setSECTION(e.target.value))}
                 value={SECTION}
               >
-                <option value={"week"}>주간</option>
                 <option value={"month"}>월간</option>
+                <option value={"year"}>연간</option>
               </select>
             </Col>
             <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
@@ -233,8 +233,8 @@ export const SleepDashAvg = () => {
           </Row>
           <Row>
             <Col lg={10} md={10} sm={10} xs={10}>
-              {SECTION === "week" && chartNodeWeek()}
               {SECTION === "month" && chartNodeMonth()}
+              {SECTION === "year" && chartNodeYear()}
             </Col>
             <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
               {tableNode()}

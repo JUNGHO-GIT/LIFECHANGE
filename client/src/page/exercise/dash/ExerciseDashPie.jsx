@@ -20,7 +20,7 @@ export const ExerciseDashPie = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (pie) (${PATH})`, "week"
+    `SECTION (pie) (${PATH})`, "month"
   );
   const {val:LINE, set:setLINE} = useStorage(
     `LINE (pie) (${PATH})`, "part"

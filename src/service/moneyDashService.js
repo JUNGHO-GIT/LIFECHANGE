@@ -13,7 +13,8 @@ export const barToday = async (
 
   let findPlan = [];
   let findReal = [];
-  let finalResult = [];
+  let finalResultIn = [];
+  let finalResultOut = [];
 
   findPlan = await repository.barToday.listPlan(
     customer_id_param, startDt, endDt
@@ -22,12 +23,16 @@ export const barToday = async (
     customer_id_param, startDt, endDt
   );
 
-  finalResult = [
+  // in
+  finalResultIn = [
     {
       name: "수입",
       목표: intFormat(findPlan?.[0]?.money_plan_in),
       실제: intFormat(findReal?.[0]?.money_total_in)
-    },
+    }
+  ];
+  // out
+  finalResultOut = [
     {
       name: "지출",
       목표: intFormat(findPlan?.[0]?.money_plan_out),
@@ -35,7 +40,10 @@ export const barToday = async (
     }
   ];
 
-  return finalResult;
+  return {
+    in: finalResultIn,
+    out: finalResultOut
+  };
 };
 
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
@@ -173,9 +181,11 @@ export const lineWeek = async (
   let finalResultIn = [];
   let finalResultOut = [];
 
+  // in
   findResultIn = await repository.lineWeek.listIn(
     customer_id_param, startDt, endDt
   );
+  // out
   findResultOut = await repository.lineWeek.listOut(
     customer_id_param, startDt, endDt
   );
@@ -187,7 +197,6 @@ export const lineWeek = async (
     const findIndexOut = findResultOut.findIndex((item) => (
       new Date(item.money_startDt).getDay() === index
     ));
-
     finalResultIn.push({
       name: data,
       수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn].money_total_in) : 0
@@ -252,13 +261,13 @@ export const lineMonth = async (
   };
 };
 
-// 4-1. dash (avg - week) ------------------------------------------------------------------------->
-export const avgWeek = async (
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
+export const avgMonth = async (
   customer_id_param
 ) => {
 
-  const startDt = curWeekStart.format("YYYY-MM-DD");
-  const endDt = curWeekEnd.format("YYYY-MM-DD");
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
   const data = Array.from({ length: 5 }, (_, i) => {
     const weekStart = curWeekStart.clone().add(i * 7, 'days').format("MM-DD");
@@ -275,22 +284,36 @@ export const avgWeek = async (
   let finalResultIn = [];
   let finalResultOut = [];
 
-  findResultIn = await repository.avgWeek.listIn(
+  // in
+  findResultIn = await repository.avgMonth.listIn(
     customer_id_param, startDt, endDt
   );
-  findResultOut = await repository.avgWeek.listOut(
+  // out
+  findResultOut = await repository.avgMonth.listOut(
     customer_id_param, startDt, endDt
   );
 
+  // in
   findResultIn.forEach((item) => {
-    const weekNum = Math.floor(new Date(item.money_startDt).getDate() / 7);
-    sumMoneyIn[weekNum] += intFormat(item.money_total_in);
-    countRecords[weekNum]++;
+    const moneyDate = new Date(item.money_startDt);
+    const diffTime = Math.abs(moneyDate.getTime() - curWeekStart.toDate().getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const weekNum = Math.floor(diffDays / 7);
+    if (weekNum >= 0 && weekNum < 5) {
+      sumMoneyIn[weekNum] += intFormat(item.money_total_in);
+      countRecords[weekNum]++;
+    }
   });
+  // out
   findResultOut.forEach((item) => {
-    const weekNum = Math.floor(new Date(item.money_startDt).getDate() / 7);
-    sumMoneyOut[weekNum] += intFormat(item.money_total_out);
-    countRecords[weekNum]++;
+    const moneyDate = new Date(item.money_startDt);
+    const diffTime = Math.abs(moneyDate.getTime() - curWeekStart.toDate().getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const weekNum = Math.floor(diffDays / 7);
+    if (weekNum >= 0 && weekNum < 5) {
+      sumMoneyOut[weekNum] += intFormat(item.money_total_out);
+      countRecords[weekNum]++;
+    }
   });
 
   data.forEach((data, index) => {
@@ -310,13 +333,13 @@ export const avgWeek = async (
   }
 };
 
-// 4-2. dash (avg - month) ------------------------------------------------------------------------>
-export const avgMonth = async (
+// 4-2. dash (avg - year) ------------------------------------------------------------------------>
+export const avgYear = async (
   customer_id_param
 ) => {
 
-  const startDt = curMonthStart.format("YYYY-MM-DD");
-  const endDt = curMonthEnd.format("YYYY-MM-DD");
+  const startDt = curYearStart.format("YYYY-MM-DD");
+  const endDt = curYearEnd.format("YYYY-MM-DD");
 
   const data = Array.from({ length: 12 }, (_, i) => {
     return `${i + 1}월`;
@@ -331,20 +354,26 @@ export const avgMonth = async (
   let finalResultIn = [];
   let finalResultOut = [];
 
-  findResultIn = await repository.avgMonth.listIn(
+  // in
+  findResultIn = await repository.avgYear.listIn(
     customer_id_param, startDt, endDt
   );
-  findResultOut = await repository.avgMonth.listOut(
+  // out
+  findResultOut = await repository.avgYear.listOut(
     customer_id_param, startDt, endDt
   );
 
+  // in
   findResultIn.forEach((item) => {
-    const monthNum = new Date(item.money_startDt).getMonth();
+    const foodDate = new Date(item.food_startDt);
+    const monthNum = foodDate.getMonth();
     sumMoneyIn[monthNum] += intFormat(item.money_total_in);
     countRecords[monthNum]++;
   });
+  // out
   findResultOut.forEach((item) => {
-    const monthNum = new Date(item.money_startDt).getMonth();
+    const foodDate = new Date(item.food_startDt);
+    const monthNum = foodDate.getMonth();
     sumMoneyOut[monthNum] += intFormat(item.money_total_out);
     countRecords[monthNum]++;
   });
