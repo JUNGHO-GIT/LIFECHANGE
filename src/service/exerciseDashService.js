@@ -8,30 +8,27 @@ export const scatterToday = async (
   customer_id_param
 ) => {
 
-  const data = {
-    "체중": {
-      plan: "exercise_plan_weight",
-      real: "exercise_body_weight"
-    }
-  };
+  const startDt = koreanDate;
+  const endDt = koreanDate;
 
+  let findPlan = [];
+  let findReal = [];
   let finalResult = [];
 
-  const listPlan = await repository.scatterToday.listPlan(
-    customer_id_param, koreanDate, koreanDate
+  findPlan = await repository.scatterToday.listPlan(
+    customer_id_param, startDt, endDt
+  );
+  findReal = await repository.scatterToday.listReal(
+    customer_id_param, startDt, endDt
   );
 
-  const listReal = await repository.scatterToday.listReal(
-    customer_id_param, koreanDate, koreanDate
-  );
-
-  for (let key in data) {
-    finalResult.push({
-      name: koreanDate,
-      목표: intFormat(listPlan?.[0]?.[data[key].plan]),
-      실제: intFormat(listReal?.[0]?.[data[key].real])
-    });
-  };
+  finalResult = [
+    {
+      name: "체중",
+      목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
+      실제: intFormat(findReal?.[0]?.exercise_body_weight)
+    }
+  ];
 
   return finalResult;
 };
@@ -41,37 +38,27 @@ export const scatterWeek = async (
   customer_id_param
 ) => {
 
-  const data = {
-    "체중": {
-      plan: "exercise_plan_weight",
-      real: "exercise_body_weight"
-    }
-  };
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
 
+  let findPlan = [];
+  let findReal = [];
   let finalResult = [];
 
-  for (
-    let day = curWeekStart.clone();
-    day.isBefore(curWeekEnd);
-    day.add(1, "days")
-  ) {
+  findPlan = await repository.scatterWeek.listPlan(
+    customer_id_param, startDt, endDt
+  );
+  findReal = await repository.scatterWeek.listReal(
+    customer_id_param, startDt, endDt
+  );
 
-    const listPlan = await repository.scatterWeek.listPlan(
-      customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
-    );
-
-    const listReal = await repository.scatterWeek.listReal(
-      customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
-    );
-
-    for (let key in data) {
-      finalResult.push({
-        name: day.format("MM/DD"),
-        목표: intFormat(listPlan?.[0]?.[data[key].plan]),
-        실제: intFormat(listReal?.[0]?.[data[key].real])
-      });
-    };
-  };
+  finalResult = [
+    {
+      name: "체중",
+      목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
+      실제: intFormat(findReal?.[0]?.exercise_body_weight)
+    }
+  ];
 
   return finalResult;
 };
@@ -81,37 +68,27 @@ export const scatterMonth = async (
   customer_id_param
 ) => {
 
-  const data = {
-    "체중": {
-      plan: "exercise_plan_weight",
-      real: "exercise_body_weight"
-    }
-  };
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
+  let findPlan = [];
+  let findReal = [];
   let finalResult = [];
 
-  for (
-    let day = curMonthStart.clone();
-    day.isBefore(curMonthEnd);
-    day.add(1, "days")
-  ) {
+  findPlan = await repository.scatterMonth.listPlan(
+    customer_id_param, startDt, endDt
+  );
+  findReal = await repository.scatterMonth.listReal(
+    customer_id_param, startDt, endDt
+  );
 
-    const listPlan = await  repository.scatterMonth.listPlan(
-      customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
-    );
-
-    const listReal = await repository.scatterMonth.listReal(
-      customer_id_param, day.format("YYYY-MM-DD"), day.format("YYYY-MM-DD")
-    );
-
-    for (let key in data) {
-      finalResult.push({
-        name: day.format("MM/DD"),
-        목표: intFormat(listPlan?.[0]?.[data[key].plan]),
-        실제: intFormat(listReal?.[0]?.[data[key].real])
-      });
-    };
-  };
+  finalResult = [
+    {
+      name: "체중",
+      목표: intFormat(findPlan?.[0]?.exercise_plan_weight),
+      실제: intFormat(findReal?.[0]?.exercise_body_weight)
+    }
+  ];
 
   return finalResult;
 };
@@ -121,32 +98,33 @@ export const pieWeek = async (
   customer_id_param
 ) => {
 
-  // top part
-  let finalResultPart = [];
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
 
-  // top title
+  let findResultPart = [];
+  let findResultTitle = [];
+  let finalResultPart = [];
   let finalResultTitle = [];
 
-  const findResultPart = await repository.pieWeek.listPart(
-    customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  // part
+  findResultPart = await repository.pieWeek.listPart(
+    customer_id_param, startDt, endDt
   );
-  const findResultTitle = await repository.pieWeek.listTitle(
-    customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  // title
+  findResultTitle = await repository.pieWeek.listTitle(
+    customer_id_param, startDt, endDt
   );
 
-  for (let i = 0; i < findResultPart.length; i++) {
-    finalResultPart.push({
-      name: findResultPart[i]._id,
-      value: findResultPart[i].count
-    });
-  }
-
-  for (let i = 0; i < findResultTitle.length; i++) {
-    finalResultTitle.push({
-      name: findResultTitle[i]._id,
-      value: findResultTitle[i].count
-    });
-  }
+  // part
+  finalResultPart = findResultPart?.map((item) => ({
+    name: item._id,
+    value: item.count
+  }));
+  // title
+  finalResultTitle = findResultTitle?.map((item) => ({
+    name: item._id,
+    value: item.count
+  }));
 
   return {
     part: finalResultPart,
@@ -159,32 +137,33 @@ export const pieMonth = async (
   customer_id_param
 ) => {
 
-  // top part
-  let finalResultPart = [];
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  // top title
+  let findResultPart = [];
+  let findResultTitle = [];
+  let finalResultPart = [];
   let finalResultTitle = [];
 
-  const findResultPart = await repository.pieMonth.listPart(
-    customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  // part
+  findResultPart = await repository.pieMonth.listPart(
+    customer_id_param, startDt, endDt
   );
-  const findResultTitle = await repository.pieMonth.listTitle(
-    customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  // title
+  findResultTitle = await repository.pieMonth.listTitle(
+    customer_id_param, startDt, endDt
   );
 
-  for (let i = 0; i < findResultPart.length; i++) {
-    finalResultPart.push({
-      name: findResultPart[i]._id,
-      value: findResultPart[i].count
-    });
-  }
-
-  for (let i = 0; i < findResultTitle.length; i++) {
-    finalResultTitle.push({
-      name: findResultTitle[i]._id,
-      value: findResultTitle[i].count
-    });
-  }
+  // part
+  finalResultPart = findResultPart?.map((item) => ({
+    name: item._id,
+    value: item.count
+  }));
+  // title
+  finalResultTitle = findResultTitle?.map((item) => ({
+    name: item._id,
+    value: item.count
+  }));
 
   return {
     part: finalResultPart,
@@ -197,32 +176,44 @@ export const lineWeek = async (
   customer_id_param
 ) => {
 
-  const data = [
-    "월", "화", "수", "목", "금", "토", "일"
-  ];
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
 
-  // volume
+  // ex 월 (00-00)
+  const data = Array.from({ length: 7 }, (_, i) => {
+    return curWeekStart.clone().add(i, 'days').format("dd (MM-DD)");
+  });
+
+  let findResultVolume = [];
+  let findResultCardio = [];
   let finalResultVolume = [];
-
-  // cardio
   let finalResultCardio = [];
 
-  for (let i = 0; i < 7; i++) {
-    const dayNum = curWeekStart.clone().add(i, "days");
-    const findResult = await repository.lineWeek.list(
-      customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
-    );
+  // volume
+  findResultVolume = await repository.lineWeek.listVolume(
+    customer_id_param, startDt, endDt
+  );
+  // cardio
+  findResultCardio = await repository.lineWeek.listCardio(
+    customer_id_param, startDt, endDt
+  );
 
+  data.forEach((item, index) => {
+    const findItemVolume = findResultVolume?.findIndex((item) => (
+      new Date(item.exercise_startDt).getDate() === index
+    ));
+    const findItemCardio = findResultCardio?.findIndex((item) => (
+      new Date(item.exercise_startDt).getDate() === index
+    ));
     finalResultVolume.push({
-      name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      볼륨: intFormat(findResult?.exercise_total_volume || 0)
+      name: item,
+      볼륨: findItemVolume !== -1 ? intFormat(findResultVolume[findItemVolume].exercise_total_volume) : 0
     });
-
     finalResultCardio.push({
-      name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      시간: intFormat(findResult?.exercise_total_cardio || 0)
+      name: item,
+      시간: findItemCardio !== -1 ? intFormat(findResultCardio[findItemCardio].exercise_total_cardio) : 0
     });
-  };
+  });
 
   return {
     volume: finalResultVolume,
@@ -235,38 +226,44 @@ export const lineMonth = async (
   customer_id_param
 ) => {
 
-  const data = [
-    "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
-    "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일",
-    "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
-  ];
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  // volume
+  const data = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+    return `${i + 1}일`;
+  });
+
+  let findResultVolume = [];
+  let findResultCardio = [];
   let finalResultVolume = [];
-
-  // cardio
   let finalResultCardio = [];
 
-  for (let i = 0; i < 31; i++) {
-    const dayNum = curMonthStart.clone().add(i, "days");
-    const findResult = await repository.lineMonth.list(
-      customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
-    );
+  // volume
+  findResultVolume = await repository.lineMonth.listVolume(
+    customer_id_param, startDt, endDt
+  );
+  // cardio
+  findResultCardio = await repository.lineMonth.listCardio(
+    customer_id_param, startDt, endDt
+  );
+
+  data.forEach((data, index) => {
+    const findIndexVolume = findResultVolume.findIndex((item) => (
+      new Date(item.exercise_startDt).getDate() === index + 1
+    ));
+    const findIndexCardio = findResultCardio.findIndex((item) => (
+      new Date(item.exercise_startDt).getDate() === index + 1
+    ));
 
     finalResultVolume.push({
-      name: `${data[i]}`,
-      볼륨: intFormat(findResult?.exercise_total_volume || 0)
+      name: data,
+      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume].exercise_total_volume) : 0
     });
-
     finalResultCardio.push({
-      name: `${data[i]}`,
-      시간: intFormat(findResult?.exercise_total_cardio || 0)
+      name: data,
+      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio].exercise_total_cardio) : 0
     });
-
-    if (dayNum.isSame(curMonthEnd, "day")) {
-      break;
-    }
-  };
+  });
 
   return {
     volume: finalResultVolume,
@@ -279,50 +276,56 @@ export const avgWeek = async (
   customer_id_param
 ) => {
 
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
+
+  const data = Array.from({ length: 5 }, (_, i) => {
+    const weekStart = curWeekStart.clone().add(i * 7, 'days').format("MM-DD");
+    const weekEnd = curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD");
+    return `${i + 1}주차 (${weekStart} ~ ${weekEnd})`;
+  });
+
   let sumExerciseVolume = Array(5).fill(0);
   let sumExerciseCardio = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  const data = [
-    "1주차", "2주차", "3주차", "4주차", "5주차"
-  ];
-
-  // volume
+  let findResultVolume = [];
+  let findResultCardio = [];
   let finalResultVolume = [];
-
-  // cardio
   let finalResultCardio = [];
 
-  for (
-    let week = curMonthStart.clone();
-    week.isBefore(curMonthEnd);
-    week.add(1, "days")
-  ) {
-    const weekNum = week.week() - curMonthStart.week() + 1;
+  // volume
+  findResultVolume = await repository.avgWeek.listVolume(
+    customer_id_param, startDt, endDt
+  );
+  // cardio
+  findResultCardio = await repository.avgWeek.listCardio(
+    customer_id_param, startDt, endDt
+  );
 
-    if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repository.avgWeek.list(
-        customer_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
-      );
+  // volume
+  findResultVolume.forEach((item) => {
+    const weekNum = Math.floor(new Date(item.exercise_startDt).getDate() / 7);
+    sumExerciseVolume[weekNum] += intFormat(item.exercise_total_volume);
+    countRecords[weekNum]++;
+  });
+  // cardio
+  findResultCardio.forEach((item) => {
+    const weekNum = Math.floor(new Date(item.exercise_startDt).getDate() / 7);
+    sumExerciseCardio[weekNum] += intFormat(item.exercise_total_cardio);
+    countRecords[weekNum]++;
+  });
 
-      if (findResult) {
-        sumExerciseVolume[weekNum - 1] += intFormat(findResult?.exercise_total_volume);
-        sumExerciseCardio[weekNum - 1] += intFormat(findResult?.exercise_total_cardio);
-        countRecords[weekNum - 1]++;
-      }
-    }
-  };
-
-  for (let i = 0; i < 5; i++) {
+  data.forEach((data, index) => {
     finalResultVolume.push({
-      name: data[i],
-      볼륨: intFormat(sumExerciseVolume[i] / countRecords[i])
+      name: data,
+      볼륨: intFormat(sumExerciseVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
-      name: data[i],
-      시간: intFormat(sumExerciseCardio[i] / countRecords[i])
+      name: data,
+      시간: intFormat(sumExerciseCardio[index] / countRecords[index])
     });
-  };
+  });
 
   return {
     volume: finalResultVolume,
@@ -335,48 +338,54 @@ export const avgMonth = async (
   customer_id_param
 ) => {
 
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
+
+  const data = Array.from({ length: 12 }, (_, i) => {
+    return `${i + 1}월`;
+  });
+
   let sumExerciseVolume = Array(12).fill(0);
   let sumExerciseCardio = Array(12).fill(0);
   let countRecords = Array(12).fill(0);
 
-  const data = [
-    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
-  ];
-
-  // volume
+  let findResultVolume = [];
+  let findResultCardio = [];
   let finalResultVolume = [];
-
-  // cardio
   let finalResultCardio = [];
 
-  for (
-    let month = curYearStart.clone();
-    month.isBefore(curYearEnd);
-    month.add(1, "days")
-  ) {
-    const monthNum = month.month();
+  // volume
+  findResultVolume = await repository.avgMonth.listVolume(
+    customer_id_param, startDt, endDt
+  );
+  // cardio
+  findResultCardio = await repository.avgMonth.listCardio(
+    customer_id_param, startDt, endDt
+  );
 
-    const findResult = await repository.avgMonth.list(
-      customer_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
-    );
+  // volume
+  findResultVolume.forEach((item) => {
+    const monthNum = new Date(item.exercise_startDt).getMonth();
+    sumExerciseVolume[monthNum] += intFormat(item.exercise_total_volume);
+    countRecords[monthNum]++;
+  });
+  // cardio
+  findResultCardio.forEach((item) => {
+    const monthNum = new Date(item.exercise_startDt).getMonth();
+    sumExerciseCardio[monthNum] += intFormat(item.exercise_total_cardio);
+    countRecords[monthNum]++;
+  });
 
-    if (findResult) {
-      sumExerciseVolume[monthNum] += intFormat(findResult?.exercise_total_volume);
-      sumExerciseCardio[monthNum] += intFormat(findResult?.exercise_total_cardio);
-      countRecords[monthNum]++;
-    }
-  };
-
-  for (let i = 0; i < 12; i++) {
+  data.forEach((data, index) => {
     finalResultVolume.push({
-      name: data[i],
-      볼륨: intFormat(sumExerciseVolume[i] / countRecords[i])
+      name: data,
+      볼륨: intFormat(sumExerciseVolume[index] / countRecords[index])
     });
     finalResultCardio.push({
-      name: data[i],
-      시간: intFormat(sumExerciseCardio[i] / countRecords[i])
+      name: data,
+      시간: intFormat(sumExerciseCardio[index] / countRecords[index])
     });
-  };
+  });
 
   return {
     volume: finalResultVolume,

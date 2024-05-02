@@ -28,7 +28,7 @@ html, body {
   border: none;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: 9vh;
+  height: 6vh;
   border-radius: 0.1rem;
   margin: 0vh 0vw 1vh 0vw;
   padding: 2vh 0vw 2vh 0vw;
@@ -42,7 +42,7 @@ html, body {
   border: none;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: 9vh;
+  height: 6vh;
   border-radius: 0.1rem;
   margin: 0vh 0vw 1vh 0vw;
   padding: 2vh 0vw 2vh 0vw;
@@ -84,7 +84,7 @@ html, body {
   border: 1px solid #dee2e6;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 58vh;
+  height: 62vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;

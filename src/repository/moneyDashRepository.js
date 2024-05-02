@@ -8,34 +8,49 @@ export const barToday = {
   listPlan: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await MoneyPlan.findOne({
-      customer_id: customer_id_param,
-      money_plan_startDt: {
-        $lte: endDt_param
-      },
-      money_plan_endDt: {
-        $gte: startDt_param
-      }
-    })
-    .lean();
+    const finalResult = await MoneyPlan.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_plan_startDt: {
+          $lte: endDt_param,
+        },
+        money_plan_endDt: {
+          $gte: startDt_param,
+        },
+      }},
+      {$project: {
+        money_plan_startDt: 1,
+        money_plan_endDt: 1,
+        money_plan_in: 1,
+        money_plan_out: 1,
+      }},
+      {$sort: {money_plan_startDt: 1}}
+    ]);
     return finalResult;
   },
 
   listReal: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Money.findOne({
-      customer_id: customer_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param
-      }
-    })
-    .lean();
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_section: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
     return finalResult;
   }
 };
@@ -243,84 +258,212 @@ export const pieMonth = {
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
-  list: async (
+  listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Money.findOne({
-      customer_id: customer_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-    })
-    .lean();
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_in: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
+    return finalResult;
+  },
+
+  listOut: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_out: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
     return finalResult;
   }
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
-  list: async (
+  listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Money.findOne({
-      customer_id: customer_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-    })
-    .lean();
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_in: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
+    return finalResult;
+  },
+
+  listOut: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_out: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
     return finalResult;
   }
 };
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
 export const avgWeek = {
-  list: async (
+  listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Money.findOne({
-      customer_id: customer_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-    })
-    .lean();
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_in: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
+    return finalResult;
+  },
+
+  listOut: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_out: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
     return finalResult;
   }
 };
 
 // 4-2. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
-  list: async (
+  listIn: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Money.findOne({
-      customer_id: customer_id_param,
-      money_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      money_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-    })
-    .lean();
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_in: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
+    return finalResult;
+  },
+
+  listOut: async (
+    customer_id_param, startDt_param, endDt_param
+  ) => {
+    const finalResult = await Money.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        money_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        money_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        money_startDt: 1,
+        money_endDt: 1,
+        money_total_out: 1,
+      }},
+      {$sort: {money_startDt: 1}}
+    ]);
     return finalResult;
   }
 };

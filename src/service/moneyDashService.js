@@ -8,35 +8,34 @@ export const barToday = async (
   customer_id_param
 ) => {
 
-  const data  = {
-    "수입": {
-      plan: "money_plan_in",
-      real: "money_total_in"
-    },
-    "지출": {
-      plan: "money_plan_out",
-      real: "money_total_out"
-    }
-  };
+  const startDt = koreanDate;
+  const endDt = koreanDate;
 
+  let findPlan = [];
+  let findReal = [];
   let finalResult = [];
 
-  for (let key in data) {
-    const listPlan = await repository.barToday.listPlan(
-      customer_id_param, koreanDate, koreanDate
-    );
-    const listReal = await repository.barToday.listReal(
-      customer_id_param, koreanDate, koreanDate
-    );
+  findPlan = await repository.barToday.listPlan(
+    customer_id_param, startDt, endDt
+  );
+  findReal = await repository.barToday.listReal(
+    customer_id_param, startDt, endDt
+  );
 
-    finalResult.push({
-      name: key,
-      목표: intFormat(listPlan?.[data[key].plan] || 0),
-      실제: intFormat(listReal?.[data[key].real] || 0),
-    });
-  };
+  finalResult = [
+    {
+      name: "수입",
+      목표: intFormat(findPlan?.[0]?.money_plan_in),
+      실제: intFormat(findReal?.[0]?.money_total_in)
+    },
+    {
+      name: "지출",
+      목표: intFormat(findPlan?.[0]?.money_plan_out),
+      실제: intFormat(findReal?.[0]?.money_total_out)
+    }
+  ];
 
-  return finalResult
+  return finalResult;
 };
 
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
@@ -44,20 +43,30 @@ export const pieToday = async (
   customer_id_param
 ) => {
 
+  const startDt = koreanDate;
+  const endDt = koreanDate;
+
+  let findResultIn = [];
+  let findResultOut = [];
+  let finalResultIn = [];
+  let finalResultOut = [];
+
   // in
-  const findResultIn = await repository.pieToday.listIn(
-    customer_id_param, koreanDate, koreanDate
+  findResultIn = await repository.pieToday.listIn(
+    customer_id_param, startDt, endDt
   );
-  const finalResultIn = findResultIn?.map((item) => ({
+  // out
+  findResultOut = await repository.pieToday.listOut(
+    customer_id_param, startDt, endDt
+  );
+
+  // in
+  finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
   }));
-
   // out
-  const findResultOut = await repository.pieToday.listOut(
-    customer_id_param, koreanDate, koreanDate
-  );
-  const finalResultOut = findResultOut?.map((item) => ({
+  finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
   }));
@@ -73,20 +82,30 @@ export const pieWeek = async (
   customer_id_param
 ) => {
 
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
+
+  let findResultIn = [];
+  let findResultOut = [];
+  let finalResultIn = [];
+  let finalResultOut = [];
+
   // in
-  const findResultIn = await repository.pieWeek.listIn(
-    customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
+  findResultIn = await repository.pieWeek.listIn(
+    customer_id_param, startDt, endDt
   );
-  const finalResultIn = findResultIn?.map((item) => ({
+  // out
+  findResultOut = await repository.pieWeek.listOut(
+    customer_id_param, startDt, endDt
+  );
+
+  // in
+  finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
   }));
-
   // out
-  const findResultOut = await repository.pieWeek.listOut(
-    customer_id_param, curWeekStart.format("YYYY-MM-DD"), curWeekEnd.format("YYYY-MM-DD")
-  );
-  const finalResultOut = findResultOut?.map((item) => ({
+  finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
   }));
@@ -102,20 +121,30 @@ export const pieMonth = async (
   customer_id_param
 ) => {
 
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
+
+  let findResultIn = [];
+  let findResultOut = [];
+  let finalResultIn = [];
+  let finalResultOut = [];
+
   // in
-  const findResultIn = await repository.pieMonth.listIn(
-    customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
+  findResultIn = await repository.pieMonth.listIn(
+    customer_id_param, startDt, endDt
   );
-  const finalResultIn = findResultIn?.map((item) => ({
+  // out
+  findResultOut = await repository.pieMonth.listOut(
+    customer_id_param, startDt, endDt
+  );
+
+  // in
+  finalResultIn = findResultIn?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
   }));
-
   // out
-  const findResultOut = await repository.pieMonth.listOut(
-    customer_id_param, curMonthStart.format("YYYY-MM-DD"), curMonthEnd.format("YYYY-MM-DD")
-  );
-  const finalResultOut = findResultOut?.map((item) => ({
+  finalResultOut = findResultOut?.map((item) => ({
     name: item._id,
     value: intFormat(item.value)
   }));
@@ -131,37 +160,48 @@ export const lineWeek = async (
   customer_id_param
 ) => {
 
-  const data = [
-    "월", "화", "수", "목", "금", "토", "일"
-  ];
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
 
-  // in
+  // ex 월 (00-00)
+  const data = Array.from({ length: 7 }, (_, i) => {
+    return curWeekStart.clone().add(i, 'days').format("dd (MM-DD)");
+  });
+
+  let findResultIn = [];
+  let findResultOut = [];
   let finalResultIn = [];
-
-  // out
   let finalResultOut = [];
 
-  for (let i = 0; i < 7; i++) {
-    const dayNum = curWeekStart.clone().day(i);
-    const findResult = await repository.lineWeek.list(
-      customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
-    );
+  findResultIn = await repository.lineWeek.listIn(
+    customer_id_param, startDt, endDt
+  );
+  findResultOut = await repository.lineWeek.listOut(
+    customer_id_param, startDt, endDt
+  );
+
+  data.forEach((data, index) => {
+    const findIndexIn = findResultIn.findIndex((item) => (
+      new Date(item.money_startDt).getDay() === index
+    ));
+    const findIndexOut = findResultOut.findIndex((item) => (
+      new Date(item.money_startDt).getDay() === index
+    ));
 
     finalResultIn.push({
-      name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      수입: intFormat(findResult?.money_total_in || 0)
+      name: data,
+      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn].money_total_in) : 0
     });
-
     finalResultOut.push({
-      name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      지출: intFormat(findResult?.money_total_out || 0)
+      name: data,
+      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut].money_total_out) : 0
     });
-  };
+  });
 
   return {
     in: finalResultIn,
     out: finalResultOut
-  }
+  };
 };
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
@@ -169,39 +209,47 @@ export const lineMonth = async (
   customer_id_param
 ) => {
 
-  const data = [
-    "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
-    "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일",
-    "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "31일"
-  ];
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  // in
+  const data = Array.from({ length: curMonthEnd.date() }, (_, i) => {
+    return `${i + 1}일`;
+  });
+
+  let findResultIn = [];
+  let findResultOut = [];
   let finalResultIn = [];
-
-  // out
   let finalResultOut = [];
 
-  for (let i = 0; i < 31; i++) {
-    const dayNum = curMonthStart.clone().add(i, "days");
-    const findResult = await repository.lineMonth.list(
-      customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
-    );
+  findResultIn = await repository.lineMonth.listIn(
+    customer_id_param, startDt, endDt
+  );
+  findResultOut = await repository.lineMonth.listOut(
+    customer_id_param, startDt, endDt
+  );
+
+  data.forEach((data, index) => {
+    const findIndexIn = findResultIn.findIndex((item) => (
+      new Date(item.money_startDt).getDay() === index + 1
+    ));
+    const findIndexOut = findResultOut.findIndex((item) => (
+      new Date(item.money_startDt).getDay() === index + 1
+    ));
 
     finalResultIn.push({
-      name: `${data[i]}`,
-      수입: intFormat(findResult?.money_total_in || 0)
+      name: data,
+      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn].money_total_in) : 0
     });
-
     finalResultOut.push({
-      name: `${data[i]}`,
-      지출: intFormat(findResult?.money_total_out || 0)
+      name: data,
+      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut].money_total_out) : 0
     });
-  }
+  });
 
   return {
     in: finalResultIn,
     out: finalResultOut
-  }
+  };
 };
 
 // 4-1. dash (avg - week) ------------------------------------------------------------------------->
@@ -209,50 +257,52 @@ export const avgWeek = async (
   customer_id_param
 ) => {
 
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
+
+  const data = Array.from({ length: 5 }, (_, i) => {
+    const weekStart = curWeekStart.clone().add(i * 7, 'days').format("MM-DD");
+    const weekEnd = curWeekStart.clone().add((i + 1) * 7 - 1, 'days').format("MM-DD");
+    return `${i + 1}주차 (${weekStart} ~ ${weekEnd})`;
+  });
+
   let sumMoneyIn = Array(5).fill(0);
   let sumMoneyOut = Array(5).fill(0);
   let countRecords = Array(5).fill(0);
 
-  const data = [
-    "1주차", "2주차", "3주차", "4주차", "5주차"
-  ];
-
-  // in
+  let findResultIn = [];
+  let findResultOut = [];
   let finalResultIn = [];
-
-  // out
   let finalResultOut = [];
 
-  for (
-    let week = curMonthStart.clone();
-    week.isBefore(curMonthEnd);
-    week.add(1, "days")
-  ) {
-    const weekNum = week.week() - curMonthStart.week() + 1;
+  findResultIn = await repository.avgWeek.listIn(
+    customer_id_param, startDt, endDt
+  );
+  findResultOut = await repository.avgWeek.listOut(
+    customer_id_param, startDt, endDt
+  );
 
-    if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repository.avgWeek.list(
-        customer_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
-      );
+  findResultIn.forEach((item) => {
+    const weekNum = Math.floor(new Date(item.money_startDt).getDate() / 7);
+    sumMoneyIn[weekNum] += intFormat(item.money_total_in);
+    countRecords[weekNum]++;
+  });
+  findResultOut.forEach((item) => {
+    const weekNum = Math.floor(new Date(item.money_startDt).getDate() / 7);
+    sumMoneyOut[weekNum] += intFormat(item.money_total_out);
+    countRecords[weekNum]++;
+  });
 
-      if (findResult) {
-        sumMoneyIn[weekNum - 1] += intFormat(findResult?.money_total_in || 0);
-        sumMoneyOut[weekNum - 1] += intFormat(findResult?.money_total_out || 0);
-        countRecords[weekNum - 1]++;
-      }
-    }
-  };
-
-  for (let i = 0; i < 5; i++) {
+  data.forEach((data, index) => {
     finalResultIn.push({
-      name: `${data[i]}`,
-      수입: intFormat(sumMoneyIn[i] / countRecords[i])
+      name: data,
+      수입: intFormat(sumMoneyIn[index] / countRecords[index])
     });
     finalResultOut.push({
-      name: `${data[i]}`,
-      지출: intFormat(sumMoneyOut[i] / countRecords[i])
+      name: data,
+      지출: intFormat(sumMoneyOut[index] / countRecords[index])
     });
-  };
+  });
 
   return {
     in: finalResultIn,
@@ -265,48 +315,50 @@ export const avgMonth = async (
   customer_id_param
 ) => {
 
-  let sumMoneyIn = Array(12).fill(0);
-  let sumMoneyOut = Array(12).fill(0);
-  let countRecords = Array(12).fill(0);
+  const startDt = curMonthStart.format("YYYY-MM-DD");
+  const endDt = curMonthEnd.format("YYYY-MM-DD");
 
-  const data = [
-    "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"
-  ];
+  const data = Array.from({ length: 12 }, (_, i) => {
+    return `${i + 1}월`;
+  });
 
-  // in
+  let sumMoneyIn = Array(5).fill(0);
+  let sumMoneyOut = Array(5).fill(0);
+  let countRecords = Array(5).fill(0);
+
+  let findResultIn = [];
+  let findResultOut = [];
   let finalResultIn = [];
-
-  // out
   let finalResultOut = [];
 
-  for (
-    let month = curYearStart.clone();
-    month.isBefore(curYearEnd);
-    month.add(1, "days")
-  ) {
-    const monthNum = month.month();
+  findResultIn = await repository.avgMonth.listIn(
+    customer_id_param, startDt, endDt
+  );
+  findResultOut = await repository.avgMonth.listOut(
+    customer_id_param, startDt, endDt
+  );
 
-    const findResult = await repository.avgMonth.list(
-      customer_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
-    );
+  findResultIn.forEach((item) => {
+    const monthNum = new Date(item.money_startDt).getMonth();
+    sumMoneyIn[monthNum] += intFormat(item.money_total_in);
+    countRecords[monthNum]++;
+  });
+  findResultOut.forEach((item) => {
+    const monthNum = new Date(item.money_startDt).getMonth();
+    sumMoneyOut[monthNum] += intFormat(item.money_total_out);
+    countRecords[monthNum]++;
+  });
 
-    if (findResult) {
-      sumMoneyIn[monthNum] += intFormat(findResult?.money_total_in || 0);
-      sumMoneyOut[monthNum] += intFormat(findResult?.money_total_out || 0);
-      countRecords[monthNum]++;
-    }
-  };
-
-  for (let i = 0; i < 12; i++) {
+  data.forEach((data, index) => {
     finalResultIn.push({
-      name: data[i],
-      수입: intFormat(sumMoneyIn[i] / countRecords[i])
+      name: data,
+      수입: intFormat(sumMoneyIn[index] / countRecords[index])
     });
     finalResultOut.push({
-      name: data[i],
-      지출: intFormat(sumMoneyOut[i] / countRecords[i])
+      name: data,
+      지출: intFormat(sumMoneyOut[index] / countRecords[index])
     });
-  };
+  });
 
   return {
     in: finalResultIn,

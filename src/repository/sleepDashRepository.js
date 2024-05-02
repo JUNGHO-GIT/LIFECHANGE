@@ -48,6 +48,8 @@ export const barToday = {
         },
       }},
       {$project: {
+        sleep_startDt: 1,
+        sleep_endDt: 1,
         sleep_section: 1,
       }},
       {$sort: {sleep_startDt: 1}}
@@ -90,18 +92,25 @@ export const lineMonth = {
   list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Sleep.findOne({
-      customer_id: customer_id_param,
-      sleep_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      sleep_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-    })
-    .lean();
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        sleep_startDt: 1,
+        sleep_endDt: 1,
+        sleep_section: 1,
+      }},
+      {$sort: {sleep_startDt: 1}}
+    ])
     return finalResult;
   }
 };
@@ -111,18 +120,25 @@ export const avgWeek = {
   list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Sleep.findOne({
-      customer_id: customer_id_param,
-      sleep_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      sleep_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-    })
-    .lean();
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        sleep_startDt: 1,
+        sleep_endDt: 1,
+        sleep_section: 1,
+      }},
+      {$sort: {sleep_startDt: 1}}
+    ])
     return finalResult;
   }
 };
@@ -132,18 +148,25 @@ export const avgMonth = {
   list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
-    const finalResult = await Sleep.findOne({
-      customer_id: customer_id_param,
-      sleep_startDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-      sleep_endDt: {
-        $gte: startDt_param,
-        $lte: endDt_param,
-      },
-    })
-    .lean();
+    const finalResult = await Sleep.aggregate([
+      {$match: {
+        customer_id: customer_id_param,
+        sleep_startDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+        sleep_endDt: {
+          $gte: startDt_param,
+          $lte: endDt_param,
+        },
+      }},
+      {$project: {
+        sleep_startDt: 1,
+        sleep_endDt: 1,
+        sleep_section: 1,
+      }},
+      {$sort: {sleep_startDt: 1}}
+    ])
     return finalResult;
   }
 };
