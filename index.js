@@ -42,7 +42,7 @@ const customLogger = (collectionName, method, query, doc) => {
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect("mongodb://34.75.165.209:27017/LIFECHANGE");
-mongoose.set("debug", customLogger);
+/* mongoose.set("debug", customLogger); */
 mongoose.set("autoIndex", true);
 const app = express();
 const __filename = fileURLToPath(import.meta.url);

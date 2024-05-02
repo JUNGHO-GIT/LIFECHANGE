@@ -301,7 +301,7 @@ export const avgWeek = async (
     const weekNum = week.week() - curMonthStart.week() + 1;
 
     if (weekNum >= 1 && weekNum <= 5) {
-      const findResult = await repository.lineWeek.list(
+      const findResult = await repository.avgWeek.list(
         customer_id_param, week.format("YYYY-MM-DD"), week.format("YYYY-MM-DD")
       );
 
@@ -356,7 +356,7 @@ export const avgMonth = async (
   ) {
     const monthNum = month.month();
 
-    const findResult = await repository.lineMonth.list(
+    const findResult = await repository.avgMonth.list(
       customer_id_param, month.format("YYYY-MM-DD"), month.format("YYYY-MM-DD")
     );
 

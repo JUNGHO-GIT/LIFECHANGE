@@ -1,2 +1,93 @@
-
-<table class="border-1 table table-hover"><thead><tr><th class="table-thead">분류</th><th class="table-thead">음식명</th><th class="table-thead">수량</th><th class="table-thead">g</th><th class="table-thead">kcal</th><th class="table-thead">fat</th><th class="table-thead">carb</th><th class="table-thead">protein</th><th class="table-thead">삭제</th></tr></thead><tbody><tr><td><select id="food_part_idx" name="food_part_idx" class="form-select"><option value="0">전체</option><option value="1">아침</option><option value="2">점심</option><option value="3">저녁</option><option value="4">간식</option></select></td><td>짬뽕(undefined)</td><td><div class="d-flex"><input min="0" max="99" minlength="1" maxlength="2" id="food_plan_count" name="food_plan_count" datatype="number" class="form-control" type="text" value="8" inputmode="numeric" /><span>회</span></div></td><td>29</td><td>1355</td><td>77</td><td>19</td><td>55</td><td><p class="del-btn">x</p></td></tr><tr><td><select id="food_part_idx" name="food_part_idx" class="form-select"><option value="0">전체</option><option value="1">아침</option><option value="2">점심</option><option value="3">저녁</option><option value="4">간식</option></select></td><td>짬뽕(undefined)</td><td><div class="d-flex"><input min="0" max="99" minlength="1" maxlength="2" id="food_plan_count" name="food_plan_count" datatype="number" class="form-control" type="text" value="0" inputmode="numeric" /><span>회</span></div></td><td>35</td><td>7086</td><td>42</td><td>89</td><td>71</td><td><p class="del-btn">x</p></td></tr><tr><td><select id="food_part_idx" name="food_part_idx" class="form-select"><option value="0">전체</option><option value="1">아침</option><option value="2">점심</option><option value="3">저녁</option><option value="4">간식</option></select></td><td>짬뽕(undefined)</td><td><div class="d-flex"><input min="0" max="99" minlength="1" maxlength="2" id="food_plan_count" name="food_plan_count" datatype="number" class="form-control" type="text" value="7" inputmode="numeric" /><span>회</span></div></td><td>37</td><td>8555</td><td>79</td><td>14</td><td>65</td><td><p class="del-btn">x</p></td></tr><tr><td><select id="food_part_idx" name="food_part_idx" class="form-select"><option value="0">전체</option><option value="1">아침</option><option value="2">점심</option><option value="3">저녁</option><option value="4">간식</option></select></td><td>짬뽕(undefined)</td><td><div class="d-flex"><input min="0" max="99" minlength="1" maxlength="2" id="food_plan_count" name="food_plan_count" datatype="number" class="form-control" type="text" value="5" inputmode="numeric" /><span>회</span></div></td><td>14</td><td>5670</td><td>92</td><td>69</td><td>87</td><td><p class="del-btn">x</p></td></tr><tr><td>합계</td><td></td><td></td><td></td><td>22666</td><td>290</td><td>191</td><td>278</td><td></td></tr></tbody></table>
+[
+  {
+    "_id": "663302d06cb9b451d8dfb7c9",
+    "sleep_startDt": "2024-05-01",
+    "sleep_endDt": "2024-05-01",
+    "sleep_section": [
+      {
+        "sleep_night": "17:33",
+        "sleep_morning": "17:02",
+        "sleep_time": "15:42",
+        "_id": "663302d06cb9b451d8dfb7ca"
+      }
+    ]
+  },
+  {
+    "_id": "663302d06cb9b451d8dfb7cd",
+    "sleep_startDt": "2024-04-30",
+    "sleep_endDt": "2024-04-30",
+    "sleep_section": [
+      {
+        "sleep_night": "22:09",
+        "sleep_morning": "09:10",
+        "sleep_time": "18:14",
+        "_id": "663302d06cb9b451d8dfb7ce"
+      }
+    ]
+  },
+  {
+    "_id": "663302d06cb9b451d8dfb7df",
+    "sleep_startDt": "2024-04-30",
+    "sleep_endDt": "2024-04-30",
+    "sleep_section": [
+      {
+        "sleep_night": "17:30",
+        "sleep_morning": "09:08",
+        "sleep_time": "16:23",
+        "_id": "663302d06cb9b451d8dfb7e0"
+      }
+    ]
+  },
+  {
+    "_id": "663302d06cb9b451d8dfb7eb",
+    "sleep_startDt": "2024-05-03",
+    "sleep_endDt": "2024-05-03",
+    "sleep_section": [
+      {
+        "sleep_night": "13:21",
+        "sleep_morning": "02:54",
+        "sleep_time": "17:18",
+        "_id": "663302d06cb9b451d8dfb7ec"
+      }
+    ]
+  },
+  {
+    "_id": "663302d06cb9b451d8dfb807",
+    "sleep_startDt": "2024-04-30",
+    "sleep_endDt": "2024-04-30",
+    "sleep_section": [
+      {
+        "sleep_night": "00:26",
+        "sleep_morning": "22:59",
+        "sleep_time": "15:19",
+        "_id": "663302d06cb9b451d8dfb808"
+      }
+    ]
+  },
+  {
+    "_id": "663302d06cb9b451d8dfb821",
+    "sleep_startDt": "2024-05-05",
+    "sleep_endDt": "2024-05-05",
+    "sleep_section": [
+      {
+        "sleep_night": "04:41",
+        "sleep_morning": "08:21",
+        "sleep_time": "20:52",
+        "_id": "663302d06cb9b451d8dfb822"
+      }
+    ]
+  },
+  {
+    "_id": "663302d06cb9b451d8dfb853",
+    "sleep_startDt": "2024-05-01",
+    "sleep_endDt": "2024-05-01",
+    "sleep_section": [
+      {
+        "sleep_night": "03:58",
+        "sleep_morning": "02:14",
+        "sleep_time": "21:55",
+        "_id": "663302d06cb9b451d8dfb854"
+      }
+    ]
+  }
+]

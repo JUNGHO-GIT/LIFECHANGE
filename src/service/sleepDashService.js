@@ -8,6 +8,9 @@ export const barToday = async (
   customer_id_param
 ) => {
 
+  const startDt = koreanDate;
+  const endDt = koreanDate;
+
   const data = {
     "취침": {
       plan: "sleep_plan_night",
@@ -23,50 +26,53 @@ export const barToday = async (
     },
   };
 
-  let finalResult = [];
+  let findPlan = [];
+  let findReal = [];
+  let finalResult;
 
-  for (let key in data) {
-    const listPlan = await repository.barToday.listPlan(
-      customer_id_param, koreanDate, koreanDate
-    );
-    const listReal = await repository.barToday.listReal(
-      customer_id_param, koreanDate, koreanDate
-    );
+  findPlan = await repository.barToday.listPlan(
+    customer_id_param, startDt, endDt
+  );
 
-    finalResult.push({
-      name: key,
-      목표: timeFormat(listPlan?.[data[key].plan]),
-      실제: timeFormat(listReal?.sleep_section?.[0]?.[data[key].real]),
-    });
-  };
+  findReal = await repository.barToday.listReal(
+    customer_id_param, startDt, endDt
+  );
 
-  return finalResult;
+  console.log("===================================");
+  console.log("findPlan: ", JSON.stringify(findPlan, null, 3));
+
+  console.log("===================================");
+  console.log("findReal: ", JSON.stringify(findReal, null, 3));
 };
+
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = async (
   customer_id_param
 ) => {
 
+  const startDt = curWeekStart.format("YYYY-MM-DD");
+  const endDt = curWeekEnd.format("YYYY-MM-DD");
+
   const data = [
     "월", "화", "수", "목", "금", "토", "일"
   ];
 
+  let findResult = [];
   let finalResult = [];
 
-  for (let i = 0; i < 7; i++) {
-    const dayNum = curWeekStart.clone().add(i, "days");
-    const findResult = await repository.lineWeek.list(
-      customer_id_param, dayNum.format("YYYY-MM-DD"), dayNum.format("YYYY-MM-DD")
-    );
+  findResult = await repository.lineWeek.list(
+    customer_id_param, startDt, endDt
+  );
 
+  findResult.forEach((element) => {
     finalResult.push({
-      name: `${data[i]} ${dayNum.format("MM/DD")}`,
-      취침: timeFormat(findResult?.sleep_section?.[0]?.sleep_night),
-      기상: timeFormat(findResult?.sleep_section?.[0]?.sleep_morning),
-      수면: timeFormat(findResult?.sleep_section?.[0]?.sleep_time),
+      name: `${element.sleep_startDt.slice(5, 10)}(${data[new Date(element.sleep_startDt).getDay()]})`,
+      취침: timeFormat(element.sleep_section[0].sleep_night),
+      수면: timeFormat(element.sleep_section[0].sleep_time),
+      기상: timeFormat(element.sleep_section[0].sleep_morning)
     });
-  };
+  });
 
   return finalResult;
 };

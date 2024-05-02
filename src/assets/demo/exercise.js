@@ -1,97 +1,7 @@
 import mongodb from 'mongodb';
 import {Exercise} from '../../schema/Exercise.js';
-
-// array ----------------------------------------------------------------------------------------->
-const exerciseArray = [
-  // 0
-  {
-    exercise_part: "전체",
-    exercise_title: [
-      "전체"
-    ]
-  },
-  // 1
-  {
-    exercise_part: "등",
-    exercise_title: [
-      "전체", "데드리프트", "바벨로우", "덤벨로우", "시티드로우", "랫풀다운", "풀업"
-    ]
-  },
-  // 2
-  {
-    exercise_part : "하체",
-    exercise_title : [
-      "전체", "백스쿼트", "프론트스쿼트", "핵스쿼트", "바벨런지", "덤벨런지", "레그프레스", "레그익스텐션", "레그컬"
-    ]
-  },
-  // 3
-  {
-    exercise_part: "가슴",
-    exercise_title: [
-      "전체", "바벨벤치프레스", "덤벨벤치프레스", "머신벤치프레스", "인클라인벤치프레스", "디클라인벤치프레스", "덤벨플라이", "케이블플라이", "케이블크로스오버", "딥스", "푸쉬업"
-    ]
-  },
-  // 4
-  {
-    exercise_part: "어깨",
-    exercise_title: [
-      "전체", "밀리터리프레스", "바벨프레스", "덤벨프레스", "머신프레스", "비하인드넥프레스", "프론트레터럴레이즈", "사이드레터럴레이즈", "벤트오버레터럴레이즈", "페이스풀"
-    ]
-  },
-  // 5
-  {
-    exercise_part: "삼두",
-    exercise_title: [
-      "전체", "라잉트라이셉스익스텐션", "덤벨트라이셉스익스텐션", "오버헤드트라이셉스익스텐션", "클로즈그립벤치프레스", "케이블트라이셉스푸쉬다운", "케이블트라이셉스로프다운", "킥백"
-    ]
-  },
-  // 6
-  {
-    exercise_part: "이두",
-    exercise_title: [
-      "전체", "바벨컬", "덤벨컬", "해머컬", "머신컬", "케이블컬", "바벨프리처컬", "덤벨프리처컬"
-    ]
-  },
-  // 7
-  {
-    exercise_part: "유산소",
-    exercise_title: [
-      "전체", "걷기", "달리기", "스텝퍼", "자전거", "수영", "플랭크"
-    ]
-  },
-  // 8
-  {
-    exercise_part: "휴식",
-    exercise_title: [
-      "전체", "휴식"
-    ]
-  },
-];
-
-// logic ------------------------------------------------------------------------------------------>
-const randomNumber = (data) => {
-  return Math.floor(Math.random() * data);
-}
-const randomDate = (start, end) => {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
-const randomTime = () => {
-  const hour = Math.floor(Math.random() * 23).toString().padStart(2, '0');
-  const minute = Math.floor(Math.random() * 60).toString().padStart(2, '0');
-  return `${hour}:${minute}`;
-}
-const formatDate1 = (date) => {
-  return `2024-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-}
-const formatDate2 = (date) => {
-  return `2024-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} / ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-}
-const calcDate = (startTime, endTime) => {
-  const start = new Date(`1970/01/01 ${startTime}`);
-  const end = new Date(`1970/01/01 ${endTime}`);
-  const duration = new Date(end - start + 24 * 60 * 60 * 1000);
-  return `${duration.getHours().toString().padStart(2, '0')}:${duration.getMinutes().toString().padStart(2, '0')}`;
-}
+import {randomNumber, randomDate, randomTime, formatDate1, formatDate2, calcDate} from '../js/utils.js';
+import {exerciseArray} from '../array/exerciseArray.js';
 
 // result ----------------------------------------------------------------------------------------->
 let demoData = [];
@@ -154,7 +64,7 @@ export const addExercise = async () => {
 
     // 데이터 삽입
     const insertResult = await Exercise.insertMany(demoData);
-    console.log('Inserted documents:', insertResult.insertedCount);
+    console.log('Inserted documents:', insertResult.length);
 
     // 중복된 날짜 항목 삭제 로직
     const docs = await Exercise.aggregate([
@@ -177,7 +87,7 @@ export const addExercise = async () => {
           }
         }
       }
-    ]).toArray();
+    ]);
 
     // 필터링된 문서 ID로 deleteMany 실행
     for (const doc of docs) {
