@@ -129,20 +129,16 @@ export const DateNode = ({
 
   return (
     <React.Fragment>
-      <Draggable positionOffset={{ x: '-50%', y: '-50%' }}>
-        <div className={`dayPicker-container ${CALENDAR.calStartOpen ? "" : "d-none"}`}>
-          {closeBtn("Start")}
-          <div className="h-2vh"></div>
-          {calendar("Start")}
-        </div>
-      </Draggable>
-      <Draggable positionOffset={{ x: '-50%', y: '-50%' }}>
-        <div className={`dayPicker-container ${CALENDAR.calEndOpen ? "" : "d-none"}`}>
-          {closeBtn("End")}
-          <div className="h-2vh"></div>
-          {calendar("End")}
-        </div>
-      </Draggable>
+      <div className={`dayPicker-container ${CALENDAR.calStartOpen ? "" : "d-none"}`}>
+        {closeBtn("Start")}
+        <div className="h-2vh"></div>
+        {calendar("Start")}
+      </div>
+      <div className={`dayPicker-container ${CALENDAR.calEndOpen ? "" : "d-none"}`}>
+        {closeBtn("End")}
+        <div className="h-2vh"></div>
+        {calendar("End")}
+      </div>
     </React.Fragment>
   );
 };
