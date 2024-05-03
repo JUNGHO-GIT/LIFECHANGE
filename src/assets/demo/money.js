@@ -1,14 +1,16 @@
 import mongodb from 'mongodb';
+import moment from 'moment-timezone';
 import {Money} from '../../schema/Money.js';
-import {randomNumber, randomDate, randomTime, formatDate1, formatDate2, calcDate} from '../js/utils.js';
+import {randomNumber} from '../js/utils.js';
 import {moneyArray} from '../array/moneyArray.js';
 
 // result ----------------------------------------------------------------------------------------->
 let demoData = [];
 for (let i = 1; i <= 100; i++) {
-  const startDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
-  const regDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
-  const updateDate = randomDate(new Date(2024, 3, 1), new Date(2024, 4, 31));
+  const startDate = moment().subtract(i, 'days').format('YYYY-MM-DD');
+  const endDate = moment().subtract(i, 'days').format('YYYY-MM-DD');
+  const regDate = startDate;
+  const updateDate = endDate;
 
   const partIndex = randomNumber(moneyArray.length - 1) + 1;
   const part = moneyArray[partIndex];
@@ -34,13 +36,13 @@ for (let i = 1; i <= 100; i++) {
     customer_id: "123",
     money_number: i + 200,
     money_demo: true,
-    money_startDt: formatDate1(startDate),
-    money_endDt: formatDate1(startDate),
+    money_startDt: startDate,
+    money_endDt: endDate,
     money_total_in: randomNumber(100000),
     money_total_out: randomNumber(100000),
     money_section: sections,
-    money_regDt: formatDate2(regDate),
-    money_updateDt: formatDate2(updateDate),
+    money_regDt: regDate,
+    money_updateDt: updateDate,
   };
 
   demoData.push(record);
@@ -49,7 +51,6 @@ for (let i = 1; i <= 100; i++) {
 // Create a new document in the Money.
 export const addMoney = async () => {
   try {
-
     // 일단 전체 데이터 삭제
     const deleteResult = await Money.deleteMany({
       customer_id: "123",
@@ -60,37 +61,6 @@ export const addMoney = async () => {
     // 데이터 삽입
     const insertResult = await Money.insertMany(demoData);
     console.log('Inserted documents:', insertResult.length);
-
-    // 중복된 날짜 항목 삭제 로직
-    const docs = await Money.aggregate([
-      {
-        $group: {
-          _id: "$money_startDt",
-          docIds: { $push: "$_id" },
-          firstId: { $first: "$_id" }
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          toDelete: {
-            $filter: {
-              input: "$docIds",
-              as: "docId",
-              cond: { $ne: ["$$docId", "$firstId"] }
-            }
-          }
-        }
-      }
-    ]);
-
-    // 필터링된 문서 ID로 deleteMany 실행
-    for (const doc of docs) {
-      if (doc.toDelete.length > 0) {
-        const deleteResult = await Money.deleteMany({ _id: { $in: doc.toDelete } });
-        console.log("Deleted documents:", deleteResult.deletedCount);
-      }
-    }
   }
   catch (error) {
     console.error('Error during database operations:', error);

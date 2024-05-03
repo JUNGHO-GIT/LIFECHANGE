@@ -47,7 +47,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        exercise_plan_startDt: -1
+        exercise_plan_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -63,7 +63,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        food_plan_startDt: -1
+        food_plan_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -79,7 +79,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        money_plan_startDt: -1
+        money_plan_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -95,7 +95,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        sleep_plan_startDt: -1
+        sleep_plan_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -111,7 +111,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        exercise_startDt: -1
+        exercise_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -127,7 +127,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        food_startDt: -1
+        food_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -143,7 +143,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        money_startDt: -1
+        money_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -159,7 +159,7 @@ export const list = {
         customer_id: customer_id_param,
       }},
       {$sort: {
-        sleep_startDt: -1
+        sleep_startDt:  1
       }},
       {$skip: (Number(page_param) - 1) * 10},
       {$limit: 10}
@@ -228,7 +228,6 @@ export const update = async (
 };
 
 // 4-1. add --------------------------------------------------------------------------------------->
-
 
 // 4-2. delete ------------------------------------------------------------------------------------>
 export const deletes = {
