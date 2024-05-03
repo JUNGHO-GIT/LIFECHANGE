@@ -28,7 +28,7 @@ export const TweakDemo = () => {
   const {val:PAGING, set:setPAGING} = useStorage(
     `PAGING(${PATH})`, {
       page: 1,
-      limit: 5
+      limit: 10
     }
   );
   const {val:COUNT, set:setCOUNT} = useStorage(
@@ -169,6 +169,7 @@ export const TweakDemo = () => {
       params: {
         customer_id: customer_id,
         PAGING: PAGING,
+        TYPE: TYPE
       }
     });
     setOBJECT_EXERCISE_PLAN(response.data.result.exercisePlan || OBJECT_EXERCISE_PLAN_DEFAULT);

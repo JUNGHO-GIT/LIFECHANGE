@@ -16,7 +16,7 @@ export const ButtonNode = ({
   // 9. button ------------------------------------------------------------------------------------>
   const buttonCalendar = () => (
     <React.Fragment>
-      <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+      <Button className={"primary-btn"} type={"button"} onClick={() => {
         setCALENDAR((prev) => ({
           ...prev,
           calOpen: !prev.calOpen,
@@ -28,7 +28,7 @@ export const ButtonNode = ({
   );
   const buttonToday = () => (
     <React.Fragment>
-      <Button size={"sm"} className={"success-btn"} type={"button"} onClick={() => {
+      <Button className={"success-btn"} type={"button"} onClick={() => {
         setFILTER((prev) => ({
           ...prev,
           type: "day",
@@ -49,7 +49,7 @@ export const ButtonNode = ({
   );
   const buttonSave = () => (
     <React.Fragment>
-      <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+      <Button className={"primary-btn"} type={"button"} onClick={() => {
         flowSave();
       }}>
         Save
@@ -58,7 +58,7 @@ export const ButtonNode = ({
   );
   const buttonUpdate = () => (
     <React.Fragment>
-      <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+      <Button className={"primary-btn"} type={"button"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toUpdate, {
@@ -71,7 +71,7 @@ export const ButtonNode = ({
   );
   const buttonList = () => (
     <React.Fragment>
-      <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
+      <Button className={"secondary-btn"} type={"button"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toList, {
@@ -84,7 +84,7 @@ export const ButtonNode = ({
   );
   const buttonSearch = () => (
     <React.Fragment>
-      <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
+      <Button className={"secondary-btn"} type={"button"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toSearch, {

@@ -29,6 +29,14 @@ import {router as sleepRouter} from "./src/router/sleepRouter.js";
 import {router as tweakRouter} from "./src/router/tweakRouter.js";
 
 // ------------------------------------------------------------------------------------------------>
+const id = "eric4757";
+const pw = "M7m7m7m7m7!";
+const host = "34.75.165.209";
+const port = "27017";
+const db = "LIFECHANGE";
+/* mongoose.connect("mongodb://eric4757:M7m7m7m7m7!@34.75.165.209:27017/LIFECHANGE"); */
+
+// ------------------------------------------------------------------------------------------------>
 const customLogger = (collectionName, method, query, doc) => {
   const message = util.format(
     "\n======================= \n-schema: \"%s\" \n-method: \"%s\" \n-query: %s \n-doc: %s",
@@ -41,7 +49,7 @@ const customLogger = (collectionName, method, query, doc) => {
 };
 
 // ------------------------------------------------------------------------------------------------>
-mongoose.connect("mongodb://eric4757:M7m7m7m7m7!@34.75.165.209:27017/LIFECHANGE");
+mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
 /* mongoose.set("debug", customLogger); */
 mongoose.set("autoIndex", true);
 const app = express();
