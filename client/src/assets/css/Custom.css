@@ -276,7 +276,7 @@ table tbody tr td {
   .del-btn {
     font-size: 0.700rem;
   }
-  .dark-btn {
+  /* .dark-btn {
     font-size: 0.700rem;
     line-height: 0.700rem;
   }
@@ -299,7 +299,7 @@ table tbody tr td {
   .secondary-btn {
     font-size: 0.700rem;
     line-height: 0.700rem;
-  }
+  } */
 }
 
 /** 2. Mobile (480px ~ 767px) *********************************************************************/
@@ -345,11 +345,11 @@ table tbody tr td {
   .del-btn {
     font-size: 0.900rem;
   }
+  /*
   .dark-btn {
     font-size: 0.775rem;
     line-height: 0.775rem;
-  }
-  .primary-btn {
+  }.primary-btn {
     font-size: 0.775rem;
     line-height: 0.775rem;
   }
@@ -368,7 +368,7 @@ table tbody tr td {
   .secondary-btn {
     font-size: 0.775rem;
     line-height: 0.775rem;
-  }
+  } */
 }
 
 /** 3. Pablet (768px ~ 991px) *********************************************************************/
@@ -414,7 +414,7 @@ table tbody tr td {
   .del-btn {
     font-size: 1.000rem;
   }
-  .dark-btn {
+  /* .dark-btn {
     font-size: 0.850rem;
     line-height: 0.850rem;
   }
@@ -437,7 +437,7 @@ table tbody tr td {
   .secondary-btn {
     font-size: 0.850rem;
     line-height: 0.850rem;
-  }
+  } */
 }
 
 /** 4. Tablet (992px ~ 1199px) ********************************************************************/
@@ -483,7 +483,7 @@ table tbody tr td {
   .del-btn {
     font-size: 1.100rem;
   }
-  .dark-btn {
+  /* .dark-btn {
     font-size: 0.925rem;
     line-height: 0.925rem;
   }
@@ -506,7 +506,7 @@ table tbody tr td {
   .secondary-btn {
     font-size: 0.925rem;
     line-height: 0.925rem;
-  }
+  } */
 }
 
 /** 5. Desktop (1200px ~ 10000px) *****************************************************************/
@@ -552,7 +552,7 @@ table tbody tr td {
   .del-btn {
     font-size: 1.200rem;
   }
-  .dark-btn {
+  /* .dark-btn {
     font-size: 1.000rem;
     line-height: 1.000rem;
   }
@@ -575,5 +575,5 @@ table tbody tr td {
   .secondary-btn {
     font-size: 1.000rem;
     line-height: 1.000rem;
-  }
+  } */
 }

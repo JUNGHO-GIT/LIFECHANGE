@@ -26,18 +26,31 @@ export const PagingNode = ({
     startPage = Math.max(endPage - 4, 0);
   }
 
-  // prev
-  const btnPrev = () => (
+  // prevMax
+  const btnPrevMax = () => (
     <React.Fragment>
-      <Button key={"prev"} size={"sm"} className={"page-btn"} disabled={PAGING.page <= 1}
-      onClick={() => (
+      <div disabled={PAGING.page <= 1} onClick={() => (
+        setPAGING((prev) => ({
+          ...prev,
+          page: 1
+        }))
+      )}>
+        <i className={"bx bx-chevrons-left"}></i>
+      </div>
+    </React.Fragment>
+  );
+
+  // prevOne
+  const btnPrevOne = () => (
+    <React.Fragment>
+      <div disabled={PAGING.page <= 1} onClick={() => (
         setPAGING((prev) => ({
           ...prev,
           page: Math.max(1, PAGING.page - 1)
-        })
-      ))}>
-        <i className={"bx bx-caret-left"}></i>
-      </Button>
+        }))
+      )}>
+        <i className={"bx bx-chevron-left"}></i>
+      </div>
     </React.Fragment>
   );
 
@@ -59,26 +72,42 @@ export const PagingNode = ({
     return pages;
   };
 
-  // next
-  const btnNext = () => (
+  // nextOne
+  const btnNextOne = () => (
     <React.Fragment>
-      <Button key={"next"} size={"sm"} className={"page-btn"} disabled={PAGING.page >= totalPages} onClick={() => (
+      <div disabled={PAGING.page >= totalPages} onClick={() => (
         setPAGING((prev) => ({
           ...prev,
           page: Math.min(totalPages, PAGING.page + 1)
         }))
       )}>
-        <i className={"bx bx-caret-right"}></i>
-      </Button>
+        <i className={"bx bx-chevron-right"}></i>
+      </div>
+    </React.Fragment>
+  );
+
+  // nextMax
+  const btnNextMax = () => (
+    <React.Fragment>
+      <div disabled={PAGING.page >= totalPages} onClick={() => (
+        setPAGING((prev) => ({
+          ...prev,
+          page: totalPages
+        }))
+      )}>
+        <i className={"bx bx-chevrons-right"}></i>
+      </div>
     </React.Fragment>
   );
 
   return (
     <React.Fragment>
       <div className={"paging-wrapper d-inline-flex"}>
-        {btnPrev()}
+        {btnPrevMax()}
+        {btnPrevOne()}
         {btnNumber()}
-        {btnNext()}
+        {btnNextOne()}
+        {btnNextMax()}
       </div>
     </React.Fragment>
   );
