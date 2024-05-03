@@ -1,0 +1,73 @@
+
+
+/* 스크롤바 전체의 너비 설정 */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* 스크롤바 썸(움직이는 부분)의 기본 스타일 */
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: #ccc;
+}
+
+/* 스크롤바 썸에 마우스를 올렸을 때의 스타일 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+/* 스크롤바 썸이 활성화(클릭) 상태일 때의 스타일 */
+::-webkit-scrollbar-thumb:active {
+  background-color: #999;
+}
+
+/* 스크롤바 트랙(바탕 부분)의 기본 스타일 */
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* 스크롤바가 비활성화 상태일 때 썸의 스타일 */
+::-webkit-scrollbar-thumb:disabled {
+  background-color: #eee;
+}
+
+/* 스크롤바가 비활성화 상태일 때 트랙의 스타일 */
+::-webkit-scrollbar-track:disabled {
+  background-color: #f9f9f9;
+}
+
+/* 스크롤바 버튼(위/아래 버튼)의 스타일. 사용하지 않음으로 설정 */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* 스크롤바의 모서리 부분. 투명하게 설정 */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* 스크롤바 트랙의 시작 부분 스타일 */
+::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+}
+
+/* 스크롤바 트랙의 끝 부분 스타일 */
+::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+}
+
+/* 윈도우가 비활성화 상태일 때 스크롤바 썸의 스타일 */
+::-webkit-scrollbar-thumb:window-inactive {
+  background-color: #ccc;
+}
+
+/* 윈도우가 비활성화 상태일 때 스크롤바 트랙의 스타일 */
+::-webkit-scrollbar-track:window-inactive {
+  background-color: #f1f1f1;
+}
+
+/* 스크롤바 리사이저 스타일 */
+::-webkit-resizer {
+  background-color: #ccc;
+}

@@ -8,21 +8,23 @@ export const useStorage = (key, initialVal) => {
 
   // ---------------------------------------------------------------------------------------------->
   const getInitialValue = () => {
-    const item = localStorage.getItem(key);
-    if (item === null) {
-      return initialVal;
-    }
-    else if (datePattern.test(item.trim())) {
-      const parsedDate = parseISO(item);
-      return isNaN(parsedDate.getTime()) ? initialVal : parsedDate;
-    }
-    else {
-      try {
-        const parsed = JSON.parse(item);
-        return parsed !== undefined ? parsed : initialVal;
-      }
-      catch {
+    if (localStorage) {
+      const item = localStorage.getItem(key);
+      if (item === null) {
         return initialVal;
+      }
+      else if (datePattern.test(item.trim())) {
+        const parsedDate = parseISO(item);
+        return isNaN(parsedDate.getTime()) ? initialVal : parsedDate;
+      }
+      else {
+        try {
+          const parsed = JSON.parse(item);
+          return parsed !== undefined ? parsed : initialVal;
+        }
+        catch {
+          return initialVal;
+        }
       }
     }
   };

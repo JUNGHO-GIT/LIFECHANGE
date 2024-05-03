@@ -1,8 +1,8 @@
 // App.jsx
 
 import React from "react";
-import ReactDOM from "react-dom";
-import {BrowserRouter} from "react-router-dom";
+import ReactDOM from 'react-dom/client';
+import {HashRouter, BrowserRouter} from "react-router-dom";
 import {reportWebVitals} from "./settings/reportWebVitals";
 import {Routes, Route} from "react-router-dom";
 import {DeveloperModeProvider} from "./hooks/useDeveloperMode.jsx";
@@ -25,6 +25,7 @@ import "./assets/css/Header.css";
 import "./assets/css/Loader.css";
 import "./assets/css/NavBar.css";
 import "./assets/css/SideBar.css";
+import "./assets/css/ScrollBar.css";
 
 import "./assets/css/Chart.css";
 import "./assets/css/Custom.css";
@@ -168,7 +169,11 @@ const Tweak = () => (
   </React.Fragment>
 );
 
-ReactDOM.render (
+// ------------------------------------------------------------------------------------------------>
+const rootElement = document.getElementById('root');
+if (rootElement === null) throw new Error("Root element not found");
+const root = ReactDOM.createRoot(rootElement);
+root.render(
   <BrowserRouter>
     <React.Fragment>
       <DeveloperModeProvider>
@@ -194,8 +199,7 @@ ReactDOM.render (
         </div>
       </DeveloperModeProvider>
     </React.Fragment>
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
 );
 
 reportWebVitals(console.log);

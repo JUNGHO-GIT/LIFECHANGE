@@ -41,55 +41,6 @@ p {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 2px;
-  background: #ccc;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-::-webkit-scrollbar-thumb:window-inactive {
-  background: #ccc;
-}
-::-webkit-scrollbar-track:window-inactive {
-  background: #f1f1f1;
-}
-::-webkit-scrollbar-button {
-  display: none;
-}
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-::-webkit-scrollbar-track-piece:start {
-  background: transparent;
-}
-::-webkit-scrollbar-track-piece:end {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb:horizontal {
-  background-color: #ccc;
-}
-::-webkit-scrollbar-thumb:vertical {
-  background-color: #ccc;
-}
-::-webkit-scrollbar-thumb:horizontal:hover {
-  background-color: #aaa;
-}
-::-webkit-scrollbar-thumb:vertical:hover {
-  background-color: #aaa;
-}
-::-webkit-scrollbar-thumb:horizontal:active {
-  background-color: #999;
-}
-::-webkit-scrollbar-thumb:vertical:active {
-  background-color: #999;
-}
 
 /** 0. Media **************************************************************************************/
 .form-control {
@@ -241,7 +192,7 @@ table tbody tr td {
   color: #ffffff !important;
   font-weight: 600;
   font-size: 0.800rem;
-};
+}
 .dataset-add:hover {
   color: #ffffff !important;
 }
@@ -253,7 +204,7 @@ table tbody tr td {
   color: #0b2730 !important;
   font-weight: 500;
   font-size: 0.600rem;
-};
+}
 .dataset-title:hover {
   color: #164a60 !important;
 }
@@ -265,7 +216,7 @@ table tbody tr td {
   color: #164a60 !important;
   font-weight: 500;
   font-size: 0.400rem;
-};
+}
 .dataset-rename:hover {
   color: #23486f !important;
 }
@@ -277,7 +228,7 @@ table tbody tr td {
   color: #dc3545 !important;
   font-weight: 600;
   font-size: 0.500rem;
-};
+}
 .dataset-delete:hover {
   color: #bd2130 !important;
 }
