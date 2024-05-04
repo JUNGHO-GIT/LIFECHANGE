@@ -18,7 +18,6 @@ export const DiaryList = () => {
   const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({

@@ -26,39 +26,30 @@ export const FoodSave = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SEND, set:setSEND} = useStorage(
-    `SEND(${PATH})`, {
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toList:"/food/list",
-      toSave:"/food/save",
-      toSearch:"/food/search",
-    }
-  );
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
-    }
-  );
+  const [SEND, setSEND] = useState({
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toList:"/food/list",
+    toSave:"/food/save",
+    toSearch:"/food/search",
+  });
+  const [DATE, setDATE] = useState({
+    startDt: location_startDt,
+    endDt: location_endDt
+  });
+  const [COUNT, setCOUNT] = useState({
+    totalCnt: 0,
+    sectionCnt: 0
+  });
+  const [CALENDAR, setCALENDAR] = useState({
+    calStartOpen: false,
+    calEndOpen: false,
+    calOpen: false,
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
@@ -83,12 +74,8 @@ export const FoodSave = () => {
       food_protein: 0,
     }],
   };
-  const {val:OBJECT_BEFORE, set:setOBJECT_BEFORE} = useStorage(
-    `OBJECT_BEFORE(${PATH})`, OBJECT_DEFAULT
-  );
-  const {val:OBJECT, set:setOBJECT} = useStorage(
-    `OBJECT(${PATH})`, OBJECT_DEFAULT
-  );
+  const [OBJECT_BEFORE, setOBJECT_BEFORE] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -361,7 +348,7 @@ export const FoodSave = () => {
                         allowNegative={false}
                         fixedDecimalScale={true}
                         thousandSeparator={true}
-                        value={Math.min(99, parseInt(item.food_count))}
+                        value={Math.min(99, Number(item.food_count))}
                         onValueChange={(values) => {
                           const limitedValue = Math.min(99, parseInt(values.value));
                           handleCountChange(index, limitedValue);

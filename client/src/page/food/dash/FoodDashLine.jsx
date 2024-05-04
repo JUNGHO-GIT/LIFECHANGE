@@ -18,19 +18,12 @@ export const FoodDashLine = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (line) (${PATH})`, "month"
-  );
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (line) (${PATH})`, "kcal"
-  );
-  const {val:PART, set:setPART} = useStorage(
-    `PART (line) (${PATH})`, array
-  );
+  const [SECTION, setSECTION] = useState("month");
+  const [LINE, setLINE] = useState("kcal");
+  const [PART, setPART] = useState(array);
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_WEEK_DEFAULT = [

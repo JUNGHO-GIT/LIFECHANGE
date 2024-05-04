@@ -18,16 +18,11 @@ export const MoneyDashAvg = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (avg) (${PATH})`, "month"
-  );
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (avg) (${PATH})`, "in"
-  );
+  const [SECTION, setSECTION] = useState("month");
+  const [LINE, setLINE] = useState("in");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_IN_MONTH_DEFAULT = [

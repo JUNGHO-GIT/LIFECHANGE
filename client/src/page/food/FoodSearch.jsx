@@ -1,7 +1,7 @@
 // FoodSearch.jsx
 
 import axios from "axios";
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import InputMask from "react-input-mask";
 import {useDate} from "../../hooks/useDate.jsx";
@@ -21,59 +21,48 @@ export const FoodSearch = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SEND, set:setSEND} = useStorage(
-    `SEND(${PATH})`, {
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toSave:"/food/save",
-    }
-  );
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      query: "",
-      page: 0,
-      limit: 10,
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
-    }
-  );
+  const [SEND, setSEND] = useState({
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toSave:"/food/save",
+  });
+  const [DATE, setDATE] = useState({
+    startDt: location_startDt,
+    endDt: location_endDt
+  });
+  const [FILTER, setFILTER] = useState({
+    query: "",
+    page: 0,
+    limit: 10,
+  });
+  const [COUNT, setCOUNT] = useState({
+    totalCnt: 0,
+    sectionCnt: 0
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:OBJECT, set:setOBJECT} = useStorage(
-    `OBJECT(${PATH})`, {
-      food_total_kcal: 0,
-      food_total_fat: 0,
-      food_total_carb: 0,
-      food_total_protein: 0,
-      food_section: [{
-        food_part_idx: 1,
-        food_part_val: "아침",
-        food_title: "",
-        food_count: 0,
-        food_serv: "회",
-        food_gram:  0,
-        food_kcal: 0,
-        food_fat: 0,
-        food_carb: 0,
-        food_protein: 0,
-      }],
-    },
-  );
+  const [OBJECT, setOBJECT] = useState({
+    food_total_kcal: 0,
+    food_total_fat: 0,
+    food_total_carb: 0,
+    food_total_protein: 0,
+    food_section: [{
+      food_part_idx: 1,
+      food_part_val: "아침",
+      food_title: "",
+      food_count: 0,
+      food_serv: "회",
+      food_gram:  0,
+      food_kcal: 0,
+      food_fat: 0,
+      food_carb: 0,
+      food_protein: 0,
+    }],
+  });
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);

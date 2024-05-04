@@ -26,8 +26,7 @@ export const ExerciseDetail = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SEND, set:setSEND} = useStorage(
-    `SEND(${PATH})`, {
+  const [SEND, setSEND] = useState({
       id: "",
       refresh: 0,
       startDt: "0000-00-00",
@@ -35,27 +34,20 @@ export const ExerciseDetail = () => {
       toList:"/exercise/list",
       toDetail:"/exercise/detail",
       toUpdate:"/exercise/save",
-    }
-  );
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
-    }
-  );
+   });
+  const [DATE, setDATE] = useState({
+    startDt: location_startDt,
+    endDt: location_endDt
+  });
+  const [COUNT, setCOUNT] = useState({
+    totalCnt: 0,
+    sectionCnt: 0
+  });
+  const [CALENDAR, setCALENDAR] = useState({
+    calStartOpen: false,
+    calEndOpen: false,
+    calOpen: false,
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {

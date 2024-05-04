@@ -23,54 +23,41 @@ export const MoneyList = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
-  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SEND, set:setSEND} = useStorage(
-    `SEND(${PATH})`, {
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toDetail: "/money/detail",
-    }
-  );
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      type: "day",
-      limit: 5,
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
-    }
-  );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 5
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false,
-    }
-  );
+  const [DATE, setDATE] = useState({
+    startDt: location_startDt,
+    endDt: location_endDt
+  });
+  const [SEND, setSEND] = useState({
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toDetail: "/money/detail",
+  });
+  const [FILTER, setFILTER] = useState({
+    order: "asc",
+    type: "day",
+    limit: 5,
+    partIdx: 0,
+    part: "전체",
+    titleIdx: 0,
+    title: "전체"
+  });
+  const [PAGING, setPAGING] = useState({
+    page: 1,
+    limit: 5
+  });
+  const [COUNT, setCOUNT] = useState({
+    totalCnt: 0,
+    sectionCnt: 0
+  });
+  const [CALENDAR, setCALENDAR] = useState({
+    calStartOpen: false,
+    calEndOpen: false,
+    calOpen: false,
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = [{

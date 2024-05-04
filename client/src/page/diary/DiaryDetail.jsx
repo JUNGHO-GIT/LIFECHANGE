@@ -26,7 +26,6 @@ export const DiaryDetail = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const location_category = location?.state?.category?.trim()?.toString();
-  const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({

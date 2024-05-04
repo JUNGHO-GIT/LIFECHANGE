@@ -18,16 +18,11 @@ export const FoodDashBar = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (bar) (${PATH})`, "today"
-  );
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (bar) (${PATH})`, "kcal"
-  );
+  const [SECTION, setSECTION] = useState("today");
+  const [LINE, setLINE] = useState("kcal");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_TODAY_DEFAULT = [

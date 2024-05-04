@@ -18,7 +18,7 @@ export const barToday = async (
   findPlan = await repository.barToday.listPlan(
     customer_id_param, startDt, endDt
   );
-  findReal = await repository.barToday.listReal(
+  findReal = await repository.barToday.list(
     customer_id_param, startDt, endDt
   );
 

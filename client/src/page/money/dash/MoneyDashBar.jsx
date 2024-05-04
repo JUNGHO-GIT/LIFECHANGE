@@ -18,13 +18,10 @@ export const MoneyDashBar = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (bar) (${PATH})`, "today"
-  );
+  const [SECTION, setSECTION] = useState("today");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_TODAY_DEFAULT = [

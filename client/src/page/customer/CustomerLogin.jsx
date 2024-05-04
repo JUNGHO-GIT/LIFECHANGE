@@ -25,14 +25,6 @@ export const CustomerLogin = () => {
   const [customer_id, setCustomerId] = useState("");
   const [customer_pw, setCustomerPw] = useState("");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: koreanDate,
-      endDt: koreanDate,
-    }
-  );
-
   // 3. flow -------------------------------------------------------------------------------------->
   const flowCustomerLogin = async () => {
     const response = await axios.post (`${URL_OBJECT}/login`, {

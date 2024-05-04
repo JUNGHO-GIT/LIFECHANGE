@@ -28,38 +28,28 @@ export const TweakDataset = () => {
   const datasetArray = ["diary", "exercise", "food", "money", "sleep"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SEND, set:setSEND} = useStorage(
-    `SEND(${PATH})`, {
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toDataset: "/customer/dataset",
-    }
-  );
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:idx, set:setIdx} = useStorage(
-    `idx(${PATH})`, {
-      sectionIdx: 0,
-      partIdx: 1,
-      titleIdx: 1,
-    }
-  );
-  const {val:selectedIdx, set:setSelectedIdx} = useStorage(
-    `selectedIdx(${PATH})`, {
-      sectionIdx: 0,
-      partIdx: 1,
-      titleIdx: 1,
-    }
-  );
-  const {val:dataType, set:setDataType} = useStorage(
-    `dataType(${PATH})`, "diary"
-  );
+  const [SEND, setSEND] = useState({
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toDataset: "/customer/dataset",
+  });
+  const [DATE, setDATE] = useState({
+    startDt: location_startDt,
+    endDt: location_endDt
+  });
+  const [idx, setIdx] = useState({
+    sectionIdx: 0,
+    partIdx: 1,
+    titleIdx: 1
+  });
+  const [selectedIdx, setSelectedIdx] = useState({
+    sectionIdx: 0,
+    partIdx: 1,
+    titleIdx: 1
+  });
+  const [dataType, setDataType] = useState("diary");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {

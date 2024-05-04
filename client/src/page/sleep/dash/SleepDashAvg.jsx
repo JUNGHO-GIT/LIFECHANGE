@@ -17,16 +17,11 @@ export const SleepDashAvg = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["취침", "기상", "수면"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (avg) (${PATH})`, "month"
-  );
-  const {val:PART, set:setPART} = useStorage(
-    `PART (avg) (${PATH})`, array
-  );
+  const [SECTION, setSECTION] = useState("month");
+  const [PART, setPART] = useState(array);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_MONTH_DEFAULT = [

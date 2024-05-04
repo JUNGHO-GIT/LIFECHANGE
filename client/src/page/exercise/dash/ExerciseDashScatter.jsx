@@ -18,13 +18,10 @@ export const ExerciseDashScatter = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (scatter) (${PATH})`, "today"
-  );
+  const [SECTION, setSECTION] = useState("today");
   const OBJECT_TODAY_DEFAULT = [
     {name:"", 목표: 0, 실제: 0},
   ];

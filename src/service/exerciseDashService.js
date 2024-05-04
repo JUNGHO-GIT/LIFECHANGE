@@ -18,7 +18,7 @@ export const scatterToday = async (
   findPlan = await repository.scatterToday.listPlan(
     customer_id_param, startDt, endDt
   );
-  findReal = await repository.scatterToday.listReal(
+  findReal = await repository.scatterToday.list(
     customer_id_param, startDt, endDt
   );
 
@@ -48,7 +48,7 @@ export const scatterWeek = async (
   findPlan = await repository.scatterWeek.listPlan(
     customer_id_param, startDt, endDt
   );
-  findReal = await repository.scatterWeek.listReal(
+  findReal = await repository.scatterWeek.list(
     customer_id_param, startDt, endDt
   );
 
@@ -78,7 +78,7 @@ export const scatterMonth = async (
   findPlan = await repository.scatterMonth.listPlan(
     customer_id_param, startDt, endDt
   );
-  findReal = await repository.scatterMonth.listReal(
+  findReal = await repository.scatterMonth.list(
     customer_id_param, startDt, endDt
   );
 

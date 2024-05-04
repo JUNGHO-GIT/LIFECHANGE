@@ -21,9 +21,6 @@ export const list = async (
     customer_id_param, sort, limit, page, startDt_param, endDt_param
   );
 
-  console.log("===================================");
-  console.log("finalResult : " + JSON.stringify(finalResult, null, 2));
-
   return {
     totalCnt: totalCnt,
     result: finalResult,

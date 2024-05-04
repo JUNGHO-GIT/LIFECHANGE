@@ -16,19 +16,12 @@ export const MoneyDashPie = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (line) (${PATH})`, "today"
-  );
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (pie) (${PATH})`, "in"
-  );
-  const {val:radius, set:setRadius} = useStorage(
-    `RADIUS (pie) (${PATH})`, 120
-  );
+  const [SECTION, setSECTION] = useState("today");
+  const [LINE, setLINE] = useState("in");
+  const [radius, setRadius] = useState(120);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_IN_TODAY_DEFAULT = [

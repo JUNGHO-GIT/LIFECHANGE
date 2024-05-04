@@ -18,16 +18,11 @@ export const ExerciseDashLine = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
   const customer_id = sessionStorage.getItem("customer_id");
-  const PATH = location.pathname?.trim()?.toString();
   const array = ["볼륨", "시간"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SECTION, set:setSECTION} = useStorage(
-    `SECTION (line) (${PATH})`, "month"
-  );
-  const {val:LINE, set:setLINE} = useStorage(
-    `LINE (line) (${PATH})`, "volume"
-  );
+  const [SECTION, setSECTION] = useState("month");
+  const [LINE, setLINE] = useState("volume");
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_VOLUME_WEEK_DEFAULT = [

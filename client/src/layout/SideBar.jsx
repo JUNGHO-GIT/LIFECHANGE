@@ -19,15 +19,14 @@ export const SideBar = ({ sidebar, onClose }) => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {val:SEND, set:setSEND} = useStorage (
-    `SEND(${PATH})`, {
-      id: "",
-      date: koreanDate,
-      refresh: 0,
-      toLogin: "/customer/login",
-      toSignup: "/customer/signup",
-    }
-  );
+  const [SEND, setSEND] = useState({
+    id: "",
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    refresh: 0,
+    toLogin: "/customer/login",
+    toSignup: "/customer/signup",
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [isOpen, setIsOpen] = useState(sidebar);
