@@ -30,7 +30,7 @@ export const FoodSave = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,

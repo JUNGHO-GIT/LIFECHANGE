@@ -25,84 +25,80 @@ export const list = async (
   user_id_param, PAGING_param, TYPE_param
 ) => {
 
-  const page = parseInt(PAGING_param.page) === 0 ? 1 : PAGING_param.page;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
   const limit = parseInt(PAGING_param.limit) === 0 ? 10 : PAGING_param.limit;
 
-  let findResult = [];
-  let findCnt = 0;
+  let finalResult = [];
+  let totalCnt = 0;
 
   if (TYPE_param === "exercise") {
-    findResult = await repository.list.listExercise(
+    finalResult = await repository.list.listExercise(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countExercise(
+    totalCnt = await repository.list.countExercise(
       user_id_param
     );
   }
   else if (TYPE_param === "exercisePlan") {
-    findResult = await repository.list.listExercisePlan(
+    finalResult = await repository.list.listExercisePlan(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countExercisePlan(
+    totalCnt = await repository.list.countExercisePlan(
       user_id_param
     );
   }
   else if (TYPE_param === "food") {
-    findResult = await repository.list.listFood(
+    finalResult = await repository.list.listFood(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countFood(
+    totalCnt = await repository.list.countFood(
       user_id_param
     );
   }
   else if (TYPE_param === "foodPlan") {
-    findResult = await repository.list.listFoodPlan(
+    finalResult = await repository.list.listFoodPlan(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countFoodPlan(
+    totalCnt = await repository.list.countFoodPlan(
       user_id_param
     );
   }
   else if (TYPE_param === "money") {
-    findResult = await repository.list.listMoney(
+    finalResult = await repository.list.listMoney(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countMoney(
+    totalCnt = await repository.list.countMoney(
       user_id_param
     );
   }
   else if (TYPE_param === "moneyPlan") {
-    findResult = await repository.list.listMoneyPlan(
+    finalResult = await repository.list.listMoneyPlan(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countMoneyPlan(
+    totalCnt = await repository.list.countMoneyPlan(
       user_id_param
     );
   }
   else if (TYPE_param === "sleep") {
-    findResult = await repository.list.listSleep(
+    finalResult = await repository.list.listSleep(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countSleep(
+    totalCnt = await repository.list.countSleep(
       user_id_param
     );
   }
   else if (TYPE_param === "sleepPlan") {
-    findResult = await repository.list.listSleepPlan(
+    finalResult = await repository.list.listSleepPlan(
       user_id_param, page, limit
     );
-    findCnt = await repository.list.countSleepPlan(
+    totalCnt = await repository.list.countSleepPlan(
       user_id_param
     );
   }
 
-  const finalResult = {
-    [`${TYPE_param}`]: findResult,
-    [`${TYPE_param}Cnt`]: findCnt
-  };
-
   return {
-    result: finalResult
+    totalCnt: totalCnt,
+    result: finalResult,
   };
 };
 

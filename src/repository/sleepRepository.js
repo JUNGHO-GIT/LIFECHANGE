@@ -26,6 +26,7 @@ export const list = {
   list: async (
     user_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
+
     const finalResult = await Sleep.aggregate([
       {$match: {
         user_id: user_id_param,
@@ -57,6 +58,7 @@ export const list = {
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);
+
     return finalResult;
   },
 };

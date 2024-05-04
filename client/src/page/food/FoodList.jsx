@@ -27,7 +27,7 @@ export const FoodList = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -60,7 +60,6 @@ export const FoodList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
-      limit: 5,
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -110,7 +109,12 @@ export const FoodList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [user_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
+  })()}, [
+    user_id,
+    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    PAGING.page, PAGING.limit,
+    DATE.startDt, DATE.endDt
+  ]);
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -179,14 +183,14 @@ export const FoodList = () => {
     />
   );
 
-  // 9. paging ------------------------------------------------------------------------------------>
+  // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={""} type={"list"}
     />
   );
 
-  // 10. filter ----------------------------------------------------------------------------------->
+  // 9. filter ------------------------------------------------------------------------------------>
   const filterNode = () => (
     <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"food"} plan={""} type={"list"}

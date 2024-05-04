@@ -30,7 +30,7 @@ export const ExercisePlanSave = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -76,7 +76,6 @@ export const ExercisePlanSave = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: user_id,

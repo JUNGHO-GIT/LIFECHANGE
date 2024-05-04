@@ -16,13 +16,13 @@ export const FilterNode = ({
   const defaultNode = () => (
     <React.Fragment>
       <select className={"form-select me-5"} id={"type"} onChange={(e) => (
-        setPAGING((prev) => ({
-          ...prev,
-          page: 1
-        })),
         setFILTER((prev) => ({
           ...prev,
           type: e.target.value
+        })),
+        setPAGING((prev) => ({
+          ...prev,
+          page: 1
         }))
       )}>
         {["day", "week", "month", "year", "select"]?.map((item) => (
@@ -44,11 +44,11 @@ export const FilterNode = ({
         ))}
       </select>
       <select className={"form-select me-5"} id={"limit"} onChange={(e) => (
-        setPAGING((prev) => ({
+        setFILTER((prev) => ({
           ...prev,
           limit: parseInt(e.target.value)
         })),
-        setFILTER((prev) => ({
+        setPAGING((prev) => ({
           ...prev,
           limit: parseInt(e.target.value)
         }))
@@ -62,7 +62,52 @@ export const FilterNode = ({
     </React.Fragment>
   );
 
-  // 2. food
+  // 2. exercise
+  const exerciseNode = () => (
+    <React.Fragment>
+      <select className={"form-select me-5"} id={"part"} value={exerciseArray[FILTER?.partIdx]?.exercise_part} onChange={(e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const idxValue = selectedOption.getAttribute("data-idx");
+        const newPartIndex = Number(idxValue);
+        const newPartVal = String(e.target.value);
+        const newTitleIndex = 0;
+        const newTitleVal = exerciseArray[newPartIndex]?.exercise_title[0];
+        setFILTER((prev) => ({
+          ...prev,
+          partIdx: newPartIndex,
+          part: newPartVal,
+          titleIdx: newTitleIndex,
+          title: newTitleVal
+        }));
+      }}>
+        {exerciseArray?.map((item, idx) => (
+          <option key={idx} data-idx={idx}>
+            {item.exercise_part}
+          </option>
+        ))}
+      </select>
+      <select className={"form-select me-5"} id={"title"} value={FILTER?.title}
+      onChange={(e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const idxValue = selectedOption.getAttribute("data-idx");
+        const newTitleIndex = Number(idxValue);
+        const newTitleVal = String(e.target.value);
+        setFILTER((prev) => ({
+          ...prev,
+          titleIdx: newTitleIndex,
+          title: newTitleVal
+        }));
+      }}>
+        {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
+          <option key={idx} data-idx={idx}>
+            {item}
+          </option>
+        ))}
+      </select>
+    </React.Fragment>
+  );
+
+  // 3. food
   const foodNode = () => (
     <React.Fragment>
       <select className={"form-select me-5"} id={"part"} value={foodArray[FILTER?.partIdx]?.money_part} onChange={(e) => {
@@ -85,7 +130,7 @@ export const FilterNode = ({
     </React.Fragment>
   );
 
-  // 3. money
+  // 4. money
   const moneyNode = () => (
     <React.Fragment>
       <select className={"form-select me-5"} id={"part"} value={moneyArray[FILTER?.partIdx]?.money_part} onChange={(e) => {
@@ -113,42 +158,6 @@ export const FilterNode = ({
         }));
       }}>
         {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
-          <option key={idx}>
-            {item}
-          </option>
-        ))}
-      </select>
-    </React.Fragment>
-  );
-
-  // 4. exercise
-  const exerciseNode = () => (
-    <React.Fragment>
-      <select className={"form-select me-5"} id={"part"} value={exerciseArray[FILTER?.partIdx]?.exercise_part} onChange={(e) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
-        const idxValue = selectedOption.getAttribute("data-idx");
-        const newPartIndex = Number(idxValue);
-        const newPartVal = String(e.target.value);
-        setFILTER((prev) => ({
-          ...prev,
-          partIdx: newPartIndex,
-          part: newPartVal
-        }));
-      }}>
-        {exerciseArray?.map((item, idx) => (
-          <option key={idx} data-idx={idx}>
-            {item.exercise_part}
-          </option>
-        ))}
-      </select>
-      <select className={"form-select me-5"} id={"title"} value={FILTER?.title}
-      onChange={(e) => {
-        setFILTER((prev) => ({
-          ...prev,
-          title: e.target.value
-        }));
-      }}>
-        {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
           <option key={idx}>
             {item}
           </option>

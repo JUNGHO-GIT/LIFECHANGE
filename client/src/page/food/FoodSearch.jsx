@@ -23,7 +23,7 @@ export const FoodSearch = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -189,7 +189,7 @@ export const FoodSearch = () => {
     />
   );
 
-  // 9. paging ------------------------------------------------------------------------------------>
+  // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <PagingNode PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={""} type={"search"}

@@ -4,7 +4,6 @@ import axios from "axios";
 import numeral from 'numeral';
 import {NumericFormat} from "react-number-format";
 import React, {useState, useEffect} from "react";
-import {useLocation} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {LoadingNode} from "../../fragments/LoadingNode.jsx";
@@ -21,7 +20,7 @@ export const TweakDemo = () => {
   const navParam = useNavigate();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [LOADING, setLOADING] = useState(true);
   const [TYPE, setTYPE] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -29,14 +28,8 @@ export const TweakDemo = () => {
   });
   const [COUNT, setCOUNT] = useState({
     inputCnt: 0,
-    exercisePlanCnt: 0,
-    exerciseCnt: 0,
-    foodPlanCnt: 0,
-    foodCnt: 0,
-    moneyPlanCnt: 0,
-    moneyCnt: 0,
-    sleepPlanCnt: 0,
-    sleepCnt: 0,
+    totalCnt: 0,
+    sectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -151,7 +144,6 @@ export const TweakDemo = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
@@ -159,40 +151,50 @@ export const TweakDemo = () => {
         TYPE: TYPE
       }
     });
-    setOBJECT_EXERCISE_PLAN(response.data.result.exercisePlan || OBJECT_EXERCISE_PLAN_DEFAULT);
-    setOBJECT_EXERCISE(response.data.result.exercise || OBJECT_EXERCISE_DEFAULT);
-    setOBJECT_FOOD_PLAN(response.data.result.foodPlan || OBJECT_FOOD_PLAN_DEFAULT);
-    setOBJECT_FOOD(response.data.result.food || OBJECT_FOOD_DEFAULT);
-    setOBJECT_MONEY_PLAN(response.data.result.moneyPlan || OBJECT_MONEY_PLAN_DEFAULT);
-    setOBJECT_MONEY(response.data.result.money || OBJECT_MONEY_DEFAULT);
-    setOBJECT_SLEEP_PLAN(response.data.result.sleepPlan || OBJECT_SLEEP_PLAN_DEFAULT);
-    setOBJECT_SLEEP(response.data.result.sleep || OBJECT_SLEEP_DEFAULT);
+    if (TYPE === "exercisePlan") {
+      setOBJECT_EXERCISE_PLAN(response.data.result || OBJECT_EXERCISE_PLAN_DEFAULT);
+    }
+    if (TYPE === "exercise") {
+      setOBJECT_EXERCISE(response.data.result || OBJECT_EXERCISE_DEFAULT);
+    }
+    if (TYPE === "foodPlan") {
+      setOBJECT_FOOD_PLAN(response.data.result || OBJECT_FOOD_PLAN_DEFAULT);
+    }
+    if (TYPE === "food") {
+      setOBJECT_FOOD(response.data.result || OBJECT_FOOD_DEFAULT);
+    }
+    if (TYPE === "moneyPlan") {
+      setOBJECT_MONEY_PLAN(response.data.result || OBJECT_MONEY_PLAN_DEFAULT);
+    }
+    if (TYPE === "money") {
+      setOBJECT_MONEY(response.data.result || OBJECT_MONEY_DEFAULT);
+    }
+    if (TYPE === "sleepPlan") {
+      setOBJECT_SLEEP_PLAN(response.data.result || OBJECT_SLEEP_PLAN_DEFAULT);
+    }
+    if (TYPE === "sleep") {
+      setOBJECT_SLEEP(response.data.result || OBJECT_SLEEP_DEFAULT);
+    }
     setCOUNT((prev) => ({
       ...prev,
-      exercisePlanCnt: response.data.result.exercisePlanCnt,
-      exerciseCnt: response.data.result.exerciseCnt,
-      foodPlanCnt: response.data.result.foodPlanCnt,
-      foodCnt: response.data.result.foodCnt,
-      moneyPlanCnt: response.data.result.moneyPlanCnt,
-      moneyCnt: response.data.result.moneyCnt,
-      sleepPlanCnt: response.data.result.sleepPlanCnt,
-      sleepCnt: response.data.result.sleepCnt,
+      totalCnt: response.data.totalCnt || 0,
+      sectionCnt: response.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [user_id, PAGING, TYPE, COUNT?.inputCnt]);
+  })()}, [user_id, PAGING, TYPE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowAdd = async (type) => {
+  const flowAdd = async (type_param) => {
     const response = await axios.post(`${URL_OBJECT}/add`, {
       user_id: user_id,
-      TYPE: type,
+      TYPE: type_param,
       count: COUNT?.inputCnt
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
       setCOUNT((prev) => ({
         ...prev,
-        [`${type}Cnt`]: prev[`${type}Cnt`] + 1
+        [`${type_param}Cnt`]: prev[`${type_param}Cnt`] + 1
       }));
       setPAGING((prev) => ({
         ...prev,
@@ -203,18 +205,18 @@ export const TweakDemo = () => {
   };
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowDelete = async (type) => {
+  const flowDelete = async (type_param) => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         user_id: user_id,
-        TYPE: type
+        TYPE: type_param
       }
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
       setCOUNT((prev) => ({
         ...prev,
-        [`${type}Cnt`]: 0
+        [`${type_param}Cnt`]: 0
       }));
       setPAGING((prev) => ({
         ...prev,
@@ -493,7 +495,7 @@ export const TweakDemo = () => {
       <React.Fragment>
         <NumericFormat
           min={0}
-          max={10}
+          max={20}
           minLength={1}
           maxLength={2}
           datatype={"number"}
@@ -504,7 +506,7 @@ export const TweakDemo = () => {
           disabled={false}
           thousandSeparator={false}
           fixedDecimalScale={true}
-          value={Math.min(10, COUNT?.inputCnt)}
+          value={Math.min(20, COUNT?.inputCnt)}
           onValueChange={(values) => (
             setCOUNT((prev) => ({
               ...prev,
@@ -564,10 +566,10 @@ export const TweakDemo = () => {
     />
   );
 
-  // 9. paging ------------------------------------------------------------------------------------>
+  // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={""} plan={""} type={"list"}
+      part={"tweak"} plan={""} type={"list"}
     />
   );
 

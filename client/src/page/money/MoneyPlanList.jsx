@@ -27,7 +27,7 @@ export const MoneyPlanList = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -60,7 +60,6 @@ export const MoneyPlanList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
-      limit: 5,
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -87,7 +86,6 @@ export const MoneyPlanList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
@@ -103,7 +101,12 @@ export const MoneyPlanList = () => {
       sectionCnt: response.data.sectionCnt || 0,
     }));
     setLOADING(false);
-  })()}, [user_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
+  })()}, [
+    user_id,
+    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    PAGING.page, PAGING.limit,
+    DATE.startDt, DATE.endDt
+  ]);
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -172,14 +175,14 @@ export const MoneyPlanList = () => {
     />
   );
 
-  // 9. paging ------------------------------------------------------------------------------------>
+  // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"money"} plan={"plan"} type={"list"}
     />
   );
 
-  // 10. filter ----------------------------------------------------------------------------------->
+  // 9. filter ------------------------------------------------------------------------------------>
   const filterNode = () => (
     <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"money"} plan={"plan"} type={"list"}

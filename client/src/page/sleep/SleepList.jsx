@@ -26,7 +26,7 @@ export const SleepList = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(false);
+  const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -59,7 +59,6 @@ export const SleepList = () => {
     `FILTER(${PATH})`, {
       order: "asc",
       type: "day",
-      limit: 5,
       partIdx: 0,
       part: "전체",
       titleIdx: 0,
@@ -84,7 +83,6 @@ export const SleepList = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
@@ -100,7 +98,12 @@ export const SleepList = () => {
       sectionCnt: response.data.sectionCnt || 0
     }));
     setLOADING(false);
-  })()}, [user_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
+  })()}, [
+    user_id,
+    FILTER.order, FILTER.partIdx, FILTER.titleIdx,
+    PAGING.page, PAGING.limit,
+    DATE.startDt, DATE.endDt
+  ]);
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -162,6 +165,13 @@ export const SleepList = () => {
     />
   );
 
+  // 9. filter ------------------------------------------------------------------------------------>
+  const filterNode = () => (
+    <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+      part={"sleep"} plan={""} type={"list"}
+    />
+  );
+
   // 8. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => (
     <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
@@ -169,16 +179,9 @@ export const SleepList = () => {
     />
   );
 
-  // 9. paging ------------------------------------------------------------------------------------>
+  // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"sleep"} plan={""} type={"list"}
-    />
-  );
-
-  // 10. filter ----------------------------------------------------------------------------------->
-  const filterNode = () => (
-    <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"sleep"} plan={""} type={"list"}
     />
   );
@@ -196,30 +199,21 @@ export const SleepList = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          {LOADING && (
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {loadingNode()}
-              </Col>
-            </Row>
-          )}
-          {!LOADING && (
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {calendarNode()}
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {filterNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {pagingNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          )}
+          <Row>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {LOADING ? "" : calendarNode()}
+              {LOADING ? loadingNode() : tableNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {LOADING ? "" : filterNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {LOADING ? "" : pagingNode()}
+            </Col>
+            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {LOADING ? "" : buttonNode()}
+            </Col>
+          </Row>
         </Container>
       </Card>
     </React.Fragment>

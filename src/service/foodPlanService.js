@@ -11,7 +11,7 @@ export const list = async (
   const [startDtPlan, endDtPlan] = duration_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = FILTER_param.limit === 0 ? 5 : FILTER_param.limit;
+  const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
   const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
 
   const totalCnt = await repository.list.cnt(

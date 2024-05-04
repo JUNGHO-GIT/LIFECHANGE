@@ -10,8 +10,8 @@ export const list = async (
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const page = parseInt(PAGING_param.page) === 0 ? 1 : PAGING_param.page;
-  const limit = parseInt(PAGING_param.limit) === 0 ? 5 : PAGING_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
 
   const totalCnt = await repository.list.cnt(
     user_id_param, startDt_param, endDt_param

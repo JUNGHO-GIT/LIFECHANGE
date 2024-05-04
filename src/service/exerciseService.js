@@ -10,8 +10,8 @@ export const list = async (
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const page = parseInt(PAGING_param.page) === 0 ? 1 : PAGING_param.page;
-  const limit = parseInt(PAGING_param.limit) === 0 ? 5 : PAGING_param.limit;
+  const page = PAGING_param.page === 0 ? 1 : PAGING_param.page;
+  const limit = PAGING_param.limit === 0 ? 5 : PAGING_param.limit;
   const part = FILTER_param.part === "" ? "전체" : FILTER_param.part;
   const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 

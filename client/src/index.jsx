@@ -1,6 +1,6 @@
 // App.jsx
 
-import React from "react";
+import React, {useEffect} from "react";
 import ReactDOM from 'react-dom/client';
 import {HashRouter, BrowserRouter} from "react-router-dom";
 import {reportWebVitals} from "./settings/reportWebVitals";
@@ -32,7 +32,6 @@ import "./assets/css/Custom.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
 
-import {Loader} from "./layout/Loader.jsx";
 import {Header} from "./layout/Header.jsx";
 import {NavBar} from "./layout/NavBar.jsx";
 
@@ -170,34 +169,41 @@ const Tweak = () => (
 );
 
 // ------------------------------------------------------------------------------------------------>
+const App = () => {
+  return (
+    <React.Fragment>
+      <div className={"App"}>
+        <div className={"header-wrapper"}>
+          <Header />
+        </div>
+        <div className={"nav-wrapper"}>
+          <NavBar />
+        </div>
+        <div className={"content-wrapper"}>
+          <Routes>
+            <Route path="/user/*" element={<User />} />
+            <Route path="/calendar/*" element={<Calendar />} />
+            <Route path="/exercise/*" element={<Exercise />} />
+            <Route path="/food/*" element={<Food />} />
+            <Route path="/money/*" element={<Money />} />
+            <Route path="/sleep/*" element={<Sleep />} />
+            <Route path="/tweak/*" element={<Tweak />} />
+          </Routes>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+// ------------------------------------------------------------------------------------------------>
 const rootElement = document.getElementById('root');
-if (rootElement === null) throw new Error("Root element not found");
+if (rootElement === null) {
+  throw new Error("Root element not found");
+}
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <BrowserRouter>
-    <React.Fragment>
-      <DeveloperModeProvider>
-        <div className={"App"}>
-          <div className={"header-wrapper"}>
-            <Header />
-          </div>
-          <div className={"nav-wrapper"}>
-            <NavBar />
-          </div>
-          <div className={"content-wrapper"}>
-            <Routes>
-              <Route path="/user/*" element={<User />} />
-              <Route path="/calendar/*" element={<Calendar />} />
-              <Route path="/exercise/*" element={<Exercise />} />
-              <Route path="/food/*" element={<Food />} />
-              <Route path="/money/*" element={<Money />} />
-              <Route path="/sleep/*" element={<Sleep />} />
-              <Route path="/tweak/*" element={<Tweak />} />
-            </Routes>
-          </div>
-        </div>
-      </DeveloperModeProvider>
-    </React.Fragment>
+    <App />
   </BrowserRouter>
 );
 
