@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../hooks/useStorage.jsx";
+import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
@@ -15,8 +15,8 @@ export const SleepDashBar = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
+  const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SECTION, setSECTION] = useState("today");
@@ -38,7 +38,8 @@ export const SleepDashBar = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeToday = () => {
+  const chartToday = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "sleep");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -54,11 +55,9 @@ export const SleepDashBar = () => {
             ></XAxis>
             <YAxis
               type={"number"}
-              domain={[0, 30]}
-              ticks={[0, 6, 12, 18, 24, 30]}
-              tickFormatter={(tick) => {
-                return tick > 24 ? tick -= 24 : tick;
-              }}
+              domain={domain}
+              ticks={ticks}
+              tickFormatter={tickFormatter}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
@@ -117,7 +116,7 @@ export const SleepDashBar = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12} style={{alignSelf:"center"}}>
-              {SECTION === "today" && chartNodeToday()}
+              {SECTION === "today" && chartToday()}
             </Col>
           </Row>
         </Container>

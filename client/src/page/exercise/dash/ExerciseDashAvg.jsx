@@ -6,7 +6,6 @@ import {useLocation} from "react-router-dom";
 import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {handlerY} from "../../../assets/js/handlerY.js";
-import {useStorage} from "../../../hooks/useStorage.jsx";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
 // ------------------------------------------------------------------------------------------------>
@@ -16,7 +15,6 @@ export const ExerciseDashAvg = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["횟수", "볼륨", "시간"];
 
@@ -62,8 +60,8 @@ export const ExerciseDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeVolumeMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array);
+  const chartVolumeMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -115,8 +113,8 @@ export const ExerciseDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeCardioMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array);
+  const chartCardioMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -168,8 +166,8 @@ export const ExerciseDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeVolumeYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_YEAR, array);
+  const chartVolumeYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_YEAR, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -221,8 +219,8 @@ export const ExerciseDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeCardioYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_YEAR, array);
+  const chartCardioYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_YEAR, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -303,10 +301,10 @@ export const ExerciseDashAvg = () => {
             </Row>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12}>
-                {SECTION === "month" && LINE === "volume" && chartNodeVolumeMonth()}
-                {SECTION === "month" && LINE === "cardio" && chartNodeCardioMonth()}
-                {SECTION === "year" && LINE === "volume" && chartNodeVolumeYear()}
-                {SECTION === "year" && LINE === "cardio" && chartNodeCardioYear()}
+                {SECTION === "month" && LINE === "volume" && chartVolumeMonth()}
+                {SECTION === "month" && LINE === "cardio" && chartCardioMonth()}
+                {SECTION === "year" && LINE === "volume" && chartVolumeYear()}
+                {SECTION === "year" && LINE === "cardio" && chartCardioYear()}
               </Col>
           </Row>
         </Container>

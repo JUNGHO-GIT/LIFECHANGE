@@ -157,7 +157,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodePartWeek = () => {
+  const chartPartWeek = () => {
     const COLORS_PART_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -193,7 +193,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeTitleWeek = () => {
+  const chartTitleWeek = () => {
     const COLORS_TITLE_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -229,7 +229,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodePartMonth = () => {
+  const chartPartMonth = () => {
     const COLORS_PART_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -265,7 +265,7 @@ export const ExerciseDashPie = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeTitleMonth = () => {
+  const chartTitleMonth = () => {
     const COLORS_TITLE_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -330,10 +330,10 @@ export const ExerciseDashPie = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "week" && LINE === "part" && chartNodePartWeek()}
-              {SECTION === "week" && LINE === "title" && chartNodeTitleWeek()}
-              {SECTION === "month" && LINE === "part" && chartNodePartMonth()}
-              {SECTION === "month" && LINE === "title" && chartNodeTitleMonth()}
+              {SECTION === "week" && LINE === "part" && chartPartWeek()}
+              {SECTION === "week" && LINE === "title" && chartTitleWeek()}
+              {SECTION === "month" && LINE === "part" && chartPartMonth()}
+              {SECTION === "month" && LINE === "title" && chartTitleMonth()}
             </Col>
           </Row>
         </Container>

@@ -60,8 +60,8 @@ export const ExerciseDashScatter = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeToday = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array);
+  const chartToday = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_TODAY, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -116,7 +116,7 @@ export const ExerciseDashScatter = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeWeek = () => {
+  const chartWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_WEEK, array);
     return (
       <React.Fragment>
@@ -178,7 +178,7 @@ export const ExerciseDashScatter = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeMonth = () => {
+  const chartMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array);
     return (
       <React.Fragment>
@@ -264,9 +264,9 @@ export const ExerciseDashScatter = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "today" && chartNodeToday()}
-              {SECTION === "week" && chartNodeWeek()}
-              {SECTION === "month" && chartNodeMonth()}
+              {SECTION === "today" && chartToday()}
+              {SECTION === "week" && chartWeek()}
+              {SECTION === "month" && chartMonth()}
             </Col>
           </Row>
         </Container>

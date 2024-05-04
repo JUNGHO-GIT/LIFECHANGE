@@ -63,8 +63,8 @@ export const FoodDashLine = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcalWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_WEEK, array);
+  const chartKcalWeek = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_WEEK, array, "food");
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_KCAL_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
@@ -115,7 +115,7 @@ export const FoodDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeNutWeek = () => {
+  const chartNutWeek = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_WEEK, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -175,7 +175,7 @@ export const FoodDashLine = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcalMonth = () => {
+  const chartKcalMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -227,7 +227,7 @@ export const FoodDashLine = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeNutMonth = () => {
+  const chartNutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
     return (
       <ResponsiveContainer width={"100%"} height={350}>
@@ -342,10 +342,10 @@ export const FoodDashLine = () => {
           </Row>
           <Row>
             <Col lg={10} md={10} sm={10} xs={10}>
-              {SECTION === "week" && LINE === "kcal" && chartNodeKcalWeek()}
-              {SECTION === "week" && LINE === "nut" && chartNodeNutWeek()}
-              {SECTION === "month" && LINE === "kcal" && chartNodeKcalMonth()}
-              {SECTION === "month" && LINE === "nut" && chartNodeNutMonth()}
+              {SECTION === "week" && LINE === "kcal" && chartKcalWeek()}
+              {SECTION === "week" && LINE === "nut" && chartNutWeek()}
+              {SECTION === "month" && LINE === "kcal" && chartKcalMonth()}
+              {SECTION === "month" && LINE === "nut" && chartNutMonth()}
             </Col>
             <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
               {tableNode()}

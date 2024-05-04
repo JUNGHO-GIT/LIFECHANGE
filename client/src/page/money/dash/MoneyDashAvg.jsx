@@ -62,8 +62,8 @@ export const MoneyDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeInMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_MONTH, array);
+  const chartInMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_MONTH, array, "money");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -115,8 +115,8 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeOutMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_MONTH, array);
+  const chartOutMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_MONTH, array, "money");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -168,8 +168,8 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeInYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_YEAR, array);
+  const chartInYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_YEAR, array, "money");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -221,8 +221,8 @@ export const MoneyDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeOutYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_YEAR, array);
+  const chartOutYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_YEAR, array, "money");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -303,10 +303,10 @@ export const MoneyDashAvg = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "month" && LINE === "in" && chartNodeInMonth()}
-              {SECTION === "month" && LINE === "out" && chartNodeOutMonth()}
-              {SECTION === "year" && LINE === "in" && chartNodeInYear()}
-              {SECTION === "year" && LINE === "out" && chartNodeOutYear()}
+              {SECTION === "month" && LINE === "in" && chartInMonth()}
+              {SECTION === "month" && LINE === "out" && chartOutMonth()}
+              {SECTION === "year" && LINE === "in" && chartInYear()}
+              {SECTION === "year" && LINE === "out" && chartOutYear()}
             </Col>
           </Row>
         </Container>

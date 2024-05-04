@@ -63,8 +63,8 @@ export const FoodDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcalMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array);
+  const chartKcalMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_MONTH, array, "food");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -118,8 +118,8 @@ export const FoodDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeNutMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array);
+  const chartNutMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_MONTH, array, "food");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -181,8 +181,8 @@ export const FoodDashAvg = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcalYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_YEAR, array);
+  const chartKcalYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_YEAR, array, "food");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -236,8 +236,8 @@ export const FoodDashAvg = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeNutYear = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_YEAR, array);
+  const chartNutYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_YEAR, array, "food");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -354,10 +354,10 @@ export const FoodDashAvg = () => {
           </Row>
           <Row>
             <Col lg={10} md={10} sm={10} xs={10}>
-              {SECTION === "month" && LINE === "kcal" && chartNodeKcalMonth()}
-              {SECTION === "month" && LINE === "nut" && chartNodeNutMonth()}
-              {SECTION === "year" && LINE === "kcal" && chartNodeKcalYear()}
-              {SECTION === "year" && LINE === "nut" && chartNodeNutYear()}
+              {SECTION === "month" && LINE === "kcal" && chartKcalMonth()}
+              {SECTION === "month" && LINE === "nut" && chartNutMonth()}
+              {SECTION === "year" && LINE === "kcal" && chartKcalYear()}
+              {SECTION === "year" && LINE === "nut" && chartNutYear()}
             </Col>
             <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
               {tableNode()}

@@ -1,8 +1,16 @@
-export const handlerY = (value, array) => {
+export const handlerY = (value, array, extra) => {
 
-  const ticks = [];
-  const maxValue = Math.max(...value?.map((item) => Math.max(...array.map((key) => item[key]))));
-  let topValue = Math.ceil(maxValue / 100) * 100;
+  let ticks = [];
+  let maxValue = 0;
+  let topValue = 0;
+
+  console.log('value:' + JSON.stringify(value, null, 2));
+  console.log('array:' + JSON.stringify(array, null, 2));
+
+  if (value && array) {
+    maxValue = Math.max(...value?.map((item) => Math.max(...array.map((key) => item[key]))));
+    topValue = Math.ceil(maxValue / 100) * 100;
+  }
 
   // topValue에 따른 동적 틱 간격 설정
   let tickInterval = 10;

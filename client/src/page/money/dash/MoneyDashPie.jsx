@@ -208,7 +208,7 @@ export const MoneyDashPie = () => {
   }
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeInToday = () => {
+  const chartInToday = () => {
     const COLORS_IN_TODAY = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -244,7 +244,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeOutToday = () => {
+  const chartOutToday = () => {
     const COLORS_OUT_TODAY = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -280,7 +280,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeInWeek = () => {
+  const chartInWeek = () => {
     const COLORS_IN_WEEK = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -316,7 +316,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeOutWeek = () => {
+  const chartOutWeek = () => {
     const COLORS_OUT_WEEK = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -352,7 +352,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-5. chart ----------------------------------------------------------------------------------->
-  const chartNodeInMonth = () => {
+  const chartInMonth = () => {
     const COLORS_IN_MONTH = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
       <React.Fragment>
@@ -388,7 +388,7 @@ export const MoneyDashPie = () => {
   };
 
   // 5-6. chart ----------------------------------------------------------------------------------->
-  const chartNodeOutMonth = () => {
+  const chartOutMonth = () => {
     const COLORS_OUT_MONTH = ["#FF8042", "#FFBB28", "#00C49F", "#0088FE"];
     return (
       <React.Fragment>
@@ -454,12 +454,12 @@ export const MoneyDashPie = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "today" && LINE === "in" && chartNodeInToday()}
-              {SECTION === "today" && LINE === "out" && chartNodeOutToday()}
-              {SECTION === "week" && LINE === "in" && chartNodeInWeek()}
-              {SECTION === "week" && LINE === "out" && chartNodeOutWeek()}
-              {SECTION === "month" && LINE === "in" && chartNodeInMonth()}
-              {SECTION === "month" && LINE === "out" && chartNodeOutMonth()}
+              {SECTION === "today" && LINE === "in" && chartInToday()}
+              {SECTION === "today" && LINE === "out" && chartOutToday()}
+              {SECTION === "week" && LINE === "in" && chartInWeek()}
+              {SECTION === "week" && LINE === "out" && chartOutWeek()}
+              {SECTION === "month" && LINE === "in" && chartInMonth()}
+              {SECTION === "month" && LINE === "out" && chartOutMonth()}
             </Col>
           </Row>
         </Container>

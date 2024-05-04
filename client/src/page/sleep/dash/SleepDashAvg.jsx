@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../hooks/useStorage.jsx";
+import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -51,7 +51,8 @@ export const SleepDashAvg = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeMonth = () => {
+  const chartMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_MONTH, array, "sleep");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -67,11 +68,9 @@ export const SleepDashAvg = () => {
             ></XAxis>
             <YAxis
               type={"number"}
-              domain={[0, 30]}
-              ticks={[0, 6, 12, 18, 24, 30]}
-              tickFormatter={(tick) => {
-                return tick > 24 ? tick -= 24 : tick;
-              }}
+              domain={domain}
+              ticks={ticks}
+              tickFormatter={tickFormatter}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
@@ -115,7 +114,8 @@ export const SleepDashAvg = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeYear = () => {
+  const chartYear = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_YEAR, array, "sleep");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -131,11 +131,9 @@ export const SleepDashAvg = () => {
             ></XAxis>
             <YAxis
               type={"number"}
-              domain={[0, 30]}
-              ticks={[0, 6, 12, 18, 24, 30]}
-              tickFormatter={(tick) => {
-                return tick > 24 ? tick -= 24 : tick;
-              }}
+              domain={domain}
+              ticks={ticks}
+              tickFormatter={tickFormatter}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
@@ -228,8 +226,8 @@ export const SleepDashAvg = () => {
           </Row>
           <Row>
             <Col lg={10} md={10} sm={10} xs={10}>
-              {SECTION === "month" && chartNodeMonth()}
-              {SECTION === "year" && chartNodeYear()}
+              {SECTION === "month" && chartMonth()}
+              {SECTION === "year" && chartYear()}
             </Col>
             <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
               {tableNode()}

@@ -4,7 +4,6 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {handlerY} from "../../../assets/js/handlerY.js";
-import {useStorage} from "../../../hooks/useStorage.jsx";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
@@ -16,7 +15,6 @@ export const FoodDashBar = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["목표", "실제"];
 
@@ -46,8 +44,8 @@ export const FoodDashBar = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeKcalToday = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_TODAY, array);
+  const chartKcalToday = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_KCAL_TODAY, array, "food");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -102,7 +100,7 @@ export const FoodDashBar = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeNutToday = () => {
+  const chartNutToday = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_NUT_TODAY, array);
     return (
       <React.Fragment>
@@ -186,8 +184,8 @@ export const FoodDashBar = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {LINE === "kcal" && chartNodeKcalToday()}
-              {LINE === "nut" && chartNodeNutToday()}
+              {LINE === "kcal" && chartKcalToday()}
+              {LINE === "nut" && chartNutToday()}
             </Col>
           </Row>
         </Container>

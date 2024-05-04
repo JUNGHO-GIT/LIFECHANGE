@@ -62,8 +62,8 @@ export const ExerciseDashLine = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeVolumeWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_WEEK, array);
+  const chartVolumeWeek = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_WEEK, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -114,8 +114,8 @@ export const ExerciseDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeCardioWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_WEEK, array);
+  const chartCardioWeek = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_WEEK, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -166,8 +166,8 @@ export const ExerciseDashLine = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeVolumeMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array);
+  const chartVolumeMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_VOLUME_MONTH, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -218,8 +218,8 @@ export const ExerciseDashLine = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeCardioMonth = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array);
+  const chartCardioMonth = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_CARDIO_MONTH, array, "exercise");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -299,10 +299,10 @@ export const ExerciseDashLine = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "week" && LINE === "volume" && chartNodeVolumeWeek()}
-              {SECTION === "week" && LINE === "cardio" && chartNodeCardioWeek()}
-              {SECTION === "month" && LINE === "volume" && chartNodeVolumeMonth()}
-              {SECTION === "month" && LINE === "cardio" && chartNodeCardioMonth()}
+              {SECTION === "week" && LINE === "volume" && chartVolumeWeek()}
+              {SECTION === "week" && LINE === "cardio" && chartCardioWeek()}
+              {SECTION === "month" && LINE === "volume" && chartVolumeMonth()}
+              {SECTION === "month" && LINE === "cardio" && chartCardioMonth()}
             </Col>
           </Row>
         </Container>

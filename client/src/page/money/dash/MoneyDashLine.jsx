@@ -16,7 +16,6 @@ export const MoneyDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["수입", "지출"];
 
@@ -62,8 +61,8 @@ export const MoneyDashLine = () => {
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
-  const chartNodeInWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_WEEK, array);
+  const chartInWeek = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_WEEK, array, "money");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -114,8 +113,8 @@ export const MoneyDashLine = () => {
   };
 
   // 5-2. chart ----------------------------------------------------------------------------------->
-  const chartNodeOutWeek = () => {
-    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_WEEK, array);
+  const chartOutWeek = () => {
+    const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_WEEK, array, "money");
     return (
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
@@ -166,7 +165,7 @@ export const MoneyDashLine = () => {
   };
 
   // 5-3. chart ----------------------------------------------------------------------------------->
-  const chartNodeInMonth = () => {
+  const chartInMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_IN_MONTH, array);
     return (
       <React.Fragment>
@@ -218,7 +217,7 @@ export const MoneyDashLine = () => {
   };
 
   // 5-4. chart ----------------------------------------------------------------------------------->
-  const chartNodeOutMonth = () => {
+  const chartOutMonth = () => {
     const {domain, ticks, tickFormatter} = handlerY(OBJECT_OUT_MONTH, array);
     return (
       <React.Fragment>
@@ -299,10 +298,10 @@ export const MoneyDashLine = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "week" && LINE === "in" && chartNodeInWeek()}
-              {SECTION === "week" && LINE === "out" && chartNodeOutWeek()}
-              {SECTION === "month" && LINE === "in" && chartNodeInMonth()}
-              {SECTION === "month" && LINE === "out" && chartNodeOutMonth()}
+              {SECTION === "week" && LINE === "in" && chartInWeek()}
+              {SECTION === "week" && LINE === "out" && chartOutWeek()}
+              {SECTION === "month" && LINE === "in" && chartInMonth()}
+              {SECTION === "month" && LINE === "out" && chartOutMonth()}
             </Col>
           </Row>
         </Container>
