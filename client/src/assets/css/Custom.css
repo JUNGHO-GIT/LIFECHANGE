@@ -85,9 +85,6 @@ table tbody tr td {
 }
 .page-btn {
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 600;
   margin: 0rem 0.15rem 0rem 0.15rem;
   color: #ffffff !important;
@@ -101,9 +98,6 @@ table tbody tr td {
 }
 .del-btn {
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: 600;
   color: #dc3545 !important;
 }
@@ -189,6 +183,7 @@ table tbody tr td {
   background-color: #4b5156 !important;
   border: 1px solid #4b5156 !important;
 }
+
 .dataset-add {
   display: flex;
   align-items: center;
@@ -197,7 +192,7 @@ table tbody tr td {
   color: #ffffff !important;
   font-weight: 600;
   font-size: 0.800rem;
-}
+};
 .dataset-add:hover {
   color: #ffffff !important;
 }
@@ -209,7 +204,7 @@ table tbody tr td {
   color: #0b2730 !important;
   font-weight: 500;
   font-size: 0.600rem;
-}
+};
 .dataset-title:hover {
   color: #164a60 !important;
 }
@@ -221,7 +216,7 @@ table tbody tr td {
   color: #164a60 !important;
   font-weight: 500;
   font-size: 0.400rem;
-}
+};
 .dataset-rename:hover {
   color: #23486f !important;
 }
@@ -233,7 +228,7 @@ table tbody tr td {
   color: #dc3545 !important;
   font-weight: 600;
   font-size: 0.500rem;
-}
+};
 .dataset-delete:hover {
   color: #bd2130 !important;
 }
@@ -281,6 +276,30 @@ table tbody tr td {
   .del-btn {
     font-size: 0.700rem;
   }
+  .dark-btn {
+    font-size: 0.700rem;
+    line-height: 0.700rem;
+  }
+  .primary-btn {
+    font-size: 0.700rem;
+    line-height: 0.700rem;
+  }
+  .success-btn {
+    font-size: 0.700rem;
+    line-height: 0.700rem;
+  }
+  .warning-btn {
+    font-size: 0.700rem;
+    line-height: 0.700rem;
+  }
+  .danger-btn {
+    font-size: 0.700rem;
+    line-height: 0.700rem;
+  }
+  .secondary-btn {
+    font-size: 0.700rem;
+    line-height: 0.700rem;
+  }
 }
 
 /** 2. Mobile (480px ~ 767px) *********************************************************************/
@@ -325,6 +344,30 @@ table tbody tr td {
   }
   .del-btn {
     font-size: 0.900rem;
+  }
+  .dark-btn {
+    font-size: 0.775rem;
+    line-height: 0.775rem;
+  }
+  .primary-btn {
+    font-size: 0.775rem;
+    line-height: 0.775rem;
+  }
+  .success-btn {
+    font-size: 0.775rem;
+    line-height: 0.775rem;
+  }
+  .warning-btn {
+    font-size: 0.775rem;
+    line-height: 0.775rem;
+  }
+  .danger-btn {
+    font-size: 0.775rem;
+    line-height: 0.775rem;
+  }
+  .secondary-btn {
+    font-size: 0.775rem;
+    line-height: 0.775rem;
   }
 }
 
@@ -371,6 +414,30 @@ table tbody tr td {
   .del-btn {
     font-size: 1.000rem;
   }
+  .dark-btn {
+    font-size: 0.850rem;
+    line-height: 0.850rem;
+  }
+  .primary-btn {
+    font-size: 0.850rem;
+    line-height: 0.850rem;
+  }
+  .success-btn {
+    font-size: 0.850rem;
+    line-height: 0.850rem;
+  }
+  .warning-btn {
+    font-size: 0.850rem;
+    line-height: 0.850rem;
+  }
+  .danger-btn {
+    font-size: 0.850rem;
+    line-height: 0.850rem;
+  }
+  .secondary-btn {
+    font-size: 0.850rem;
+    line-height: 0.850rem;
+  }
 }
 
 /** 4. Tablet (992px ~ 1199px) ********************************************************************/
@@ -416,6 +483,30 @@ table tbody tr td {
   .del-btn {
     font-size: 1.100rem;
   }
+  .dark-btn {
+    font-size: 0.925rem;
+    line-height: 0.925rem;
+  }
+  .primary-btn {
+    font-size: 0.925rem;
+    line-height: 0.925rem;
+  }
+  .success-btn {
+    font-size: 0.925rem;
+    line-height: 0.925rem;
+  }
+  .warning-btn {
+    font-size: 0.925rem;
+    line-height: 0.925rem;
+  }
+  .danger-btn {
+    font-size: 0.925rem;
+    line-height: 0.925rem;
+  }
+  .secondary-btn {
+    font-size: 0.925rem;
+    line-height: 0.925rem;
+  }
 }
 
 /** 5. Desktop (1200px ~ 10000px) *****************************************************************/
@@ -460,5 +551,29 @@ table tbody tr td {
   }
   .del-btn {
     font-size: 1.200rem;
+  }
+  .dark-btn {
+    font-size: 1.000rem;
+    line-height: 1.000rem;
+  }
+  .primary-btn {
+    font-size: 1.000rem;
+    line-height: 1.000rem;
+  }
+  .success-btn {
+    font-size: 1.000rem;
+    line-height: 1.000rem;
+  }
+  .warning-btn {
+    font-size: 1.000rem;
+    line-height: 1.000rem;
+  }
+  .danger-btn {
+    font-size: 1.000rem;
+    line-height: 1.000rem;
+  }
+  .secondary-btn {
+    font-size: 1.000rem;
+    line-height: 1.000rem;
   }
 }
