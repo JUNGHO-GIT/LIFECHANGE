@@ -164,28 +164,28 @@ export const FoodList = () => {
     );
   };
 
-  // 6. calendar ---------------------------------------------------------------------------------->
+  // 8. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => (
     <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
     />
   );
 
-  // 7. paging ------------------------------------------------------------------------------------>
+  // 9. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => (
     <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={""} type={"list"}
     />
   );
 
-  // 8. filter ------------------------------------------------------------------------------------>
+  // 10. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"food"} plan={""} type={"list"}
     />
   );
 
-  // 9. button ------------------------------------------------------------------------------------>
+  // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
     <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
@@ -193,7 +193,7 @@ export const FoodList = () => {
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <Card className={"card-wrapper"}>

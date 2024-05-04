@@ -180,14 +180,14 @@ export const FoodSearch = () => {
     </div>
   );
 
-  // 7. paging ------------------------------------------------------------------------------------>
+  // 9. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => (
     <PagingNode PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={""} type={"search"}
     />
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <Card className={"card-wrapper"}>

@@ -4,7 +4,6 @@ import {SideBar} from "./SideBar.jsx";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import moment from "moment-timezone";
-import {useDeveloperMode} from "../hooks/useDeveloperMode.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -14,11 +13,9 @@ export const Header = () => {
   const navParam = useNavigate();
   const user_id = sessionStorage.getItem("user_id");
 
-  // 2-1. useStorage ------------------------------------------------------------------------------>
-  const {isDeveloperMode, toggleDeveloperMode} = useDeveloperMode();
-
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [isSidebar, setIsSidebar] = useState(true);
+  // 사이드바 기본값
+  const [isSidebar, setIsSidebar] = useState(false);
 
   // 4. toggle ------------------------------------------------------------------------------------>
   const toggleSidebar = () => {
@@ -84,7 +81,7 @@ export const Header = () => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <Card className={"card-wrapper"}>

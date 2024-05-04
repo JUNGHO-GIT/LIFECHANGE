@@ -2,7 +2,7 @@
 
 import React from "react";
 
-// 8. filter  ------------------------------------------------------------------------------------->
+// 10. filter ------------------------------------------------------------------------------------->
 export const FilterNode = ({
   FILTER, setFILTER, PAGING, setPAGING, part, plan, type
 }) => {

@@ -4,7 +4,6 @@ import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/array/dataArray.js";
-import {useStorage} from "../hooks/useStorage.jsx";
 import {Collapse} from "react-bootstrap";
 // @ts-ignore
 import logo3 from "../assets/images/logo3.png";
@@ -109,7 +108,7 @@ export const SideBar = ({ sidebar, onClose }) => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={`sidebar ${isOpen ? "sidebar-open" : "sidebar-closed"} bg-white`}>

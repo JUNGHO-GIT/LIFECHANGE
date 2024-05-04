@@ -378,14 +378,14 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 5. date -------------------------------------------------------------------------------------->
+  // 7. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
     <DateNode DATE={DATE} setDATE={setDATE} CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
       part={"calendar"} plan={""} type={"detail"}
     />
   );
 
-  // 9. button ------------------------------------------------------------------------------------>
+  // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
     <React.Fragment>
       <Button size={"sm"} className={"primary-btn"} onClick={() => {
@@ -401,7 +401,7 @@ export const CalendarDetail = () => {
     </React.Fragment>
   );
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <Card className={"card-wrapper"}>

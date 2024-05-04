@@ -239,7 +239,7 @@ export const ExerciseDashScatter = () => {
     );
   };
 
-  // 10. return ----------------------------------------------------------------------------------->
+  // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <Card className={"border-0 border-bottom ms-2vw"}>

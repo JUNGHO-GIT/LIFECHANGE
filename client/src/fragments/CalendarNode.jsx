@@ -6,7 +6,7 @@ import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
 
-// 4. calendar ------------------------------------------------------------------------------------>
+// 8. calendar ------------------------------------------------------------------------------------>
 export const CalendarNode = ({
   FILTER, setFILTER, DATE, setDATE, CALENDAR, setCALENDAR
 }) => {

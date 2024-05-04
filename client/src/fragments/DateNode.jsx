@@ -4,9 +4,8 @@ import React, { useEffect } from "react";
 import {DayPicker} from "react-day-picker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
-import Draggable from 'react-draggable';
 
-// ------------------------------------------------------------------------------------------------>
+// 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
   DATE, setDATE, CALENDAR, setCALENDAR, part, plan, type
 }) => {
