@@ -23,20 +23,17 @@ export const MoneyPlanDetail = () => {
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toDetail: "/money/plan/detail",
-      toList: "/money/plan/list",
-      toUpdate: "/money/plan/save"
-   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toDetail: "/money/plan/detail",
+    toList: "/money/plan/list",
+    toUpdate: "/money/plan/save"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -49,6 +46,14 @@ export const MoneyPlanDetail = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     money_plan_number: 0,

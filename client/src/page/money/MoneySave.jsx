@@ -36,10 +36,6 @@ export const MoneySave = () => {
     endDt: "0000-00-00",
     toList: "/money/list"
   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
-  });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0
@@ -51,6 +47,14 @@ export const MoneySave = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     money_number: 0,

@@ -23,6 +23,7 @@ export const FoodDetail = () => {
   const location_id = location?.state?.id?.trim()?.toString();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -48,7 +49,7 @@ export const FoodDetail = () => {
     calOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     food_number: 0,

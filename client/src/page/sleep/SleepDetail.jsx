@@ -34,10 +34,6 @@ export const SleepDetail = () => {
     toList:"/sleep/list",
     toUpdate:"/sleep/save",
   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
-  });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0
@@ -49,6 +45,14 @@ export const SleepDetail = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     sleep_number: 0,

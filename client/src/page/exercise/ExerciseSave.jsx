@@ -33,15 +33,11 @@ export const ExerciseSave = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toList:"/exercise/list"
-   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toList:"/exercise/list"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -54,6 +50,14 @@ export const ExerciseSave = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     exercise_number: 0,

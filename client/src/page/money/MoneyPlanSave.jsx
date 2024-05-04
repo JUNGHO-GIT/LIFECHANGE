@@ -24,6 +24,7 @@ export const MoneyPlanSave = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -32,10 +33,6 @@ export const MoneyPlanSave = () => {
     startDt: "0000-00-00",
     endDt: "0000-00-00",
     toList:"/money/plan/list"
-  });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -48,6 +45,14 @@ export const MoneyPlanSave = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     money_plan_number: 0,

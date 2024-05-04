@@ -27,17 +27,13 @@ export const ExercisePlanDetail = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toDetail: "/exercise/plan/detail",
-      toList: "/exercise/plan/list",
-      toUpdate: "/exercise/plan/save"
-   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toDetail: "/exercise/plan/detail",
+    toList: "/exercise/plan/list",
+    toUpdate: "/exercise/plan/save"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -50,6 +46,14 @@ export const ExercisePlanDetail = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     exercise_plan_number: 0,

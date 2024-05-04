@@ -23,6 +23,7 @@ export const FoodList = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -31,19 +32,6 @@ export const FoodList = () => {
     startDt: "0000-00-00",
     endDt: "0000-00-00",
     toDetail:"/food/detail"
-  });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
-  });
-  const [FILTER, setFILTER] = useState({
-    order: "asc",
-    type: "day",
-    limit: 5,
-    partIdx: 0,
-    part: "전체",
-    titleIdx: 0,
-    title: "전체"
   });
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -60,6 +48,25 @@ export const FoodList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day",
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = [{
     _id: "",
     food_number: 0,

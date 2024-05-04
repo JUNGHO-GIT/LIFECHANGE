@@ -51,7 +51,7 @@ export const TweakDataset = () => {
   });
   const [dataType, setDataType] = useState("diary");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     customer_id: customer_id,
     customer_number: 0,

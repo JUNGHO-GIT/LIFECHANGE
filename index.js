@@ -76,6 +76,7 @@ catch (error) {
 // ------------------------------------------------------------------------------------------------>
 app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
+  res.setHeader("Cache-Control", "max-age=3600");
   next();
 });
 app.use(bodyParser.json());

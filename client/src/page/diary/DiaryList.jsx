@@ -18,6 +18,7 @@ export const DiaryList = () => {
   const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
+  const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -29,12 +30,16 @@ export const DiaryList = () => {
     category: "",
     toDetail: "/diary/detail"
   });
-  const [DATE, setDATE] = useState({
-    startDt: moment().startOf("month").format("YYYY-MM-DD"),
-    endDt: moment().endOf("month").format("YYYY-MM-DD")
-  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: moment().startOf("month").format("YYYY-MM-DD"),
+      endDt: moment().endOf("month").format("YYYY-MM-DD")
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = [{
     customer_id: customer_id,
     diary_number: 0,

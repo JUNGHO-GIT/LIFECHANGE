@@ -35,10 +35,6 @@ export const SleepPlanSave = () => {
     endDt: "0000-00-00",
     toList:"/sleep/plan/list"
   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
-  });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0
@@ -50,6 +46,14 @@ export const SleepPlanSave = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,

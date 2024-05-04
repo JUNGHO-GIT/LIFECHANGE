@@ -32,19 +32,6 @@ export const SleepPlanList = () => {
     endDt: "0000-00-00",
     toDetail:"/sleep/plan/detail"
   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
-  });
-  const [FILTER, setFILTER] = useState({
-    order: "asc",
-    type: "day",
-    limit: 5,
-    partIdx: 0,
-    part: "전체",
-    titleIdx: 0,
-    title: "전체"
-  });
   const [PAGING, setPAGING] = useState({
     page: 1,
     limit: 5
@@ -60,6 +47,25 @@ export const SleepPlanList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day",
+      limit: 5,
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
+
+  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = [{
     sleep_startDt: "0000-00-00",
     sleep_endDt: "0000-00-00",
