@@ -34,7 +34,6 @@ html, body {
   padding: 2vh 0vw 2vh 0vw;
   background-color: #fff;
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
-  animation: fadeIn 1.0s;
 }
 .nav-wrapper {
   display: flex;
@@ -49,7 +48,6 @@ html, body {
   padding: 2vh 0vw 2vh 0vw;
   background-color: #fff;
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
-  animation: fadeIn 1.0s;
 }
 .content-wrapper {
   border: none;
@@ -62,7 +60,6 @@ html, body {
   padding: 1vh 2vw 1vh 2vw;
   background-color: #fff;
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
-  animation: fadeIn 1.0s;
 }
 .container {
   --bs-gutter-x: 1.0rem;
@@ -82,7 +79,7 @@ html, body {
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .table-wrapper {
   border: 1px solid #dee2e6;
@@ -91,7 +88,7 @@ html, body {
   height: 60vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .save-wrapper {
   border: 1px solid #dee2e6;
@@ -100,7 +97,7 @@ html, body {
   height: 60vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .detail-wrapper {
   border: 1px solid #dee2e6;
@@ -109,7 +106,7 @@ html, body {
   height: 68vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .dataset-wrapper {
   border: none;
@@ -118,7 +115,7 @@ html, body {
   height: 68vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .calendar-list-wrapper {
   border: none;
@@ -127,7 +124,7 @@ html, body {
   height: 74vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .calendar-detail-wrapper {
   border: none;
@@ -136,7 +133,7 @@ html, body {
   height: 61vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .date-wrapper {
   border: none;
@@ -144,7 +141,7 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .paging-wrapper {
   border: none;
@@ -152,7 +149,7 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .filter-wrapper {
   border: none;
@@ -160,7 +157,7 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .btn-wrapper {
   border: none;
@@ -168,7 +165,7 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 1.0s;
+  animation: fadeIn 1.0s !important;
 }
 .loading-wrapper {
   display: flex;
@@ -188,46 +185,4 @@ html, body {
   to {
     opacity: 1;
   }
-}
-
-/** 0. Media **************************************************************************************/
-
-/** 1. Small (0 ~ 479px) **************************************************************************/
-@media only screen and (min-width: 0px) and (max-width: 479px) {
-
-  /** non display **/
-
-  /** display **/
-}
-
-/** 2. Mobile (480px ~ 767px) *********************************************************************/
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-
-  /** non display **/
-
-  /** display **/
-}
-
-/** 3. Pablet (768px ~ 991px) *********************************************************************/
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  /** non display **/
-
-  /** display **/
-}
-
-/** 4. Tablet (992px ~ 1199px) ********************************************************************/
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-  /** non display **/
-
-  /** display **/
-}
-
-/** 5. Desktop (1200px ~ 10000px) *****************************************************************/
-@media only screen and (min-width: 1200px) and (max-width: 10000px) {
-
-  /** non display **/
-
-  /** display **/
 }
