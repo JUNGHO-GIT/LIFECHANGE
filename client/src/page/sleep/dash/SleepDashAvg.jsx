@@ -187,7 +187,7 @@ export const SleepDashAvg = () => {
   const tableNode = () => {
     return (
       <React.Fragment>
-        {["취침", "기상", "수면"].map((key, index) => (
+        {["취침", "기상", "수면"]?.map((key, index) => (
           <div key={index} className={"dash-checkbox flex-column mb-10"}>
             <FormCheck
               inline

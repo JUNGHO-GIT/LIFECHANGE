@@ -212,13 +212,13 @@ export const lineWeek = async (
 
     finalResultKcal.push({
       name: data,
-      칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal].food_total_kcal) : 0
+      칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
     });
     finalResultNut.push({
       name: data,
-      탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut].food_total_carb) : 0,
-      단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut].food_total_protein) : 0,
-      지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut].food_total_fat) : 0
+      탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
+      단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
+      지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
     });
   });
 
@@ -264,13 +264,13 @@ export const lineMonth = async (
 
     finalResultKcal.push({
       name: data,
-      칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal].food_total_kcal) : 0
+      칼로리: findIndexKcal !== -1 ? intFormat(findResultKcal[findIndexKcal]?.food_total_kcal) : 0
     });
     finalResultNut.push({
       name: data,
-      탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut].food_total_carb) : 0,
-      단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut].food_total_protein) : 0,
-      지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut].food_total_fat) : 0
+      탄수화물: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_carb) : 0,
+      단백질: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_protein) : 0,
+      지방: findIndexNut !== -1 ? intFormat(findResultNut[findIndexNut]?.food_total_fat) : 0
     });
   });
 

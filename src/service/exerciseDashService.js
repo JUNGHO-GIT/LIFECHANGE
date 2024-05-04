@@ -207,11 +207,11 @@ export const lineWeek = async (
     ));
     finalResultVolume.push({
       name: item,
-      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume].exercise_total_volume) : 0
+      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
     });
     finalResultCardio.push({
       name: item,
-      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio].exercise_total_cardio) : 0
+      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
 
@@ -257,11 +257,11 @@ export const lineMonth = async (
 
     finalResultVolume.push({
       name: data,
-      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume].exercise_total_volume) : 0
+      볼륨: findIndexVolume !== -1 ? intFormat(findResultVolume[findIndexVolume]?.exercise_total_volume) : 0
     });
     finalResultCardio.push({
       name: data,
-      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio].exercise_total_cardio) : 0
+      시간: findIndexCardio !== -1 ? intFormat(findResultCardio[findIndexCardio]?.exercise_total_cardio) : 0
     });
   });
 

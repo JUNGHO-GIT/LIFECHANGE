@@ -32,42 +32,42 @@ export const CalendarNode = ({
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (FILTER.type === "day") {
+    if (FILTER?.type === "day") {
       setDATE((prev) => ({
         ...prev,
         startDt: moment(koreanDate).format("YYYY-MM-DD"),
         endDt: moment(koreanDate).format("YYYY-MM-DD"),
       }));
     }
-    else if (FILTER.type === "week") {
+    else if (FILTER?.type === "week") {
       setDATE((prev) => ({
         ...prev,
         startDt: moment(koreanDate).startOf("isoWeek").format("YYYY-MM-DD"),
         endDt: moment(koreanDate).endOf("isoWeek").format("YYYY-MM-DD")
       }));
     }
-    else if (FILTER.type === "month") {
+    else if (FILTER?.type === "month") {
       setDATE((prev) => ({
         ...prev,
         startDt: moment(koreanDate).startOf("month").format("YYYY-MM-DD"),
         endDt: moment(koreanDate).endOf("month").format("YYYY-MM-DD")
       }));
     }
-    else if (FILTER.type === "year") {
+    else if (FILTER?.type === "year") {
       setDATE((prev) => ({
         ...prev,
         startDt: moment(koreanDate).startOf("year").format("YYYY-MM-DD"),
         endDt: moment(koreanDate).endOf("year").format("YYYY-MM-DD")
       }));
     }
-    else if (FILTER.type === "select") {
+    else if (FILTER?.type === "select") {
       setDATE((prev) => ({
         ...prev,
         startDt: moment(koreanDate).format("YYYY-MM-DD"),
         endDt: moment(koreanDate).format("YYYY-MM-DD"),
       }));
     }
-  }, [FILTER.type]);
+  }, [FILTER?.type]);
 
   // 3. closeBtn ---------------------------------------------------------------------------------->
   const closeBtn = () => (
@@ -91,7 +91,7 @@ export const CalendarNode = ({
     let onMonthChange = undefined;
 
     // 1. day
-    if (FILTER.type === "day") {
+    if (FILTER?.type === "day") {
       mode = "single";
       selected = DATE.startDt && new Date(DATE.startDt);
       month = new Date(DATE.startDt);
@@ -112,7 +112,7 @@ export const CalendarNode = ({
     }
 
     // 2. week
-    if (FILTER.type === "week") {
+    if (FILTER?.type === "week") {
       mode = "range";
       selected = DATE.startDt && DATE.endDt && {from: new Date(DATE.startDt), to: new Date(DATE.endDt)}
       month = new Date(DATE.startDt);
@@ -133,7 +133,7 @@ export const CalendarNode = ({
     }
 
     // 3. month
-    if (FILTER.type === "month") {
+    if (FILTER?.type === "month") {
       mode = "default";
       selected = undefined;
       month = new Date(DATE.startDt);
@@ -148,7 +148,7 @@ export const CalendarNode = ({
     }
 
     // 4. year
-    if (FILTER.type === "year") {
+    if (FILTER?.type === "year") {
       mode = "default";
       selected = undefined;
       month = new Date(DATE.startDt);
@@ -176,7 +176,7 @@ export const CalendarNode = ({
     }
 
     // 5. select
-    if (FILTER.type === "select") {
+    if (FILTER?.type === "select") {
       mode = "range";
       selected = DATE.startDt && DATE.endDt && {from: new Date(DATE.startDt), to: new Date(DATE.endDt)}
       month = new Date(DATE.startDt);

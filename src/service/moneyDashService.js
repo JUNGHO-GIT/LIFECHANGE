@@ -199,11 +199,11 @@ export const lineWeek = async (
     ));
     finalResultIn.push({
       name: data,
-      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn].money_total_in) : 0
+      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn]?.money_total_in) : 0
     });
     finalResultOut.push({
       name: data,
-      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut].money_total_out) : 0
+      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut]?.money_total_out) : 0
     });
   });
 
@@ -247,11 +247,11 @@ export const lineMonth = async (
 
     finalResultIn.push({
       name: data,
-      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn].money_total_in) : 0
+      수입: findIndexIn !== -1 ? intFormat(findResultIn[findIndexIn]?.money_total_in) : 0
     });
     finalResultOut.push({
       name: data,
-      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut].money_total_out) : 0
+      지출: findIndexOut !== -1 ? intFormat(findResultOut[findIndexOut]?.money_total_out) : 0
     });
   });
 

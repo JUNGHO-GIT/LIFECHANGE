@@ -30,7 +30,7 @@ export const list = async (
   const finalResult = findResult1.map((item) => {
     return {
       ...item,
-      money_property: findResult2[0].money_total_in - findResult2[0].money_total_out,
+      money_property: findResult2[0]?.money_total_in - findResult2[0]?.money_total_out,
     };
   });
 

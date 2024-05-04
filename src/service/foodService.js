@@ -51,10 +51,10 @@ export const search = async (
       let found = false;
       // 1. servArray에 포함된 단어가 있는 경우
       servArray.forEach((el) => {
-        if (matches[2].includes(el)) {
-          const idx = matches[2].indexOf(el);
-          const gramMatch = matches[2].slice(idx + el.length).trim().match(/(\d+)\s*g/);
-          serv = matches[2].slice(0, idx + el.length).replace(/(\d+)\s+(.+)/, "$1$2").trim();
+        if (matches[2]?.includes(el)) {
+          const idx = matches[2]?.indexOf(el);
+          const gramMatch = matches[2]?.slice(idx + el.length).trim().match(/(\d+)\s*g/);
+          serv = matches[2]?.slice(0, idx + el.length).replace(/(\d+)\s+(.+)/, "$1$2").trim();
           gram  = gramMatch ? gramMatch[1] : "-";
           found = true;
         }
@@ -68,8 +68,8 @@ export const search = async (
           gram = gramDirectMatch[1];
         }
         else {
-          const gramMatch = matches[2].trim().match(/(\d+)\s*g/);
-          serv = matches ? matches[2].replace(/(\d+)\s+(.+)/, "$1$2").trim() : "1회";
+          const gramMatch = matches[2]?.trim().match(/(\d+)\s*g/);
+          serv = matches ? matches[2]?.replace(/(\d+)\s+(.+)/, "$1$2").trim() : "1회";
           gram = gramMatch ? gramMatch[1] : "-";
         }
       }
@@ -105,7 +105,7 @@ export const search = async (
       });
 
       const count = document.querySelector(".searchResultSummary")?.textContent;
-      totalCnt = count ? Math.ceil(parseInt(count.split("중")[0].trim(), 10) / 10) : 0;
+      totalCnt = count ? Math.ceil(parseInt(count.split("중")[0]?.trim(), 10) / 10) : 0;
     });
   });
 

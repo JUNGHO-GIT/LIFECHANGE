@@ -7,7 +7,7 @@ export const FilterNode = ({
   FILTER, setFILTER, PAGING, setPAGING, part, plan, type
 }) => {
 
-  const session = sessionStorage.getItem("dataset") || "";
+  const session = sessionStorage.getItem("dataset") || "{}";
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const exerciseArray = JSON.parse(session).exercise || [];
@@ -26,7 +26,7 @@ export const FilterNode = ({
         }))
       )}>
         {["day", "week", "month", "year", "select"]?.map((item) => (
-          <option key={item} value={item} selected={FILTER.type === item}>
+          <option key={item} value={item} selected={FILTER?.type === item}>
             {item}
           </option>
         ))}
@@ -38,7 +38,7 @@ export const FilterNode = ({
         }))
       )}>
         {["asc", "desc"]?.map((item) => (
-          <option key={item} value={item} selected={FILTER.order === item}>
+          <option key={item} value={item} selected={FILTER?.order === item}>
             {item}
           </option>
         ))}
@@ -54,7 +54,7 @@ export const FilterNode = ({
         }))
       )}>
         {["5", "10"]?.map((item) => (
-          <option key={item} value={item} selected={FILTER.limit === parseInt(item)}>
+          <option key={item} value={item} selected={FILTER?.limit === parseInt(item)}>
             {item}
           </option>
         ))}
@@ -65,7 +65,7 @@ export const FilterNode = ({
   // 2. food
   const foodNode = () => (
     <React.Fragment>
-      <select className={"form-select me-5"} id={"part"} value={foodArray[FILTER.partIdx].money_part} onChange={(e) => {
+      <select className={"form-select me-5"} id={"part"} value={foodArray[FILTER?.partIdx]?.money_part} onChange={(e) => {
         const selectedOption = e.target.options[e.target.selectedIndex];
         const idxValue = selectedOption.getAttribute("data-idx");
         const newPartIndex = Number(idxValue);
@@ -88,7 +88,7 @@ export const FilterNode = ({
   // 3. money
   const moneyNode = () => (
     <React.Fragment>
-      <select className={"form-select me-5"} id={"part"} value={moneyArray[FILTER.partIdx].money_part} onChange={(e) => {
+      <select className={"form-select me-5"} id={"part"} value={moneyArray[FILTER?.partIdx]?.money_part} onChange={(e) => {
         const selectedOption = e.target.options[e.target.selectedIndex];
         const idxValue = selectedOption.getAttribute("data-idx");
         const newPartIndex = Number(idxValue);
@@ -105,14 +105,14 @@ export const FilterNode = ({
           </option>
         ))}
       </select>
-      <select className={"form-select me-5"} id={"title"} value={FILTER.title}
+      <select className={"form-select me-5"} id={"title"} value={FILTER?.title}
       onChange={(e) => {
         setFILTER((prev) => ({
           ...prev,
           title: e.target.value
         }));
       }}>
-        {moneyArray[FILTER.partIdx].money_title?.map((item, idx) => (
+        {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
           <option key={idx}>
             {item}
           </option>
@@ -124,7 +124,7 @@ export const FilterNode = ({
   // 4. exercise
   const exerciseNode = () => (
     <React.Fragment>
-      <select className={"form-select me-5"} id={"part"} value={exerciseArray[FILTER.partIdx].exercise_part} onChange={(e) => {
+      <select className={"form-select me-5"} id={"part"} value={exerciseArray[FILTER?.partIdx]?.exercise_part} onChange={(e) => {
         const selectedOption = e.target.options[e.target.selectedIndex];
         const idxValue = selectedOption.getAttribute("data-idx");
         const newPartIndex = Number(idxValue);
@@ -141,14 +141,14 @@ export const FilterNode = ({
           </option>
         ))}
       </select>
-      <select className={"form-select me-5"} id={"title"} value={FILTER.title}
+      <select className={"form-select me-5"} id={"title"} value={FILTER?.title}
       onChange={(e) => {
         setFILTER((prev) => ({
           ...prev,
           title: e.target.value
         }));
       }}>
-        {exerciseArray[FILTER.partIdx].exercise_title?.map((item, idx) => (
+        {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
           <option key={idx}>
             {item}
           </option>

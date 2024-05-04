@@ -80,13 +80,13 @@ export const FoodSearch = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    if (FILTER.query === "") {
+    if (FILTER?.query === "") {
       return;
     }
     else {
       flowSearch();
     }
-  }, [FILTER.page]);
+  }, [FILTER?.page]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSearch = async () => {
@@ -171,7 +171,7 @@ export const FoodSearch = () => {
         className={"form-control"}
         readOnly={false}
         disabled={false}
-        value={FILTER.query}
+        value={FILTER?.query}
         onChange={(e) => {
           setFILTER((prev) => ({
             ...prev,

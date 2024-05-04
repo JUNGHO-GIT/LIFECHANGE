@@ -70,9 +70,9 @@ export const lineWeek = async (
 
     finalResult.push({
       name: data,
-      취침: findIndex !== -1 ? timeFormat(findResult[findIndex].sleep_section[0].sleep_night) : 0,
-      수면: findIndex !== -1 ? timeFormat(findResult[findIndex].sleep_section[0].sleep_time) : 0,
-      기상: findIndex !== -1 ? timeFormat(findResult[findIndex].sleep_section[0].sleep_morning) : 0
+      취침: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_night) : 0,
+      수면: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_time) : 0,
+      기상: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_morning) : 0
     });
   });
 
@@ -105,9 +105,9 @@ export const lineMonth = async (
 
     finalResult.push({
       name: data,
-      취침: findIndex !== -1 ? timeFormat(findResult[findIndex].sleep_section[0].sleep_night) : 0,
-      수면: findIndex !== -1 ? timeFormat(findResult[findIndex].sleep_section[0].sleep_time) : 0,
-      기상: findIndex !== -1 ? timeFormat(findResult[findIndex].sleep_section[0].sleep_morning) : 0
+      취침: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_night) : 0,
+      수면: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_time) : 0,
+      기상: findIndex !== -1 ? timeFormat(findResult[findIndex]?.sleep_section[0]?.sleep_morning) : 0
     });
   });
 
@@ -144,9 +144,9 @@ export const avgMonth = async (
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const weekNum = Math.floor(diffDays / 7);
     if (weekNum >= 0 && weekNum < 5) {
-      sumSleepStart[weekNum] += timeFormat(item.sleep_section[0].sleep_night);
-      sumSleepEnd[weekNum] += timeFormat(item.sleep_section[0].sleep_morning);
-      sumSleepTime[weekNum] += timeFormat(item.sleep_section[0].sleep_time);
+      sumSleepStart[weekNum] += timeFormat(item.sleep_section[0]?.sleep_night);
+      sumSleepEnd[weekNum] += timeFormat(item.sleep_section[0]?.sleep_morning);
+      sumSleepTime[weekNum] += timeFormat(item.sleep_section[0]?.sleep_time);
       countRecords[weekNum]++;
     }
   });
@@ -189,9 +189,9 @@ export const avgYear = async (
   findResult.forEach((element) => {
     const sleepDate = new Date(element.sleep_startDt);
     const monthNum = sleepDate.getMonth();
-    sumSleepStart[monthNum] += timeFormat(element.sleep_section[0].sleep_night);
-    sumSleepEnd[monthNum] += timeFormat(element.sleep_section[0].sleep_morning);
-    sumSleepTime[monthNum] += timeFormat(element.sleep_section[0].sleep_time);
+    sumSleepStart[monthNum] += timeFormat(element.sleep_section[0]?.sleep_night);
+    sumSleepEnd[monthNum] += timeFormat(element.sleep_section[0]?.sleep_morning);
+    sumSleepTime[monthNum] += timeFormat(element.sleep_section[0]?.sleep_time);
     countRecords[monthNum]++;
   });
 
