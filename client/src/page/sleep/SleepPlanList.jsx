@@ -128,7 +128,7 @@ export const SleepPlanList = () => {
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={4} className={"pointer"} onClick={() => {
+                  <td rowSpan={3} className={"pointer"} onClick={() => {
                     SEND.id = item._id;
                     SEND.startDt = item.sleep_plan_startDt;
                     SEND.endDt = item.sleep_plan_endDt;
@@ -138,8 +138,6 @@ export const SleepPlanList = () => {
                   }}>
                     {item.sleep_plan_startDt}
                   </td>
-                </tr>
-                <tr>
                   <td>취침</td>
                   <td>{item.sleep_plan_night}</td>
                   <td>{item.sleep_night}</td>

@@ -133,7 +133,7 @@ export const ExercisePlanList = () => {
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={5} className={"pointer"} onClick={() => {
+                  <td rowSpan={4} className={"pointer"} onClick={() => {
                     SEND.id = item._id;
                     SEND.startDt = item.exercise_plan_startDt;
                     SEND.endDt = item.exercise_plan_endDt;
@@ -143,8 +143,6 @@ export const ExercisePlanList = () => {
                   }}>
                     {`${item.exercise_plan_startDt?.substring(5, 10)} ~ ${item.exercise_plan_endDt?.substring(5, 10)}`}
                   </td>
-                </tr>
-                <tr>
                   <td>총 운동횟수</td>
                   <td>{`${numeral(item.exercise_plan_count).format("0,0")} 회`}</td>
                   <td>{`${numeral(item.exercise_total_count).format("0,0")} 회`}</td>

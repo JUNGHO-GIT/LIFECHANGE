@@ -133,7 +133,7 @@ export const FoodPlanList = () => {
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={5} className={"pointer"} onClick={() => {
+                  <td rowSpan={4} className={"pointer"} onClick={() => {
                     SEND.id = item._id;
                     SEND.startDt = item.food_plan_startDt;
                     SEND.endDt = item.food_plan_endDt;
@@ -143,8 +143,6 @@ export const FoodPlanList = () => {
                   }}>
                     {`${item.food_plan_startDt?.substring(5, 10)} ~ ${item.food_plan_endDt?.substring(5, 10)}`}
                   </td>
-                </tr>
-                <tr>
                   <td>칼로리</td>
                   <td>{`${numeral(item.food_plan_kcal).format('0,0')} kcal`}</td>
                   <td>{`${numeral(item.food_total_kcal).format('0,0')} kcal`}</td>

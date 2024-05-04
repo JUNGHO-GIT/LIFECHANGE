@@ -125,7 +125,7 @@ export const MoneyPlanList = () => {
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
                 <tr>
-                  <td rowSpan={3} className={"pointer"} onClick={() => {
+                  <td rowSpan={2} className={"pointer"} onClick={() => {
                     SEND.id = item._id;
                     SEND.startDt = item.money_plan_startDt;
                     SEND.endDt = item.money_plan_endDt;
@@ -135,8 +135,6 @@ export const MoneyPlanList = () => {
                   }}>
                     {`${item.money_plan_startDt?.substring(5, 10)} ~ ${item.money_plan_endDt?.substring(5, 10)}`}
                   </td>
-                </tr>
-                <tr>
                   <td>수입</td>
                   <td>{`₩ ${numeral(item.money_plan_in).format('0,0')}`}</td>
                   <td>{`₩ ${numeral(item.money_total_in).format('0,0')}`}</td>
