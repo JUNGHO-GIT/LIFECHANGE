@@ -62,7 +62,7 @@ export const list = {
     });
     return finalResult;
   },
-  listExerciseReal: async (
+  listExercise: async (
     customer_id_param, page_param, limit_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -77,7 +77,7 @@ export const list = {
     ]);
     return finalResult;
   },
-  countExerciseReal: async (
+  countExercise: async (
     customer_id_param
   ) => {
     const finalResult = await Exercise.countDocuments({
@@ -109,7 +109,7 @@ export const list = {
     });
     return finalResult;
   },
-  listFoodReal: async (
+  listFood: async (
     customer_id_param, page_param, limit_param
   ) => {
     const finalResult = await Food.aggregate([
@@ -124,7 +124,7 @@ export const list = {
     ]);
     return finalResult;
   },
-  countFoodReal: async (
+  countFood: async (
     customer_id_param
   ) => {
     const finalResult = await Food.countDocuments({
@@ -156,7 +156,7 @@ export const list = {
     });
     return finalResult;
   },
-  listMoneyReal: async (
+  listMoney: async (
     customer_id_param, page_param, limit_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -171,7 +171,7 @@ export const list = {
     ]);
     return finalResult;
   },
-  countMoneyReal: async (
+  countMoney: async (
     customer_id_param
   ) => {
     const finalResult = await Money.countDocuments({
@@ -203,7 +203,7 @@ export const list = {
     });
     return finalResult;
   },
-  listSleepReal: async (
+  listSleep: async (
     customer_id_param, page_param, limit_param
   ) => {
     const finalResult = await Sleep.aggregate([
@@ -218,7 +218,7 @@ export const list = {
     ]);
     return finalResult;
   },
-  countSleepReal: async (
+  countSleep: async (
     customer_id_param
   ) => {
     const finalResult = await Sleep.countDocuments({
@@ -337,6 +337,11 @@ export const add = {
 
     // 데이터 삽입
     const insertResult = await ExercisePlan.insertMany(OBJECT_param);
+
+    // 로그
+    console.log('Deleted documents : ' + deleteResult.deletedCount);
+    console.log('Inserted documents : ' + insertResult.length);
+
     return insertResult;
   },
 
@@ -461,8 +466,10 @@ export const deletes = {
   deletes: async (
     customer_id_param, typeStr_param, typeUpper_param
   ) => {
+    const demo = `${typeStr_param}_demo`;
     const finalResult = await eval(typeUpper_param).deleteMany({
-      customer_id: customer_id_param
+      customer_id: customer_id_param,
+      [demo]: true
     });
 
     return finalResult;

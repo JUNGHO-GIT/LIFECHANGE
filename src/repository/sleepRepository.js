@@ -55,7 +55,7 @@ export const list = {
         sleep_endDt: sort_param
       }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
-      {$limit:  Number(limit_param)},
+      {$limit: Number(limit_param)}
     ]);
     return finalResult;
   },

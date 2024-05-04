@@ -102,7 +102,8 @@ router.post("/add", async (req, res) => {
   try {
     let result = await service.add (
       req.body.customer_id,
-      req.body.TYPE
+      req.body.TYPE,
+      req.body.count
     );
     if (result !== "fail") {
       res.json({

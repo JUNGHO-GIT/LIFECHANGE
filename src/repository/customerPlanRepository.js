@@ -39,7 +39,7 @@ export const percent = {
     return finalResult;
   },
 
-  listFoodReal: async (
+  listFood: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
@@ -90,7 +90,7 @@ export const percent = {
     return finalResult;
   },
 
-  listMoneyReal: async (
+  listMoney: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
@@ -140,7 +140,7 @@ export const percent = {
     return finalResult;
   },
 
-  listSleepReal: async (
+  listSleep: async (
     customer_id_param, startDt_param, endDt_param,
   ) => {
     const finalResult = await Sleep.aggregate([
@@ -194,7 +194,7 @@ export const percent = {
     return finalResult;
   },
 
-  listExerciseReal: async (
+  listExercise: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([

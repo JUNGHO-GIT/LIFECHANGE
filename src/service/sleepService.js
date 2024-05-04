@@ -10,8 +10,8 @@ export const list = async (
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const sort = FILTER_param.order === "asc" ? 1 : -1;
-  const limit = parseInt(FILTER_param.limit) === 0 ? 5 : parseInt(FILTER_param.limit);
-  const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
+  const page = parseInt(PAGING_param.page) === 0 ? 1 : PAGING_param.page;
+  const limit = parseInt(PAGING_param.limit) === 0 ? 5 : PAGING_param.limit;
 
   const totalCnt = await repository.list.cnt(
     customer_id_param, startDt_param, endDt_param
@@ -20,6 +20,9 @@ export const list = async (
   const finalResult = await repository.list.list(
     customer_id_param, sort, limit, page, startDt_param, endDt_param
   );
+
+  console.log("===================================");
+  console.log("finalResult : " + JSON.stringify(finalResult, null, 2));
 
   return {
     totalCnt: totalCnt,

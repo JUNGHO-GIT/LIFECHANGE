@@ -25,7 +25,7 @@ export const list = async (
     const startDt = plan.food_plan_startDt;
     const endDt = plan.food_plan_endDt;
 
-    const listReal = await repository.list.listReal(
+    const listReal = await repository.list.list (
       customer_id_param, startDt, endDt
     );
 

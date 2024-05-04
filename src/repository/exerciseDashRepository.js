@@ -27,7 +27,7 @@ export const scatterToday = {
     return finalResult;
   },
 
-  listReal: async (
+  list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -74,7 +74,7 @@ export const scatterWeek = {
     return finalResult;
   },
 
-  listReal: async (
+  list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
@@ -121,7 +121,7 @@ export const scatterMonth = {
     return finalResult;
   },
 
-  listReal: async (
+  list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([

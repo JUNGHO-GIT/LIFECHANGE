@@ -32,7 +32,7 @@ export const barToday = {
     return finalResult;
   },
 
-  listReal: async (
+  list: async (
     customer_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Sleep.aggregate([

@@ -25,11 +25,11 @@ export const list = async (
   customer_id_param, PAGING_param, TYPE_param
 ) => {
 
-  const page = parseInt(PAGING_param.page) === 0 ? 1 : parseInt(PAGING_param.page);
-  const limit = parseInt(PAGING_param.limit) === 0 ? 10 : parseInt(PAGING_param.limit);
+  const page = parseInt(PAGING_param.page) === 0 ? 1 : PAGING_param.page;
+  const limit = parseInt(PAGING_param.limit) === 0 ? 10 : PAGING_param.limit;
 
-  let findResult;
-  let findCnt;
+  let findResult = [];
+  let findCnt = 0;
 
   if (TYPE_param === "exercise") {
     findResult = await repository.list.listExercise(
@@ -132,265 +132,260 @@ export const save = async (
 
 // 4-1. add --------------------------------------------------------------------------------------->
 export const add = async (
-  customer_id_param, TYPE_param
+  customer_id_param, TYPE_param, count_param
 ) => {
 
-  let OBJECT = [];
-  let sections = [];
-  let finalResult = "";
+  let insertCount = Number(count_param);
+  let finalResult = String("");
+  let typeStr = String(TYPE_param);
 
-  const typeStr = TYPE_param.toString();
-  const sectionCount = randomNumber(5) + 1;
-
-  for (let k = 0; k < sectionCount; k++) {
-    if (typeStr === "exercise") {
-      const partIndex = randomNumber(exerciseArray.length - 1) + 1;
-      const part = exerciseArray[partIndex];
-      const titleIndex = randomNumber(part.exercise_title.length);
-      const title = part.exercise_title[titleIndex];
-      sections.push({
+  // 1. exercisePlan
+  if (typeStr === "exercisePlan") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      return {
         _id: new mongodb.ObjectId(),
-        exercise_part_idx: partIndex,
-        exercise_part_val: part.exercise_part,
-        exercise_title_idx: titleIndex,
-        exercise_title_val: title,
-        exercise_set: randomNumber(10),
-        exercise_rep: randomNumber(10),
-        exercise_kg: randomNumber(100),
-        exercise_rest: randomNumber(100),
-        exercise_volume: randomNumber(1000),
-        exercise_cardio: randomTime(),
-      });
-    }
-    else if (typeStr === "food") {
-      const partIndex = randomNumber(foodArray.length - 1) + 1;
-      const part = foodArray[partIndex];
-      const titleArray = ["김치찌개", "된장찌개", "부대찌개", "순두부찌개", "갈비탕", "설렁탕", "뼈해장국", "칼국수", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이"]
-      const title = titleArray[randomNumber(titleArray.length)];
-      sections.push({
-        _id: new mongodb.ObjectId(),
-        food_part_idx: partIndex,
-        food_part_val: part.food_part,
-        food_title : title,
-        food_count: randomNumber(10),
-        food_serv: "회",
-        food_gram: randomNumber(100),
-        food_kcal: randomNumber(10000),
-        food_fat: randomNumber(100),
-        food_carb: randomNumber(100),
-        food_protein: randomNumber(100),
-      });
-    }
-    else if (typeStr === "money") {
-      const partIndex = randomNumber(moneyArray.length - 1) + 1;
-      const part = moneyArray[partIndex];
-      const titleIndex = randomNumber(3);
-      const title = part.money_title[titleIndex];
-      sections.push({
-        _id: new mongodb.ObjectId(),
-        money_part_idx: partIndex,
-        money_part_val: part.money_part,
-        money_title_idx: titleIndex,
-        money_title_val: title,
-        money_amount: randomNumber(100000),
-        money_content: "content",
-      });
-    }
-    else if (typeStr === "sleep") {
-      sections.push({
-        _id: new mongodb.ObjectId(),
-        sleep_night: randomTime(),
-        sleep_morning: randomTime(),
-        sleep_time: calcDate(randomTime(), randomTime()),
-      });
-    }
-  }
-
-  for (let i = 1; i <= 100; i++) {
-    const id = new mongodb.ObjectId();
-    const customer_id = customer_id_param;
-    const number = i + 100;
-    const demo = true;
-    const startDate = moment().subtract(i, 'days').format('YYYY-MM-DD');
-    const endDate = moment().subtract(i, 'days').format('YYYY-MM-DD');
-    const regDate = startDate;
-    const updateDate = endDate;
-
-    if (typeStr === "exercise") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        exercise_number: number,
-        exercise_demo: demo,
-        exercise_startDt: startDate,
-        exercise_endDt: endDate,
-        exercise_total_volume: randomNumber(10000),
-        exercise_total_cardio: randomTime(),
-        exercise_body_weight: randomNumber(100),
-        exercise_section: sections,
-        exercise_regDt: regDate,
-        exercise_updateDt: updateDate,
-      });
-    }
-    else if (typeStr === "exercisePlan") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        exercise_plan_number: number,
-        exercise_plan_demo: demo,
-        exercise_plan_startDt: startDate,
-        exercise_plan_endDt: endDate,
+        customer_id: customer_id_param,
+        exercise_plan_number: i + insertCount,
+        exercise_plan_demo: true,
+        exercise_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_plan_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         exercise_plan_count: randomNumber(100),
         exercise_plan_volume: randomNumber(1000),
         exercise_plan_cardio: randomTime(),
         exercise_plan_weight: randomNumber(1000),
-        exercise_plan_regDt: regDate,
-        exercise_plan_updateDt: updateDate,
+        exercise_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
+    });
+    await repository.add.addExercisePlan(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
+  }
+
+  // 2. exercise
+  else if (typeStr === "exercise") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      const sections = Array.from({length: Math.floor(Math.random() * 5) + 1}, () => {
+        const partIndex = Math.floor(Math.random() * exerciseArray.length);
+        const part = exerciseArray[partIndex];
+        const titleIndex = Math.floor(Math.random() * part.exercise_title.length);
+        return {
+          _id: new mongodb.ObjectId(),
+          exercise_part_idx: partIndex,
+          exercise_part_val: part.exercise_part,
+          exercise_title_idx: titleIndex,
+          exercise_title_val: part.exercise_title[titleIndex],
+          exercise_set: randomNumber(10),
+          exercise_rep: randomNumber(10),
+          exercise_kg: randomNumber(100),
+          exercise_rest: randomNumber(100),
+          exercise_volume: randomNumber(1000),
+          exercise_cardio: randomTime(),
+        };
       });
-    }
-    else if (typeStr === "food") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        food_number: number,
-        food_demo: demo,
-        food_startDt: startDate,
-        food_endDt: endDate,
+      return {
+        _id: new mongodb.ObjectId(),
+        customer_id: customer_id_param,
+        exercise_number: i + insertCount,
+        exercise_demo: true,
+        exercise_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_total_volume: randomNumber(10000),
+        exercise_total_cardio: randomTime(),
+        exercise_body_weight: randomNumber(100),
+        exercise_section: sections,
+        exercise_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        exercise_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
+    });
+    await repository.add.addExercise(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
+  }
+
+  // 3. foodPlan
+  else if (typeStr === "foodPlan") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      return {
+        _id: new mongodb.ObjectId(),
+        customer_id: customer_id_param,
+        food_plan_number: i + insertCount,
+        food_plan_demo: true,
+        food_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_plan_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_plan_kcal: randomNumber(10000),
+        food_plan_carb: randomNumber(1000),
+        food_plan_protein: randomNumber(1000),
+        food_plan_fat: randomNumber(1000),
+        food_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
+    });
+    await repository.add.addFoodPlan(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
+  }
+
+  // 4. food
+  else if (typeStr === "food") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      const sections = Array.from({length: Math.floor(Math.random() * 5) + 1}, () => {
+        const partIndex = Math.floor(Math.random() * foodArray.length);
+        const part = foodArray[partIndex];
+        const titleArray = ["김치찌개", "된장찌개", "부대찌개", "순두부찌개", "갈비탕", "설렁탕", "뼈해장국", "칼국수", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이", "순대", "튀김", "만두", "라면", "우동", "짜장면", "짬뽕", "볶음밥", "김밥", "초밥", "회", "떡국", "떡만두국", "떡볶이"]
+        const title = Math.floor(Math.random() * titleArray.length);
+        return {
+          _id: new mongodb.ObjectId(),
+          food_part_idx: partIndex,
+          food_part_val: part.food_part,
+          food_title : title,
+          food_count: randomNumber(10),
+          food_serv: "회",
+          food_gram: randomNumber(100),
+          food_kcal: randomNumber(10000),
+          food_fat: randomNumber(100),
+          food_carb: randomNumber(100),
+          food_protein: randomNumber(100),
+        };
+      });
+      return {
+        _id: new mongodb.ObjectId(),
+        customer_id: customer_id_param,
+        food_number: i + insertCount,
+        food_demo: true,
+        food_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         food_total_kcal: randomNumber(10000),
         food_total_carb: randomNumber(1000),
         food_total_protein: randomNumber(1000),
         food_total_fat: randomNumber(1000),
         food_section: sections,
-        food_regDt: regDate,
-        food_updateDt: updateDate,
-      });
+        food_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        food_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
     }
-    else if (typeStr === "foodPlan") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        food_plan_number: number,
-        food_plan_demo: demo,
-        food_plan_startDt: startDate,
-        food_plan_endDt: endDate,
-        food_plan_kcal: randomNumber(10000),
-        food_plan_carb: randomNumber(1000),
-        food_plan_protein: randomNumber(1000),
-        food_plan_fat: randomNumber(1000),
-        food_plan_regDt: regDate,
-        food_plan_updateDt: updateDate,
+    );
+    await repository.add.addFood(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
+  }
+
+  // 5. moneyPlan
+  else if (typeStr === "moneyPlan") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      return {
+        _id: new mongodb.ObjectId(),
+        customer_id: customer_id_param,
+        money_plan_number: i + insertCount,
+        money_plan_demo: true,
+        money_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_plan_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_plan_in: randomNumber(10000),
+        money_plan_out: randomNumber(10000),
+        money_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
+    });
+    await repository.add.addMoneyPlan(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
+  }
+
+  // 6. money
+  else if (typeStr === "money") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      const sections = Array.from({length: Math.floor(Math.random() * 5) + 1}, () => {
+        const partIndex = Math.floor(Math.random() * moneyArray.length);
+        const part = moneyArray[partIndex];
+        const titleIndex = Math.floor(Math.random() * part.money_title.length);
+        return {
+          _id: new mongodb.ObjectId(),
+          money_part_idx: partIndex,
+          money_part_val: part.money_part,
+          money_title_idx: titleIndex,
+          money_title_val: part.money_title[titleIndex],
+          money_amount: randomNumber(100000),
+          money_content: "content",
+        };
       });
-    }
-    else if (typeStr === "money") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        money_number: number,
-        money_demo: demo,
-        money_startDt: startDate,
-        money_endDt: endDate,
+      return {
+        _id: new mongodb.ObjectId(),
+        customer_id: customer_id_param,
+        money_number: i + insertCount,
+        money_demo: true,
+        money_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         money_total_in: randomNumber(10000),
         money_total_out: randomNumber(10000),
         money_section: sections,
-        money_regDt: regDate,
-        money_updateDt: updateDate,
-      });
-    }
-    else if (typeStr === "moneyPlan") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        money_plan_number: number,
-        money_plan_demo: demo,
-        money_plan_startDt: startDate,
-        money_plan_endDt: endDate,
-        money_plan_in: randomNumber(10000),
-        money_plan_out: randomNumber(10000),
-        money_plan_regDt: regDate,
-        money_plan_updateDt: updateDate,
-      });
-    }
-    else if (typeStr === "sleep") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        sleep_number: number,
-        sleep_demo: demo,
-        sleep_startDt: startDate,
-        sleep_endDt: endDate,
-        sleep_section: sections,
-        sleep_regDt: regDate,
-        sleep_updateDt: updateDate,
-      });
-    }
-    else if (typeStr === "sleepPlan") {
-      OBJECT.push({
-        _id: id,
-        customer_id: customer_id,
-        sleep_plan_number: number,
-        sleep_plan_demo: demo,
-        sleep_plan_startDt: startDate,
-        sleep_plan_endDt: endDate,
+        money_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        money_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
+    });
+    await repository.add.addMoney(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
+  }
+
+  // 7. sleepPlan
+  else if (typeStr === "sleepPlan") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      return {
+        _id: new mongodb.ObjectId(),
+        customer_id: customer_id_param,
+        sleep_plan_number: i + insertCount,
+        sleep_plan_demo: true,
+        sleep_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_plan_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
         sleep_plan_night: randomTime(),
         sleep_plan_morning: randomTime(),
         sleep_plan_time: calcDate(randomTime(), randomTime()),
-        sleep_plan_regDt: regDate,
-        sleep_plan_updateDt: updateDate,
+        sleep_plan_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_plan_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
+    });
+    await repository.add.addSleepPlan(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
+  }
+
+  // 8. sleep
+  else if (typeStr === "sleep") {
+    const OBJECT = Array.from({length: insertCount}, (_, i) => {
+      const sections = Array.from({length: 1}, () => {
+        return {
+          _id: new mongodb.ObjectId(),
+          sleep_night: randomTime(),
+          sleep_morning: randomTime(),
+          sleep_time: calcDate(randomTime(), randomTime()),
+        };
       });
-    }
+      return {
+        _id: new mongodb.ObjectId(),
+        customer_id: customer_id_param,
+        sleep_number: i + insertCount,
+        sleep_demo: true,
+        sleep_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_endDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_section: sections,
+        sleep_regDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+        sleep_updateDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
+      };
+    });
+    await repository.add.addSleep(
+      customer_id_param, OBJECT
+    );
+    finalResult = "success";
   }
-  try {
-    if (typeStr === "exercise") {
-      await repository.add.addExercise(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-    else if (typeStr === "exercisePlan") {
-      await repository.add.addExercisePlan(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-    else if (typeStr === "food") {
-      await repository.add.addFood(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-    else if (typeStr === "foodPlan") {
-      await repository.add.addFoodPlan(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-    else if (typeStr === "money") {
-      await repository.add.addMoney(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-    else if (typeStr === "moneyPlan") {
-      await repository.add.addMoneyPlan(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-    else if (typeStr === "sleep") {
-      await repository.add.addSleep(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-    else if (typeStr === "sleepPlan") {
-      await repository.add.addSleepPlan(
-        customer_id_param, OBJECT
-      );
-      finalResult = "success";
-    }
-  }
-  catch (e) {
-    console.error(e);
+
+  else {
     finalResult = "fail";
   }
 

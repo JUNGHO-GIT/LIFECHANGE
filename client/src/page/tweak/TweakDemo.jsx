@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import numeral from 'numeral';
+import {NumericFormat} from "react-number-format";
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
@@ -19,31 +20,24 @@ export const TweakDemo = () => {
   const customer_id = sessionStorage.getItem("customer_id");
   const navParam = useNavigate();
   const location = useLocation();
-  const PATH = location?.pathname;
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:TYPE, set:setTYPE} = useStorage(
-    `TYPE(${PATH})`, "exercisePlan"
-  );
-  const {val:PAGING, set:setPAGING} = useStorage(
-    `PAGING(${PATH})`, {
-      page: 1,
-      limit: 10
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      exercisePlanCnt: 0,
-      foodPlanCnt: 0,
-      moneyPlanCnt: 0,
-      sleepPlanCnt: 0,
-      exerciseCnt: 0,
-      foodCnt: 0,
-      moneyCnt: 0,
-      sleepCnt: 0,
-      totalCnt: 0
-    }
-  );
+  const [TYPE, setTYPE] = useState("exercisePlan");
+  const [PAGING, setPAGING] = useState({
+    page: 1,
+    limit: 10
+  });
+  const [COUNT, setCOUNT] = useState({
+    inputCnt: 0,
+    exercisePlanCnt: 0,
+    exerciseCnt: 0,
+    foodPlanCnt: 0,
+    foodCnt: 0,
+    moneyPlanCnt: 0,
+    moneyCnt: 0,
+    sleepPlanCnt: 0,
+    sleepCnt: 0,
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_EXERCISE_PLAN_DEFAULT = [{
@@ -53,27 +47,6 @@ export const TweakDemo = () => {
     exercise_plan_cardio: "00:00",
     exercise_plan_volume: 0,
     exercise_plan_weight: 0,
-  }];
-  const OBJECT_FOOD_PLAN_DEFAULT = [{
-    food_plan_startDt: "0000-00-00",
-    food_plan_endDt: "0000-00-00",
-    food_plan_kcal: 0,
-    food_plan_carb: 0,
-    food_plan_protein: 0,
-    food_plan_fat: 0,
-  }];
-  const OBJECT_MONEY_PLAN_DEFAULT = [{
-    money_plan_startDt: "0000-00-00",
-    money_plan_endDt: "0000-00-00",
-    money_plan_in: 0,
-    money_plan_out: 0,
-  }];
-  const OBJECT_SLEEP_PLAN_DEFAULT = [{
-    sleep_plan_startDt: "0000-00-00",
-    sleep_plan_endDt: "0000-00-00",
-    sleep_plan_night: "00:00",
-    sleep_plan_morning: "00:00",
-    sleep_plan_time: "00:00",
   }];
   const OBJECT_EXERCISE_DEFAULT = [{
     _id: "",
@@ -95,6 +68,14 @@ export const TweakDemo = () => {
       exercise_volume: 0,
       exercise_cardio: "00:00",
     }],
+  }];
+  const OBJECT_FOOD_PLAN_DEFAULT = [{
+    food_plan_startDt: "0000-00-00",
+    food_plan_endDt: "0000-00-00",
+    food_plan_kcal: 0,
+    food_plan_carb: 0,
+    food_plan_protein: 0,
+    food_plan_fat: 0,
   }];
   const OBJECT_FOOD_DEFAULT = [{
     _id: "",
@@ -118,6 +99,12 @@ export const TweakDemo = () => {
       food_protein: 0,
     }],
   }];
+  const OBJECT_MONEY_PLAN_DEFAULT = [{
+    money_plan_startDt: "0000-00-00",
+    money_plan_endDt: "0000-00-00",
+    money_plan_in: 0,
+    money_plan_out: 0,
+  }];
   const OBJECT_MONEY_DEFAULT = [{
     _id: "",
     money_number: 0,
@@ -134,6 +121,13 @@ export const TweakDemo = () => {
       money_amount: 0,
       money_content: "",
     }],
+  }];
+  const OBJECT_SLEEP_PLAN_DEFAULT = [{
+    sleep_plan_startDt: "0000-00-00",
+    sleep_plan_endDt: "0000-00-00",
+    sleep_plan_night: "00:00",
+    sleep_plan_morning: "00:00",
+    sleep_plan_time: "00:00",
   }];
   const OBJECT_SLEEP_DEFAULT = [{
     _id: "",
@@ -156,14 +150,6 @@ export const TweakDemo = () => {
   const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState(OBJECT_SLEEP_DEFAULT);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    setCOUNT((prev) => ({
-      ...prev,
-      totalCnt: prev[`${TYPE}Cnt`]
-    }));
-  }, [TYPE]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
@@ -173,31 +159,32 @@ export const TweakDemo = () => {
       }
     });
     setOBJECT_EXERCISE_PLAN(response.data.result.exercisePlan || OBJECT_EXERCISE_PLAN_DEFAULT);
-    setOBJECT_FOOD_PLAN(response.data.result.foodPlan || OBJECT_FOOD_PLAN_DEFAULT);
-    setOBJECT_MONEY_PLAN(response.data.result.moneyPlan || OBJECT_MONEY_PLAN_DEFAULT);
-    setOBJECT_SLEEP_PLAN(response.data.result.sleepPlan || OBJECT_SLEEP_PLAN_DEFAULT);
     setOBJECT_EXERCISE(response.data.result.exercise || OBJECT_EXERCISE_DEFAULT);
+    setOBJECT_FOOD_PLAN(response.data.result.foodPlan || OBJECT_FOOD_PLAN_DEFAULT);
     setOBJECT_FOOD(response.data.result.food || OBJECT_FOOD_DEFAULT);
+    setOBJECT_MONEY_PLAN(response.data.result.moneyPlan || OBJECT_MONEY_PLAN_DEFAULT);
     setOBJECT_MONEY(response.data.result.money || OBJECT_MONEY_DEFAULT);
+    setOBJECT_SLEEP_PLAN(response.data.result.sleepPlan || OBJECT_SLEEP_PLAN_DEFAULT);
     setOBJECT_SLEEP(response.data.result.sleep || OBJECT_SLEEP_DEFAULT);
     setCOUNT((prev) => ({
       ...prev,
       exercisePlanCnt: response.data.result.exercisePlanCnt,
-      foodPlanCnt: response.data.result.foodPlanCnt,
-      moneyPlanCnt: response.data.result.moneyPlanCnt,
-      sleepPlanCnt: response.data.result.sleepPlanCnt,
       exerciseCnt: response.data.result.exerciseCnt,
+      foodPlanCnt: response.data.result.foodPlanCnt,
       foodCnt: response.data.result.foodCnt,
+      moneyPlanCnt: response.data.result.moneyPlanCnt,
       moneyCnt: response.data.result.moneyCnt,
+      sleepPlanCnt: response.data.result.sleepPlanCnt,
       sleepCnt: response.data.result.sleepCnt,
     }));
-  })()}, [customer_id, PAGING]);
+  })()}, [customer_id, PAGING, TYPE, COUNT?.inputCnt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowAdd = async (type) => {
     const response = await axios.post(`${URL_OBJECT}/add`, {
       customer_id: customer_id,
-      TYPE: type
+      TYPE: type,
+      count: COUNT?.inputCnt
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
@@ -244,12 +231,12 @@ export const TweakDemo = () => {
           value={TYPE}
         >
           <option value={"exercisePlan"}>운동(계획)</option>
-          <option value={"foodPlan"}>식사(계획)</option>
-          <option value={"moneyPlan"}>지출(계획)</option>
-          <option value={"sleepPlan"}>수면(계획)</option>
           <option value={"exercise"}>운동</option>
+          <option value={"foodPlan"}>식사(계획)</option>
           <option value={"food"}>식사</option>
+          <option value={"moneyPlan"}>지출(계획)</option>
           <option value={"money"}>지출</option>
+          <option value={"sleepPlan"}>수면(계획)</option>
           <option value={"sleep"}>수면</option>
         </select>
       </React.Fragment>
@@ -274,78 +261,6 @@ export const TweakDemo = () => {
                 <td>{item.exercise_plan_cardio}</td>
                 <td>{item.exercise_plan_volume}</td>
                 <td>{item.exercise_plan_weight}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </React.Fragment>
-    );
-    const tableFoodPlan = () => (
-      <React.Fragment>
-        <Table hover responsive className={"border-1"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>칼로리</th>
-              <th className={"table-thead"}>탄수화물</th>
-              <th className={"table-thead"}>단백질</th>
-              <th className={"table-thead"}>지방</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT_FOOD_PLAN?.map((item, index) => (
-              <tr key={index}>
-                <td>{item.food_plan_startDt?.substring(5, 10)}</td>
-                <td>{item.food_plan_kcal}</td>
-                <td>{item.food_plan_carb}</td>
-                <td>{item.food_plan_protein}</td>
-                <td>{item.food_plan_fat}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </React.Fragment>
-    );
-    const tableMoneyPlan = () => (
-      <React.Fragment>
-        <Table hover responsive className={"border-1"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>수입</th>
-              <th className={"table-thead"}>지출</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT_MONEY_PLAN?.map((item, index) => (
-              <tr key={index}>
-                <td>{item.money_plan_startDt?.substring(5, 10)}</td>
-                <td>{item.money_plan_in}</td>
-                <td>{item.money_plan_out}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </React.Fragment>
-    );
-    const tableSleepPlan = () => (
-      <React.Fragment>
-        <Table hover responsive className={"border-1"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>취침</th>
-              <th className={"table-thead"}>기상</th>
-              <th className={"table-thead"}>수면</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT_SLEEP_PLAN?.map((item, index) => (
-              <tr key={index}>
-                <td>{item.sleep_plan_startDt?.substring(5, 10)}</td>
-                <td>{item.sleep_plan_night}</td>
-                <td>{item.sleep_plan_morning}</td>
-                <td>{item.sleep_plan_time}</td>
               </tr>
             ))}
           </tbody>
@@ -397,6 +312,32 @@ export const TweakDemo = () => {
         </Table>
       </React.Fragment>
     );
+    const tableFoodPlan = () => (
+      <React.Fragment>
+        <Table hover responsive className={"border-1"}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>칼로리</th>
+              <th className={"table-thead"}>탄수화물</th>
+              <th className={"table-thead"}>단백질</th>
+              <th className={"table-thead"}>지방</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT_FOOD_PLAN?.map((item, index) => (
+              <tr key={index}>
+                <td>{item.food_plan_startDt?.substring(5, 10)}</td>
+                <td>{item.food_plan_kcal}</td>
+                <td>{item.food_plan_carb}</td>
+                <td>{item.food_plan_protein}</td>
+                <td>{item.food_plan_fat}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     const tableFood = () => (
       <React.Fragment>
         <Table hover responsive className={"border-1"}>
@@ -432,6 +373,28 @@ export const TweakDemo = () => {
         </Table>
       </React.Fragment>
     );
+    const tableMoneyPlan = () => (
+      <React.Fragment>
+        <Table hover responsive className={"border-1"}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>수입</th>
+              <th className={"table-thead"}>지출</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT_MONEY_PLAN?.map((item, index) => (
+              <tr key={index}>
+                <td>{item.money_plan_startDt?.substring(5, 10)}</td>
+                <td>{item.money_plan_in}</td>
+                <td>{item.money_plan_out}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     const tableMoney = () => (
       <React.Fragment>
         <Table hover responsive className={"border-1"}>
@@ -460,6 +423,30 @@ export const TweakDemo = () => {
                   </tr>
                 </React.Fragment>
               ))
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
+    const tableSleepPlan = () => (
+      <React.Fragment>
+        <Table hover responsive className={"border-1"}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>취침</th>
+              <th className={"table-thead"}>기상</th>
+              <th className={"table-thead"}>수면</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT_SLEEP_PLAN?.map((item, index) => (
+              <tr key={index}>
+                <td>{item.sleep_plan_startDt?.substring(5, 10)}</td>
+                <td>{item.sleep_plan_night}</td>
+                <td>{item.sleep_plan_morning}</td>
+                <td>{item.sleep_plan_time}</td>
+              </tr>
             ))}
           </tbody>
         </Table>
@@ -500,6 +487,31 @@ export const TweakDemo = () => {
         </Table>
       </React.Fragment>
     );
+    const inputCount = () => (
+      <React.Fragment>
+        <NumericFormat
+          min={0}
+          max={10}
+          minLength={1}
+          maxLength={2}
+          datatype={"number"}
+          displayType={"input"}
+          className={"form-control"}
+          id={"inputCount"}
+          name={"inputCount"}
+          disabled={false}
+          thousandSeparator={false}
+          fixedDecimalScale={true}
+          value={Math.min(10, COUNT?.inputCnt)}
+          onValueChange={(values) => (
+            setCOUNT((prev) => ({
+              ...prev,
+              inputCnt: Number(values.value)
+            }))
+          )}
+        ></NumericFormat>
+      </React.Fragment>
+    );
     const btnAdd = () => (
       <React.Fragment>
         <Button variant={"outline-secondary"} size={"sm"} onClick={() => (
@@ -525,13 +537,16 @@ export const TweakDemo = () => {
         </div>
         <div className={"table-wrapper"}>
           {TYPE === "exercisePlan" && tableExercisePlan()}
-          {TYPE === "foodPlan" && tableFoodPlan()}
-          {TYPE === "moneyPlan" && tableMoneyPlan()}
-          {TYPE === "sleepPlan" && tableSleepPlan()}
           {TYPE === "exercise" && tableExercise()}
+          {TYPE === "foodPlan" && tableFoodPlan()}
           {TYPE === "food" && tableFood()}
+          {TYPE === "moneyPlan" && tableMoneyPlan()}
           {TYPE === "money" && tableMoney()}
+          {TYPE === "sleepPlan" && tableSleepPlan()}
           {TYPE === "sleep" && tableSleep()}
+        </div>
+        <div className={"input-wrapper"}>
+          {inputCount()}
         </div>
         <div className={"btn-wrapper"}>
           {btnAdd()}

@@ -132,12 +132,12 @@ export const percent = async (
 
   return {
     exercisePlan: listExercisePlan[0] || {},
-    exerciseReal: listExerciseReal[0] || {},
+    exercise: listExerciseReal[0] || {},
     foodPlan: listFoodPlan[0] || {},
-    foodReal: listFoodReal[0] || {},
+    food: listFoodReal[0] || {},
     moneyPlan: listMoneyPlan[0] || {},
-    moneyReal: listMoneyReal[0] || {},
+    money: listMoneyReal[0] || {},
     sleepPlan: listSleepPlan[0] || {},
-    sleepReal: listSleepReal[0] || {},
+    sleep: listSleepReal[0] || {},
   };
 };
