@@ -8,9 +8,9 @@ export const FilterNode = ({
 }) => {
 
   const session = sessionStorage.getItem("dataset") || "";
-  const foodArray = JSON.parse(session).food;
-  const moneyArray = JSON.parse(session).money;
-  const exerciseArray = JSON.parse(session).exercise;
+  const foodArray = JSON.parse(session).food || [];
+  const moneyArray = JSON.parse(session).money || [];
+  const exerciseArray = JSON.parse(session).exercise || [];
 
   // 1. default
   const defaultNode = () => (
