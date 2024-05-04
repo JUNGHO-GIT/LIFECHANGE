@@ -17,7 +17,7 @@ export const MoneyDashLine = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -46,7 +46,7 @@ export const MoneyDashLine = () => {
   useEffect(() => {(async () => {
     const responseWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_IN_WEEK(responseWeek.data.result.in || OBJECT_IN_WEEK_DEFAULT);
@@ -54,12 +54,12 @@ export const MoneyDashLine = () => {
 
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_IN_MONTH(responseMonth.data.result.in || OBJECT_IN_MONTH_DEFAULT);
     setOBJECT_OUT_MONTH(responseMonth.data.result.out || OBJECT_OUT_MONTH_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeInWeek = () => {

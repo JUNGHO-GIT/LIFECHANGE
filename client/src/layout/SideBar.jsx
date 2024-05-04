@@ -24,8 +24,8 @@ export const SideBar = ({ sidebar, onClose }) => {
     startDt: "0000-00-00",
     endDt: "0000-00-00",
     refresh: 0,
-    toLogin: "/customer/login",
-    toSignup: "/customer/signup",
+    toLogin: "/user/login",
+    toSignup: "/user/signup",
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->

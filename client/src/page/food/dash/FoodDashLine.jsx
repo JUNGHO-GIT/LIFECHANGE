@@ -17,7 +17,7 @@ export const FoodDashLine = () => {
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -47,7 +47,7 @@ export const FoodDashLine = () => {
   useEffect(() => {(async () => {
     const responseWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_KCAL_WEEK(responseWeek.data.result.kcal || OBJECT_KCAL_WEEK_DEFAULT);
@@ -55,12 +55,12 @@ export const FoodDashLine = () => {
 
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_KCAL_MONTH(responseMonth.data.result.kcal || OBJECT_KCAL_MONTH_DEFAULT);
     setOBJECT_NUT_MONTH(responseMonth.data.result.nut || OBJECT_NUT_MONTH_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeKcalWeek = () => {

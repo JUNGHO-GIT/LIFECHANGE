@@ -16,7 +16,7 @@ export const FoodSearch = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -81,7 +81,7 @@ export const FoodSearch = () => {
   const flowSearch = async () => {
     const response = await axios.get(`${URL_OBJECT}/search`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         FILTER: FILTER
       }
     });

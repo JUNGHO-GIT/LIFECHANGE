@@ -1,12 +1,12 @@
 // 1. dataArray ---------------------------------------------------------------------------------->
 export const dataArray = [
-  // diary
+  // calendar
   {
     icon: "bx bx-calendar",
-    title: "Diary",
+    title: "Calendar",
     items: [
-      {to: "/diary/list", label: "DiaryList"},
-      {to: "/diary/detail", label: "DiaryDetail"},
+      {to: "/calendar/list", label: "CalendarList"},
+      {to: "/calendar/detail", label: "CalendarDetail"},
     ]
   },
   // exercise

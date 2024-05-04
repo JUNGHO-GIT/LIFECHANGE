@@ -22,7 +22,7 @@ export const ExerciseSave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const session = sessionStorage.getItem("dataset") || "";
   const exerciseArray = JSON.parse(session)?.exercise || [];
   const navParam = useNavigate();
@@ -61,6 +61,7 @@ export const ExerciseSave = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     exercise_number: 0,
+    exercise_demo: false,
     exercise_startDt: "0000-00-00",
     exercise_endDt: "0000-00-00",
     exercise_total_volume: 0,
@@ -89,7 +90,7 @@ export const ExerciseSave = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -100,7 +101,7 @@ export const ExerciseSave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -142,7 +143,7 @@ export const ExerciseSave = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
-      customer_id: customer_id,
+      user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
@@ -170,8 +171,8 @@ export const ExerciseSave = () => {
               <span className={"input-group-text"}>시작일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"diary_startDt"}
-                name={"diary_startDt"}
+                id={"calendar_startDt"}
+                name={"calendar_startDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.startDt}
@@ -190,8 +191,8 @@ export const ExerciseSave = () => {
               <span className={"input-group-text"}>종료일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"diary_endDt"}
-                name={"diary_endDt"}
+                id={"calendar_endDt"}
+                name={"calendar_endDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.endDt}

@@ -5,7 +5,7 @@ import {intFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeek
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = koreanDate;
@@ -17,10 +17,10 @@ export const barToday = async (
   let finalResultOut = [];
 
   findPlan = await repository.barToday.listPlan(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findReal = await repository.barToday.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // in
@@ -48,7 +48,7 @@ export const barToday = async (
 
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
 export const pieToday = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = koreanDate;
@@ -61,11 +61,11 @@ export const pieToday = async (
 
   // in
   findResultIn = await repository.pieToday.listIn(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // out
   findResultOut = await repository.pieToday.listOut(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // in
@@ -87,7 +87,7 @@ export const pieToday = async (
 
 // 2-2. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curWeekStart.format("YYYY-MM-DD");
@@ -100,11 +100,11 @@ export const pieWeek = async (
 
   // in
   findResultIn = await repository.pieWeek.listIn(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // out
   findResultOut = await repository.pieWeek.listOut(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // in
@@ -126,7 +126,7 @@ export const pieWeek = async (
 
 // 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -139,11 +139,11 @@ export const pieMonth = async (
 
   // in
   findResultIn = await repository.pieMonth.listIn(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // out
   findResultOut = await repository.pieMonth.listOut(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // in
@@ -165,7 +165,7 @@ export const pieMonth = async (
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curWeekStart.format("YYYY-MM-DD");
@@ -183,11 +183,11 @@ export const lineWeek = async (
 
   // in
   findResultIn = await repository.lineWeek.listIn(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // out
   findResultOut = await repository.lineWeek.listOut(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   data.forEach((data, index) => {
@@ -215,7 +215,7 @@ export const lineWeek = async (
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -231,10 +231,10 @@ export const lineMonth = async (
   let finalResultOut = [];
 
   findResultIn = await repository.lineMonth.listIn(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findResultOut = await repository.lineMonth.listOut(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   data.forEach((data, index) => {
@@ -263,7 +263,7 @@ export const lineMonth = async (
 
 // 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -286,11 +286,11 @@ export const avgMonth = async (
 
   // in
   findResultIn = await repository.avgMonth.listIn(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // out
   findResultOut = await repository.avgMonth.listOut(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // in
@@ -335,7 +335,7 @@ export const avgMonth = async (
 
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
 export const avgYear = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curYearStart.format("YYYY-MM-DD");
@@ -356,11 +356,11 @@ export const avgYear = async (
 
   // in
   findResultIn = await repository.avgYear.listIn(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // out
   findResultOut = await repository.avgYear.listOut(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // in

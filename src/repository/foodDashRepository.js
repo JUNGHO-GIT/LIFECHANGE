@@ -6,11 +6,11 @@ import {FoodPlan} from "../schema/FoodPlan.js";
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
   listPlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_plan_startDt: {
           $lte: endDt_param,
         },
@@ -32,11 +32,11 @@ export const barToday = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -63,11 +63,11 @@ export const barToday = {
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
 export const pieToday = {
   listKcal: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -94,11 +94,11 @@ export const pieToday = {
   },
 
   listNut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -129,11 +129,11 @@ export const pieToday = {
 // 2-2. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = {
   listKcal: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -160,11 +160,11 @@ export const pieWeek = {
   },
 
   listNut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -195,11 +195,11 @@ export const pieWeek = {
 // 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = {
   listKcal: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -226,11 +226,11 @@ export const pieMonth = {
   },
 
   listNut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -261,11 +261,11 @@ export const pieMonth = {
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
   listKcal: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -286,11 +286,11 @@ export const lineWeek = {
   },
 
   listNut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -316,11 +316,11 @@ export const lineWeek = {
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
   listKcal: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -341,11 +341,11 @@ export const lineMonth = {
   },
 
   listNut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -371,11 +371,11 @@ export const lineMonth = {
 // 4-1. dash (avg - month) ------------------------------------------------------------------------->
 export const avgMonth = {
   listKcal: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -396,11 +396,11 @@ export const avgMonth = {
   },
 
   listNut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -426,11 +426,11 @@ export const avgMonth = {
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
 export const avgYear = {
   listKcal: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -451,11 +451,11 @@ export const avgYear = {
   },
 
   listNut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,

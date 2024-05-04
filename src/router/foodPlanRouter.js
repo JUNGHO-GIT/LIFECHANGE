@@ -9,7 +9,7 @@ export const router = express.Router();
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
-      req.query.customer_id,
+      req.query.user_id,
       req.query.FILTER,
       req.query.PAGING,
       req.query.duration
@@ -44,7 +44,7 @@ router.get("/list", async (req, res) => {
 router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
-      req.query.customer_id,
+      req.query.user_id,
       req.query._id,
       req.query.duration
     );
@@ -76,7 +76,7 @@ router.get("/detail", async (req, res) => {
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save(
-      req.body.customer_id,
+      req.body.user_id,
       req.body.OBJECT,
       req.body.duration
     );
@@ -108,7 +108,7 @@ router.post("/save", async (req, res) => {
 router.delete("/delete", async (req, res) => {
   try {
     let result = await service.deletes(
-      req.query.customer_id,
+      req.query.user_id,
       req.query._id,
       req.query.duration
     );

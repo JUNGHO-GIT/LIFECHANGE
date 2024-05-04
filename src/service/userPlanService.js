@@ -1,25 +1,25 @@
-// customerPlanService.js
+// userPlanService.js
 
-import * as repository from "../repository/customerPlanRepository.js";
+import * as repository from "../repository/userPlanRepository.js";
 import {strToDecimal, decimalToStr} from "../assets/js/date.js";
 
 // 1-1. percent ----------------------------------------------------------------------------------->
 export const percent = async (
-  customer_id_param, duration_param
+  user_id_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   // 1. exercise
   const listExercisePlan = await repository.percent.listExercisePlan(
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   );
   const listExerciseReal = await Promise.all(listExercisePlan.map(async (plan) => {
     const startDt = plan.exercise_plan_startDt;
     const endDt = plan.exercise_plan_endDt;
 
     const listReal = await repository.percent.listExerciseReal(
-      customer_id_param, startDt, endDt
+      user_id_param, startDt, endDt
     );
 
     const exerciseTotalCount = listReal.reduce((acc, curr) => (
@@ -45,14 +45,14 @@ export const percent = async (
 
   // 2. food
   const listFoodPlan = await repository.percent.listFoodPlan(
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   );
   const listFoodReal = await Promise.all(listFoodPlan.map(async (plan) => {
     const startDt = plan.food_plan_startDt;
     const endDt = plan.food_plan_endDt;
 
     const listReal = await repository.percent.listFoodReal(
-      customer_id_param, startDt, endDt
+      user_id_param, startDt, endDt
     );
 
     const foodTotalKcal = listReal.reduce((acc, curr) => (
@@ -78,14 +78,14 @@ export const percent = async (
 
   // 3. money
   const listMoneyPlan = await repository.percent.listMoneyPlan(
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   );
   const listMoneyReal = await Promise.all(listMoneyPlan.map(async (plan) => {
     const startDt = plan.money_plan_startDt;
     const endDt = plan.money_plan_endDt;
 
     const listReal = await repository.percent.listMoneyReal(
-      customer_id_param, startDt, endDt
+      user_id_param, startDt, endDt
     );
 
     const moneyTotalIn = listReal.reduce((acc, curr) => (
@@ -103,14 +103,14 @@ export const percent = async (
 
   // 4. sleep
   const listSleepPlan = await repository.percent.listSleepPlan(
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   );
   const listSleepReal = await Promise.all(listSleepPlan.map(async (plan) => {
     const startDt = plan.sleep_plan_startDt;
     const endDt = plan.sleep_plan_endDt;
 
     const listReal = await repository.percent.listSleepReal(
-      customer_id_param, startDt, endDt
+      user_id_param, startDt, endDt
     );
 
     const sleepNight = listReal.reduce((acc, curr) => (

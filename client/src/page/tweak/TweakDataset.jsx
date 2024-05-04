@@ -5,7 +5,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {diaryArray} from "../../assets/array/diaryArray.js";
+import {calendarArray} from "../../assets/array/calendarArray.js";
 import {exerciseArray} from "../../assets/array/exerciseArray.js";
 import {foodArray} from "../../assets/array/foodArray.js";
 import {moneyArray} from "../../assets/array/moneyArray.js";
@@ -19,13 +19,13 @@ export const TweakDataset = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_TWEAK || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
-  const datasetArray = ["diary", "exercise", "food", "money", "sleep"];
+  const datasetArray = ["calendar", "exercise", "food", "money", "sleep"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
@@ -33,7 +33,7 @@ export const TweakDataset = () => {
     refresh: 0,
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toDataset: "/customer/dataset",
+    toDataset: "/user/dataset",
   });
   const [DATE, setDATE] = useState({
     startDt: location_startDt,
@@ -49,15 +49,15 @@ export const TweakDataset = () => {
     partIdx: 1,
     titleIdx: 1
   });
-  const [dataType, setDataType] = useState("diary");
+  const [dataType, setDataType] = useState("calendar");
 
   // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
-    customer_id: customer_id,
-    customer_number: 0,
-    customer_dataset: {
-      diary: [{
-        diary_part: ""
+    user_id: user_id,
+    user_number: 0,
+    user_dataset: {
+      calendar: [{
+        calendar_part: ""
       }],
       exercise: [{
         exercise_part: "",
@@ -81,26 +81,26 @@ export const TweakDataset = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/dataset`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       }
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
-      customer_id: customer_id,
+      user_id: user_id,
       OBJECT: OBJECT
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
-      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
+      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
       navParam(SEND.toDataset);
     }
     else {
       alert(response.data.msg);
-      sessionStorage.setItem("customer_id", "false");
+      sessionStorage.setItem("user_id", "false");
     }
   };
 
@@ -109,10 +109,10 @@ export const TweakDataset = () => {
     const addPart = () => (
       setOBJECT((prev) => ({
         ...prev,
-        customer_dataset: {
-          ...prev.customer_dataset,
+        user_dataset: {
+          ...prev.user_dataset,
           [dataType]: [
-            ...prev.customer_dataset[dataType], {
+            ...prev.user_dataset[dataType], {
               [`${dataType}_part`]: "",
               [`${dataType}_title`]: [""]
             }
@@ -125,14 +125,14 @@ export const TweakDataset = () => {
       if (newPart) {
         setOBJECT((prev) => ({
           ...prev,
-          customer_dataset: {
-            ...prev.customer_dataset,
+          user_dataset: {
+            ...prev.user_dataset,
             [dataType]: [
-              ...prev.customer_dataset[dataType]?.slice(0, index), {
-                ...prev.customer_dataset[dataType]?.[index],
+              ...prev.user_dataset[dataType]?.slice(0, index), {
+                ...prev.user_dataset[dataType]?.[index],
                 [`${dataType}_part`]: newPart
               },
-              ...prev.customer_dataset[dataType]?.slice(index + 1)
+              ...prev.user_dataset[dataType]?.slice(index + 1)
             ]
           }
         }));
@@ -141,11 +141,11 @@ export const TweakDataset = () => {
     const rmPart = (index) => (() => {
       setOBJECT((prev) => ({
         ...prev,
-        customer_dataset: {
-          ...prev.customer_dataset,
+        user_dataset: {
+          ...prev.user_dataset,
           [dataType]: [
-            ...prev.customer_dataset[dataType]?.slice(0, index),
-            ...prev.customer_dataset[dataType]?.slice(index + 1)
+            ...prev.user_dataset[dataType]?.slice(0, index),
+            ...prev.user_dataset[dataType]?.slice(index + 1)
           ]
         }
       }));
@@ -153,17 +153,17 @@ export const TweakDataset = () => {
     const addTitle = () => (
       setOBJECT((prev) => ({
         ...prev,
-        customer_dataset: {
-          ...prev.customer_dataset,
+        user_dataset: {
+          ...prev.user_dataset,
           [dataType]: [
-            ...prev.customer_dataset[dataType]?.slice(0, idx.partIdx), {
-              ...prev.customer_dataset[dataType]?.[idx.partIdx],
+            ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
+              ...prev.user_dataset[dataType]?.[idx.partIdx],
               [`${dataType}_title`]: [
-                ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
+                ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`],
                 ""
               ]
             },
-            ...prev.customer_dataset[dataType]?.slice(idx.partIdx + 1)
+            ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
           ]
         }
       }))
@@ -173,18 +173,18 @@ export const TweakDataset = () => {
       if (newTitle) {
         setOBJECT((prev) => ({
           ...prev,
-          customer_dataset: {
-            ...prev.customer_dataset,
+          user_dataset: {
+            ...prev.user_dataset,
             [dataType]: [
-              ...prev.customer_dataset[dataType]?.slice(0, idx.partIdx), {
-                ...prev.customer_dataset[dataType]?.[idx.partIdx],
+              ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
+                ...prev.user_dataset[dataType]?.[idx.partIdx],
                 [`${dataType}_title`]: [
-                  ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                  ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
                   newTitle,
-                  ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
+                  ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
                 ]
               },
-              ...prev.customer_dataset[dataType]?.slice(idx.partIdx + 1)
+              ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
             ]
           }
         }));
@@ -193,17 +193,17 @@ export const TweakDataset = () => {
     const rmTitle = (index) => (() => {
       setOBJECT((prev) => ({
         ...prev,
-        customer_dataset: {
-          ...prev.customer_dataset,
+        user_dataset: {
+          ...prev.user_dataset,
           [dataType]: [
-            ...prev.customer_dataset[dataType]?.slice(0, idx.partIdx), {
-              ...prev.customer_dataset[dataType]?.[idx.partIdx],
+            ...prev.user_dataset[dataType]?.slice(0, idx.partIdx), {
+              ...prev.user_dataset[dataType]?.[idx.partIdx],
               [`${dataType}_title`]: [
-                ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
-                ...prev.customer_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
+                ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(0, index),
+                ...prev.user_dataset[dataType]?.[idx.partIdx]?.[`${dataType}_title`]?.slice(index + 1)
               ]
             },
-            ...prev.customer_dataset[dataType]?.slice(idx.partIdx + 1)
+            ...prev.user_dataset[dataType]?.slice(idx.partIdx + 1)
           ]
         }
       }));
@@ -282,7 +282,7 @@ export const TweakDataset = () => {
             </tr>
           </thead>
           <tbody>
-            {OBJECT?.customer_dataset[dataType]?.map((item, index) => (index > 0) && (
+            {OBJECT?.user_dataset[dataType]?.map((item, index) => (index > 0) && (
               <tr key={index}
                 className={selectedIdx.partIdx === index ? "table-secondary" : ""}
                 style={{border: "1px solid #dee2e6"}}
@@ -343,7 +343,7 @@ export const TweakDataset = () => {
             </tr>
           </thead>
           <tbody>
-            {OBJECT?.customer_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
+            {OBJECT?.user_dataset[dataType]?.[idx?.partIdx]?.[`${dataType}_title`]?.map((item, index) => (index > 0) && (
               <tr
                 key={index}
                 className={selectedIdx.titleIdx === index ? "table-secondary" : ""}
@@ -394,7 +394,7 @@ export const TweakDataset = () => {
               {tableSection2()}
             </Col>
             <Col lg={5} md={5} sm={5} xs={5} className={"ps-0"}>
-              {(dataType !== "diary" && dataType !== "food" && dataType !== "sleep")
+              {(dataType !== "calendar" && dataType !== "food" && dataType !== "sleep")
                 && (tableSection3())}
             </Col>
           </Row>
@@ -409,8 +409,8 @@ export const TweakDataset = () => {
       const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
       let defaultArray = [];
-      if (dataType === "diary") {
-        defaultArray = diaryArray;
+      if (dataType === "calendar") {
+        defaultArray = calendarArray;
       }
       else if (dataType === "exercise") {
         defaultArray = exerciseArray;
@@ -428,8 +428,8 @@ export const TweakDataset = () => {
       if (confirm) {
         setOBJECT((prev) => ({
           ...prev,
-          customer_dataset: {
-            ...prev.customer_dataset,
+          user_dataset: {
+            ...prev.user_dataset,
             [dataType]: defaultArray
           }
         }));
@@ -449,7 +449,7 @@ export const TweakDataset = () => {
   const buttonNode = () => (
     <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"customer"} plan={""} type={"save"}
+      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"save"}
     />
   );
 

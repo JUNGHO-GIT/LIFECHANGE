@@ -12,7 +12,7 @@ export const percent = async () => {
 
   const response = await axios.get(`${URL_OBJECT}/plan/percent`, {
     params: {
-      customer_id: sessionStorage.getItem("customer_id"),
+      user_id: sessionStorage.getItem("user_id"),
       duration: `${today} ~ ${today}`,
     },
   });

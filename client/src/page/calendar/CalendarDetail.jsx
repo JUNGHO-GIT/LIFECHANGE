@@ -1,4 +1,4 @@
-// DiaryDetail.jsx
+// CalendarDetail.jsx
 
 import React, {useState, useEffect} from "react";
 import axios from "axios";
@@ -11,15 +11,15 @@ import {DateNode} from "../../fragments/DateNode.jsx";
 import {Button, Col, Row, Container, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const DiaryDetail = () => {
+export const CalendarDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_DIARY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const session = sessionStorage.getItem("dataset") || "";
-  const diaryArray = JSON.parse(session)?.diary || [];
+  const calendarArray = JSON.parse(session)?.calendar || [];
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -34,7 +34,7 @@ export const DiaryDetail = () => {
     refresh: 0,
     startDt: "0000-00-00",
     endDt: "0000-00-00",
-    toList: "/diary/list"
+    toList: "/calendar/list"
   });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
@@ -56,16 +56,16 @@ export const DiaryDetail = () => {
 
   // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
-    customer_id: customer_id,
-    diary_number: 0,
-    diary_startDt: "0000-00-00",
-    diary_endDt: "0000-00-00",
-    diary_section: [{
-      diary_part_idx: 1,
-      diary_part_val: "일정",
-      diary_title : "",
-      diary_color: "#000000",
-      diary_detail: ""
+    user_id: user_id,
+    calendar_number: 0,
+    calendar_startDt: "0000-00-00",
+    calendar_endDt: "0000-00-00",
+    calendar_section: [{
+      calendar_part_idx: 1,
+      calendar_part_val: "일정",
+      calendar_title : "",
+      calendar_color: "#000000",
+      calendar_detail: ""
     }]
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
@@ -77,7 +77,7 @@ export const DiaryDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -88,12 +88,12 @@ export const DiaryDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [location_id, customer_id, location_category, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, user_id, location_category, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
-      customer_id: customer_id,
+      user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
@@ -112,7 +112,7 @@ export const DiaryDetail = () => {
   const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -147,8 +147,8 @@ export const DiaryDetail = () => {
               <span className={"input-group-text"}>시작일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"diary_startDt"}
-                name={"diary_startDt"}
+                id={"calendar_startDt"}
+                name={"calendar_startDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.startDt}
@@ -167,8 +167,8 @@ export const DiaryDetail = () => {
               <span className={"input-group-text"}>종료일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"diary_endDt"}
-                name={"diary_endDt"}
+                id={"calendar_endDt"}
+                name={"calendar_endDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.endDt}
@@ -188,11 +188,11 @@ export const DiaryDetail = () => {
     const handlerCount = (e) => {
       let newCount = parseInt(e, 10);
       let defaultSection = {
-        diary_part_idx: 1,
-        diary_part_val: "일정",
-        diary_title : "",
-        diary_color: "#000000",
-        diary_detail: ""
+        calendar_part_idx: 1,
+        calendar_part_val: "일정",
+        calendar_title : "",
+        calendar_color: "#000000",
+        calendar_detail: ""
       };
       setCOUNT((prev) => ({
         ...prev,
@@ -200,17 +200,17 @@ export const DiaryDetail = () => {
       }));
       if (newCount > 0) {
         let updatedSection = Array(newCount).fill(null).map((_, idx) => (
-          idx < OBJECT.diary_section.length ? OBJECT.diary_section[idx] : {...defaultSection}
+          idx < OBJECT.calendar_section.length ? OBJECT.calendar_section[idx] : {...defaultSection}
         ));
         setOBJECT((prev) => ({
           ...prev,
-          diary_section: updatedSection
+          calendar_section: updatedSection
         }));
       }
       else {
         setOBJECT((prev) => ({
           ...prev,
-          diary_section: []
+          calendar_section: []
         }));
       }
     };
@@ -247,27 +247,27 @@ export const DiaryDetail = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>파트</span>
               <select
-                id={`diary_part_idx-${i}`}
-                name={`diary_part_idx-${i}`}
+                id={`calendar_part_idx-${i}`}
+                name={`calendar_part_idx-${i}`}
                 className={"form-select"}
-                value={OBJECT?.diary_section[i]?.diary_part_idx}
+                value={OBJECT?.calendar_section[i]?.calendar_part_idx}
                 onChange={(e) => {
                   const newIndex = parseInt(e.target.value);
                   setOBJECT((prev) => ({
                     ...prev,
-                    diary_section: prev.diary_section.map((item, idx) => (
+                    calendar_section: prev.calendar_section.map((item, idx) => (
                       idx === i ? {
                         ...item,
-                        diary_part_idx: newIndex,
-                        diary_part_val: diaryArray[newIndex]?.diary_part
+                        calendar_part_idx: newIndex,
+                        calendar_part_val: calendarArray[newIndex]?.calendar_part
                       } : item
                     ))
                   }));
                 }}
               >
-                {diaryArray?.map((item, idx) => (
+                {calendarArray?.map((item, idx) => (
                   <option key={idx} value={idx}>
-                    {item.diary_part}
+                    {item.calendar_part}
                   </option>
                 ))}
               </select>
@@ -277,19 +277,19 @@ export const DiaryDetail = () => {
             <div className={"input-group"}>
               <span className={"input-group-text"}>색상</span>
               <select
-                id={`diary_color-${i}`}
-                name={`diary_color-${i}`}
+                id={`calendar_color-${i}`}
+                name={`calendar_color-${i}`}
                 className={"form-select"}
-                value={OBJECT?.diary_section[i]?.diary_color}
-                style={{color: OBJECT?.diary_section[i]?.diary_color}}
+                value={OBJECT?.calendar_section[i]?.calendar_color}
+                style={{color: OBJECT?.calendar_section[i]?.calendar_color}}
                 onChange={(e) => {
                   const newColor = e.target.value;
                   setOBJECT((prev) => ({
                     ...prev,
-                    diary_section: prev.diary_section.map((item, idx) => (
+                    calendar_section: prev.calendar_section.map((item, idx) => (
                       idx === i ? {
                         ...item,
-                        diary_color: newColor
+                        calendar_color: newColor
                       } : item
                     ))
                   }));
@@ -311,19 +311,19 @@ export const DiaryDetail = () => {
               <InputMask
                 mask={""}
                 placeholder={"제목"}
-                id={`diary_title-${i}`}
-                name={`diary_title-${i}`}
+                id={`calendar_title-${i}`}
+                name={`calendar_title-${i}`}
                 className={"form-control"}
                 maskChar={null}
-                value={OBJECT?.diary_section[i]?.diary_title}
+                value={OBJECT?.calendar_section[i]?.calendar_title}
                 onChange={(e) => {
                   const newTitle = e.target.value;
                   setOBJECT((prev) => ({
                     ...prev,
-                    diary_section: prev.diary_section.map((item, idx) => (
+                    calendar_section: prev.calendar_section.map((item, idx) => (
                       idx === i ? {
                         ...item,
-                        diary_title: newTitle
+                        calendar_title: newTitle
                       } : item
                     ))
                   }));
@@ -337,19 +337,19 @@ export const DiaryDetail = () => {
               <InputMask
                 mask={""}
                 placeholder={"내용"}
-                id={`diary_detail-${i}`}
-                name={`diary_detail-${i}`}
+                id={`calendar_detail-${i}`}
+                name={`calendar_detail-${i}`}
                 className={"form-control"}
                 maskChar={null}
-                value={OBJECT?.diary_section[i]?.diary_detail}
+                value={OBJECT?.calendar_section[i]?.calendar_detail}
                 onChange={(e) => {
                   const newDetail = e.target.value;
                   setOBJECT((prev) => ({
                     ...prev,
-                    diary_section: prev.diary_section.map((item, idx) => (
+                    calendar_section: prev.calendar_section.map((item, idx) => (
                       idx === i ? {
                         ...item,
-                        diary_detail: newDetail
+                        calendar_detail: newDetail
                       } : item
                     ))
                   }));
@@ -370,7 +370,7 @@ export const DiaryDetail = () => {
         <div className={"date-wrapper"}>
           {dateSection()}
         </div>
-        <div className={"diary-detail-wrapper"}>
+        <div className={"calendar-detail-wrapper"}>
           {countNode()}
           {tableSection()}
         </div>
@@ -381,7 +381,7 @@ export const DiaryDetail = () => {
   // 5. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
     <DateNode DATE={DATE} setDATE={setDATE} CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
-      part={"diary"} plan={""} type={"detail"}
+      part={"calendar"} plan={""} type={"detail"}
     />
   );
 

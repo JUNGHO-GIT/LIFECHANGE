@@ -1,4 +1,4 @@
-// customerMiddleware.js
+// userMiddleware.js
 
 // 1. percent ------------------------------------------------------------------------------------->
 export const percent = async (object) => {

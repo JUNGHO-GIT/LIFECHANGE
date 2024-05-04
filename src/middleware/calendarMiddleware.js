@@ -1,4 +1,4 @@
-// diaryMiddleware.js
+// calendarMiddleware.js
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (object) => {

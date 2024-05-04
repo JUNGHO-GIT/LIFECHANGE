@@ -17,7 +17,7 @@ export const SleepList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -69,6 +69,7 @@ export const SleepList = () => {
   const OBJECT_DEFAULT = [{
     _id: "",
     sleep_number: 0,
+    sleep_demo: false,
     sleep_startDt: "0000-00-00",
     sleep_endDt: "0000-00-00",
     sleep_section: [{
@@ -83,7 +84,7 @@ export const SleepList = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         FILTER: FILTER,
         PAGING: PAGING,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
@@ -95,7 +96,7 @@ export const SleepList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [customer_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {

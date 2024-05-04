@@ -19,7 +19,7 @@ export const MoneySave = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const session = sessionStorage.getItem("dataset") || "";
   const moneyArray = JSON.parse(session)?.money || [];
   const navParam = useNavigate();
@@ -58,6 +58,7 @@ export const MoneySave = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     money_number: 0,
+    money_demo: false,
     money_startDt: "0000-00-00",
     money_endDt: "0000-00-00",
     money_total_in: 0,
@@ -81,7 +82,7 @@ export const MoneySave = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -92,7 +93,7 @@ export const MoneySave = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -115,7 +116,7 @@ export const MoneySave = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
     const response = await axios.post(`${URL_OBJECT}/save`, {
-      customer_id: customer_id,
+      user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
@@ -143,8 +144,8 @@ export const MoneySave = () => {
               <span className={"input-group-text"}>시작일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"diary_startDt"}
-                name={"diary_startDt"}
+                id={"calendar_startDt"}
+                name={"calendar_startDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.startDt}
@@ -163,8 +164,8 @@ export const MoneySave = () => {
               <span className={"input-group-text"}>종료일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"diary_endDt"}
-                name={"diary_endDt"}
+                id={"calendar_endDt"}
+                name={"calendar_endDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.endDt}

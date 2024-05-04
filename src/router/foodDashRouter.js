@@ -8,7 +8,7 @@ export const router = express.Router();
 router.get("/bar/today", async (req, res) => {
   try {
     let result = await service.barToday (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -38,7 +38,7 @@ router.get("/bar/today", async (req, res) => {
 router.get("/pie/today", async (req, res) => {
   try {
     let result = await service.pieToday (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -68,7 +68,7 @@ router.get("/pie/today", async (req, res) => {
 router.get("/pie/week", async (req, res) => {
   try {
     let result = await service.pieWeek (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -98,7 +98,7 @@ router.get("/pie/week", async (req, res) => {
 router.get("/pie/month", async (req, res) => {
   try {
     let result = await service.pieMonth (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -128,7 +128,7 @@ router.get("/pie/month", async (req, res) => {
 router.get("/line/week", async (req, res) => {
   try {
     let result = await service.lineWeek (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -158,7 +158,7 @@ router.get("/line/week", async (req, res) => {
 router.get("/line/month", async (req, res) => {
   try {
     let result = await service.lineMonth (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -188,7 +188,7 @@ router.get("/line/month", async (req, res) => {
 router.get("/avg/month", async (req, res) => {
   try {
     let result = await service.avgMonth (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -218,7 +218,7 @@ router.get("/avg/month", async (req, res) => {
 router.get("/avg/year", async (req, res) => {
   try {
     let result = await service.avgYear (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({

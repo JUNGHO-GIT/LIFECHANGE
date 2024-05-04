@@ -6,7 +6,7 @@ import * as repository from "../repository/foodRepository.js";
 
 // 1-0. search ------------------------------------------------------------------------------------>
 export const search = async (
-  customer_id_param,
+  user_id_param,
   FILTER_param
 ) => {
 
@@ -117,7 +117,7 @@ export const search = async (
 
 // 1-1. list -------------------------------------------------------------------------------------->
 export const list = async (
-  customer_id_param, FILTER_param, PAGING_param, duration_param
+  user_id_param, FILTER_param, PAGING_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
@@ -129,11 +129,11 @@ export const list = async (
   const title = FILTER_param.title === "" ? "전체" : FILTER_param.title;
 
   const totalCnt = await repository.list.cnt(
-    customer_id_param, part, title, startDt_param, endDt_param
+    user_id_param, part, title, startDt_param, endDt_param
   );
 
   const finalResult = await repository.list.list(
-    customer_id_param, part, title, sort, limit, page, startDt_param, endDt_param
+    user_id_param, part, title, sort, limit, page, startDt_param, endDt_param
   );
 
   return {
@@ -144,13 +144,13 @@ export const list = async (
 
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = async (
-  customer_id_param, _id_param, duration_param
+  user_id_param, _id_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const finalResult = await repository.detail.detail (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   );
 
   const sectionCnt = finalResult?.food_section.length || 0;
@@ -163,24 +163,24 @@ export const detail = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  customer_id_param, OBJECT_param, duration_param
+  user_id_param, OBJECT_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.save.detail(
-    customer_id_param, "", startDt_param, endDt_param
+    user_id_param, "", startDt_param, endDt_param
   );
 
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      customer_id_param, OBJECT_param, startDt_param, endDt_param
+      user_id_param, OBJECT_param, startDt_param, endDt_param
     );
   }
   else {
     finalResult = await repository.save.update(
-      customer_id_param, findResult._id, OBJECT_param, startDt_param, endDt_param
+      user_id_param, findResult._id, OBJECT_param, startDt_param, endDt_param
     );
   }
 
@@ -189,13 +189,13 @@ export const save = async (
 
 // 4. deletes ------------------------------------------------------------------------------------->
 export const deletes = async (
-  customer_id_param, _id_param, section_id_param, duration_param
+  user_id_param, _id_param, section_id_param, duration_param
 ) => {
 
   const [startDt_param, endDt_param] = duration_param.split(` ~ `);
 
   const findResult = await repository.deletes.detail(
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   );
 
   if (!findResult) {
@@ -203,18 +203,18 @@ export const deletes = async (
   }
   else {
     const updateResult = await repository.deletes.update(
-      customer_id_param, _id_param, section_id_param, startDt_param, endDt_param
+      user_id_param, _id_param, section_id_param, startDt_param, endDt_param
     );
     if (!updateResult) {
       return null;
     }
     else {
       const findAgain = await repository.deletes.detail(
-        customer_id_param, _id_param, startDt_param, endDt_param
+        user_id_param, _id_param, startDt_param, endDt_param
       );
       if (findAgain?.food_section.length === 0) {
         await repository.deletes.deletes(
-          customer_id_param, _id_param
+          user_id_param, _id_param
         );
         return "deleted";
       }

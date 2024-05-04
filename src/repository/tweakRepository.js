@@ -9,22 +9,22 @@ import {Exercise} from "../schema/Exercise.js";
 import {Food} from "../schema/Food.js";
 import {Money} from "../schema/Money.js";
 import {Sleep} from "../schema/Sleep.js";
-import {Customer} from "../schema/Customer.js";
+import {User} from "../schema/User.js";
 import {fmtDate} from "../assets/js/date.js";
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = {
   list: async (
-    customer_id_param
+    user_id_param
   ) => {
-    const finalResult = await Customer.aggregate([
+    const finalResult = await User.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$project: {
         _id: 0,
-        customer_dataset: {
-          diary: 1,
+        user_dataset: {
+          calendar: 1,
           food: 1,
           money: 1,
           exercise: 1,
@@ -40,11 +40,11 @@ export const dataset = {
 export const list = {
 
   listExercisePlan: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         exercise_plan_startDt:  1
@@ -55,19 +55,19 @@ export const list = {
     return finalResult;
   },
   countExercisePlan: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await ExercisePlan.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   },
   listExercise: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         exercise_startDt:  1
@@ -78,20 +78,20 @@ export const list = {
     return finalResult;
   },
   countExercise: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await Exercise.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   },
 
   listFoodPlan: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         food_plan_startDt:  1
@@ -102,19 +102,19 @@ export const list = {
     return finalResult;
   },
   countFoodPlan: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await FoodPlan.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   },
   listFood: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         food_startDt:  1
@@ -125,20 +125,20 @@ export const list = {
     return finalResult;
   },
   countFood: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await Food.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   },
 
   listMoneyPlan: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         money_plan_startDt:  1
@@ -149,19 +149,19 @@ export const list = {
     return finalResult;
   },
   countMoneyPlan: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await MoneyPlan.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   },
   listMoney: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         money_startDt:  1
@@ -172,20 +172,20 @@ export const list = {
     return finalResult;
   },
   countMoney: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await Money.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   },
 
   listSleepPlan: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         sleep_plan_startDt:  1
@@ -196,19 +196,19 @@ export const list = {
     return finalResult;
   },
   countSleepPlan: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await SleepPlan.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   },
   listSleep: async (
-    customer_id_param, page_param, limit_param
+    user_id_param, page_param, limit_param
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
       }},
       {$sort: {
         sleep_startDt:  1
@@ -219,10 +219,10 @@ export const list = {
     return finalResult;
   },
   countSleep: async (
-    customer_id_param
+    user_id_param
   ) => {
     const finalResult = await Sleep.countDocuments({
-      customer_id: customer_id_param
+      user_id: user_id_param
     });
     return finalResult;
   }
@@ -232,12 +232,12 @@ export const list = {
 export const detail = {
 
   detail: async (
-    customer_id_param, _id_param
+    user_id_param, _id_param
   ) => {
 
-    const finalResult = await Customer.findOne({
+    const finalResult = await User.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
-      customer_id: customer_id_param,
+      user_id: user_id_param,
     })
     .lean();
 
@@ -249,11 +249,11 @@ export const detail = {
 export const save = {
 
   detail: async (
-    customer_id_param, _id_param
+    user_id_param, _id_param
   ) => {
-    const finalResult = await Customer.findOne({
+    const finalResult = await User.findOne({
       _id: !_id_param ? {$exists:true} : _id_param,
-      customer_id: customer_id_param,
+      user_id: user_id_param,
     })
     .lean();
 
@@ -261,38 +261,38 @@ export const save = {
   },
 
   create: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
 
-    const finalResult = await Customer.create({
+    const finalResult = await User.create({
       _id: new mongoose.Types.ObjectId(),
-      customer_id: customer_id_param,
-      customer_pw: OBJECT_param.customer_pw,
-      customer_sex: OBJECT_param.customer_sex,
-      customer_age: OBJECT_param.customer_age,
-      customer_height: OBJECT_param.customer_height,
-      customer_weight: OBJECT_param.customer_weight,
-      customer_email: OBJECT_param.customer_email,
-      customer_phone: OBJECT_param.customer_phone,
-      customer_image: OBJECT_param.customer_image,
-      customer_dataset: OBJECT_param.customer_dataset,
-      customer_regDt: fmtDate,
-      customer_updateDt: "",
+      user_id: user_id_param,
+      user_pw: OBJECT_param.user_pw,
+      user_sex: OBJECT_param.user_sex,
+      user_age: OBJECT_param.user_age,
+      user_height: OBJECT_param.user_height,
+      user_weight: OBJECT_param.user_weight,
+      user_email: OBJECT_param.user_email,
+      user_phone: OBJECT_param.user_phone,
+      user_image: OBJECT_param.user_image,
+      user_dataset: OBJECT_param.user_dataset,
+      user_regDt: fmtDate,
+      user_updateDt: "",
     });
 
     return finalResult;
   },
 
   update: async (
-    customer_id_param, _id_param, OBJECT_param
+    user_id_param, _id_param, OBJECT_param
   ) => {
-    const finalResult = await Customer.findOneAndUpdate(
-      {customer_id: customer_id_param,
+    const finalResult = await User.findOneAndUpdate(
+      {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
         ...OBJECT_param,
-        customer_updateDt: fmtDate,
+        user_updateDt: fmtDate,
       }},
       {upsert: true,
         new: true
@@ -308,11 +308,11 @@ export const save = {
 export const add = {
 
   addExercise: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await Exercise.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       exercise_demo: true
     });
 
@@ -327,11 +327,11 @@ export const add = {
   },
 
   addExercisePlan: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await ExercisePlan.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       exercise_plan_demo: true
     });
 
@@ -346,11 +346,11 @@ export const add = {
   },
 
   addFood: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await Food.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       food_demo: true
     });
 
@@ -365,11 +365,11 @@ export const add = {
   },
 
   addFoodPlan: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await FoodPlan.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       food_plan_demo: true
     });
 
@@ -384,11 +384,11 @@ export const add = {
   },
 
   addMoney: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await Money.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       money_demo: true
     });
 
@@ -403,11 +403,11 @@ export const add = {
   },
 
   addMoneyPlan: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await MoneyPlan.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       money_plan_demo: true
     });
 
@@ -422,11 +422,11 @@ export const add = {
   },
 
   addSleep: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await Sleep.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       sleep_demo: true
     });
 
@@ -441,11 +441,11 @@ export const add = {
   },
 
   addSleepPlan: async (
-    customer_id_param, OBJECT_param
+    user_id_param, OBJECT_param
   ) => {
     // 일단 전체 데이터 삭제
     const deleteResult = await SleepPlan.deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       sleep_plan_demo: true
     });
 
@@ -464,11 +464,11 @@ export const add = {
 export const deletes = {
 
   deletes: async (
-    customer_id_param, typeStr_param, typeUpper_param
+    user_id_param, typeStr_param, typeUpper_param
   ) => {
     const demo = `${typeStr_param}_demo`;
     const finalResult = await eval(typeUpper_param).deleteMany({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       [demo]: true
     });
 

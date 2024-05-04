@@ -1,4 +1,4 @@
-// CustomerSignup.jsx
+// UserSignup.jsx
 
 import axios from "axios";
 import React, {useState} from "react";
@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const CustomerSignup = () => {
+export const UserSignup = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -16,32 +16,32 @@ export const CustomerSignup = () => {
   const navParam = useNavigate();
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [customer_id, setCustomerId] = useState("");
-  const [customer_pw, setCustomerPw] = useState("");
+  const [user_id, setUserId] = useState("");
+  const [user_pw, setUserPw] = useState("");
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowCustomerSave = async () => {
-    if (customer_id === "" || customer_pw === "") {
+  const flowUserSave = async () => {
+    if (user_id === "" || user_pw === "") {
       alert("Please enter both Id and Pw");
       return;
     }
     const response = await axios.post (`${URL_OBJECT}/signup`, {
-      customer_id: customer_id,
-      customer_pw: customer_pw,
+      user_id: user_id,
+      user_pw: user_pw,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
-      navParam("/customer/login");
+      navParam("/user/login");
     }
     else if (response.data.status === "duplicated") {
       alert(response.data.msg);
-      setCustomerId("");
-      setCustomerPw("");
+      setUserId("");
+      setUserPw("");
     }
     else if (response.data.status === "fail") {
       alert(response.data.msg);
-      setCustomerId("");
-      setCustomerPw("");
+      setUserId("");
+      setUserPw("");
     }
     else {
       alert(response.data.msg);
@@ -49,7 +49,7 @@ export const CustomerSignup = () => {
   };
 
   // 4. table ------------------------------------------------------------------------------------->
-  const tableCustomerSave = () => {
+  const tableUserSave = () => {
     return (
       <div>
         <div className={"input-group"}>
@@ -59,9 +59,9 @@ export const CustomerSignup = () => {
             type={"text"}
             className={"form-control"}
             placeholder={"ID"}
-            value={customer_id}
+            value={user_id}
             onChange={(e) => (
-              setCustomerId(e.target.value)
+              setUserId(e.target.value)
             )}
           ></InputMask>
         </div>
@@ -72,9 +72,9 @@ export const CustomerSignup = () => {
             type={"password"}
             className={"form-control"}
             placeholder={"PW"}
-            value={customer_pw}
+            value={user_pw}
             onChange={(e) => (
-              setCustomerPw(e.target.value)
+              setUserPw(e.target.value)
             )}
           ></InputMask>
         </div>
@@ -98,18 +98,18 @@ export const CustomerSignup = () => {
     return (
       <React.Fragment>
         <Button type={"button"} size={"sm"} className={"primary-btn"} onClick={() => {
-          flowCustomerSave();
+          flowUserSave();
         }}>
           Submit
         </Button>
       </React.Fragment>
     );
   };
-  const btnCustomerList = () => {
+  const btnUserList = () => {
     return (
       <React.Fragment>
         <Button type={"button"} size={"sm"} className={"secondary-btn"} onClick={() => {
-          navParam("/customer/list");
+          navParam("/user/list");
         }}>
           List
         </Button>
@@ -127,11 +127,11 @@ export const CustomerSignup = () => {
                 <h1>Sign Up</h1>
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableCustomerSave()}
+                {tableUserSave()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {btnSignUp()}
-                {btnCustomerList()}
+                {btnUserList()}
                 {btnRefresh()}
               </Col>
           </Row>

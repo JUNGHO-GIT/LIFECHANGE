@@ -17,7 +17,7 @@ export const ExerciseDashAvg = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["횟수", "볼륨", "시간"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -46,7 +46,7 @@ export const ExerciseDashAvg = () => {
   useEffect(() => {(async () => {
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_VOLUME_MONTH(responseMonth.data.result.volume || OBJECT_VOLUME_MONTH_DEFAULT);
@@ -54,12 +54,12 @@ export const ExerciseDashAvg = () => {
 
     const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_VOLUME_YEAR(responseYear.data.result.volume || OBJECT_VOLUME_YEAR_DEFAULT);
     setOBJECT_CARDIO_YEAR(responseYear.data.result.cardio || OBJECT_CARDIO_YEAR_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeVolumeMonth = () => {

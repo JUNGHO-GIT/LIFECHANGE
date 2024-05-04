@@ -8,10 +8,10 @@ import {fmtDate} from "../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.countDocuments({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       sleep_plan_startDt: {
         $lte: endDt_param,
       },
@@ -23,11 +23,11 @@ export const list = {
   },
 
   listPlan: async (
-    customer_id_param, sort_param, limit_param, page_param, startDt_param,  endDt_param,
+    user_id_param, sort_param, limit_param, page_param, startDt_param,  endDt_param,
   ) => {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         sleep_plan_startDt: {
           $lte: endDt_param,
         },
@@ -46,11 +46,11 @@ export const list = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param,
+    user_id_param, startDt_param, endDt_param,
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         sleep_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -83,10 +83,10 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       sleep_plan_startDt: {
         $gte: startDt_param,
@@ -105,10 +105,10 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       sleep_plan_startDt: {
         $gte: startDt_param,
@@ -124,11 +124,12 @@ export const save = {
   },
 
   create: async (
-    customer_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.create({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      sleep_plan_demo: false,
       sleep_plan_startDt: startDt_param,
       sleep_plan_endDt: endDt_param,
       sleep_plan_night: OBJECT_param.sleep_plan_night,
@@ -141,10 +142,10 @@ export const save = {
   },
 
   update: async (
-    customer_id_param, _id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.findOneAndUpdate(
-      {customer_id: customer_id_param,
+      {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
@@ -167,10 +168,10 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await SleepPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       sleep_plan_startDt: {
         $gte: startDt_param,
@@ -186,10 +187,10 @@ export const deletes = {
   },
 
   deletes: async (
-    customer_id_param, _id_param
+    user_id_param, _id_param
   ) => {
     const deleteResult = await SleepPlan.deleteOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param
     })
     .lean();

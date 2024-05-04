@@ -8,10 +8,10 @@ import {fmtDate} from "../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.countDocuments({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       food_plan_startDt: {
         $lte: endDt_param,
       },
@@ -23,11 +23,11 @@ export const list = {
   },
 
   listPlan: async (
-    customer_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    user_id_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_plan_startDt: {
           $lte: endDt_param,
         },
@@ -46,11 +46,11 @@ export const list = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $lte: endDt_param,
         },
@@ -75,10 +75,10 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       food_plan_startDt: {
         $gte: startDt_param,
@@ -96,10 +96,10 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       food_plan_startDt: {
         $gte: startDt_param,
@@ -115,11 +115,12 @@ export const save = {
   },
 
   create: async (
-    customer_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.create({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      food_plan_demo: false,
       food_plan_startDt: startDt_param,
       food_plan_endDt: endDt_param,
       food_plan_kcal: OBJECT_param.food_plan_kcal,
@@ -133,10 +134,10 @@ export const save = {
   },
 
   update: async (
-    customer_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.findOneAndUpdate(
-      {customer_id: customer_id_param,
+      {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
@@ -159,10 +160,10 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       food_plan_startDt: {
         $gte: startDt_param,
@@ -178,10 +179,10 @@ export const deletes = {
   },
 
   deletes: async (
-    customer_id_param, _id_param
+    user_id_param, _id_param
   ) => {
     const deleteResult = await FoodPlan.deleteOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param
     })
     .lean();

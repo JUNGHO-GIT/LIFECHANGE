@@ -17,7 +17,7 @@ export const MoneyDashBar = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -33,11 +33,11 @@ export const MoneyDashBar = () => {
   useEffect(() => {(async () => {
     const responseToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_TODAY(responseToday.data.result || OBJECT_TODAY_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeToday = () => {

@@ -1,4 +1,4 @@
-// DiaryList.jsx
+// CalendarList.jsx
 
 import axios from "axios";
 import moment from "moment-timezone";
@@ -9,13 +9,13 @@ import {Container, Row, Col, Card} from "react-bootstrap";
 import {useStorage} from "../../hooks/useStorage.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-export const DiaryList = () => {
+export const CalendarList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_DIARY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
@@ -28,7 +28,7 @@ export const DiaryList = () => {
     startDt: "0000-00-00",
     endDt: "0000-00-00",
     category: "",
-    toDetail: "/diary/detail"
+    toDetail: "/calendar/detail"
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -41,16 +41,16 @@ export const DiaryList = () => {
 
   // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = [{
-    customer_id: customer_id,
-    diary_number: 0,
-    diary_startDt: "0000-00-00",
-    diary_endDt: "0000-00-00",
-    diary_section: [{
-      diary_part_idx: 0,
-      diary_part_val: "일정",
-      diary_title : "",
-      diary_color: "#000000",
-      diary_detail: ""
+    user_id: user_id,
+    calendar_number: 0,
+    calendar_startDt: "0000-00-00",
+    calendar_endDt: "0000-00-00",
+    calendar_section: [{
+      calendar_part_idx: 0,
+      calendar_part_val: "일정",
+      calendar_title : "",
+      calendar_color: "#000000",
+      calendar_detail: ""
     }]
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
@@ -59,12 +59,12 @@ export const DiaryList = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
-  })()}, [customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
@@ -75,37 +75,37 @@ export const DiaryList = () => {
       const currDate = formatDate(date);
       return currDate >= startDt && currDate <= endDt;
     };
-    const activeLine = (diaryForDates) => (
+    const activeLine = (calendarForDates) => (
       <React.Fragment>
-        {diaryForDates?.map((diary) => (
-          diary.diary_section.map((section) => (
-            <div key={diary._id} className={"calendar-filled"}
+        {calendarForDates?.map((calendar) => (
+          calendar.calendar_section.map((section) => (
+            <div key={calendar._id} className={"calendar-filled"}
               style={{
-                backgroundColor: section.diary_color
+                backgroundColor: section.calendar_color
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                SEND.id = diary._id;
+                SEND.id = calendar._id;
                 SEND.section_id = section._id;
-                SEND.startDt = diary.diary_startDt;
-                SEND.endDt = diary.diary_endDt;
+                SEND.startDt = calendar.calendar_startDt;
+                SEND.endDt = calendar.calendar_endDt;
                 navParam(SEND.toDetail, {
                   state: SEND
                 });
               }}
             >
-              <span className={"calendar-category"}>{section.diary_title}</span>
+              <span className={"calendar-category"}>{section.calendar_title}</span>
             </div>
           ))
         ))}
       </React.Fragment>
     );
-    const unActiveLine = (diaryForDates) => (
+    const unActiveLine = (calendarForDates) => (
       <React.Fragment>
-        {diaryForDates?.map((diary) => (
-          diary.diary_section.map((section) => (
-            <div key={diary._id} className={"calendar-unfilled"}>
-              <span className={"calendar-category"}>{section.diary_title}</span>
+        {calendarForDates?.map((calendar) => (
+          calendar.calendar_section.map((section) => (
+            <div key={calendar._id} className={"calendar-unfilled"}>
+              <span className={"calendar-category"}>{section.calendar_title}</span>
             </div>
           ))
         ))}
@@ -140,7 +140,7 @@ export const DiaryList = () => {
             SEND.startDt = formatDate(date);
             SEND.endDt = formatDate(date);
             SEND.category = "";
-            SEND.toDetail = "/diary/detail";
+            SEND.toDetail = "/calendar/detail";
             navParam(SEND.toDetail, {
               state: SEND
             });
@@ -149,12 +149,12 @@ export const DiaryList = () => {
             return "calendar-tile-text";
           }}
           tileContent={({date, view}) => {
-            const diaryForDates = OBJECT?.filter((diary) => (
-              dateInRange(date, diary.diary_startDt, diary.diary_endDt)
+            const calendarForDates = OBJECT?.filter((calendar) => (
+              dateInRange(date, calendar.calendar_startDt, calendar.calendar_endDt)
             ));
             return (
               <React.Fragment>
-                {diaryForDates.length > 0 ? activeLine(diaryForDates) : unActiveLine(diaryForDates)}
+                {calendarForDates.length > 0 ? activeLine(calendarForDates) : unActiveLine(calendarForDates)}
               </React.Fragment>
             );
           }}
@@ -163,7 +163,7 @@ export const DiaryList = () => {
     );
     return (
       <React.Fragment>
-        <div className={"diary-list-wrapper"}>
+        <div className={"calendar-list-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>

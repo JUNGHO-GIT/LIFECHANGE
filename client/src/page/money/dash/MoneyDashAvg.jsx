@@ -17,7 +17,7 @@ export const MoneyDashAvg = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -46,7 +46,7 @@ export const MoneyDashAvg = () => {
   useEffect(() => {(async () => {
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_IN_MONTH(responseMonth.data.result.in || OBJECT_IN_MONTH_DEFAULT);
@@ -54,12 +54,12 @@ export const MoneyDashAvg = () => {
 
     const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_IN_YEAR(responseYear.data.result.in || OBJECT_IN_YEAR_DEFAULT);
     setOBJECT_OUT_YEAR(responseYear.data.result.out || OBJECT_OUT_YEAR_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeInMonth = () => {

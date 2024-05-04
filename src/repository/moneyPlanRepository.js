@@ -8,10 +8,10 @@ import {fmtDate} from "../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.countDocuments({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       money_plan_startDt: {
         $lte: endDt_param,
       },
@@ -23,7 +23,7 @@ export const list = {
   },
 
   listPlan: async (
-    customer_id_param,
+    user_id_param,
     sort_param,
     limit_param,
     page_param,
@@ -32,7 +32,7 @@ export const list = {
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_plan_startDt: {
           $lte: endDt_param,
         },
@@ -51,11 +51,11 @@ export const list = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $lte: endDt_param,
         },
@@ -78,10 +78,10 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       money_plan_startDt: {
         $gte: startDt_param,
@@ -100,10 +100,10 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       money_plan_startDt: {
         $gte: startDt_param,
@@ -119,11 +119,12 @@ export const save = {
   },
 
   create: async (
-    customer_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.create({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      money_plan_demo: false,
       money_plan_startDt: startDt_param,
       money_plan_endDt: endDt_param,
       money_plan_in: OBJECT_param.money_plan_in,
@@ -135,10 +136,10 @@ export const save = {
   },
 
   update: async (
-    customer_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOneAndUpdate(
-      {customer_id: customer_id_param,
+      {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
@@ -160,10 +161,10 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       money_plan_startDt: {
         $gte: startDt_param,
@@ -179,10 +180,10 @@ export const deletes = {
   },
 
   deletes: async (
-    customer_id_param, _id_param
+    user_id_param, _id_param
   ) => {
     const deleteResult = await MoneyPlan.deleteOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param
     })
     .lean();

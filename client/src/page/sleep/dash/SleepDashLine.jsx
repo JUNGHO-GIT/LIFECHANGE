@@ -16,7 +16,7 @@ export const SleepDashLine = () => {
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["취침", "수면", "기상"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -37,18 +37,18 @@ export const SleepDashLine = () => {
   useEffect(() => {(async () => {
     const responseWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_WEEK(responseWeek.data.result || OBJECT_WEEK_DEFAULT);
 
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeWeek = () => {

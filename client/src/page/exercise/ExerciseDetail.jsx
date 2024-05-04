@@ -17,7 +17,7 @@ export const ExerciseDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -57,6 +57,7 @@ export const ExerciseDetail = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     exercise_number: 0,
+    exercise_demo: false,
     exercise_startDt: "0000-00-00",
     exercise_endDt: "0000-00-00",
     exercise_total_volume: 0,
@@ -83,7 +84,7 @@ export const ExerciseDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -94,13 +95,13 @@ export const ExerciseDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id, section_id) => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: id,
         section_id: section_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,

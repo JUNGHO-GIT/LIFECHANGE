@@ -18,7 +18,7 @@ export const FoodPlanList = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
@@ -70,12 +70,12 @@ export const FoodPlanList = () => {
   const OBJECT_DEFAULT = [{
     food_startDt: "0000-00-00",
     food_endDt: "0000-00-00",
-    food_plan_startDt: "0000-00-00",
-    food_plan_endDt: "0000-00-00",
     food_total_kcal: 0,
     food_total_carb: 0,
     food_total_protein: 0,
     food_total_fat: 0,
+    food_plan_startDt: "0000-00-00",
+    food_plan_endDt: "0000-00-00",
     food_plan_kcal: 0,
     food_plan_carb: 0,
     food_plan_protein: 0,
@@ -95,7 +95,7 @@ export const FoodPlanList = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         FILTER: FILTER,
         PAGING: PAGING,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
@@ -107,7 +107,7 @@ export const FoodPlanList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [customer_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
+  })()}, [user_id, FILTER, PAGING, DATE.startDt, DATE.endDt]);
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {

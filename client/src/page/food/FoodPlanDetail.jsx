@@ -17,7 +17,7 @@ export const FoodPlanDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -56,6 +56,7 @@ export const FoodPlanDetail = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     food_plan_number: 0,
+    food_plan_demo: false,
     food_plan_startDt: "0000-00-00",
     food_plan_endDt: "0000-00-00",
     food_plan_kcal: 0,
@@ -72,7 +73,7 @@ export const FoodPlanDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
@@ -83,13 +84,13 @@ export const FoodPlanDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
-  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_OBJECT}/plan/delete`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },

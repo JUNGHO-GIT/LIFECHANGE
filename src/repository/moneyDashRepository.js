@@ -6,11 +6,11 @@ import {MoneyPlan} from "../schema/MoneyPlan.js";
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = {
   listPlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_plan_startDt: {
           $lte: endDt_param,
         },
@@ -30,11 +30,11 @@ export const barToday = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -59,11 +59,11 @@ export const barToday = {
 // 2-1. dash (pie - today) ------------------------------------------------------------------------>
 export const pieToday = {
   listIn: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -91,11 +91,11 @@ export const pieToday = {
   },
 
   listOut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -126,11 +126,11 @@ export const pieToday = {
 // 2-2. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = {
   listIn: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -158,11 +158,11 @@ export const pieWeek = {
   },
 
   listOut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -193,11 +193,11 @@ export const pieWeek = {
 // 2-3. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = {
   listIn: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -225,11 +225,11 @@ export const pieMonth = {
   },
 
   listOut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -260,11 +260,11 @@ export const pieMonth = {
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
   listIn: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -285,11 +285,11 @@ export const lineWeek = {
   },
 
   listOut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -313,11 +313,11 @@ export const lineWeek = {
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
   listIn: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -338,11 +338,11 @@ export const lineMonth = {
   },
 
   listOut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -366,11 +366,11 @@ export const lineMonth = {
 // 4-1. dash (avg - month) ------------------------------------------------------------------------->
 export const avgMonth = {
   listIn: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -391,11 +391,11 @@ export const avgMonth = {
   },
 
   listOut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -419,11 +419,11 @@ export const avgMonth = {
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
 export const avgYear = {
   listIn: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -444,11 +444,11 @@ export const avgYear = {
   },
 
   listOut: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,

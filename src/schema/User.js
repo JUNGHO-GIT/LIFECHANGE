@@ -1,8 +1,8 @@
-// Customer.js
+// User.js
 
 import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
-import {diaryArray} from "../assets/array/diaryArray.js";
+import {calendarArray} from "../assets/array/calendarArray.js";
 import {exerciseArray} from "../assets/array/exerciseArray.js";
 import {moneyArray} from "../assets/array/moneyArray.js";
 import {foodArray} from "../assets/array/foodArray.js";
@@ -10,62 +10,62 @@ import {sleepArray} from "../assets/array/sleepArray.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-  customer_id: {
+  user_id: {
     type: String,
     default: "",
     required: true
   },
-  customer_pw : {
+  user_pw : {
     type : String,
     default: "",
     required : false
   },
-  customer_number : {
+  user_number : {
     type : Number,
     default: 0,
     unique : true
   },
 
-  customer_sex: {
+  user_sex: {
     type : String,
     default: "",
     required : false
   },
-  customer_age: {
+  user_age: {
     type : String,
     default: "",
     required : false
   },
-  customer_height: {
+  user_height: {
     type : String,
     default: "",
     required : false
   },
-  customer_weight: {
+  user_weight: {
     type : String,
     default: "",
     required : false
   },
-  customer_email: {
+  user_email: {
     type : String,
     default: "",
     required : false
   },
-  customer_phone: {
+  user_phone: {
     type : String,
     default: "",
     required : false
   },
-  customer_image: {
+  user_image: {
     type : String,
     default: "",
     required : false
   },
 
-  customer_dataset: {
-    diary: {
+  user_dataset: {
+    calendar: {
       type: Array,
-      default: diaryArray,
+      default: calendarArray,
       required: false
     },
     exercise: {
@@ -90,12 +90,12 @@ const schema = new mongoose.Schema({
     }
   },
 
-  customer_regDt: {
+  user_regDt: {
     type: String,
     default: "0000-00-00 / 00:00:00",
     required: false
   },
-  customer_updateDt: {
+  user_updateDt: {
     type: String,
     default: "0000-00-00 / 00:00:00",
     required: false
@@ -106,12 +106,12 @@ const schema = new mongoose.Schema({
 // @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
-    this.customer_number = await incrementSeq("customer_number", "Customer");
+    this.user_number = await incrementSeq("user_number", "User");
   }
   next();
 });
 
 // 5. model --------------------------------------------------------------------------------------->
-export const Customer = mongoose.model(
-  "Customer", schema, "customer"
+export const User = mongoose.model(
+  "User", schema, "user"
 );

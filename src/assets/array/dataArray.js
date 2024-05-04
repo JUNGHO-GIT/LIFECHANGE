@@ -7,9 +7,9 @@ export const dataArray = [
     ]
   },
   {
-    label: "Customer",
+    label: "User",
     items: [
-      {to: "/customer/list", label: "CustomerList"},
+      {to: "/user/list", label: "UserList"},
     ]
   },
   {

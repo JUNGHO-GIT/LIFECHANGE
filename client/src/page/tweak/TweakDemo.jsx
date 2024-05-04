@@ -17,7 +17,7 @@ export const TweakDemo = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_TWEAK || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
 
@@ -153,7 +153,7 @@ export const TweakDemo = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         PAGING: PAGING,
         TYPE: TYPE
       }
@@ -177,12 +177,12 @@ export const TweakDemo = () => {
       sleepPlanCnt: response.data.result.sleepPlanCnt,
       sleepCnt: response.data.result.sleepCnt,
     }));
-  })()}, [customer_id, PAGING, TYPE, COUNT?.inputCnt]);
+  })()}, [user_id, PAGING, TYPE, COUNT?.inputCnt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowAdd = async (type) => {
     const response = await axios.post(`${URL_OBJECT}/add`, {
-      customer_id: customer_id,
+      user_id: user_id,
       TYPE: type,
       count: COUNT?.inputCnt
     });
@@ -204,7 +204,7 @@ export const TweakDemo = () => {
   const flowDelete = async (type) => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         TYPE: type
       }
     });

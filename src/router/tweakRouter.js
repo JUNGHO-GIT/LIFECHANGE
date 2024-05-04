@@ -8,7 +8,7 @@ export const router = express.Router();
 router.get("/dataset", async (req, res) => {
   try {
     let result = await service.dataset (
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -37,7 +37,7 @@ router.get("/dataset", async (req, res) => {
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
-      req.query.customer_id,
+      req.query.user_id,
       req.query.PAGING,
       req.query.TYPE
     );
@@ -70,7 +70,7 @@ router.get("/list", async (req, res) => {
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save (
-      req.body.customer_id,
+      req.body.user_id,
       req.body.OBJECT
     );
     if (result) {
@@ -101,7 +101,7 @@ router.post("/save", async (req, res) => {
 router.post("/add", async (req, res) => {
   try {
     let result = await service.add (
-      req.body.customer_id,
+      req.body.user_id,
       req.body.TYPE,
       req.body.count
     );
@@ -133,7 +133,7 @@ router.post("/add", async (req, res) => {
 router.delete("/delete", async (req, res) => {
   try {
     let result = await service.deletes(
-      req.query.customer_id,
+      req.query.user_id,
       req.query.TYPE
     );
     if (result) {

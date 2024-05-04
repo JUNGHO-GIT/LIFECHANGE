@@ -17,7 +17,7 @@ export const ExerciseDashScatter = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -39,25 +39,25 @@ export const ExerciseDashScatter = () => {
   useEffect(() => {(async () => {
     const responseToday = await axios.get(`${URL_OBJECT}/dash/scatter/today`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_TODAY(responseToday.data.result || OBJECT_TODAY_DEFAULT);
 
     const responseWeek = await axios.get(`${URL_OBJECT}/dash/scatter/week`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_WEEK(responseWeek.data.result || OBJECT_WEEK_DEFAULT);
 
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/scatter/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
   const chartNodeToday = () => {

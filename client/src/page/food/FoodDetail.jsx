@@ -17,7 +17,7 @@ export const FoodDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -27,14 +27,14 @@ export const FoodDetail = () => {
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SEND, setSEND] = useState({
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toList:"/food/list",
-      toDetail:"/food/detail",
-      toUpdate:"/food/save",
-   });
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toList:"/food/list",
+    toDetail:"/food/detail",
+    toUpdate:"/food/save",
+  });
   const [DATE, setDATE] = useState({
     startDt: location_startDt,
     endDt: location_endDt
@@ -53,6 +53,7 @@ export const FoodDetail = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     food_number: 0,
+    food_demo: false,
     food_startDt: "0000-00-00",
     food_endDt: "0000-00-00",
     food_total_kcal: 0,
@@ -81,7 +82,7 @@ export const FoodDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -92,13 +93,13 @@ export const FoodDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id, section_id) => {
     const response = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: id,
         section_id: section_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,

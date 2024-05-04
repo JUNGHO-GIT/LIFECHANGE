@@ -16,7 +16,7 @@ export const SleepPlanDetail = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
   const location = useLocation();
   const location_id = location?.state?.id?.trim()?.toString();
@@ -55,6 +55,7 @@ export const SleepPlanDetail = () => {
   const OBJECT_DEFAULT = {
     _id: "",
     sleep_plan_number: 0,
+    sleep_plan_demo: false,
     sleep_plan_startDt: "0000-00-00",
     sleep_plan_endDt: "0000-00-00",
     sleep_plan_night: "00:00",
@@ -70,7 +71,7 @@ export const SleepPlanDetail = () => {
   useEffect(() => {(async () => {
     const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
@@ -81,13 +82,13 @@ export const SleepPlanDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
-  })()}, [location_id, customer_id, DATE.startDt, DATE.endDt]);
+  })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
     const response = await axios.delete(`${URL_OBJECT}/plan/delete`, {
       params: {
-        customer_id: customer_id,
+        user_id: user_id,
         _id: id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },

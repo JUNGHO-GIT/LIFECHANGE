@@ -5,7 +5,7 @@ import {intFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWeek
 
 // 1-1. dash (scatter - Today) -------------------------------------------------------------------->
 export const scatterToday = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = koreanDate;
@@ -16,10 +16,10 @@ export const scatterToday = async (
   let finalResult = [];
 
   findPlan = await repository.scatterToday.listPlan(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findReal = await repository.scatterToday.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   finalResult = [
@@ -35,7 +35,7 @@ export const scatterToday = async (
 
 // 1-2. dash (scatter - week) --------------------------------------------------------------------->
 export const scatterWeek = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curWeekStart.format("YYYY-MM-DD");
@@ -46,10 +46,10 @@ export const scatterWeek = async (
   let finalResult = [];
 
   findPlan = await repository.scatterWeek.listPlan(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findReal = await repository.scatterWeek.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   finalResult = [
@@ -65,7 +65,7 @@ export const scatterWeek = async (
 
 // 1-3. dash (scatter - month) -------------------------------------------------------------------->
 export const scatterMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -76,10 +76,10 @@ export const scatterMonth = async (
   let finalResult = [];
 
   findPlan = await repository.scatterMonth.listPlan(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findReal = await repository.scatterMonth.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   finalResult = [
@@ -95,7 +95,7 @@ export const scatterMonth = async (
 
 // 2-1. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curWeekStart.format("YYYY-MM-DD");
@@ -108,11 +108,11 @@ export const pieWeek = async (
 
   // part
   findResultPart = await repository.pieWeek.listPart(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // title
   findResultTitle = await repository.pieWeek.listTitle(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // part
@@ -134,7 +134,7 @@ export const pieWeek = async (
 
 // 2-2. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -147,11 +147,11 @@ export const pieMonth = async (
 
   // part
   findResultPart = await repository.pieMonth.listPart(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // title
   findResultTitle = await repository.pieMonth.listTitle(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // part
@@ -173,7 +173,7 @@ export const pieMonth = async (
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curWeekStart.format("YYYY-MM-DD");
@@ -191,11 +191,11 @@ export const lineWeek = async (
 
   // volume
   findResultVolume = await repository.lineWeek.listVolume(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // cardio
   findResultCardio = await repository.lineWeek.listCardio(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   data.forEach((item, index) => {
@@ -223,7 +223,7 @@ export const lineWeek = async (
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -240,11 +240,11 @@ export const lineMonth = async (
 
   // volume
   findResultVolume = await repository.lineMonth.listVolume(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // cardio
   findResultCardio = await repository.lineMonth.listCardio(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   data.forEach((data, index) => {
@@ -273,7 +273,7 @@ export const lineMonth = async (
 
 // 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -295,11 +295,11 @@ export const avgMonth = async (
 
   // volume
   findResultVolume = await repository.avgMonth.listVolume(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // cardio
   findResultCardio = await repository.avgMonth.listCardio(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // volume
@@ -345,7 +345,7 @@ export const avgMonth = async (
 
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
 export const avgYear = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curYearStart.format("YYYY-MM-DD");
@@ -366,11 +366,11 @@ export const avgYear = async (
 
   // volume
   findResultVolume = await repository.avgYear.listVolume(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   // cardio
   findResultCardio = await repository.avgYear.listCardio(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   // volume

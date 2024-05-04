@@ -10,11 +10,11 @@ import {moneyArray} from '../assets/array/moneyArray.js';
 
 // 1-1. dataset ----------------------------------------------------------------------------------->
 export const dataset = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const findResult = await repository.dataset.list(
-    customer_id_param
+    user_id_param
   );
 
   return findResult;
@@ -22,7 +22,7 @@ export const dataset = async (
 
 // 1-2. list -------------------------------------------------------------------------------------->
 export const list = async (
-  customer_id_param, PAGING_param, TYPE_param
+  user_id_param, PAGING_param, TYPE_param
 ) => {
 
   const page = parseInt(PAGING_param.page) === 0 ? 1 : PAGING_param.page;
@@ -33,66 +33,66 @@ export const list = async (
 
   if (TYPE_param === "exercise") {
     findResult = await repository.list.listExercise(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countExercise(
-      customer_id_param
+      user_id_param
     );
   }
   else if (TYPE_param === "exercisePlan") {
     findResult = await repository.list.listExercisePlan(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countExercisePlan(
-      customer_id_param
+      user_id_param
     );
   }
   else if (TYPE_param === "food") {
     findResult = await repository.list.listFood(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countFood(
-      customer_id_param
+      user_id_param
     );
   }
   else if (TYPE_param === "foodPlan") {
     findResult = await repository.list.listFoodPlan(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countFoodPlan(
-      customer_id_param
+      user_id_param
     );
   }
   else if (TYPE_param === "money") {
     findResult = await repository.list.listMoney(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countMoney(
-      customer_id_param
+      user_id_param
     );
   }
   else if (TYPE_param === "moneyPlan") {
     findResult = await repository.list.listMoneyPlan(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countMoneyPlan(
-      customer_id_param
+      user_id_param
     );
   }
   else if (TYPE_param === "sleep") {
     findResult = await repository.list.listSleep(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countSleep(
-      customer_id_param
+      user_id_param
     );
   }
   else if (TYPE_param === "sleepPlan") {
     findResult = await repository.list.listSleepPlan(
-      customer_id_param, page, limit
+      user_id_param, page, limit
     );
     findCnt = await repository.list.countSleepPlan(
-      customer_id_param
+      user_id_param
     );
   }
 
@@ -108,22 +108,22 @@ export const list = async (
 
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = async (
-  customer_id_param, OBJECT_param
+  user_id_param, OBJECT_param
 ) => {
 
   const findResult = await repository.save.detail(
-    customer_id_param, ""
+    user_id_param, ""
   );
 
   let finalResult;
   if (!findResult) {
     finalResult = await repository.save.create(
-      customer_id_param, OBJECT_param
+      user_id_param, OBJECT_param
     );
   }
   else {
     finalResult = await repository.save.update(
-      customer_id_param, findResult._id, OBJECT_param
+      user_id_param, findResult._id, OBJECT_param
     );
   }
 
@@ -132,7 +132,7 @@ export const save = async (
 
 // 4-1. add --------------------------------------------------------------------------------------->
 export const add = async (
-  customer_id_param, TYPE_param, count_param
+  user_id_param, TYPE_param, count_param
 ) => {
 
   let insertCount = Number(count_param);
@@ -144,7 +144,7 @@ export const add = async (
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_plan_number: i + insertCount,
         exercise_plan_demo: true,
         exercise_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -158,7 +158,7 @@ export const add = async (
       };
     });
     await repository.add.addExercisePlan(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -186,7 +186,7 @@ export const add = async (
       });
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_number: i + insertCount,
         exercise_demo: true,
         exercise_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -200,7 +200,7 @@ export const add = async (
       };
     });
     await repository.add.addExercise(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -210,7 +210,7 @@ export const add = async (
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_plan_number: i + insertCount,
         food_plan_demo: true,
         food_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -224,7 +224,7 @@ export const add = async (
       };
     });
     await repository.add.addFoodPlan(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -253,7 +253,7 @@ export const add = async (
       });
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_number: i + insertCount,
         food_demo: true,
         food_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -269,7 +269,7 @@ export const add = async (
     }
     );
     await repository.add.addFood(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -279,7 +279,7 @@ export const add = async (
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_plan_number: i + insertCount,
         money_plan_demo: true,
         money_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -291,7 +291,7 @@ export const add = async (
       };
     });
     await repository.add.addMoneyPlan(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -315,7 +315,7 @@ export const add = async (
       });
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_number: i + insertCount,
         money_demo: true,
         money_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -328,7 +328,7 @@ export const add = async (
       };
     });
     await repository.add.addMoney(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -338,7 +338,7 @@ export const add = async (
     const OBJECT = Array.from({length: insertCount}, (_, i) => {
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         sleep_plan_number: i + insertCount,
         sleep_plan_demo: true,
         sleep_plan_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -351,7 +351,7 @@ export const add = async (
       };
     });
     await repository.add.addSleepPlan(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -369,7 +369,7 @@ export const add = async (
       });
       return {
         _id: new mongodb.ObjectId(),
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         sleep_number: i + insertCount,
         sleep_demo: true,
         sleep_startDt: moment().subtract(i, 'days').format('YYYY-MM-DD'),
@@ -380,7 +380,7 @@ export const add = async (
       };
     });
     await repository.add.addSleep(
-      customer_id_param, OBJECT
+      user_id_param, OBJECT
     );
     finalResult = "success";
   }
@@ -394,14 +394,14 @@ export const add = async (
 
 // 4-2. delete ------------------------------------------------------------------------------------>
 export const deletes = async (
-  customer_id_param, TYPE_param
+  user_id_param, TYPE_param
 ) => {
 
   const typeStr = TYPE_param.toString();
   const typeUpper = typeStr.charAt(0).toUpperCase() + typeStr.slice(1);
 
   const finalResult = await repository.deletes.deletes(
-    customer_id_param, typeStr, typeUpper
+    user_id_param, typeStr, typeUpper
   );
 
   return finalResult;

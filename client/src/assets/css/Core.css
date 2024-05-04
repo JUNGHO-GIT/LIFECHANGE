@@ -116,7 +116,7 @@ html, body {
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
 }
-.diary-list-wrapper {
+.calendar-list-wrapper {
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
@@ -125,7 +125,7 @@ html, body {
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 0.5s;
 }
-.diary-detail-wrapper {
+.calendar-detail-wrapper {
   border: none;
   overflow-x: hidden;
   overflow-y: auto;

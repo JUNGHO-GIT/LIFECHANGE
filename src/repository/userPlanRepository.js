@@ -1,4 +1,4 @@
-// customerPlanRepository.js
+// userPlanRepository.js
 
 import {Food} from "../schema/Food.js";
 import {FoodPlan} from "../schema/FoodPlan.js";
@@ -14,11 +14,11 @@ export const percent = {
 
   // 1. food
   listFoodPlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await FoodPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_plan_startDt: {
           $lte: endDt_param,
         },
@@ -40,11 +40,11 @@ export const percent = {
   },
 
   listFood: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $lte: endDt_param,
         },
@@ -67,11 +67,11 @@ export const percent = {
 
   // 2. money
   listMoneyPlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await MoneyPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_plan_startDt: {
           $lte: endDt_param,
         },
@@ -91,11 +91,11 @@ export const percent = {
   },
 
   listMoney: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Money.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         money_startDt: {
           $lte: endDt_param,
         },
@@ -116,11 +116,11 @@ export const percent = {
 
   // 3. sleep
   listSleepPlan: async (
-    customer_id_param, startDt_param,  endDt_param,
+    user_id_param, startDt_param,  endDt_param,
   ) => {
     const finalResult = await SleepPlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         sleep_plan_startDt: {
           $lte: endDt_param,
         },
@@ -141,11 +141,11 @@ export const percent = {
   },
 
   listSleep: async (
-    customer_id_param, startDt_param, endDt_param,
+    user_id_param, startDt_param, endDt_param,
   ) => {
     const finalResult = await Sleep.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         sleep_startDt: {
           $lte: endDt_param,
         },
@@ -169,11 +169,11 @@ export const percent = {
 
   // 4. exercise
   listExercisePlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_plan_startDt: {
           $lte: endDt_param,
         },
@@ -195,11 +195,11 @@ export const percent = {
   },
 
   listExercise: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $lte: endDt_param,
         },

@@ -1,66 +1,66 @@
-// Diary.js
+// Calendar.js
 
 import mongoose from "mongoose";
 import {incrementSeq} from "./Counter.js";
 
 // 1. schema -------------------------------------------------------------------------------------->
 const schema = new mongoose.Schema({
-  customer_id: {
+  user_id: {
     type: String,
     default: "",
     required: true
   },
-  diary_number: {
+  calendar_number: {
     type : Number,
     default: 0,
     unique : true
   },
 
-  diary_startDt : {
+  calendar_startDt : {
     type: String,
     default: "0000-00-00",
     required: false
   },
-  diary_endDt : {
+  calendar_endDt : {
     type: String,
     default: "0000-00-00",
     required: false
   },
 
-  diary_section: [{
-    diary_part_idx : {
+  calendar_section: [{
+    calendar_part_idx : {
       type : Number,
       default : 0,
       required : false
     },
-    diary_part_val : {
+    calendar_part_val : {
       type : String,
       default : "",
       required : false
     },
-    diary_title : {
+    calendar_title : {
       type : String,
       default : "",
       required : false
     },
-    diary_color: {
+    calendar_color: {
       type : String,
       default: "",
       required : false
     },
-    diary_detail: {
+    calendar_detail: {
       type : String,
       default: "",
       required : false
     }
   }],
 
-  diary_regDt: {
+  calendar_regDt: {
     type: String,
     default: "0000-00-00 / 00:00:00",
     required: false
   },
-  diary_updateDt: {
+  calendar_updateDt: {
     type: String,
     default: "0000-00-00 / 00:00:00",
     required: false
@@ -71,12 +71,12 @@ const schema = new mongoose.Schema({
 // @ts-ignore
 schema.pre("save", async function(next) {
   if (this.isNew) {
-    this.diary_number = await incrementSeq("diary_number", "Diary");
+    this.calendar_number = await incrementSeq("calendar_number", "Calendar");
   }
   next();
 });
 
 // 5. model --------------------------------------------------------------------------------------->
-export const Diary = mongoose.model(
-  "Diary", schema, "diary"
+export const Calendar = mongoose.model(
+  "Calendar", schema, "calendar"
 );

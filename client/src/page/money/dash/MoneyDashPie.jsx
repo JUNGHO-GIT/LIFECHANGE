@@ -15,7 +15,7 @@ export const MoneyDashPie = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
   const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
@@ -82,7 +82,7 @@ export const MoneyDashPie = () => {
   useEffect(() => {(async () => {
     const responseToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_IN_TODAY(responseToday.data.result.in || OBJECT_IN_TODAY_DEFAULT);
@@ -90,7 +90,7 @@ export const MoneyDashPie = () => {
 
     const responseWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_IN_WEEK(responseWeek.data.result.in || OBJECT_IN_WEEK_DEFAULT);
@@ -98,12 +98,12 @@ export const MoneyDashPie = () => {
 
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_IN_MONTH(responseMonth.data.result.in || OBJECT_IN_MONTH_DEFAULT);
     setOBJECT_OUT_MONTH(responseMonth.data.result.out || OBJECT_OUT_MONTH_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->
   const renderInToday = ({

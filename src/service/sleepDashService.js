@@ -5,7 +5,7 @@ import {timeFormat, curYearStart, curYearEnd, curMonthStart, curMonthEnd, curWee
 
 // 1-1. dash (bar - today) ------------------------------------------------------------------------>
 export const barToday = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = koreanDate;
@@ -16,10 +16,10 @@ export const barToday = async (
   let finalResult = [];
 
   findPlan = await repository.barToday.listPlan(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findReal = await repository.barToday.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   finalResult = [
@@ -45,7 +45,7 @@ export const barToday = async (
 
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curWeekStart.format("YYYY-MM-DD");
@@ -60,7 +60,7 @@ export const lineWeek = async (
   let finalResult = [];
 
   findResult = await repository.lineWeek.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   data.forEach((data, index) => {
@@ -81,7 +81,7 @@ export const lineWeek = async (
 
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -95,7 +95,7 @@ export const lineMonth = async (
   let finalResult = [];
 
   findResult = await repository.lineMonth.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
 
   data.forEach((data, index) => {
@@ -116,7 +116,7 @@ export const lineMonth = async (
 
 // 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curMonthStart.format("YYYY-MM-DD");
@@ -136,7 +136,7 @@ export const avgMonth = async (
   let finalResult = [];
 
   findResult = await repository.avgMonth.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findResult.forEach((item) => {
     const sleepDate = new Date(item.sleep_startDt);
@@ -165,7 +165,7 @@ export const avgMonth = async (
 
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
 export const avgYear = async (
-  customer_id_param
+  user_id_param
 ) => {
 
   const startDt = curYearStart.format("YYYY-MM-DD");
@@ -184,7 +184,7 @@ export const avgYear = async (
   let finalResult = [];
 
   findResult = await repository.avgYear.list(
-    customer_id_param, startDt, endDt
+    user_id_param, startDt, endDt
   );
   findResult.forEach((element) => {
     const sleepDate = new Date(element.sleep_startDt);

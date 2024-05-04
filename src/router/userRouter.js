@@ -1,15 +1,15 @@
-// customerRouter.js
+// userRouter.js
 
 import express from "express";
-import * as service from "../service/customerService.js";
+import * as service from "../service/userService.js";
 export const router = express.Router();
 
 // 0-0. signup ------------------------------------------------------------------------------------>
 router.post("/signup", async (req, res) => {
   try {
     let result = await service.signup (
-      req.body.customer_id,
-      req.body.customer_pw
+      req.body.user_id,
+      req.body.user_pw
     );
     if (result && result !== "duplicated") {
       res.json({
@@ -44,8 +44,8 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     let result = await service.login (
-      req.body.customer_id,
-      req.body.customer_pw
+      req.body.user_id,
+      req.body.user_pw
     );
     if (result && result.result) {
       res.json({
@@ -74,7 +74,7 @@ router.post("/login", async (req, res) => {
 router.post("/checkId", async (req, res) => {
   try {
     let result = await service.checkId (
-      req.body.customer_id
+      req.body.user_id
     );
     if (result) {
       res.json({
@@ -103,7 +103,7 @@ router.post("/checkId", async (req, res) => {
 router.get("/list", async (req, res) => {
   try {
     let result = await service.list (
-      req.query.customer_id,
+      req.query.user_id,
       req.query.sort,
       req.query.limit,
       req.query.page
@@ -137,7 +137,7 @@ router.get("/detail", async (req, res) => {
   try {
     let result = await service.detail (
       req.query._id,
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({
@@ -167,7 +167,7 @@ router.get("/detail", async (req, res) => {
 router.post("/save", async (req, res) => {
   try {
     let result = await service.save (
-      req.body.customer_id,
+      req.body.user_id,
       req.body.OBJECT
     );
     if (result) {
@@ -199,7 +199,7 @@ router.delete("/delete", async (req, res) => {
   try {
     let result = await service.deletes(
       req.query._id,
-      req.query.customer_id
+      req.query.user_id
     );
     if (result) {
       res.json({

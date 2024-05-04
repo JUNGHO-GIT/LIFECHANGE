@@ -1,4 +1,4 @@
-// CustomerLogin.jsx
+// UserLogin.jsx
 
 import axios from "axios";
 import moment from "moment-timezone";
@@ -10,7 +10,7 @@ import {percent} from "../../assets/js/percent.js";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
-export const CustomerLogin = () => {
+export const UserLogin = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
@@ -22,30 +22,30 @@ export const CustomerLogin = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [customer_id, setCustomerId] = useState("");
-  const [customer_pw, setCustomerPw] = useState("");
+  const [user_id, setUserId] = useState("");
+  const [user_pw, setUserPw] = useState("");
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowCustomerLogin = async () => {
+  const flowUserLogin = async () => {
     const response = await axios.post (`${URL_OBJECT}/login`, {
-      customer_id: customer_id,
-      customer_pw: customer_pw,
+      user_id: user_id,
+      user_pw: user_pw,
     });
     if (response.data.status === "success") {
       alert(response.data.msg);
-      sessionStorage.setItem("customer_id", customer_id);
-      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.customer_dataset));
+      sessionStorage.setItem("user_id", user_id);
+      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
       percent();
-      navParam("/diary/list");
+      navParam("/calendar/list");
     }
     else {
       alert(response.data.msg);
-      sessionStorage.setItem("customer_id", "false");
+      sessionStorage.setItem("user_id", "false");
     }
   };
 
   // 4. table ------------------------------------------------------------------------------------->
-  const tableCustomerLogin = () => {
+  const tableUserLogin = () => {
     return (
       <div>
         <div className={"input-group"}>
@@ -54,9 +54,9 @@ export const CustomerLogin = () => {
             mask={""}
             type={"text"}
             className={"form-control"}
-            value={customer_id}
+            value={user_id}
             onChange={(e) => (
-              setCustomerId(e.target.value)
+              setUserId(e.target.value)
             )}
           ></InputMask>
         </div>
@@ -66,9 +66,9 @@ export const CustomerLogin = () => {
             mask={""}
             type={"text"}
             className={"form-control"}
-            value={customer_pw}
+            value={user_pw}
             onChange={(e) => (
-              setCustomerPw(e.target.value)
+              setUserPw(e.target.value)
             )}
           ></InputMask>
         </div>
@@ -77,11 +77,11 @@ export const CustomerLogin = () => {
   };
 
   // 9. button ------------------------------------------------------------------------------------>
-  const buttonCustomerLogin = () => {
+  const buttonUserLogin = () => {
     return (
       <React.Fragment>
         <Button size={"sm"} className={"primary-btn"} onClick={() => {
-          flowCustomerLogin();
+          flowUserLogin();
         }}>
           Log In
         </Button>
@@ -110,10 +110,10 @@ export const CustomerLogin = () => {
               <h1>Login</h1>
             </Col>
             <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableCustomerLogin()}
+              {tableUserLogin()}
             </Col>
             <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {buttonCustomerLogin()}
+              {buttonUserLogin()}
               {buttonRefreshPage()}
             </Col>
           </Row>

@@ -1,15 +1,15 @@
-// customerPlanRouter.js
+// userPlanRouter.js
 
 import express from "express";
-import * as service from "../service/customerPlanService.js";
-import * as middleware from "../middleware/customerMiddleware.js";
+import * as service from "../service/userPlanService.js";
+import * as middleware from "../middleware/userMiddleware.js";
 export const router = express.Router();
 
 // 1-1. percent ----------------------------------------------------------------------------------->
 router.get("/percent", async (req, res) => {
   try {
     let result = await service.percent (
-      req.query.customer_id,
+      req.query.user_id,
       req.query.duration
     );
     result = await middleware.percent(result);

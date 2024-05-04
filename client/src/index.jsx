@@ -36,11 +36,11 @@ import {Loader} from "./layout/Loader.jsx";
 import {Header} from "./layout/Header.jsx";
 import {NavBar} from "./layout/NavBar.jsx";
 
-import {CustomerSignup} from "./page/customer/CustomerSignup.jsx";
-import {CustomerLogin} from "./page/customer/CustomerLogin.jsx";
+import {UserSignup} from "./page/user/UserSignup.jsx";
+import {UserLogin} from "./page/user/UserLogin.jsx";
 
-import {DiaryList} from "./page/diary/DiaryList.jsx";
-import {DiaryDetail} from "./page/diary/DiaryDetail.jsx";
+import {CalendarList} from "./page/calendar/CalendarList.jsx";
+import {CalendarDetail} from "./page/calendar/CalendarDetail.jsx";
 
 import {ExercisePlanList} from "./page/exercise/ExercisePlanList.jsx";
 import {ExercisePlanDetail} from "./page/exercise/ExercisePlanDetail.jsx";
@@ -79,21 +79,21 @@ import {TweakDataset} from "./page/tweak/TweakDataset.jsx";
 import {TweakDemo} from "./page/tweak/TweakDemo.jsx";
 
 // ------------------------------------------------------------------------------------------------>
-const Customer = () => (
+const User = () => (
   <React.Fragment>
     <Routes>
-      <Route path="/signup" element={<CustomerSignup />} />
-      <Route path="/login" element={<CustomerLogin />} />
+      <Route path="/signup" element={<UserSignup />} />
+      <Route path="/login" element={<UserLogin />} />
     </Routes>
   </React.Fragment>
 );
 
 // ------------------------------------------------------------------------------------------------>
-const Diary = () => (
+const Calendar = () => (
   <React.Fragment>
     <Routes>
-      <Route path="/list" element={<DiaryList />} />
-      <Route path="/detail" element={<DiaryDetail />} />
+      <Route path="/list" element={<CalendarList />} />
+      <Route path="/detail" element={<CalendarDetail />} />
     </Routes>
   </React.Fragment>
 );
@@ -187,8 +187,8 @@ root.render(
           <div className={"content-wrapper"}>
             <Loader />
             <Routes>
-              <Route path="/customer/*" element={<Customer />} />
-              <Route path="/diary/*" element={<Diary />} />
+              <Route path="/user/*" element={<User />} />
+              <Route path="/calendar/*" element={<Calendar />} />
               <Route path="/exercise/*" element={<Exercise />} />
               <Route path="/food/*" element={<Food />} />
               <Route path="/money/*" element={<Money />} />

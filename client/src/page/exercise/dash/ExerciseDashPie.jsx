@@ -15,7 +15,7 @@ export const ExerciseDashPie = () => {
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const location = useLocation();
-  const customer_id = sessionStorage.getItem("customer_id");
+  const user_id = sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [SECTION, setSECTION] = useState("month");
@@ -73,7 +73,7 @@ export const ExerciseDashPie = () => {
   useEffect(() => {(async () => {
     const responseWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_PART_WEEK(responseWeek.data.result.part || OBJECT_PART_WEEK_DEFAULT);
@@ -81,12 +81,12 @@ export const ExerciseDashPie = () => {
 
     const responseMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
       params: {
-        customer_id: customer_id
+        user_id: user_id
       },
     });
     setOBJECT_PART_MONTH(responseMonth.data.result.part || OBJECT_PART_MONTH_DEFAULT);
     setOBJECT_TITLE_MONTH(responseMonth.data.result.title || OBJECT_TITLE_MONTH_DEFAULT);
-  })()}, [customer_id]);
+  })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->
   const renderPartWeek = ({

@@ -7,10 +7,10 @@ import {fmtDate} from "../assets/js/date.js";
 // 1. list ---------------------------------------------------------------------------------------->
 export const list = {
   cnt: async (
-    customer_id_param, part_param, title_param, startDt_param, endDt_param
+    user_id_param, part_param, title_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.countDocuments({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       food_startDt: {
         $gte: startDt_param,
         $lte: endDt_param,
@@ -30,11 +30,11 @@ export const list = {
   },
 
   list: async (
-    customer_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
+    user_id_param, part_param, title_param, sort_param, limit_param, page_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -79,10 +79,10 @@ export const list = {
 // 2. detail -------------------------------------------------------------------------------------->
 export const detail = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -101,10 +101,10 @@ export const detail = {
 // 3. save ---------------------------------------------------------------------------------------->
 export const save = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -120,11 +120,12 @@ export const save = {
   },
 
   create: async (
-    customer_id_param, OBJECT_param, startDt_param, endDt_param
+    user_id_param, OBJECT_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.create({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: new mongoose.Types.ObjectId(),
+      food_demo: false,
       food_startDt: startDt_param,
       food_endDt: endDt_param,
       food_total_kcal: OBJECT_param.food_total_kcal,
@@ -139,10 +140,10 @@ export const save = {
   },
 
   update: async (
-    customer_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
+    user_id_param, _id_param, OBJECT_param,startDt_param, endDt_param
   ) => {
     const finalResult = await Food.findOneAndUpdate(
-      {customer_id: customer_id_param,
+      {user_id: user_id_param,
         _id: !_id_param ? {$exists:true} : _id_param
       },
       {$set: {
@@ -167,10 +168,10 @@ export const save = {
 // 4. delete -------------------------------------------------------------------------------------->
 export const deletes = {
   detail: async (
-    customer_id_param, _id_param, startDt_param, endDt_param
+    user_id_param, _id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Food.findOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param,
       food_startDt: {
         $gte: startDt_param,
@@ -186,11 +187,11 @@ export const deletes = {
   },
 
   update: async (
-    customer_id_param, _id_param, section_id_param, startDt_param, endDt_param,
+    user_id_param, _id_param, section_id_param, startDt_param, endDt_param,
   ) => {
     const updateResult = await Food.updateOne(
       {_id: !_id_param ? {$exists:true} : _id_param,
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         food_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -214,10 +215,10 @@ export const deletes = {
   },
 
   deletes: async (
-    customer_id_param, _id_param
+    user_id_param, _id_param
   ) => {
     const deleteResult = await Food.deleteOne({
-      customer_id: customer_id_param,
+      user_id: user_id_param,
       _id: !_id_param ? {$exists:true} : _id_param
     })
     .lean();

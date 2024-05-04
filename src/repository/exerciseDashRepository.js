@@ -6,11 +6,11 @@ import {ExercisePlan} from "../schema/ExercisePlan.js";
 // 1-1. dash (scatter - today) -------------------------------------------------------------------->
 export const scatterToday = {
   listPlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_plan_startDt: {
           $gte: startDt_param,
         },
@@ -28,11 +28,11 @@ export const scatterToday = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
         },
@@ -53,11 +53,11 @@ export const scatterToday = {
 // 1-2. dash (scatter - week) --------------------------------------------------------------------->
 export const scatterWeek = {
   listPlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_plan_startDt: {
           $gte: startDt_param,
         },
@@ -75,11 +75,11 @@ export const scatterWeek = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
         },
@@ -100,11 +100,11 @@ export const scatterWeek = {
 // 1-3. dash (scatter - month) -------------------------------------------------------------------->
 export const scatterMonth = {
   listPlan: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await ExercisePlan.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_plan_startDt: {
           $gte: startDt_param,
         },
@@ -122,11 +122,11 @@ export const scatterMonth = {
   },
 
   list: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
         },
@@ -147,11 +147,11 @@ export const scatterMonth = {
 // 2-1. dash (pie - week) ------------------------------------------------------------------------->
 export const pieWeek = {
   listPart: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -178,11 +178,11 @@ export const pieWeek = {
   },
 
   listTitle: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -212,11 +212,11 @@ export const pieWeek = {
 // 2-2. dash (pie - month) ------------------------------------------------------------------------>
 export const pieMonth = {
   listPart: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -243,11 +243,11 @@ export const pieMonth = {
   },
 
   listTitle: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -277,11 +277,11 @@ export const pieMonth = {
 // 3-1. dash (line - week) ------------------------------------------------------------------------>
 export const lineWeek = {
   listVolume: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -302,11 +302,11 @@ export const lineWeek = {
   },
 
   listCardio: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -330,11 +330,11 @@ export const lineWeek = {
 // 3-2. dash (line - month) ----------------------------------------------------------------------->
 export const lineMonth = {
   listVolume: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -355,11 +355,11 @@ export const lineMonth = {
   },
 
   listCardio: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -383,11 +383,11 @@ export const lineMonth = {
 // 4-1. dash (avg - month) ------------------------------------------------------------------------->
 export const avgMonth = {
   listVolume: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -408,11 +408,11 @@ export const avgMonth = {
   },
 
   listCardio: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -436,11 +436,11 @@ export const avgMonth = {
 // 4-2. dash (avg - year) ------------------------------------------------------------------------>
 export const avgYear = {
   listVolume: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
@@ -461,11 +461,11 @@ export const avgYear = {
   },
 
   listCardio: async (
-    customer_id_param, startDt_param, endDt_param
+    user_id_param, startDt_param, endDt_param
   ) => {
     const finalResult = await Exercise.aggregate([
       {$match: {
-        customer_id: customer_id_param,
+        user_id: user_id_param,
         exercise_startDt: {
           $gte: startDt_param,
           $lte: endDt_param,
