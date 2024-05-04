@@ -138,10 +138,14 @@ export const FilterNode = ({
         const idxValue = selectedOption.getAttribute("data-idx");
         const newPartIndex = Number(idxValue);
         const newPartVal = String(e.target.value);
+        const newTitleIndex = 0;
+        const newTitleVal = moneyArray[newPartIndex]?.money_title[0];
         setFILTER((prev) => ({
           ...prev,
           partIdx: newPartIndex,
-          part: newPartVal
+          part: newPartVal,
+          titleIdx: newTitleIndex,
+          title: newTitleVal
         }));
       }}>
         {moneyArray?.map((item, idx) => (
@@ -152,13 +156,18 @@ export const FilterNode = ({
       </select>
       <select className={"form-select me-5"} id={"title"} value={FILTER?.title}
       onChange={(e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const idxValue = selectedOption.getAttribute("data-idx");
+        const newTitleIndex = Number(idxValue);
+        const newTitleVal = String(e.target.value);
         setFILTER((prev) => ({
           ...prev,
-          title: e.target.value
+          titleIdx: newTitleIndex,
+          title: newTitleVal
         }));
       }}>
         {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
-          <option key={idx}>
+          <option key={idx} data-idx={idx}>
             {item}
           </option>
         ))}

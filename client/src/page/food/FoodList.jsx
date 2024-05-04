@@ -109,6 +109,7 @@ export const FoodList = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
+    setLOADING(false);
   })()}, [
     user_id,
     FILTER.order, FILTER.partIdx, FILTER.titleIdx,
