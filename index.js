@@ -76,7 +76,6 @@ catch (error) {
 // ------------------------------------------------------------------------------------------------>
 app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Cache-Control", "max-age=3600");
   next();
 });
 app.use(bodyParser.json());
@@ -108,5 +107,4 @@ app.use("/tweak", tweakRouter);
 // ------------------------------------------------------------------------------------------------>
 app.listen(app.get("port"), () => {
   console.log(`App is running at http://localhost:${app.get("port")} in ${app.get("env")} mode`);
-  console.log("Press CTRL-C to stop\n");
 });

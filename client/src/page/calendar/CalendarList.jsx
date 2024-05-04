@@ -13,7 +13,7 @@ export const CalendarList = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_DIARY || "";
+  const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
@@ -21,6 +21,7 @@ export const CalendarList = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     section_id: "",
@@ -114,11 +115,12 @@ export const CalendarList = () => {
     const tableSection = () => (
       <React.Fragment>
         <Calendar
+          view={"month"}
           value={new Date()}
           showNavigation={true}
           showNeighboringMonth={true}
           showDoubleView={false}
-          prevLabel={<div><i className={"bx bxs-left-arrow"}></i></div>}
+          prevLabel={<i className={"bx bxs-left-arrow"}></i>}
           nextLabel={<i className={"bx bxs-right-arrow"}></i>}
           prev2Label={null}
           next2Label={null}
@@ -134,7 +136,6 @@ export const CalendarList = () => {
             const week = ["일", "월", "화", "수", "목", "금", "토"];
             return week[day];
           }}
-          view={"month"}
           onClickDay={(date) => {
             SEND.id = "";
             SEND.startDt = formatDate(date);
@@ -161,10 +162,47 @@ export const CalendarList = () => {
         />
       </React.Fragment>
     );
+    const loadingSection = () => (
+      <React.Fragment>
+        <Calendar
+          view={"month"}
+          value={new Date()}
+          showNavigation={true}
+          showNeighboringMonth={true}
+          showDoubleView={false}
+          prevLabel={<i className={"bx bxs-left-arrow"}></i>}
+          nextLabel={<i className={"bx bxs-right-arrow"}></i>}
+          prev2Label={null}
+          next2Label={null}
+          formatDay={(locale, date) => ("")}
+          formatWeekday={(locale, date) => (moment(date).format("D"))}
+          formatMonth={(locale, date) => (moment(date).format("MM"))}
+          formatYear={(locale, date) => (moment(date).format("YYYY"))}
+          formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
+          formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
+          // 월화수목금토일 한글로 표시
+          formatShortWeekday={(locale, date) => {
+            const day = moment(date).format("d");
+            const week = ["일", "월", "화", "수", "목", "금", "토"];
+            return week[day];
+          }}
+          onClickDay={(date) => {}}
+          tileClassName={({date, view}) => {
+            return "calendar-tile-loading";
+          }}
+          tileContent={({date, view}) => {
+            return "";
+          }}
+        />
+        <div className={"loading-wrapper"}>
+          <i className={"bx bx-loader-alt bx-spin"}></i>
+        </div>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <div className={"calendar-list-wrapper"}>
-          {tableSection()}
+          {LOADING ? loadingSection() : tableSection()}
         </div>
       </React.Fragment>
     );

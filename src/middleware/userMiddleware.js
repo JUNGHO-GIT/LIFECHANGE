@@ -199,28 +199,28 @@ export const percent = async (object) => {
   }
 
   const exercise = {
-    diff_count: diffExercise(object.exercisePlan.exercise_plan_count, object.exerciseReal.exercise_total_count, "") || 1,
-    diff_volume: diffExercise(object.exercisePlan.exercise_plan_volume, object.exerciseReal.exercise_total_volume, "volume") || 1,
-    diff_cardio: diffExercise(object.exercisePlan.exercise_plan_cardio, object.exerciseReal.exercise_total_cardio, "time") || 1,
-    diff_weight:  diffExercise(object.exercisePlan.exercise_plan_weight, object.exerciseReal.exercise_body_weight, "") || 1,
+    diff_count: diffExercise(object?.exercisePlan.exercise_plan_count, object?.exerciseReal.exercise_total_count, "") || 1,
+    diff_volume: diffExercise(object?.exercisePlan.exercise_plan_volume, object?.exerciseReal.exercise_total_volume, "volume") || 1,
+    diff_cardio: diffExercise(object?.exercisePlan.exercise_plan_cardio, object?.exerciseReal.exercise_total_cardio, "time") || 1,
+    diff_weight:  diffExercise(object?.exercisePlan.exercise_plan_weight, object?.exerciseReal.exercise_body_weight, "") || 1,
   };
 
   const food = {
-    diff_kcal: diffFood(object.foodPlan.food_plan_kcal, object.foodReal.food_total_kcal) || 1,
-    diff_carb: diffFood(object.foodPlan.food_plan_carb, object.foodReal.food_total_carb) || 1,
-    diff_protein: diffFood(object.foodPlan.food_plan_protein, object.foodReal.food_total_protein) || 1,
-    diff_fat: diffFood(object.foodPlan.food_plan_fat, object.foodReal.food_total_fat) || 1,
+    diff_kcal: diffFood(object?.foodPlan.food_plan_kcal, object?.foodReal.food_total_kcal) || 1,
+    diff_carb: diffFood(object?.foodPlan.food_plan_carb, object?.foodReal.food_total_carb) || 1,
+    diff_protein: diffFood(object?.foodPlan.food_plan_protein, object?.foodReal.food_total_protein) || 1,
+    diff_fat: diffFood(object?.foodPlan.food_plan_fat, object?.foodReal.food_total_fat) || 1,
   };
 
   const money = {
-    diff_in: diffMoney(object.moneyPlan.money_plan_in, object.moneyReal.money_total_in, "in") || 1,
-    diff_out: diffMoney(object.moneyPlan.money_plan_out, object.moneyReal.money_total_out, "out") || 1,
+    diff_in: diffMoney(object?.moneyPlan.money_plan_in, object?.moneyReal.money_total_in, "in") || 1,
+    diff_out: diffMoney(object?.moneyPlan.money_plan_out, object?.moneyReal.money_total_out, "out") || 1,
   };
 
   const sleep = {
-    diff_night: diffSleep(object.sleepPlan.sleep_plan_night, object.sleepReal.sleep_night) || 1,
-    diff_morning: diffSleep(object.sleepPlan.sleep_plan_morning, object.sleepReal.sleep_morning) || 1,
-    diff_time: diffSleep(object.sleepPlan.sleep_plan_time, object.sleepReal.sleep_time) || 1,
+    diff_night: diffSleep(object?.sleepPlan.sleep_plan_night, object?.sleepReal.sleep_night) || 1,
+    diff_morning: diffSleep(object?.sleepPlan.sleep_plan_morning, object?.sleepReal.sleep_morning) || 1,
+    diff_time: diffSleep(object?.sleepPlan.sleep_plan_time, object?.sleepReal.sleep_time) || 1,
   };
 
   const newObject = {

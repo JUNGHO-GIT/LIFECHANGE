@@ -34,6 +34,7 @@ html, body {
   padding: 2vh 0vw 2vh 0vw;
   background-color: #fff;
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
+  animation: fadeIn 1.0s;
 }
 .nav-wrapper {
   display: flex;
@@ -48,6 +49,7 @@ html, body {
   padding: 2vh 0vw 2vh 0vw;
   background-color: #fff;
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
+  animation: fadeIn 1.0s;
 }
 .content-wrapper {
   border: none;
@@ -60,6 +62,7 @@ html, body {
   padding: 1vh 2vw 1vh 2vw;
   background-color: #fff;
   box-shadow: 2px 2px 0.375rem 0 rgba(161, 172, 184, 0.12);
+  animation: fadeIn 1.0s;
 }
 .container {
   --bs-gutter-x: 1.0rem;
@@ -79,6 +82,7 @@ html, body {
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
+  animation: fadeIn 1.0s;
 }
 .table-wrapper {
   border: 1px solid #dee2e6;
@@ -87,7 +91,7 @@ html, body {
   height: 60vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .save-wrapper {
   border: 1px solid #dee2e6;
@@ -96,7 +100,7 @@ html, body {
   height: 60vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .detail-wrapper {
   border: 1px solid #dee2e6;
@@ -105,7 +109,7 @@ html, body {
   height: 68vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .dataset-wrapper {
   border: none;
@@ -114,7 +118,7 @@ html, body {
   height: 68vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .calendar-list-wrapper {
   border: none;
@@ -123,7 +127,7 @@ html, body {
   height: 74vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .calendar-detail-wrapper {
   border: none;
@@ -132,7 +136,7 @@ html, body {
   height: 61vh;
   margin: 1vh 0vw 1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .date-wrapper {
   border: none;
@@ -140,7 +144,7 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .paging-wrapper {
   border: none;
@@ -148,7 +152,7 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .filter-wrapper {
   border: none;
@@ -156,7 +160,7 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
 }
 .btn-wrapper {
   border: none;
@@ -164,7 +168,17 @@ html, body {
   overflow-y: auto;
   max-height: 6vh;
   margin: 1vh 0vw 1vh 0vw;
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1.0s;
+}
+.loading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 @keyframes fadeIn {

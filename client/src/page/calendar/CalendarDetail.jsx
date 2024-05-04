@@ -15,7 +15,7 @@ export const CalendarDetail = () => {
 
   // 1. common ------------------------------------------------------------------------------------>
   const URL = process.env.REACT_APP_URL || "";
-  const SUBFIX = process.env.REACT_APP_DIARY || "";
+  const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
   const session = sessionStorage.getItem("dataset") || "";
@@ -29,6 +29,7 @@ export const CalendarDetail = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -75,6 +76,7 @@ export const CalendarDetail = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: user_id,
@@ -88,6 +90,7 @@ export const CalendarDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0
     }));
+    setLOADING(false);
   })()}, [location_id, user_id, location_category, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -365,17 +368,22 @@ export const CalendarDetail = () => {
         {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
       </React.Fragment>
     );
+    const loadingSection = () => (
+      <div className={"loading-wrapper"}>
+        <i className={"bx bx-loader-alt bx-spin"}></i>
+      </div>
+    );
     return (
       <React.Fragment>
         <div className={"date-wrapper"}>
-          {dateSection()}
+          {LOADING ? "" : dateSection()}
         </div>
         <div className={"calendar-detail-wrapper"}>
-          {countNode()}
-          {tableSection()}
+          {LOADING ? loadingSection() : countNode()}
+          {LOADING ? "" : tableSection()}
         </div>
       </React.Fragment>
-    );
+    )
   };
 
   // 7. date -------------------------------------------------------------------------------------->
