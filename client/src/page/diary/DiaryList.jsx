@@ -21,23 +21,19 @@ export const DiaryList = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SEND, set:setSEND} = useStorage(
-    `SEND(${PATH})`, {
-      id: "",
-      section_id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      category: "",
-      toDetail: "/diary/detail"
-    }
-  );
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: moment().startOf("month").format("YYYY-MM-DD"),
-      endDt: moment().endOf("month").format("YYYY-MM-DD")
-    }
-  );
+  const [SEND, setSEND] = useState({
+    id: "",
+    section_id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    category: "",
+    toDetail: "/diary/detail"
+  });
+  const [DATE, setDATE] = useState({
+    startDt: moment().startOf("month").format("YYYY-MM-DD"),
+    endDt: moment().endOf("month").format("YYYY-MM-DD")
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = [{
@@ -81,7 +77,7 @@ export const DiaryList = () => {
           diary.diary_section.map((section) => (
             <div key={diary._id} className={"calendar-filled"}
               style={{
-                backgroundColor: section.diary_color,
+                backgroundColor: section.diary_color
               }}
               onClick={(e) => {
                 e.stopPropagation();

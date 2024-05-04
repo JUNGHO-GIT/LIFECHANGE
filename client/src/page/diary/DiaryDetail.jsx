@@ -29,34 +29,26 @@ export const DiaryDetail = () => {
   const PATH = location.pathname?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const {val:SEND, set:setSEND} = useStorage(
-    `SEND(${PATH})`, {
-      id: "",
-      refresh: 0,
-      startDt: "0000-00-00",
-      endDt: "0000-00-00",
-      toList: "/diary/list"
-    }
-  );
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:COUNT, set:setCOUNT} = useStorage(
-    `COUNT(${PATH})`, {
-      totalCnt: 0,
-      sectionCnt: 0
-    }
-  );
-  const {val:CALENDAR, set:setCALENDAR} = useStorage(
-    `CALENDAR(${PATH})`, {
-      calStartOpen: false,
-      calEndOpen: false,
-      calOpen: false
-    }
-  );
+  const [SEND, setSEND] = useState({
+    id: "",
+    refresh: 0,
+    startDt: "0000-00-00",
+    endDt: "0000-00-00",
+    toList: "/diary/list"
+  });
+  const [DATE, setDATE] = useState({
+    startDt: location_startDt,
+    endDt: location_endDt
+  });
+  const [COUNT, setCOUNT] = useState({
+    totalCnt: 0,
+    sectionCnt: 0
+  });
+  const [CALENDAR, setCALENDAR] = useState({
+    calStartOpen: false,
+    calEndOpen: false,
+    calOpen: false
+  });
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEFAULT = {
@@ -141,15 +133,7 @@ export const DiaryDetail = () => {
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const colors = [
-      {name: "red", value: "#ff0000"},
-      {name: "orange", value: "#ffa500"},
-      {name: "yellow", value: "#ffff00"},
-      {name: "green", value: "#008000"},
-      {name: "blue", value: "#0000ff"},
-      {name: "navy", value: "#000080"},
-      {name: "purple", value: "#800080"},
-      {name: "black", value: "#000000"},
-      {name: "gray", value: "#808080"}
+      "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
     ];
     const dateSection = () => (
       <React.Fragment>
@@ -308,8 +292,8 @@ export const DiaryDetail = () => {
                 }}
               >
                 {colors.map((color, index) => (
-                  <option key={index} value={color.value} style={{color: color.value}}>
-                    ● {color.name}
+                  <option key={index} value={color} style={{color: color}}>
+                    ● {color}
                   </option>
                 ))}
               </select>
