@@ -4,9 +4,9 @@ import axios from "axios";
 import moment from "moment-timezone";
 import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../hooks/useStorage.jsx";
 import {percent} from "../../assets/js/percent.js";
+import {useNavigate, useLocation} from "react-router-dom";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -22,6 +22,7 @@ export const UserLogin = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
@@ -76,6 +77,12 @@ export const UserLogin = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 11. button ----------------------------------------------------------------------------------->
   const buttonUserLogin = () => {
     return (
@@ -105,18 +112,27 @@ export const UserLogin = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              <h1>Login</h1>
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableUserLogin()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {buttonUserLogin()}
-              {buttonRefreshPage()}
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                <h1>Login</h1>
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableUserLogin()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {buttonUserLogin()}
+                {buttonRefreshPage()}
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

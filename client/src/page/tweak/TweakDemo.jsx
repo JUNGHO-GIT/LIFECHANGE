@@ -7,7 +7,7 @@ import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
-import {useStorage} from "../../hooks/useStorage.jsx";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -19,9 +19,9 @@ export const TweakDemo = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
-  const location = useLocation();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [TYPE, setTYPE] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
     page: 1,
@@ -151,6 +151,7 @@ export const TweakDemo = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
@@ -177,6 +178,7 @@ export const TweakDemo = () => {
       sleepPlanCnt: response.data.result.sleepPlanCnt,
       sleepCnt: response.data.result.sleepCnt,
     }));
+    setLOADING(false);
   })()}, [user_id, PAGING, TYPE, COUNT?.inputCnt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -556,6 +558,12 @@ export const TweakDemo = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 9. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => (
     <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
@@ -568,14 +576,23 @@ export const TweakDemo = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {pagingNode()}
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {pagingNode()}
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

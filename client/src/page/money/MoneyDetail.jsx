@@ -8,6 +8,7 @@ import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -26,6 +27,7 @@ export const MoneyDetail = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -79,6 +81,7 @@ export const MoneyDetail = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: user_id,
@@ -92,6 +95,7 @@ export const MoneyDetail = () => {
       totalCnt: response.data.totalCnt || 0,
       sectionCnt: response.data.sectionCnt || 0,
     }));
+    setLOADING(false);
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -178,6 +182,12 @@ export const MoneyDetail = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
     <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
@@ -191,14 +201,23 @@ export const MoneyDetail = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {buttonNode()}
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {buttonNode()}
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

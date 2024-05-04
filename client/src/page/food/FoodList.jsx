@@ -9,6 +9,7 @@ import {CalendarNode} from "../../fragments/CalendarNode.jsx";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {FilterNode} from "../../fragments/FilterNode.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Table, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -26,6 +27,7 @@ export const FoodList = () => {
   const PATH = location?.pathname.trim().toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -164,6 +166,12 @@ export const FoodList = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 8. calendar ---------------------------------------------------------------------------------->
   const calendarNode = () => (
     <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
@@ -198,21 +206,30 @@ export const FoodList = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {calendarNode()}
-              {tableNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {filterNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {pagingNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {buttonNode()}
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {calendarNode()}
+                {tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {filterNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {pagingNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {buttonNode()}
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

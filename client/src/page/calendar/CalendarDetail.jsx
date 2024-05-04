@@ -8,6 +8,7 @@ import {useDate} from "../../hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {DateNode} from "../../fragments/DateNode.jsx";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Button, Col, Row, Container, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -368,23 +369,24 @@ export const CalendarDetail = () => {
         {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}
       </React.Fragment>
     );
-    const loadingSection = () => (
-      <div className={"loading-wrapper"}>
-        <i className={"bx bx-loader-alt bx-spin"}></i>
-      </div>
-    );
     return (
       <React.Fragment>
         <div className={"date-wrapper"}>
-          {LOADING ? "" : dateSection()}
+          {dateSection()}
         </div>
         <div className={"calendar-detail-wrapper"}>
-          {LOADING ? loadingSection() : countNode()}
-          {LOADING ? "" : tableSection()}
+          {countNode()}
+          {tableSection()}
         </div>
       </React.Fragment>
     )
   };
+
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
 
   // 7. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
@@ -414,17 +416,26 @@ export const CalendarDetail = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {dateNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {buttonNode()}
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {dateNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {buttonNode()}
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

@@ -3,13 +3,13 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "../../hooks/useStorage.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {calendarArray} from "../../assets/array/calendarArray.js";
 import {exerciseArray} from "../../assets/array/exerciseArray.js";
 import {foodArray} from "../../assets/array/foodArray.js";
 import {moneyArray} from "../../assets/array/moneyArray.js";
 import {sleepArray} from "../../assets/array/sleepArray.js";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -28,6 +28,7 @@ export const TweakDataset = () => {
   const datasetArray = ["calendar", "exercise", "food", "money", "sleep"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -79,12 +80,14 @@ export const TweakDataset = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/dataset`, {
       params: {
         user_id: user_id
       }
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
@@ -445,6 +448,12 @@ export const TweakDataset = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
     <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
@@ -458,15 +467,24 @@ export const TweakDataset = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {buttonNode()}
-              <span className={"me-1 d-inline-flex"}>{buttonDefault()}</span>
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {buttonNode()}
+                <span className={"me-1 d-inline-flex"}>{buttonDefault()}</span>
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

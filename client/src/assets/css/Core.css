@@ -176,6 +176,7 @@ html, body {
   overflow-y: hidden;
   height: 100%;
   width: 100%;
+  animation: fadeOut 0.5 !important;
 }
 
 @keyframes fadeIn {
@@ -184,5 +185,14 @@ html, body {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

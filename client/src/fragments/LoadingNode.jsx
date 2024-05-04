@@ -2,7 +2,7 @@
 
 import React from "react";
 
-// 7. loading ------------------------------------------------------------------------------------->
+// 6. loading ------------------------------------------------------------------------------------->
 export const LoadingNode = ({
   LOADING, setLOADING
 }) => {
@@ -13,8 +13,8 @@ export const LoadingNode = ({
 
   return (
     <React.Fragment>
-      <div className={"table-wrapper"}>
-        <div className={"loading"}>Loading...</div>
+      <div className={"loading-wrapper"}>
+        <i className={"bx bx-loader-alt bx-spin"}></i>
       </div>
     </React.Fragment>
   );

@@ -185,7 +185,6 @@ root.render(
             <NavBar />
           </div>
           <div className={"content-wrapper"}>
-            <Loader />
             <Routes>
               <Route path="/user/*" element={<User />} />
               <Route path="/calendar/*" element={<Calendar />} />

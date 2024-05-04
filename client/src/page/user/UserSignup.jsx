@@ -4,6 +4,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -16,6 +17,7 @@ export const UserSignup = () => {
   const navParam = useNavigate();
 
   // 2-2. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [user_id, setUserId] = useState("");
   const [user_pw, setUserPw] = useState("");
 
@@ -82,6 +84,12 @@ export const UserSignup = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 11. button ----------------------------------------------------------------------------------->
   const btnRefresh = () => {
     return (
@@ -121,7 +129,15 @@ export const UserSignup = () => {
   return (
     <React.Fragment>
       <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+        <Container fluid={true}>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 <h1>Sign Up</h1>
@@ -134,7 +150,8 @@ export const UserSignup = () => {
                 {btnUserList()}
                 {btnRefresh()}
               </Col>
-          </Row>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

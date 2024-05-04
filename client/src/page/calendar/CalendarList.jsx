@@ -7,6 +7,7 @@ import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {useStorage} from "../../hooks/useStorage.jsx";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
@@ -58,6 +59,7 @@ export const CalendarList = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
+    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
@@ -65,6 +67,7 @@ export const CalendarList = () => {
       },
     });
     setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 4. table ------------------------------------------------------------------------------------->
@@ -162,62 +165,40 @@ export const CalendarList = () => {
         />
       </React.Fragment>
     );
-    const loadingSection = () => (
-      <React.Fragment>
-        <Calendar
-          view={"month"}
-          value={new Date()}
-          showNavigation={true}
-          showNeighboringMonth={true}
-          showDoubleView={false}
-          prevLabel={<i className={"bx bxs-left-arrow"}></i>}
-          nextLabel={<i className={"bx bxs-right-arrow"}></i>}
-          prev2Label={null}
-          next2Label={null}
-          formatDay={(locale, date) => ("")}
-          formatWeekday={(locale, date) => (moment(date).format("D"))}
-          formatMonth={(locale, date) => (moment(date).format("MM"))}
-          formatYear={(locale, date) => (moment(date).format("YYYY"))}
-          formatLongDate={(locale, date) => (moment(date).format("YYYY-MM-DD"))}
-          formatMonthYear={(locale, date) => (moment(date).format("YYYY-MM"))}
-          // 월화수목금토일 한글로 표시
-          formatShortWeekday={(locale, date) => {
-            const day = moment(date).format("d");
-            const week = ["일", "월", "화", "수", "목", "금", "토"];
-            return week[day];
-          }}
-          onClickDay={(date) => {}}
-          tileClassName={({date, view}) => {
-            return "calendar-tile-loading";
-          }}
-          tileContent={({date, view}) => {
-            return "";
-          }}
-        />
-        <div className={"loading-wrapper"}>
-          <i className={"bx bx-loader-alt bx-spin"}></i>
-        </div>
-      </React.Fragment>
-    );
     return (
       <React.Fragment>
         <div className={"calendar-list-wrapper"}>
-          {LOADING ? loadingSection() : tableSection()}
+          {tableSection()}
         </div>
       </React.Fragment>
     );
   };
+
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
 
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableNode()}
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableNode()}
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>

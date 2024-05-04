@@ -5,8 +5,8 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import InputMask from "react-input-mask";
 import {useDate} from "../../hooks/useDate.jsx";
-import {useStorage} from "../../hooks/useStorage.jsx";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
+import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -23,6 +23,7 @@ export const FoodSearch = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -79,6 +80,7 @@ export const FoodSearch = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSearch = async () => {
+    setLOADING(true);
     const response = await axios.get(`${URL_OBJECT}/search`, {
       params: {
         user_id: user_id,
@@ -93,6 +95,7 @@ export const FoodSearch = () => {
       ...prev,
       totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
     }));
+    setLOADING(false);
   };
 
   // 4. table ------------------------------------------------------------------------------------->
@@ -180,6 +183,12 @@ export const FoodSearch = () => {
     </div>
   );
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 9. paging ------------------------------------------------------------------------------------>
   const pagingNode = () => (
     <PagingNode PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
@@ -192,17 +201,26 @@ export const FoodSearch = () => {
     <React.Fragment>
       <Card className={"card-wrapper"}>
         <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {tableNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {searchNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {pagingNode()}
-            </Col>
-          </Row>
+          {LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {loadingNode()}
+              </Col>
+            </Row>
+          )}
+          {!LOADING && (
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {searchNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {pagingNode()}
+              </Col>
+            </Row>
+          )}
         </Container>
       </Card>
     </React.Fragment>
