@@ -57,7 +57,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ------------------------------------------------------------------------------------------------>
-app.set("port", process.env.PORT || 4000);
+const appPort = Number(process.env.PORT);
+try {
+  app.set("port", appPort);
+  console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
+}
+catch (error) {
+  if (error.code === "EADDRINUSE") {
+    console.log(`${port} 포트가 이미 사용 중입니다. 다른 포트로 변경합니다.`);
+    app.set("port", appPort + 1);
+  }
+  else {
+    console.error(`서버 실행 중 오류 발생: ${error}`);
+  }
+}
+
+// ------------------------------------------------------------------------------------------------>
 app.use(cors(), (req, res, next) => {
   res.set("Content-Type", "application/json; charset=utf-8");
   next();
@@ -87,8 +102,3 @@ app.use("/money", moneyRouter);
 app.use("/sleep", sleepRouter);
 
 app.use("/tweak", tweakRouter);
-
-// ------------------------------------------------------------------------------------------------>
-app.listen(app.get("port"), () => {
-  console.log(`App is running at http://127.0.0.1:${app.get("port")} in ${app.get("env")} mode`);
-});
