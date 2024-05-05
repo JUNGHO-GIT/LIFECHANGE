@@ -96,31 +96,33 @@ export const SleepDashBar = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0 border-bottom ms-2vw"}>
-        <Container fluid={true}>
-          <Row>
-            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <select className={"form-select form-select-sm"}
-                onChange={(e) => (setSECTION(e.target.value))}
-                value={SECTION}
-              >
-                <option value={"today"}>오늘</option>
-              </select>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-              <span className={"dash-title"}>수면 목표</span>
-            </Col>
-            <Col lg={3} md={3} sm={3} xs={3}>
-              <span></span>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} style={{alignSelf:"center"}}>
-              {SECTION === "today" && chartToday()}
-            </Col>
-          </Row>
-        </Container>
-      </Card>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
+              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+                <select className={"form-select form-select-sm"}
+                  onChange={(e) => (setSECTION(e.target.value))}
+                  value={SECTION}
+                >
+                  <option value={"today"}>오늘</option>
+                </select>
+              </Col>
+              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+                <span className={"dash-title"}>수면 목표</span>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3}>
+                <span></span>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} style={{alignSelf:"center"}}>
+                {SECTION === "today" && chartToday()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

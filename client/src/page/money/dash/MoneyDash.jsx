@@ -13,11 +13,8 @@ export const MoneyDash = () => {
   return (
     <React.Fragment>
       {MoneyDashBar()}
-      <br/>
       {MoneyDashPie()}
-      <br/>
       {MoneyDashLine()}
-      <br/>
       {MoneyDashAvg()}
     </React.Fragment>
   );

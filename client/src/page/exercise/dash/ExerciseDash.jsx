@@ -13,11 +13,8 @@ export const ExerciseDash = () => {
   return (
     <React.Fragment>
       {ExerciseDashScatter()}
-      <br/>
       {ExerciseDashPie()}
-      <br/>
       {ExerciseDashLine()}
-      <br/>
       {ExerciseDashAvg()}
     </React.Fragment>
   );

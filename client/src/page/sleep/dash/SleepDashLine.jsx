@@ -203,36 +203,38 @@ export const SleepDashLine = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0 border-bottom ms-2vw"}>
-        <Container fluid={true}>
-          <Row>
-            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <select className={"form-select form-select-sm"}
-                onChange={(e) => (setSECTION(e.target.value))}
-                value={SECTION}
-              >
-                <option value={"week"}>주간</option>
-                <option value={"month"}>월간</option>
-              </select>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-              <span className={"dash-title"}>수면 추이</span>
-            </Col>
-            <Col lg={3} md={3} sm={3} xs={3}>
-              <span></span>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={10} md={10} sm={10} xs={10}>
-              {SECTION === "week" && chartWeek()}
-              {SECTION === "month" && chartMonth()}
-            </Col>
-            <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-              {tableNode()}
-            </Col>
-          </Row>
-        </Container>
-      </Card>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
+              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+                <select className={"form-select form-select-sm"}
+                  onChange={(e) => (setSECTION(e.target.value))}
+                  value={SECTION}
+                >
+                  <option value={"week"}>주간</option>
+                  <option value={"month"}>월간</option>
+                </select>
+              </Col>
+              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+                <span className={"dash-title"}>수면 추이</span>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3}>
+                <span></span>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={10} md={10} sm={10} xs={10}>
+                {SECTION === "week" && chartWeek()}
+                {SECTION === "month" && chartMonth()}
+              </Col>
+              <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
+                {tableNode()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

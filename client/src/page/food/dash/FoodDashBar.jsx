@@ -158,8 +158,9 @@ export const FoodDashBar = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"border-0 border-bottom ms-2vw"}>
-        <Container fluid={true}>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
           <Row>
             <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
               <select className={"form-select form-select-sm"}
@@ -187,9 +188,10 @@ export const FoodDashBar = () => {
               {LINE === "kcal" && chartKcalToday()}
               {LINE === "nut" && chartNutToday()}
             </Col>
-          </Row>
-        </Container>
-      </Card>
+            </Row>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

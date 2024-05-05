@@ -41,6 +41,9 @@ p {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+.br {
+  height: 1px;
+}
 
 /** 0. Media **************************************************************************************/
 .form-control {

@@ -12,9 +12,7 @@ export const SleepDash = () => {
   return (
     <React.Fragment>
       {SleepDashBar()}
-      <br/>
       {SleepDashLine()}
-      <br/>
       {SleepDashAvg()}
     </React.Fragment>
   );
