@@ -23,7 +23,7 @@ export const FoodSearch = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const [LOADING, setLOADING] = useState(true);
+  const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
     refresh: 0,
@@ -146,7 +146,7 @@ export const FoodSearch = () => {
     );
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
+        <div className={"food-search-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>
@@ -215,10 +215,10 @@ export const FoodSearch = () => {
           <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : searchNode()}
+                {searchNode()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : pagingNode()}
+                {pagingNode()}
               </Col>
             </Row>
           </Container>

@@ -26,15 +26,18 @@
 
 /** 0. Media **************************************************************************************/
 .sidebar {
+  width: 200px;
+  max-width: 200px;
+  height: 100%;
+  max-height: 100%;
   position: fixed;
   text-align: center;
   left: 0;
   top: 0;
-  width: 200px;
-  height: 100%;
+  border-radius: 0px 8px 0px 0px;
   transition: transform 0.3s ease;
   transform: translateX(-100%);
-  z-index: 100;
+  z-index: 10000;
   box-shadow: 5px 10px 0.375rem 0 rgba(161, 172, 184, 0.12);
 }
 .sidebar-head-group {

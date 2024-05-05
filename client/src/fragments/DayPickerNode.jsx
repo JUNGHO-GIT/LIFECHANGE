@@ -1,4 +1,4 @@
-// CalendarNode.jsx
+// DayPickerNode.jsx
 
 import React, {useEffect} from "react";
 import {DayPicker} from "react-day-picker";
@@ -6,9 +6,9 @@ import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
 
-// 8. calendar ------------------------------------------------------------------------------------>
-export const CalendarNode = ({
-  FILTER, setFILTER, DATE, setDATE, CALENDAR, setCALENDAR
+// 8. dayPicker ----------------------------------------------------------------------------------->
+export const DayPickerNode = ({
+  FILTER, setFILTER, DATE, setDATE, DAYPICKER, setDAYPICKER, part, plan, type
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>
@@ -53,14 +53,15 @@ export const CalendarNode = ({
     }
   }, [FILTER?.type]);
 
+
   // 3. closeBtn ---------------------------------------------------------------------------------->
   const closeBtn = () => (
     <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => (
-      setCALENDAR((prev) => ({
+      setDAYPICKER((prev) => ({
         ...prev,
-        calOpen: false
-      }))
-    )}>
+        dayOpen: false
+      })
+    ))}>
       X
     </span>
   );
@@ -247,7 +248,7 @@ export const CalendarNode = ({
 
   return (
     <React.Fragment>
-      <div className={`dayPicker-container ${CALENDAR.calOpen ? "" : "d-none"}`}>
+      <div className={`dayPicker-container ${DAYPICKER.dayOpen ? "" : "d-none"}`}>
         {closeBtn()}
         <div className={"h-2vh"}></div>
         {calendar()}

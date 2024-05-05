@@ -455,9 +455,9 @@ export const TweakDataset = () => {
 
   // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
-    <ButtonNode CALENDAR={""} setCALENDAR={""} DATE={DATE} setDATE={setDATE}
+    <ButtonNode DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"save"}
+      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"dataset"}
     />
   );
 
@@ -480,7 +480,7 @@ export const TweakDataset = () => {
           <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonNode()}</span>
+                <span className={"me-1 d-inline-flex"}>{buttonNode()}</span>
                 <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonDefault()}</span>
               </Col>
             </Row>

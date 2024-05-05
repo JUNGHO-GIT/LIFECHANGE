@@ -9,7 +9,7 @@ import InputMask from "react-input-mask";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
-  DATE, setDATE, CALENDAR, setCALENDAR, part, plan, type
+  DATE, setDATE, DAYPICKER, setDAYPICKER, part, plan, type
 }) => {
 
   // 1. useEffect (startDt) ----------------------------------------------------------------------->
@@ -25,13 +25,13 @@ export const DateNode = ({
 
   // 중복 방지
    useEffect(() => {
-    if (CALENDAR.calStartOpen) {
-      setCALENDAR((prev) => ({
+    if (DAYPICKER.dayStartOpen) {
+      setDAYPICKER((prev) => ({
         ...prev,
-        calEndOpen: false,
+        dayEndOpen: false,
       }));
     }
-  }, [CALENDAR.calStartOpen]);
+  }, [DAYPICKER.dayStartOpen]);
 
   // 2. useEffect (endDt) ------------------------------------------------------------------------->
   // endDt가 startDt보다 작을 경우 startDt를 endDt로 설정
@@ -46,20 +46,20 @@ export const DateNode = ({
 
   // 중복 방지
   useEffect(() => {
-    if (CALENDAR.calEndOpen) {
-      setCALENDAR((prev) => ({
+    if (DAYPICKER.dayEndOpen) {
+      setDAYPICKER((prev) => ({
         ...prev,
-        calStartOpen: false,
+        dayStartOpen: false,
       }));
     }
-  }, [CALENDAR.calEndOpen]);
+  }, [DAYPICKER.dayEndOpen]);
 
   // 닫기 버튼 ------------------------------------------------------------------------------------>
   const closeBtn = (type) => (
     <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => {
-      setCALENDAR((prev) => ({
+      setDAYPICKER((prev) => ({
         ...prev,
-        [`cal${type}Open`]: false,
+        [`day${type}Open`]: false,
       }));
     }}>
       X
@@ -67,7 +67,7 @@ export const DateNode = ({
   );
 
   // 달력 본체 ------------------------------------------------------------------------------------>
-  const calendar = (type) => (
+  const dayPicker = (type) => (
     <React.Fragment>
       <h5 className={"text-center drag"}>{type === "Start" ? "시작일" : "종료일"}</h5>
       <DayPicker
@@ -98,15 +98,15 @@ export const DateNode = ({
 
   return (
     <React.Fragment>
-      <div className={`dayPicker-container ${CALENDAR.calStartOpen ? "" : "d-none"}`}>
+      <div className={`dayPicker-container ${DAYPICKER.dayStartOpen ? "" : "d-none"}`}>
         {closeBtn("Start")}
         <div className="h-2vh"></div>
-        {calendar("Start")}
+        {dayPicker("Start")}
       </div>
-      <div className={`dayPicker-container ${CALENDAR.calEndOpen ? "" : "d-none"}`}>
+      <div className={`dayPicker-container ${DAYPICKER.dayEndOpen ? "" : "d-none"}`}>
         {closeBtn("End")}
         <div className="h-2vh"></div>
-        {calendar("End")}
+        {dayPicker("End")}
       </div>
       <div className={"date-wrapper"}>
         <Row className={"d-center"}>
@@ -115,16 +115,16 @@ export const DateNode = ({
               <span className={"input-group-text"}>시작일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"calendar_startDt"}
-                name={"calendar_startDt"}
+                id={"dayPicker_startDt"}
+                name={"dayPicker_startDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.startDt}
                 readOnly={true}
                 onClick={() => {
-                  setCALENDAR((prev) => ({
+                  setDAYPICKER((prev) => ({
                     ...prev,
-                    calStartOpen: !prev.calStartOpen
+                    dayStartOpen: !prev.dayStartOpen
                   }));
                 }}
               ></InputMask>
@@ -135,16 +135,16 @@ export const DateNode = ({
               <span className={"input-group-text"}>종료일</span>
               <InputMask
                 mask={"9999-99-99"}
-                id={"calendar_endDt"}
-                name={"calendar_endDt"}
+                id={"dayPicker_endDt"}
+                name={"dayPicker_endDt"}
                 className={"form-control pointer"}
                 maskChar={null}
                 value={DATE?.endDt}
                 readOnly={true}
                 onClick={() => {
-                  setCALENDAR((prev) => ({
+                  setDAYPICKER((prev) => ({
                     ...prev,
-                    calEndOpen: !prev.calEndOpen
+                    dayEndOpen: !prev.dayEndOpen
                   }));
                 }}
               ></InputMask>

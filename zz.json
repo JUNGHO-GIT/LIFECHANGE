@@ -1,133 +1,44 @@
-[
-  {
-    "_id": {
-      "$oid": "66364c62f3caa6e5ac06cf6e"
-    },
-    "user_id": "123",
-    "money_demo": true,
-    "money_number": 21,
-    "money_startDt": "2024-05-03",
-    "money_endDt": "2024-05-03",
-    "money_total_in": 9173,
-    "money_total_out": 7578,
-    "money_property": 0,
-    "money_section": [
-      {
-        "money_part_idx": 2,
-        "money_part_val": "지출",
-        "money_title_idx": 9,
-        "money_title_val": "금융",
-        "money_amount": 21216,
-        "money_content": "content",
-        "_id": {
-          "$oid": "66364c62f3caa6e5ac06cf6b"
-        }
-      },
-      {
-        "money_part_idx": 2,
-        "money_part_val": "지출",
-        "money_title_idx": 8,
-        "money_title_val": "저축",
-        "money_amount": 24029,
-        "money_content": "content",
-        "_id": {
-          "$oid": "66364c62f3caa6e5ac06cf6c"
-        }
-      },
-      {
-        "money_part_idx": 2,
-        "money_part_val": "지출",
-        "money_title_idx": 7,
-        "money_title_val": "품위",
-        "money_amount": 54958,
-        "money_content": "content",
-        "_id": {
-          "$oid": "66364c62f3caa6e5ac06cf6d"
-        }
-      }
-    ],
-    "money_regDt": "2024-05-03",
-    "money_updateDt": "2024-05-03",
-    "__v": 0
+{
+  "exercisePlan": {
+    "exercise_plan_count": 42,
+    "exercise_plan_volume": 140,
+    "exercise_plan_cardio": "15:19",
+    "exercise_plan_weight": 827
   },
-  {
-    "_id": {
-      "$oid": "66364c62f3caa6e5ac06cf73"
-    },
-    "user_id": "123",
-    "money_demo": true,
-    "money_number": 22,
-    "money_startDt": "2024-05-02",
-    "money_endDt": "2024-05-02",
-    "money_total_in": 2698,
-    "money_total_out": 5578,
-    "money_property": 0,
-    "money_section": [
-      {
-        "money_part_idx": 2,
-        "money_part_val": "지출",
-        "money_title_idx": 5,
-        "money_title_val": "교통",
-        "money_amount": 98838,
-        "money_content": "content",
-        "_id": {
-          "$oid": "66364c62f3caa6e5ac06cf71"
-        }
-      },
-      {
-        "money_part_idx": 2,
-        "money_part_val": "지출",
-        "money_title_idx": 1,
-        "money_title_val": "식비",
-        "money_amount": 44726,
-        "money_content": "content",
-        "_id": {
-          "$oid": "66364c62f3caa6e5ac06cf72"
-        }
-      }
-    ],
-    "money_regDt": "2024-05-02",
-    "money_updateDt": "2024-05-05 / 02:49:45",
-    "__v": 0
+  "exercise": {
+    "exercise_total_count": 1,
+    "exercise_total_volume": 0,
+    "exercise_total_cardio": "00:00",
+    "exercise_body_weight": 0
   },
-  {
-    "_id": {
-      "$oid": "66364c62f3caa6e5ac06cf78"
-    },
-    "user_id": "123",
-    "money_demo": true,
-    "money_number": 23,
-    "money_startDt": "2024-05-01",
-    "money_endDt": "2024-05-01",
+  "foodPlan": {
+    "food_plan_kcal": 0,
+    "food_plan_carb": 0,
+    "food_plan_protein": 0,
+    "food_plan_fat": 0
+  },
+  "food": {
+    "food_total_kcal": 0,
+    "food_total_carb": 0,
+    "food_total_protein": 0,
+    "food_total_fat": 0
+  },
+  "moneyPlan": {
+    "money_plan_in": 0,
+    "money_plan_out": 0
+  },
+  "money": {
     "money_total_in": 0,
-    "money_total_out": 164803,
-    "money_property": 0,
-    "money_section": [
-      {
-        "money_part_idx": 0,
-        "money_part_val": "전체",
-        "money_title_idx": 0,
-        "money_title_val": "전체",
-        "money_amount": 95782,
-        "money_content": "content",
-        "_id": {
-          "$oid": "66364c62f3caa6e5ac06cf75"
-        }
-      },
-      {
-        "money_part_idx": 2,
-        "money_part_val": "지출",
-        "money_title_idx": 0,
-        "money_title_val": "전체",
-        "money_amount": 91260,
-        "money_content": "content",
-        "_id": {
-          "$oid": "66364c62f3caa6e5ac06cf76"
-        }
-      }
-    ],
-    "money_regDt": "2024-05-01",
-    "money_updateDt": "2024-05-05 / 03:31:56",
-    "__v": 0
+    "money_total_out": 0
+  },
+  "sleepPlan": {
+    "sleep_plan_night": "00:00",
+    "sleep_plan_morning": "00:00",
+    "sleep_plan_time": "00:00"
+  },
+  "sleep": {
+    "sleep_night": "00:00",
+    "sleep_morning": "00:00",
+    "sleep_time": "00:00"
   }
-]
+}

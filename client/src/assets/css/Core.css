@@ -103,12 +103,24 @@ html, body {
   padding: 0vh 0vw 0vh 0vw;
   animation: fadeIn 1.0s !important;
 }
+.food-search-wrapper {
+  width: auto;
+  max-width: 100%;
+  height: 64vh;
+  max-height: 64vh;
+  border: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 1vh 0vw 1vh 0vw;
+  padding: 0vh 0vw 0vh 0vw;
+  animation: fadeIn 1.0s !important;
+}
 .table-wrapper {
   width: auto;
   max-width: 100%;
   height: 60vh;
   max-height: 60vh;
-  border: 0.3px solid #dee2e6;
+  border: 0.3px solid #f0f2f5;
   overflow-x: hidden;
   overflow-y: auto;
   margin: 1vh 0vw 1vh 0vw;
@@ -120,7 +132,7 @@ html, body {
   max-width: 100%;
   height: 70vh;
   max-height: 70vh;
-  border: 0.3px solid #dee2e6;
+  border: 0.3px solid #f0f2f5;
   overflow-x: hidden;
   overflow-y: auto;
   margin: 1vh 0vw 1vh 0vw;
@@ -132,7 +144,7 @@ html, body {
   max-width: 100%;
   height: 60vh;
   max-height: 60vh;
-  border: 0.3px solid #dee2e6;
+  border: 0.3px solid #f0f2f5;
   overflow-x: hidden;
   overflow-y: auto;
   margin: 1vh 0vw 1vh 0vw;
@@ -157,15 +169,17 @@ html, body {
 .loading-wrapper {
   width: auto;
   max-width: 100%;
-  height: auto;
-  max-height: 100%;
+  height: 60vh;
+  max-height: 98vh;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   overflow-x: hidden;
-  overflow-y: hidden;
-  animation: fadeOut 0.5 !important;
+  overflow-y: auto;
+  margin: 1vh 0vw 1vh 0vw;
+  padding: 0vh 0vw 0vh 0vw;
+  animation: fadeIn 1.0s !important;
 }
 
 @keyframes fadeIn {

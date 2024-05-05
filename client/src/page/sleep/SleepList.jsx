@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {CalendarNode} from "../../fragments/CalendarNode.jsx";
+import {DayPickerNode} from "../../fragments/DayPickerNode.jsx";
 import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {FilterNode} from "../../fragments/FilterNode.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
@@ -42,10 +42,10 @@ export const SleepList = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [CALENDAR, setCALENDAR] = useState({
-    calStartOpen: false,
-    calEndOpen: false,
-    calOpen: false,
+  const [DAYPICKER, setDAYPICKER] = useState({
+    dayStartOpen: false,
+    dayEndOpen: false,
+    dayOpen: false,
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -172,10 +172,10 @@ export const SleepList = () => {
     />
   );
 
-  // 8. calendar ---------------------------------------------------------------------------------->
-  const calendarNode = () => (
-    <CalendarNode FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
-      CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
+    // 8. dayPicker --------------------------------------------------------------------------------->
+  const dayPickerNode = () => (
+    <DayPickerNode  FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+      DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
@@ -188,7 +188,7 @@ export const SleepList = () => {
 
   // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
-    <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
     />
@@ -202,7 +202,7 @@ export const SleepList = () => {
           <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {LOADING ? "" : calendarNode()}
+                {dayPickerNode()}
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
             </Row>
@@ -214,13 +214,13 @@ export const SleepList = () => {
           <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : filterNode()}
+                {filterNode()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : pagingNode()}
+                {pagingNode()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : buttonNode()}
+                {buttonNode()}
               </Col>
             </Row>
           </Container>

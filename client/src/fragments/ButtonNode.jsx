@@ -6,7 +6,7 @@ import {Button} from "react-bootstrap";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const ButtonNode = ({
-  CALENDAR, setCALENDAR, DATE, setDATE, SEND, FILTER, setFILTER, PAGING, setPAGING,
+  DAYPICKER, setDAYPICKER, DATE, setDATE, SEND, FILTER, setFILTER, PAGING, setPAGING,
   flowSave, navParam, part, plan, type
 }) => {
 
@@ -14,19 +14,19 @@ export const ButtonNode = ({
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
   // 11. button ----------------------------------------------------------------------------------->
-  const buttonCalendar = () => (
+  const btnOpenCalendar = () => (
     <React.Fragment>
       <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
-        setCALENDAR((prev) => ({
+        setDAYPICKER((prev) => ({
           ...prev,
-          calOpen: !prev.calOpen,
+          dayOpen: !prev.dayOpen,
         }));
       }}>
         달력
       </Button>
     </React.Fragment>
   );
-  const buttonToday = () => (
+  const btnGetToday = () => (
     <React.Fragment>
       <Button size={"sm"} className={"success-btn"} type={"button"} onClick={() => {
         setFILTER((prev) => ({
@@ -47,7 +47,7 @@ export const ButtonNode = ({
       </Button>
     </React.Fragment>
   );
-  const buttonSave = () => (
+  const btnToSave = () => (
     <React.Fragment>
       <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
         flowSave();
@@ -56,7 +56,7 @@ export const ButtonNode = ({
       </Button>
     </React.Fragment>
   );
-  const buttonUpdate = () => (
+  const btnToUpdate = () => (
     <React.Fragment>
       <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
         SEND.startDt = DATE.startDt;
@@ -69,7 +69,7 @@ export const ButtonNode = ({
       </Button>
     </React.Fragment>
   );
-  const buttonList = () => (
+  const btnToList = () => (
     <React.Fragment>
       <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
         SEND.startDt = DATE.startDt;
@@ -82,7 +82,7 @@ export const ButtonNode = ({
       </Button>
     </React.Fragment>
   );
-  const buttonSearch = () => (
+  const btnToSearch = () => (
     <React.Fragment>
       <Button size={"sm"} className={"secondary-btn"} type={"button"} onClick={() => {
         SEND.startDt = DATE.startDt;
@@ -100,45 +100,29 @@ export const ButtonNode = ({
   return (
     <React.Fragment>
       <div className={"btn-wrapper d-inline-flex"}>
-        {part === "food" && type === "list" ? (
+        {type === "list" ? (
           <React.Fragment>
-            {buttonCalendar()}
-            {buttonToday()}
+            {btnOpenCalendar()}
+            {btnGetToday()}
           </React.Fragment>
-        ) : part === "food" && type === "detail" ? (
+        ) : type === "detail" ? (
           <React.Fragment>
-            {buttonUpdate()}
-            {buttonList()}
+            {btnToUpdate()}
+            {btnToList()}
           </React.Fragment>
-        ) : part === "food" && type === "save" ? (
+        ) : type === "save" ? (
           <React.Fragment>
-            {buttonSave()}
-            {buttonSearch()}
+            {btnToSave()}
+            {btnToList()}
           </React.Fragment>
-        ) : part === "food" && type === "list" ? (
+        ) : type === "search" ? (
           <React.Fragment>
-            {buttonCalendar()}
-            {buttonToday()}
+            {btnToSave()}
+            {btnToSearch()}
           </React.Fragment>
-        ) : part !== "food" && type === "list" ? (
+        ) : type === "dataset" ? (
           <React.Fragment>
-            {buttonCalendar()}
-            {buttonToday()}
-          </React.Fragment>
-        ) : part !== "food" && type === "detail" ? (
-          <React.Fragment>
-            {buttonUpdate()}
-            {buttonList()}
-          </React.Fragment>
-        ) : part !== "food" && type === "save" ? (
-          <React.Fragment>
-            {buttonSave()}
-            {buttonList()}
-          </React.Fragment>
-        ) : part !== "food" && type === "list" ? (
-          <React.Fragment>
-            {buttonCalendar()}
-            {buttonToday()}
+            {btnToSave()}
           </React.Fragment>
         ) : null}
       </div>

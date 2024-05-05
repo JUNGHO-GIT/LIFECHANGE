@@ -18,7 +18,7 @@ export const percent = async (
     const startDt = plan.exercise_plan_startDt;
     const endDt = plan.exercise_plan_endDt;
 
-    const listReal = await repository.percent.listExerciseReal(
+    const listReal = await repository.percent.listExercise(
       user_id_param, startDt, endDt
     );
 
@@ -51,7 +51,7 @@ export const percent = async (
     const startDt = plan.food_plan_startDt;
     const endDt = plan.food_plan_endDt;
 
-    const listReal = await repository.percent.listFoodReal(
+    const listReal = await repository.percent.listFood(
       user_id_param, startDt, endDt
     );
 
@@ -84,7 +84,7 @@ export const percent = async (
     const startDt = plan.money_plan_startDt;
     const endDt = plan.money_plan_endDt;
 
-    const listReal = await repository.percent.listMoneyReal(
+    const listReal = await repository.percent.listMoney(
       user_id_param, startDt, endDt
     );
 
@@ -109,7 +109,7 @@ export const percent = async (
     const startDt = plan.sleep_plan_startDt;
     const endDt = plan.sleep_plan_endDt;
 
-    const listReal = await repository.percent.listSleepReal(
+    const listReal = await repository.percent.listSleep(
       user_id_param, startDt, endDt
     );
 
@@ -130,14 +130,16 @@ export const percent = async (
     };
   }));
 
-  return {
-    exercisePlan: listExercisePlan[0] || {},
-    exercise: listExerciseReal[0] || {},
-    foodPlan: listFoodPlan[0] || {},
-    food: listFoodReal[0] || {},
-    moneyPlan: listMoneyPlan[0] || {},
-    money: listMoneyReal[0] || {},
-    sleepPlan: listSleepPlan[0] || {},
-    sleep: listSleepReal[0] || {},
+  const finalResult = {
+    exercisePlan: listExercisePlan[0],
+    exercise: listExerciseReal[0],
+    foodPlan: listFoodPlan[0],
+    food: listFoodReal[0],
+    moneyPlan: listMoneyPlan[0],
+    money: listMoneyReal[0],
+    sleepPlan: listSleepPlan[0],
+    sleep: listSleepReal[0],
   };
+
+  return finalResult;
 };

@@ -41,10 +41,10 @@ export const MoneyPlanDetail = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [CALENDAR, setCALENDAR] = useState({
-    calStartOpen: false,
-    calEndOpen: false,
-    calOpen: false,
+  const [DAYPICKER, setDAYPICKER] = useState({
+    dayStartOpen: false,
+    dayEndOpen: false,
+    dayOpen: false,
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -153,7 +153,7 @@ export const MoneyPlanDetail = () => {
 
   // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
-    <ButtonNode CALENDAR={CALENDAR} setCALENDAR={setCALENDAR} DATE={DATE} setDATE={setDATE}
+    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam} part={"money"} plan={"plan"} type={"detail"}
     />
@@ -178,7 +178,7 @@ export const MoneyPlanDetail = () => {
           <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : buttonNode()}
+                {buttonNode()}
               </Col>
             </Row>
           </Container>

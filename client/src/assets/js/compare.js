@@ -7,7 +7,21 @@ export const compare = (
   plan, real, part, extra
 ) => {
 
-  // 1. food
+  // 1. exercise
+  const exerciseCompare = (plan, real, extra) => {
+    const abs = Math.abs(plan - real);
+    if (real < plan) {
+      return (<span className={"text-danger"}>{abs}</span>);
+    }
+    else if (real === plan) {
+      return (<span className={"text-primary"}>{abs}</span>);
+    }
+    else if (real > plan) {
+      return (<span className={"text-success"}>{abs}</span>);
+    }
+  }
+
+  // 2. food
   const foodCompare = (plan, real, extra) => {
     const abs = Math.abs(plan - real);
     if (real < plan) {
@@ -21,7 +35,7 @@ export const compare = (
     }
   }
 
-  // 2. money
+  // 3. money
   const moneyCompare = (plan, real, extra) => {
     const abs = Math.abs(plan - real);
     // 1. 수입 항목인 경우
@@ -50,7 +64,7 @@ export const compare = (
     }
   }
 
-  // 3. sleep
+  // 4. sleep
   const sleepCompare = (plan, real, extra) => {
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
@@ -89,21 +103,10 @@ export const compare = (
     }
   }
 
-  // 4. exercise
-  const exerciseCompare = (plan, real, extra) => {
-    const abs = Math.abs(plan - real);
-    if (real < plan) {
-      return (<span className={"text-danger"}>{abs}</span>);
-    }
-    else if (real === plan) {
-      return (<span className={"text-primary"}>{abs}</span>);
-    }
-    else if (real > plan) {
-      return (<span className={"text-success"}>{abs}</span>);
-    }
+  if (part === "exercise") {
+    return exerciseCompare(plan, real, extra);
   }
-
-  if (part === "food") {
+  else if (part === "food") {
     return foodCompare(plan, real, extra);
   }
   else if (part === "money") {
@@ -111,9 +114,6 @@ export const compare = (
   }
   else if (part === "sleep") {
     return sleepCompare(plan, real, extra);
-  }
-  else if (part === "exercise") {
-    return exerciseCompare(plan, real, extra);
   }
 
 };

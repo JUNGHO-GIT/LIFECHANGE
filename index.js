@@ -52,7 +52,7 @@ const customLogger = (collectionName, method, query, doc) => {
 
 // ------------------------------------------------------------------------------------------------>
 mongoose.connect(`mongodb://${id}:${pw}@${host}:${port}/${db}`);
-mongoose.set("debug", customLogger);
+// mongoose.set("debug", customLogger);
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

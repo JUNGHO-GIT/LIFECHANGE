@@ -8,6 +8,7 @@ import {useDate} from "../../hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {DateNode} from "../../fragments/DateNode.jsx";
+import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Button, Col, Row, Container, Card} from "react-bootstrap";
 
@@ -42,10 +43,10 @@ export const CalendarDetail = () => {
     totalCnt: 0,
     sectionCnt: 0
   });
-  const [CALENDAR, setCALENDAR] = useState({
-    calStartOpen: false,
-    calEndOpen: false,
-    calOpen: false
+  const [DAYPICKER, setDAYPICKER] = useState({
+    dayStartOpen: false,
+    dayEndOpen: false,
+    dayOpen: false
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -340,27 +341,17 @@ export const CalendarDetail = () => {
 
   // 7. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
-    <DateNode DATE={DATE} setDATE={setDATE} CALENDAR={CALENDAR} setCALENDAR={setCALENDAR}
+    <DateNode DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       part={"calendar"} plan={""} type={"detail"}
     />
   );
 
   // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
-    <React.Fragment>
-      <div className={"btn-wrapper d-inline-flex"}>
-        <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
-          flowSave();
-        }}>
-          저장
-        </Button>
-        <Button size={"sm"} className={"danger-btn"} type={"button"} onClick={() => {
-          flowDelete(OBJECT._id);
-        }}>
-          삭제
-        </Button>
-      </div>
-    </React.Fragment>
+    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={flowSave} navParam={navParam} part={"calendar"} plan={""} type={"save"}
+    />
   );
 
   // 12. return ----------------------------------------------------------------------------------->
@@ -371,7 +362,7 @@ export const CalendarDetail = () => {
           <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : dateNode()}
+                {dateNode()}
               </Col>
             </Row>
           </Container>
@@ -393,7 +384,7 @@ export const CalendarDetail = () => {
           <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {LOADING ? "" : buttonNode()}
+                {buttonNode()}
               </Col>
             </Row>
           </Container>
