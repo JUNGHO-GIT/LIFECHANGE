@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
@@ -25,40 +24,47 @@ export const ExerciseDashAvg = () => {
   const [LINE, setLINE] = useState("volume");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_VOLUME_MONTH_DEFAULT = [
+  const OBJECT_VOLUME_MONTH_DEF = [
     {name:"", 볼륨: 0},
   ];
-  const OBJECT_CARDIO_MONTH_DEFAULT = [
+  const OBJECT_CARDIO_MONTH_DEF = [
     {name:"", 시간: 0},
   ];
-  const OBJECT_VOLUME_YEAR_DEFAULT = [
+  const OBJECT_VOLUME_YEAR_DEF = [
     {name:"", 볼륨: 0},
   ];
-  const OBJECT_CARDIO_YEAR_DEFAULT = [
+  const OBJECT_CARDIO_YEAR_DEF = [
     {name:"", 시간: 0},
   ];
-  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState(OBJECT_VOLUME_MONTH_DEFAULT);
-  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState(OBJECT_CARDIO_MONTH_DEFAULT);
-  const [OBJECT_VOLUME_YEAR, setOBJECT_VOLUME_YEAR] = useState(OBJECT_VOLUME_YEAR_DEFAULT);
-  const [OBJECT_CARDIO_YEAR, setOBJECT_CARDIO_YEAR] = useState(OBJECT_CARDIO_YEAR_DEFAULT);
+  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState(OBJECT_VOLUME_MONTH_DEF);
+  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState(OBJECT_CARDIO_MONTH_DEF);
+  const [OBJECT_VOLUME_YEAR, setOBJECT_VOLUME_YEAR] = useState(OBJECT_VOLUME_YEAR_DEF);
+  const [OBJECT_CARDIO_YEAR, setOBJECT_CARDIO_YEAR] = useState(OBJECT_CARDIO_YEAR_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_VOLUME_MONTH(responseMonth.data.result.volume || OBJECT_VOLUME_MONTH_DEFAULT);
-    setOBJECT_CARDIO_MONTH(responseMonth.data.result.cardio || OBJECT_CARDIO_MONTH_DEFAULT);
-
-    const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
+    const resYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_VOLUME_YEAR(responseYear.data.result.volume || OBJECT_VOLUME_YEAR_DEFAULT);
-    setOBJECT_CARDIO_YEAR(responseYear.data.result.cardio || OBJECT_CARDIO_YEAR_DEFAULT);
+    setOBJECT_VOLUME_MONTH(
+      resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : OBJECT_VOLUME_MONTH_DEF
+    );
+    setOBJECT_CARDIO_MONTH(
+      resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : OBJECT_CARDIO_MONTH_DEF
+    );
+    setOBJECT_VOLUME_YEAR(
+      resYear.data.result.volume.length > 0 ? resYear.data.result.volume : OBJECT_VOLUME_YEAR_DEF
+    );
+    setOBJECT_CARDIO_YEAR(
+      resYear.data.result.cardio.length > 0 ? resYear.data.result.cardio : OBJECT_CARDIO_YEAR_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

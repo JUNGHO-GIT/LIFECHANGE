@@ -3,7 +3,6 @@
 import axios from "axios";
 import {ComposedChart, Bar} from "recharts";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -16,7 +15,6 @@ export const MoneyDashAvg = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["수입", "지출"];
 
@@ -26,40 +24,47 @@ export const MoneyDashAvg = () => {
   const [LINE, setLINE] = useState("in");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_IN_MONTH_DEFAULT = [
+  const OBJECT_IN_MONTH_DEF = [
     {name:"", 수입: 0},
   ];
-  const OBJECT_OUT_MONTH_DEFAULT = [
+  const OBJECT_OUT_MONTH_DEF = [
     {name:"", 지출: 0},
   ];
-  const OBJECT_IN_YEAR_DEFAULT = [
+  const OBJECT_IN_YEAR_DEF = [
     {name:"", 수입: 0},
   ];
-  const OBJECT_OUT_YEAR_DEFAULT = [
+  const OBJECT_OUT_YEAR_DEF = [
     {name:"", 지출: 0},
   ];
-  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEFAULT);
-  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEFAULT);
-  const [OBJECT_IN_YEAR, setOBJECT_IN_YEAR] = useState(OBJECT_IN_YEAR_DEFAULT);
-  const [OBJECT_OUT_YEAR, setOBJECT_OUT_YEAR] = useState(OBJECT_OUT_YEAR_DEFAULT);
+  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEF);
+  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEF);
+  const [OBJECT_IN_YEAR, setOBJECT_IN_YEAR] = useState(OBJECT_IN_YEAR_DEF);
+  const [OBJECT_OUT_YEAR, setOBJECT_OUT_YEAR] = useState(OBJECT_OUT_YEAR_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_IN_MONTH(responseMonth.data.result.in || OBJECT_IN_MONTH_DEFAULT);
-    setOBJECT_OUT_MONTH(responseMonth.data.result.out || OBJECT_OUT_MONTH_DEFAULT);
-
-    const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
+    const resYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_IN_YEAR(responseYear.data.result.in || OBJECT_IN_YEAR_DEFAULT);
-    setOBJECT_OUT_YEAR(responseYear.data.result.out || OBJECT_OUT_YEAR_DEFAULT);
+    setOBJECT_IN_MONTH(
+      resMonth.data.result.in.length > 0 ? resMonth.data.result.in : OBJECT_IN_MONTH_DEF
+    );
+    setOBJECT_OUT_MONTH(
+      resMonth.data.result.out.length > 0 ? resMonth.data.result.out : OBJECT_OUT_MONTH_DEF
+    );
+    setOBJECT_IN_YEAR(
+      resYear.data.result.in.length > 0 ? resYear.data.result.in : OBJECT_IN_YEAR_DEF
+    );
+    setOBJECT_OUT_YEAR(
+      resYear.data.result.out.length > 0 ? resYear.data.result.out : OBJECT_OUT_YEAR_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

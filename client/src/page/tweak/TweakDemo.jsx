@@ -33,7 +33,7 @@ export const TweakDemo = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_EXERCISE_PLAN_DEFAULT = [{
+  const OBJECT_EXERCISE_PLAN_DEF = [{
     exercise_plan_startDt: "0000-00-00",
     exercise_plan_endDt: "0000-00-00",
     exercise_plan_count: 0,
@@ -41,7 +41,7 @@ export const TweakDemo = () => {
     exercise_plan_volume: 0,
     exercise_plan_weight: 0,
   }];
-  const OBJECT_EXERCISE_DEFAULT = [{
+  const OBJECT_EXERCISE_DEF = [{
     _id: "",
     exercise_number: 0,
     exercise_startDt: "0000-00-00",
@@ -62,7 +62,7 @@ export const TweakDemo = () => {
       exercise_cardio: "00:00",
     }],
   }];
-  const OBJECT_FOOD_PLAN_DEFAULT = [{
+  const OBJECT_FOOD_PLAN_DEF = [{
     food_plan_startDt: "0000-00-00",
     food_plan_endDt: "0000-00-00",
     food_plan_kcal: 0,
@@ -70,7 +70,7 @@ export const TweakDemo = () => {
     food_plan_protein: 0,
     food_plan_fat: 0,
   }];
-  const OBJECT_FOOD_DEFAULT = [{
+  const OBJECT_FOOD_DEF = [{
     _id: "",
     food_number: 0,
     food_startDt: "0000-00-00",
@@ -92,13 +92,13 @@ export const TweakDemo = () => {
       food_protein: 0,
     }],
   }];
-  const OBJECT_MONEY_PLAN_DEFAULT = [{
+  const OBJECT_MONEY_PLAN_DEF = [{
     money_plan_startDt: "0000-00-00",
     money_plan_endDt: "0000-00-00",
     money_plan_in: 0,
     money_plan_out: 0,
   }];
-  const OBJECT_MONEY_DEFAULT = [{
+  const OBJECT_MONEY_DEF = [{
     _id: "",
     money_number: 0,
     money_startDt: "0000-00-00",
@@ -115,14 +115,14 @@ export const TweakDemo = () => {
       money_content: "",
     }],
   }];
-  const OBJECT_SLEEP_PLAN_DEFAULT = [{
+  const OBJECT_SLEEP_PLAN_DEF = [{
     sleep_plan_startDt: "0000-00-00",
     sleep_plan_endDt: "0000-00-00",
     sleep_plan_night: "00:00",
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
   }];
-  const OBJECT_SLEEP_DEFAULT = [{
+  const OBJECT_SLEEP_DEF = [{
     _id: "",
     sleep_number: 0,
     sleep_startDt: "0000-00-00",
@@ -133,18 +133,18 @@ export const TweakDemo = () => {
       sleep_time: "00:00",
     }],
   }];
-  const [OBJECT_EXERCISE_PLAN, setOBJECT_EXERCISE_PLAN] = useState(OBJECT_EXERCISE_PLAN_DEFAULT);
-  const [OBJECT_FOOD_PLAN, setOBJECT_FOOD_PLAN] = useState(OBJECT_FOOD_PLAN_DEFAULT);
-  const [OBJECT_MONEY_PLAN, setOBJECT_MONEY_PLAN] = useState(OBJECT_MONEY_PLAN_DEFAULT);
-  const [OBJECT_SLEEP_PLAN, setOBJECT_SLEEP_PLAN] = useState(OBJECT_SLEEP_PLAN_DEFAULT);
-  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEFAULT);
-  const [OBJECT_FOOD, setOBJECT_FOOD] = useState(OBJECT_FOOD_DEFAULT);
-  const [OBJECT_MONEY, setOBJECT_MONEY] = useState(OBJECT_MONEY_DEFAULT);
-  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState(OBJECT_SLEEP_DEFAULT);
+  const [OBJECT_EXERCISE_PLAN, setOBJECT_EXERCISE_PLAN] = useState(OBJECT_EXERCISE_PLAN_DEF);
+  const [OBJECT_FOOD_PLAN, setOBJECT_FOOD_PLAN] = useState(OBJECT_FOOD_PLAN_DEF);
+  const [OBJECT_MONEY_PLAN, setOBJECT_MONEY_PLAN] = useState(OBJECT_MONEY_PLAN_DEF);
+  const [OBJECT_SLEEP_PLAN, setOBJECT_SLEEP_PLAN] = useState(OBJECT_SLEEP_PLAN_DEF);
+  const [OBJECT_EXERCISE, setOBJECT_EXERCISE] = useState(OBJECT_EXERCISE_DEF);
+  const [OBJECT_FOOD, setOBJECT_FOOD] = useState(OBJECT_FOOD_DEF);
+  const [OBJECT_MONEY, setOBJECT_MONEY] = useState(OBJECT_MONEY_DEF);
+  const [OBJECT_SLEEP, setOBJECT_SLEEP] = useState(OBJECT_SLEEP_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/list`, {
+    const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
         PAGING: PAGING,
@@ -152,46 +152,46 @@ export const TweakDemo = () => {
       }
     });
     if (TYPE === "exercisePlan") {
-      setOBJECT_EXERCISE_PLAN(response.data.result || OBJECT_EXERCISE_PLAN_DEFAULT);
+      setOBJECT_EXERCISE_PLAN(res.data.result || OBJECT_EXERCISE_PLAN_DEF);
     }
     if (TYPE === "exercise") {
-      setOBJECT_EXERCISE(response.data.result || OBJECT_EXERCISE_DEFAULT);
+      setOBJECT_EXERCISE(res.data.result || OBJECT_EXERCISE_DEF);
     }
     if (TYPE === "foodPlan") {
-      setOBJECT_FOOD_PLAN(response.data.result || OBJECT_FOOD_PLAN_DEFAULT);
+      setOBJECT_FOOD_PLAN(res.data.result || OBJECT_FOOD_PLAN_DEF);
     }
     if (TYPE === "food") {
-      setOBJECT_FOOD(response.data.result || OBJECT_FOOD_DEFAULT);
+      setOBJECT_FOOD(res.data.result || OBJECT_FOOD_DEF);
     }
     if (TYPE === "moneyPlan") {
-      setOBJECT_MONEY_PLAN(response.data.result || OBJECT_MONEY_PLAN_DEFAULT);
+      setOBJECT_MONEY_PLAN(res.data.result || OBJECT_MONEY_PLAN_DEF);
     }
     if (TYPE === "money") {
-      setOBJECT_MONEY(response.data.result || OBJECT_MONEY_DEFAULT);
+      setOBJECT_MONEY(res.data.result || OBJECT_MONEY_DEF);
     }
     if (TYPE === "sleepPlan") {
-      setOBJECT_SLEEP_PLAN(response.data.result || OBJECT_SLEEP_PLAN_DEFAULT);
+      setOBJECT_SLEEP_PLAN(res.data.result || OBJECT_SLEEP_PLAN_DEF);
     }
     if (TYPE === "sleep") {
-      setOBJECT_SLEEP(response.data.result || OBJECT_SLEEP_DEFAULT);
+      setOBJECT_SLEEP(res.data.result || OBJECT_SLEEP_DEF);
     }
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [user_id, PAGING, TYPE]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowAdd = async (type_param) => {
-    const response = await axios.post(`${URL_OBJECT}/add`, {
+    const res = await axios.post(`${URL_OBJECT}/add`, {
       user_id: user_id,
       TYPE: type_param,
       count: COUNT?.inputCnt
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       setCOUNT((prev) => ({
         ...prev,
         [`${type_param}Cnt`]: prev[`${type_param}Cnt`] + 1
@@ -206,14 +206,14 @@ export const TweakDemo = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (type_param) => {
-    const response = await axios.delete(`${URL_OBJECT}/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         user_id: user_id,
         TYPE: type_param
       }
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       setCOUNT((prev) => ({
         ...prev,
         [`${type_param}Cnt`]: 0

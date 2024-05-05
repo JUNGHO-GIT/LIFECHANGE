@@ -27,26 +27,26 @@ export const UserSignup = () => {
       alert("Please enter both Id and Pw");
       return;
     }
-    const response = await axios.post (`${URL_OBJECT}/signup`, {
+    const res = await axios.post (`${URL_OBJECT}/signup`, {
       user_id: user_id,
       user_pw: user_pw,
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       navParam("/user/login");
     }
-    else if (response.data.status === "duplicated") {
-      alert(response.data.msg);
+    else if (res.data.status === "duplicated") {
+      alert(res.data.msg);
       setUserId("");
       setUserPw("");
     }
-    else if (response.data.status === "fail") {
-      alert(response.data.msg);
+    else if (res.data.status === "fail") {
+      alert(res.data.msg);
       setUserId("");
       setUserPw("");
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
     }
   };
 

@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Scatter, ComposedChart} from "recharts";
@@ -16,48 +15,51 @@ export const ExerciseDashScatter = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
-  const OBJECT_TODAY_DEFAULT = [
+  const OBJECT_TODAY_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const OBJECT_WEEK_DEFAULT = [
+  const OBJECT_WEEK_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const OBJECT_MONTH_DEFAULT = [
+  const OBJECT_MONTH_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEFAULT);
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEFAULT);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEFAULT);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseToday = await axios.get(`${URL_OBJECT}/dash/scatter/today`, {
+    const resToday = await axios.get(`${URL_OBJECT}/dash/scatter/today`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_TODAY(responseToday.data.result || OBJECT_TODAY_DEFAULT);
-
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/scatter/week`, {
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/scatter/week`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_WEEK(responseWeek.data.result || OBJECT_WEEK_DEFAULT);
-
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/scatter/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/scatter/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
+    setOBJECT_TODAY(
+      resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
+    );
+    setOBJECT_WEEK(
+      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
+    );
+    setOBJECT_MONTH(
+      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

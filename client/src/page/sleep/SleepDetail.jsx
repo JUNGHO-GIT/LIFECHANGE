@@ -55,7 +55,7 @@ export const SleepDetail = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = {
+  const OBJECT_DEF = {
     _id: "",
     sleep_number: 0,
     sleep_demo: false,
@@ -67,31 +67,31 @@ export const SleepDetail = () => {
       sleep_time: "00:00",
     }],
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: response.data.sectionCnt || 0
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id, section_id) => {
-    const response = await axios.delete(`${URL_OBJECT}/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         user_id: user_id,
         _id: id,
@@ -99,18 +99,18 @@ export const SleepDetail = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       percent();
-      if (Object.keys(response.data.result).length > 0) {
-        setOBJECT(response.data.result);
+      if (Object.keys(res.data.result).length > 0) {
+        setOBJECT(res.data.result);
       }
       else {
         navParam(SEND.toList);
       }
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
     }
   };
 

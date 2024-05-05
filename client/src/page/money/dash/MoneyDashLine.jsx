@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Line, LineChart} from "recharts";
@@ -25,40 +24,47 @@ export const MoneyDashLine = () => {
   const [LINE, setLINE] = useState("in");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_IN_WEEK_DEFAULT = [
+  const OBJECT_IN_WEEK_DEF = [
     {name:"", 수입: 0},
   ];
-  const OBJECT_OUT_WEEK_DEFAULT = [
+  const OBJECT_OUT_WEEK_DEF = [
     {name:"", 지출: 0},
   ];
-  const OBJECT_IN_MONTH_DEFAULT = [
+  const OBJECT_IN_MONTH_DEF = [
     {name:"", 수입: 0},
   ];
-  const OBJECT_OUT_MONTH_DEFAULT = [
+  const OBJECT_OUT_MONTH_DEF = [
     {name:"", 지출: 0},
   ];
-  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState(OBJECT_IN_WEEK_DEFAULT);
-  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState(OBJECT_OUT_WEEK_DEFAULT);
-  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEFAULT);
-  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEFAULT);
+  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState(OBJECT_IN_WEEK_DEF);
+  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState(OBJECT_OUT_WEEK_DEF);
+  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEF);
+  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_IN_WEEK(responseWeek.data.result.in || OBJECT_IN_WEEK_DEFAULT);
-    setOBJECT_OUT_WEEK(responseWeek.data.result.out || OBJECT_OUT_WEEK_DEFAULT);
-
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_IN_MONTH(responseMonth.data.result.in || OBJECT_IN_MONTH_DEFAULT);
-    setOBJECT_OUT_MONTH(responseMonth.data.result.out || OBJECT_OUT_MONTH_DEFAULT);
+    setOBJECT_IN_WEEK(
+      resWeek.data.result.in.length > 0 ? resWeek.data.result.in : OBJECT_IN_WEEK_DEF
+    );
+    setOBJECT_OUT_WEEK(
+      resWeek.data.result.out.length > 0 ? resWeek.data.result.out : OBJECT_OUT_WEEK_DEF
+    );
+    setOBJECT_IN_MONTH(
+      resMonth.data.result.in.length > 0 ? resMonth.data.result.in : OBJECT_IN_MONTH_DEF
+    );
+    setOBJECT_OUT_MONTH(
+      resMonth.data.result.out.length > 0 ? resMonth.data.result.out : OBJECT_OUT_MONTH_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

@@ -30,8 +30,8 @@ export const search = async (
           pg: page,
         },
       })
-      .then((response) => {
-        resolve(response.data);
+      .then((res) => {
+        resolve(res.data);
       })
       .catch((error) => {
         reject(error);

@@ -76,7 +76,7 @@ export const pieToday = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_val": "수입"
+        "money_section.money_part_idx": 1
       }},
       {$group: {
         _id: "$money_section.money_title_val",
@@ -108,7 +108,7 @@ export const pieToday = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_val": "지출"
+        "money_section.money_part_part_idx": 2
       }},
       {$group: {
         _id: "$money_section.money_title_val",
@@ -143,7 +143,7 @@ export const pieWeek = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_val": "수입"
+        "money_section.money_part_idx": 1
       }},
       {$group: {
         _id: "$money_section.money_title_val",
@@ -175,7 +175,7 @@ export const pieWeek = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_val": "지출"
+        "money_section.money_part_idx": 2
       }},
       {$group: {
         _id: "$money_section.money_title_val",
@@ -210,7 +210,7 @@ export const pieMonth = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_val": "수입"
+        "money_section.money_part_idx": 1
       }},
       {$group: {
         _id: "$money_section.money_title_val",
@@ -242,7 +242,7 @@ export const pieMonth = {
       {$unwind: "$money_section"
       },
       {$match: {
-        "money_section.money_part_val": "지출"
+        "money_section.money_part_part_idx": 2
       }},
       {$group: {
         _id: "$money_section.money_title_val",
@@ -363,7 +363,7 @@ export const lineMonth = {
   }
 };
 
-// 4-1. dash (avg - month) ------------------------------------------------------------------------->
+// 4-1. dash (avg - month) ------------------------------------------------------------------------>
 export const avgMonth = {
   listIn: async (
     user_id_param, startDt_param, endDt_param

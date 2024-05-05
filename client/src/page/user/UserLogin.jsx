@@ -27,19 +27,19 @@ export const UserLogin = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowUserLogin = async () => {
-    const response = await axios.post (`${URL_OBJECT}/login`, {
+    const res = await axios.post (`${URL_OBJECT}/login`, {
       user_id: user_id,
       user_pw: user_pw,
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       sessionStorage.setItem("user_id", user_id);
-      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
+      sessionStorage.setItem("dataset", JSON.stringify(res.data.result.user_dataset));
       percent();
       navParam("/calendar/list");
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
       sessionStorage.setItem("user_id", "false");
     }
   };

@@ -81,7 +81,7 @@ export const FoodSearch = () => {
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSearch = async () => {
     setLOADING(true);
-    const response = await axios.get(`${URL_OBJECT}/search`, {
+    const res = await axios.get(`${URL_OBJECT}/search`, {
       params: {
         user_id: user_id,
         FILTER: FILTER
@@ -89,11 +89,11 @@ export const FoodSearch = () => {
     });
     setOBJECT((prev) => ({
       ...prev,
-      food_section: response.data.result
+      food_section: res.data.result
     }));
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt ? response.data.totalCnt : 0,
+      totalCnt: res.data.totalCnt ? res.data.totalCnt : 0,
     }));
     setLOADING(false);
   };

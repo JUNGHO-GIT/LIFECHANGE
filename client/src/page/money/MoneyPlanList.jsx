@@ -68,7 +68,7 @@ export const MoneyPlanList = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = [{
+  const OBJECT_DEF = [{
     money_startDt: "0000-00-00",
     money_endDt: "0000-00-00",
     money_total_in: 0,
@@ -82,11 +82,11 @@ export const MoneyPlanList = () => {
     money_diff_in_color: "",
     money_diff_out_color: "",
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/plan/list`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -94,11 +94,11 @@ export const MoneyPlanList = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0,
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [

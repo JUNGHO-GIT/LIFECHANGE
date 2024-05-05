@@ -24,30 +24,33 @@ export const SleepDashAvg = () => {
   const [PART, setPART] = useState(array);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_MONTH_DEFAULT = [
+  const OBJECT_MONTH_DEF = [
     {name:"", 취침: 0, 기상: 0, 수면: 0}
   ];
-  const OBJECT_YEAR_DEFAULT = [
+  const OBJECT_YEAR_DEF = [
     {name:"", 취침: 0, 기상: 0, 수면: 0}
   ];
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEFAULT);
-  const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEFAULT);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
+  const [OBJECT_YEAR, setOBJECT_YEAR] = useState(OBJECT_YEAR_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
-
-    const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
+    const resYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_YEAR(responseYear.data.result || OBJECT_YEAR_DEFAULT);
+    setOBJECT_MONTH(
+      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+    );
+    setOBJECT_YEAR(
+      resYear.data.result.length > 0 ? resYear.data.result : OBJECT_YEAR_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

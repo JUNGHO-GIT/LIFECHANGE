@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
@@ -23,22 +22,22 @@ export const ExerciseDashPie = () => {
   const [radius, setRadius] = useState(120);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_PART_WEEK_DEFAULT = [
-    {name:"", value: 100},
+  const OBJECT_PART_WEEK_DEF = [
+    {name:"Empty", value: 100},
   ];
-  const OBJECT_TITLE_WEEK_DEFAULT = [
-    {name:"", value: 100},
+  const OBJECT_TITLE_WEEK_DEF = [
+    {name:"Empty", value: 100},
   ];
-  const OBJECT_PART_MONTH_DEFAULT = [
-    {name:"", value: 100},
+  const OBJECT_PART_MONTH_DEF = [
+    {name:"Empty", value: 100},
   ];
-  const OBJECT_TITLE_MONTH_DEFAULT = [
-    {name:"", value: 100},
+  const OBJECT_TITLE_MONTH_DEF = [
+    {name:"Empty", value: 100},
   ];
-  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState(OBJECT_PART_WEEK_DEFAULT);
-  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState(OBJECT_TITLE_WEEK_DEFAULT);
-  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState(OBJECT_PART_MONTH_DEFAULT);
-  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState(OBJECT_TITLE_MONTH_DEFAULT);
+  const [OBJECT_PART_WEEK, setOBJECT_PART_WEEK] = useState(OBJECT_PART_WEEK_DEF);
+  const [OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK] = useState(OBJECT_TITLE_WEEK_DEF);
+  const [OBJECT_PART_MONTH, setOBJECT_PART_MONTH] = useState(OBJECT_PART_MONTH_DEF);
+  const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState(OBJECT_TITLE_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -71,21 +70,28 @@ export const ExerciseDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_PART_WEEK(responseWeek.data.result.part || OBJECT_PART_WEEK_DEFAULT);
-    setOBJECT_TITLE_WEEK(responseWeek.data.result.title || OBJECT_TITLE_WEEK_DEFAULT);
-
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_PART_MONTH(responseMonth.data.result.part || OBJECT_PART_MONTH_DEFAULT);
-    setOBJECT_TITLE_MONTH(responseMonth.data.result.title || OBJECT_TITLE_MONTH_DEFAULT);
+    setOBJECT_PART_WEEK(
+      resWeek.data.result.part.length > 0 ? resWeek.data.result.part : OBJECT_PART_WEEK_DEF
+    );
+    setOBJECT_TITLE_WEEK(
+      resWeek.data.result.title.length > 0 ? resWeek.data.result.title : OBJECT_TITLE_WEEK_DEF
+    );
+    setOBJECT_PART_MONTH(
+      resMonth.data.result.part.length > 0 ? resMonth.data.result.part : OBJECT_PART_MONTH_DEF
+    );
+    setOBJECT_TITLE_MONTH(
+      resMonth.data.result.title.length > 0 ? resMonth.data.result.title : OBJECT_TITLE_MONTH_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

@@ -68,7 +68,7 @@ export const ExercisePlanList = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = [{
+  const OBJECT_DEF = [{
     exercise_startDt: "0000-00-00",
     exercise_endDt: "0000-00-00",
     exercise_total_count: 0,
@@ -90,11 +90,11 @@ export const ExercisePlanList = () => {
     exercise_diff_volume_color: "",
     exercise_diff_weight_color: "",
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/plan/list`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -102,11 +102,11 @@ export const ExercisePlanList = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0,
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [

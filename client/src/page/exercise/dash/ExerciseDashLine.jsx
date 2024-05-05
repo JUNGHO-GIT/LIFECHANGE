@@ -24,40 +24,47 @@ export const ExerciseDashLine = () => {
   const [LINE, setLINE] = useState("volume");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_VOLUME_WEEK_DEFAULT = [
+  const OBJECT_VOLUME_WEEK_DEF = [
     {name:"", 볼륨: 0},
   ];
-  const OBJECT_CARDIO_WEEK_DEFAULT = [
+  const OBJECT_CARDIO_WEEK_DEF = [
     {name:"", 시간: 0},
   ];
-  const OBJECT_VOLUME_MONTH_DEFAULT = [
+  const OBJECT_VOLUME_MONTH_DEF = [
     {name:"", 볼륨: 0},
   ];
-  const OBJECT_CARDIO_MONTH_DEFAULT = [
+  const OBJECT_CARDIO_MONTH_DEF = [
     {name:"", 시간: 0},
   ];
-  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState(OBJECT_VOLUME_WEEK_DEFAULT);
-  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState(OBJECT_CARDIO_WEEK_DEFAULT);
-  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState(OBJECT_VOLUME_MONTH_DEFAULT);
-  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState(OBJECT_CARDIO_MONTH_DEFAULT);
+  const [OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK] = useState(OBJECT_VOLUME_WEEK_DEF);
+  const [OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK] = useState(OBJECT_CARDIO_WEEK_DEF);
+  const [OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH] = useState(OBJECT_VOLUME_MONTH_DEF);
+  const [OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH] = useState(OBJECT_CARDIO_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_VOLUME_WEEK(responseWeek.data.result.volume || OBJECT_VOLUME_WEEK_DEFAULT);
-    setOBJECT_CARDIO_WEEK(responseWeek.data.result.cardio || OBJECT_CARDIO_WEEK_DEFAULT);
-
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_VOLUME_MONTH(responseMonth.data.result.volume || OBJECT_VOLUME_MONTH_DEFAULT);
-    setOBJECT_CARDIO_MONTH(responseMonth.data.result.cardio || OBJECT_CARDIO_MONTH_DEFAULT);
+    setOBJECT_VOLUME_WEEK(
+      resWeek.data.result.volume.length > 0 ? resWeek.data.result.volume : OBJECT_VOLUME_WEEK_DEF
+    );
+    setOBJECT_CARDIO_WEEK(
+      resWeek.data.result.cardio.length > 0 ? resWeek.data.result.cardio : OBJECT_CARDIO_WEEK_DEF
+    );
+    setOBJECT_VOLUME_MONTH(
+      resMonth.data.result.volume.length > 0 ? resMonth.data.result.volume : OBJECT_VOLUME_MONTH_DEF
+    );
+    setOBJECT_CARDIO_MONTH(
+      resMonth.data.result.cardio.length > 0 ? resMonth.data.result.cardio : OBJECT_CARDIO_MONTH_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

@@ -54,7 +54,7 @@ export const SleepPlanDetail = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = {
+  const OBJECT_DEF = {
     _id: "",
     sleep_plan_number: 0,
     sleep_plan_demo: false,
@@ -64,46 +64,46 @@ export const SleepPlanDetail = () => {
     sleep_plan_morning: "00:00",
     sleep_plan_time: "00:00",
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0,
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_OBJECT}/plan/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/plan/delete`, {
       params: {
         user_id: user_id,
         _id: id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       percent();
-      setOBJECT(response.data.result);
+      setOBJECT(res.data.result);
       navParam(SEND.toList);
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
     }
   };
 

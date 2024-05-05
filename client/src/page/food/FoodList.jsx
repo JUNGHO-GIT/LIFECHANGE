@@ -68,7 +68,7 @@ export const FoodList = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = [{
+  const OBJECT_DEF = [{
     _id: "",
     food_number: 0,
     food_demo: false,
@@ -91,11 +91,11 @@ export const FoodList = () => {
       food_protein: 0,
     }],
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/list`, {
+    const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
         FILTER: FILTER,
@@ -103,11 +103,11 @@ export const FoodList = () => {
         duration: `${DATE.startDt} ~ ${DATE.endDt}`
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0,
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [

@@ -55,7 +55,7 @@ export const FoodPlanSave = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = {
+  const OBJECT_DEF = {
     _id: "",
     food_plan_number: 0,
     food_plan_demo: false,
@@ -66,38 +66,38 @@ export const FoodPlanSave = () => {
     food_plan_protein: 0,
     food_plan_fat: 0,
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/plan/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
         user_id: user_id,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0,
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/plan/save`, {
+    const res = await axios.post(`${URL_OBJECT}/plan/save`, {
       user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
@@ -106,7 +106,7 @@ export const FoodPlanSave = () => {
       });
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
     }
   };
 

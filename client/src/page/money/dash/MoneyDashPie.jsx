@@ -14,7 +14,6 @@ export const MoneyDashPie = () => {
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
-  const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
@@ -23,30 +22,30 @@ export const MoneyDashPie = () => {
   const [radius, setRadius] = useState(120);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_IN_TODAY_DEFAULT = [
-    {name:"", value: 100}
+  const OBJECT_IN_TODAY_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const OBJECT_OUT_TODAY_DEFAULT = [
-    {name:"", value: 100}
+  const OBJECT_OUT_TODAY_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const OBJECT_IN_WEEK_DEFAULT = [
-    {name:"", value: 100}
+  const OBJECT_IN_WEEK_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const OBJECT_OUT_WEEK_DEFAULT = [
-    {name:"", value: 100}
+  const OBJECT_OUT_WEEK_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const OBJECT_IN_MONTH_DEFAULT = [
-    {name:"", value: 100}
+  const OBJECT_IN_MONTH_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const OBJECT_OUT_MONTH_DEFAULT = [
-    {name:"", value: 100}
+  const OBJECT_OUT_MONTH_DEF = [
+    {name:"Empty", value: 100}
   ];
-  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEFAULT);
-  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEFAULT);
-  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState(OBJECT_IN_WEEK_DEFAULT);
-  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState(OBJECT_OUT_WEEK_DEFAULT);
-  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEFAULT);
-  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEFAULT);
+  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEF);
+  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEF);
+  const [OBJECT_IN_WEEK, setOBJECT_IN_WEEK] = useState(OBJECT_IN_WEEK_DEF);
+  const [OBJECT_OUT_WEEK, setOBJECT_OUT_WEEK] = useState(OBJECT_OUT_WEEK_DEF);
+  const [OBJECT_IN_MONTH, setOBJECT_IN_MONTH] = useState(OBJECT_IN_MONTH_DEF);
+  const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -79,29 +78,40 @@ export const MoneyDashPie = () => {
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
+    const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_IN_TODAY(responseToday.data.result.in || OBJECT_IN_TODAY_DEFAULT);
-    setOBJECT_OUT_TODAY(responseToday.data.result.out || OBJECT_OUT_TODAY_DEFAULT);
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
+      params: {
+        user_id: user_id
+      },
+    });
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
+      params: {
+        user_id: user_id
+      },
+    });
+    setOBJECT_IN_TODAY(
+      resToday.data.result.in.length > 0 ? resToday.data.result.in : OBJECT_IN_TODAY_DEF
+    );
+    setOBJECT_OUT_TODAY(
+      resToday.data.result.out.length > 0 ? resToday.data.result.out : OBJECT_OUT_TODAY_DEF
+    );
+    setOBJECT_IN_WEEK(
+      resWeek.data.result.in.length > 0 ? resWeek.data.result.in : OBJECT_IN_WEEK_DEF
+    );
+    setOBJECT_OUT_WEEK(
+      resWeek.data.result.out.length > 0 ? resWeek.data.result.out : OBJECT_OUT_WEEK_DEF
+    );
+    setOBJECT_IN_MONTH(
+      resMonth.data.result.in.length > 0 ? resMonth.data.result.in : OBJECT_IN_MONTH_DEF
+    );
+    setOBJECT_OUT_MONTH(
+      resMonth.data.result.out.length > 0 ? resMonth.data.result.out : OBJECT_OUT_MONTH_DEF
+    );
 
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setOBJECT_IN_WEEK(responseWeek.data.result.in || OBJECT_IN_WEEK_DEFAULT);
-    setOBJECT_OUT_WEEK(responseWeek.data.result.out || OBJECT_OUT_WEEK_DEFAULT);
-
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setOBJECT_IN_MONTH(responseMonth.data.result.in || OBJECT_IN_MONTH_DEFAULT);
-    setOBJECT_OUT_MONTH(responseMonth.data.result.out || OBJECT_OUT_MONTH_DEFAULT);
     setLOADING(false);
   })()}, [user_id]);
 

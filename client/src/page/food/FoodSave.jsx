@@ -59,7 +59,7 @@ export const FoodSave = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = {
+  const OBJECT_DEF = {
     _id: "",
     food_number: 0,
     food_demo: false,
@@ -82,8 +82,8 @@ export const FoodSave = () => {
       food_protein: 0,
     }],
   };
-  const [OBJECT_BEFORE, setOBJECT_BEFORE] = useState(OBJECT_DEFAULT);
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT_BEFORE, setOBJECT_BEFORE] = useState(OBJECT_DEF);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -98,7 +98,7 @@ export const FoodSave = () => {
     // 상세 데이터 가져오기
     setLOADING(true);
     const fetchDetail = async () => {
-      const response = await axios.get(`${URL_OBJECT}/detail`, {
+      const res = await axios.get(`${URL_OBJECT}/detail`, {
         params: {
           _id: "",
           user_id: user_id,
@@ -107,17 +107,17 @@ export const FoodSave = () => {
       });
 
       // 결과 있는경우 OBJECT 상태 업데이트
-      if (response.data.result !== null && !storageSection) {
+      if (res.data.result !== null && !storageSection) {
         setOBJECT((prev) => ({
           ...prev,
-          ...response.data.result,
+          ...res.data.result,
         }));
       }
 
       // 결과가 null or !null 이면서 스토리지 데이터가 있는 경우, OBJECT 상태 업데이트
       else if (
-        (response.data.result !== null && storageSection) ||
-        (response.data.result === null && storageSection)
+        (res.data.result !== null && storageSection) ||
+        (res.data.result === null && storageSection)
       ) {
         if (storageSection) {
           setOBJECT((prev) => {
@@ -146,13 +146,13 @@ export const FoodSave = () => {
 
       // 결과가 null 일 경우, OBJECT 상태를 명시적으로 초기화
       else {
-        setOBJECT(OBJECT_DEFAULT);
+        setOBJECT(OBJECT_DEF);
       }
 
       setCOUNT((prev) => ({
         ...prev,
-        totalCnt: response.data.totalCnt || 0,
-        sectionCnt: response.data.sectionCnt || 0
+        totalCnt: res.data.totalCnt || 0,
+        sectionCnt: res.data.sectionCnt || 0
       }));
     };
     fetchDetail();
@@ -190,13 +190,13 @@ export const FoodSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/save`, {
+    const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
@@ -205,7 +205,7 @@ export const FoodSave = () => {
       });
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
     }
   };
 

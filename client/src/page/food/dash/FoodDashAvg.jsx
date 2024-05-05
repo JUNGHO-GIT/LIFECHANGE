@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
@@ -16,7 +15,6 @@ export const FoodDashAvg = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_FOOD || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
@@ -27,40 +25,47 @@ export const FoodDashAvg = () => {
   const [PART, setPART] = useState(array);
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_KCAL_MONTH_DEFAULT = [
+  const OBJECT_KCAL_MONTH_DEF = [
     {name:"", 칼로리: 0},
   ];
-  const OBJECT_NUT_MONTH_DEFAULT = [
+  const OBJECT_NUT_MONTH_DEF = [
     {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
   ];
-  const OBJECT_KCAL_YEAR_DEFAULT = [
+  const OBJECT_KCAL_YEAR_DEF = [
     {name:"", 칼로리: 0},
   ];
-  const OBJECT_NUT_YEAR_DEFAULT = [
+  const OBJECT_NUT_YEAR_DEF = [
     {name:"", 탄수화물: 0, 단백질: 0, 지방: 0},
   ];
-  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEFAULT);
-  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEFAULT);
-  const [OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR] = useState(OBJECT_KCAL_YEAR_DEFAULT);
-  const [OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR] = useState(OBJECT_NUT_YEAR_DEFAULT);
+  const [OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH] = useState(OBJECT_KCAL_MONTH_DEF);
+  const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEF);
+  const [OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR] = useState(OBJECT_KCAL_YEAR_DEF);
+  const [OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR] = useState(OBJECT_NUT_YEAR_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/avg/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_KCAL_MONTH(responseMonth.data.result.kcal || OBJECT_KCAL_MONTH_DEFAULT);
-    setOBJECT_NUT_MONTH(responseMonth.data.result.nut || OBJECT_NUT_MONTH_DEFAULT);
-
-    const responseYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
+    const resYear = await axios.get(`${URL_OBJECT}/dash/avg/year`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_KCAL_YEAR(responseYear.data.result.kcal || OBJECT_KCAL_YEAR_DEFAULT);
-    setOBJECT_NUT_YEAR(responseYear.data.result.nut || OBJECT_NUT_YEAR_DEFAULT);
+    setOBJECT_KCAL_MONTH(
+      resMonth.data.result.kcal.length > 0 ? resMonth.data.result.kcal : OBJECT_KCAL_MONTH_DEF
+    );
+    setOBJECT_NUT_MONTH(
+      resMonth.data.result.nut.length > 0 ? resMonth.data.result.nut : OBJECT_NUT_MONTH_DEF
+    );
+    setOBJECT_KCAL_YEAR(
+      resYear.data.result.kcal.length > 0 ? resYear.data.result.kcal : OBJECT_KCAL_YEAR_DEF
+    );
+    setOBJECT_NUT_YEAR(
+      resYear.data.result.nut.length > 0 ? resYear.data.result.nut : OBJECT_NUT_YEAR_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

@@ -24,30 +24,33 @@ export const SleepDashLine = () => {
   const [PART, setPART] = useState(array);
 
   // 2-1. useState -------------------------------------------------------------------------------->
-  const OBJECT_WEEK_DEFAULT = [
+  const OBJECT_WEEK_DEF = [
     {name:"", 취침: 0, 기상: 0, 수면: 0},
   ];
-  const OBJECT_MONTH_DEFAULT = [
+  const OBJECT_MONTH_DEF = [
     {name:"", 취침: 0, 기상: 0, 수면: 0},
   ];
-  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEFAULT);
-  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEFAULT);
+  const [OBJECT_WEEK, setOBJECT_WEEK] = useState(OBJECT_WEEK_DEF);
+  const [OBJECT_MONTH, setOBJECT_MONTH] = useState(OBJECT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/line/week`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_WEEK(responseWeek.data.result || OBJECT_WEEK_DEFAULT);
-
-    const responseMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/line/month`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
+    setOBJECT_WEEK(
+      resWeek.data.result.length > 0 ? resWeek.data.result : OBJECT_WEEK_DEF
+    );
+    setOBJECT_MONTH(
+      resMonth.data.result.length > 0 ? resMonth.data.result : OBJECT_MONTH_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

@@ -60,7 +60,7 @@ export const ExerciseSave = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = {
+  const OBJECT_DEF = {
     _id: "",
     exercise_number: 0,
     exercise_demo: false,
@@ -82,7 +82,7 @@ export const ExerciseSave = () => {
       exercise_cardio: "00:00",
     }],
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -90,18 +90,18 @@ export const ExerciseSave = () => {
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: user_id,
         _id: "",
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
@@ -145,13 +145,13 @@ export const ExerciseSave = () => {
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/save`, {
+    const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       percent();
       SEND.startDt = DATE.startDt;
       SEND.endDt = DATE.endDt;
@@ -160,7 +160,7 @@ export const ExerciseSave = () => {
       });
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
     }
   };
 

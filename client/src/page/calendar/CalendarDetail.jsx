@@ -57,7 +57,7 @@ export const CalendarDetail = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = {
+  const OBJECT_DEF = {
     user_id: user_id,
     calendar_number: 0,
     calendar_startDt: "0000-00-00",
@@ -70,69 +70,69 @@ export const CalendarDetail = () => {
       calendar_detail: ""
     }]
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/detail`, {
+    const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
         user_id: user_id,
         _id: location_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      totalCnt: response.data.totalCnt || 0,
-      sectionCnt: response.data.sectionCnt || 0
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0
     }));
     setLOADING(false);
   })()}, [location_id, user_id, location_category, DATE.startDt, DATE.endDt]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/save`, {
+    const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
       OBJECT: OBJECT,
       duration: `${DATE.startDt} ~ ${DATE.endDt}`,
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
-    if (response.data.status === "success") {
-      alert(response.data.msg);
+    setOBJECT(res.data.result || OBJECT_DEF);
+    if (res.data.status === "success") {
+      alert(res.data.msg);
       navParam(SEND?.toList);
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
       navParam(SEND?.toList);
     }
   };
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowDelete = async (id) => {
-    const response = await axios.delete(`${URL_OBJECT}/delete`, {
+    const res = await axios.delete(`${URL_OBJECT}/delete`, {
       params: {
         user_id: user_id,
         _id: id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    if (response.data.status === "success") {
-      if (Object.keys(response.data.result).length > 0) {
-        alert(response.data.msg);
-        setOBJECT(response.data.result);
+    if (res.data.status === "success") {
+      if (Object.keys(res.data.result).length > 0) {
+        alert(res.data.msg);
+        setOBJECT(res.data.result);
         navParam(SEND?.toList);
       }
       else {
-        alert(response.data.msg);
+        alert(res.data.msg);
         navParam(SEND?.toList);
       }
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
       navParam(SEND?.toList);
     }
   };

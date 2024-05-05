@@ -42,7 +42,7 @@ export const CalendarList = () => {
   );
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = [{
+  const OBJECT_DEF = [{
     user_id: user_id,
     calendar_number: 0,
     calendar_startDt: "0000-00-00",
@@ -55,17 +55,17 @@ export const CalendarList = () => {
       calendar_detail: ""
     }]
   }];
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2.3 useEffect -------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/list`, {
+    const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
         user_id: user_id,
         duration: `${DATE.startDt} ~ ${DATE.endDt}`,
       },
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 

@@ -53,7 +53,7 @@ export const TweakDataset = () => {
   const [dataType, setDataType] = useState("calendar");
 
   // 2-3. useState -------------------------------------------------------------------------------->
-  const OBJECT_DEFAULT = {
+  const OBJECT_DEF = {
     user_id: user_id,
     user_number: 0,
     user_dataset: {
@@ -76,32 +76,32 @@ export const TweakDataset = () => {
       }]
     }
   };
-  const [OBJECT, setOBJECT] = useState(OBJECT_DEFAULT);
+  const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const response = await axios.get(`${URL_OBJECT}/dataset`, {
+    const res = await axios.get(`${URL_OBJECT}/dataset`, {
       params: {
         user_id: user_id
       }
     });
-    setOBJECT(response.data.result || OBJECT_DEFAULT);
+    setOBJECT(res.data.result || OBJECT_DEF);
     setLOADING(false);
   })()}, [user_id]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
-    const response = await axios.post(`${URL_OBJECT}/save`, {
+    const res = await axios.post(`${URL_OBJECT}/save`, {
       user_id: user_id,
       OBJECT: OBJECT
     });
-    if (response.data.status === "success") {
-      alert(response.data.msg);
-      sessionStorage.setItem("dataset", JSON.stringify(response.data.result.user_dataset));
+    if (res.data.status === "success") {
+      alert(res.data.msg);
+      sessionStorage.setItem("dataset", JSON.stringify(res.data.result.user_dataset));
       navParam(SEND.toDataset);
     }
     else {
-      alert(response.data.msg);
+      alert(res.data.msg);
       sessionStorage.setItem("user_id", "false");
     }
   };

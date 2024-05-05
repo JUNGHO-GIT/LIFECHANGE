@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Line, ComposedChart} from "recharts";
@@ -25,24 +24,28 @@ export const FoodDashBar = () => {
   const [LINE, setLINE] = useState("kcal");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_KCAL_TODAY_DEFAULT = [
+  const OBJECT_KCAL_TODAY_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const OBJECT_NUT_TODAY_DEFAULT = [
+  const OBJECT_NUT_TODAY_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState(OBJECT_KCAL_TODAY_DEFAULT);
-  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState(OBJECT_NUT_TODAY_DEFAULT);
+  const [OBJECT_KCAL_TODAY, setOBJECT_KCAL_TODAY] = useState(OBJECT_KCAL_TODAY_DEF);
+  const [OBJECT_NUT_TODAY, setOBJECT_NUT_TODAY] = useState(OBJECT_NUT_TODAY_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
+    const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_KCAL_TODAY(responseToday.data.result.kcal || OBJECT_KCAL_TODAY_DEFAULT);
-    setOBJECT_NUT_TODAY(responseToday.data.result.nut || OBJECT_NUT_TODAY_DEFAULT);
+    setOBJECT_KCAL_TODAY(
+      resToday.data.result.kcal.length > 0 ? resToday.data.result.kcal : OBJECT_KCAL_TODAY_DEF
+    );
+    setOBJECT_NUT_TODAY(
+      resToday.data.result.nut.length > 0 ? resToday.data.result.nut : OBJECT_NUT_TODAY_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

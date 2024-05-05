@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Line, ComposedChart} from "recharts";
@@ -25,24 +24,28 @@ export const MoneyDashBar = () => {
   const [LINE, setLINE] = useState("in");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_IN_TODAY_DEFAULT = [
+  const OBJECT_IN_TODAY_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const OBJECT_OUT_TODAY_DEFAULT = [
+  const OBJECT_OUT_TODAY_DEF = [
     {name:"", 목표: 0, 실제: 0},
   ];
-  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEFAULT);
-  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEFAULT);
+  const [OBJECT_IN_TODAY, setOBJECT_IN_TODAY] = useState(OBJECT_IN_TODAY_DEF);
+  const [OBJECT_OUT_TODAY, setOBJECT_OUT_TODAY] = useState(OBJECT_OUT_TODAY_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
+    const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_IN_TODAY(responseToday.data.result.in || OBJECT_IN_TODAY_DEFAULT);
-    setOBJECT_OUT_TODAY(responseToday.data.result.out || OBJECT_OUT_TODAY_DEFAULT);
+    setOBJECT_IN_TODAY(
+      resToday.data.result.in.length > 0 ? resToday.data.result.in : OBJECT_IN_TODAY_DEF
+    );
+    setOBJECT_OUT_TODAY(
+      resToday.data.result.out.length > 0 ? resToday.data.result.out : OBJECT_OUT_TODAY_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

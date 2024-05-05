@@ -23,19 +23,21 @@ export const SleepDashBar = () => {
   const [SECTION, setSECTION] = useState("today");
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const OBJECT_TODAY_DEFAULT = [
+  const OBJECT_TODAY_DEF = [
     {name:"", 목표: 0, 실제: 0}
   ];
-  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEFAULT);
+  const [OBJECT_TODAY, setOBJECT_TODAY] = useState(OBJECT_TODAY_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
-    const responseToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
+    const resToday = await axios.get(`${URL_OBJECT}/dash/bar/today`, {
       params: {
         user_id: user_id
       },
     });
-    setOBJECT_TODAY(responseToday.data.result || OBJECT_TODAY_DEFAULT);
+    setOBJECT_TODAY(
+      resToday.data.result.length > 0 ? resToday.data.result : OBJECT_TODAY_DEF
+    );
     setLOADING(false);
   })()}, [user_id]);
 

@@ -14,22 +14,6 @@ export const CalendarNode = ({
   // 1. common ------------------------------------------------------------------------------------>
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
-  // 3-1. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const closeSidebar = (event) => {
-      if (CALENDAR.calOpen && !event.target.closest(".dayPicker-container")) {
-        setCALENDAR((prev) => ({
-          ...prev,
-          calOpen: false
-        }));
-      }
-    };
-    document.addEventListener("click", closeSidebar);
-    return () => {
-      document.removeEventListener("click", closeSidebar);
-    };
-  }, [CALENDAR.calOpen]);
-
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     if (FILTER?.type === "day") {
