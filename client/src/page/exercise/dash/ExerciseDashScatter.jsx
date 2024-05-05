@@ -254,7 +254,7 @@ export const ExerciseDashScatter = () => {
     <React.Fragment>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
           <Row>
             <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
               <select className={"form-select form-select-sm"}

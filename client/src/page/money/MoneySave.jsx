@@ -206,7 +206,7 @@ export const MoneySave = () => {
                 className={"form-select"}
                 value={OBJECT?.money_section[i]?.money_part_idx}
                 onChange={(e) => {
-                  const newIndex = parseInt(e.target.value);
+                  const newIndex = Number(e.target.value);
                   setOBJECT((prev) => ({
                     ...prev,
                     money_section: prev.money_section.map((item, idx) => (
@@ -238,7 +238,7 @@ export const MoneySave = () => {
                 className={"form-select"}
                 value={OBJECT?.money_section[i]?.money_title_idx}
                 onChange={(e) => {
-                  const newTitleIdx = parseInt(e.target.value);
+                  const newTitleIdx = Number(e.target.value);
                   const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
                   if (newTitleIdx >= 0 && newTitleVal) {
                     setOBJECT((prev) => ({
@@ -421,7 +421,7 @@ export const MoneySave = () => {
     <React.Fragment>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {dateNode()}
@@ -432,7 +432,7 @@ export const MoneySave = () => {
       </div>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
@@ -443,7 +443,7 @@ export const MoneySave = () => {
       </div>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {buttonNode()}

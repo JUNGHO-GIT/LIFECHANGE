@@ -209,7 +209,7 @@ export const CalendarDetail = () => {
                 className={"form-select"}
                 value={OBJECT?.calendar_section[i]?.calendar_part_idx}
                 onChange={(e) => {
-                  const newIndex = parseInt(e.target.value);
+                  const newIndex = Number(e.target.value);
                   setOBJECT((prev) => ({
                     ...prev,
                     calendar_section: prev.calendar_section.map((item, idx) => (
@@ -358,7 +358,7 @@ export const CalendarDetail = () => {
     <React.Fragment>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {dateNode()}
@@ -369,7 +369,7 @@ export const CalendarDetail = () => {
       </div>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
@@ -380,7 +380,7 @@ export const CalendarDetail = () => {
       </div>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {buttonNode()}

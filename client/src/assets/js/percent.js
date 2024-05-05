@@ -1,8 +1,8 @@
 // percent.js
 
 import axios from "axios";
-import moment from "moment-timezone";
 import "moment/locale/ko";
+import moment from "moment-timezone";
 
 export const percent = async () => {
 

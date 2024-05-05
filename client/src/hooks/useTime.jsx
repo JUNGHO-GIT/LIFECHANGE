@@ -1,8 +1,8 @@
 // useTime.jsx
 
 import React, {useEffect} from "react";
-import moment from "moment-timezone";
 import "moment/locale/ko";
+import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>
 export const useTime = (

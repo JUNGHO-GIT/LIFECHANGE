@@ -14,6 +14,7 @@ import "react-resizable/css/styles.css";
 import "react-calendar/dist/Calendar.css";
 import "./index.css";
 
+import "./assets/css/Mui.css";
 import "./assets/css/TimePicker.css";
 import "./assets/css/DayPicker.css";
 import "./assets/css/Calendar.css";
@@ -22,6 +23,7 @@ import "./assets/css/Header.css";
 import "./assets/css/Loader.css";
 import "./assets/css/NavBar.css";
 import "./assets/css/SideBar.css";
+import "./assets/css/Table.css";
 import "./assets/css/ScrollBar.css";
 
 import "./assets/css/Chart.css";

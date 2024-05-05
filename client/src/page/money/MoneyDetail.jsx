@@ -199,7 +199,7 @@ export const MoneyDetail = () => {
     <React.Fragment>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
@@ -210,7 +210,7 @@ export const MoneyDetail = () => {
       </div>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {buttonNode()}

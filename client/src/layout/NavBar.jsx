@@ -59,7 +59,7 @@ export const NavBar = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"nav-wrapper"}>
+      <Card className={"flex-wrapper h-6vh shadow-all"}>
         <Container>
           <Grid container spacing={3}>
             <Grid xl={4} lg={4} md={4} sm={4} xs={4} className={"d-left"}>

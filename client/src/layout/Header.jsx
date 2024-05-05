@@ -2,13 +2,13 @@
 
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import moment from "moment-timezone";
 import "moment/locale/ko";
+import moment from "moment-timezone";
 import {SideBar} from "./SideBar.jsx";
-import {Card, Container, Menu, MenuItem} from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {Card, Container, Menu, MenuItem} from "@mui/material";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 // ------------------------------------------------------------------------------------------------>
@@ -60,7 +60,7 @@ export const Header = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"header-wrapper"}>
+      <Card className={"flex-wrapper h-6vh shadow-all"}>
         <Container>
           <Grid container spacing={3}>
             <Grid xl={2} lg={2} md={2} sm={2} xs={2} className={"d-left"}>

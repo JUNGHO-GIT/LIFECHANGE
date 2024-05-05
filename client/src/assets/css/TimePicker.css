@@ -55,7 +55,7 @@
   color : #007bff;
   font-size: 0.8rem;
   outline: none;
-  padding: 0;
+  padding: 0px 0px 0px 0px;
   text-align: center;
   width: 100%;
   cursor: pointer;
@@ -85,7 +85,7 @@
   border: none;
   color : #007bff;
   outline: none;
-  padding: 0;
+  padding: 0px 0px 0px 0px;
   text-align: center;
   width: 100%;
   cursor: pointer;

@@ -2,8 +2,8 @@
 
 import React, { useEffect } from "react";
 import {DayPicker} from "react-day-picker";
-import moment from "moment-timezone";
 import "moment/locale/ko";
+import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {Col, Row} from "react-bootstrap";
 import InputMask from "react-input-mask";

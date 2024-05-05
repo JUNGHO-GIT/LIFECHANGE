@@ -1,0 +1,16 @@
+[class$="MuiSvgIcon-root-MuiSelect-icon"] {
+  right: 0px !important;
+}
+[class$="MuiTablePagination-root"] {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+[class$="MuiToolbar-root-MuiTablePagination-toolbar"] {
+  min-width: min-content !important;
+  min-height: min-content !important;
+  padding: 0px 20px 0px 0px !important;
+}
+[class$="MuiPaper-root-MuiDrawer-paper"] {
+  border-radius: 0px 10px 10px 0px !important;
+}

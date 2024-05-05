@@ -1,6 +1,7 @@
 // FilterNode.jsx
 
 import React from "react";
+import {InputLabel, MenuItem, FormControl, Select, Box, FormHelperText} from "@mui/material";
 
 // 10. filter ------------------------------------------------------------------------------------->
 export const FilterNode = ({
@@ -16,50 +17,59 @@ export const FilterNode = ({
   // 1. default
   const defaultNode = () => (
     <React.Fragment>
-      <select className={"form-select me-5"} id={"type"} onChange={(e) => (
-        setFILTER((prev) => ({
-          ...prev,
-          type: e.target.value
-        })),
-        setPAGING((prev) => ({
-          ...prev,
-          page: 1
-        }))
-      )}>
-        {["day", "week", "month", "year", "select"]?.map((item) => (
-          <option key={item} value={item} selected={FILTER?.type === item}>
-            {item}
-          </option>
-        ))}
-      </select>
-      <select className={"form-select me-5"} id={"order"} onChange={(e) => (
-        setFILTER((prev) => ({
-          ...prev,
-          order: e.target.value
-        }))
-      )}>
-        {["asc", "desc"]?.map((item) => (
-          <option key={item} value={item} selected={FILTER?.order === item}>
-            {item}
-          </option>
-        ))}
-      </select>
-      <select className={"form-select me-5"} id={"limit"} onChange={(e) => (
-        setFILTER((prev) => ({
-          ...prev,
-          limit: parseInt(e.target.value)
-        })),
-        setPAGING((prev) => ({
-          ...prev,
-          limit: parseInt(e.target.value)
-        }))
-      )}>
-        {["5", "10"]?.map((item) => (
-          <option key={item} value={item} selected={FILTER?.limit === parseInt(item)}>
-            {item}
-          </option>
-        ))}
-      </select>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"type"} id={"type"} value={FILTER?.type} className={"form-select"}
+        onChange={(e) => (
+          setFILTER((prev) => ({
+            ...prev,
+            type: e.target.value
+          })),
+          setPAGING((prev) => ({
+            ...prev,
+            page: 1
+          }))
+        )}>
+          {["day", "week", "month", "year", "select"]?.map((item) => (
+            <MenuItem key={item} value={item} selected={FILTER?.type === item}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"order"} id={"order"} value={FILTER?.order} className={"form-select"}
+        onChange={(e) => (
+          setFILTER((prev) => ({
+            ...prev,
+            order: e.target.value
+          }))
+        )}>
+          {["asc", "desc"]?.map((item) => (
+            <MenuItem key={item} value={item} selected={FILTER?.order === item}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"limit"} id={"limit"} value={FILTER?.limit} className={"form-select"}
+        onChange={(e) => (
+          setFILTER((prev) => ({
+            ...prev,
+            limit: Number(e.target.value)
+          })),
+          setPAGING((prev) => ({
+            ...prev,
+            limit: Number(e.target.value)
+          }))
+        )}>
+          {["5", "10"]?.map((item) => (
+            <MenuItem key={item} value={item} selected={FILTER?.limit === parseInt(item)}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </React.Fragment>
   );
 
@@ -179,7 +189,7 @@ export const FilterNode = ({
   // 6. return
   return (
     <React.Fragment>
-      <div className={"filter-wrapper d-inline-flex"}>
+      <div className={"flex-wrapper h-6vh"}>
         {part === "exercise" && plan === "" ? (
           <React.Fragment>
             {defaultNode()}

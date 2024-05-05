@@ -9,7 +9,15 @@ import {PagingNode} from "../../fragments/PagingNode.jsx";
 import {FilterNode} from "../../fragments/FilterNode.jsx";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {LoadingNode} from "../../fragments/LoadingNode.jsx";
-import {Container, Row, Col, Card, Table} from "react-bootstrap";
+import Grid from '@mui/material/Unstable_Grid2';
+import {Container, Card, Table} from "@mui/material";
+import Paper from '@mui/material/Paper';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
@@ -106,54 +114,96 @@ export const SleepList = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const columns = [
+      { id: "sleep_startDt", label: "날짜", minWidth: 170, align: "center"},
+      { id: "sleep_night", label: "취침", minWidth: 100 },
+      { id: "sleep_morning", label: "기상", minWidth: 100 },
+      { id: "sleep_time", label: "수면", minWidth: 100 },
+    ];
+    const rows = OBJECT?.map((item, index) => (
+      item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => ({
+        _id: item._id,
+        sleep_startDt: item.sleep_startDt,
+        sleep_night: section.sleep_night,
+        sleep_morning: section.sleep_morning,
+        sleep_time: section.sleep_time,
+        send: {
+          id: item._id,
+          startDt: item.sleep_startDt,
+          endDt: item.sleep_endDt
+        }
+      }))
+    )).flat().filter((item) => (item !== undefined));
     const tableSection = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>취침</th>
-              <th className={"table-thead"}>기상</th>
-              <th className={"table-thead"}>수면</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={sectionIndex}>
-                    <tr>
-                      {sectionIndex === 0 && (
-                        <td rowSpan={Math.min(item.sleep_section.length, 3)}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.sleep_startDt;
-                          SEND.endDt = item.sleep_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                          {item.sleep_startDt?.substring(5, 10)}
-                          {item.sleep_section.length > 3 && (<div>더보기</div>)}
-                        </td>
-                      )}
-                      <td>{section.sleep_night}</td>
-                      <td>{section.sleep_morning}</td>
-                      <td>{section.sleep_time}</td>
-                    </tr>
-                  </React.Fragment>
+        <TableContainer className={"block-wrapper h-54vh"}>
+          <Table className={"border"}>
+            <TableHead className={"table-thead"}>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    className={"table-th"}
+                  >
+                    {column.label}
+                  </TableCell>
                 ))}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </Table>
+              </TableRow>
+            </TableHead>
+            <TableBody className={"table-tbody"}>
+              {rows.map((row, index) => (
+                <TableRow hover role={"checkbox"} tabIndex={-1} key={index}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        className={"table-td"}
+                        onClick={column.id === "sleep_startDt" ? (() => {
+                          navParam(SEND.toDetail, {
+                            state: row.send
+                          });
+                        }) : undefined}
+                      >
+                        {column.format && typeof value === "number"
+                          ? column.format(value)
+                          : value
+                        }
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10]}
+          component={"div"}
+          labelRowsPerPage={""}
+          count={COUNT.totalCnt}
+          rowsPerPage={PAGING.limit}
+          page={PAGING.page - 1}
+          onPageChange={(event, newPage) => {
+            setPAGING((prev) => ({
+              ...prev,
+              page: newPage + 1
+            }));
+          }}
+          onRowsPerPageChange={(event) => {
+            setPAGING((prev) => ({
+              ...prev,
+              limit: parseInt(event.target.value, 10)
+            }));
+          }}
+        ></TablePagination>
       </React.Fragment>
     );
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
-          {tableSection()}
-        </div>
+        {tableSection()}
       </React.Fragment>
     );
   };
@@ -196,35 +246,28 @@ export const SleepList = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container fluid={true}>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {dayPickerNode()}
-                {LOADING ? loadingNode() : tableNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container fluid={true}>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {filterNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {pagingNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"content-wrapper shadow-all"}>
+        <Container className={"p-0"}>
+          <Grid container spacing={3}>
+            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {dayPickerNode()}
+              {LOADING ? loadingNode() : tableNode()}
+            </Grid>
+          </Grid>
+        </Container>
+      </Card>
+      <Card className={"content-wrapper shadow-all"}>
+        <Container className={"p-6"}>
+          <Grid container spacing={3}>
+            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center pt-5 pb-5"}>
+              {filterNode()}
+            </Grid>
+            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center pt-5 pb-5"}>
+              {buttonNode()}
+            </Grid>
+          </Grid>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

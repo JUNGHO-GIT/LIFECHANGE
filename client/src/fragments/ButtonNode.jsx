@@ -1,8 +1,8 @@
 // ButtonNode.jsx
 
 import React from "react";
-import moment from "moment-timezone";
 import "moment/locale/ko";
+import moment from "moment-timezone";
 import {Button} from "@mui/material";
 
 // 11. button ------------------------------------------------------------------------------------->
@@ -18,7 +18,7 @@ export const ButtonNode = ({
   const btnOpenCalendar = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      onClick={() => {
+      className={"primary-btn"} onClick={() => {
         setDAYPICKER((prev) => ({
           ...prev,
           dayOpen: !prev.dayOpen,
@@ -31,7 +31,7 @@ export const ButtonNode = ({
   const btnGetToday = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-      onClick={() => {
+      className={"success-btn"} onClick={() => {
         setFILTER((prev) => ({
           ...prev,
           type: "day",
@@ -53,7 +53,7 @@ export const ButtonNode = ({
   const btnToSave = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      onClick={() => {
+      className={"primary-btn"} onClick={() => {
         flowSave();
       }}>
         Save
@@ -63,7 +63,7 @@ export const ButtonNode = ({
   const btnToUpdate = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      onClick={() => {
+      className={"primary-btn"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toUpdate, {
@@ -77,7 +77,7 @@ export const ButtonNode = ({
   const btnToList = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
-      onClick={() => {
+      className={"secondary-btn"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toList, {
@@ -91,7 +91,7 @@ export const ButtonNode = ({
   const btnToSearch = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"secondary"} variant={"contained"}
-      onClick={() => {
+      className={"secondary-btn"} onClick={() => {
         SEND.startDt = DATE.startDt;
         SEND.endDt = DATE.endDt;
         navParam(SEND.toSearch, {
@@ -105,7 +105,7 @@ export const ButtonNode = ({
   const btnLogin = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      onClick={() => {
+      className={"primary-btn"} onClick={() => {
         flowSave();
       }}>
         Log In
@@ -115,7 +115,7 @@ export const ButtonNode = ({
   const btnSignup = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"primary"} variant={"contained"}
-      onClick={() => {
+      className={"primary-btn"} onClick={() => {
         flowSave();
       }}>
         Sign Up
@@ -125,7 +125,7 @@ export const ButtonNode = ({
   const btnRefresh = () => (
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
-      onClick={() => {
+      className={"success-btn"} onClick={() => {
         navParam(0);
       }}>
         Refresh
@@ -136,7 +136,7 @@ export const ButtonNode = ({
   // 5. return ------------------------------------------------------------------------------------>
   return (
     <React.Fragment>
-      <div className={"btn-wrapper d-inline-flex"}>
+      <div className={"flex-wrapper h-4vh"}>
         {type === "list" ? (
           <React.Fragment>
             {btnOpenCalendar()}

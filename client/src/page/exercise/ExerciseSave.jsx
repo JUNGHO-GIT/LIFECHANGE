@@ -237,7 +237,7 @@ export const ExerciseSave = () => {
                 className={"form-select"}
                 value={OBJECT?.exercise_section[i]?.exercise_part_idx}
                 onChange={(e) => {
-                  const newIndex = parseInt(e.target.value);
+                  const newIndex = Number(e.target.value);
                   setOBJECT((prev) => ({
                     ...prev,
                     exercise_section: prev.exercise_section.map((item, idx) => (
@@ -269,7 +269,7 @@ export const ExerciseSave = () => {
                 className={"form-select"}
                 value={OBJECT?.exercise_section[i]?.exercise_title_idx}
                 onChange={(e) => {
-                  const newTitleIdx = parseInt(e.target.value);
+                  const newTitleIdx = Number(e.target.value);
                   const newTitleVal = exerciseArray[OBJECT?.exercise_section[i]?.exercise_part_idx]?.exercise_title[newTitleIdx];
                   if (newTitleIdx >= 0 && newTitleVal) {
                     setOBJECT((prev) => ({
@@ -623,7 +623,7 @@ export const ExerciseSave = () => {
     <React.Fragment>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {dateNode()}
@@ -634,7 +634,7 @@ export const ExerciseSave = () => {
       </div>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
@@ -645,7 +645,7 @@ export const ExerciseSave = () => {
       </div>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {buttonNode()}

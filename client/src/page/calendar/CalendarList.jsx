@@ -1,8 +1,8 @@
 // CalendarList.jsx
 
 import axios from "axios";
-import moment from "moment-timezone";
 import "moment/locale/ko";
+import moment from "moment-timezone";
 import Calendar from "react-calendar";
 import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -185,7 +185,7 @@ export const CalendarList = () => {
     <React.Fragment>
       <div className={"content-wrapper"}>
         <Card className={"card-wrapper"}>
-          <Container fluid={true}>
+          <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
