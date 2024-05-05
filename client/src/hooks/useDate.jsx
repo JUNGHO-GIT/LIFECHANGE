@@ -10,10 +10,12 @@ export const useDate = (
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
-    setDATE((prev) => ({
-      ...prev,
-      startDt: location_startDt,
-      endDt: location_endDt,
-    }));
+    if (location_startDt && location_endDt) {
+      setDATE((prev) => ({
+        ...prev,
+        startDt: location_startDt,
+        endDt: location_endDt,
+      }));
+    }
   }, [location_startDt, location_endDt]);
 };

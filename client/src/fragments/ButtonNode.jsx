@@ -2,6 +2,7 @@
 
 import React from "react";
 import moment from "moment-timezone";
+import "moment/locale/ko";
 import {Button} from "react-bootstrap";
 
 // 11. button ------------------------------------------------------------------------------------->

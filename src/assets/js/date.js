@@ -1,6 +1,7 @@
 // date.js
 
 import moment from "moment-timezone";
+import "moment/locale/ko.js";
 
 // 1. common -------------------------------------------------------------------------------------->
 export const fmtDate = moment().tz("Asia/Seoul").format("YYYY-MM-DD / HH:mm:ss");

@@ -4,6 +4,7 @@ import {SideBar} from "./SideBar.jsx";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import moment from "moment-timezone";
+import "moment/locale/ko";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -92,7 +93,7 @@ export const Header = () => {
                 {buttonNode1()}
               </Col>
               <Col lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-                <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
+                <span className={"head-text"}>{moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}</span>
               </Col>
               <Col lg={3} md={3} sm={3} xs={3} className={"d-right"}>
                 {buttonNode2()}

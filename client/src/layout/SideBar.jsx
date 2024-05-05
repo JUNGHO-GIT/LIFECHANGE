@@ -2,6 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
+import "moment/locale/ko";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/array/dataArray.js";
 import {Collapse} from "react-bootstrap";

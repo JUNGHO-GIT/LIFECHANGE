@@ -3,6 +3,7 @@
 import React, {useEffect} from "react";
 import {DayPicker} from "react-day-picker";
 import moment from "moment-timezone";
+import "moment/locale/ko";
 import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
 

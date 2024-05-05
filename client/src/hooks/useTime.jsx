@@ -2,6 +2,7 @@
 
 import React, {useEffect} from "react";
 import moment from "moment-timezone";
+import "moment/locale/ko";
 
 // ------------------------------------------------------------------------------------------------>
 export const useTime = (
@@ -11,13 +12,6 @@ export const useTime = (
   // 1. common ------------------------------------------------------------------------------------>
   const strLow = PATH.match(/\/([^\/]+)\//)[1];
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
-
-  // log
-  useEffect(() => {
-    console.log("===================================");
-    console.log(JSON.stringify(OBJECT, null, 2));
-    console.log("===================================");
-  }, [OBJECT]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {

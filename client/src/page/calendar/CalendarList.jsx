@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import moment from "moment-timezone";
+import "moment/locale/ko";
 import Calendar from "react-calendar";
 import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";

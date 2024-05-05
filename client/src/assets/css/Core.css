@@ -94,8 +94,8 @@ html, body {
 .calendar-detail-wrapper {
   width: auto;
   max-width: 100%;
-  height: 60vh;
-  max-height: 60vh;
+  height: 59vh;
+  max-height: 59vh;
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
@@ -133,8 +133,8 @@ html, body {
 .table-wrapper {
   width: auto;
   max-width: 100%;
-  height: 60vh;
-  max-height: 60vh;
+  height: 59vh;
+  max-height: 59vh;
   border: 0.3px solid #f0f2f5;
   overflow-x: hidden;
   overflow-y: auto;
@@ -157,8 +157,8 @@ html, body {
 .save-wrapper {
   width: auto;
   max-width: 100%;
-  height: 60vh;
-  max-height: 60vh;
+  height: 59vh;
+  max-height: 59vh;
   border: 0.3px solid #f0f2f5;
   overflow-x: hidden;
   overflow-y: auto;
@@ -184,7 +184,7 @@ html, body {
 .loading-wrapper {
   width: auto;
   max-width: 100%;
-  height: 60vh;
+  min-height: 59vh;
   max-height: 98vh;
   display: flex;
   align-items: center;

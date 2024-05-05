@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import moment from "moment-timezone";
+import "moment/locale/ko";
 
 export const percent = async () => {
 
