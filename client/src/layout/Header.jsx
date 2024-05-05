@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import moment from "moment-timezone";
 import "moment/locale/ko";
+import {SideBar} from "./SideBar.jsx";
 import {Card, Container, Menu, MenuItem} from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -17,20 +18,19 @@ export const Header = () => {
   const navParam = useNavigate();
   const user_id = sessionStorage.getItem("user_id");
 
-  // 2-2. useState -------------------------------------------------------------------------------->
-  // 사이드바 기본값
+  // 2-1. useState -------------------------------------------------------------------------------->
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // 4. toggle ------------------------------------------------------------------------------------>
   const openSidebar = () => {
     setIsSidebarOpen((prev) => (!prev));
-    local
   };
 
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
     <React.Fragment>
       <MenuIcon onClick={openSidebar} />
+      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
     </React.Fragment>
   );
 
@@ -38,23 +38,21 @@ export const Header = () => {
   const btnUser = () => (
     <PopupState variant={"popover"} popupId={"popup-menu"}>
       {(popupState) => (
-        <>
+        <React.Fragment>
           <AccountCircleIcon {...bindTrigger(popupState)} />
           <Menu {...bindMenu(popupState)}>
-            <React.Fragment>
-              <MenuItem onClick={() => {
-                navParam("/user/login");
-              }}>
-                Login
-              </MenuItem>
-              <MenuItem onClick={() => {
-                navParam("/user/signup");
-              }}>
-                Signup
-              </MenuItem>
-            </React.Fragment>
+            <MenuItem onClick={() => {
+              navParam("/user/login");
+            }}>
+              Login
+            </MenuItem>
+            <MenuItem onClick={() => {
+              navParam("/user/signup");
+            }}>
+              Signup
+            </MenuItem>
           </Menu>
-        </>
+        </React.Fragment>
       )}
     </PopupState>
   );

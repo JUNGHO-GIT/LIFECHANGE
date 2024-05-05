@@ -20,7 +20,7 @@ export const CalendarDetail = () => {
   const SUBFIX = process.env.REACT_APP_CALENDAR || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
-  const session = sessionStorage.getItem("dataset") || "";
+  const session = sessionStorage.getItem("dataset") || "{}";
   const calendarArray = JSON.parse(session)?.calendar || [];
   const navParam = useNavigate();
   const location = useLocation();

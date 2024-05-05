@@ -4,11 +4,6 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {calendarArray} from "../../assets/array/calendarArray.js";
-import {exerciseArray} from "../../assets/array/exerciseArray.js";
-import {foodArray} from "../../assets/array/foodArray.js";
-import {moneyArray} from "../../assets/array/moneyArray.js";
-import {sleepArray} from "../../assets/array/sleepArray.js";
 import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
@@ -20,6 +15,12 @@ export const TweakDataset = () => {
   const SUBFIX = process.env.REACT_APP_TWEAK || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const user_id = sessionStorage.getItem("user_id");
+  const session = sessionStorage.getItem("dataset") || "{}";
+  const calendarArray = JSON.parse(session)?.calendar || [];
+  const exerciseArray = JSON.parse(session)?.exercise || [];
+  const foodArray = JSON.parse(session)?.food || [];
+  const moneyArray = JSON.parse(session)?.money || [];
+  const sleepArray = JSON.parse(session)?.sleep || [];
   const navParam = useNavigate();
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
