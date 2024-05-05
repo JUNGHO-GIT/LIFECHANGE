@@ -213,10 +213,18 @@ export const SleepPlanList = () => {
         <Card className={"card-wrapper"}>
           <Container fluid={true}>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? "" : calendarNode()}
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {LOADING ? "" : filterNode()}
               </Col>

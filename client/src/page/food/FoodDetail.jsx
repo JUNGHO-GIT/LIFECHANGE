@@ -180,7 +180,7 @@ export const FoodDetail = () => {
       );
     return (
       <React.Fragment>
-        <div className={"detail-wrapper over-x-auto"}>
+        <div className={"detail-wrapper"}>
           {tableSection()}
         </div>
       </React.Fragment>
@@ -208,9 +208,17 @@ export const FoodDetail = () => {
         <Card className={"card-wrapper"}>
           <Container fluid={true}>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {LOADING ? "" : buttonNode()}
               </Col>

@@ -387,7 +387,7 @@ export const TweakDataset = () => {
     );
     return (
       <React.Fragment>
-        <div className={"dataset-wrapper"}>
+        <div className={"detail-wrapper"}>
           <Row>
             <Col lg={3} md={3} sm={3} xs={3} className={"pe-0"}>
               {tableSection1()}
@@ -468,9 +468,17 @@ export const TweakDataset = () => {
         <Card className={"card-wrapper"}>
           <Container fluid={true}>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonNode()}</span>
                 <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonDefault()}</span>

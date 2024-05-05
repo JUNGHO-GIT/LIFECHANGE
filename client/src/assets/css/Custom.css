@@ -3,8 +3,11 @@ textarea {
   resize: none;
 }
 textarea.form-control {
-  resize: none;
+  width: 100%;
+  max-width: 100%;
   height: 100px;
+  max-height: 100px;
+  resize: none;
 }
 .form-control[readonly] {
   background-color: #ffffff;
@@ -41,14 +44,14 @@ p {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-.br {
-  height: 1px;
-}
 
 /** 0. Media **************************************************************************************/
 .form-control {
-  display: block;
   width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 40px;
+  display: block;
   font-weight: 400;
   color: #0b2730;
   appearance: none;
@@ -57,11 +60,13 @@ p {
   border: var(--bs-border-width) solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-  max-height: 40px !important;
 }
 .form-select {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 40px;
   font-weight: 400;
-  max-height: 40px !important;
   color: #0b2730;
 }
 .input-group-text {
@@ -186,7 +191,6 @@ table tbody tr td {
   background-color: #4b5156 !important;
   border: 1px solid #4b5156 !important;
 }
-
 .dataset-add {
   display: flex;
   align-items: center;
