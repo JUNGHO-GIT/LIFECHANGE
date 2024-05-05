@@ -84,21 +84,23 @@ export const Header = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"card-wrapper"}>
-        <Container fluid={true}>
-          <Row className={"w-100vw"}>
-            <Col lg={3} md={3} sm={3} xs={3} className={"d-left"}>
-              {buttonNode1()}
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-              <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
-            </Col>
-            <Col lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-              {buttonNode2()}
-            </Col>
-          </Row>
-        </Container>
-      </Card>
+      <div className={"header-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
+              <Col lg={3} md={3} sm={3} xs={3} className={"d-left"}>
+                {buttonNode1()}
+              </Col>
+              <Col lg={6} md={6} sm={6} xs={6} className={"d-center"}>
+                <span className={"head-text"}>{moment().format("YYYY-MM-DD")}</span>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3} className={"d-right"}>
+                {buttonNode2()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

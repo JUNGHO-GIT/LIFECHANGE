@@ -197,25 +197,27 @@ export const SleepList = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"card-wrapper"}>
-        <Container fluid={true}>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {LOADING ? "" : calendarNode()}
-              {LOADING ? loadingNode() : tableNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {LOADING ? "" : filterNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {LOADING ? "" : pagingNode()}
-            </Col>
-            <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {LOADING ? "" : buttonNode()}
-            </Col>
-          </Row>
-        </Container>
-      </Card>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : calendarNode()}
+                {LOADING ? loadingNode() : tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : filterNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : pagingNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : buttonNode()}
+              </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

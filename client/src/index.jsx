@@ -173,23 +173,17 @@ const App = () => {
   return (
     <React.Fragment>
       <div className={"App"}>
-        <div className={"header-wrapper"}>
-          <Header />
-        </div>
-        <div className={"nav-wrapper"}>
-          <NavBar />
-        </div>
-        <div className={"content-wrapper"}>
-          <Routes>
-            <Route path="/user/*" element={<User />} />
-            <Route path="/calendar/*" element={<Calendar />} />
-            <Route path="/exercise/*" element={<Exercise />} />
-            <Route path="/food/*" element={<Food />} />
-            <Route path="/money/*" element={<Money />} />
-            <Route path="/sleep/*" element={<Sleep />} />
-            <Route path="/tweak/*" element={<Tweak />} />
-          </Routes>
-        </div>
+        <Header />
+        <NavBar />
+        <Routes>
+          <Route path="/user/*" element={<User />} />
+          <Route path="/calendar/*" element={<Calendar />} />
+          <Route path="/exercise/*" element={<Exercise />} />
+          <Route path="/food/*" element={<Food />} />
+          <Route path="/money/*" element={<Money />} />
+          <Route path="/sleep/*" element={<Sleep />} />
+          <Route path="/tweak/*" element={<Tweak />} />
+        </Routes>
       </div>
     </React.Fragment>
   );

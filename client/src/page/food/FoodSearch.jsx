@@ -199,30 +199,23 @@ export const FoodSearch = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"card-wrapper"}>
-        <Container fluid={true}>
-          {LOADING && (
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {loadingNode()}
+                {LOADING ? loadingNode() : tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : searchNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : pagingNode()}
               </Col>
             </Row>
-          )}
-          {!LOADING && (
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {searchNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {pagingNode()}
-              </Col>
-            </Row>
-          )}
-        </Container>
-      </Card>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

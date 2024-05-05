@@ -51,38 +51,36 @@ export const UserSignup = () => {
   };
 
   // 4. table ------------------------------------------------------------------------------------->
-  const tableUserSave = () => {
-    return (
-      <div>
-        <div className={"input-group"}>
-          <span className={"input-group-text"}>ID</span>
-          <InputMask
-            mask={""}
-            type={"text"}
-            className={"form-control"}
-            placeholder={"ID"}
-            value={user_id}
-            onChange={(e) => (
-              setUserId(e.target.value)
-            )}
-          ></InputMask>
-        </div>
-        <div className={"input-group"}>
-          <span className={"input-group-text"}>PW</span>
-          <InputMask
-            mask={""}
-            type={"password"}
-            className={"form-control"}
-            placeholder={"PW"}
-            value={user_pw}
-            onChange={(e) => (
-              setUserPw(e.target.value)
-            )}
-          ></InputMask>
-        </div>
+  const tableNode = () => (
+    <React.Fragment>
+      <div className={"input-group"}>
+        <span className={"input-group-text"}>ID</span>
+        <InputMask
+          mask={""}
+          type={"text"}
+          className={"form-control"}
+          placeholder={"ID"}
+          value={user_id}
+          onChange={(e) => (
+            setUserId(e.target.value)
+          )}
+        ></InputMask>
       </div>
-    );
-  };
+      <div className={"input-group"}>
+        <span className={"input-group-text"}>PW</span>
+        <InputMask
+          mask={""}
+          type={"password"}
+          className={"form-control"}
+          placeholder={"PW"}
+          value={user_pw}
+          onChange={(e) => (
+            setUserPw(e.target.value)
+          )}
+        ></InputMask>
+      </div>
+    </React.Fragment>
+  );
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
@@ -91,69 +89,41 @@ export const UserSignup = () => {
   );
 
   // 11. button ----------------------------------------------------------------------------------->
-  const btnRefresh = () => {
-    return (
-      <React.Fragment>
-        <Button type={"button"} size={"sm"} className={"success-btn"} onClick={() => {
-          navParam(0);
-        }}>
+  const buttonNode = () => (
+    <React.Fragment>
+      <Button size={"sm"} className={"primary-btn"} onClick={() => {
+        flowUserSave();
+      }}>
+        Submit
+      </Button>
+      <Button size={"sm"} className={"success-btn"} onClick={() => {
+        navParam(0);
+      }}>
         Refresh
       </Button>
-      </React.Fragment>
-    );
-  };
-  const btnSignUp = () => {
-    return (
-      <React.Fragment>
-        <Button type={"button"} size={"sm"} className={"primary-btn"} onClick={() => {
-          flowUserSave();
-        }}>
-          Submit
-        </Button>
-      </React.Fragment>
-    );
-  };
-  const btnUserList = () => {
-    return (
-      <React.Fragment>
-        <Button type={"button"} size={"sm"} className={"secondary-btn"} onClick={() => {
-          navParam("/user/list");
-        }}>
-          List
-        </Button>
-      </React.Fragment>
-    );
-  };
+    </React.Fragment>
+  );
 
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"card-wrapper"}>
-        <Container fluid={true}>
-          {LOADING && (
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {loadingNode()}
-              </Col>
-            </Row>
-          )}
-          {!LOADING && (
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 <h1>Sign Up</h1>
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableUserSave()}
+                {LOADING ? loadingNode() : tableNode()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {btnSignUp()}
-                {btnUserList()}
-                {btnRefresh()}
+                {LOADING ? "" : buttonNode()}
               </Col>
             </Row>
-          )}
-        </Container>
-      </Card>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };

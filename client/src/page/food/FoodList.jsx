@@ -209,34 +209,27 @@ export const FoodList = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"card-wrapper"}>
-        <Container fluid={true}>
-          {LOADING && (
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {loadingNode()}
+                {LOADING ? "" : calendarNode()}
+                {LOADING ? loadingNode() : tableNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : filterNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : pagingNode()}
+              </Col>
+              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {LOADING ? "" : buttonNode()}
               </Col>
             </Row>
-          )}
-          {!LOADING && (
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {calendarNode()}
-                {tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {filterNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {pagingNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          )}
-        </Container>
-      </Card>
+          </Container>
+        </Card>
+      </div>
     </React.Fragment>
   );
 };
