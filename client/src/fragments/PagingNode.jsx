@@ -28,18 +28,14 @@ export const PagingNode = ({
   const btnPrevMax = () => (
     <React.Fragment>
       {PAGING.page > 1 ? (
-        <div onClick={() => (
+        <i className={"bx bx-chevrons-left d-center"} onClick={() => (
           setPAGING((prev) => ({
             ...prev,
             page: 1
           }))
-        )}>
-          <i className={"bx bx-chevrons-left"}></i>
-        </div>
+        )}></i>
       ) : (
-        <div>
-          <i className={"bx bx-chevrons-left"}></i>
-        </div>
+        <i className={"bx bx-chevrons-left d-center"}></i>
       )}
     </React.Fragment>
   );
@@ -48,18 +44,14 @@ export const PagingNode = ({
   const btnPrevOne = () => (
     <React.Fragment>
       {PAGING.page <= 1 ? (
-        <div>
-          <i className={"bx bx-chevron-left"}></i>
-        </div>
+        <i className={"bx bx-chevron-left d-center"}></i>
       ) : (
-        <div onClick={() => (
+        <i className={"bx bx-chevron-left d-center "} onClick={() => (
           setPAGING((prev) => ({
             ...prev,
             page: Math.max(1, PAGING.page - 1)
           }))
-        )}>
-          <i className={"bx bx-chevron-left"}></i>
-        </div>
+        )}></i>
       )}
     </React.Fragment>
   );
@@ -85,18 +77,14 @@ export const PagingNode = ({
   const btnNextOne = () => (
     <React.Fragment>
       {PAGING.page >= totalPages ? (
-        <div>
-          <i className={"bx bx-chevron-right"}></i>
-        </div>
+        <i className={"bx bx-chevron-right d-center"}></i>
       ) : (
-        <div onClick={() => (
+        <i className={"bx bx-chevron-right d-center"}onClick={() => (
           setPAGING((prev) => ({
             ...prev,
             page: Math.min(totalPages, PAGING.page + 1)
           }))
-        )}>
-          <i className={"bx bx-chevron-right"}></i>
-        </div>
+        )}></i>
       )}
     </React.Fragment>
   );
@@ -105,18 +93,14 @@ export const PagingNode = ({
   const btnNextMax = () => (
     <React.Fragment>
       {PAGING.page >= totalPages ? (
-        <div>
-          <i className={"bx bx-chevrons-right"}></i>
-        </div>
+        <i className={"bx bx-chevrons-right d-center"}></i>
       ) : (
-        <div onClick={() => (
+        <i className={"bx bx-chevrons-right  d-center"} onClick={() => (
           setPAGING((prev) => ({
             ...prev,
             page: totalPages
           }))
-        )}>
-          <i className={"bx bx-chevrons-right"}></i>
-        </div>
+        )}></i>
       )}
     </React.Fragment>
   );

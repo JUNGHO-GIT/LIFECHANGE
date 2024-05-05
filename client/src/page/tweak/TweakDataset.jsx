@@ -468,10 +468,10 @@ export const TweakDataset = () => {
         <Card className={"card-wrapper"}>
           <Container fluid={true}>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonNode()}</span>
                 <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonDefault()}</span>
               </Col>

@@ -210,13 +210,21 @@ export const MoneyList = () => {
                 {LOADING ? "" : calendarNode()}
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+            </Row>
+          </Container>
+        </Card>
+      </div>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-1vh"}>
                 {LOADING ? "" : filterNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-1vh"}>
                 {LOADING ? "" : pagingNode()}
               </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              <Col lg={12} md={12} sm={12} xs={12} className={"d-center mb-1vh"}>
                 {LOADING ? "" : buttonNode()}
               </Col>
             </Row>
