@@ -40,6 +40,33 @@ export const ExerciseDashPie = () => {
   const [OBJECT_TITLE_MONTH, setOBJECT_TITLE_MONTH] = useState(OBJECT_TITLE_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {(async () => {
+    const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
+      params: {
+        user_id: user_id
+      },
+    });
+    const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
+      params: {
+        user_id: user_id
+      },
+    });
+    setOBJECT_PART_WEEK(
+      resWeek.data.result.part.length > 0 ? resWeek.data.result.part : OBJECT_PART_WEEK_DEF
+    );
+    setOBJECT_TITLE_WEEK(
+      resWeek.data.result.title.length > 0 ? resWeek.data.result.title : OBJECT_TITLE_WEEK_DEF
+    );
+    setOBJECT_PART_MONTH(
+      resMonth.data.result.part.length > 0 ? resMonth.data.result.part : OBJECT_PART_MONTH_DEF
+    );
+    setOBJECT_TITLE_MONTH(
+      resMonth.data.result.title.length > 0 ? resMonth.data.result.title : OBJECT_TITLE_MONTH_DEF
+    );
+    setLOADING(false);
+  })()}, [user_id]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     const updateRadius = () => {
       // lg
@@ -67,33 +94,6 @@ export const ExerciseDashPie = () => {
       window.removeEventListener('resize', updateRadius);
     }
   }, []);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {(async () => {
-    const resWeek = await axios.get(`${URL_OBJECT}/dash/pie/week`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    const resMonth = await axios.get(`${URL_OBJECT}/dash/pie/month`, {
-      params: {
-        user_id: user_id
-      },
-    });
-    setOBJECT_PART_WEEK(
-      resWeek.data.result.part.length > 0 ? resWeek.data.result.part : OBJECT_PART_WEEK_DEF
-    );
-    setOBJECT_TITLE_WEEK(
-      resWeek.data.result.title.length > 0 ? resWeek.data.result.title : OBJECT_TITLE_WEEK_DEF
-    );
-    setOBJECT_PART_MONTH(
-      resMonth.data.result.part.length > 0 ? resMonth.data.result.part : OBJECT_PART_MONTH_DEF
-    );
-    setOBJECT_TITLE_MONTH(
-      resMonth.data.result.title.length > 0 ? resMonth.data.result.title : OBJECT_TITLE_MONTH_DEF
-    );
-    setLOADING(false);
-  })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->
   const renderPartWeek = ({

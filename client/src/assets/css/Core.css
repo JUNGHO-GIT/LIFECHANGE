@@ -19,7 +19,7 @@ html, body {
   align-items: center;
   width: 100%;
   height: 100%;
-  margin: 0;
+  margin: 2vh 0vw 2vh 0vw;
   padding: 0;
 }
 .header-wrapper {
@@ -56,8 +56,8 @@ html, body {
   border: none;
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 85vh;
   width: 95vw;
+  max-height: 85vh;
   border-radius: 0.5rem;
   margin: 0vh 0vw 1vh 0vw;
   padding: 1vh 2vw 1vh 2vw;

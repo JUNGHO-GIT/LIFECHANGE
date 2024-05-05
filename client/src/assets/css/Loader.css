@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   background-color: #f6f6f6;
   top: 50%;
   left: 50%;

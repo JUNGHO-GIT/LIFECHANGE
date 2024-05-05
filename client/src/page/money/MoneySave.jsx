@@ -139,52 +139,6 @@ export const MoneySave = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const dateSection = () => (
-      <React.Fragment>
-        <Row className={"d-center"}>
-          <Col lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>시작일</span>
-              <InputMask
-                mask={"9999-99-99"}
-                id={"calendar_startDt"}
-                name={"calendar_startDt"}
-                className={"form-control pointer"}
-                maskChar={null}
-                value={DATE?.startDt}
-                readOnly={true}
-                onClick={() => {
-                  setCALENDAR((prev) => ({
-                    ...prev,
-                    calStartOpen: !prev.calStartOpen
-                  }));
-                }}
-              ></InputMask>
-            </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>종료일</span>
-              <InputMask
-                mask={"9999-99-99"}
-                id={"calendar_endDt"}
-                name={"calendar_endDt"}
-                className={"form-control pointer"}
-                maskChar={null}
-                value={DATE?.endDt}
-                readOnly={true}
-                onClick={() => {
-                  setCALENDAR((prev) => ({
-                    ...prev,
-                    calEndOpen: !prev.calEndOpen
-                  }));
-                }}
-              ></InputMask>
-            </div>
-          </Col>
-        </Row>
-      </React.Fragment>
-    );
     const handlerCount = (e) => {
       let newCount = parseInt(e, 10);
       let defaultSection = {
@@ -433,9 +387,6 @@ export const MoneySave = () => {
     );
     return (
       <React.Fragment>
-        <div className={"date-wrapper"}>
-          {dateSection()}
-        </div>
         <div className={"save-wrapper"}>
           {countNode()}
           {tableSection()}
@@ -476,9 +427,25 @@ export const MoneySave = () => {
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? "" : dateNode()}
               </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? "" : buttonNode()}
               </Col>

@@ -91,7 +91,8 @@ export const pieToday = async (
 
   return {
     kcal: finalResultKcal,
-    nut: finalResultNut
+    nut: finalResultNut,
+    date: `${startDt} ~ ${endDt}`
   };
 };
 
@@ -131,7 +132,8 @@ export const pieWeek = async (
 
   return {
     kcal: finalResultKcal,
-    nut: finalResultNut
+    nut: finalResultNut,
+    date: `${startDt} ~ ${endDt}`
   };
 };
 
@@ -171,7 +173,8 @@ export const pieMonth = async (
 
   return {
     kcal: finalResultKcal,
-    nut: finalResultNut
+    nut: finalResultNut,
+    date: `${startDt} ~ ${endDt}`
   };
 };
 

@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import {Container, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -48,35 +48,6 @@ export const MoneyDashPie = () => {
   const [OBJECT_OUT_MONTH, setOBJECT_OUT_MONTH] = useState(OBJECT_OUT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const updateRadius = () => {
-      // lg
-      if (window.innerWidth >= 1200) {
-        setRadius(120);
-      }
-      // md
-      else if (window.innerWidth >= 992) {
-        setRadius(110);
-      }
-      // sm
-      else if (window.innerWidth >= 768) {
-        setRadius(100);
-      }
-      // xs
-      else {
-        setRadius(90);
-      }
-    };
-
-    window.addEventListener('resize', updateRadius);
-    updateRadius();
-
-    return () => {
-      window.removeEventListener('resize', updateRadius);
-    }
-  }, []);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
@@ -111,9 +82,37 @@ export const MoneyDashPie = () => {
     setOBJECT_OUT_MONTH(
       resMonth.data.result.out.length > 0 ? resMonth.data.result.out : OBJECT_OUT_MONTH_DEF
     );
-
     setLOADING(false);
   })()}, [user_id]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const updateRadius = () => {
+      // lg
+      if (window.innerWidth >= 1200) {
+        setRadius(120);
+      }
+      // md
+      else if (window.innerWidth >= 992) {
+        setRadius(110);
+      }
+      // sm
+      else if (window.innerWidth >= 768) {
+        setRadius(100);
+      }
+      // xs
+      else {
+        setRadius(90);
+      }
+    };
+
+    window.addEventListener('resize', updateRadius);
+    updateRadius();
+
+    return () => {
+      window.removeEventListener('resize', updateRadius);
+    }
+  }, []);
 
   // 4-1. render ---------------------------------------------------------------------------------->
   const renderInToday = ({
@@ -247,6 +246,14 @@ export const MoneyDashPie = () => {
                 borderRadius:"10px"
               }}
             ></Tooltip>
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+              }}
+            ></Legend>
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -283,6 +290,14 @@ export const MoneyDashPie = () => {
                 borderRadius:"10px"
               }}
             ></Tooltip>
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+              }}
+            ></Legend>
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -319,6 +334,14 @@ export const MoneyDashPie = () => {
                 borderRadius:"10px"
               }}
             ></Tooltip>
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+              }}
+            ></Legend>
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -355,6 +378,14 @@ export const MoneyDashPie = () => {
                 borderRadius:"10px"
               }}
             ></Tooltip>
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+              }}
+            ></Legend>
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -391,6 +422,14 @@ export const MoneyDashPie = () => {
                 borderRadius:"10px"
               }}
             ></Tooltip>
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+              }}
+            ></Legend>
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -427,6 +466,14 @@ export const MoneyDashPie = () => {
                 borderRadius:"10px"
               }}
             ></Tooltip>
+            <Legend
+              iconType={"circle"}
+              verticalAlign={"bottom"}
+              align={"center"}
+              wrapperStyle={{
+                lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
+              }}
+            ></Legend>
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>

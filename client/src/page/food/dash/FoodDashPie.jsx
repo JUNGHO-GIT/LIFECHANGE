@@ -48,35 +48,6 @@ export const FoodDashPie = () => {
   const [OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH] = useState(OBJECT_NUT_MONTH_DEF);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    const updateRadius = () => {
-      // lg
-      if (window.innerWidth >= 1200) {
-        setRadius(120);
-      }
-      // md
-      else if (window.innerWidth >= 992) {
-        setRadius(110);
-      }
-      // sm
-      else if (window.innerWidth >= 768) {
-        setRadius(100);
-      }
-      // xs
-      else {
-        setRadius(90);
-      }
-    };
-
-    window.addEventListener('resize', updateRadius);
-    updateRadius();
-
-    return () => {
-      window.removeEventListener('resize', updateRadius);
-    }
-  }, []);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const resToday = await axios.get(`${URL_OBJECT}/dash/pie/today`, {
       params: {
@@ -113,6 +84,35 @@ export const FoodDashPie = () => {
     );
     setLOADING(false);
   })()}, [user_id]);
+
+  // 2-3. useEffect ------------------------------------------------------------------------------->
+  useEffect(() => {
+    const updateRadius = () => {
+      // lg
+      if (window.innerWidth >= 1200) {
+        setRadius(120);
+      }
+      // md
+      else if (window.innerWidth >= 992) {
+        setRadius(110);
+      }
+      // sm
+      else if (window.innerWidth >= 768) {
+        setRadius(100);
+      }
+      // xs
+      else {
+        setRadius(90);
+      }
+    };
+
+    window.addEventListener('resize', updateRadius);
+    updateRadius();
+
+    return () => {
+      window.removeEventListener('resize', updateRadius);
+    }
+  }, []);
 
   // 4-1. render ---------------------------------------------------------------------------------->
   const renderKcalToday = ({

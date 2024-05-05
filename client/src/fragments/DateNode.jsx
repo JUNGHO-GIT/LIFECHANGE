@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import {DayPicker} from "react-day-picker";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
+import {Col, Row} from "react-bootstrap";
+import InputMask from "react-input-mask";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DateNode = ({
@@ -20,22 +22,6 @@ export const DateNode = ({
       }));
     }
   }, [DATE.startDt]);
-
-  // 외부 클릭시 창 닫힘
-  useEffect(() => {
-    const closeSidebar = (event) => {
-      if (CALENDAR.calStartOpen && !event.target.closest(".dayPicker-container")) {
-        setCALENDAR((prev) => ({
-          ...prev,
-          calStartOpen: false
-        }));
-      }
-    };
-    document.addEventListener("click", closeSidebar);
-    return () => {
-      document.removeEventListener("click", closeSidebar);
-    };
-  }, [CALENDAR.calStartOpen]);
 
   // 중복 방지
    useEffect(() => {
@@ -57,22 +43,6 @@ export const DateNode = ({
       }));
     }
   }, [DATE.endDt]);
-
-  // 외부 클릭시 창 닫힘
-  useEffect(() => {
-    const closeSidebar = (event) => {
-      if (CALENDAR.calEndOpen && !event.target.closest(".dayPicker-container")) {
-        setCALENDAR((prev) => ({
-          ...prev,
-          calEndOpen: false
-        }));
-      }
-    };
-    document.addEventListener("click", closeSidebar);
-    return () => {
-      document.removeEventListener("click", closeSidebar);
-    };
-  }, [CALENDAR.calEndOpen]);
 
   // 중복 방지
   useEffect(() => {
@@ -137,6 +107,50 @@ export const DateNode = ({
         {closeBtn("End")}
         <div className="h-2vh"></div>
         {calendar("End")}
+      </div>
+      <div className={"date-wrapper"}>
+        <Row className={"d-center"}>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>시작일</span>
+              <InputMask
+                mask={"9999-99-99"}
+                id={"calendar_startDt"}
+                name={"calendar_startDt"}
+                className={"form-control pointer"}
+                maskChar={null}
+                value={DATE?.startDt}
+                readOnly={true}
+                onClick={() => {
+                  setCALENDAR((prev) => ({
+                    ...prev,
+                    calStartOpen: !prev.calStartOpen
+                  }));
+                }}
+              ></InputMask>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>종료일</span>
+              <InputMask
+                mask={"9999-99-99"}
+                id={"calendar_endDt"}
+                name={"calendar_endDt"}
+                className={"form-control pointer"}
+                maskChar={null}
+                value={DATE?.endDt}
+                readOnly={true}
+                onClick={() => {
+                  setCALENDAR((prev) => ({
+                    ...prev,
+                    calEndOpen: !prev.calEndOpen
+                  }));
+                }}
+              ></InputMask>
+            </div>
+          </Col>
+        </Row>
       </div>
     </React.Fragment>
   );

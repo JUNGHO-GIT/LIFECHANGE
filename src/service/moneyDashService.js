@@ -81,7 +81,8 @@ export const pieToday = async (
 
   return {
     in: finalResultIn,
-    out: finalResultOut
+    out: finalResultOut,
+    date: `${startDt} ~ ${endDt}`
   };
 };
 
@@ -120,7 +121,8 @@ export const pieWeek = async (
 
   return {
     in: finalResultIn,
-    out: finalResultOut
+    out: finalResultOut,
+    date: `${startDt} ~ ${endDt}`
   };
 };
 
@@ -159,7 +161,8 @@ export const pieMonth = async (
 
   return {
     in: finalResultIn,
-    out: finalResultOut
+    out: finalResultOut,
+    date: `${startDt} ~ ${endDt}`
   };
 };
 
