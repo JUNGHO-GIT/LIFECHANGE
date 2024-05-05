@@ -1,11 +1,11 @@
 // UserLogin.jsx
 
 import axios from "axios";
-import moment from "moment-timezone";
 import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {percent} from "../../assets/js/percent.js";
 import {useNavigate, useLocation} from "react-router-dom";
+import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {LoadingNode} from "../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
 
@@ -26,7 +26,7 @@ export const UserLogin = () => {
   const [user_pw, setUserPw] = useState("");
 
   // 3. flow -------------------------------------------------------------------------------------->
-  const flowUserLogin = async () => {
+  const flowSave = async () => {
     const res = await axios.post (`${URL_OBJECT}/login`, {
       user_id: user_id,
       user_pw: user_pw,
@@ -45,34 +45,52 @@ export const UserLogin = () => {
   };
 
   // 4. table ------------------------------------------------------------------------------------->
-  const tableNode = () => (
-    <React.Fragment>
-      <div className={"input-group"}>
-        <span className={"input-group-text"}>ID</span>
-        <InputMask
-          mask={""}
-          type={"text"}
-          className={"form-control"}
-          value={user_id}
-          onChange={(e) => (
-            setUserId(e.target.value)
-          )}
-        ></InputMask>
-      </div>
-      <div className={"input-group"}>
-        <span className={"input-group-text"}>PW</span>
-        <InputMask
-          mask={""}
-          type={"text"}
-          className={"form-control"}
-          value={user_pw}
-          onChange={(e) => (
-            setUserPw(e.target.value)
-          )}
-        ></InputMask>
-      </div>
-    </React.Fragment>
-  );
+  const tableNode = () => {
+    const tableSection = () => (
+      <React.Fragment>
+        <Row>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <h2>Log In</h2>
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>ID</span>
+              <InputMask
+                mask={""}
+                type={"text"}
+                className={"form-control"}
+                value={user_id}
+                onChange={(e) => (
+                  setUserId(e.target.value)
+                )}
+              ></InputMask>
+            </div>
+          </Col>
+          <Col lg={12} md={12} sm={12} xs={12}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>PW</span>
+              <InputMask
+                mask={""}
+                type={"text"}
+                className={"form-control"}
+                value={user_pw}
+                onChange={(e) => (
+                  setUserPw(e.target.value)
+                )}
+              ></InputMask>
+            </div>
+          </Col>
+        </Row>
+      </React.Fragment>
+    );
+    return (
+      <React.Fragment>
+        <div className={"login-wrapper"}>
+          {tableSection()}
+        </div>
+      </React.Fragment>
+    );
+  };
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
@@ -82,18 +100,10 @@ export const UserLogin = () => {
 
   // 11. button ----------------------------------------------------------------------------------->
   const buttonNode = () => (
-    <React.Fragment>
-      <Button size={"sm"} className={"primary-btn"} onClick={() => {
-        flowUserLogin();
-      }}>
-        Log In
-      </Button>
-      <Button size={"sm"} className={"success-btn"} onClick={() => {
-        navParam(0);
-      }}>
-        Refresh
-      </Button>
-    </React.Fragment>
+    <ButtonNode DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
+      SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"login"}
+    />
   );
 
   // 12. return ----------------------------------------------------------------------------------->
@@ -103,12 +113,17 @@ export const UserLogin = () => {
         <Card className={"card-wrapper"}>
           <Container fluid={true}>
             <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                <h1>Login</h1>
-              </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
+            </Row>
+          </Container>
+        </Card>
+      </div>
+      <div className={"content-wrapper"}>
+        <Card className={"card-wrapper"}>
+          <Container fluid={true}>
+            <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {buttonNode()}
               </Col>

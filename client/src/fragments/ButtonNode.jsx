@@ -95,6 +95,33 @@ export const ButtonNode = ({
       </Button>
     </React.Fragment>
   );
+  const btnLogin = () => (
+    <React.Fragment>
+      <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+        flowSave();
+      }}>
+        Log In
+      </Button>
+    </React.Fragment>
+  );
+  const btnSignup = () => (
+    <React.Fragment>
+      <Button size={"sm"} className={"primary-btn"} type={"button"} onClick={() => {
+        flowSave();
+      }}>
+        Sign Up
+      </Button>
+    </React.Fragment>
+  );
+  const btnRefresh = () => (
+    <React.Fragment>
+      <Button size={"sm"} className={"success-btn"} type={"button"} onClick={() => {
+        navParam(0);
+      }}>
+        Refresh
+      </Button>
+    </React.Fragment>
+  );
 
   // 5. return ------------------------------------------------------------------------------------>
   return (
@@ -123,6 +150,16 @@ export const ButtonNode = ({
         ) : type === "dataset" ? (
           <React.Fragment>
             {btnToSave()}
+          </React.Fragment>
+        ) : type === "login" ? (
+          <React.Fragment>
+            {btnLogin()}
+            {btnRefresh()}
+          </React.Fragment>
+        ) : type === "signup" ? (
+          <React.Fragment>
+            {btnSignup()}
+            {btnRefresh()}
           </React.Fragment>
         ) : null}
       </div>

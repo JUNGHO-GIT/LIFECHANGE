@@ -29,7 +29,6 @@ export const SleepPlanList = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
-    refresh: 0,
     startDt: "0000-00-00",
     endDt: "0000-00-00",
     toDetail:"/sleep/plan/detail"
