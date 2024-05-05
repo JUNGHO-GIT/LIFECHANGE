@@ -1,13 +1,13 @@
 // UserLogin.jsx
 
 import axios from "axios";
-import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {percent} from "../../assets/js/percent.js";
 import {useNavigate, useLocation} from "react-router-dom";
 import {ButtonNode} from "../../fragments/ButtonNode.jsx";
 import {LoadingNode} from "../../fragments/LoadingNode.jsx";
-import {Container, Row, Col, Card, Button} from "react-bootstrap";
+import {TextField, Card, Box, Typography, Button} from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -18,7 +18,6 @@ export const UserLogin = () => {
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navParam = useNavigate();
   const location = useLocation();
-  const PATH = location?.pathname.trim().toString();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
@@ -48,39 +47,37 @@ export const UserLogin = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Row>
-          <Col lg={12} md={12} sm={12} xs={12}>
-            <h2>Log In</h2>
-          </Col>
-          <Col lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>ID</span>
-              <InputMask
-                mask={""}
-                type={"text"}
-                className={"form-control"}
-                value={user_id}
-                onChange={(e) => (
-                  setUserId(e.target.value)
-                )}
-              ></InputMask>
-            </div>
-          </Col>
-          <Col lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
-              <span className={"input-group-text"}>PW</span>
-              <InputMask
-                mask={""}
-                type={"text"}
-                className={"form-control"}
-                value={user_pw}
-                onChange={(e) => (
-                  setUserPw(e.target.value)
-                )}
-              ></InputMask>
-            </div>
-          </Col>
-        </Row>
+        <Grid container spacing={3}>
+          <Grid lg={12} md={12} sm={12} xs={12}>
+            <Typography component="h1" variant="h5">
+              로그인
+            </Typography>
+          </Grid>
+          <Grid lg={12} md={12} sm={12} xs={12}>
+            <TextField
+              type={"text"}
+              id={"user_id"}
+              name={"user_id"}
+              label={"ID"}
+              value={user_id}
+              onChange={(e) => (
+                setUserId(e.target.value)
+              )}
+            ></TextField>
+          </Grid>
+          <Grid lg={12} md={12} sm={12} xs={12}>
+            <TextField
+              type={"password"}
+              id={"user_pw"}
+              name={"user_pw"}
+              label={"Password"}
+              value={user_pw}
+              onChange={(e) => (
+                setUserPw(e.target.value)
+              )}
+            ></TextField>
+          </Grid>
+        </Grid>
       </React.Fragment>
     );
     return (
@@ -110,26 +107,22 @@ export const UserLogin = () => {
   return (
     <React.Fragment>
       <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container fluid={true}>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {LOADING ? loadingNode() : tableNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
+        <div className={"card-wrapper"}>
+          <Grid container spacing={1}>
+            <Grid lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {LOADING ? loadingNode() : tableNode()}
+            </Grid>
+          </Grid>
+        </div>
       </div>
       <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container fluid={true}>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {buttonNode()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
+        <div className={"card-wrapper"}>
+          <Grid container spacing={1}>
+            <Grid lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {buttonNode()}
+            </Grid>
+          </Grid>
+        </div>
       </div>
     </React.Fragment>
   );

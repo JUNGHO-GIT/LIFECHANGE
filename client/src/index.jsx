@@ -1,15 +1,12 @@
 // App.jsx
 
-import React, {useEffect} from "react";
+import React from "react";
 import ReactDOM from 'react-dom/client';
-import {HashRouter, BrowserRouter} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import {reportWebVitals} from "./settings/reportWebVitals";
 import {Routes, Route} from "react-router-dom";
-import {DeveloperModeProvider} from "./hooks/useDeveloperMode.jsx";
+import CssBaseline from "@mui/material/CssBaseline";
 
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
 import "react-day-picker/dist/style.css";
@@ -197,6 +194,7 @@ if (rootElement === null) {
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <BrowserRouter>
+    <CssBaseline />
     <App />
   </BrowserRouter>
 );

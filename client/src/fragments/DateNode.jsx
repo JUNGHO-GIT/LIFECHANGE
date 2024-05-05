@@ -137,50 +137,48 @@ export const DateNode = ({
     );
     const tableSection2 = () => (
       <React.Fragment>
-        <div className={"date-wrapper"}>
-          <Row className={"d-center"}>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>시작일</span>
-                <InputMask
-                  mask={"9999-99-99"}
-                  id={"dayPicker_startDt"}
-                  name={"dayPicker_startDt"}
-                  className={"form-control pointer"}
-                  maskChar={null}
-                  value={DATE?.startDt}
-                  readOnly={true}
-                  onClick={() => {
-                    setDAYPICKER((prev) => ({
-                      ...prev,
-                      dayStartOpen: !prev.dayStartOpen
-                    }));
-                  }}
-                ></InputMask>
-              </div>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6}>
-              <div className={"input-group"}>
-                <span className={"input-group-text"}>종료일</span>
-                <InputMask
-                  mask={"9999-99-99"}
-                  id={"dayPicker_endDt"}
-                  name={"dayPicker_endDt"}
-                  className={"form-control pointer"}
-                  maskChar={null}
-                  value={DATE?.endDt}
-                  readOnly={true}
-                  onClick={() => {
-                    setDAYPICKER((prev) => ({
-                      ...prev,
-                      dayEndOpen: !prev.dayEndOpen
-                    }));
-                  }}
-                ></InputMask>
-              </div>
-            </Col>
-          </Row>
-        </div>
+        <Row className={"d-center"}>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>시작일</span>
+              <InputMask
+                mask={"9999-99-99"}
+                id={"dayPicker_startDt"}
+                name={"dayPicker_startDt"}
+                className={"form-control pointer"}
+                maskChar={null}
+                value={DATE?.startDt}
+                readOnly={true}
+                onClick={() => {
+                  setDAYPICKER((prev) => ({
+                    ...prev,
+                    dayStartOpen: !prev.dayStartOpen
+                  }));
+                }}
+              ></InputMask>
+            </div>
+          </Col>
+          <Col lg={6} md={6} sm={6} xs={6}>
+            <div className={"input-group"}>
+              <span className={"input-group-text"}>종료일</span>
+              <InputMask
+                mask={"9999-99-99"}
+                id={"dayPicker_endDt"}
+                name={"dayPicker_endDt"}
+                className={"form-control pointer"}
+                maskChar={null}
+                value={DATE?.endDt}
+                readOnly={true}
+                onClick={() => {
+                  setDAYPICKER((prev) => ({
+                    ...prev,
+                    dayEndOpen: !prev.dayEndOpen
+                  }));
+                }}
+              ></InputMask>
+            </div>
+          </Col>
+        </Row>
       </React.Fragment>
     );
     return (

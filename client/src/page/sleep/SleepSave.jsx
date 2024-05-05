@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import InputMask from "react-input-mask";
 import {useNavigate, useLocation} from "react-router-dom";
 import {TimePicker} from "react-time-picker";
 import {percent} from "../../assets/js/percent.js";

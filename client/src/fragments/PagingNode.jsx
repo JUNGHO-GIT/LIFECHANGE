@@ -60,7 +60,7 @@ export const PagingNode = ({
   const btnNumber = () => (
     <React.Fragment>
       {Array.from({length: endPage - startPage + 1}, (_, i) => startPage + i).map((i) => (
-        <Button key={i} size={"sm"} className={"page-btn"} disabled={PAGING.page === i}
+        <Button key={i} size={"small"} className={"page-btn"} disabled={PAGING.page === i}
         onClick={() => (
           setPAGING((prev) => ({
             ...prev,

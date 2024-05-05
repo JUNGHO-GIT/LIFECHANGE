@@ -25,9 +25,13 @@
     "cache": "npm cache clean -f"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@fullcalendar/core": "^6.1.8",
     "@fullcalendar/daygrid": "^6.1.8",
     "@fullcalendar/react": "^6.1.8",
+    "@mui/icons-material": "^5.15.16",
+    "@mui/material": "^5.15.16",
     "@react-hooks-library/core": "^0.5.1",
     "@srexi/purecounterjs": "^1.5.0",
     "@types/react": "^18.3.1",
@@ -44,6 +48,7 @@
     "isotope-layout": "^3.0.6",
     "jquery": "^3.7.0",
     "lodash": "^4.17.21",
+    "material-ui-popup-state": "^5.1.0",
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

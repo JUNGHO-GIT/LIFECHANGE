@@ -1,11 +1,14 @@
 // Header.jsx
 
-import {SideBar} from "./SideBar.jsx";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import moment from "moment-timezone";
 import "moment/locale/ko";
-import {Container, Row, Col, Card, Button} from "react-bootstrap";
+import {Card, Container, Menu, MenuItem} from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -16,92 +19,64 @@ export const Header = () => {
 
   // 2-2. useState -------------------------------------------------------------------------------->
   // 사이드바 기본값
-  const [isSidebar, setIsSidebar] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // 4. toggle ------------------------------------------------------------------------------------>
-  const toggleSidebar = () => {
-    setIsSidebar((prev) => (!prev));
-  };
-  const handleCloseSidebar = () => {
-    setIsSidebar(false);
+  const openSidebar = () => {
+    setIsSidebarOpen((prev) => (!prev));
+    local
   };
 
   // 6-1. button ---------------------------------------------------------------------------------->
-  const buttonNode1 = () => {
-    const btnSideBar = () => (
-      <Button type={"button"} size={"sm"} className={"dark-btn"} onClick={toggleSidebar}>
-        Sidebar
-      </Button>
-    );
-    return (
-      <React.Fragment>
-        <span className={"w-1vw"}></span>
-        <SideBar sidebar={isSidebar} onClose={handleCloseSidebar} />
-        {btnSideBar()}
-      </React.Fragment>
-    );
-  };
+  const btnSideBar = () => (
+    <React.Fragment>
+      <MenuIcon onClick={openSidebar} />
+    </React.Fragment>
+  );
+
   // 6-2. button ---------------------------------------------------------------------------------->
-  const buttonNode2 = () => {
-    const btnLogIn = () => (
-      <Button size={"sm"} className={"dark-btn"} onClick={() => {
-        navParam("/user/login");
-      }}>
-        Login
-      </Button>
-    );
-    const btnSignUp = () => (
-      <Button size={"sm"} className={"dark-btn"} onClick={() => {
-        navParam("/user/signup");
-      }}>
-        Signup
-      </Button>
-    );
-    const btnLogOut = () => (
-      <Button size={"sm"} className={"dark-btn"} onClick={() => {
-        sessionStorage.clear();
-        sessionStorage.setItem("user_id", "false");
-        navParam("/calendar/list");
-      }}>
-        Logout
-      </Button>
-    );
-    return (
-      (!user_id || user_id === "false") ? (
-        <React.Fragment>
-          {btnLogIn()}
-          {btnSignUp()}
-          <span className={"w-1vw"}></span>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          {btnLogOut()}
-          <span className={"w-1vw"}></span>
-        </React.Fragment>
-      )
-    );
-  };
+  const btnUser = () => (
+    <PopupState variant={"popover"} popupId={"popup-menu"}>
+      {(popupState) => (
+        <>
+          <AccountCircleIcon {...bindTrigger(popupState)} />
+          <Menu {...bindMenu(popupState)}>
+            <React.Fragment>
+              <MenuItem onClick={() => {
+                navParam("/user/login");
+              }}>
+                Login
+              </MenuItem>
+              <MenuItem onClick={() => {
+                navParam("/user/signup");
+              }}>
+                Signup
+              </MenuItem>
+            </React.Fragment>
+          </Menu>
+        </>
+      )}
+    </PopupState>
+  );
 
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"header-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container fluid={true}>
-            <Row>
-              <Col lg={3} md={3} sm={3} xs={3} className={"d-left"}>
-                {buttonNode1()}
-              </Col>
-              <Col lg={6} md={6} sm={6} xs={6} className={"d-center"}>
-                <span className={"head-text"}>{moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}</span>
-              </Col>
-              <Col lg={3} md={3} sm={3} xs={3} className={"d-right"}>
-                {buttonNode2()}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"header-wrapper"}>
+        <Container>
+          <Grid container spacing={3}>
+            <Grid xl={2} lg={2} md={2} sm={2} xs={2} className={"d-left"}>
+              {btnSideBar()}
+            </Grid>
+            <Grid xl={8} lg={8} md={8} sm={8} xs={8} className={"d-center"}>
+              <span className={"head-text"}>{moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}</span>
+            </Grid>
+            <Grid xl={2} lg={2} md={2} sm={2} xs={2} className={"d-right"}>
+              {btnUser()}
+            </Grid>
+          </Grid>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

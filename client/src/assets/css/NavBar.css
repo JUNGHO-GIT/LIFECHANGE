@@ -10,8 +10,7 @@
   color: #0b2730;
 }
 .nav-image-smile {
-  display: inline-block;
-  object-fit: cover;
+  display: flex;
   color: #0b2730;
 }
 
@@ -24,14 +23,17 @@
   .nav-text {
     font-size: 0.8rem;
     font-weight: 600;
+    line-height: 0.8rem;
   }
   .nav-icon-text {
     font-size: 0.8rem;
     font-weight: 600;
+    line-height: 0.8rem;
   }
   .nav-image-smile {
     width: 15px;
     height: 15px;
+    line-height: 15px;
   }
 }
 
@@ -44,14 +46,17 @@
   .nav-text {
     font-size: 1.0rem;
     font-weight: 600;
+    line-height: 1.0rem;
   }
   .nav-icon-text {
     font-size: 0.9rem;
     font-weight: 600;
+    line-height: 0.9rem;
   }
   .nav-image-smile {
     width: 18px;
     height: 18px;
+    line-height: 18px;
   }
 }
 
@@ -64,14 +69,17 @@
   .nav-text {
     font-size: 1.2rem;
     font-weight: 600;
+    line-height: 1.2rem;
   }
   .nav-icon-text {
     font-size: 1.0rem;
     font-weight: 600;
+    line-height: 1.0rem;
   }
   .nav-image-smile {
     width: 20px;
     height: 20px;
+    line-height: 20px;
   }
 }
 
@@ -84,14 +92,17 @@
   .nav-text {
     font-size: 1.4rem;
     font-weight: 600;
+    line-height: 1.4rem;
   }
   .nav-icon-text {
     font-size: 1.1rem;
     font-weight: 600;
+    line-height: 1.1rem;
   }
   .nav-image-smile {
     width: 23px;
     height: 23px;
+    line-height: 23px;
   }
 }
 
@@ -104,13 +115,16 @@
   .nav-text {
     font-size: 1.6rem;
     font-weight: 600;
+    line-height: 1.6rem;
   }
   .nav-icon-text {
     font-size: 1.2rem;
     font-weight: 600;
+    line-height: 1.2rem;
   }
   .nav-image-smile {
     width: 25px;
     height: 25px;
+    line-height: 25px;
   }
 }

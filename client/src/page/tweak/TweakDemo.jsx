@@ -518,7 +518,7 @@ export const TweakDemo = () => {
     );
     const btnAdd = () => (
       <React.Fragment>
-        <Button variant={"outline-secondary"} size={"sm"} onClick={() => (
+        <Button variant={"outline-secondary"} size={"small"} onClick={() => (
           flowAdd(TYPE)
         )}>
           추가
@@ -527,7 +527,7 @@ export const TweakDemo = () => {
     );
     const btnDelete = () => (
       <React.Fragment>
-        <Button variant={"outline-secondary"} size={"sm"} onClick={() => (
+        <Button variant={"outline-secondary"} size={"small"} onClick={() => (
           flowDelete(TYPE)
         )}>
           삭제

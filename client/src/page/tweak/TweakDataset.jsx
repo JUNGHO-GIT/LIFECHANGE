@@ -438,7 +438,7 @@ export const TweakDataset = () => {
     }
     return (
       <React.Fragment>
-        <Button variant={"danger"} size={"sm"} className={"danger-btn"}
+        <Button variant={"danger"} size={"small"} className={"danger-btn"}
         onClick={confirmDefault}>
           기본값
         </Button>
