@@ -55,37 +55,47 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
 
   // 4. sidebarNode ------------------------------------------------------------------------------->
   const sidBarNode = () => (
-    <SwipeableDrawer open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} onOpen={() => setIsSidebarOpen(true)} className={"sidebar"}>
-      <List sx={{width:200}} role={"presentation"} component={"nav"} className={"sidebar-ul-text"}>
-        {dataArray.map((item, index) => (
-          <Box key={index} sx={{width:200}}>
-            <ListItemButton key={index} className={`sidebar-li-text ${isFirstOpen === item.title?"highlight":""}`} onClick={() => (
-              toggleFirstOpen(item.title)
-            )}>
-              <ListItemIcon><i className={`${item.icon}`}></i></ListItemIcon>
-              <ListItemText>{item.title}</ListItemText>
-            </ListItemButton>
-            <Collapse in={isFirstOpen === item.title} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                {item?.items?.map(({ to, label }) => (
-                  <ListItemButton key={to} className={`sidebar-li2-text ${isSecondOpen === to?"highlight":""}`}
-                  onClick={() => {
-                    SEND.startDt = koreanDate;
-                    SEND.endDt = koreanDate;
-                    navParam(to, {
-                      state: SEND
-                    });
-                    setIsSidebarOpen(false);
-                    setIsSecondOpen(to);
-                  }}>
-                    <ListItemText>{label}</ListItemText>
-                  </ListItemButton>
-                ))}
-              </List>
-            </Collapse>
-          </Box>
-        ))}
-      </List>
+    <SwipeableDrawer
+      open={isSidebarOpen}
+      onOpen={() => (setIsSidebarOpen(true))}
+      onClose={() => (setIsSidebarOpen(false))}
+      className={"sidebar"}
+    >
+      <Box sx={{width:180}}>
+        <Box>
+          <img src={logo3} alt={"logo"} className={"sidebar-image-logo"} />
+        </Box>
+        <List role={"presentation"} component={"nav"} className={"sidebar-ul-text"}>
+          {dataArray.map((item, index) => (
+            <Box key={index}>
+              <ListItemButton key={index} className={`sidebar-li-text ${isFirstOpen === item.title?"highlight":""}`} onClick={() => (
+                toggleFirstOpen(item.title)
+              )}>
+                <ListItemIcon><i className={`${item.icon}`}></i></ListItemIcon>
+                <ListItemText>{item.title}</ListItemText>
+              </ListItemButton>
+              <Collapse in={isFirstOpen === item.title} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {item?.items?.map(({ to, label }) => (
+                    <ListItemButton key={to} className={`sidebar-li2-text ${isSecondOpen === to?"highlight":""}`}
+                    onClick={() => {
+                      SEND.startDt = koreanDate;
+                      SEND.endDt = koreanDate;
+                      navParam(to, {
+                        state: SEND
+                      });
+                      setIsSidebarOpen(false);
+                      setIsSecondOpen(to);
+                    }}>
+                      <ListItemText>{label}</ListItemText>
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Collapse>
+            </Box>
+          ))}
+        </List>
+      </Box>
     </SwipeableDrawer>
   );
 
