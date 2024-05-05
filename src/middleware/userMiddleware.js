@@ -7,16 +7,16 @@ export const percent = async (object) => {
     return [];
   }
 
-  console.log("===================================");
-  console.log(JSON.stringify(object, null, 3));
-  console.log("===================================");
-
   // 1. exercise
   const diffExercise = (plan, real, extra) => {
     const percent = ((real - plan) / plan) * 100;
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
-    if (extra === "volume") {
+
+    if (plan === 0 || plan === "00:00" || real === 0 || real === "00:00") {
+      return 1;
+    }
+    else if (extra === "count" || extra === "volume" || extra === "weight") {
       // 1. ~ 1%
       if (percent <= 1) {
         return 4;
@@ -34,7 +34,7 @@ export const percent = async (object) => {
         return 1;
       }
     }
-    else {
+    else if (extra === "time") {
       let diff = 0;
       if (realDate < planDate) {
         diff = planDate.getTime() - realDate.getTime();
@@ -64,8 +64,11 @@ export const percent = async (object) => {
   // 2. food
   const diffFood = (plan, real, extra) => {
     const percent = ((real - plan) / plan) * 100;
+    if (plan === 0 || plan === "00:00" || real === 0 || real === "00:00") {
+      return 1;
+    }
     // 1. ~ 1%
-    if (percent <= 1) {
+    else if (percent <= 1) {
       return 4;
     }
     // 2. 1% ~ 10%
@@ -84,7 +87,7 @@ export const percent = async (object) => {
 
   // 3. money
   const diffMoney = (plan, real, extra) => {
-    if (plan === undefined || real === undefined) {
+    if (plan === 0 || plan === "00:00" || real === 0 || real === "00:00") {
       return 1;
     }
     else if (extra === "in") {
@@ -171,14 +174,13 @@ export const percent = async (object) => {
     const planDate = new Date(`1970-01-01T${plan}Z`);
     const realDate = new Date(`1970-01-01T${real}Z`);
     let diff = 0;
-    if (realDate < planDate) {
-      diff = planDate.getTime() - realDate.getTime();
-    }
-    else {
-      diff = realDate.getTime() - planDate.getTime();
+    realDate < planDate ? diff = planDate.getTime() - realDate.getTime() : diff = realDate.getTime() - planDate.getTime();
+
+    if (plan === 0 || plan === "00:00" || real === 0 || real === "00:00") {
+      return 1;
     }
     // 1. 10분이내
-    if (0 <= diff && diff <= 600000) {
+    else if (0 <= diff && diff <= 600000) {
       return 4;
     }
     // 2. 10분 ~ 20분
@@ -203,28 +205,80 @@ export const percent = async (object) => {
   }
 
   const exercise = {
-    diff_count: diffExercise(object?.exercisePlan.exercise_plan_count, object?.exerciseReal.exercise_total_count, "") || 1,
-    diff_volume: diffExercise(object?.exercisePlan.exercise_plan_volume, object?.exerciseReal.exercise_total_volume, "volume") || 1,
-    diff_cardio: diffExercise(object?.exercisePlan.exercise_plan_cardio, object?.exerciseReal.exercise_total_cardio, "time") || 1,
-    diff_weight:  diffExercise(object?.exercisePlan.exercise_plan_weight, object?.exerciseReal.exercise_body_weight, "") || 1,
+    diff_count: diffExercise(
+      object?.exercisePlan?.exercise_plan_count,
+      object?.exercise?.exercise_total_count,
+      "count"
+    ),
+    diff_volume: diffExercise(
+      object?.exercisePlan?.exercise_plan_volume,
+      object?.exercise?.exercise_total_volume,
+      "volume"
+    ),
+    diff_cardio: diffExercise(
+      object?.exercisePlan?.exercise_plan_cardio,
+      object?.exercise?.exercise_total_cardio,
+      "time"
+    ),
+    diff_weight:diffExercise(
+      object?.exercisePlan?.exercise_plan_weight,
+      object?.exercise?.exercise_body_weight,
+      "weight"
+    ),
   };
 
   const food = {
-    diff_kcal: diffFood(object?.foodPlan.food_plan_kcal, object?.foodReal.food_total_kcal) || 1,
-    diff_carb: diffFood(object?.foodPlan.food_plan_carb, object?.foodReal.food_total_carb) || 1,
-    diff_protein: diffFood(object?.foodPlan.food_plan_protein, object?.foodReal.food_total_protein) || 1,
-    diff_fat: diffFood(object?.foodPlan.food_plan_fat, object?.foodReal.food_total_fat) || 1,
+    diff_kcal: diffFood(
+      object?.foodPlan?.food_plan_kcal,
+      object?.food?.food_total_kcal,
+      "kcal"
+    ),
+    diff_carb: diffFood(
+      object?.foodPlan?.food_plan_carb,
+      object?.food?.food_total_carb,
+      "carb"
+    ),
+    diff_protein: diffFood(
+      object?.foodPlan?.food_plan_protein,
+      object?.food?.food_total_protein,
+      "protein"
+    ),
+    diff_fat: diffFood(
+      object?.foodPlan?.food_plan_fat,
+      object?.food?.food_total_fat,
+      "fat"
+    ),
   };
 
   const money = {
-    diff_in: diffMoney(object?.moneyPlan.money_plan_in, object?.moneyReal.money_total_in, "in") || 1,
-    diff_out: diffMoney(object?.moneyPlan.money_plan_out, object?.moneyReal.money_total_out, "out") || 1,
+    diff_in: diffMoney(
+      object?.moneyPlan?.money_plan_in,
+      object?.money?.money_total_in,
+      "in"
+    ),
+    diff_out: diffMoney(
+      object?.moneyPlan?.money_plan_out,
+      object?.money?.money_total_out,
+      "out"
+    ),
   };
 
   const sleep = {
-    diff_night: diffSleep(object?.sleepPlan.sleep_plan_night, object?.sleepReal.sleep_night) || 1,
-    diff_morning: diffSleep(object?.sleepPlan.sleep_plan_morning, object?.sleepReal.sleep_morning) || 1,
-    diff_time: diffSleep(object?.sleepPlan.sleep_plan_time, object?.sleepReal.sleep_time) || 1,
+    diff_night: diffSleep(
+      object?.sleepPlan?.sleep_plan_night,
+      object?.sleep?.sleep_night,
+      "night"
+    ),
+    diff_morning: diffSleep(
+      object?.sleepPlan?.sleep_plan_morning,
+      object?.sleep?.sleep_morning,
+      "morning"
+    ),
+    diff_time: diffSleep(
+      object?.sleepPlan?.sleep_plan_time,
+      object?.sleep?.sleep_time,
+      "time"
+    ),
   };
 
   const newObject = {
