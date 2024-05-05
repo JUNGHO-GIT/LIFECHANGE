@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -19,6 +20,7 @@ export const ExerciseDashAvg = () => {
   const array = ["횟수", "볼륨", "시간"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("volume");
 
@@ -57,6 +59,7 @@ export const ExerciseDashAvg = () => {
     });
     setOBJECT_VOLUME_YEAR(responseYear.data.result.volume || OBJECT_VOLUME_YEAR_DEFAULT);
     setOBJECT_CARDIO_YEAR(responseYear.data.result.cardio || OBJECT_CARDIO_YEAR_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -271,6 +274,12 @@ export const ExerciseDashAvg = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -302,10 +311,10 @@ export const ExerciseDashAvg = () => {
             </Row>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12}>
-                {SECTION === "month" && LINE === "volume" && chartVolumeMonth()}
-                {SECTION === "month" && LINE === "cardio" && chartCardioMonth()}
-                {SECTION === "year" && LINE === "volume" && chartVolumeYear()}
-                {SECTION === "year" && LINE === "cardio" && chartCardioYear()}
+                {SECTION === "month" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeMonth())}
+                {SECTION === "month" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioMonth())}
+                {SECTION === "year" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeYear())}
+                {SECTION === "year" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioYear())}
               </Col>
             </Row>
           </Container>

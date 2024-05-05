@@ -2,8 +2,7 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../hooks/useStorage.jsx";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
 
@@ -14,11 +13,11 @@ export const MoneyDashPie = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_MONEY || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("in");
   const [radius, setRadius] = useState(120);
@@ -103,6 +102,7 @@ export const MoneyDashPie = () => {
     });
     setOBJECT_IN_MONTH(responseMonth.data.result.in || OBJECT_IN_MONTH_DEFAULT);
     setOBJECT_OUT_MONTH(responseMonth.data.result.out || OBJECT_OUT_MONTH_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->
@@ -423,6 +423,12 @@ export const MoneyDashPie = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -455,12 +461,12 @@ export const MoneyDashPie = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "today" && LINE === "in" && chartInToday()}
-              {SECTION === "today" && LINE === "out" && chartOutToday()}
-              {SECTION === "week" && LINE === "in" && chartInWeek()}
-              {SECTION === "week" && LINE === "out" && chartOutWeek()}
-              {SECTION === "month" && LINE === "in" && chartInMonth()}
-              {SECTION === "month" && LINE === "out" && chartOutMonth()}
+              {SECTION === "today" && LINE === "in" && (LOADING ? loadingNode() : chartInToday())}
+              {SECTION === "today" && LINE === "out" && (LOADING ? loadingNode() : chartOutToday())}
+              {SECTION === "week" && LINE === "in" && (LOADING ? loadingNode() : chartInWeek())}
+              {SECTION === "week" && LINE === "out" && (LOADING ? loadingNode() : chartOutWeek())}
+              {SECTION === "month" && LINE === "in" && (LOADING ? loadingNode() : chartInMonth())}
+              {SECTION === "month" && LINE === "out" && (LOADING ? loadingNode() : chartOutMonth())}
             </Col>
             </Row>
           </Container>

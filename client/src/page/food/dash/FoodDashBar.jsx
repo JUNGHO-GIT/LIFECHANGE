@@ -3,6 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -19,6 +20,7 @@ export const FoodDashBar = () => {
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("kcal");
 
@@ -41,6 +43,7 @@ export const FoodDashBar = () => {
     });
     setOBJECT_KCAL_TODAY(responseToday.data.result.kcal || OBJECT_KCAL_TODAY_DEFAULT);
     setOBJECT_NUT_TODAY(responseToday.data.result.nut || OBJECT_NUT_TODAY_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -155,6 +158,12 @@ export const FoodDashBar = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -185,8 +194,8 @@ export const FoodDashBar = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {LINE === "kcal" && chartKcalToday()}
-              {LINE === "nut" && chartNutToday()}
+              {LINE === "kcal" && (LOADING ? loadingNode() : chartKcalToday())}
+              {LINE === "nut" && (LOADING ? loadingNode() : chartNutToday())}
             </Col>
             </Row>
           </Container>

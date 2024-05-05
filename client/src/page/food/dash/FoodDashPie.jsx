@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../hooks/useStorage.jsx";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
 
@@ -18,6 +18,7 @@ export const FoodDashPie = () => {
   const user_id = sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("kcal");
   const [radius, setRadius] = useState(120);
@@ -102,6 +103,7 @@ export const FoodDashPie = () => {
     });
     setOBJECT_KCAL_MONTH(responseMonth.data.result.kcal || OBJECT_KCAL_MONTH_DEFAULT);
     setOBJECT_NUT_MONTH(responseMonth.data.result.nut || OBJECT_NUT_MONTH_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->
@@ -422,6 +424,12 @@ export const FoodDashPie = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -454,12 +462,12 @@ export const FoodDashPie = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "today" && LINE === "kcal" && chartKcalToday()}
-              {SECTION === "today" && LINE === "nut" && chartNutToday()}
-              {SECTION === "week" && LINE === "kcal" && chartKcalWeek()}
-              {SECTION === "week" && LINE === "nut" && chartNutWeek()}
-              {SECTION === "month" && LINE === "kcal" && chartKcalMonth()}
-              {SECTION === "month" && LINE === "nut" && chartNutMonth()}
+              {SECTION === "today" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalToday())}
+              {SECTION === "today" && LINE === "nut" && (LOADING ? loadingNode() : chartNutToday())}
+              {SECTION === "week" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalWeek())}
+              {SECTION === "week" && LINE === "nut" && (LOADING ? loadingNode() : chartNutWeek())}
+              {SECTION === "month" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalMonth())}
+              {SECTION === "month" && LINE === "nut" && (LOADING ? loadingNode() : chartNutMonth())}
             </Col>
             </Row>
           </Container>

@@ -4,8 +4,8 @@ import axios from "axios";
 import {ComposedChart, Bar} from "recharts";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
-import {useStorage} from "../../../hooks/useStorage.jsx";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
 
@@ -21,6 +21,7 @@ export const MoneyDashAvg = () => {
   const array = ["수입", "지출"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("in");
 
@@ -59,6 +60,7 @@ export const MoneyDashAvg = () => {
     });
     setOBJECT_IN_YEAR(responseYear.data.result.in || OBJECT_IN_YEAR_DEFAULT);
     setOBJECT_OUT_YEAR(responseYear.data.result.out || OBJECT_OUT_YEAR_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -273,6 +275,12 @@ export const MoneyDashAvg = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -304,10 +312,10 @@ export const MoneyDashAvg = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "month" && LINE === "in" && chartInMonth()}
-              {SECTION === "month" && LINE === "out" && chartOutMonth()}
-              {SECTION === "year" && LINE === "in" && chartInYear()}
-              {SECTION === "year" && LINE === "out" && chartOutYear()}
+              {SECTION === "month" && LINE === "in" && (LOADING ? loadingNode() : chartInMonth())}
+              {SECTION === "month" && LINE === "out" && (LOADING ? loadingNode() : chartOutMonth())}
+              {SECTION === "year" && LINE === "in" && (LOADING ? loadingNode() : chartInYear())}
+              {SECTION === "year" && LINE === "out" && (LOADING ? loadingNode() : chartOutYear())}
             </Col>
             </Row>
           </Container>

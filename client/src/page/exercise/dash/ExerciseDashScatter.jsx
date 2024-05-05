@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
-import {useStorage} from "../../../hooks/useStorage.jsx";
 import {Bar, Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
@@ -21,6 +21,7 @@ export const ExerciseDashScatter = () => {
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const OBJECT_TODAY_DEFAULT = [
     {name:"", 목표: 0, 실제: 0},
@@ -57,6 +58,7 @@ export const ExerciseDashScatter = () => {
       },
     });
     setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -239,6 +241,12 @@ export const ExerciseDashScatter = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -265,9 +273,9 @@ export const ExerciseDashScatter = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "today" && chartToday()}
-              {SECTION === "week" && chartWeek()}
-              {SECTION === "month" && chartMonth()}
+              {SECTION === "today" && (LOADING ? loadingNode() : chartToday())}
+              {SECTION === "week" && (LOADING ? loadingNode() : chartWeek())}
+              {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
             </Col>
             </Row>
           </Container>

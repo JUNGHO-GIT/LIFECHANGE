@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
-import {useStorage} from "../../../hooks/useStorage.jsx";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
@@ -21,6 +21,7 @@ export const FoodDashAvg = () => {
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("kcal");
   const [PART, setPART] = useState(array);
@@ -60,6 +61,7 @@ export const FoodDashAvg = () => {
     });
     setOBJECT_KCAL_YEAR(responseYear.data.result.kcal || OBJECT_KCAL_YEAR_DEFAULT);
     setOBJECT_NUT_YEAR(responseYear.data.result.nut || OBJECT_NUT_YEAR_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -324,6 +326,12 @@ export const FoodDashAvg = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -355,13 +363,13 @@ export const FoodDashAvg = () => {
           </Row>
           <Row>
             <Col lg={10} md={10} sm={10} xs={10}>
-              {SECTION === "month" && LINE === "kcal" && chartKcalMonth()}
-              {SECTION === "month" && LINE === "nut" && chartNutMonth()}
-              {SECTION === "year" && LINE === "kcal" && chartKcalYear()}
-              {SECTION === "year" && LINE === "nut" && chartNutYear()}
+              {SECTION === "month" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalMonth())}
+              {SECTION === "month" && LINE === "nut" && (LOADING ? loadingNode() : chartNutMonth())}
+              {SECTION === "year" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalYear())}
+              {SECTION === "year" && LINE === "nut" && (LOADING ? loadingNode() : chartNutYear())}
             </Col>
             <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-              {tableNode()}
+              {LOADING ? "" : tableNode()}
             </Col>
             </Row>
           </Container>

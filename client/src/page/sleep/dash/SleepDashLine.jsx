@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -15,11 +15,11 @@ export const SleepDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["취침", "수면", "기상"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [PART, setPART] = useState(array);
 
@@ -48,6 +48,7 @@ export const SleepDashLine = () => {
       },
     });
     setOBJECT_MONTH(responseMonth.data.result || OBJECT_MONTH_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -200,6 +201,12 @@ export const SleepDashLine = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -225,11 +232,11 @@ export const SleepDashLine = () => {
             </Row>
             <Row>
               <Col lg={10} md={10} sm={10} xs={10}>
-                {SECTION === "week" && chartWeek()}
-                {SECTION === "month" && chartMonth()}
+                {SECTION === "week" && (LOADING ? loadingNode() : chartWeek())}
+                {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
               </Col>
               <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-                {tableNode()}
+                {LOADING ? "" : tableNode()}
               </Col>
             </Row>
           </Container>

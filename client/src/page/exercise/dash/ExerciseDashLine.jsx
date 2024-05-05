@@ -2,10 +2,9 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Line, LineChart} from "recharts";
-import {useStorage} from "../../../hooks/useStorage.jsx";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -16,11 +15,11 @@ export const ExerciseDashLine = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["볼륨", "시간"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("volume");
 
@@ -59,6 +58,7 @@ export const ExerciseDashLine = () => {
     });
     setOBJECT_VOLUME_MONTH(responseMonth.data.result.volume || OBJECT_VOLUME_MONTH_DEFAULT);
     setOBJECT_CARDIO_MONTH(responseMonth.data.result.cardio || OBJECT_CARDIO_MONTH_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -269,6 +269,12 @@ export const ExerciseDashLine = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -300,10 +306,10 @@ export const ExerciseDashLine = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "week" && LINE === "volume" && chartVolumeWeek()}
-              {SECTION === "week" && LINE === "cardio" && chartCardioWeek()}
-              {SECTION === "month" && LINE === "volume" && chartVolumeMonth()}
-              {SECTION === "month" && LINE === "cardio" && chartCardioMonth()}
+              {SECTION === "week" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeWeek())}
+              {SECTION === "week" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioWeek())}
+              {SECTION === "month" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeMonth())}
+              {SECTION === "month" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioMonth())}
             </Col>
             </Row>
           </Container>

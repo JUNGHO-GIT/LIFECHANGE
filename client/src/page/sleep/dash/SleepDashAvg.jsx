@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
@@ -15,11 +15,11 @@ export const SleepDashAvg = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_SLEEP || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
   const array = ["취침", "기상", "수면"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [PART, setPART] = useState(array);
 
@@ -48,6 +48,7 @@ export const SleepDashAvg = () => {
       },
     });
     setOBJECT_YEAR(responseYear.data.result || OBJECT_YEAR_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -202,6 +203,12 @@ export const SleepDashAvg = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -227,11 +234,11 @@ export const SleepDashAvg = () => {
             </Row>
             <Row>
               <Col lg={10} md={10} sm={10} xs={10}>
-                {SECTION === "month" && chartMonth()}
-                {SECTION === "year" && chartYear()}
+                {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
+                {SECTION === "year" && (LOADING ? loadingNode() : chartYear())}
               </Col>
               <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-                {tableNode()}
+                {LOADING ? "" : tableNode()}
               </Col>
             </Row>
           </Container>

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -19,6 +19,7 @@ export const SleepDashBar = () => {
   const array = ["목표", "실제"];
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -35,6 +36,7 @@ export const SleepDashBar = () => {
       },
     });
     setOBJECT_TODAY(responseToday.data.result || OBJECT_TODAY_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 5-1. chart ----------------------------------------------------------------------------------->
@@ -93,6 +95,12 @@ export const SleepDashBar = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -117,7 +125,7 @@ export const SleepDashBar = () => {
             </Row>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} style={{alignSelf:"center"}}>
-                {SECTION === "today" && chartToday()}
+                {SECTION === "today" && (LOADING ? loadingNode() : chartToday())}
               </Col>
             </Row>
           </Container>

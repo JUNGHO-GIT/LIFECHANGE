@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {useStorage} from "../../../hooks/useStorage.jsx";
+import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
@@ -14,10 +14,10 @@ export const ExerciseDashPie = () => {
   const URL = process.env.REACT_APP_URL || "";
   const SUBFIX = process.env.REACT_APP_EXERCISE || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
-  const location = useLocation();
   const user_id = sessionStorage.getItem("user_id");
 
   // 2-1. useState -------------------------------------------------------------------------------->
+  const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("part");
   const [radius, setRadius] = useState(120);
@@ -86,6 +86,7 @@ export const ExerciseDashPie = () => {
     });
     setOBJECT_PART_MONTH(responseMonth.data.result.part || OBJECT_PART_MONTH_DEFAULT);
     setOBJECT_TITLE_MONTH(responseMonth.data.result.title || OBJECT_TITLE_MONTH_DEFAULT);
+    setLOADING(false);
   })()}, [user_id]);
 
   // 4-1. render ---------------------------------------------------------------------------------->
@@ -300,6 +301,12 @@ export const ExerciseDashPie = () => {
     );
   };
 
+  // 6. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -331,10 +338,10 @@ export const ExerciseDashPie = () => {
           </Row>
           <Row>
             <Col lg={12} md={12} sm={12} xs={12}>
-              {SECTION === "week" && LINE === "part" && chartPartWeek()}
-              {SECTION === "week" && LINE === "title" && chartTitleWeek()}
-              {SECTION === "month" && LINE === "part" && chartPartMonth()}
-              {SECTION === "month" && LINE === "title" && chartTitleMonth()}
+              {SECTION === "week" && LINE === "part" && (LOADING ? loadingNode() : chartPartWeek())}
+              {SECTION === "week" && LINE === "title" && (LOADING ? loadingNode() : chartTitleWeek())}
+              {SECTION === "month" && LINE === "part" && (LOADING ? loadingNode() : chartPartMonth())}
+              {SECTION === "month" && LINE === "title" && (LOADING ? loadingNode() : chartTitleMonth())}
             </Col>
             </Row>
           </Container>
