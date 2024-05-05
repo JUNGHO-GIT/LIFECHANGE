@@ -68,7 +68,10 @@ export const list = {
           }
         }
       }},
-      {$sort: {food_startDt: sort_param}},
+      {$sort: {
+        food_startDt: sort_param,
+        food_endDt: sort_param
+      }},
       {$skip: (Number(page_param) - 1) * Number(limit_param)},
       {$limit: Number(limit_param)}
     ]);

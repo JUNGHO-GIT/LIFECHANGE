@@ -8,9 +8,10 @@ export const FilterNode = ({
 }) => {
 
   const session = sessionStorage.getItem("dataset") || "{}";
+  const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
-  const exerciseArray = JSON.parse(session).exercise || [];
+  const sleepArray = JSON.parse(session).sleep || [];
 
   // 1. default
   const defaultNode = () => (
@@ -175,46 +176,34 @@ export const FilterNode = ({
     </React.Fragment>
   );
 
-  // 5. return
+  // 6. return
   return (
     <React.Fragment>
       <div className={"filter-wrapper d-inline-flex"}>
-        {part === "food" && plan === "" ? (
+        {part === "exercise" && plan === "" ? (
+          <React.Fragment>
+            {defaultNode()}
+            {exerciseNode()}
+          </React.Fragment>
+        ) : part === "food" && plan === "" ? (
           <React.Fragment>
             {defaultNode()}
             {foodNode()}
-          </React.Fragment>
-        ) : part === "food" && plan === "plan" ? (
-          <React.Fragment>
-            {defaultNode()}
           </React.Fragment>
         ) : part === "money" && plan === "" ? (
           <React.Fragment>
             {defaultNode()}
             {moneyNode()}
           </React.Fragment>
-        ) : part === "money" && plan === "plan" ? (
-          <React.Fragment>
-            {defaultNode()}
-          </React.Fragment>
         ) : part === "sleep" && plan === "" ? (
           <React.Fragment>
             {defaultNode()}
           </React.Fragment>
-        ) : part === "sleep" && plan === "plan" ? (
+        ) : (
           <React.Fragment>
             {defaultNode()}
           </React.Fragment>
-        ) : part === "exercise" && plan === "" ? (
-          <React.Fragment>
-            {defaultNode()}
-            {exerciseNode()}
-          </React.Fragment>
-        ) : part === "exercise" && plan === "plan" ? (
-          <React.Fragment>
-            {defaultNode()}
-          </React.Fragment>
-        ) : null}
+        )}
       </div>
     </React.Fragment>
   );

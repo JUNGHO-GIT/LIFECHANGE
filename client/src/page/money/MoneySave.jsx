@@ -45,7 +45,7 @@ export const MoneySave = () => {
   const [DAYPICKER, setDAYPICKER] = useState({
     dayStartOpen: false,
     dayEndOpen: false,
-    dayOpen: false,
+    calOpen: false,
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->

@@ -8,7 +8,7 @@ import {differenceInDays} from "date-fns";
 
 // 8. dayPicker ----------------------------------------------------------------------------------->
 export const DayPickerNode = ({
-  FILTER, setFILTER, DATE, setDATE, DAYPICKER, setDAYPICKER, part, plan, type
+  FILTER, setFILTER, DATE, setDATE, DAYPICKER, setDAYPICKER
 }) => {
 
   // 1. common ------------------------------------------------------------------------------------>

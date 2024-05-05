@@ -172,7 +172,7 @@ export const SleepList = () => {
     />
   );
 
-    // 8. dayPicker --------------------------------------------------------------------------------->
+  // 8. dayPicker --------------------------------------------------------------------------------->
   const dayPickerNode = () => (
     <DayPickerNode  FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}

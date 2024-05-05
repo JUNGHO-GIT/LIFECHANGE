@@ -42,9 +42,9 @@ export const SleepSave = () => {
     sectionCnt: 0
   });
   const [DAYPICKER, setDAYPICKER] = useState({
-    dayStartOpen: false,
-    dayEndOpen: false,
-    dayOpen: false,
+    calStartOpen: false,
+    calEndOpen: false,
+    calOpen: false,
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->

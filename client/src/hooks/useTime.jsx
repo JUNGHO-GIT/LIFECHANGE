@@ -12,6 +12,13 @@ export const useTime = (
   const strLow = PATH.match(/\/([^\/]+)\//)[1];
   const koreanDate = moment.tz("Asia/Seoul").format("YYYY-MM-DD");
 
+  // log
+  useEffect(() => {
+    console.log("===================================");
+    console.log(JSON.stringify(OBJECT, null, 2));
+    console.log("===================================");
+  }, [OBJECT]);
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
 
@@ -62,8 +69,9 @@ export const useTime = (
 
     // 4-2. sleep
     if (type === "real" && strLow === "sleep") {
-      const nightTime = OBJECT?.sleep_section[0]?.sleep_night;
-      const morningTime = OBJECT?.sleep_section[0]?.sleep_morning;
+
+      const nightTime = OBJECT?.sleep_section[0]?.sleep_time;
+      const morningTime = OBJECT?.sleep_section[1]?.sleep_time;
 
       if (nightTime && morningTime) {
         const startDate = new Date(`${koreanDate}T${nightTime}Z`);
@@ -80,21 +88,22 @@ export const useTime = (
 
         setOBJECT((prev) => ({
           ...prev,
-          sleep_section: [{
-            ...prev.sleep_section[0],
-            sleep_time: time,
-          }],
+          sleep_section: prev.sleep_section.map((section, index) => (
+            index === 2 ? {
+              ...section,
+              sleep_time: time
+            } : section
+          )),
         }));
       }
     }
-
   }, [
     strLow,
     type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_startDt : "",
     type === "plan" && strLow === "exercise" ? OBJECT?.exercise_plan_endDt : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_night : "",
     type === "plan" && strLow === "sleep" ? OBJECT?.sleep_plan_morning : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_night : "",
-    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_morning : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[0]?.sleep_time : "",
+    type === "real" && strLow === "sleep" ? OBJECT?.sleep_section[1]?.sleep_time : "",
   ]);
 };

@@ -327,8 +327,6 @@ export const percent = {
           $gte: startDt_param
         },
       }},
-      {$unwind: "$sleep_section"
-      },
       {$project: {
         _id: 0,
         sleep_night: "$sleep_section.sleep_night",
