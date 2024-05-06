@@ -131,50 +131,54 @@ export const MoneyDetail = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>항목</th>
-              <th className={"table-thead"}>금액</th>
-              <th className={"table-thead"}>내용</th>
-              <th className={"table-thead"}>x</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+              <TableCell>분류</TableCell>
+              <TableCell>항목</TableCell>
+              <TableCell>금액</TableCell>
+              <TableCell>내용</TableCell>
+              <TableCell>x</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {OBJECT?.money_section?.map((section, index) => (
-              <tr key={index}>
+              <TableRow key={index}>
                 {index === 0 && (
                   <React.Fragment>
-                    <td rowSpan={OBJECT?.money_section?.length}>
+                    <TableCell rowSpan={OBJECT?.money_section?.length}>
                       {OBJECT?.money_startDt?.substring(5, 10)}
-                    </td>
+                    </TableCell>
                   </React.Fragment>
                 )}
-                <td>{section.money_part_val}</td>
-                <td>{section.money_title_val}</td>
-                <td>{`₩ ${numeral(section.money_amount).format('0,0')}`}</td>
-                <td>{section.money_content}</td>
-                <td>
+                <TableCell>{section.money_part_val}</TableCell>
+                <TableCell>{section.money_title_val}</TableCell>
+                <TableCell>{`₩ ${numeral(section.money_amount).format('0,0')}`}</TableCell>
+                <TableCell>{section.money_content}</TableCell>
+                <TableCell>
                   <p className={"del-btn"} onClick={() => (
                     flowDelete(OBJECT._id, section._id)
                   )}>x</p>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-            <tr>
-              <td colSpan={3}>수입 합계</td>
-              <td>{`₩ ${numeral(OBJECT?.money_total_in).format('0,0')}`}</td>
-              <td colSpan={3}></td>
-            </tr>
-            <tr>
-              <td colSpan={3}>지출 합계</td>
-              <td>{`₩ ${numeral(OBJECT?.money_total_out).format('0,0')}`}</td>
-              <td colSpan={3}></td>
-            </tr>
-          </tbody>
-        </Table>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={3}>수입 합계</TableCell>
+              <TableCell>{`₩ ${numeral(OBJECT?.money_total_in).format('0,0')}`}</TableCell>
+              <TableCell colSpan={3}></TableCell>
+            </TableRow>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={3}>지출 합계</TableCell>
+              <TableCell>{`₩ ${numeral(OBJECT?.money_total_out).format('0,0')}`}</TableCell>
+              <TableCell colSpan={3}></TableCell>
+            </TableRow>
+          </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (

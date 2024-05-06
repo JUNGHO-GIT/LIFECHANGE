@@ -133,7 +133,7 @@ export const SleepPlanList = () => {
               <TableBody className={"table-tbody-tr"}>
                 {OBJECT?.map((item) => (
                   <React.Fragment key={item._id}>
-                    <TableRow>
+                    <TableRow className={"table-tbody-tr"}>
                       <TableCell rowSpan={3} className={"pointer"} onClick={() => {
                         SEND.id = item._id;
                         SEND.startDt = item.sleep_plan_startDt;
@@ -149,13 +149,13 @@ export const SleepPlanList = () => {
                       <TableCell>{item.sleep_night}</TableCell>
                       <TableCell className={item.sleep_diff_night_color}>{item.sleep_diff_night}</TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow className={"table-tbody-tr"}>
                       <TableCell>기상</TableCell>
                       <TableCell>{item.sleep_plan_morning}</TableCell>
                       <TableCell>{item.sleep_morning}</TableCell>
                       <TableCell className={item.sleep_diff_morning_color}>{item.sleep_diff_morning}</TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow className={"table-tbody-tr"}>
                       <TableCell>수면</TableCell>
                       <TableCell>{item.sleep_plan_time}</TableCell>
                       <TableCell>{item.sleep_time}</TableCell>

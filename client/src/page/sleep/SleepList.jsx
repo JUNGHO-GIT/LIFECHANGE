@@ -124,12 +124,12 @@ export const SleepList = () => {
                   <TableCell>수면</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody className={"table-tbody-tr"}>
+              <TableBody>
                 {OBJECT?.map((item, index) => (
                   <React.Fragment key={item._id}>
                     {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
                       <React.Fragment key={sectionIndex}>
-                        <TableRow>
+                        <TableRow className={"table-tbody-tr"}>
                           {sectionIndex === 0 && (
                             <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}
                               className={"pointer"} onClick={() => {
@@ -141,7 +141,7 @@ export const SleepList = () => {
                                 });
                               }}>
                               {item.sleep_startDt?.substring(5, 10)}
-                              {item.sleep_section.length > 3 && (<div>더보기</div>)}
+                              {item.sleep_section.length > 3 && (<>더보기</>)}
                             </TableCell>
                           )}
                           <TableCell>{section.sleep_night}</TableCell>

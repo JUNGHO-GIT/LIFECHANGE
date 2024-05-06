@@ -134,62 +134,66 @@ export const ExerciseDetail = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>부위</th>
-              <th className={"table-thead"}>종목</th>
-              <th className={"table-thead"}>볼륨 or 시간</th>
-              <th className={"table-thead"}>x</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+              <TableCell>부위</TableCell>
+              <TableCell>종목</TableCell>
+              <TableCell>볼륨 or 시간</TableCell>
+              <TableCell>x</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {OBJECT?.exercise_section?.map((section, index) => (
-              <tr key={index}>
+              <TableRow key={index}>
                 {index === 0 && (
-                  <td rowSpan={OBJECT?.exercise_section?.length}>
+                  <TableCell rowSpan={OBJECT?.exercise_section?.length}>
                     {OBJECT?.exercise_startDt?.substring(5, 10)}
-                  </td>
+                  </TableCell>
                 )}
-                <td>{section.exercise_part_val}</td>
+                <TableCell>{section.exercise_part_val}</TableCell>
                 {(section.exercise_part_val !== "유산소") ? (
                   <React.Fragment>
-                    <td>
+                    <TableCell>
                       <p>{section.exercise_title_val}</p>
                       <p>{section.exercise_set} x {section.exercise_rep} x {section.exercise_kg} x {section.exercise_rest}</p>
-                    </td>
-                    <td>{section.exercise_volume}</td>
+                    </TableCell>
+                    <TableCell>{section.exercise_volume}</TableCell>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <td>
+                    <TableCell>
                       <p>{section.exercise_title_val}</p>
-                    </td>
-                    <td>{section.exercise_cardio}</td>
+                    </TableCell>
+                    <TableCell>{section.exercise_cardio}</TableCell>
                   </React.Fragment>
                 )}
-                <td>
+                <TableCell>
                   <p className={"del-btn"} onClick={() => (
                     flowDelete(OBJECT._id, section._id)
                   )}>x</p>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-            <tr>
-              <td colSpan={2}>총 볼륨</td>
-              <td colSpan={3}>{`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}</td>
-            </tr>
-            <tr>
-              <td colSpan={2}>총 유산소 시간</td>
-              <td colSpan={3}>{`${OBJECT?.exercise_total_cardio}`}</td>
-            </tr>
-            <tr>
-              <td colSpan={2}>체중</td>
-              <td colSpan={3}>{`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}</td>
-            </tr>
-          </tbody>
-        </Table>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={2}>총 볼륨</TableCell>
+              <TableCell colSpan={3}>{`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}</TableCell>
+            </TableRow>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={2}>총 유산소 시간</TableCell>
+              <TableCell colSpan={3}>{`${OBJECT?.exercise_total_cardio}`}</TableCell>
+            </TableRow>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell colSpan={2}>체중</TableCell>
+              <TableCell colSpan={3}>{`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}</TableCell>
+            </TableRow>
+          </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (

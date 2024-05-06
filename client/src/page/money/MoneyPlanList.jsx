@@ -117,21 +117,23 @@ export const MoneyPlanList = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>목표</th>
-              <th className={"table-thead"}>실제</th>
-              <th className={"table-thead"}>비교</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+              <TableCell>분류</TableCell>
+              <TableCell>목표</TableCell>
+              <TableCell>실제</TableCell>
+              <TableCell>비교</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
-                <tr>
-                  <td rowSpan={2} className={"pointer"} onClick={() => {
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell rowSpan={2} className={"pointer"} onClick={() => {
                     SEND.id = item._id;
                     SEND.startDt = item.money_plan_startDt;
                     SEND.endDt = item.money_plan_endDt;
@@ -140,22 +142,24 @@ export const MoneyPlanList = () => {
                     });
                   }}>
                     {`${item.money_plan_startDt?.substring(5, 10)} ~ ${item.money_plan_endDt?.substring(5, 10)}`}
-                  </td>
-                  <td>수입</td>
-                  <td>{`₩ ${numeral(item.money_plan_in).format('0,0')}`}</td>
-                  <td>{`₩ ${numeral(item.money_total_in).format('0,0')}`}</td>
-                  <td className={item.money_diff_in_color}>{`₩ ${numeral(item.money_diff_in).format('0,0')}`}</td>
-                </tr>
-                <tr>
-                  <td>지출</td>
-                  <td>{`₩ ${numeral(item.money_plan_out).format('0,0')}`}</td>
-                  <td>{`₩ ${numeral(item.money_total_out).format('0,0')}`}</td>
-                  <td className={item.money_diff_out_color}>{`₩ ${numeral(item.money_diff_out).format('0,0')}`}</td>
-                </tr>
+                  </TableCell>
+                  <TableCell>수입</TableCell>
+                  <TableCell>{`₩ ${numeral(item.money_plan_in).format('0,0')}`}</TableCell>
+                  <TableCell>{`₩ ${numeral(item.money_total_in).format('0,0')}`}</TableCell>
+                  <TableCell className={item.money_diff_in_color}>{`₩ ${numeral(item.money_diff_in).format('0,0')}`}</TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>지출</TableCell>
+                  <TableCell>{`₩ ${numeral(item.money_plan_out).format('0,0')}`}</TableCell>
+                  <TableCell>{`₩ ${numeral(item.money_total_out).format('0,0')}`}</TableCell>
+                  <TableCell className={item.money_diff_out_color}>{`₩ ${numeral(item.money_diff_out).format('0,0')}`}</TableCell>
+                </TableRow>
               </React.Fragment>
             ))}
-          </tbody>
-        </Table>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (

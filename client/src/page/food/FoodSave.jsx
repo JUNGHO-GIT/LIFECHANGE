@@ -253,105 +253,109 @@ export const FoodSave = () => {
     };
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>음식명</th>
-              <th className={"table-thead"}>수량</th>
-              <th className={"table-thead"}>g</th>
-              <th className={"table-thead"}>kcal</th>
-              <th className={"table-thead"}>fat</th>
-              <th className={"table-thead"}>carb</th>
-              <th className={"table-thead"}>protein</th>
-              <th className={"table-thead"}>x</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.food_section?.map((item, index) => (
-              <React.Fragment key={index}>
-                <tr>
-                  <td>
-                    <select
-                      id={"food_part_idx"}
-                      name={"food_part_idx"}
-                      className={"form-select"}
-                      value={item.food_part_idx}
-                      onChange={(e) => {
-                        const newIndex = Number(e.target.value);
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          food_section: prev.food_section.map((item, idx) => (
-                            idx === index ? {
-                              ...item,
-                              food_part_idx: newIndex,
-                              food_part_val: foodArray[newIndex]?.food_part
-                            } : item
-                          ))
-                        }));
-                      }}
-                    >
-                      {foodArray?.map((item, idx) => (
-                        <option key={idx} value={idx}>
-                          {item.food_part}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>{`${item.food_title}(${item.food_brand})`}</td>
-                  <td>
-                    <Box className={"d-flex"}>
-                      <NumericFormat
-                        min={0}
-                        max={99}
-                        minLength={1}
-                        maxLength={2}
-                        id={"food_plan_count"}
-                        name={"food_plan_count"}
-                        datatype={"number"}
-                        displayType={"input"}
-                        className={"form-control"}
-                        disabled={false}
-                        allowNegative={false}
-                        fixedDecimalScale={true}
-                        thousandSeparator={true}
-                        value={Math.min(99, Number(item.food_count))}
-                        onValueChange={(values) => {
-                          const limitedValue = Math.min(99, parseInt(values.value));
-                          handleCountChange(index, limitedValue);
-                        }}
-                      ></NumericFormat>
-                      <span>{item.food_serv}</span>
-                    </Box>
-                  </td>
-                  <td>{item.food_gram}</td>
-                  <td>{item.food_kcal}</td>
-                  <td>{item.food_fat}</td>
-                  <td>{item.food_carb}</td>
-                  <td>{item.food_protein}</td>
-                  <td>
-                    <p className={"del-btn"} onClick={() => (
-                      handlerFoodDelete(index)
-                    )}>
-                      x
-                    </p>
-                  </td>
-                </tr>
-              </React.Fragment>
-            ))}
-            <tr>
-              <td>합계</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>{OBJECT?.food_total_kcal}</td>
-              <td>{OBJECT?.food_total_fat}</td>
-              <td>{OBJECT?.food_total_carb}</td>
-              <td>{OBJECT?.food_total_protein}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </Table>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+              <TableHead>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>분류</TableCell>
+                  <TableCell>음식명</TableCell>
+                  <TableCell>수량</TableCell>
+                  <TableCell>g</TableCell>
+                  <TableCell>kcal</TableCell>
+                  <TableCell>fat</TableCell>
+                  <TableCell>carb</TableCell>
+                  <TableCell>protein</TableCell>
+                  <TableCell>x</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {OBJECT?.food_section?.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell>
+                        <select
+                          id={"food_part_idx"}
+                          name={"food_part_idx"}
+                          className={"form-select"}
+                          value={item.food_part_idx}
+                          onChange={(e) => {
+                            const newIndex = Number(e.target.value);
+                            setOBJECT((prev) => ({
+                              ...prev,
+                              food_section: prev.food_section.map((item, idx) => (
+                                idx === index ? {
+                                  ...item,
+                                  food_part_idx: newIndex,
+                                  food_part_val: foodArray[newIndex]?.food_part
+                                } : item
+                              ))
+                            }));
+                          }}
+                        >
+                          {foodArray?.map((item, idx) => (
+                            <option key={idx} value={idx}>
+                              {item.food_part}
+                            </option>
+                          ))}
+                        </select>
+                      </TableCell>
+                      <TableCell>{`${item.food_title}(${item.food_brand})`}</TableCell>
+                      <TableCell>
+                        <Box className={"d-flex"}>
+                          <NumericFormat
+                            min={0}
+                            max={99}
+                            minLength={1}
+                            maxLength={2}
+                            id={"food_plan_count"}
+                            name={"food_plan_count"}
+                            datatype={"number"}
+                            displayType={"input"}
+                            className={"form-control"}
+                            disabled={false}
+                            allowNegative={false}
+                            fixedDecimalScale={true}
+                            thousandSeparator={true}
+                            value={Math.min(99, Number(item.food_count))}
+                            onValueChange={(values) => {
+                              const limitedValue = Math.min(99, parseInt(values.value));
+                              handleCountChange(index, limitedValue);
+                            }}
+                          ></NumericFormat>
+                          <span>{item.food_serv}</span>
+                        </Box>
+                      </TableCell>
+                      <TableCell>{item.food_gram}</TableCell>
+                      <TableCell>{item.food_kcal}</TableCell>
+                      <TableCell>{item.food_fat}</TableCell>
+                      <TableCell>{item.food_carb}</TableCell>
+                      <TableCell>{item.food_protein}</TableCell>
+                      <TableCell>
+                        <p className={"del-btn"} onClick={() => (
+                          handlerFoodDelete(index)
+                        )}>
+                          x
+                        </p>
+                      </TableCell>
+                    </TableRow>
+                  </React.Fragment>
+                ))}
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>합계</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell>{OBJECT?.food_total_kcal}</TableCell>
+                  <TableCell>{OBJECT?.food_total_fat}</TableCell>
+                  <TableCell>{OBJECT?.food_total_carb}</TableCell>
+                  <TableCell>{OBJECT?.food_total_protein}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (

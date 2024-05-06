@@ -126,45 +126,49 @@ export const FoodList = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>식품명</th>
-              <th className={"table-thead"}>칼로리</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={sectionIndex}>
-                    <tr>
-                      {sectionIndex === 0 && (
-                        <td rowSpan={Math.min(item.food_section.length, 3)}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.food_startDt;
-                          SEND.endDt = item.food_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                          {item.food_startDt?.substring(5, 10)}
-                          {item.food_section.length > 3 && (<Box>더보기</Box>)}
-                        </td>
-                      )}
-                      <td>{section.food_part_val.substring(0, 6)}</td>
-                      <td>{section.food_title.substring(0, 6)}</td>
-                      <td>{`${numeral(section.food_kcal).format('0,0')} kcal`}</td>
-                    </tr>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+              <TableHead>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+                  <TableCell>분류</TableCell>
+                  <TableCell>식품명</TableCell>
+                  <TableCell>칼로리</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {OBJECT?.map((item, index) => (
+                  <React.Fragment key={item._id}>
+                    {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
+                      <React.Fragment key={sectionIndex}>
+                        <TableRow className={"table-tbody-tr"}>
+                          {sectionIndex === 0 && (
+                            <TableCell rowSpan={Math.min(item.food_section.length, 3)}
+                            className={"pointer"} onClick={() => {
+                              SEND.id = item._id;
+                              SEND.startDt = item.food_startDt;
+                              SEND.endDt = item.food_endDt;
+                              navParam(SEND.toDetail, {
+                                state: SEND
+                              });
+                            }}>
+                              {item.food_startDt?.substring(5, 10)}
+                              {item.food_section.length > 3 && (<Box>더보기</Box>)}
+                            </TableCell>
+                          )}
+                          <TableCell>{section.food_part_val.substring(0, 6)}</TableCell>
+                          <TableCell>{section.food_title.substring(0, 6)}</TableCell>
+                          <TableCell>{`${numeral(section.food_kcal).format('0,0')} kcal`}</TableCell>
+                        </TableRow>
+                      </React.Fragment>
+                    ))}
                   </React.Fragment>
                 ))}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </Table>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (

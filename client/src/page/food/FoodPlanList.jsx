@@ -125,21 +125,23 @@ export const FoodPlanList = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>목표</th>
-              <th className={"table-thead"}>실제</th>
-              <th className={"table-thead"}>비교</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+              <TableCell>분류</TableCell>
+              <TableCell>목표</TableCell>
+              <TableCell>실제</TableCell>
+              <TableCell>비교</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {OBJECT?.map((item, index) => (
               <React.Fragment key={item._id}>
-                <tr>
-                  <td rowSpan={4} className={"pointer"} onClick={() => {
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell rowSpan={4} className={"pointer"} onClick={() => {
                     SEND.id = item._id;
                     SEND.startDt = item.food_plan_startDt;
                     SEND.endDt = item.food_plan_endDt;
@@ -148,34 +150,36 @@ export const FoodPlanList = () => {
                     });
                   }}>
                     {`${item.food_plan_startDt?.substring(5, 10)} ~ ${item.food_plan_endDt?.substring(5, 10)}`}
-                  </td>
-                  <td>칼로리</td>
-                  <td>{`${numeral(item.food_plan_kcal).format('0,0')} kcal`}</td>
-                  <td>{`${numeral(item.food_total_kcal).format('0,0')} kcal`}</td>
-                  <td className={item.food_diff_kcal_color}>{`${numeral(item.food_diff_kcal).format('0,0')} kcal`}</td>
-                </tr>
-                <tr>
-                  <td>탄수화물</td>
-                  <td>{`${numeral(item.food_plan_carb).format('0,0')} g`}</td>
-                  <td>{`${numeral(item.food_total_carb).format('0,0')} g`}</td>
-                  <td className={item.food_diff_carb_color}>{`${numeral(item.food_diff_carb).format('0,0')} g`}</td>
-                </tr>
-                <tr>
-                  <td>단백질</td>
-                  <td>{`${numeral(item.food_plan_protein).format('0,0')} g`}</td>
-                  <td>{`${numeral(item.food_total_protein).format('0,0')} g`}</td>
-                  <td className={item.food_diff_protein_color}>{`${numeral(item.food_diff_protein).format('0,0')} g`}</td>
-                </tr>
-                <tr>
-                  <td>지방</td>
-                  <td>{`${numeral(item.food_plan_fat).format('0,0')} g`}</td>
-                  <td>{`${numeral(item.food_total_fat).format('0,0')} g`}</td>
-                  <td className={item.food_diff_fat_color}>{`${numeral(item.food_diff_fat).format('0,0')} g`}</td>
-                </tr>
+                  </TableCell>
+                  <TableCell>칼로리</TableCell>
+                  <TableCell>{`${numeral(item.food_plan_kcal).format('0,0')} kcal`}</TableCell>
+                  <TableCell>{`${numeral(item.food_total_kcal).format('0,0')} kcal`}</TableCell>
+                  <TableCell className={item.food_diff_kcal_color}>{`${numeral(item.food_diff_kcal).format('0,0')} kcal`}</TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>탄수화물</TableCell>
+                  <TableCell>{`${numeral(item.food_plan_carb).format('0,0')} g`}</TableCell>
+                  <TableCell>{`${numeral(item.food_total_carb).format('0,0')} g`}</TableCell>
+                  <TableCell className={item.food_diff_carb_color}>{`${numeral(item.food_diff_carb).format('0,0')} g`}</TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>단백질</TableCell>
+                  <TableCell>{`${numeral(item.food_plan_protein).format('0,0')} g`}</TableCell>
+                  <TableCell>{`${numeral(item.food_total_protein).format('0,0')} g`}</TableCell>
+                  <TableCell className={item.food_diff_protein_color}>{`${numeral(item.food_diff_protein).format('0,0')} g`}</TableCell>
+                </TableRow>
+                <TableRow className={"table-tbody-tr"}>
+                  <TableCell>지방</TableCell>
+                  <TableCell>{`${numeral(item.food_plan_fat).format('0,0')} g`}</TableCell>
+                  <TableCell>{`${numeral(item.food_total_fat).format('0,0')} g`}</TableCell>
+                  <TableCell className={item.food_diff_fat_color}>{`${numeral(item.food_diff_fat).format('0,0')} g`}</TableCell>
+                </TableRow>
               </React.Fragment>
             ))}
-          </tbody>
-        </Table>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (

@@ -117,28 +117,32 @@ export const MoneyPlanDetail = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>수입 목표</th>
-              <th className={"table-thead"}>지출 목표</th>
-              <th className={"table-thead"}>x</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{`${OBJECT?.money_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt?.substring(5, 10)}`}</td>
-              <td>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</td>
-              <td>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</td>
-              <td>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+              <TableCell>수입 목표</TableCell>
+              <TableCell>지출 목표</TableCell>
+              <TableCell>x</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow className={"table-tbody-tr"}>
+              <TableCell>{`${OBJECT?.money_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.money_plan_endDt?.substring(5, 10)}`}</TableCell>
+              <TableCell>{`₩ ${numeral(OBJECT?.money_plan_in).format("0,0")}`}</TableCell>
+              <TableCell>{`₩ ${numeral(OBJECT?.money_plan_out).format("0,0")}`}</TableCell>
+              <TableCell>
                 <p className={"del-btn"} onClick={() => (
                   flowDelete(OBJECT._id)
                 )}>x</p>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (

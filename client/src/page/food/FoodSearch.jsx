@@ -115,38 +115,42 @@ export const FoodSearch = () => {
     };
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>식품명</th>
-              <th className={"table-thead"}>브랜드</th>
-              <th className={"table-thead"}>1회 제공량</th>
-              <th className={"table-thead"}>1회 중량</th>
-              <th className={"table-thead"}>칼로리</th>
-              <th className={"table-thead"}>지방</th>
-              <th className={"table-thead"}>탄수화물</th>
-              <th className={"table-thead"}>단백질</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+          <TableHead>
+            <TableRow className={"table-thead-tr"}>
+                  <TableCell>식품명</TableCell>
+              <TableCell>브랜드</TableCell>
+              <TableCell>1회 제공량</TableCell>
+              <TableCell>1회 중량</TableCell>
+              <TableCell>칼로리</TableCell>
+              <TableCell>지방</TableCell>
+              <TableCell>탄수화물</TableCell>
+              <TableCell>단백질</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {OBJECT?.food_section?.map((item, index) => (
-              <tr key={index}>
-                <td className={"pointer"} onClick={() => {
+              <TableRow key={index}>
+                <TableCell className={"pointer"} onClick={() => {
                   handleStorage(item);
                 }}>
                   {item.food_title}
-                </td>
-                <td>{item.food_brand}</td>
-                <td>{item.food_count} {item.food_serv}</td>
-                <td>{item.food_gram}</td>
-                <td>{item.food_kcal}</td>
-                <td>{item.food_fat}</td>
-                <td>{item.food_carb}</td>
-                <td>{item.food_protein}</td>
-              </tr>
+                </TableCell>
+                <TableCell>{item.food_brand}</TableCell>
+                <TableCell>{item.food_count} {item.food_serv}</TableCell>
+                <TableCell>{item.food_gram}</TableCell>
+                <TableCell>{item.food_kcal}</TableCell>
+                <TableCell>{item.food_fat}</TableCell>
+                <TableCell>{item.food_carb}</TableCell>
+                <TableCell>{item.food_protein}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </Table>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (
