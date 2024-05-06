@@ -109,7 +109,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
     </SwipeableDrawer>
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       {sidBarNode()}

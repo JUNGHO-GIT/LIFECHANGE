@@ -4,6 +4,8 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {percent} from "../../assets/js/percent.js";
 import {useNavigate, useLocation} from "react-router-dom";
+import {Header} from "../../layout/Header.jsx";
+import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {TextField, Card, Box, Typography, Button} from "@mui/material";
@@ -88,13 +90,23 @@ export const UserLogin = () => {
     );
   };
 
-  // 6. loading ----------------------------------------------------------------------------------->
+  // 9. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 11. btn -------------------------------------------------------------------------------------->
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 14. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
@@ -102,7 +114,7 @@ export const UserLogin = () => {
     />
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={"content-wrapper"}>

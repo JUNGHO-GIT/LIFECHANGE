@@ -188,7 +188,7 @@ export const Date = ({
     );
   };
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={`dayPicker-container ${DAYPICKER.dayStartOpen ? "" : "d-none"}`}>

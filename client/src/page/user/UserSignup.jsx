@@ -4,6 +4,8 @@ import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
+import {Header} from "../../layout/Header.jsx";
+import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Row, Col, Card, Button} from "react-bootstrap";
@@ -101,13 +103,23 @@ export const UserSignup = () => {
     );
   };
 
-  // 6. loading ----------------------------------------------------------------------------------->
+  // 9. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 11. btn -------------------------------------------------------------------------------------->
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 14. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
@@ -115,7 +127,7 @@ export const UserSignup = () => {
     />
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={"content-wrapper"}>

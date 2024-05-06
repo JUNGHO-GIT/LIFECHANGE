@@ -4,6 +4,8 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {percent} from "../../assets/js/percent.js";
+import {Header} from "../../layout/Header.jsx";
+import {NavBar} from "../../layout/NavBar.jsx";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
@@ -160,13 +162,23 @@ export const SleepDetail = () => {
     );
   };
 
-  // 6. loading ----------------------------------------------------------------------------------->
+  // 9. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 11. btn -------------------------------------------------------------------------------------->
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 14. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
@@ -174,7 +186,7 @@ export const SleepDetail = () => {
     />
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={"content-wrapper"}>

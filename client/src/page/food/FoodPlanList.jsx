@@ -5,6 +5,8 @@ import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
+import {Header} from "../../layout/Header.jsx";
+import {NavBar} from "../../layout/NavBar.jsx";
 import {Day} from "../../fragments/Day.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Filter} from "../../fragments/Filter.jsx";
@@ -181,13 +183,23 @@ export const FoodPlanList = () => {
     );
   };
 
-  // 6. loading ----------------------------------------------------------------------------------->
+  // 9. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 8. day --------------------------------------------------------------------------------------->
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 11. day -------------------------------------------------------------------------------------->
   const dayNode = () => (
     <Day FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
@@ -201,14 +213,14 @@ export const FoodPlanList = () => {
     />
   );
 
-  // 10. filter ----------------------------------------------------------------------------------->
+  // 13. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"food"} plan={"plan"} type={"list"}
     />
   );
 
-  // 11. btn -------------------------------------------------------------------------------------->
+  // 14. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
@@ -216,7 +228,7 @@ export const FoodPlanList = () => {
     />
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={"content-wrapper"}>

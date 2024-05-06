@@ -2,6 +2,8 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import {Header} from "../../../layout/Header.jsx";
+import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
@@ -432,13 +434,23 @@ export const FoodDashPie = () => {
     );
   };
 
-  // 6. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={"content-wrapper"}>

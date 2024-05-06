@@ -1,7 +1,8 @@
 // Paging.jsx
 
 import React, {useEffect} from "react";
-import {Button} from "react-bootstrap";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, TablePagination, Button} from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2';
 
 // 9. paging -------------------------------------------------------------------------------------->
 export const Paging = ({
@@ -105,7 +106,7 @@ export const Paging = ({
     </React.Fragment>
   );
 
-  return (
+  /* return (
     <React.Fragment>
       <div className={"paging-wrapper d-inline-flex"}>
         {btnPrevMax()}
@@ -114,6 +115,39 @@ export const Paging = ({
         {btnNextOne()}
         {btnNextMax()}
       </div>
+    </React.Fragment>
+  ); */
+
+  return (
+    <React.Fragment>
+      <Card className={"flex-wrapper h-8vh p-sticky bottom-80"}>
+        <Container>
+          <Grid container spacing={3}>
+            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <TablePagination
+                rowsPerPageOptions={[5, 10]}
+                component={"div"}
+                labelRowsPerPage={""}
+                count={COUNT.totalCnt}
+                rowsPerPage={PAGING.limit}
+                page={PAGING.page - 1}
+                onPageChange={(event, newPage) => {
+                  setPAGING((prev) => ({
+                    ...prev,
+                    page: newPage + 1
+                  }));
+                }}
+                onRowsPerPageChange={(event) => {
+                  setPAGING((prev) => ({
+                    ...prev,
+                    limit: parseInt(event.target.value, 10)
+                  }));
+                }}
+              ></TablePagination>
+            </Grid>
+          </Grid>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

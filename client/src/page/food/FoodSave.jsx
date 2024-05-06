@@ -9,6 +9,8 @@ import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Date} from "../../fragments/Date.jsx";
+import {Header} from "../../layout/Header.jsx";
+import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Row, Col, Card, Table} from "react-bootstrap";
@@ -358,10 +360,20 @@ export const FoodSave = () => {
     );
   };
 
-  // 6. loading ----------------------------------------------------------------------------------->
+  // 9. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
+  );
+
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
   );
 
   // 7. date -------------------------------------------------------------------------------------->
@@ -371,7 +383,7 @@ export const FoodSave = () => {
     />
   );
 
-  // 11. btn -------------------------------------------------------------------------------------->
+  // 14. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
@@ -379,7 +391,7 @@ export const FoodSave = () => {
     />
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <div className={"content-wrapper"}>

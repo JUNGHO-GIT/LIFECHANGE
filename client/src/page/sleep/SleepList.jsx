@@ -7,11 +7,11 @@ import {useStorage} from "../../hooks/useStorage.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {Day} from "../../fragments/Day.jsx";
+import {Paging} from "../../fragments/Paging.jsx";
 import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, TablePagination} from "@mui/material";
-import Grid from '@mui/material/Unstable_Grid2';
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, TablePagination, Grid} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
@@ -173,26 +173,6 @@ export const SleepList = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10]}
-          component={"div"}
-          labelRowsPerPage={""}
-          count={COUNT.totalCnt}
-          rowsPerPage={PAGING.limit}
-          page={PAGING.page - 1}
-          onPageChange={(event, newPage) => {
-            setPAGING((prev) => ({
-              ...prev,
-              page: newPage + 1
-            }));
-          }}
-          onRowsPerPageChange={(event) => {
-            setPAGING((prev) => ({
-              ...prev,
-              limit: parseInt(event.target.value, 10)
-            }));
-          }}
-        ></TablePagination>
       </React.Fragment>
     );
     return (
@@ -210,37 +190,44 @@ export const SleepList = () => {
     );
   };
 
-  // 6. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 7. header ------------------------------------------------------------------------------------>
+  // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
   );
 
-  // 8. navBar ------------------------------------------------------------------------------------>
+  // 10. navBar ----------------------------------------------------------------------------------->
   const navBarNode = () => (
     <NavBar />
   );
 
-  // 8. day --------------------------------------------------------------------------------------->
+  // 11. day -------------------------------------------------------------------------------------->
   const dayNode = () => (
     <Day FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
-  // 10. filter ----------------------------------------------------------------------------------->
+  // 12. paging ----------------------------------------------------------------------------------->
+  const pagingNode = () => (
+    <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+      part={"sleep"} plan={""} type={"list"}
+    />
+  );
+
+  // 13. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
     <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"sleep"} plan={""} type={"list"}
     />
   );
 
-  // 11. btn -------------------------------------------------------------------------------------->
+  // 14. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
@@ -248,13 +235,14 @@ export const SleepList = () => {
     />
   );
 
-  // 12. return ----------------------------------------------------------------------------------->
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       {headerNode()}
       {navBarNode()}
       {dayNode()}
       {LOADING ? loadingNode() : tableNode()}
+      {pagingNode()}
       {filterNode()}
       {btnNode()}
     </React.Fragment>
