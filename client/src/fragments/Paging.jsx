@@ -1,7 +1,7 @@
 // Paging.jsx
 
 import React from "react";
-import {Container, Card, TablePagination} from "@mui/material";
+import {Container, Paper, TablePagination} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 9. paging -------------------------------------------------------------------------------------->
@@ -12,7 +12,7 @@ export const Paging = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
-      <Card className={"flex-wrapper h-8vh p-sticky bottom-80"}>
+      <Paper className={"flex-wrapper h-8vh p-sticky bottom-80"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
@@ -39,7 +39,7 @@ export const Paging = ({
             </Grid2>
           </Grid2>
         </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 

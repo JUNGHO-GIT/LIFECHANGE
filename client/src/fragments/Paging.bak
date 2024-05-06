@@ -108,13 +108,13 @@ export const Paging = ({
 
   return (
     <React.Fragment>
-      <div className={"paging-wrapper d-inline-flex"}>
+      <Box className={"paging-wrapper d-inline-flex"}>
         {btnPrevMax()}
         {btnPrevOne()}
         {btnNumber()}
         {btnNextOne()}
         {btnNextMax()}
-      </div>
+      </Box>
     </React.Fragment>
   );
 };

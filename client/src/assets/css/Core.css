@@ -23,23 +23,8 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-.content-wrapper {
-  width: 95vw;
-  max-width: 95vw;
-  height: auto;
-  max-height: 150vh;
-  margin: 1vh 0vw 1vh 0vw;
-  padding: 1vh 2vw 1vh 2vw;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
-  animation: fadeIn 1.0s !important;
-  z-index: 999;
-}
 .flex-wrapper {
-  width: 95vw;
+  width: 100%;
   max-width: 95vw;
   height: auto;
   max-height: 100%;
@@ -52,17 +37,35 @@ html, body {
   border-radius: 0.5rem;
   background-color: #fff;
   overflow-x: hidden;
+  overflow-y: hidden;
   animation: fadeIn 1.0s !important;
   z-index: 1000;
 }
+.content-wrapper {
+  width: 100%;
+  max-width: 95vw;
+  height: auto;
+  max-height: 150vh;
+  margin: 0.5vh 0vw 0.5vh 0vw;
+  padding: 1vh 2vw 1vh 2vw;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  animation: fadeIn 1.0s !important;
+  z-index: 999;
+}
 .block-wrapper {
-  width: 95vw;
+  width: 100%;
   max-width: 95vw;
   height: auto;
   max-height: 100%;
   margin: 0.5vh 0vw 0.5vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
-  display: block;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
   border: none;
   border-radius: 0.5rem;
   background-color: #fff;

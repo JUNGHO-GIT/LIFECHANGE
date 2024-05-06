@@ -14,7 +14,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -178,7 +178,7 @@ export const CalendarDetail = () => {
     };
     const countNode = () => (
       <React.Fragment>
-        <div className={"input-group"}>
+        <Box className={"input-group"}>
           <span className={"input-group-text"}>섹션 갯수</span>
           <NumericFormat
             min={0}
@@ -199,14 +199,14 @@ export const CalendarDetail = () => {
               handlerCount(limitedValue.toString());
             }}
           ></NumericFormat>
-        </div>
+        </Box>
       </React.Fragment>
     );
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>파트</span>
               <select
                 id={`calendar_part_idx-${i}`}
@@ -233,10 +233,10 @@ export const CalendarDetail = () => {
                   </option>
                 ))}
               </select>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>색상</span>
               <select
                 id={`calendar_color-${i}`}
@@ -263,12 +263,12 @@ export const CalendarDetail = () => {
                   </option>
                 ))}
               </select>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>제목</span>
               <InputMask
                 mask={""}
@@ -291,10 +291,10 @@ export const CalendarDetail = () => {
                   }));
                 }}
               ></InputMask>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>내용</span>
               <InputMask
                 mask={""}
@@ -317,7 +317,7 @@ export const CalendarDetail = () => {
                   }));
                 }}
               ></InputMask>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>

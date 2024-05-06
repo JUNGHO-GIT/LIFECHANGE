@@ -28,6 +28,7 @@
     "xml2js": "^0.6.2"
   },
   "dependencies": {
+    "dayjs": "^1.11.11",
     "dotenv": "^16.3.1",
     "helmet": "^7.1.0",
     "oauth-signature": "^1.5.0",

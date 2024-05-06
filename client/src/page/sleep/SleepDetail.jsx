@@ -11,9 +11,9 @@ import {useStorage} from "../../hooks/useStorage.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
+import {Badge} from "@mui/material";
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {Container, Card, Paper, Box} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
@@ -122,45 +122,74 @@ export const SleepDetail = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Paper className={"block-wrapper h-80vh"}>
-
-        <Table className={"block-wrapper h-80vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>취침</th>
-              <th className={"table-thead"}>기상</th>
-              <th className={"table-thead"}>수면</th>
-              <th className={"table-thead"}>x</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.sleep_section?.map((section, index) => (
-              <tr key={index}>
-                {index === 0 && (
-                  <React.Fragment>
-                    <td rowSpan={OBJECT?.sleep_section?.length}>
-                      {OBJECT?.sleep_startDt?.substring(5, 10)}
-                    </td>
-                  </React.Fragment>
-                )}
-                <td>{section.sleep_night}</td>
-                <td>{section.sleep_morning}</td>
-                <td>{section.sleep_time}</td>
-                <td>
-                  <p className={"del-btn"} onClick={() => (
-                    flowDelete(OBJECT._id, section._id)
-                  )}>x</p>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            <Typography variant={"h5"} fontWeight={500}>
+              수면 상세
+            </Typography>
+          </Box>
+          <Card variant={"outlined"} className={"p-20"}>
+            <Box className={"d-right"}>
+              <Badge color={"primary"} badgeContent={1} showZero></Badge>
+            </Box>
+            <Box className={"d-center"}>
+              <TextField
+                type={"text"}
+                id={"sleep_startDt"}
+                name={"sleep_startDt"}
+                label={"날짜"}
+                value={OBJECT?.sleep_startDt}
+                InputProps={{
+                  readOnly: true,
+                }}
+              ></TextField>
+            </Box>
+            <br />
+            <Box className={"d-center"}>
+              <TextField
+                type={"text"}
+                id={"sleep_night"}
+                name={"sleep_night"}
+                label={"취침"}
+                value={OBJECT?.sleep_section[0]?.sleep_night}
+                InputProps={{
+                  readOnly: true,
+                }}
+              ></TextField>
+            </Box>
+            <br />
+            <Box className={"d-center"}>
+              <TextField
+                type={"text"}
+                id={"sleep_morning"}
+                name={"sleep_morning"}
+                label={"기상"}
+                value={OBJECT?.sleep_section[0]?.sleep_morning}
+                InputProps={{
+                  readOnly: true,
+                }}
+              ></TextField>
+            </Box>
+            <br />
+            <Box className={"d-center"}>
+              <TextField
+                type={"text"}
+                id={"sleep_time"}
+                name={"sleep_time"}
+                label={"수면"}
+                value={OBJECT?.sleep_section[0]?.sleep_time}
+                InputProps={{
+                  readOnly: true,
+                }}
+              ></TextField>
+            </Box>
+          </Card>
+        </Box>
       </React.Fragment>
     );
     return (
       <React.Fragment>
-        <Card className={"content-wrapper"}>
+        <Paper className={"content-wrapper"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
@@ -168,7 +197,7 @@ export const SleepDetail = () => {
               </Grid2>
             </Grid2>
           </Container>
-        </Card>
+        </Paper>
       </React.Fragment>
     );
   };

@@ -14,7 +14,7 @@ import {DaySave} from "../../fragments/DaySave.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -119,7 +119,7 @@ export const FoodPlanSave = () => {
       <React.Fragment>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>칼로리</span>
               <NumericFormat
                 min={1}
@@ -145,10 +145,10 @@ export const FoodPlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>탄수화물</span>
               <NumericFormat
                 min={0}
@@ -174,10 +174,10 @@ export const FoodPlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>단백질</span>
               <NumericFormat
                 min={0}
@@ -203,10 +203,10 @@ export const FoodPlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>지방</span>
               <NumericFormat
                 min={0}
@@ -232,7 +232,7 @@ export const FoodPlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>

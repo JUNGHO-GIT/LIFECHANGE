@@ -14,7 +14,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -116,7 +116,7 @@ export const MoneyPlanList = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>

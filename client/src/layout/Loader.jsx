@@ -6,9 +6,9 @@ import React from "react";
 export const Loader = () => {
   return (
     <React.Fragment>
-      <div className={"background"}>
-        <div className={"loader"}></div>
-      </div>
+      <Box className={"background"}>
+        <Box className={"loader"}></Box>
+      </Box>
     </React.Fragment>
   );
 };

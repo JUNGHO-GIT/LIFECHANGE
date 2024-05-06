@@ -5,10 +5,11 @@ import {useNavigate} from "react-router-dom";
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import {SideBar} from "./SideBar.jsx";
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {Card, Container, Menu, MenuItem} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
+import MenuIcon from '@mui/icons-material/Menu';
+import {Container, Card, Paper, Box} from "@mui/material";
+import {Menu, MenuItem} from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 // ------------------------------------------------------------------------------------------------>
@@ -60,7 +61,7 @@ export const Header = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"flex-wrapper h-6vh p-sticky top-0"}>
+      <Paper className={"flex-wrapper h-6vh p-sticky top-0"} variant={"outlined"}>
         <Container className={"p-5"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"d-left"}>
@@ -74,7 +75,7 @@ export const Header = () => {
             </Grid2>
           </Grid2>
         </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 };

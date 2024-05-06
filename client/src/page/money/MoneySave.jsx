@@ -15,7 +15,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -175,7 +175,7 @@ export const MoneySave = () => {
     };
     const countNode = () => (
       <React.Fragment>
-        <div className={"input-group"}>
+        <Box className={"input-group"}>
           <span className={"input-group-text"}>섹션 갯수</span>
           <NumericFormat
             min={0}
@@ -196,14 +196,14 @@ export const MoneySave = () => {
               handlerCount(limitedValue.toString());
             }}
           ></NumericFormat>
-        </div>
+        </Box>
       </React.Fragment>
     );
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>파트</span>
               <select
                 id={`money_part_idx-${i}`}
@@ -232,10 +232,10 @@ export const MoneySave = () => {
                   </option>
                 ))}
               </select>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>제목</span>
               <select
                 id={`money_title_idx-${i}`}
@@ -265,12 +265,12 @@ export const MoneySave = () => {
                   </option>
                 ))}
               </select>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>금액</span>
               <NumericFormat
                 min={0}
@@ -301,10 +301,10 @@ export const MoneySave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>메모</span>
               <InputMask
                 mask={""}
@@ -327,7 +327,7 @@ export const MoneySave = () => {
                   }));
                 }}
               ></InputMask>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>
@@ -341,7 +341,7 @@ export const MoneySave = () => {
       <React.Fragment>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>총수입</span>
               <NumericFormat
                 min={0}
@@ -361,10 +361,10 @@ export const MoneySave = () => {
                 fixedDecimalScale={true}
                 value={Math.min(9999999999, OBJECT?.money_total_in)}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>총지출</span>
               <NumericFormat
                 min={0}
@@ -384,7 +384,7 @@ export const MoneySave = () => {
                 fixedDecimalScale={true}
                 value={Math.min(9999999999, OBJECT?.money_total_out)}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>

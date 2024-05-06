@@ -12,7 +12,7 @@ import {useStorage} from "../../hooks/useStorage.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -88,7 +88,7 @@ export const CalendarList = () => {
       <React.Fragment>
         {calendarForDates?.map((calendar) => (
           calendar.calendar_section.map((section) => (
-            <div key={calendar._id} className={"calendar-filled"}
+            <Box key={calendar._id} className={"calendar-filled"}
               style={{
                 backgroundColor: section.calendar_color
               }}
@@ -104,7 +104,7 @@ export const CalendarList = () => {
               }}
             >
               <span className={"calendar-category"}>{section.calendar_title}</span>
-            </div>
+            </Box>
           ))
         ))}
       </React.Fragment>
@@ -113,9 +113,9 @@ export const CalendarList = () => {
       <React.Fragment>
         {calendarForDates?.map((calendar) => (
           calendar.calendar_section.map((section) => (
-            <div key={calendar._id} className={"calendar-unfilled"}>
+            <Box key={calendar._id} className={"calendar-unfilled"}>
               <span className={"calendar-category"}>{section.calendar_title}</span>
-            </div>
+            </Box>
           ))
         ))}
       </React.Fragment>

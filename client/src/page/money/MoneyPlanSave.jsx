@@ -14,7 +14,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -117,7 +117,7 @@ export const MoneyPlanSave = () => {
       <React.Fragment>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>목표 수입</span>
               <NumericFormat
                 min={0}
@@ -144,10 +144,10 @@ export const MoneyPlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>목표 지출</span>
               <NumericFormat
                 min={0}
@@ -174,7 +174,7 @@ export const MoneyPlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>

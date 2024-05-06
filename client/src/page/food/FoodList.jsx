@@ -14,7 +14,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -125,7 +125,7 @@ export const FoodList = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -151,7 +151,7 @@ export const FoodList = () => {
                           });
                         }}>
                           {item.food_startDt?.substring(5, 10)}
-                          {item.food_section.length > 3 && (<div>더보기</div>)}
+                          {item.food_section.length > 3 && (<Box>더보기</Box>)}
                         </td>
                       )}
                       <td>{section.food_part_val.substring(0, 6)}</td>

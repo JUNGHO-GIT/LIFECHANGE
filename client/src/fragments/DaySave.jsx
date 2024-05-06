@@ -6,8 +6,10 @@ import {ko} from "date-fns/locale";
 import React, { useEffect } from "react";
 import {DayPicker} from "react-day-picker";
 import InputMask from "react-input-mask";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Paper, Button} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
+import {TextField, Typography} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
+import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const DaySave = ({
@@ -111,16 +113,16 @@ export const DaySave = ({
   // 7-1. popup ----------------------------------------------------------------------------------->
   const popupNode = () => (
     <React.Fragment>
-      <div className={`dayPicker-container ${DAYPICKER.dayStartOpen ? "" : "d-none"}`}>
+      <Box className={`dayPicker-container ${DAYPICKER.dayStartOpen ? "" : "d-none"}`}>
         {closeBtn("Start")}
-        <div className="h-2vh"></div>
+        <Box className="h-2vh"></Box>
         {dayPicker("start")}
-      </div>
-      <div className={`dayPicker-container ${DAYPICKER.dayEndOpen ? "" : "d-none"}`}>
+      </Box>
+      <Box className={`dayPicker-container ${DAYPICKER.dayEndOpen ? "" : "d-none"}`}>
         {closeBtn("End")}
-        <div className="h-2vh"></div>
+        <Box className="h-2vh"></Box>
         {dayPicker("end")}
-      </div>
+      </Box>
     </React.Fragment>
   );
 
@@ -130,7 +132,7 @@ export const DaySave = ({
       <React.Fragment>
         <Grid2 container spacing={3}>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>날짜</span>
               <InputMask
                 mask={"9999-99-99"}
@@ -147,7 +149,7 @@ export const DaySave = ({
                   }));
                 }}
               ></InputMask>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>
@@ -156,7 +158,7 @@ export const DaySave = ({
       <React.Fragment>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>시작일</span>
               <InputMask
                 mask={"9999-99-99"}
@@ -173,10 +175,10 @@ export const DaySave = ({
                   }));
                 }}
               ></InputMask>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>종료일</span>
               <InputMask
                 mask={"9999-99-99"}
@@ -193,7 +195,7 @@ export const DaySave = ({
                   }));
                 }}
               ></InputMask>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>

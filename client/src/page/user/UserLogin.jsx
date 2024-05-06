@@ -10,7 +10,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -51,12 +51,12 @@ export const UserLogin = () => {
     const tableSection = () => (
       <React.Fragment>
         <Grid2 container spacing={3}>
-          <Grid2 lg={12} md={12} sm={12} xs={12}>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <Typography component="h1" variant="h5">
               로그인
             </Typography>
           </Grid2>
-          <Grid2 lg={12} md={12} sm={12} xs={12}>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <TextField
               type={"text"}
               id={"user_id"}
@@ -68,7 +68,7 @@ export const UserLogin = () => {
               )}
             ></TextField>
           </Grid2>
-          <Grid2 lg={12} md={12} sm={12} xs={12}>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <TextField
               type={"password"}
               id={"user_pw"}

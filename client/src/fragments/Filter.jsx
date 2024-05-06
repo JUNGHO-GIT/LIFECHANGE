@@ -2,7 +2,7 @@
 
 import React from "react";
 import {InputLabel, MenuItem, FormControl, Select, Box, FormHelperText} from "@mui/material";
-import {Card, Container, Grid} from "@mui/material";
+import {Card, Container, Paper} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 10. filter ------------------------------------------------------------------------------------->
@@ -201,7 +201,7 @@ export const Filter = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
-      <Card className={"flex-wrapper h-8vh p-sticky bottom-35"}>
+      <Paper className={"flex-wrapper h-8vh p-sticky bottom-35"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
@@ -232,7 +232,7 @@ export const Filter = ({
             </Grid2>
           </Grid2>
         </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 

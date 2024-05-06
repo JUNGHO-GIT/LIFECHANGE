@@ -9,7 +9,7 @@ import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Paper, Button} from "@mui/material";
+import {Container, Card, Paper, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Button} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
@@ -234,7 +234,7 @@ export const TweakDemo = () => {
 
     const tableExercisePlan = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -260,7 +260,7 @@ export const TweakDemo = () => {
     );
     const tableExercise = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -279,7 +279,7 @@ export const TweakDemo = () => {
                     {sectionIndex === 0 && (
                       <td rowSpan={Math.min(item.exercise_section.length, 3)}>
                         {item.exercise_startDt?.substring(5, 10)}
-                        {item.exercise_section.length > 3 && (<div>더보기</div>)}
+                        {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
                       </td>
                     )}
                     <td>{section.exercise_part_val.substring(0, 6)}</td>
@@ -305,7 +305,7 @@ export const TweakDemo = () => {
     );
     const tableFoodPlan = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -331,7 +331,7 @@ export const TweakDemo = () => {
     );
     const tableFood = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -349,7 +349,7 @@ export const TweakDemo = () => {
                       {sectionIndex === 0 && (
                         <td rowSpan={Math.min(item.food_section.length, 3)}>
                           {item.food_startDt?.substring(5, 10)}
-                          {item.food_section.length > 3 && (<div>더보기</div>)}
+                          {item.food_section.length > 3 && (<Box>더보기</Box>)}
                         </td>
                       )}
                       <td>{section.food_part_val.substring(0, 6)}</td>
@@ -366,7 +366,7 @@ export const TweakDemo = () => {
     );
     const tableMoneyPlan = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -388,7 +388,7 @@ export const TweakDemo = () => {
     );
     const tableMoney = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -405,7 +405,7 @@ export const TweakDemo = () => {
                     {sectionIndex === 0 && (
                       <td rowSpan={Math.min(item.money_section.length, 3)}>
                         {item.money_startDt?.substring(5, 10)}
-                        {item.money_section.length > 3 && (<div>더보기</div>)}
+                        {item.money_section.length > 3 && (<Box>더보기</Box>)}
                       </td>
                     )}
                     <td>{section.money_part_val}</td>
@@ -421,7 +421,7 @@ export const TweakDemo = () => {
     );
     const tableSleepPlan = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -445,7 +445,7 @@ export const TweakDemo = () => {
     );
     const tableSleep = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -463,7 +463,7 @@ export const TweakDemo = () => {
                       {sectionIndex === 0 && (
                         <td rowSpan={Math.min(item.sleep_section.length, 3)}>
                           {item.sleep_startDt?.substring(5, 10)}
-                          {item.sleep_section.length > 3 && (<div>더보기</div>)}
+                          {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
                         </td>
                       )}
                       <td>{section.sleep_night}</td>

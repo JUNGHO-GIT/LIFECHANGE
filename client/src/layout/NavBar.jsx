@@ -3,8 +3,8 @@
 import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {dataArray} from "../assets/array/dataArray.js";
-import {Card, Container} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
+import {Container, Paper} from "@mui/material";
 
 // @ts-ignore
 import smile1 from "../assets/images/smile1.png";
@@ -59,7 +59,7 @@ export const NavBar = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"flex-wrapper h-6vh p-sticky top-35"}>
+      <Paper className={"flex-wrapper h-6vh p-sticky top-35"} variant={"outlined"}>
         <Container className={"p-5"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"d-left"}>
@@ -81,7 +81,7 @@ export const NavBar = () => {
             </Grid2>
           </Grid2>
         </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 };

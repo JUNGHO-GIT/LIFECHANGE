@@ -4,7 +4,7 @@ import React from "react";
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import {Button} from "@mui/material";
-import {Card, Container, Grid} from "@mui/material";
+import {Container, Paper} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 11. button ------------------------------------------------------------------------------------->
@@ -138,7 +138,7 @@ export const Btn = ({
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
-      <Card className={"flex-wrapper h-6vh p-sticky bottom-0"}>
+      <Paper className={"flex-wrapper h-6vh p-sticky bottom-0"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
@@ -180,7 +180,7 @@ export const Btn = ({
             </Grid2>
           </Grid2>
         </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 

@@ -15,7 +15,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -122,7 +122,7 @@ export const SleepSave = () => {
       <React.Fragment>
         <Grid2 container spacing={3}>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>취침</span>
               <TimePicker
                 locale={"ko"}
@@ -144,10 +144,10 @@ export const SleepSave = () => {
                   }));
                 }}
               ></TimePicker>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>기상</span>
               <TimePicker
                 locale={"ko"}
@@ -169,10 +169,10 @@ export const SleepSave = () => {
                   }));
                 }}
               ></TimePicker>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>수면</span>
               <TimePicker
                 locale={"ko"}
@@ -185,7 +185,7 @@ export const SleepSave = () => {
                 disableClock={false}
                 value={OBJECT?.sleep_section[0]?.sleep_time}
               ></TimePicker>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>

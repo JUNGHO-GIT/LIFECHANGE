@@ -1,6 +1,7 @@
 // Loading.jsx
 
 import React from "react";
+import {Box} from "@mui/material";
 
 // 6. loading ------------------------------------------------------------------------------------->
 export const Loading = ({
@@ -13,9 +14,9 @@ export const Loading = ({
 
   return (
     <React.Fragment>
-      <div className={"loading-wrapper"}>
+      <Box className={"loading-wrapper"}>
         <i className={"bx bx-loader-alt bx-spin"}></i>
-      </div>
+      </Box>
     </React.Fragment>
   );
 }

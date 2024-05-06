@@ -14,7 +14,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -252,7 +252,7 @@ export const FoodSave = () => {
     };
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>분류</th>
@@ -299,7 +299,7 @@ export const FoodSave = () => {
                   </td>
                   <td>{`${item.food_title}(${item.food_brand})`}</td>
                   <td>
-                    <div className={"d-flex"}>
+                    <Box className={"d-flex"}>
                       <NumericFormat
                         min={0}
                         max={99}
@@ -321,7 +321,7 @@ export const FoodSave = () => {
                         }}
                       ></NumericFormat>
                       <span>{item.food_serv}</span>
-                    </div>
+                    </Box>
                   </td>
                   <td>{item.food_gram}</td>
                   <td>{item.food_kcal}</td>

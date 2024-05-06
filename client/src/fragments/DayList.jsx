@@ -6,6 +6,10 @@ import "moment/locale/ko";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
+import Grid2 from '@mui/material/Unstable_Grid2';
+import {TextField, Typography} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
+import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // 8. dayPicker ----------------------------------------------------------------------------------->
 export const DayList = ({
@@ -229,9 +233,9 @@ export const DayList = ({
 
     return (
       <React.Fragment>
-        <div className={`dayPicker-container ${DAYPICKER.dayOpen ? "" : "d-none"}`}>
+        <Box className={`dayPicker-container ${DAYPICKER.dayOpen ? "" : "d-none"}`}>
           {closeBtn()}
-          <div className={"h-2vh"}></div>
+          <Box className={"h-2vh"}></Box>
           <DayPicker
             weekStartsOn={1}
             showOutsideDays={true}
@@ -246,7 +250,7 @@ export const DayList = ({
             onDayClick={onDayClick}
             onMonthChange={onMonthChange}
           ></DayPicker>
-        </div>
+        </Box>
       </React.Fragment>
     );
   };

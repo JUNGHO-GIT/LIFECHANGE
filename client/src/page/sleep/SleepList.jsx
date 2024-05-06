@@ -13,7 +13,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -136,54 +136,56 @@ export const SleepList = () => {
 
     const tableSection = () => (
       <React.Fragment>
-        <TableContainer className={"block-wrapper h-80vh"}>
-          <Table className={"border"}>
-            <TableHead className={"table-thead"}>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    className={"table-th"}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody className={"table-tbody"}>
-              {rows.map((row, index) => (
-                <TableRow hover role={"checkbox"} tabIndex={-1} key={index}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        className={"table-td"}
-                        onClick={column.id === "sleep_startDt" ? (() => {
-                          navParam(SEND.toDetail, {
-                            state: row.send
-                          });
-                        }) : undefined}
-                      >
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value
-                        }
-                      </TableCell>
-                    );
-                  })}
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+              <TableHead className={"table-thead"}>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      className={"table-th"}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody className={"table-tbody"}>
+                {rows.map((row, index) => (
+                  <TableRow hover role={"checkbox"} tabIndex={-1} key={index}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          className={"table-td"}
+                          onClick={column.id === "sleep_startDt" ? (() => {
+                            navParam(SEND.toDetail, {
+                              state: row.send
+                            });
+                          }) : undefined}
+                        >
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value
+                          }
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </React.Fragment>
     );
     return (
       <React.Fragment>
-        <Card className={"content-wrapper"}>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
@@ -191,7 +193,7 @@ export const SleepList = () => {
               </Grid2>
             </Grid2>
           </Container>
-        </Card>
+        </Paper>
       </React.Fragment>
     );
   };

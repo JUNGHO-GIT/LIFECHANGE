@@ -7,7 +7,7 @@ import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Paper, Button} from "@mui/material";
+import {Container, Card, Paper, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Button} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
@@ -215,15 +215,15 @@ export const TweakDataset = () => {
     });
     const tableSection1 = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
                 <Grid2 container spacing={3}>
                   <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                    <div>
+                    <Box>
                       Dataset
-                    </div>
+                    </Box>
                   </Grid2>
                 </Grid2>
               </th>
@@ -253,9 +253,9 @@ export const TweakDataset = () => {
                 <td>
                   <Grid2 container spacing={3}>
                     <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"p-5"}>
-                      <div className={"dataset-title"}>
+                      <Box className={"dataset-title"}>
                         {item}
-                      </div>
+                      </Box>
                     </Grid2>
                   </Grid2>
                 </td>
@@ -267,20 +267,20 @@ export const TweakDataset = () => {
     );
     const tableSection2 = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
                 <Grid2 container spacing={3}>
                   <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                    <div>
+                    <Box>
                       Part
-                    </div>
+                    </Box>
                   </Grid2>
                   <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                    <div className={"dataset-add"} onClick={addPart}>
+                    <Box className={"dataset-add"} onClick={addPart}>
                       +
-                    </div>
+                    </Box>
                   </Grid2>
                 </Grid2>
               </th>
@@ -301,22 +301,22 @@ export const TweakDataset = () => {
                 <td>
                   <Grid2 container spacing={3}>
                     <Grid2 xl={7} lg={7} md={7} sm={7} xs={7} className={"p-5 d-center"}>
-                      <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
+                      <Box className={"dataset-title"} onClick={() => (setIdx((prev) => ({
                         ...prev,
                         partIdx: index
                       })))}>
                         {item[`${dataType}_part`]}
-                      </div>
+                      </Box>
                     </Grid2>
                     <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"p-5 d-center"}>
-                      <div className={"dataset-rename"} onClick={renamePart(index)}>
+                      <Box className={"dataset-rename"} onClick={renamePart(index)}>
                         re
-                      </div>
+                      </Box>
                     </Grid2>
                     <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"p-5 d-center"}>
-                      <div className={"dataset-delete"} onClick={rmPart(index)}>
+                      <Box className={"dataset-delete"} onClick={rmPart(index)}>
                         x
-                      </div>
+                      </Box>
                     </Grid2>
                   </Grid2>
                 </td>
@@ -328,20 +328,20 @@ export const TweakDataset = () => {
     );
     const tableSection3 = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-80vh"}>
+        <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
                 <Grid2 container spacing={3}>
                   <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                    <div>
+                    <Box>
                       Title
-                    </div>
+                    </Box>
                   </Grid2>
                   <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                    <div className={"dataset-add"} onClick={addTitle}>
+                    <Box className={"dataset-add"} onClick={addTitle}>
                       +
-                    </div>
+                    </Box>
                   </Grid2>
                 </Grid2>
               </th>
@@ -363,22 +363,22 @@ export const TweakDataset = () => {
                 <td>
                   <Grid2 container spacing={3}>
                     <Grid2 xl={7} lg={7} md={7} sm={7} xs={7} className={"p-5 d-center"}>
-                      <div className={"dataset-title"} onClick={() => (setIdx((prev) => ({
+                      <Box className={"dataset-title"} onClick={() => (setIdx((prev) => ({
                         ...prev,
                         titleIdx: index
                       })))}>
                         {item}
-                      </div>
+                      </Box>
                     </Grid2>
                     <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"p-5 d-center"}>
-                      <div className={"dataset-rename"} onClick={renameTitle(index)}>
+                      <Box className={"dataset-rename"} onClick={renameTitle(index)}>
                         re
-                      </div>
+                      </Box>
                     </Grid2>
                     <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"p-5 d-center"}>
-                      <div className={"dataset-delete"} onClick={rmTitle(index)}>
+                      <Box className={"dataset-delete"} onClick={rmTitle(index)}>
                         x
-                      </div>
+                      </Box>
                     </Grid2>
                   </Grid2>
                 </td>

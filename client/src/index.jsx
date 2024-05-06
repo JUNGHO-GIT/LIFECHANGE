@@ -6,6 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import {reportWebVitals} from "./settings/reportWebVitals";
 import {Routes, Route} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
+import {Box} from "@mui/material";
 
 import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
@@ -171,7 +172,7 @@ const Tweak = () => (
 const App = () => {
   return (
     <React.Fragment>
-      <div className={"App"}>
+      <Box className={"App"}>
         <Routes>
           <Route path="/user/*" element={<User />} />
           <Route path="/calendar/*" element={<Calendar />} />
@@ -181,7 +182,7 @@ const App = () => {
           <Route path="/sleep/*" element={<Sleep />} />
           <Route path="/tweak/*" element={<Tweak />} />
         </Routes>
-      </div>
+      </Box>
     </React.Fragment>
   );
 };

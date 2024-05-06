@@ -16,7 +16,7 @@ import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Container, Card, Paper, Box, Divider} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -122,7 +122,7 @@ export const ExercisePlanSave = () => {
       <React.Fragment>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>목표 총 볼륨</span>
               <NumericFormat
                 min={0}
@@ -148,10 +148,10 @@ export const ExercisePlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>목표 유산소 시간</span>
               <TimePicker
                 locale={"ko"}
@@ -170,12 +170,12 @@ export const ExercisePlanSave = () => {
                   }));
                 }}
               ></TimePicker>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
         <Grid2 container spacing={3}>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>목표 운동 횟수</span>
               <NumericFormat
                 min={0}
@@ -201,10 +201,10 @@ export const ExercisePlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <div className={"input-group"}>
+            <Box className={"input-group"}>
               <span className={"input-group-text"}>목표 체중</span>
               <NumericFormat
                 min={0}
@@ -230,7 +230,7 @@ export const ExercisePlanSave = () => {
                   }));
                 }}
               ></NumericFormat>
-            </div>
+            </Box>
           </Grid2>
         </Grid2>
       </React.Fragment>
