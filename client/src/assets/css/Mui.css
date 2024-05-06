@@ -18,7 +18,6 @@
   width: 100% !important;
   margin: 0px 0px 0px 0px !important;
 }
-
 [class$="MuiPaper-root-MuiDialog-paper"] {
   margin: 30px 25px 30px 25px !important;
 }
@@ -50,4 +49,30 @@
 [class$="MuiDialogActions-root"] {
   margin: 0px 0px 0px 0px !important;
   padding: 15px 0px 0px 0px !important;
+}
+[class$="MuiPickersPopper-paper"] {
+  margin: 0px 0px 0px 0px !important;
+  padding: 8px 8px 20px 8px !important;
+}
+[class$="MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item"] {
+  width: 65px !important;
+  min-height: 20px !important;
+  border-radius: 10px !important;
+}
+[class$="MuiButtonBase-root-MuiMenuItem-root-MuiMultiSectionDigitalClockSection-item Mui-selected"] {
+  background-color: #164a60 !important;
+  color: #ffffff !important;
+}
+[class$="MuiPopper-root-MuiPickersPopper-root"] {
+  max-width: 245px !important;
+}
+[class$="MuiList-root-MuiMultiSectionDigitalClockSection-root"] {
+  width: 77px !important;
+  height: 150px !important;
+}
+[class$="MuiMultiSectionDigitalClockSection-item"] {
+  font-size: 0.8rem !important;
+}
+[class$="MuiButtonBase-root-MuiPickersDay-root"] {
+  line-height: 1.5 !important;
 }

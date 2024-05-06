@@ -6,14 +6,14 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
-import {DaySave} from "../../fragments/DaySave.jsx";
+import {DayList} from "../../fragments/DayList.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {TextField, Typography} from "@mui/material";
-import {Container, Card, Paper, Box, Badge} from "@mui/material";
+import {TextField, Typography, InputAdornment} from '@mui/material';
+import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -119,6 +119,74 @@ export const SleepPlanList = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <TableContainer>
+            <Table className={"border"}>
+              <TableHead>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+                  <TableCell>분류</TableCell>
+                  <TableCell>목표</TableCell>
+                  <TableCell>실제</TableCell>
+                  <TableCell>비교</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody className={"table-tbody-tr"}>
+                {OBJECT?.map((item) => (
+                  <React.Fragment key={item._id}>
+                    <TableRow>
+                      <TableCell rowSpan={3} className={"pointer"} onClick={() => {
+                        SEND.id = item._id;
+                        SEND.startDt = item.sleep_plan_startDt;
+                        SEND.endDt = item.sleep_plan_endDt;
+                        navParam(SEND.toDetail, {
+                          state: SEND
+                        });
+                      }}>
+                        {item.sleep_plan_startDt}
+                      </TableCell>
+                      <TableCell>취침</TableCell>
+                      <TableCell>{item.sleep_plan_night}</TableCell>
+                      <TableCell>{item.sleep_night}</TableCell>
+                      <TableCell className={item.sleep_diff_night_color}>{item.sleep_diff_night}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>기상</TableCell>
+                      <TableCell>{item.sleep_plan_morning}</TableCell>
+                      <TableCell>{item.sleep_morning}</TableCell>
+                      <TableCell className={item.sleep_diff_morning_color}>{item.sleep_diff_morning}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>수면</TableCell>
+                      <TableCell>{item.sleep_plan_time}</TableCell>
+                      <TableCell>{item.sleep_time}</TableCell>
+                      <TableCell className={item.sleep_diff_time_color}>{item.sleep_diff_time}</TableCell>
+                    </TableRow>
+                  </React.Fragment>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </React.Fragment>
+    );
+    return (
+      <React.Fragment>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Paper>
+      </React.Fragment>
+    );
+  };
+  /* const tableNode = () => {
+    const tableSection = () => (
+      <React.Fragment>
         <Table className={"block-wrapper h-75vh"}>
           <thead>
             <tr>
@@ -179,7 +247,7 @@ export const SleepPlanList = () => {
         </Paper>
       </React.Fragment>
     );
-  };
+  }; */
 
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
@@ -197,9 +265,9 @@ export const SleepPlanList = () => {
     <NavBar />
   );
 
-  // 11. daySave ---------------------------------------------------------------------------------->
-  const daySaveNode = () => (
-    <DaySave FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+  // 11. day -------------------------------------------------------------------------------------->
+  const dayListNode = () => (
+    <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
@@ -232,7 +300,7 @@ export const SleepPlanList = () => {
     <React.Fragment>
       {headerNode()}
       {navBarNode()}
-      {daySaveNode()}
+      {dayListNode()}
       {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
       {filterNode()}

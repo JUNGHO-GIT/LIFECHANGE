@@ -9,18 +9,21 @@ import {percent} from "../../assets/js/percent.js";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {useTime} from "../../hooks/useTime.jsx";
 import {useDate} from "../../hooks/useDate.jsx";
-import {DaySave} from "../../fragments/DaySave.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {TextField, Typography} from "@mui/material";
-import {Container, Card, Paper, Box, Badge} from "@mui/material";
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import {Menu, MenuItem} from "@mui/material";
+import {TextField, Typography, InputAdornment} from '@mui/material';
+import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepSave = () => {
@@ -122,79 +125,138 @@ export const SleepSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const titleSection = () => (
+      <React.Fragment>
+        <Typography variant={"h5"} fontWeight={500}>
+          수면 Detail
+        </Typography>
+      </React.Fragment>
+    );
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            slotProps={{ field: { shouldRespectLeadingZeros: true } }}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
+          ></DesktopDatePicker>
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    const dropdownSection = () => (
+      <PopupState variant={"popover"} popupId={"popup"}>
+        {(popupState) => (
+          <React.Fragment>
+            <IconButton {...bindTrigger(popupState)}>
+              <Badge badgeContent={COUNT?.sectionCnt} color={"primary"} showZero={true}>
+              </Badge>
+            </IconButton>
+            <Menu {...bindMenu(popupState)}>
+              <MenuItem onClick={() => {
+                setOBJECT(OBJECT_DEF);
+              }}>
+                <DeleteIcon fontSize={"small"} color={"action"}></DeleteIcon>
+                초기화
+              </MenuItem>
+              <MenuItem>
+                <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+                기타
+              </MenuItem>
+            </Menu>
+          </React.Fragment>
+        )}
+      </PopupState>
+    );
+    const adornment = () => (
+      <InputAdornment position={"end"}>시간</InputAdornment>
+    );
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
           <Box className={"d-center p-10"}>
-            <Typography variant={"h5"} fontWeight={500}>
-              수면 데이터
-            </Typography>
+            {titleSection()}
           </Box>
+          <Divider variant={"middle"} className={"mb-20"}></Divider>
           <Box className={"d-center mb-20"}>
-            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-              <DatePicker
-                label={"날짜"}
-                value={moment(DATE.startDt)}
-                format={"YYYY-MM-DD"}
-                slotProps={{ field: { shouldRespectLeadingZeros: true } }}
-                onChange={(day) => {
-                  setDATE((prev) => ({
-                    ...prev,
-                    startDt: moment(day).format("YYYY-MM-DD"),
-                    endDt: moment(day).format("YYYY-MM-DD")
-                  }));
-                }}
-              ></DatePicker>
-            </LocalizationProvider>
+            {dateSection()}
           </Box>
-          <Card variant={"outlined"} className={"p-20"}>
-            <Box className={"d-right mb-20"}>
-              <Badge color={"primary"} badgeContent={1} showZero></Badge>
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <TimePicker
-                  label={"취침"}
-                  value={moment(OBJECT?.sleep_section[0]?.sleep_night, "HH:mm")}
-                  onChange={(time) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      sleep_section: [{
-                        ...prev?.sleep_section[0],
-                        sleep_night: moment(time).format("HH:mm")
-                      }],
-                    }));
-                  }}
-                ></TimePicker>
-              </LocalizationProvider>
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <TimePicker
-                  label={"기상"}
-                  value={moment(OBJECT?.sleep_section[0]?.sleep_morning, "HH:mm")}
-                  onChange={(time) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      sleep_section: [{
-                        ...prev.sleep_section[0],
-                        sleep_morning: moment(time).format("HH:mm")
-                      }]
-                    }));
-                  }}
-                ></TimePicker>
-              </LocalizationProvider>
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <TimePicker
-                  label={"수면"}
-                  value={moment(OBJECT?.sleep_section[0]?.sleep_time, "HH:mm")}
-                ></TimePicker>
-              </LocalizationProvider>
-            </Box>
-            <Box className={"h-3vh"}></Box>
-          </Card>
+          {OBJECT?.sleep_section?.map((section, index) => (
+            <React.Fragment key={index}>
+              <Card variant={"outlined"} className={"p-20"}>
+                <Box className={"d-right mb-20"}>
+                  {dropdownSection()}
+                </Box>
+                <Box className={"d-center mb-20"}>
+                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                    <DesktopTimePicker
+                      label={"취침"}
+                      minutesStep={1}
+                      value={moment(section.sleep_night, "HH:mm")}
+                      format={"HH:mm"}
+                      timezone={"Asia/Seoul"}
+                      views={['hours', 'minutes']}
+                      onChange={(time) => {
+                        setOBJECT((prev) => ({
+                          ...prev,
+                          sleep_section: [{
+                            ...prev?.sleep_section[0],
+                            sleep_night: moment(time).format("HH:mm")
+                          }],
+                        }));
+                      }}
+                    ></DesktopTimePicker>
+                  </LocalizationProvider>
+                </Box>
+                <Box className={"d-center mb-20"}>
+                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                    <DesktopTimePicker
+                      label={"기상"}
+                      minutesStep={1}
+                      value={moment(section.sleep_morning, "HH:mm")}
+                      format={"HH:mm"}
+                      timezone={"Asia/Seoul"}
+                      views={['hours', 'minutes']}
+                      onChange={(time) => {
+                        setOBJECT((prev) => ({
+                          ...prev,
+                          sleep_section: [{
+                            ...prev.sleep_section[0],
+                            sleep_morning: moment(time).format("HH:mm")
+                          }]
+                        }));
+                      }}
+                    ></DesktopTimePicker>
+                  </LocalizationProvider>
+                </Box>
+                <Box className={"d-center mb-20"}>
+                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                    <TextField
+                      type={"text"}
+                      size={"medium"}
+                      id={"sleep_time"}
+                      name={"sleep_time"}
+                      label={"수면"}
+                      InputProps={{
+                        readOnly: true,
+                        endAdornment: adornment()
+                      }}
+                      value={section.sleep_time}
+                    ></TextField>
+                  </LocalizationProvider>
+                </Box>
+                <Box className={"h-3vh"}></Box>
+              </Card>
+            </React.Fragment>
+          ))}
         </Box>
       </React.Fragment>
     );
@@ -227,13 +289,6 @@ export const SleepSave = () => {
   // 10. navBar ----------------------------------------------------------------------------------->
   const navBarNode = () => (
     <NavBar />
-  );
-
-  // 11. day -------------------------------------------------------------------------------------->
-  const daySaveNode = () => (
-    <DaySave DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      part={"sleep"} plan={""} type={"save"}
-    />
   );
 
   // 14. btn -------------------------------------------------------------------------------------->

@@ -1,21 +1,18 @@
 /** 0. Non Media **********************************************************************************/
-.table-thead {
-  border: 1px solid #dee2e6 !important;
-}
-.table-th {
+
+/** 0. Media **************************************************************************************/
+.table-thead-tr th, .table-thead-tr td {
   text-align: center !important;
   background-color: #164a60 !important;
   color: #ffffff !important;
   padding: 5px !important;
 }
-.table-tbody {
+.table-tbody-tr th, .table-tbody-tr td {
   text-align: center !important;
+  background-color: transparent !important;
+  color: #000000 !important;
+  padding: 10px !important;
 }
-.table-td {
-  text-align: center !important;
-}
-
-/** 0. Media **************************************************************************************/
 
 /** 1. Small (0 ~ 479px) **************************************************************************/
 @media only screen and (min-width: 0px) and (max-width: 479px) {
@@ -23,11 +20,11 @@
   /** non display **/
 
   /** display **/
-  .table-th {
-    font-size: 0.650rem !important;
+  .table-thead-tr th, .table-thead-tr td {
+    font-size: 0.800rem !important;
   }
-  .table-td {
-    font-size: 0.600rem !important;
+  .table-tbody-tr th, .table-tbody-tr td {
+    font-size: 0.700rem !important;
   }
 }
 
@@ -37,11 +34,11 @@
   /** non display **/
 
   /** display **/
-  .table-th {
-    font-size: 0.750rem !important;
+  .table-thead-tr th, .table-thead-tr td {
+    font-size: 0.825rem !important;
   }
-  .table-td {
-    font-size: 0.700rem !important;
+  .table-tbody-tr th, .table-tbody-tr td {
+    font-size: 0.725rem !important;
   }
 }
 
@@ -51,11 +48,11 @@
   /** non display **/
 
   /** display **/
-  .table-th {
+  .table-thead-tr th, .table-thead-tr td {
     font-size: 0.850rem !important;
   }
-  .table-td {
-    font-size: 0.800rem !important;
+  .table-tbody-tr th, .table-tbody-tr td {
+    font-size: 0.750rem !important;
   }
 }
 
@@ -65,11 +62,11 @@
   /** non display **/
 
   /** display **/
-  .table-th {
-    font-size: 0.950rem !important;
+  .table-thead-tr th, .table-thead-tr td {
+    font-size: 0.875rem !important;
   }
-  .table-td {
-    font-size: 0.900rem !important;
+  .table-tbody-tr th, .table-tbody-tr td {
+    font-size: 0.775rem !important;
   }
 }
 
@@ -79,10 +76,10 @@
   /** non display **/
 
   /** display **/
-  .table-th {
-    font-size: 1.500rem !important;
-  }
-  .table-td {
+  .table-thead-tr th, .table-thead-tr td {
     font-size: 1.000rem !important;
+  }
+  .table-tbody-tr th, .table-tbody-tr td {
+    font-size: 0.900rem !important;
   }
 }

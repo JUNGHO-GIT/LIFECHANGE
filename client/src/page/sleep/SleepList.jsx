@@ -12,8 +12,8 @@ import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {TextField, Typography} from "@mui/material";
-import {Container, Card, Paper, Box, Badge} from "@mui/material";
+import {TextField, Typography, InputAdornment} from '@mui/material';
+import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -111,71 +111,46 @@ export const SleepList = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-
-    const columns = [
-      { id: "sleep_startDt", label: "날짜", minWidth: 170, align: "center"},
-      { id: "sleep_night", label: "취침", minWidth: 100 },
-      { id: "sleep_morning", label: "기상", minWidth: 100 },
-      { id: "sleep_time", label: "수면", minWidth: 100 },
-    ];
-
-    const rows = OBJECT?.map((item, index) => (
-      item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => ({
-        _id: item._id,
-        sleep_startDt: item.sleep_startDt,
-        sleep_night: section.sleep_night,
-        sleep_morning: section.sleep_morning,
-        sleep_time: section.sleep_time,
-        send: {
-          id: item._id,
-          startDt: item.sleep_startDt,
-          endDt: item.sleep_endDt
-        }
-      }))
-    )).flat().filter((item) => (item !== undefined));
-
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
           <TableContainer>
             <Table className={"border"}>
-              <TableHead className={"table-thead"}>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      className={"table-th"}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
+              <TableHead>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>날짜</TableCell>
+                  <TableCell>취침</TableCell>
+                  <TableCell>기상</TableCell>
+                  <TableCell>수면</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody className={"table-tbody"}>
-                {rows.map((row, index) => (
-                  <TableRow hover role={"checkbox"} tabIndex={-1} key={index}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          className={"table-td"}
-                          onClick={column.id === "sleep_startDt" ? (() => {
-                            navParam(SEND.toDetail, {
-                              state: row.send
-                            });
-                          }) : undefined}
-                        >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value
-                          }
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
+              <TableBody className={"table-tbody-tr"}>
+                {OBJECT?.map((item, index) => (
+                  <React.Fragment key={item._id}>
+                    {item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => (
+                      <React.Fragment key={sectionIndex}>
+                        <TableRow>
+                          {sectionIndex === 0 && (
+                            <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}
+                              className={"pointer"} onClick={() => {
+                                SEND.id = item._id;
+                                SEND.startDt = item.sleep_startDt;
+                                SEND.endDt = item.sleep_endDt;
+                                navParam(SEND.toDetail, {
+                                  state: SEND
+                                });
+                              }}>
+                              {item.sleep_startDt?.substring(5, 10)}
+                              {item.sleep_section.length > 3 && (<div>더보기</div>)}
+                            </TableCell>
+                          )}
+                          <TableCell>{section.sleep_night}</TableCell>
+                          <TableCell>{section.sleep_morning}</TableCell>
+                          <TableCell>{section.sleep_time}</TableCell>
+                        </TableRow>
+                      </React.Fragment>
+                    ))}
+                  </React.Fragment>
                 ))}
               </TableBody>
             </Table>
