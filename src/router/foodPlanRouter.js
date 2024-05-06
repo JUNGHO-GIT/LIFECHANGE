@@ -52,7 +52,8 @@ router.get("/detail", async (req, res) => {
       res.json({
         status: "success",
         msg: "조회 성공",
-        result: result
+        sectionCnt: result.sectionCnt,
+        result: result.result
       });
     }
     else {

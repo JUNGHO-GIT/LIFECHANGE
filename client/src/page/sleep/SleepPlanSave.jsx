@@ -1,9 +1,10 @@
 // SleepPlanSave.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {TimePicker} from "react-time-picker";
 import {percent} from "../../assets/js/percent.js";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
@@ -17,7 +18,13 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import {Menu, MenuItem} from "@mui/material";
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanSave = () => {
@@ -117,70 +124,129 @@ export const SleepPlanSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const titleSection = () => (
+      <React.Fragment>
+        <Typography variant={"h5"} fontWeight={500}>
+          수면 계획 Detail
+        </Typography>
+      </React.Fragment>
+    );
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            slotProps={{ field: { shouldRespectLeadingZeros: true } }}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
+          ></DesktopDatePicker>
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    const dropdownSection = () => (
+      <PopupState variant={"popover"} popupId={"popup"}>
+        {(popupState) => (
+          <React.Fragment>
+            <IconButton {...bindTrigger(popupState)}>
+              <Badge badgeContent={COUNT?.sectionCnt} color={"primary"} showZero={true}>
+              </Badge>
+            </IconButton>
+            <Menu {...bindMenu(popupState)}>
+              <MenuItem onClick={() => {
+                setOBJECT(OBJECT_DEF);
+              }}>
+                <DeleteIcon fontSize={"small"} color={"action"}></DeleteIcon>
+                초기화
+              </MenuItem>
+              <MenuItem>
+                <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+                기타
+              </MenuItem>
+            </Menu>
+          </React.Fragment>
+        )}
+      </PopupState>
+    );
+    const adornment = () => (
+      <InputAdornment position={"end"}>시간</InputAdornment>
+    );
     const tableSection = () => (
       <React.Fragment>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>취침</span>
-              <TimePicker
-                locale={"ko"}
-                format={"HH:mm"}
-                id={"sleep_plan_night"}
-                name={"sleep_plan_night"}
-                className={"form-control"}
-                clockIcon={null}
-                disabled={false}
-                disableClock={false}
-                value={OBJECT?.sleep_plan_night}
-                onChange={(e) => {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    sleep_plan_night: e ? e.toString() : "",
-                  }));
-                }}
-              ></TimePicker>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Card variant={"outlined"} className={"p-20"}>
+            <Box className={"d-right mb-20"}>
+              {dropdownSection()}
             </Box>
-          </Grid2>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>기상</span>
-              <TimePicker
-                locale={"ko"}
-                format={"HH:mm"}
-                id={"sleep_plan_morning"}
-                name={"sleep_plan_morning"}
-                className={"form-control"}
-                clockIcon={null}
-                disabled={false}
-                disableClock={false}
-                value={OBJECT?.sleep_plan_morning}
-                onChange={(e) => {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    sleep_plan_morning: e ? e.toString() : "",
-                  }));
-                }}
-              ></TimePicker>
+            <Box className={"d-center mb-20"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DesktopTimePicker
+                  label={"취침 계획"}
+                  minutesStep={1}
+                  value={moment(OBJECT.sleep_plan_night, "HH:mm")}
+                  format={"HH:mm"}
+                  timezone={"Asia/Seoul"}
+                  views={['hours', 'minutes']}
+                  onChange={(time) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      sleep_plan_night: moment(time).format("HH:mm")
+                    }));
+                  }}
+                ></DesktopTimePicker>
+              </LocalizationProvider>
             </Box>
-          </Grid2>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>수면</span>
-              <TimePicker
-                locale={"ko"}
-                format={"HH:mm"}
-                id={"sleep_plan_time"}
-                name={"sleep_plan_time"}
-                className={"form-control"}
-                disabled={true}
-                clockIcon={null}
-                disableClock={false}
-                value={OBJECT?.sleep_plan_time}
-              ></TimePicker>
+            <Box className={"d-center mb-20"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DesktopTimePicker
+                  label={"기상"}
+                  minutesStep={1}
+                  value={moment(OBJECT.sleep_plan_morning, "HH:mm")}
+                  format={"HH:mm"}
+                  timezone={"Asia/Seoul"}
+                  views={['hours', 'minutes']}
+                  onChange={(time) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      sleep_plan_morning: moment(time).format("HH:mm")
+                    }));
+                  }}
+                ></DesktopTimePicker>
+              </LocalizationProvider>
             </Box>
-          </Grid2>
-        </Grid2>
+            <Box className={"d-center mb-20"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <TextField
+                  label={"수면"}
+                  type={"text"}
+                  size={"medium"}
+                  id={"sleep_time"}
+                  name={"sleep_time"}
+                  value={OBJECT.sleep_plan_time}
+                  InputProps={{
+                    readOnly: true,
+                    endAdornment: adornment()
+                  }}
+                ></TextField>
+              </LocalizationProvider>
+            </Box>
+            <Box className={"h-3vh"}></Box>
+          </Card>
+        </Box>
       </React.Fragment>
     );
     return (

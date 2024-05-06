@@ -1,5 +1,7 @@
 // SleepPlanDetail.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -14,7 +16,13 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import {Menu, MenuItem} from "@mui/material";
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanDetail = () => {
@@ -114,32 +122,121 @@ export const SleepPlanDetail = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const titleSection = () => (
+      <React.Fragment>
+        <Typography variant={"h5"} fontWeight={500}>
+          수면 계획 Detail
+        </Typography>
+      </React.Fragment>
+    );
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            readOnly={true}
+          ></DesktopDatePicker>
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    const dropdownSection = (id) => (
+      <PopupState variant={"popover"} popupId={"popup"}>
+        {(popupState) => (
+          <React.Fragment>
+            <IconButton {...bindTrigger(popupState)}>
+              <Badge badgeContent={COUNT.sectionCnt} color={"primary"} showZero={true}></Badge>
+            </IconButton>
+            <Menu {...bindMenu(popupState)}>
+              <MenuItem onClick={() => {
+                flowDelete(id)
+              }}>
+                <DeleteIcon fontSize={"small"} color={"error"}></DeleteIcon>
+                삭제
+              </MenuItem>
+              <MenuItem onClick={() => {
+                SEND.startDt = DATE.startDt;
+                SEND.endDt = DATE.endDt;
+                navParam(SEND.toUpdate, {
+                  state: SEND,
+                });
+              }}>
+                <EditIcon fontSize={"small"} color={"primary"}></EditIcon>
+                수정
+              </MenuItem>
+              <MenuItem>
+                <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+                기타
+              </MenuItem>
+            </Menu>
+          </React.Fragment>
+        )}
+      </PopupState>
+    );
+    const adornment = () => (
+      <InputAdornment position={"end"}>시간</InputAdornment>
+    );
     const tableSection = () => (
       <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-          <tr>
-            <th className={"table-thead"}>날짜</th>
-            <th className={"table-thead"}>취침 목표</th>
-            <th className={"table-thead"}>기상 목표</th>
-            <th className={"table-thead"}>수면 목표</th>
-            <th className={"table-thead"}>x</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{`${OBJECT?.sleep_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.sleep_plan_endDt?.substring(5, 10)}`}</td>
-            <td>{OBJECT?.sleep_plan_night}</td>
-            <td>{OBJECT?.sleep_plan_morning}</td>
-            <td>{OBJECT?.sleep_plan_time}</td>
-            <td>
-              <p className={"del-btn"} onClick={() => (
-                flowDelete(OBJECT._id)
-              )}>x</p>
-            </td>
-          </tr>
-        </tbody>
-        </Table>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Card variant={"outlined"} className={"p-20"}>
+            <Box className={"d-right mb-20"}>
+              {dropdownSection(OBJECT._id)}
+            </Box>
+            <Box className={"d-center mb-20"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DesktopTimePicker
+                  label={"취침 목표"}
+                  minutesStep={1}
+                  value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+                  format={"HH:mm"}
+                  timezone={"Asia/Seoul"}
+                  views={['hours', 'minutes']}
+                  readOnly={true}
+                ></DesktopTimePicker>
+              </LocalizationProvider>
+            </Box>
+            <Box className={"d-center mb-20"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <DesktopTimePicker
+                  label={"기상 목표"}
+                  minutesStep={1}
+                  value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+                  format={"HH:mm"}
+                  timezone={"Asia/Seoul"}
+                  views={['hours', 'minutes']}
+                  readOnly={true}
+                ></DesktopTimePicker>
+              </LocalizationProvider>
+            </Box>
+            <Box className={"d-center mb-20"}>
+              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+                <TextField
+                  label={"수면 목표"}
+                  type={"text"}
+                  size={"medium"}
+                  id={"sleep_time"}
+                  name={"sleep_time"}
+                  value={OBJECT?.sleep_plan_time}
+                  InputProps={{
+                    readOnly: true,
+                    endAdornment: adornment()
+                  }}
+                ></TextField>
+              </LocalizationProvider>
+            </Box>
+            <Box className={"h-3vh"}></Box>
+          </Card>
+        </Box>
       </React.Fragment>
     );
     return (

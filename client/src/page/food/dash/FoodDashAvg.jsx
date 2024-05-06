@@ -2,14 +2,17 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-
 import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
+import {Container, Card, Box, Paper} from "@mui/material";
+import {MenuItem, FormControl, Select} from "@mui/material";
 import {FormGroup, FormControlLabel, Switch} from "@mui/material";
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import {IconButton, Menu} from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashAvg = () => {
@@ -25,7 +28,6 @@ export const FoodDashAvg = () => {
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("kcal");
-  const [PART, setPART] = useState(array);
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_KCAL_MONTH_DEF = [
@@ -97,10 +99,8 @@ export const FoodDashAvg = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {PART.includes("칼로리") && (
-              <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
+            <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -152,18 +152,12 @@ export const FoodDashAvg = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {PART.includes("탄수화물") && (
-              <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("단백질") && (
-              <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("지방") && (
-              <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
+            <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+            <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+            <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}g`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -215,10 +209,8 @@ export const FoodDashAvg = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {PART.includes("칼로리") && (
-              <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
+            <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -270,18 +262,12 @@ export const FoodDashAvg = () => {
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
             ></YAxis>
-            {PART.includes("탄수화물") && (
-              <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("단백질") && (
-              <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
-            {PART.includes("지방") && (
-              <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
-              </Bar>
-            )}
+            <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+            <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
+            <Bar dataKey={"지방"} fill="#ff7300" radius={[10, 10, 0, 0]} minPointSize={1}>
+            </Bar>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}g`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -308,26 +294,46 @@ export const FoodDashAvg = () => {
     );
   };
 
-  // 6-1. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
-    return (
-      <React.Fragment>
-        {["탄수화물", "단백질", "지방"]?.map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-              if (PART.includes(key)) {
-                setPART(PART?.filter((item) => (item !== key)));
-              }
-              else {
-                setPART([...PART, key]);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        ))}
-      </React.Fragment>
-    );
-  };
+  // 7-1. dropdown -------------------------------------------------------------------------------->
+  const dropdownSection1 = () => (
+    <FormControl size={"small"} variant={"outlined"}>
+      <Select id={"section"} value={SECTION} className={"form-select"}
+      onChange={(e) => (
+        setSECTION(e.target.value)
+      )}>
+        <MenuItem value={"month"}>월간</MenuItem>
+        <MenuItem value={"year"}>연간</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
+  // 7-3. dropdown -------------------------------------------------------------------------------->
+  const dropdownSection3 = () => (
+    <PopupState variant={"popover"} popupId={"popup"}>
+      {(popupState) => (
+        <React.Fragment>
+          <IconButton {...bindTrigger(popupState)}>
+            <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+          </IconButton>
+          <Menu {...bindMenu(popupState)}>
+            {["kcal", "nut"]?.map((key, index) => (
+              <FormGroup key={index} className={"p-5 pe-10"}>
+                <FormControlLabel control={<Switch checked={LINE === key} onChange={() => {
+                  if (LINE === key) {
+                    setLINE("");
+                  }
+                  else {
+                    setLINE(key);
+                  }
+                }}/>} label={key} labelPlacement={"start"}>
+                </FormControlLabel>
+              </FormGroup>
+            ))}
+          </Menu>
+        </React.Fragment>
+      )}
+    </PopupState>
+  );
 
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
@@ -338,44 +344,29 @@ export const FoodDashAvg = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <select className={"form-select form-select-sm"}
-                onChange={(e) => (setSECTION(e.target.value))}
-                value={SECTION}
-              >
-                <option value={"month"}>월간</option>
-                <option value={"year"}>연간</option>
-              </select>
+              {dropdownSection1()}
             </Grid2>
-            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <span className={"dash-title"}>칼로리/영양소 평균</span>
             </Grid2>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <select className={"form-select form-select-sm"}
-                onChange={(e) => (setLINE(e.target.value))}
-                value={LINE}
-              >
-                <option value={"kcal"}>칼로리</option>
-                <option value={"nut"}>영양소</option>
-              </select>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
-            <Grid2 xl={10} lg={10} md={10} sm={10} xs={10}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "month" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalMonth())}
               {SECTION === "month" && LINE === "nut" && (LOADING ? loadingNode() : chartNutMonth())}
               {SECTION === "year" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalYear())}
               {SECTION === "year" && LINE === "nut" && (LOADING ? loadingNode() : chartNutYear())}
             </Grid2>
-            <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-              {LOADING ? "" : tableNode()}
-            </Grid2>
-            </Grid2>
-          </Container>
-      </Card>
+          </Grid2>
+        </Container>
+      </Paper>
     </React.Fragment>
   );
 };

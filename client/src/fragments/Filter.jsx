@@ -1,8 +1,8 @@
 // Filter.jsx
 
 import React from "react";
-import {InputLabel, MenuItem, FormControl, Select, Box, FormHelperText} from "@mui/material";
-import {Card, Container, Paper} from "@mui/material";
+import {Container, Paper} from "@mui/material";
+import {MenuItem, FormControl, Select} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 10. filter ------------------------------------------------------------------------------------->
@@ -49,25 +49,6 @@ export const Filter = ({
         )}>
           {["asc", "desc"]?.map((item) => (
             <MenuItem key={item} value={item} selected={FILTER?.order === item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
-        <Select labelId={"limit"} id={"limit"} value={FILTER?.limit} className={"form-select"}
-        onChange={(e) => (
-          setFILTER((prev) => ({
-            ...prev,
-            limit: Number(e.target.value)
-          })),
-          setPAGING((prev) => ({
-            ...prev,
-            limit: Number(e.target.value)
-          }))
-        )}>
-          {["5", "10"]?.map((item) => (
-            <MenuItem key={item} value={item} selected={FILTER?.limit === parseInt(item)}>
               {item}
             </MenuItem>
           ))}

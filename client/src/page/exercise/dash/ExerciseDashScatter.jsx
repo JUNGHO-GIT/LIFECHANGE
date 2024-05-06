@@ -2,16 +2,17 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-
 import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Scatter, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem} from "@mui/material";
-import {TextField, Typography, InputAdornment} from '@mui/material';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {Container, Card, Box, Paper} from "@mui/material";
+import {MenuItem, FormControl, Select} from "@mui/material";
+import {FormGroup, FormControlLabel, Switch} from "@mui/material";
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import {IconButton, Menu} from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashScatter = () => {
@@ -248,6 +249,20 @@ export const ExerciseDashScatter = () => {
     );
   };
 
+  // 7-1. dropdown -------------------------------------------------------------------------------->
+  const dropdownSection1 = () => (
+    <FormControl size={"small"} variant={"outlined"}>
+      <Select id={"section"} value={SECTION} className={"form-select"}
+      onChange={(e) => (
+        setSECTION(e.target.value)
+      )}>
+        <MenuItem value={"today"}>오늘</MenuItem>
+        <MenuItem value={"week"}>주간</MenuItem>
+        <MenuItem value={"month"}>월간</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
@@ -257,23 +272,16 @@ export const ExerciseDashScatter = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
           <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <select className={"form-select form-select-sm"}
-                onChange={(e) => (setSECTION(e.target.value))}
-                value={SECTION}
-              >
-                <option value={"today"}>오늘</option>
-                <option value={"week"}>주간</option>
-                <option value={"month"}>월간</option>
-              </select>
+              {dropdownSection1()}
             </Grid2>
-            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <span className={"dash-title"}>몸무게 목표/실제</span>
             </Grid2>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
               <span></span>
             </Grid2>
           </Grid2>
@@ -285,7 +293,7 @@ export const ExerciseDashScatter = () => {
             </Grid2>
             </Grid2>
           </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 };

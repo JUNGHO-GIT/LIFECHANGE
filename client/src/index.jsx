@@ -1,9 +1,8 @@
 // App.jsx
 
-import React, { StrictMode } from "react";
+import React from "react";
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from "react-router-dom";
-import {reportWebVitals} from "./settings/reportWebVitals";
 import {Routes, Route} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import {Box} from "@mui/material";
@@ -27,13 +26,10 @@ import "./assets/css/SideBar.css";
 import "./assets/css/Table.css";
 import "./assets/css/ScrollBar.css";
 
-import "./assets/css/Chart.css";
+import "./assets/css/Dash.css";
 import "./assets/css/Custom.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
-
-import {Header} from "./layout/Header.jsx";
-import {NavBar} from "./layout/NavBar.jsx";
 
 import {UserSignup} from "./page/user/UserSignup.jsx";
 import {UserLogin} from "./page/user/UserLogin.jsx";
@@ -199,5 +195,3 @@ root.render(
     <App />
   </BrowserRouter>
 );
-
-reportWebVitals(console.log);

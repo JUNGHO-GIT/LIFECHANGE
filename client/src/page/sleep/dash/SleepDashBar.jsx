@@ -2,16 +2,13 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-
 import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem} from "@mui/material";
-import {TextField, Typography, InputAdornment} from '@mui/material';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {MenuItem, FormControl, Select} from "@mui/material";
+import {Container, Card, Box, Paper} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDashBar = () => {
@@ -102,6 +99,18 @@ export const SleepDashBar = () => {
     );
   };
 
+  // 7-1. dropdown -------------------------------------------------------------------------------->
+  const dropdownSection1 = () => (
+    <FormControl size={"small"} variant={"outlined"}>
+      <Select id={"section"} value={SECTION} className={"form-select"}
+      onChange={(e) => (
+        setSECTION(e.target.value)
+      )}>
+        <MenuItem value={"today"}>오늘</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
@@ -111,31 +120,25 @@ export const SleepDashBar = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setSECTION(e.target.value))}
-                  value={SECTION}
-                >
-                  <option value={"today"}>오늘</option>
-                </select>
-              </Grid2>
-              <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-                <span className={"dash-title"}>수면 목표</span>
-              </Grid2>
-              <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <span></span>
-              </Grid2>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
+        <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              {dropdownSection1()}
             </Grid2>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} style={{alignSelf:"center"}}>
-                {SECTION === "today" && (LOADING ? loadingNode() : chartToday())}
-              </Grid2>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
+              <span className={"dash-title"}>수면 목표</span>
             </Grid2>
-          </Container>
-      </Card>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
+            </Grid2>
+          </Grid2>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
+              {SECTION === "today" && (LOADING ? loadingNode() : chartToday())}
+            </Grid2>
+          </Grid2>
+        </Container>
+      </Paper>
     </React.Fragment>
   );
 };

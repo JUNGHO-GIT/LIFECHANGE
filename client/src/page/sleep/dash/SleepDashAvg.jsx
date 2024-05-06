@@ -7,8 +7,12 @@ import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
+import {Container, Card, Box, Paper} from "@mui/material";
+import {MenuItem, FormControl, Select} from "@mui/material";
 import {FormGroup, FormControlLabel, Switch} from "@mui/material";
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import {IconButton, Menu} from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDashAvg = () => {
@@ -182,26 +186,46 @@ export const SleepDashAvg = () => {
     );
   };
 
-  // 6-1. table ----------------------------------------------------------------------------------->
-  const tableNode = () => {
-    return (
-      <React.Fragment>
-        {["취침", "기상", "수면"]?.map((key, index) => (
-          <FormGroup key={index}>
-            <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
-              if (PART.includes(key)) {
-                setPART(PART?.filter((item) => (item !== key)));
-              }
-              else {
-                setPART([...PART, key]);
-              }
-            }}/>} label={key} labelPlacement={"start"}>
-            </FormControlLabel>
-          </FormGroup>
-        ))}
-      </React.Fragment>
-    );
-  };
+  // 7-1. dropdown -------------------------------------------------------------------------------->
+  const dropdownSection1 = () => (
+    <FormControl size={"small"} variant={"outlined"}>
+      <Select id={"section"} value={SECTION} className={"form-select"}
+      onChange={(e) => (
+        setSECTION(e.target.value)
+      )}>
+        <MenuItem value={"month"}>월간</MenuItem>
+        <MenuItem value={"year"}>연간</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
+  // 7-3. dropdown -------------------------------------------------------------------------------->
+  const dropdownSection3 = () => (
+    <PopupState variant={"popover"} popupId={"popup"}>
+      {(popupState) => (
+        <React.Fragment>
+          <IconButton {...bindTrigger(popupState)}>
+            <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+          </IconButton>
+          <Menu {...bindMenu(popupState)}>
+            {["취침", "기상", "수면"]?.map((key, index) => (
+              <FormGroup key={index} className={"p-5 pe-10"}>
+                <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
+                  if (PART.includes(key)) {
+                    setPART(PART?.filter((item) => (item !== key)));
+                  }
+                  else {
+                    setPART([...PART, key]);
+                  }
+                }}/>} label={key} labelPlacement={"start"}>
+                </FormControlLabel>
+              </FormGroup>
+            ))}
+          </Menu>
+        </React.Fragment>
+      )}
+    </PopupState>
+  );
 
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
@@ -212,36 +236,27 @@ export const SleepDashAvg = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
+      <Paper className={"content-wrapper"} variant={"outlined"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
             <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <select className={"form-select form-select-sm"}
-                onChange={(e) => (setSECTION(e.target.value))}
-                value={SECTION}
-              >
-                <option value={"month"}>월간</option>
-                <option value={"year"}>연간</option>
-              </select>
+              {dropdownSection1()}
             </Grid2>
-            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"d-center"}>
               <span className={"dash-title"}>수면 평균</span>
             </Grid2>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-              <span></span>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-right"}>
+              {dropdownSection3()}
             </Grid2>
           </Grid2>
           <Grid2 container spacing={3}>
-            <Grid2 xl={10} lg={10} md={10} sm={10} xs={10}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-right"}>
               {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
               {SECTION === "year" && (LOADING ? loadingNode() : chartYear())}
             </Grid2>
-            <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-              {LOADING ? "" : tableNode()}
-            </Grid2>
           </Grid2>
         </Container>
-      </Card>
+      </Paper>
     </React.Fragment>
   );
 };

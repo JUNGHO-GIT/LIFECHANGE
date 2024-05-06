@@ -68,7 +68,12 @@ export const detail = async (
     user_id_param, _id_param, startDt_param, endDt_param
   );
 
-  return finalResult
+  const sectionCnt = finalResult ? 1 : 0;
+
+  return {
+    sectionCnt: sectionCnt,
+    result: finalResult,
+  };
 };
 
 // 3. save ---------------------------------------------------------------------------------------->

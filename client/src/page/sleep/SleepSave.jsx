@@ -21,8 +21,7 @@ import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
@@ -240,16 +239,16 @@ export const SleepSave = () => {
                 <Box className={"d-center mb-20"}>
                   <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                     <TextField
+                      label={"수면"}
                       type={"text"}
                       size={"medium"}
                       id={"sleep_time"}
                       name={"sleep_time"}
-                      label={"수면"}
+                      value={section.sleep_time}
                       InputProps={{
                         readOnly: true,
                         endAdornment: adornment()
                       }}
-                      value={section.sleep_time}
                     ></TextField>
                   </LocalizationProvider>
                 </Box>

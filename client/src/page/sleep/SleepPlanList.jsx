@@ -12,7 +12,6 @@ import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
@@ -184,70 +183,6 @@ export const SleepPlanList = () => {
       </React.Fragment>
     );
   };
-  /* const tableNode = () => {
-    const tableSection = () => (
-      <React.Fragment>
-        <Table className={"block-wrapper h-75vh"}>
-          <thead>
-            <tr>
-              <th className={"table-thead"}>날짜</th>
-              <th className={"table-thead"}>분류</th>
-              <th className={"table-thead"}>목표</th>
-              <th className={"table-thead"}>실제</th>
-              <th className={"table-thead"}>비교</th>
-            </tr>
-          </thead>
-          <tbody>
-            {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                <tr>
-                  <td rowSpan={3} className={"pointer"} onClick={() => {
-                    SEND.id = item._id;
-                    SEND.startDt = item.sleep_plan_startDt;
-                    SEND.endDt = item.sleep_plan_endDt;
-                    navParam(SEND.toDetail, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.sleep_plan_startDt}
-                  </td>
-                  <td>취침</td>
-                  <td>{item.sleep_plan_night}</td>
-                  <td>{item.sleep_night}</td>
-                  <td className={item.sleep_diff_night_color}>{item.sleep_diff_night}</td>
-                </tr>
-                <tr>
-                  <td>기상</td>
-                  <td>{item.sleep_plan_morning}</td>
-                  <td>{item.sleep_morning}</td>
-                  <td className={item.sleep_diff_morning_color}>{item.sleep_diff_morning}</td>
-                </tr>
-                <tr>
-                  <td>수면</td>
-                  <td>{item.sleep_plan_time}</td>
-                  <td>{item.sleep_time}</td>
-                  <td className={item.sleep_diff_time_color}>{item.sleep_diff_time}</td>
-                </tr>
-              </React.Fragment>
-            ))}
-          </tbody>
-        </Table>
-      </React.Fragment>
-    );
-    return (
-      <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {tableSection()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Paper>
-      </React.Fragment>
-    );
-  }; */
 
   // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
