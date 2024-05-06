@@ -5,11 +5,11 @@ import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {DayPickerNode} from "../../fragments/DayPickerNode.jsx";
-import {PagingNode} from "../../fragments/PagingNode.jsx";
-import {FilterNode} from "../../fragments/FilterNode.jsx";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Day} from "../../fragments/Day.jsx";
+import {Paging} from "../../fragments/Paging.jsx";
+import {Filter} from "../../fragments/Filter.jsx";
+import {Btn} from "../../fragments/Btn.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Table, Row, Col, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -183,34 +183,34 @@ export const FoodPlanList = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-    // 8. dayPicker --------------------------------------------------------------------------------->
-  const dayPickerNode = () => (
-    <DayPickerNode  FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+  // 8. day --------------------------------------------------------------------------------------->
+  const dayNode = () => (
+    <Day FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
   // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
-    <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+    <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={"plan"} type={"list"}
     />
   );
 
-  // 9. filter ------------------------------------------------------------------------------------>
+  // 10. filter ----------------------------------------------------------------------------------->
   const filterNode = () => (
-    <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
+    <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"food"} plan={"plan"} type={"list"}
     />
   );
 
-  // 11. button ----------------------------------------------------------------------------------->
-  const buttonNode = () => (
-    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+  // 11. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
     />
@@ -224,7 +224,7 @@ export const FoodPlanList = () => {
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {dayPickerNode()}
+                {dayNode()}
                 {LOADING ? loadingNode() : tableNode()}
               </Col>
             </Row>
@@ -242,7 +242,7 @@ export const FoodPlanList = () => {
                 {pagingNode()}
               </Col>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {buttonNode()}
+                {btnNode()}
               </Col>
             </Row>
           </Container>

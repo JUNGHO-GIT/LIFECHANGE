@@ -1,10 +1,11 @@
-// FilterNode.jsx
+// Filter.jsx
 
 import React from "react";
 import {InputLabel, MenuItem, FormControl, Select, Box, FormHelperText} from "@mui/material";
+import {Card, Container, Grid} from "@mui/material";
 
 // 10. filter ------------------------------------------------------------------------------------->
-export const FilterNode = ({
+export const Filter = ({
   FILTER, setFILTER, PAGING, setPAGING, part, plan, type
 }) => {
 
@@ -189,32 +190,38 @@ export const FilterNode = ({
   // 6. return
   return (
     <React.Fragment>
-      <div className={"flex-wrapper h-6vh"}>
-        {part === "exercise" && plan === "" ? (
-          <React.Fragment>
-            {defaultNode()}
-            {exerciseNode()}
-          </React.Fragment>
-        ) : part === "food" && plan === "" ? (
-          <React.Fragment>
-            {defaultNode()}
-            {foodNode()}
-          </React.Fragment>
-        ) : part === "money" && plan === "" ? (
-          <React.Fragment>
-            {defaultNode()}
-            {moneyNode()}
-          </React.Fragment>
-        ) : part === "sleep" && plan === "" ? (
-          <React.Fragment>
-            {defaultNode()}
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {defaultNode()}
-          </React.Fragment>
-        )}
-      </div>
+      <Card className={"flex-wrapper h-8vh p-sticky bottom-35"}>
+        <Container>
+          <Grid container spacing={3}>
+            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {part === "exercise" && plan === "" ? (
+                <React.Fragment>
+                  {defaultNode()}
+                  {exerciseNode()}
+                </React.Fragment>
+              ) : part === "food" && plan === "" ? (
+                <React.Fragment>
+                  {defaultNode()}
+                  {foodNode()}
+                </React.Fragment>
+              ) : part === "money" && plan === "" ? (
+                <React.Fragment>
+                  {defaultNode()}
+                  {moneyNode()}
+                </React.Fragment>
+              ) : part === "sleep" && plan === "" ? (
+                <React.Fragment>
+                  {defaultNode()}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {defaultNode()}
+                </React.Fragment>
+              )}
+            </Grid>
+          </Grid>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

@@ -1,9 +1,9 @@
-// LoadingNode.jsx
+// Loading.jsx
 
 import React from "react";
 
 // 6. loading ------------------------------------------------------------------------------------->
-export const LoadingNode = ({
+export const Loading = ({
   LOADING, setLOADING
 }) => {
 

@@ -3,8 +3,8 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Btn} from "../../fragments/Btn.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -449,13 +449,13 @@ export const TweakDataset = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 11. button ----------------------------------------------------------------------------------->
-  const buttonNode = () => (
-    <ButtonNode DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
+  // 11. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"dataset"}
     />
@@ -480,7 +480,7 @@ export const TweakDataset = () => {
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                <span className={"me-1 d-inline-flex"}>{buttonNode()}</span>
+                <span className={"me-1 d-inline-flex"}>{btnNode()}</span>
                 <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonDefault()}</span>
               </Col>
             </Row>

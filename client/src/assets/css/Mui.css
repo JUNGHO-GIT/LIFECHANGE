@@ -14,3 +14,7 @@
 [class$="MuiPaper-root-MuiDrawer-paper"] {
   border-radius: 0px 10px 10px 0px !important;
 }
+[class$="MuiGrid-root"] {
+  width: 100% !important;
+  margin: 0px 0px 0px 0px !important;
+}

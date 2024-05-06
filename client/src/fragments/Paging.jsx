@@ -1,10 +1,10 @@
-// PagingNode.jsx
+// Paging.jsx
 
 import React, {useEffect} from "react";
 import {Button} from "react-bootstrap";
 
 // 9. paging -------------------------------------------------------------------------------------->
-export const PagingNode = ({
+export const Paging = ({
   PAGING, setPAGING, COUNT, setCOUNT, part, plan, type
 }) => {
   let totalPages = 0;

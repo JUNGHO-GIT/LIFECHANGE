@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
+import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card, FormCheck} from "react-bootstrap";
@@ -208,7 +208,7 @@ export const SleepDashAvg = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

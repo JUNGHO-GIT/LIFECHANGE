@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
+import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
@@ -278,7 +278,7 @@ export const MoneyDashLine = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

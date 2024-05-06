@@ -8,7 +8,7 @@ import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
@@ -176,7 +176,7 @@ export const CalendarList = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

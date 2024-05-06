@@ -5,8 +5,8 @@ import numeral from 'numeral';
 import {NumericFormat} from "react-number-format";
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {PagingNode} from "../../fragments/PagingNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Paging} from "../../fragments/Paging.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Table, Row, Col, Card, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -562,13 +562,13 @@ export const TweakDemo = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
   // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
-    <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+    <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"tweak"} plan={""} type={"list"}
     />
   );

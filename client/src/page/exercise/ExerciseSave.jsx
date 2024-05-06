@@ -10,9 +10,9 @@ import {percent} from "../../assets/js/percent.js";
 import {useTime} from "../../hooks/useTime.jsx";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {DateNode} from "../../fragments/DateNode.jsx";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Date} from "../../fragments/Date.jsx";
+import {Btn} from "../../fragments/Btn.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import _ from 'lodash';
 
@@ -599,20 +599,20 @@ export const ExerciseSave = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
   // 7. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
-    <DateNode DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+    <Date DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       part={"exercise"} plan={""} type={"save"}
     />
   );
 
-  // 11. button ----------------------------------------------------------------------------------->
-  const buttonNode = () => (
-    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+  // 11. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam} part={"exercise"} plan={""} type={"save"}
     />
@@ -648,7 +648,7 @@ export const ExerciseSave = () => {
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {buttonNode()}
+                {btnNode()}
               </Col>
             </Row>
           </Container>

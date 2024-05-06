@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
+import {Loading} from "../../../fragments/Loading.jsx";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 
@@ -309,7 +309,7 @@ export const ExerciseDashPie = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

@@ -4,8 +4,8 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {percent} from "../../assets/js/percent.js";
 import {useNavigate, useLocation} from "react-router-dom";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Btn} from "../../fragments/Btn.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {TextField, Card, Box, Typography, Button} from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -17,7 +17,6 @@ export const UserLogin = () => {
   const SUBFIX = process.env.REACT_APP_USER || "";
   const URL_OBJECT = URL?.trim()?.toString() + SUBFIX?.trim()?.toString();
   const navParam = useNavigate();
-  const location = useLocation();
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
@@ -91,13 +90,13 @@ export const UserLogin = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 11. button ----------------------------------------------------------------------------------->
-  const buttonNode = () => (
-    <ButtonNode DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
+  // 11. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"login"}
     />
@@ -119,7 +118,7 @@ export const UserLogin = () => {
         <div className={"card-wrapper"}>
           <Grid container spacing={1}>
             <Grid lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {buttonNode()}
+              {btnNode()}
             </Grid>
           </Grid>
         </div>

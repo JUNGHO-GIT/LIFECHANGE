@@ -7,8 +7,8 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {percent} from "../../assets/js/percent.js";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Btn} from "../../fragments/Btn.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Row, Col, Card, Table} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -188,13 +188,13 @@ export const FoodDetail = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 11. button ----------------------------------------------------------------------------------->
-  const buttonNode = () => (
-    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+  // 11. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam} part={"food"} plan={""} type={"detail"}
     />
@@ -219,7 +219,7 @@ export const FoodDetail = () => {
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {buttonNode()}
+                {btnNode()}
               </Col>
             </Row>
           </Container>

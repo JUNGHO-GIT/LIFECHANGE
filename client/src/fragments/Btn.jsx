@@ -1,12 +1,13 @@
-// ButtonNode.jsx
+// Button.jsx
 
 import React from "react";
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import {Button} from "@mui/material";
+import {Card, Container, Grid} from "@mui/material";
 
 // 11. button ------------------------------------------------------------------------------------->
-export const ButtonNode = ({
+export const Btn = ({
   DAYPICKER, setDAYPICKER, DATE, setDATE, SEND, FILTER, setFILTER, PAGING, setPAGING,
   flowSave, navParam, part, plan, type
 }) => {
@@ -134,45 +135,52 @@ export const ButtonNode = ({
   );
 
   // 5. return ------------------------------------------------------------------------------------>
+  // 6. return
   return (
     <React.Fragment>
-      <div className={"flex-wrapper h-4vh"}>
-        {type === "list" ? (
-          <React.Fragment>
-            {btnOpenCalendar()}
-            {btnGetToday()}
-          </React.Fragment>
-        ) : type === "detail" ? (
-          <React.Fragment>
-            {btnToUpdate()}
-            {btnToList()}
-          </React.Fragment>
-        ) : type === "save" ? (
-          <React.Fragment>
-            {btnToSave()}
-            {btnToList()}
-          </React.Fragment>
-        ) : type === "search" ? (
-          <React.Fragment>
-            {btnToSave()}
-            {btnToSearch()}
-          </React.Fragment>
-        ) : type === "dataset" ? (
-          <React.Fragment>
-            {btnToSave()}
-          </React.Fragment>
-        ) : type === "login" ? (
-          <React.Fragment>
-            {btnLogin()}
-            {btnRefresh()}
-          </React.Fragment>
-        ) : type === "signup" ? (
-          <React.Fragment>
-            {btnSignup()}
-            {btnRefresh()}
-          </React.Fragment>
-        ) : null}
-      </div>
+      <Card className={"flex-wrapper h-6vh p-sticky bottom-0"}>
+        <Container>
+          <Grid container spacing={3}>
+            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              {type === "list" ? (
+                <React.Fragment>
+                  {btnOpenCalendar()}
+                  {btnGetToday()}
+                </React.Fragment>
+              ) : type === "detail" ? (
+                <React.Fragment>
+                  {btnToUpdate()}
+                  {btnToList()}
+                </React.Fragment>
+              ) : type === "save" ? (
+                <React.Fragment>
+                  {btnToSave()}
+                  {btnToList()}
+                </React.Fragment>
+              ) : type === "search" ? (
+                <React.Fragment>
+                  {btnToSave()}
+                  {btnToSearch()}
+                </React.Fragment>
+              ) : type === "dataset" ? (
+                <React.Fragment>
+                  {btnToSave()}
+                </React.Fragment>
+              ) : type === "login" ? (
+                <React.Fragment>
+                  {btnLogin()}
+                  {btnRefresh()}
+                </React.Fragment>
+              ) : type === "signup" ? (
+                <React.Fragment>
+                  {btnSignup()}
+                  {btnRefresh()}
+                </React.Fragment>
+              ) : null}
+            </Grid>
+          </Grid>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

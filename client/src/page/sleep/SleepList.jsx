@@ -4,20 +4,14 @@ import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {DayPickerNode} from "../../fragments/DayPickerNode.jsx";
-import {PagingNode} from "../../fragments/PagingNode.jsx";
-import {FilterNode} from "../../fragments/FilterNode.jsx";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Header} from "../../layout/Header.jsx";
+import {NavBar} from "../../layout/NavBar.jsx";
+import {Day} from "../../fragments/Day.jsx";
+import {Filter} from "../../fragments/Filter.jsx";
+import {Btn} from "../../fragments/Btn.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, TablePagination} from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2';
-import {Container, Card, Table} from "@mui/material";
-import Paper from '@mui/material/Paper';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
@@ -136,7 +130,7 @@ export const SleepList = () => {
     )).flat().filter((item) => (item !== undefined));
     const tableSection = () => (
       <React.Fragment>
-        <TableContainer className={"block-wrapper h-54vh"}>
+        <TableContainer className={"block-wrapper h-80vh"}>
           <Table className={"border"}>
             <TableHead className={"table-thead"}>
               <TableRow>
@@ -203,41 +197,52 @@ export const SleepList = () => {
     );
     return (
       <React.Fragment>
-        {tableSection()}
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid container spacing={3}>
+              <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid>
+            </Grid>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
-  // 9. filter ------------------------------------------------------------------------------------>
-  const filterNode = () => (
-    <FilterNode FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      part={"sleep"} plan={""} type={"list"}
-    />
+  // 7. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
   );
 
-  // 8. dayPicker --------------------------------------------------------------------------------->
-  const dayPickerNode = () => (
-    <DayPickerNode  FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+  // 8. navBar ------------------------------------------------------------------------------------>
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 8. day --------------------------------------------------------------------------------------->
+  const dayNode = () => (
+    <Day FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
-  // 10. paging ----------------------------------------------------------------------------------->
-  const pagingNode = () => (
-    <PagingNode PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
+  // 10. filter ----------------------------------------------------------------------------------->
+  const filterNode = () => (
+    <Filter FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       part={"sleep"} plan={""} type={"list"}
     />
   );
 
-  // 11. button ----------------------------------------------------------------------------------->
-  const buttonNode = () => (
-    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+  // 11. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
     />
@@ -246,28 +251,12 @@ export const SleepList = () => {
   // 12. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper shadow-all"}>
-        <Container className={"p-0"}>
-          <Grid container spacing={3}>
-            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {dayPickerNode()}
-              {LOADING ? loadingNode() : tableNode()}
-            </Grid>
-          </Grid>
-        </Container>
-      </Card>
-      <Card className={"content-wrapper shadow-all"}>
-        <Container className={"p-6"}>
-          <Grid container spacing={3}>
-            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center pt-5 pb-5"}>
-              {filterNode()}
-            </Grid>
-            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center pt-5 pb-5"}>
-              {buttonNode()}
-            </Grid>
-          </Grid>
-        </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {dayNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {filterNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

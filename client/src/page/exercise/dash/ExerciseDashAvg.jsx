@@ -4,7 +4,7 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {ComposedChart, Bar} from "recharts";
 import {Container, Row, Col, Card} from "react-bootstrap";
-import {LoadingNode} from "../../../fragments/LoadingNode.jsx";
+import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -282,7 +282,7 @@ export const ExerciseDashAvg = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

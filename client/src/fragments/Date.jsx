@@ -1,4 +1,4 @@
-// DateNode.jsx
+// Date.jsx
 
 import React, { useEffect } from "react";
 import {DayPicker} from "react-day-picker";
@@ -9,7 +9,7 @@ import {Col, Row} from "react-bootstrap";
 import InputMask from "react-input-mask";
 
 // 4. date ---------------------------------------------------------------------------------------->
-export const DateNode = ({
+export const Date = ({
   DATE, setDATE, DAYPICKER, setDAYPICKER, part, plan, type
 }) => {
 

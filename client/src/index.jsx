@@ -172,8 +172,6 @@ const App = () => {
   return (
     <React.Fragment>
       <div className={"App"}>
-        <Header />
-        <NavBar />
         <Routes>
           <Route path="/user/*" element={<User />} />
           <Route path="/calendar/*" element={<Calendar />} />

@@ -5,8 +5,8 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import InputMask from "react-input-mask";
 import {useDate} from "../../hooks/useDate.jsx";
-import {PagingNode} from "../../fragments/PagingNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Paging} from "../../fragments/Paging.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -184,13 +184,13 @@ export const FoodSearch = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
   // 10. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
-    <PagingNode PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
+    <Paging PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={""} type={"search"}
     />
   );

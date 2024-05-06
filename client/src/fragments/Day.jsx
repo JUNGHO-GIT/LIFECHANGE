@@ -1,4 +1,4 @@
-// DayPickerNode.jsx
+// Day.jsx
 
 import React, {useEffect} from "react";
 import {DayPicker} from "react-day-picker";
@@ -8,7 +8,7 @@ import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
 
 // 8. dayPicker ----------------------------------------------------------------------------------->
-export const DayPickerNode = ({
+export const Day = ({
   FILTER, setFILTER, DATE, setDATE, DAYPICKER, setDAYPICKER
 }) => {
 

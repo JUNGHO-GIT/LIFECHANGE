@@ -7,9 +7,9 @@ import {NumericFormat} from "react-number-format";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {DateNode} from "../../fragments/DateNode.jsx";
-import {ButtonNode} from "../../fragments/ButtonNode.jsx";
-import {LoadingNode} from "../../fragments/LoadingNode.jsx";
+import {Date} from "../../fragments/Date.jsx";
+import {Btn} from "../../fragments/Btn.jsx";
+import {Loading} from "../../fragments/Loading.jsx";
 import {Button, Col, Row, Container, Card} from "react-bootstrap";
 
 // ------------------------------------------------------------------------------------------------>
@@ -334,20 +334,20 @@ export const CalendarDetail = () => {
 
   // 6. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
-    <LoadingNode LOADING={LOADING} setLOADING={setLOADING}
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 
   // 7. date -------------------------------------------------------------------------------------->
   const dateNode = () => (
-    <DateNode DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+    <Date DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       part={"calendar"} plan={""} type={"detail"}
     />
   );
 
-  // 11. button ----------------------------------------------------------------------------------->
-  const buttonNode = () => (
-    <ButtonNode DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
+  // 11. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam} part={"calendar"} plan={""} type={"save"}
     />
@@ -383,7 +383,7 @@ export const CalendarDetail = () => {
           <Container>
             <Row>
               <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {buttonNode()}
+                {btnNode()}
               </Col>
             </Row>
           </Container>
