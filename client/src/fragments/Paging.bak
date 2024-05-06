@@ -1,7 +1,7 @@
 // Paging.jsx
 
 import React, {useEffect} from "react";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, Button, TablePagination} from "@mui/material";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Paper, Button, TablePagination} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 9. paging -------------------------------------------------------------------------------------->

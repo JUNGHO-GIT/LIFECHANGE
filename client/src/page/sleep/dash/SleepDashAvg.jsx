@@ -6,7 +6,8 @@ import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, FormGroup, FormControlLabel, Switch} from "@mui/material";
+import {Container, Card, Box, Paper} from "@mui/material";
+import {FormGroup, FormControlLabel, Switch} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>

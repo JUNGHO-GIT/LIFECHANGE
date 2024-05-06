@@ -9,7 +9,7 @@ import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, Button} from "@mui/material";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Paper, Button} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
