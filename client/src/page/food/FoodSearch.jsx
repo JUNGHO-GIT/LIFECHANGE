@@ -100,7 +100,7 @@ export const FoodSearch = () => {
     setLOADING(false);
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const handleStorage = (param) => {
       localStorage.setItem("food_section", JSON.stringify(param));
@@ -112,7 +112,7 @@ export const FoodSearch = () => {
     };
     const tableSection = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>식품명</th>
@@ -148,15 +148,44 @@ export const FoodSearch = () => {
     );
     return (
       <React.Fragment>
-        <div className={"food-search-wrapper"}>
-          {tableSection()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
 
-  // 5-2. search ---------------------------------------------------------------------------------->
-  const searchNode = () => (
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 12. paging ----------------------------------------------------------------------------------->
+  const pagingNode = () => (
+    <Paging PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
+      part={"food"} plan={""} type={"search"}
+    />
+  );
+
+  // 14. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
     <div className={"input-group"}>
       <InputMask
         mask={""}
@@ -185,29 +214,6 @@ export const FoodSearch = () => {
     </div>
   );
 
-  // 9. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
-  // 9. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 10. navBar ----------------------------------------------------------------------------------->
-  const navBarNode = () => (
-    <NavBar />
-  );
-
-  // 12. paging ----------------------------------------------------------------------------------->
-  const pagingNode = () => (
-    <Paging PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
-      part={"food"} plan={""} type={"search"}
-    />
-  );
-
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
@@ -215,7 +221,7 @@ export const FoodSearch = () => {
       {navBarNode()}
       {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
-      {searchNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

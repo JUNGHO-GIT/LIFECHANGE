@@ -210,7 +210,7 @@ export const FoodSave = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const handleCountChange = (index, newValue) => {
       const newCountValue = Number(newValue);
@@ -250,7 +250,7 @@ export const FoodSave = () => {
     };
     const tableSection = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>분류</th>
@@ -353,14 +353,20 @@ export const FoodSave = () => {
     );
     return (
       <React.Fragment>
-        <div className={"save-wrapper over-x-auto"}>
-          {tableSection()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -387,7 +393,8 @@ export const FoodSave = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"food"} plan={""} type={"search"}
+      flowSave={flowSave} navParam={navParam}
+      part={"food"} plan={""} type={"search"}
     />
   );
 

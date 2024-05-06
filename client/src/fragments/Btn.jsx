@@ -135,9 +135,8 @@ export const Btn = ({
     </React.Fragment>
   );
 
-  // 5. return ------------------------------------------------------------------------------------>
-  // 6. return
-  return (
+  // 7. table ------------------------------------------------------------------------------------->
+  const tableNode = () => (
     <React.Fragment>
       <Card className={"flex-wrapper h-6vh p-sticky bottom-0"}>
         <Container className={"p-0"}>
@@ -182,6 +181,13 @@ export const Btn = ({
           </Grid2>
         </Container>
       </Card>
+    </React.Fragment>
+  );
+
+  // 15. return ----------------------------------------------------------------------------------->
+  return (
+    <React.Fragment>
+      {tableNode()}
     </React.Fragment>
   );
 };

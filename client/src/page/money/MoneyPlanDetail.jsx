@@ -110,11 +110,11 @@ export const MoneyPlanDetail = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -153,7 +153,7 @@ export const MoneyPlanDetail = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -173,7 +173,8 @@ export const MoneyPlanDetail = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={""} navParam={navParam} part={"money"} plan={"plan"} type={"detail"}
+      flowSave={""} navParam={navParam}
+      part={"money"} plan={"plan"} type={"detail"}
     />
   );
 

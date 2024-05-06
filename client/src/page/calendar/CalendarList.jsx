@@ -73,7 +73,7 @@ export const CalendarList = () => {
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const formatDate = (date) => (
       moment(date).format("YYYY-MM-DD")
@@ -183,7 +183,7 @@ export const CalendarList = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />

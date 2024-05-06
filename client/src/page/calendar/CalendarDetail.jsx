@@ -140,7 +140,7 @@ export const CalendarDetail = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const colors = [
       "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
@@ -341,7 +341,7 @@ export const CalendarDetail = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -368,7 +368,8 @@ export const CalendarDetail = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"calendar"} plan={""} type={"save"}
+      flowSave={flowSave} navParam={navParam}
+      part={"calendar"} plan={""} type={"save"}
     />
   );
 

@@ -215,7 +215,7 @@ export const TweakDataset = () => {
     });
     const tableSection1 = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
@@ -267,7 +267,7 @@ export const TweakDataset = () => {
     );
     const tableSection2 = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
@@ -328,7 +328,7 @@ export const TweakDataset = () => {
     );
     const tableSection3 = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>
@@ -390,26 +390,44 @@ export const TweakDataset = () => {
     );
     return (
       <React.Fragment>
-        <div className={"detail-wrapper"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"pe-0"}>
-              {tableSection1()}
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"text-center"}>
+                {tableSection1()}
+              </Grid2>
+              <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"text-center"}>
+                {tableSection2()}
+              </Grid2>
+              <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"text-center"}>
+                {(dataType !== "calendar" && dataType !== "food" && dataType !== "sleep")
+                  && (tableSection3())}
+              </Grid2>
             </Grid2>
-            <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"ps-0 pe-0"}>
-              {tableSection2()}
-            </Grid2>
-            <Grid2 xl={5} lg={5} md={5} sm={5} xs={5} className={"ps-0"}>
-              {(dataType !== "calendar" && dataType !== "food" && dataType !== "sleep")
-                && (tableSection3())}
-            </Grid2>
-          </Grid2>
-        </div>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
 
-  // 4. button ------------------------------------------------------------------------------------>
-  const buttonDefault = () => {
+  // 8. loading ----------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
+  // 9. header ------------------------------------------------------------------------------------>
+  const headerNode = () => (
+    <Header />
+  );
+
+  // 10. navBar ----------------------------------------------------------------------------------->
+  const navBarNode = () => (
+    <NavBar />
+  );
+
+  // 14. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => {
     const confirmDefault = () => {
       const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
@@ -439,10 +457,15 @@ export const TweakDataset = () => {
           }
         }));
       }
-    }
+    };
     return (
       <React.Fragment>
-        <Button variant={"danger"} size={"small"} className={"danger-btn"}
+        <Btn DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
+          SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
+          flowSave={flowSave} navParam={navParam}
+          part={"user"} plan={""} type={"dataset"}
+        />
+        <Button size={"small"} className={"danger-btn"} color={"error"} variant={"contained"}
         onClick={confirmDefault}>
           기본값
         </Button>
@@ -450,52 +473,13 @@ export const TweakDataset = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
-  // 9. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 10. navBar ----------------------------------------------------------------------------------->
-  const navBarNode = () => (
-    <NavBar />
-  );
-
-  // 14. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
-    <Btn DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
-      SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"dataset"}
-    />
-  );
-
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {LOADING ? loadingNode() : tableNode()}
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Card>
-      <Card className={"content-wrapper"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              <span className={"me-1 d-inline-flex"}>{btnNode()}</span>
-              <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonDefault()}</span>
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

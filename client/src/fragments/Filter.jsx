@@ -10,13 +10,14 @@ export const Filter = ({
   FILTER, setFILTER, PAGING, setPAGING, part, plan, type
 }) => {
 
+  // 1. common ------------------------------------------------------------------------------------>
   const session = sessionStorage.getItem("dataset") || "{}";
   const exerciseArray = JSON.parse(session).exercise || [];
   const foodArray = JSON.parse(session).food || [];
   const moneyArray = JSON.parse(session).money || [];
   const sleepArray = JSON.parse(session).sleep || [];
 
-  // 1. default
+  // 1. default ----------------------------------------------------------------------------------->
   const defaultNode = () => (
     <React.Fragment>
       <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
@@ -75,121 +76,130 @@ export const Filter = ({
     </React.Fragment>
   );
 
-  // 2. exercise
+  // 2. exercise ---------------------------------------------------------------------------------->
   const exerciseNode = () => (
     <React.Fragment>
-      <select className={"form-select me-5"} id={"part"} value={exerciseArray[FILTER?.partIdx]?.exercise_part} onChange={(e) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
-        const idxValue = selectedOption.getAttribute("data-idx");
-        const newPartIndex = Number(idxValue);
-        const newPartVal = String(e.target.value);
-        const newTitleIndex = 0;
-        const newTitleVal = exerciseArray[newPartIndex]?.exercise_title[0];
-        setFILTER((prev) => ({
-          ...prev,
-          partIdx: newPartIndex,
-          part: newPartVal,
-          titleIdx: newTitleIndex,
-          title: newTitleVal
-        }));
-      }}>
-        {exerciseArray?.map((item, idx) => (
-          <option key={idx} data-idx={idx}>
-            {item.exercise_part}
-          </option>
-        ))}
-      </select>
-      <select className={"form-select me-5"} id={"title"} value={FILTER?.title}
-      onChange={(e) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
-        const idxValue = selectedOption.getAttribute("data-idx");
-        const newTitleIndex = Number(idxValue);
-        const newTitleVal = String(e.target.value);
-        setFILTER((prev) => ({
-          ...prev,
-          titleIdx: newTitleIndex,
-          title: newTitleVal
-        }));
-      }}>
-        {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
-          <option key={idx} data-idx={idx}>
-            {item}
-          </option>
-        ))}
-      </select>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"part"} id={"part"} value={FILTER?.part} className={"form-select"}
+        onChange={(e) => {
+          const newPartVal = e.target.value;
+          const newPartIndex = exerciseArray.findIndex((item) => (
+            item.exercise_part === newPartVal
+          ));
+          const newTitleIndex = 0;
+          const newTitleVal = exerciseArray[newPartIndex]?.exercise_title[0];
+          setFILTER(prev => ({
+            ...prev,
+            partIdx: newPartIndex,
+            part: newPartVal,
+            titleIdx: newTitleIndex,
+            title: newTitleVal
+          }));
+        }}>
+          {exerciseArray?.map((item, idx) => (
+            <MenuItem key={idx} value={item.exercise_part}>
+              {item.exercise_part}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"title"} id={"title"} value={FILTER?.title} className={"form-select"}
+        onChange={(e) => {
+          const newTitleVal = e.target.value;
+          const newTitleIndex = exerciseArray[FILTER?.partIdx]?.exercise_title.findIndex(item => item === newTitleVal);
+          setFILTER(prev => ({
+            ...prev,
+            titleIdx: newTitleIndex,
+            title: newTitleVal
+          }));
+        }}>
+          {exerciseArray[FILTER?.partIdx]?.exercise_title?.map((item, idx) => (
+            <MenuItem key={idx} value={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </React.Fragment>
   );
 
-  // 3. food
+  // 3. food -------------------------------------------------------------------------------------->
   const foodNode = () => (
     <React.Fragment>
-      <select className={"form-select me-5"} id={"part"} value={foodArray[FILTER?.partIdx]?.money_part} onChange={(e) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
-        const idxValue = selectedOption.getAttribute("data-idx");
-        const newPartIndex = Number(idxValue);
-        const newPartVal = String(e.target.value);
-        setFILTER((prev) => ({
-          ...prev,
-          partIdx: newPartIndex,
-          part: newPartVal
-        }));
-      }}>
-        {foodArray?.map((item, idx) => (
-          <option key={idx} data-idx={idx}>
-            {item.food_part}
-          </option>
-        ))}
-      </select>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"part"} id={"part"} value={FILTER?.part} className={"form-select"}
+        onChange={(e) => {
+          const newPartVal = e.target.value;
+          const newPartIndex = foodArray.findIndex((item) => (
+            item.food_part === newPartVal
+          ));
+          setFILTER(prev => ({
+            ...prev,
+            partIdx: newPartIndex,
+            part: newPartVal
+          }));
+        }}>
+          {foodArray?.map((item, idx) => (
+            <MenuItem key={idx} value={item.food_part}>
+              {item.food_part}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </React.Fragment>
   );
 
-  // 4. money
+  // 4. money ------------------------------------------------------------------------------------->
   const moneyNode = () => (
     <React.Fragment>
-      <select className={"form-select me-5"} id={"part"} value={moneyArray[FILTER?.partIdx]?.money_part} onChange={(e) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
-        const idxValue = selectedOption.getAttribute("data-idx");
-        const newPartIndex = Number(idxValue);
-        const newPartVal = String(e.target.value);
-        const newTitleIndex = 0;
-        const newTitleVal = moneyArray[newPartIndex]?.money_title[0];
-        setFILTER((prev) => ({
-          ...prev,
-          partIdx: newPartIndex,
-          part: newPartVal,
-          titleIdx: newTitleIndex,
-          title: newTitleVal
-        }));
-      }}>
-        {moneyArray?.map((item, idx) => (
-          <option key={idx} data-idx={idx}>
-            {item.money_part}
-          </option>
-        ))}
-      </select>
-      <select className={"form-select me-5"} id={"title"} value={FILTER?.title}
-      onChange={(e) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
-        const idxValue = selectedOption.getAttribute("data-idx");
-        const newTitleIndex = Number(idxValue);
-        const newTitleVal = String(e.target.value);
-        setFILTER((prev) => ({
-          ...prev,
-          titleIdx: newTitleIndex,
-          title: newTitleVal
-        }));
-      }}>
-        {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
-          <option key={idx} data-idx={idx}>
-            {item}
-          </option>
-        ))}
-      </select>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"part"} id={"part"} value={FILTER?.part} className={"form-select"}
+        onChange={(e) => {
+          const newPartVal = e.target.value;
+          const newPartIndex = moneyArray.findIndex((item) => (
+            item.money_part === newPartVal
+          ));
+          const newTitleIndex = 0;
+          const newTitleVal = moneyArray[newPartIndex]?.money_title[0];
+          setFILTER(prev => ({
+            ...prev,
+            partIdx: newPartIndex,
+            part: newPartVal,
+            titleIdx: newTitleIndex,
+            title: newTitleVal
+          }));
+        }}>
+          {moneyArray?.map((item, idx) => (
+            <MenuItem key={idx} value={item.money_part}>
+              {item.money_part}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl size={"small"} variant={"outlined"} className={"ms-2 me-2"}>
+        <Select labelId={"title"} id={"title"} value={FILTER?.title} className={"form-select"}
+        onChange={(e) => {
+          const newTitleVal = e.target.value;
+          const newTitleIndex = moneyArray[FILTER?.partIdx]?.money_title.findIndex(item => item === newTitleVal);
+          setFILTER(prev => ({
+            ...prev,
+            titleIdx: newTitleIndex,
+            title: newTitleVal
+          }));
+        }}>
+          {moneyArray[FILTER?.partIdx]?.money_title?.map((item, idx) => (
+            <MenuItem key={idx} value={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </React.Fragment>
   );
 
-  // 6. return
-  return (
+  // 7. table ------------------------------------------------------------------------------------->
+  const tableNode = () => (
     <React.Fragment>
       <Card className={"flex-wrapper h-8vh p-sticky bottom-35"}>
         <Container className={"p-0"}>
@@ -223,6 +233,13 @@ export const Filter = ({
           </Grid2>
         </Container>
       </Card>
+    </React.Fragment>
+  );
+
+  // 15. return ----------------------------------------------------------------------------------->
+  return (
+    <React.Fragment>
+      {tableNode()}
     </React.Fragment>
   );
 };

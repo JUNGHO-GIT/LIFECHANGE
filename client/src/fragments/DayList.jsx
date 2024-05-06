@@ -54,21 +54,8 @@ export const DayList = ({
     }
   }, [FILTER?.type]);
 
-
-  // 3. closeBtn ---------------------------------------------------------------------------------->
-  const closeBtn = () => (
-    <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => (
-      setDAYPICKER((prev) => ({
-        ...prev,
-        dayOpen: false
-      })
-    ))}>
-      X
-    </span>
-  );
-
-  // 4. calendar ---------------------------------------------------------------------------------->
-  const calendar = () => {
+  // 7-1. popupNode ------------------------------------------------------------------------------->
+  const popupNode = () => {
 
     let mode = "";
     let selected = undefined;
@@ -229,31 +216,45 @@ export const DayList = ({
       }
     };
 
+    const closeBtn = () => (
+      <span className={"d-right fw-700 dayPicker-x-btn"} onClick={() => (
+        setDAYPICKER((prev) => ({
+          ...prev,
+          dayOpen: false
+        })
+      ))}>
+        X
+      </span>
+    );
+
     return (
-      <DayPicker
-        weekStartsOn={1}
-        showOutsideDays={true}
-        locale={ko}
-        modifiersClassNames={{
-          selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
-        }}
-        //@ts-ignore
-        mode={mode}
-        selected={selected}
-        month={month}
-        onDayClick={onDayClick}
-        onMonthChange={onMonthChange}
-      ></DayPicker>
+      <React.Fragment>
+        <div className={`dayPicker-container ${DAYPICKER.dayOpen ? "" : "d-none"}`}>
+          {closeBtn()}
+          <div className={"h-2vh"}></div>
+          <DayPicker
+            weekStartsOn={1}
+            showOutsideDays={true}
+            locale={ko}
+            modifiersClassNames={{
+              selected: "selected", disabled: "disabled", outside: "outside", inside: "inside",
+            }}
+            //@ts-ignore
+            mode={mode}
+            selected={selected}
+            month={month}
+            onDayClick={onDayClick}
+            onMonthChange={onMonthChange}
+          ></DayPicker>
+        </div>
+      </React.Fragment>
     );
   };
 
+  // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={`dayPicker-container ${DAYPICKER.dayOpen ? "" : "d-none"}`}>
-        {closeBtn()}
-        <div className={"h-2vh"}></div>
-        {calendar()}
-      </div>
+      {popupNode()}
     </React.Fragment>
   );
 };

@@ -112,38 +112,38 @@ export const ExercisePlanDetail = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-          <Table striped hover responsive variant={"light"}>
-            <thead className={"table-primary"}>
-              <tr>
-                <th className={"table-thead"}>날짜</th>
-                <th className={"table-thead"}>횟수 목표</th>
-                <th className={"table-thead"}>볼륨 목표</th>
-                <th className={"table-thead"}>유산소 목표</th>
-                <th className={"table-thead"}>체중 목표</th>
-                <th className={"table-thead"}>x</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{`${OBJECT?.exercise_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt?.substring(5, 10)}`}</td>
-                <td>{`${numeral(OBJECT?.exercise_plan_count).format("0,0")} 회`}</td>
-                <td>{`${numeral(OBJECT?.exercise_plan_volume).format("0,0")} vol`}</td>
-                <td>{OBJECT?.exercise_plan_cardio}</td>
-                <td>{`${numeral(OBJECT?.exercise_plan_weight).format("0,0")} kg`}</td>
-                <td>
-                  <p className={"del-btn"} onClick={() => (
-                    flowDelete(OBJECT._id)
-                  )}>x</p>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
+        <Table striped hover responsive variant={"light"}>
+          <thead className={"table-primary"}>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>횟수 목표</th>
+              <th className={"table-thead"}>볼륨 목표</th>
+              <th className={"table-thead"}>유산소 목표</th>
+              <th className={"table-thead"}>체중 목표</th>
+              <th className={"table-thead"}>x</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{`${OBJECT?.exercise_plan_startDt?.substring(5, 10)} ~ ${OBJECT?.exercise_plan_endDt?.substring(5, 10)}`}</td>
+              <td>{`${numeral(OBJECT?.exercise_plan_count).format("0,0")} 회`}</td>
+              <td>{`${numeral(OBJECT?.exercise_plan_volume).format("0,0")} vol`}</td>
+              <td>{OBJECT?.exercise_plan_cardio}</td>
+              <td>{`${numeral(OBJECT?.exercise_plan_weight).format("0,0")} kg`}</td>
+              <td>
+                <p className={"del-btn"} onClick={() => (
+                  flowDelete(OBJECT._id)
+                )}>x</p>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
         <Card className={"content-wrapper"}>
@@ -159,7 +159,7 @@ export const ExercisePlanDetail = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -179,7 +179,8 @@ export const ExercisePlanDetail = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={""} navParam={navParam} part={"exercise"} plan={"plan"} type={"detail"}
+      flowSave={""} navParam={navParam}
+      part={"exercise"} plan={"plan"} type={"detail"}
     />
   );
 

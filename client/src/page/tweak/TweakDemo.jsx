@@ -231,26 +231,10 @@ export const TweakDemo = () => {
 
   // 6. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const selectType = () => (
-      <React.Fragment>
-        <select className={"form-select form-select-sm"}
-          onChange={(e) => (setTYPE(e.target.value))}
-          value={TYPE}
-        >
-          <option value={"exercisePlan"}>운동(계획)</option>
-          <option value={"exercise"}>운동</option>
-          <option value={"foodPlan"}>식사(계획)</option>
-          <option value={"food"}>식사</option>
-          <option value={"moneyPlan"}>지출(계획)</option>
-          <option value={"money"}>지출</option>
-          <option value={"sleepPlan"}>수면(계획)</option>
-          <option value={"sleep"}>수면</option>
-        </select>
-      </React.Fragment>
-    );
+
     const tableExercisePlan = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -276,7 +260,7 @@ export const TweakDemo = () => {
     );
     const tableExercise = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -321,7 +305,7 @@ export const TweakDemo = () => {
     );
     const tableFoodPlan = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -347,7 +331,7 @@ export const TweakDemo = () => {
     );
     const tableFood = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -382,7 +366,7 @@ export const TweakDemo = () => {
     );
     const tableMoneyPlan = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -404,7 +388,7 @@ export const TweakDemo = () => {
     );
     const tableMoney = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -437,7 +421,7 @@ export const TweakDemo = () => {
     );
     const tableSleepPlan = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -461,7 +445,7 @@ export const TweakDemo = () => {
     );
     const tableSleep = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -494,76 +478,29 @@ export const TweakDemo = () => {
         </Table>
       </React.Fragment>
     );
-    const inputCount = () => (
-      <React.Fragment>
-        <NumericFormat
-          min={0}
-          max={20}
-          minLength={1}
-          maxLength={2}
-          datatype={"number"}
-          displayType={"input"}
-          className={"form-control"}
-          id={"inputCount"}
-          name={"inputCount"}
-          disabled={false}
-          thousandSeparator={false}
-          fixedDecimalScale={true}
-          value={Math.min(20, COUNT?.inputCnt)}
-          onValueChange={(values) => (
-            setCOUNT((prev) => ({
-              ...prev,
-              inputCnt: Number(values.value)
-            }))
-          )}
-        ></NumericFormat>
-      </React.Fragment>
-    );
-    const btnAdd = () => (
-      <React.Fragment>
-        <Button variant={"outline-secondary"} size={"small"} onClick={() => (
-          flowAdd(TYPE)
-        )}>
-          추가
-        </Button>
-      </React.Fragment>
-    );
-    const btnDelete = () => (
-      <React.Fragment>
-        <Button variant={"outline-secondary"} size={"small"} onClick={() => (
-          flowDelete(TYPE)
-        )}>
-          삭제
-        </Button>
-      </React.Fragment>
-    );
     return (
       <React.Fragment>
-        <div className={"date-wrapper"}>
-          {selectType()}
-        </div>
-        <div className={"table-wrapper"}>
-          {TYPE === "exercisePlan" && tableExercisePlan()}
-          {TYPE === "exercise" && tableExercise()}
-          {TYPE === "foodPlan" && tableFoodPlan()}
-          {TYPE === "food" && tableFood()}
-          {TYPE === "moneyPlan" && tableMoneyPlan()}
-          {TYPE === "money" && tableMoney()}
-          {TYPE === "sleepPlan" && tableSleepPlan()}
-          {TYPE === "sleep" && tableSleep()}
-        </div>
-        <div className={"input-wrapper"}>
-          {inputCount()}
-        </div>
-        <div className={"btn-wrapper"}>
-          {btnAdd()}
-          {btnDelete()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {TYPE === "exercisePlan" && tableExercisePlan()}
+                {TYPE === "exercise" && tableExercise()}
+                {TYPE === "foodPlan" && tableFoodPlan()}
+                {TYPE === "food" && tableFood()}
+                {TYPE === "moneyPlan" && tableMoneyPlan()}
+                {TYPE === "money" && tableMoney()}
+                {TYPE === "sleepPlan" && tableSleepPlan()}
+                {TYPE === "sleep" && tableSleep()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -586,21 +523,85 @@ export const TweakDemo = () => {
     />
   );
 
-  // 15. return ----------------------------------------------------------------------------------->
-  return (
+  // 13. filter ----------------------------------------------------------------------------------->
+  const filterNode = () => (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
+      <Card className={"flex-wrapper h-8vh p-sticky bottom-35"}>
         <Container className={"p-0"}>
           <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {LOADING ? loadingNode() : tableNode()}
-            </Grid2>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {pagingNode()}
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setTYPE(e.target.value))}
+                value={TYPE}
+              >
+                <option value={"exercisePlan"}>운동(계획)</option>
+                <option value={"exercise"}>운동</option>
+                <option value={"foodPlan"}>식사(계획)</option>
+                <option value={"food"}>식사</option>
+                <option value={"moneyPlan"}>지출(계획)</option>
+                <option value={"money"}>지출</option>
+                <option value={"sleepPlan"}>수면(계획)</option>
+                <option value={"sleep"}>수면</option>
+              </select>
             </Grid2>
           </Grid2>
         </Container>
       </Card>
+    </React.Fragment>
+  );
+
+  // 14. btn -------------------------------------------------------------------------------------->
+  const btnNode = () => (
+    <React.Fragment>
+      <Card className={"flex-wrapper h-6vh p-sticky bottom-0"}>
+        <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <NumericFormat
+                min={0}
+                max={20}
+                minLength={1}
+                maxLength={2}
+                datatype={"number"}
+                displayType={"input"}
+                className={"form-control"}
+                id={"inputCount"}
+                name={"inputCount"}
+                disabled={false}
+                thousandSeparator={false}
+                fixedDecimalScale={true}
+                value={Math.min(20, COUNT?.inputCnt)}
+                onValueChange={(values) => (
+                  setCOUNT((prev) => ({
+                    ...prev,
+                    inputCnt: Number(values.value)
+                  }))
+                )}
+              ></NumericFormat>
+              <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
+              onClick={() => (flowAdd(TYPE))}>
+                추가
+              </Button>
+              <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
+              onClick={() => (flowDelete(TYPE))}>
+                삭제
+              </Button>
+            </Grid2>
+          </Grid2>
+        </Container>
+      </Card>
+    </React.Fragment>
+  );
+
+  // 15. return ----------------------------------------------------------------------------------->
+  return (
+    <React.Fragment>
+      {headerNode()}
+      {navBarNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {pagingNode()}
+      {filterNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

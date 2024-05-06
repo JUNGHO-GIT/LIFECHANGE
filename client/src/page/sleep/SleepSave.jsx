@@ -114,7 +114,7 @@ export const SleepSave = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
@@ -203,7 +203,7 @@ export const SleepSave = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -230,7 +230,8 @@ export const SleepSave = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"sleep"} plan={""} type={"save"}
+      flowSave={flowSave} navParam={navParam}
+      part={"sleep"} plan={""} type={"save"}
     />
   );
 

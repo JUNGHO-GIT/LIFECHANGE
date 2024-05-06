@@ -139,7 +139,7 @@ export const MoneySave = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const handlerCount = (e) => {
       let newCount = parseInt(e, 10);
@@ -389,16 +389,22 @@ export const MoneySave = () => {
     );
     return (
       <React.Fragment>
-        <div className={"save-wrapper"}>
-          {countNode()}
-          {tableSection()}
-          {tableRemain()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {countNode()}
+                {tableSection()}
+                {tableRemain()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -425,7 +431,8 @@ export const MoneySave = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"money"} plan={""} type={"save"}
+      flowSave={flowSave} navParam={navParam}
+      part={"money"} plan={""} type={"save"}
     />
   );
 

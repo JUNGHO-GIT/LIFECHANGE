@@ -107,7 +107,7 @@ export const SleepList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
 
     const columns = [
@@ -235,7 +235,8 @@ export const SleepList = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
-      flowSave={""} navParam={navParam} part={"sleep"} plan={"plan"} type={"list"}
+      flowSave={""} navParam={navParam}
+      part={"sleep"} plan={"plan"} type={"list"}
     />
   );
 

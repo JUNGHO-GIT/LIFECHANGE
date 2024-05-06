@@ -1,10 +1,10 @@
 // DaySave.jsx
 
-import React, { useEffect } from "react";
-import {DayPicker} from "react-day-picker";
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
+import React, { useEffect } from "react";
+import {DayPicker} from "react-day-picker";
 import InputMask from "react-input-mask";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, Button} from "@mui/material";
 import Grid2 from '@mui/material/Unstable_Grid2';
@@ -108,7 +108,23 @@ export const DaySave = ({
     </React.Fragment>
   );
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7-1. popup ----------------------------------------------------------------------------------->
+  const popupNode = () => (
+    <React.Fragment>
+      <div className={`dayPicker-container ${DAYPICKER.dayStartOpen ? "" : "d-none"}`}>
+        {closeBtn("Start")}
+        <div className="h-2vh"></div>
+        {dayPicker("start")}
+      </div>
+      <div className={`dayPicker-container ${DAYPICKER.dayEndOpen ? "" : "d-none"}`}>
+        {closeBtn("End")}
+        <div className="h-2vh"></div>
+        {dayPicker("end")}
+      </div>
+    </React.Fragment>
+  );
+
+  // 7-1. table ----------------------------------------------------------------------------------->
   const tableNode = () => {
     const tableSection1 = () => (
       <React.Fragment>
@@ -184,7 +200,15 @@ export const DaySave = ({
     );
     return (
       <React.Fragment>
-        {part === "sleep" ? tableSection1() : tableSection2()}
+        <Card className={"flex-wrapper h-8vh p-sticky bottom-35"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+                {part === "sleep" ? tableSection1() : tableSection2()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
@@ -192,19 +216,8 @@ export const DaySave = ({
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={`dayPicker-container ${DAYPICKER.dayStartOpen ? "" : "d-none"}`}>
-        {closeBtn("Start")}
-        <div className="h-2vh"></div>
-        {dayPicker("start")}
-      </div>
-      <div className={`dayPicker-container ${DAYPICKER.dayEndOpen ? "" : "d-none"}`}>
-        {closeBtn("End")}
-        <div className="h-2vh"></div>
-        {dayPicker("end")}
-      </div>
-      <div className={"date-wrapper"}>
-        {tableNode()}
-      </div>
+      {popupNode()}
+      {tableNode()}
     </React.Fragment>
   );
 };

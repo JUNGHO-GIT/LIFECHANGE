@@ -127,11 +127,11 @@ export const ExerciseDetail = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Table hover responsive className={"border-1"}>
+        <Table className={"block-wrapper h-80vh"}>
           <thead>
             <tr>
               <th className={"table-thead"}>날짜</th>
@@ -204,7 +204,7 @@ export const ExerciseDetail = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -224,31 +224,18 @@ export const ExerciseDetail = () => {
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={""} navParam={navParam} part={"exercise"} plan={""} type={"detail"}
+      flowSave={""} navParam={navParam}
+      part={"exercise"} plan={""} type={"detail"}
     />
   );
 
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-              {LOADING ? loadingNode() : tableNode()}
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Card>
-      <Card className={"content-wrapper"}>
-        <Container className={"p-0"}>
-          <Grid2 container spacing={3}>
-            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {btnNode()}
-            </Grid2>
-          </Grid2>
-        </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

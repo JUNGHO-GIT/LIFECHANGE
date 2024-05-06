@@ -44,7 +44,7 @@ export const UserLogin = () => {
     }
   };
 
-  // 4. table ------------------------------------------------------------------------------------->
+  // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
@@ -96,7 +96,7 @@ export const UserLogin = () => {
     );
   };
 
-  // 9. loading ----------------------------------------------------------------------------------->
+  // 8. loading ----------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
@@ -116,7 +116,8 @@ export const UserLogin = () => {
   const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"login"}
+      flowSave={flowSave} navParam={navParam}
+      part={"user"} plan={""} type={"login"}
     />
   );
 
