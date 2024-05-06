@@ -3,6 +3,7 @@
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
+import numeral from 'numeral';
 import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -113,6 +114,10 @@ export const MoneySave = () => {
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
+  useEffect(() => {
+    console.log("COUNT", COUNT);
+  }, [COUNT]);
+
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     // money_part_val 가 수입인경우, 지출인 경우
@@ -188,41 +193,24 @@ export const MoneySave = () => {
       <React.Fragment>
         <Box className={"input-group"}>
           <span className={"input-group-text"}>섹션 갯수</span>
-          <NumericInput
-            label={"섹션 갯수"}
-            min={0}
-            max={10}
-            minLength={1}
-            maxLength={2}
-            datatype={"number"}
-            displayType={"input"}
-            className={"form-control"}
+          <TextField
+            type={"number"}
             id={"sectionCnt"}
             name={"sectionCnt"}
-            disabled={false}
-            thousandSeparator={false}
-            fixedDecimalScale={true}
-            value={Math.min(10, COUNT?.sectionCnt)}
-          ></NumericInput>
-          {/* <NumericFormat
-            min={0}
-            max={10}
-            minLength={1}
-            maxLength={2}
-            datatype={"number"}
-            displayType={"input"}
             className={"form-control"}
-            id={"sectionCnt"}
-            name={"sectionCnt"}
-            disabled={false}
-            thousandSeparator={false}
-            fixedDecimalScale={true}
-            value={Math.min(10, COUNT?.sectionCnt)}
-            onValueChange={(values) => {
-              const limitedValue = Math.min(10, parseInt(values?.value));
-              handlerCount(limitedValue.toString());
+            value={COUNT.sectionCnt}
+            onChange={(e) => {
+              if (Number(e.target.value) > 10) {
+                alert("최대 10개까지 입력 가능합니다.");
+                return;
+              }
+              else if (Number(e.target.value) < 0) {
+                alert("0개 이상 입력 가능합니다.");
+                return;
+              }
+              handlerCount(e.target.value);
             }}
-          ></NumericFormat> */}
+          />
         </Box>
       </React.Fragment>
     );

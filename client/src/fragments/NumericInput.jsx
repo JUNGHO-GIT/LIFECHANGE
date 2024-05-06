@@ -1,45 +1,47 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import { NumericFormat } from "react-number-format";
-import TextField from "@mui/material/TextField";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { NumericFormat } from 'react-number-format';
+import TextField from '@mui/material/TextField';
 
 const NumericFormatCustom = React.forwardRef((props, ref) => {
-  const { onChange, min, max, name, disabled, ...other } = props;
-
-  const handleValueChange = (values) => {
-    const limitedValue = Math.min(max, parseInt(values.value, 10));
-    onChange({
-      target: {
-        name: name,
-        value: limitedValue.toString(),
-      },
-    });
-  };
+  const { onChange, ...other } = props;
 
   return (
     <NumericFormat
       {...other}
       getInputRef={ref}
-      onValueChange={handleValueChange}
-      thousandSeparator={false}
-      valueIsNumericString={true}
-      fixedDecimalScale={true}
-      disabled={disabled}
-      min={min}
-      max={max}
+      onValueChange={(values) => {
+        if (onChange) {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }
+      }}
+      thousandSeparator={props.thousandSeparator}
+      fixedDecimalScale={props.fixedDecimalScale}
+      allowNegative={false}
     />
   );
 });
 
-NumericFormatCustom.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  disabled: PropTypes.bool
-};
-
-export const NumericInput = ({ value, onChange, min, max, name, label, id, disabled }) => {
+export const NumericInput = ({
+  label,
+  value,
+  onChange,
+  min,
+  max,
+  minLength,
+  maxLength,
+  datatype,
+  displayType,
+  className,
+  id,
+  name,
+  disabled
+}) => {
   return (
     <TextField
       label={label}
@@ -47,29 +49,44 @@ export const NumericInput = ({ value, onChange, min, max, name, label, id, disab
       onChange={onChange}
       name={name}
       id={id}
+      className={className}
       disabled={disabled}
+      inputProps={{
+        min,
+        max,
+        minLength,
+        maxLength,
+        type: datatype,
+      }}
       InputProps={{
         inputComponent: NumericFormatCustom,
-        inputProps: {
-          min,
-          max,
-          onChange,
-          name,
-          disabled
-        }
       }}
-      variant="standard"
+      variant="outlined"
     />
   );
 };
 
 NumericInput.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  minLength: PropTypes.number,
+  maxLength: PropTypes.number,
+  datatype: PropTypes.string,
+  displayType: PropTypes.string,
+  className: PropTypes.string,
   id: PropTypes.string.isRequired,
-  disabled: PropTypes.bool
+  name: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  thousandSeparator: PropTypes.bool,
+  fixedDecimalScale: PropTypes.bool,
+};
+
+NumericFormatCustom.propTypes = {
+  onChange: PropTypes.func,
+  name: PropTypes.string.isRequired,
+  thousandSeparator: PropTypes.bool,
+  fixedDecimalScale: PropTypes.bool,
 };
