@@ -2,7 +2,6 @@
 
 // @ts-ignore
 import logo3 from "../assets/images/logo3.png";
-
 import React, {useState, useEffect} from "react";
 import "moment/locale/ko";
 import moment from "moment-timezone";
@@ -10,7 +9,6 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/array/dataArray.js";
 import {Box, Button, Collapse, Divider, SwipeableDrawer} from "@mui/material";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
@@ -40,6 +38,15 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
       setIsFirstOpen(isFirstOpen === menuLabel ? null : menuLabel);
     }
   };
+  useEffect(() => {
+    const savedFirstOpen = sessionStorage.getItem("isFirstOpen");
+    if (savedFirstOpen) {
+      setIsFirstOpen(savedFirstOpen);
+    }
+  }, []);
+  useEffect(() => {
+    sessionStorage.setItem("isFirstOpen", isFirstOpen);
+  }, [isFirstOpen]);
 
   // 3-2. isSecondOpen ---------------------------------------------------------------------------->
   useEffect(() => {
@@ -75,8 +82,8 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                   {item.title}
                 </ListItemText>
               </ListItemButton>
-              <Collapse in={isFirstOpen === item.title} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
+              <Collapse in={isFirstOpen === item.title} timeout={"auto"} unmountOnExit>
+                <List component={"div"} disablePadding>
                   {item?.items?.map(({ to, label }) => (
                     <ListItemButton
                       key={to}
