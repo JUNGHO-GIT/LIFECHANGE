@@ -7,9 +7,9 @@ import {Line, LineChart} from "recharts";
 
 import {Loading} from "../../../fragments/Loading.jsx";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import Grid2 from '@mui/material/Unstable_Grid2';
 import {Container, Card, Box, Paper} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
-import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashLine = () => {
