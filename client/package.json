@@ -39,8 +39,6 @@
     "aos": "^2.3.4",
     "apexcharts": "^3.48.0",
     "axios": "^1.4.0",
-    "bootstrap": "^5.3.0",
-    "bootstrap-icons": "^1.10.5",
     "boxicons": "^2.1.4",
     "cors": "^2.8.5",
     "history": "^5.3.0",

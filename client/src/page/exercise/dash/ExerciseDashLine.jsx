@@ -8,8 +8,8 @@ import {Line, LineChart} from "recharts";
 import {Header} from "../../../layout/Header.jsx";
 import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
-import {Container, Row, Col, Card} from "react-bootstrap";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashLine = () => {

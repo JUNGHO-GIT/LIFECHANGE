@@ -12,7 +12,7 @@ import {Paging} from "../../fragments/Paging.jsx";
 import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Table, Row, Col, Card} from "react-bootstrap";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodList = () => {
@@ -165,9 +165,15 @@ export const FoodList = () => {
     );
     return (
       <React.Fragment>
-        <div className={"table-wrapper"}>
-          {tableSection()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid container spacing={3}>
+              <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid>
+            </Grid>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };

@@ -9,7 +9,7 @@ import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Row, Col, Card} from "react-bootstrap";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDashAvg = () => {

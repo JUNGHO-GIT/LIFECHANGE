@@ -6,8 +6,8 @@ import React, {useEffect, useState} from "react";
 import {Header} from "../../../layout/Header.jsx";
 import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
-import {Container, Row, Col, Card} from "react-bootstrap";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashPie = () => {

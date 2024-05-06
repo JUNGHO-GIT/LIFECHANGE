@@ -6,7 +6,7 @@ import {Header} from "../../../layout/Header.jsx";
 import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
-import {Container, Row, Col, Card} from "react-bootstrap";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashPie = () => {

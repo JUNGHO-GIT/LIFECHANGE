@@ -6,9 +6,9 @@ import moment from "moment-timezone";
 import Calendar from "react-calendar";
 import React, {useState, useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Container, Row, Col, Card} from "react-bootstrap";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {

@@ -10,7 +10,7 @@ import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
@@ -119,45 +119,51 @@ export const SleepDetail = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-          <Table hover responsive className={"border-1"}>
-            <thead>
-              <tr>
-                <th className={"table-thead"}>날짜</th>
-                <th className={"table-thead"}>취침</th>
-                <th className={"table-thead"}>기상</th>
-                <th className={"table-thead"}>수면</th>
-                <th className={"table-thead"}>x</th>
+        <Table hover responsive className={"border-1"}>
+          <thead>
+            <tr>
+              <th className={"table-thead"}>날짜</th>
+              <th className={"table-thead"}>취침</th>
+              <th className={"table-thead"}>기상</th>
+              <th className={"table-thead"}>수면</th>
+              <th className={"table-thead"}>x</th>
+            </tr>
+          </thead>
+          <tbody>
+            {OBJECT?.sleep_section?.map((section, index) => (
+              <tr key={index}>
+                {index === 0 && (
+                  <React.Fragment>
+                    <td rowSpan={OBJECT?.sleep_section?.length}>
+                      {OBJECT?.sleep_startDt?.substring(5, 10)}
+                    </td>
+                  </React.Fragment>
+                )}
+                <td>{section.sleep_night}</td>
+                <td>{section.sleep_morning}</td>
+                <td>{section.sleep_time}</td>
+                <td>
+                  <p className={"del-btn"} onClick={() => (
+                    flowDelete(OBJECT._id, section._id)
+                  )}>x</p>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {OBJECT?.sleep_section?.map((section, index) => (
-                <tr key={index}>
-                  {index === 0 && (
-                    <React.Fragment>
-                      <td rowSpan={OBJECT?.sleep_section?.length}>
-                        {OBJECT?.sleep_startDt?.substring(5, 10)}
-                      </td>
-                    </React.Fragment>
-                  )}
-                  <td>{section.sleep_night}</td>
-                  <td>{section.sleep_morning}</td>
-                  <td>{section.sleep_time}</td>
-                  <td>
-                    <p className={"del-btn"} onClick={() => (
-                      flowDelete(OBJECT._id, section._id)
-                    )}>x</p>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </React.Fragment>
-      );
+            ))}
+          </tbody>
+        </Table>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>
-        <div className={"detail-wrapper"}>
-          {tableSection()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid container spacing={3}>
+              <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid>
+            </Grid>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };

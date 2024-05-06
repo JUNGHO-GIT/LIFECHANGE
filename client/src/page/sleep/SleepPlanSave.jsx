@@ -14,7 +14,7 @@ import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Row, Col, Card} from "react-bootstrap";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanSave = () => {
@@ -182,9 +182,15 @@ export const SleepPlanSave = () => {
     );
     return (
       <React.Fragment>
-        <div className={"save-wrapper"}>
-          {tableSection()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid container spacing={3}>
+              <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid>
+            </Grid>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };

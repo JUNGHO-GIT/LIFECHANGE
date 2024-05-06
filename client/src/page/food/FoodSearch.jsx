@@ -7,7 +7,7 @@ import InputMask from "react-input-mask";
 import {useDate} from "../../hooks/useDate.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Row, Col, Card, Table, Button} from "react-bootstrap";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
