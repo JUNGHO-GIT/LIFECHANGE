@@ -5,6 +5,7 @@ import "moment/locale/ko";
 import moment from "moment-timezone";
 import {Button} from "@mui/material";
 import {Card, Container, Grid} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({
@@ -139,9 +140,9 @@ export const Btn = ({
   return (
     <React.Fragment>
       <Card className={"flex-wrapper h-6vh p-sticky bottom-0"}>
-        <Container>
-          <Grid container spacing={3}>
-            <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+        <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
               {type === "list" ? (
                 <React.Fragment>
                   {btnOpenCalendar()}
@@ -177,8 +178,8 @@ export const Btn = ({
                   {btnRefresh()}
                 </React.Fragment>
               ) : null}
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </Container>
       </Card>
     </React.Fragment>

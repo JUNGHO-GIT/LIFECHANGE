@@ -8,6 +8,7 @@ import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend} from 'recharts';
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDashPie = () => {
@@ -502,11 +503,10 @@ export const MoneyDashPie = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-          <Row>
-            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
               <select className={"form-select form-select-sm"}
                 onChange={(e) => (setSECTION(e.target.value))}
                 value={SECTION}
@@ -515,11 +515,11 @@ export const MoneyDashPie = () => {
                 <option value={"week"}>주간</option>
                 <option value={"month"}>월간</option>
               </select>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+            </Grid2>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
               <span className={"dash-title"}>수입/지출 비율</span>
-            </Col>
-            <Col lg={3} md={3} sm={3} xs={3}>
+            </Grid2>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
               <select className={"form-select form-select-sm"}
                 onChange={(e) => (setLINE(e.target.value))}
                 value={LINE}
@@ -527,21 +527,20 @@ export const MoneyDashPie = () => {
                 <option value={"in"}>수입</option>
                 <option value={"out"}>지출</option>
               </select>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12}>
+            </Grid2>
+          </Grid2>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && LINE === "in" && (LOADING ? loadingNode() : chartInToday())}
               {SECTION === "today" && LINE === "out" && (LOADING ? loadingNode() : chartOutToday())}
               {SECTION === "week" && LINE === "in" && (LOADING ? loadingNode() : chartInWeek())}
               {SECTION === "week" && LINE === "out" && (LOADING ? loadingNode() : chartOutWeek())}
               {SECTION === "month" && LINE === "in" && (LOADING ? loadingNode() : chartInMonth())}
               {SECTION === "month" && LINE === "out" && (LOADING ? loadingNode() : chartOutMonth())}
-            </Col>
-            </Row>
+            </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };

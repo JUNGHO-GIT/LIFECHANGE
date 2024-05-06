@@ -11,6 +11,7 @@ import {useStorage} from "../../hooks/useStorage.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
@@ -157,11 +158,11 @@ export const SleepDetail = () => {
       <React.Fragment>
         <Card className={"content-wrapper"}>
           <Container className={"p-0"}>
-            <Grid container spacing={3}>
-              <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {tableSection()}
-              </Grid>
-            </Grid>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
       </React.Fragment>
@@ -195,28 +196,24 @@ export const SleepDetail = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {btnNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };

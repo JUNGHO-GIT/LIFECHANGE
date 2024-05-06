@@ -9,7 +9,8 @@ import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, Button} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakDemo = () => {
@@ -588,20 +589,18 @@ export const TweakDemo = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
-              </Col>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              </Grid2>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {pagingNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };

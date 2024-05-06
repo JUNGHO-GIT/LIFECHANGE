@@ -4,7 +4,7 @@ import React, {useState, useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {dataArray} from "../assets/array/dataArray.js";
 import {Card, Container} from "@mui/material";
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // @ts-ignore
 import smile1 from "../assets/images/smile1.png";
@@ -60,26 +60,26 @@ export const NavBar = () => {
   return (
     <React.Fragment>
       <Card className={"flex-wrapper h-6vh p-sticky top-35"}>
-        <Container>
-          <Grid container spacing={3}>
-            <Grid xl={4} lg={4} md={4} sm={4} xs={4} className={"d-left"}>
+        <Container className={"p-5"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"d-left"}>
               <span className={"nav-icon-text"}>Total</span>
               <span className={"w-1vw"}></span>
               <span className={"nav-image-smile"}>{makeIcon("total")}</span>
-            </Grid>
-            <Grid xl={4} lg={4} md={4} sm={4} xs={4} className={"d-center"}>
+            </Grid2>
+            <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"d-center"}>
               {!preFix ? (
                 <span className={"nav-text"}>Home</span>
               ) : (
                 <span className={"nav-text"}>{preFix} / {subFix}</span>
               )}
-            </Grid>
-            <Grid xl={4} lg={4} md={4} sm={4} xs={4} className={"d-right"}>
+            </Grid2>
+            <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"d-right"}>
               <span className={"nav-icon-text"}>{`${preFix}`}</span>
               <span className={"w-1vw"}></span>
               <span className={"nav-image-smile"}>{makeIcon("sub")}</span>
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </Container>
       </Card>
     </React.Fragment>

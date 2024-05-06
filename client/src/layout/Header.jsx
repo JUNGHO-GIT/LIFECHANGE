@@ -5,12 +5,11 @@ import {useNavigate} from "react-router-dom";
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import {SideBar} from "./SideBar.jsx";
-import Grid from '@mui/material/Unstable_Grid2';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Card, Container, Menu, MenuItem} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import Box from '@mui/material/Box';
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {
@@ -62,18 +61,18 @@ export const Header = () => {
   return (
     <React.Fragment>
       <Card className={"flex-wrapper h-6vh p-sticky top-0"}>
-        <Container className={"p-4"}>
-          <Grid container spacing={3}>
-            <Grid xl={2} lg={2} md={2} sm={2} xs={2} className={"d-left"}>
+        <Container className={"p-5"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"d-left"}>
               {btnSideBar()}
-            </Grid>
-            <Grid xl={8} lg={8} md={8} sm={8} xs={8} className={"d-center"}>
+            </Grid2>
+            <Grid2 xl={8} lg={8} md={8} sm={8} xs={8} className={"d-center"}>
               <span className={"head-text"}>{moment().tz("Asia/Seoul").format(`YYYY-MM-DD (ddd)`)}</span>
-            </Grid>
-            <Grid xl={2} lg={2} md={2} sm={2} xs={2} className={"d-right"}>
+            </Grid2>
+            <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"d-right"}>
               {btnUser()}
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </Container>
       </Card>
     </React.Fragment>

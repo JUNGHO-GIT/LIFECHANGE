@@ -7,12 +7,13 @@ import {NumericFormat} from "react-number-format";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {Date} from "../../fragments/Date.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
+import {Date} from "../../fragments/Date.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarDetail = () => {
@@ -201,8 +202,8 @@ export const CalendarDetail = () => {
     );
     const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Row>
-          <Col lg={6} md={6} sm={6} xs={6}>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>파트</span>
               <select
@@ -231,8 +232,8 @@ export const CalendarDetail = () => {
                 ))}
               </select>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>색상</span>
               <select
@@ -261,10 +262,10 @@ export const CalendarDetail = () => {
                 ))}
               </select>
             </div>
-          </Col>
-        </Row>
-        <Row className={"text-center"}>
-          <Col lg={12} md={12} sm={12} xs={12}>
+          </Grid2>
+        </Grid2>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>제목</span>
               <InputMask
@@ -289,8 +290,8 @@ export const CalendarDetail = () => {
                 }}
               ></InputMask>
             </div>
-          </Col>
-          <Col lg={12} md={12} sm={12} xs={12}>
+          </Grid2>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>내용</span>
               <InputMask
@@ -315,8 +316,8 @@ export const CalendarDetail = () => {
                 }}
               ></InputMask>
             </div>
-          </Col>
-        </Row>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     const tableSection = () => (
@@ -368,39 +369,33 @@ export const CalendarDetail = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {dateNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {btnNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };

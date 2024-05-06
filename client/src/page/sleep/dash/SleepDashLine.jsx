@@ -9,7 +9,8 @@ import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, FormGroup, FormControlLabel, Switch} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDashLine = () => {
@@ -186,22 +187,17 @@ export const SleepDashLine = () => {
     return (
       <React.Fragment>
         {["취침", "기상", "수면"]?.map((key, index) => (
-          <div key={index} className={"dash-checkbox flex-column mb-10"}>
-            <FormCheck
-              inline
-              type={"switch"}
-              checked={PART.includes(key)}
-              onChange={() => {
-                if (PART.includes(key)) {
-                  setPART(PART?.filter((item) => (item !== key)));
-                }
-                else {
-                  setPART([...PART, key]);
-                }
-              }}
-            ></FormCheck>
-            <span>{key}</span>
-          </div>
+          <FormGroup key={index}>
+            <FormControlLabel control={<Switch checked={PART.includes(key)} onChange={() => {
+              if (PART.includes(key)) {
+                setPART(PART?.filter((item) => (item !== key)));
+              }
+              else {
+                setPART([...PART, key]);
+              }
+            }}/>} label={key} labelPlacement={"start"}>
+            </FormControlLabel>
+          </FormGroup>
         ))}
       </React.Fragment>
     );
@@ -226,11 +222,10 @@ export const SleepDashLine = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
                 <select className={"form-select form-select-sm"}
                   onChange={(e) => (setSECTION(e.target.value))}
                   value={SECTION}
@@ -238,26 +233,25 @@ export const SleepDashLine = () => {
                   <option value={"week"}>주간</option>
                   <option value={"month"}>월간</option>
                 </select>
-              </Col>
-              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+              </Grid2>
+              <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
                 <span className={"dash-title"}>수면 추이</span>
-              </Col>
-              <Col lg={3} md={3} sm={3} xs={3}>
+              </Grid2>
+              <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
                 <span></span>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={10} md={10} sm={10} xs={10}>
+              </Grid2>
+            </Grid2>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={10} lg={10} md={10} sm={10} xs={10}>
                 {SECTION === "week" && (LOADING ? loadingNode() : chartWeek())}
                 {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
-              </Col>
-              <Col lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
+              </Grid2>
+              <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
                 {LOADING ? "" : tableNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };

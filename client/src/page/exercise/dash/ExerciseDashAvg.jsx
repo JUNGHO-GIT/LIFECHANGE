@@ -9,6 +9,7 @@ import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashAvg = () => {
@@ -301,43 +302,41 @@ export const ExerciseDashAvg = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setSECTION(e.target.value))}
-                  value={SECTION}
-                >
-                  <option value={"month"}>월간</option>
-                  <option value={"year"}>연간</option>
-                </select>
-              </Col>
-              <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-                <span className={"dash-title"}>볼륨 / 유산소 평균</span>
-              </Col>
-              <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setLINE(e.target.value))}
-                  value={LINE}
-                >
-                  <option value={"volume"}>볼륨</option>
-                  <option value={"cardio"}>시간</option>
-                </select>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12}>
-                {SECTION === "month" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeMonth())}
-                {SECTION === "month" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioMonth())}
-                {SECTION === "year" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeYear())}
-                {SECTION === "year" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioYear())}
-              </Col>
-            </Row>
-          </Container>
-        </Card>
-      </div>
+      <Card className={"content-wrapper"}>
+        <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setSECTION(e.target.value))}
+                value={SECTION}
+              >
+                <option value={"month"}>월간</option>
+                <option value={"year"}>연간</option>
+              </select>
+            </Grid2>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+              <span className={"dash-title"}>볼륨 / 유산소 평균</span>
+            </Grid2>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setLINE(e.target.value))}
+                value={LINE}
+              >
+                <option value={"volume"}>볼륨</option>
+                <option value={"cardio"}>시간</option>
+              </select>
+            </Grid2>
+          </Grid2>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
+              {SECTION === "month" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeMonth())}
+              {SECTION === "month" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioMonth())}
+              {SECTION === "year" && LINE === "volume" && (LOADING ? loadingNode() : chartVolumeYear())}
+              {SECTION === "year" && LINE === "cardio" && (LOADING ? loadingNode() : chartCardioYear())}
+            </Grid2>
+          </Grid2>
+        </Container>
+      </Card>
     </React.Fragment>
   );
 };

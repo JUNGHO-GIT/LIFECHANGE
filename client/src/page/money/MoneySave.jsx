@@ -6,14 +6,15 @@ import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
 import {percent} from "../../assets/js/percent.js";
+import {Header} from "../../layout/Header.jsx";
+import {NavBar} from "../../layout/NavBar.jsx";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Date} from "../../fragments/Date.jsx";
-import {Header} from "../../layout/Header.jsx";
-import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -198,8 +199,8 @@ export const MoneySave = () => {
     );
     const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Row>
-          <Col lg={6} md={6} sm={6} xs={6}>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>파트</span>
               <select
@@ -230,8 +231,8 @@ export const MoneySave = () => {
                 ))}
               </select>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>제목</span>
               <select
@@ -263,10 +264,10 @@ export const MoneySave = () => {
                 ))}
               </select>
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+        </Grid2>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>금액</span>
               <NumericFormat
@@ -299,8 +300,8 @@ export const MoneySave = () => {
                 }}
               ></NumericFormat>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>메모</span>
               <InputMask
@@ -325,8 +326,8 @@ export const MoneySave = () => {
                 }}
               ></InputMask>
             </div>
-          </Col>
-        </Row>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     const tableSection = () => (
@@ -336,8 +337,8 @@ export const MoneySave = () => {
     );
     const tableRemain = () => (
       <React.Fragment>
-        <Row>
-          <Col lg={6} md={6} sm={6} xs={6}>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총수입</span>
               <NumericFormat
@@ -359,8 +360,8 @@ export const MoneySave = () => {
                 value={Math.min(9999999999, OBJECT?.money_total_in)}
               ></NumericFormat>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총지출</span>
               <NumericFormat
@@ -382,8 +383,8 @@ export const MoneySave = () => {
                 value={Math.min(9999999999, OBJECT?.money_total_out)}
               ></NumericFormat>
             </div>
-          </Col>
-        </Row>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     return (
@@ -431,39 +432,33 @@ export const MoneySave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {dateNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {btnNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };

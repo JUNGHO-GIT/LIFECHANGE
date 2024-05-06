@@ -5,8 +5,9 @@ import {DayPicker} from "react-day-picker";
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
-import {Col, Row} from "react-bootstrap";
 import InputMask from "react-input-mask";
+import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, Button} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 4. date ---------------------------------------------------------------------------------------->
 export const Date = ({
@@ -111,8 +112,8 @@ export const Date = ({
   const tableNode = () => {
     const tableSection1 = () => (
       <React.Fragment>
-        <Row className={"d-center"}>
-          <Col lg={12} md={12} sm={12} xs={12}>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>날짜</span>
               <InputMask
@@ -131,14 +132,14 @@ export const Date = ({
                 }}
               ></InputMask>
             </div>
-          </Col>
-        </Row>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     const tableSection2 = () => (
       <React.Fragment>
-        <Row className={"d-center"}>
-          <Col lg={6} md={6} sm={6} xs={6}>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>시작일</span>
               <InputMask
@@ -157,8 +158,8 @@ export const Date = ({
                 }}
               ></InputMask>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>종료일</span>
               <InputMask
@@ -177,8 +178,8 @@ export const Date = ({
                 }}
               ></InputMask>
             </div>
-          </Col>
-        </Row>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     return (

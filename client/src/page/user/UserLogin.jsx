@@ -9,6 +9,7 @@ import {NavBar} from "../../layout/NavBar.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -47,13 +48,13 @@ export const UserLogin = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Grid container spacing={3}>
-          <Grid lg={12} md={12} sm={12} xs={12}>
+        <Grid2 container spacing={3}>
+          <Grid2 lg={12} md={12} sm={12} xs={12}>
             <Typography component="h1" variant="h5">
               로그인
             </Typography>
-          </Grid>
-          <Grid lg={12} md={12} sm={12} xs={12}>
+          </Grid2>
+          <Grid2 lg={12} md={12} sm={12} xs={12}>
             <TextField
               type={"text"}
               id={"user_id"}
@@ -64,8 +65,8 @@ export const UserLogin = () => {
                 setUserId(e.target.value)
               )}
             ></TextField>
-          </Grid>
-          <Grid lg={12} md={12} sm={12} xs={12}>
+          </Grid2>
+          <Grid2 lg={12} md={12} sm={12} xs={12}>
             <TextField
               type={"password"}
               id={"user_pw"}
@@ -76,8 +77,8 @@ export const UserLogin = () => {
                 setUserPw(e.target.value)
               )}
             ></TextField>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     return (
@@ -118,20 +119,20 @@ export const UserLogin = () => {
     <React.Fragment>
       <div className={"content-wrapper"}>
         <div className={"card-wrapper"}>
-          <Grid container spacing={1}>
-            <Grid lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+          <Grid2 container spacing={1}>
+            <Grid2 lg={12} md={12} sm={12} xs={12} className={"d-center"}>
               {LOADING ? loadingNode() : tableNode()}
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </div>
       </div>
       <div className={"content-wrapper"}>
         <div className={"card-wrapper"}>
-          <Grid container spacing={1}>
-            <Grid lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+          <Grid2 container spacing={1}>
+            <Grid2 lg={12} md={12} sm={12} xs={12} className={"d-center"}>
               {btnNode()}
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </div>
       </div>
     </React.Fragment>

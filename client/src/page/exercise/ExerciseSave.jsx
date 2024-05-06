@@ -10,13 +10,14 @@ import {percent} from "../../assets/js/percent.js";
 import {useTime} from "../../hooks/useTime.jsx";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {Date} from "../../fragments/Date.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
+import {Date} from "../../fragments/Date.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
 import _ from 'lodash';
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2.js";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseSave = () => {
@@ -229,8 +230,8 @@ export const ExerciseSave = () => {
     );
     const tableFragment = (i) => (
       <React.Fragment key={i}>
-        <Row>
-          <Col lg={6} md={6} sm={6} xs={6}>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>부위</span>
               <select
@@ -261,8 +262,8 @@ export const ExerciseSave = () => {
                 ))}
               </select>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>제목</span>
               <select
@@ -294,10 +295,10 @@ export const ExerciseSave = () => {
                 ))}
               </select>
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={3}>
+          </Grid2>
+        </Grid2>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>세트</span>
               <NumericFormat
@@ -336,8 +337,8 @@ export const ExerciseSave = () => {
                 }}
               ></NumericFormat>
             </div>
-          </Col>
-          <Col xs={3}>
+          </Grid2>
+          <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>횟수</span>
               <NumericFormat
@@ -376,8 +377,8 @@ export const ExerciseSave = () => {
                 }}
               ></NumericFormat>
             </div>
-          </Col>
-          <Col xs={3}>
+          </Grid2>
+          <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>무게</span>
               <NumericFormat
@@ -416,8 +417,8 @@ export const ExerciseSave = () => {
                 }}
               ></NumericFormat>
             </div>
-          </Col>
-          <Col xs={3}>
+          </Grid2>
+          <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>휴식</span>
               <NumericFormat
@@ -455,10 +456,10 @@ export const ExerciseSave = () => {
                 }}
               ></NumericFormat>
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+        </Grid2>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>볼륨</span>
               <NumericFormat
@@ -479,8 +480,8 @@ export const ExerciseSave = () => {
                 value={Math.min(999999999, OBJECT?.exercise_section[i]?.exercise_volume)}
               ></NumericFormat>
             </div>
-          </Col>
-          <Col lg={6} md={6} sm={6} xs={6}>
+          </Grid2>
+          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>유산소</span>
               <TimePicker
@@ -507,8 +508,8 @@ export const ExerciseSave = () => {
                 }}
               ></TimePicker>
             </div>
-          </Col>
-        </Row>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     const tableSection = () => (
@@ -518,8 +519,8 @@ export const ExerciseSave = () => {
     );
     const tableRemain = () => (
       <React.Fragment>
-        <Row>
-          <Col lg={12} md={12} sm={12} xs={12}>
+        <Grid2 container spacing={3}>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총 볼륨</span>
                 <NumericFormat
@@ -540,8 +541,8 @@ export const ExerciseSave = () => {
                   value={Math.min(9999999999, OBJECT?.exercise_total_volume)}
                 ></NumericFormat>
             </div>
-          </Col>
-          <Col lg={12} md={12} sm={12} xs={12}>
+          </Grid2>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>총 유산소 시간</span>
               <TimePicker
@@ -556,8 +557,8 @@ export const ExerciseSave = () => {
                 value={OBJECT?.exercise_total_cardio}
               ></TimePicker>
             </div>
-          </Col>
-          <Col lg={12} md={12} sm={12} xs={12}>
+          </Grid2>
+          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <div className={"input-group"}>
               <span className={"input-group-text"}>체중</span>
               <NumericFormat
@@ -584,8 +585,8 @@ export const ExerciseSave = () => {
                 }}
               ></NumericFormat>
             </div>
-          </Col>
-        </Row>
+          </Grid2>
+        </Grid2>
       </React.Fragment>
     );
     return (
@@ -633,39 +634,33 @@ export const ExerciseSave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {dateNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {LOADING ? loadingNode() : tableNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
-      </div>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-            <Row>
-              <Col lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 {btnNode()}
-              </Col>
-            </Row>
+              </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };

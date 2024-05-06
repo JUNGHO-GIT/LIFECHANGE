@@ -12,6 +12,7 @@ import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepList = () => {
@@ -108,12 +109,14 @@ export const SleepList = () => {
 
   // 4. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+
     const columns = [
       { id: "sleep_startDt", label: "날짜", minWidth: 170, align: "center"},
       { id: "sleep_night", label: "취침", minWidth: 100 },
       { id: "sleep_morning", label: "기상", minWidth: 100 },
       { id: "sleep_time", label: "수면", minWidth: 100 },
     ];
+
     const rows = OBJECT?.map((item, index) => (
       item.sleep_section?.slice(0, 3)?.map((section, sectionIndex) => ({
         _id: item._id,
@@ -128,6 +131,7 @@ export const SleepList = () => {
         }
       }))
     )).flat().filter((item) => (item !== undefined));
+
     const tableSection = () => (
       <React.Fragment>
         <TableContainer className={"block-wrapper h-80vh"}>
@@ -179,11 +183,11 @@ export const SleepList = () => {
       <React.Fragment>
         <Card className={"content-wrapper"}>
           <Container className={"p-0"}>
-            <Grid container spacing={3}>
-              <Grid xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
                 {tableSection()}
-              </Grid>
-            </Grid>
+              </Grid2>
+            </Grid2>
           </Container>
         </Card>
       </React.Fragment>

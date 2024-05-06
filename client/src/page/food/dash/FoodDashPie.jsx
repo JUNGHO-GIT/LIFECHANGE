@@ -7,6 +7,7 @@ import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDashPie = () => {
@@ -453,11 +454,10 @@ export const FoodDashPie = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <Card className={"card-wrapper"}>
-          <Container>
-          <Row>
-            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+      <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
               <select className={"form-select form-select-sm"}
                 onChange={(e) => (setSECTION(e.target.value))}
                 value={SECTION}
@@ -466,11 +466,11 @@ export const FoodDashPie = () => {
                 <option value={"week"}>주간</option>
                 <option value={"month"}>월간</option>
               </select>
-            </Col>
-            <Col lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+            </Grid2>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
               <span className={"dash-title"}>칼로리/영양소 비율</span>
-            </Col>
-            <Col lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+            </Grid2>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
               <select className={"form-select form-select-sm"}
                 onChange={(e) => (setLINE(e.target.value))}
                 value={LINE}
@@ -478,21 +478,20 @@ export const FoodDashPie = () => {
                 <option value={"kcal"}>칼로리</option>
                 <option value={"nut"}>영양소</option>
               </select>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={12} md={12} sm={12} xs={12}>
+            </Grid2>
+          </Grid2>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
               {SECTION === "today" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalToday())}
               {SECTION === "today" && LINE === "nut" && (LOADING ? loadingNode() : chartNutToday())}
               {SECTION === "week" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalWeek())}
               {SECTION === "week" && LINE === "nut" && (LOADING ? loadingNode() : chartNutWeek())}
               {SECTION === "month" && LINE === "kcal" && (LOADING ? loadingNode() : chartKcalMonth())}
               {SECTION === "month" && LINE === "nut" && (LOADING ? loadingNode() : chartNutMonth())}
-            </Col>
-            </Row>
+            </Grid2>
+            </Grid2>
           </Container>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   );
 };
