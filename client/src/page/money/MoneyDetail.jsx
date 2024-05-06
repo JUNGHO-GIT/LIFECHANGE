@@ -7,10 +7,10 @@ import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {percent} from "../../assets/js/percent.js";
+import {useStorage} from "../../hooks/useStorage.jsx";
+import {useDate} from "../../hooks/useDate.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
-import {useDate} from "../../hooks/useDate.jsx";
-import {useStorage} from "../../hooks/useStorage.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
@@ -137,6 +137,9 @@ export const MoneyDetail = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const adornment = () => (
+      <InputAdornment position={"start"}><i className='bx bx-won'></i></InputAdornment>
+    );
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -152,9 +155,54 @@ export const MoneyDetail = () => {
             value={moment(DATE.startDt, "YYYY-MM-DD")}
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
-            readOnly={true}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
           ></DesktopDatePicker>
         </LocalizationProvider>
+      </React.Fragment>
+    );
+    const totalSection = () => (
+      <React.Fragment>
+        <Box sx={{display: "grid", placeItems: "center"}}>
+          <TextField
+            label={"총 수입"}
+            size={"small"}
+            value={`${numeral(OBJECT.money_total_in).format('0,0')}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: adornment()
+            }}
+          ></TextField>
+          <TextField
+            label={"총 지출"}
+            size={"small"}
+            value={`${numeral(OBJECT.money_total_out).format('0,0')}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: adornment()
+            }}
+          ></TextField>
+          <TextField
+            label={"총 자산"}
+            size={"small"}
+            value={`${numeral(OBJECT.money_property).format('0,0')}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: adornment()
+            }}
+          ></TextField>
+        </Box>
       </React.Fragment>
     );
     const dropdownSection = (id, sectionId, index) => (
@@ -190,9 +238,6 @@ export const MoneyDetail = () => {
         )}
       </PopupState>
     );
-    const adornment = () => (
-      <InputAdornment position={"start"}><i className='bx bx-won'></i></InputAdornment>
-    );
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
@@ -202,6 +247,10 @@ export const MoneyDetail = () => {
           <Divider variant={"middle"} className={"mb-20"}></Divider>
           <Box className={"d-center mb-20"}>
             {dateSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Box className={"text-center mb-20"}>
+            {totalSection()}
           </Box>
           {OBJECT?.money_section?.map((section, index) => (
             <React.Fragment key={index}>
@@ -265,12 +314,6 @@ export const MoneyDetail = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -281,12 +324,18 @@ export const MoneyDetail = () => {
     <NavBar />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
       part={"money"} plan={""} type={"detail"}
+    />
+  );
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

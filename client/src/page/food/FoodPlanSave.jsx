@@ -255,12 +255,6 @@ export const FoodPlanSave = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -278,12 +272,18 @@ export const FoodPlanSave = () => {
     />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"food"} plan={"plan"} type={"save"}
+    />
+  );
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

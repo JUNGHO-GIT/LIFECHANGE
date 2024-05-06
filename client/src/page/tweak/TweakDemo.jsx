@@ -534,12 +534,6 @@ export const TweakDemo = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -584,7 +578,7 @@ export const TweakDemo = () => {
     </React.Fragment>
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <React.Fragment>
       <Card className={"flex-wrapper h-6vh p-sticky bottom-0"}>
@@ -625,6 +619,12 @@ export const TweakDemo = () => {
         </Container>
       </Card>
     </React.Fragment>
+  );
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
+    />
   );
 
   // 15. return ----------------------------------------------------------------------------------->

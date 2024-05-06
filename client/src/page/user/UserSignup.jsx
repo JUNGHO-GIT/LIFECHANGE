@@ -115,12 +115,6 @@ export const UserSignup = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -131,12 +125,18 @@ export const UserSignup = () => {
     <NavBar />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"user"} plan={""} type={"signup"}
+    />
+  );
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

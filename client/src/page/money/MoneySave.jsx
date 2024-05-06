@@ -16,7 +16,7 @@ import {DaySave} from "../../fragments/DaySave.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem} from "@mui/material";
+import {Menu, MenuItem, FormControl, Select, InputLabel} from '@mui/material';
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
@@ -26,6 +26,8 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
+import {NumericInput} from "../../fragments/NumericInput.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -58,7 +60,7 @@ export const MoneySave = () => {
   const [DAYPICKER, setDAYPICKER] = useState({
     dayStartOpen: false,
     dayEndOpen: false,
-    calOpen: false,
+    dayOpen: false,
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -186,7 +188,23 @@ export const MoneySave = () => {
       <React.Fragment>
         <Box className={"input-group"}>
           <span className={"input-group-text"}>섹션 갯수</span>
-          <NumericFormat
+          <NumericInput
+            label={"섹션 갯수"}
+            min={0}
+            max={10}
+            minLength={1}
+            maxLength={2}
+            datatype={"number"}
+            displayType={"input"}
+            className={"form-control"}
+            id={"sectionCnt"}
+            name={"sectionCnt"}
+            disabled={false}
+            thousandSeparator={false}
+            fixedDecimalScale={true}
+            value={Math.min(10, COUNT?.sectionCnt)}
+          ></NumericInput>
+          {/* <NumericFormat
             min={0}
             max={10}
             minLength={1}
@@ -204,7 +222,7 @@ export const MoneySave = () => {
               const limitedValue = Math.min(10, parseInt(values?.value));
               handlerCount(limitedValue.toString());
             }}
-          ></NumericFormat>
+          ></NumericFormat> */}
         </Box>
       </React.Fragment>
     );
@@ -415,12 +433,6 @@ export const MoneySave = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -438,12 +450,18 @@ export const MoneySave = () => {
     />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"money"} plan={""} type={"save"}
+    />
+  );
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

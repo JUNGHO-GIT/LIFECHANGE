@@ -424,12 +424,6 @@ export const TweakDataset = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -440,7 +434,7 @@ export const TweakDataset = () => {
     <NavBar />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => {
     const confirmDefault = () => {
       const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
@@ -486,6 +480,12 @@ export const TweakDataset = () => {
       </React.Fragment>
     );
   };
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
 
   // 15. return ----------------------------------------------------------------------------------->
   return (

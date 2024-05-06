@@ -57,7 +57,7 @@ export const SleepDetail = () => {
   const [DAYPICKER, setDAYPICKER] = useState({
     dayStartOpen: false,
     dayEndOpen: false,
-    calOpen: false,
+    dayOpen: false,
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -98,7 +98,8 @@ export const SleepDetail = () => {
     setOBJECT(res.data.result || OBJECT_DEF);
     setCOUNT((prev) => ({
       ...prev,
-      sectionCnt: res.data.sectionCnt || 0
+      totalCnt: res.data.totalCnt || 0,
+      sectionCnt: res.data.sectionCnt || 0,
     }));
     setLOADING(false);
   })()}, [location_id, user_id, DATE.startDt, DATE.endDt]);
@@ -130,6 +131,9 @@ export const SleepDetail = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const adornment = () => (
+      <InputAdornment position={"end"}><BedtimeIcon/></InputAdornment>
+    );
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -182,9 +186,6 @@ export const SleepDetail = () => {
           </React.Fragment>
         )}
       </PopupState>
-    );
-    const adornment = () => (
-      <InputAdornment position={"end"}><BedtimeIcon/></InputAdornment>
     );
     const tableSection = () => (
       <React.Fragment>
@@ -265,12 +266,6 @@ export const SleepDetail = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -281,12 +276,18 @@ export const SleepDetail = () => {
     <NavBar />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
       part={"sleep"} plan={""} type={"detail"}
+    />
+  );
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

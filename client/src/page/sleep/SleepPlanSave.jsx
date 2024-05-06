@@ -124,6 +124,9 @@ export const SleepPlanSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const adornment = () => (
+      <InputAdornment position={"end"}>시간</InputAdornment>
+    );
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -174,9 +177,6 @@ export const SleepPlanSave = () => {
           </React.Fragment>
         )}
       </PopupState>
-    );
-    const adornment = () => (
-      <InputAdornment position={"end"}>시간</InputAdornment>
     );
     const tableSection = () => (
       <React.Fragment>
@@ -263,12 +263,6 @@ export const SleepPlanSave = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -286,12 +280,18 @@ export const SleepPlanSave = () => {
     />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
       part={"sleep"} plan={"plan"} type={"save"}
+    />
+  );
+
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
   );
 

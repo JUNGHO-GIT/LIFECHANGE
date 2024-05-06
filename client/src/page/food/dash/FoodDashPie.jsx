@@ -482,7 +482,7 @@ export const FoodDashPie = () => {
     </PopupState>
   );
 
-  // 8. loading ----------------------------------------------------------------------------------->
+  // 14. loading ---------------------------------------------------------------------------------->
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />

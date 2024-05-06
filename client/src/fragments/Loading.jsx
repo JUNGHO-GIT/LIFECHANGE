@@ -3,7 +3,7 @@
 import React from "react";
 import {Box} from "@mui/material";
 
-// 6. loading ------------------------------------------------------------------------------------->
+// 14. loading ------------------------------------------------------------------------------------>
 export const Loading = ({
   LOADING, setLOADING
 }) => {

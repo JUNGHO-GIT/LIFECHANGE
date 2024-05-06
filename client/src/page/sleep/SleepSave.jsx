@@ -53,7 +53,7 @@ export const SleepSave = () => {
   const [DAYPICKER, setDAYPICKER] = useState({
     calStartOpen: false,
     calEndOpen: false,
-    calOpen: false,
+    dayOpen: false,
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -124,6 +124,9 @@ export const SleepSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const adornment = () => (
+      <InputAdornment position={"end"}>시간</InputAdornment>
+    );
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -174,9 +177,6 @@ export const SleepSave = () => {
           </React.Fragment>
         )}
       </PopupState>
-    );
-    const adornment = () => (
-      <InputAdornment position={"end"}>시간</InputAdornment>
     );
     const tableSection = () => (
       <React.Fragment>
@@ -273,12 +273,6 @@ export const SleepSave = () => {
     );
   };
 
-  // 8. loading ----------------------------------------------------------------------------------->
-  const loadingNode = () => (
-    <Loading LOADING={LOADING} setLOADING={setLOADING}
-    />
-  );
-
   // 9. header ------------------------------------------------------------------------------------>
   const headerNode = () => (
     <Header />
@@ -289,7 +283,13 @@ export const SleepSave = () => {
     <NavBar />
   );
 
-  // 14. btn -------------------------------------------------------------------------------------->
+  // 14. loading ---------------------------------------------------------------------------------->
+  const loadingNode = () => (
+    <Loading LOADING={LOADING} setLOADING={setLOADING}
+    />
+  );
+
+  // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
