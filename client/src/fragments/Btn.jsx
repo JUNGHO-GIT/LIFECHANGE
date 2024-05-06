@@ -34,14 +34,18 @@ export const Btn = ({
     <React.Fragment>
       <Button size={"small"} type={"button"} color={"success"} variant={"contained"}
       className={"success-btn"} onClick={() => {
-        setFILTER((prev) => ({
-          ...prev,
-          type: "day",
-        }));
-        setPAGING((prev) => ({
-          ...prev,
-          page: 1,
-        }));
+        FILTER && (
+          setFILTER((prev) => ({
+            ...prev,
+            type: "day",
+          }))
+        );
+        PAGING && (
+          setPAGING((prev) => ({
+            ...prev,
+            page: 1,
+          }))
+        );
         setDATE((prev) => ({
           ...prev,
           startDt: koreanDate,
@@ -155,6 +159,7 @@ export const Btn = ({
               ) : type === "save" ? (
                 <React.Fragment>
                   {btnToSave()}
+                  {btnGetToday()}
                   {btnToList()}
                 </React.Fragment>
               ) : type === "search" ? (

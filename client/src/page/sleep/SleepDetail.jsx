@@ -11,9 +11,8 @@ import {useStorage} from "../../hooks/useStorage.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {Badge} from "@mui/material";
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Paper, Box} from "@mui/material";
+import {Container, Card, Paper, Box, Badge} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
@@ -189,7 +188,7 @@ export const SleepDetail = () => {
     );
     return (
       <React.Fragment>
-        <Paper className={"content-wrapper"}>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>

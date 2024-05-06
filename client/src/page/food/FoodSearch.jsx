@@ -11,7 +11,7 @@ import {Paging} from "../../fragments/Paging.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {TextField, Typography} from "@mui/material";
-import {Container, Card, Paper, Box, Divider} from "@mui/material";
+import {Container, Card, Paper, Box, Badge} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
 
 // ------------------------------------------------------------------------------------------------>
@@ -150,7 +150,7 @@ export const FoodSearch = () => {
     );
     return (
       <React.Fragment>
-        <Card className={"content-wrapper"}>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
@@ -158,7 +158,7 @@ export const FoodSearch = () => {
               </Grid2>
             </Grid2>
           </Container>
-        </Card>
+        </Paper>
       </React.Fragment>
     );
   };

@@ -18,3 +18,36 @@
   width: 100% !important;
   margin: 0px 0px 0px 0px !important;
 }
+
+[class$="MuiPaper-root-MuiDialog-paper"] {
+  margin: 30px 25px 30px 25px !important;
+}
+[class$="MuiDialog-paper"] {
+  width: 85vw!important;
+  min-width: auto!important;
+  height: 65vh!important;
+  min-height: auto!important;
+}
+[class$="MuiDateCalendar-root"] {
+  width: 230px !important;
+  max-height: 240px !important;
+}
+[class$="MuiDatePickerToolbar-root"] {
+  margin: 0px 0px 0px 0px !important;
+  padding: 20px 5px 5px 20px !important;
+}
+[class$="MuiPickersCalendarHeader-root"] {
+  margin: 0px 0px 10px 5px !important;
+  padding: 0px 0px 0px 0px !important;
+}
+[class$="MuiPickersDay-root"] {
+  width: 30px !important;
+  height: 30px !important;
+}
+[class$="MuiPickersLayout-contentWrapper"] {
+  max-height: 240px !important;
+}
+[class$="MuiDialogActions-root"] {
+  margin: 0px 0px 0px 0px !important;
+  padding: 15px 0px 0px 0px !important;
+}
