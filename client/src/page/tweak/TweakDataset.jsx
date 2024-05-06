@@ -478,23 +478,23 @@ export const TweakDataset = () => {
   return (
     <React.Fragment>
       <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {LOADING ? loadingNode() : tableNode()}
-              </Grid2>
+        <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+              {LOADING ? loadingNode() : tableNode()}
             </Grid2>
-          </Container>
-        </Card>
+          </Grid2>
+        </Container>
+      </Card>
       <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                <span className={"me-1 d-inline-flex"}>{btnNode()}</span>
-                <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonDefault()}</span>
-              </Grid2>
+        <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <span className={"me-1 d-inline-flex"}>{btnNode()}</span>
+              <span className={"me-1 d-inline-flex"}>{LOADING ? "" : buttonDefault()}</span>
             </Grid2>
-          </Container>
+          </Grid2>
+        </Container>
       </Card>
     </React.Fragment>
   );

@@ -7,7 +7,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
-import {Day} from "../../fragments/Day.jsx";
+import {DayList} from "../../fragments/DayList.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
@@ -187,13 +187,13 @@ export const MoneyPlanList = () => {
   );
 
   // 11. day -------------------------------------------------------------------------------------->
-  const dayNode = () => (
-    <Day FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+  const dayListNode = () => (
+    <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
 
-  // 10. paging ----------------------------------------------------------------------------------->
+  // 12. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={PAGING} setPAGING={setPAGING} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"money"} plan={"plan"} type={"list"}
@@ -218,31 +218,13 @@ export const MoneyPlanList = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {dayNode()}
-                {LOADING ? loadingNode() : tableNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Card>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {filterNode()}
-              </Grid2>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {pagingNode()}
-              </Grid2>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {btnNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {dayListNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {pagingNode()}
+      {filterNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

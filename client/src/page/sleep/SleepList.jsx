@@ -6,7 +6,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
-import {Day} from "../../fragments/Day.jsx";
+import {DayList} from "../../fragments/DayList.jsx";
 import {Paging} from "../../fragments/Paging.jsx";
 import {Filter} from "../../fragments/Filter.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
@@ -211,8 +211,8 @@ export const SleepList = () => {
   );
 
   // 11. day -------------------------------------------------------------------------------------->
-  const dayNode = () => (
-    <Day FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
+  const dayListNode = () => (
+    <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
       DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
     />
   );
@@ -244,7 +244,7 @@ export const SleepList = () => {
     <React.Fragment>
       {headerNode()}
       {navBarNode()}
-      {dayNode()}
+      {dayListNode()}
       {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
       {filterNode()}

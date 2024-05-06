@@ -5,8 +5,6 @@ import React, {useEffect, useState} from "react";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Line, LineChart} from "recharts";
 
-import {Header} from "../../../layout/Header.jsx";
-import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid} from "@mui/material";
@@ -284,16 +282,6 @@ export const ExerciseDashLine = () => {
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
-  );
-
-  // 9. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 10. navBar ----------------------------------------------------------------------------------->
-  const navBarNode = () => (
-    <NavBar />
   );
 
   // 15. return ----------------------------------------------------------------------------------->

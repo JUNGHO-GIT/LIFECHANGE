@@ -4,7 +4,6 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-
 import {percent} from "../../assets/js/percent.js";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
@@ -186,24 +185,10 @@ export const FoodPlanDetail = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {LOADING ? loadingNode() : tableNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Card>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {btnNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

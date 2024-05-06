@@ -2,9 +2,6 @@
 
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-
-import {Header} from "../../../layout/Header.jsx";
-import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {ComposedChart, Bar} from "recharts";
@@ -211,48 +208,38 @@ export const SleepDashAvg = () => {
     />
   );
 
-  // 9. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 10. navBar ----------------------------------------------------------------------------------->
-  const navBarNode = () => (
-    <NavBar />
-  );
-
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
       <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <select className={"form-select form-select-sm"}
-                  onChange={(e) => (setSECTION(e.target.value))}
-                  value={SECTION}
-                >
-                  <option value={"month"}>월간</option>
-                  <option value={"year"}>연간</option>
-                </select>
-              </Grid2>
-              <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
-                <span className={"dash-title"}>수면 평균</span>
-              </Grid2>
-              <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
-                <span></span>
-              </Grid2>
+        <Container className={"p-0"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <select className={"form-select form-select-sm"}
+                onChange={(e) => (setSECTION(e.target.value))}
+                value={SECTION}
+              >
+                <option value={"month"}>월간</option>
+                <option value={"year"}>연간</option>
+              </select>
             </Grid2>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={10} lg={10} md={10} sm={10} xs={10}>
-                {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
-                {SECTION === "year" && (LOADING ? loadingNode() : chartYear())}
-              </Grid2>
-              <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
-                {LOADING ? "" : tableNode()}
-              </Grid2>
+            <Grid2 xl={6} lg={6} md={6} sm={6} xs={6} className={"text-center"}>
+              <span className={"dash-title"}>수면 평균</span>
             </Grid2>
-          </Container>
+            <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"text-center"}>
+              <span></span>
+            </Grid2>
+          </Grid2>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={10} lg={10} md={10} sm={10} xs={10}>
+              {SECTION === "month" && (LOADING ? loadingNode() : chartMonth())}
+              {SECTION === "year" && (LOADING ? loadingNode() : chartYear())}
+            </Grid2>
+            <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} style={{alignSelf:"center"}}>
+              {LOADING ? "" : tableNode()}
+            </Grid2>
+          </Grid2>
+        </Container>
       </Card>
     </React.Fragment>
   );

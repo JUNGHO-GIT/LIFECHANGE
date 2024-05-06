@@ -83,9 +83,15 @@ export const UserLogin = () => {
     );
     return (
       <React.Fragment>
-        <div className={"login-wrapper"}>
-          {tableSection()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Card>
       </React.Fragment>
     );
   };
@@ -117,24 +123,10 @@ export const UserLogin = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <div className={"content-wrapper"}>
-        <div className={"card-wrapper"}>
-          <Grid2 container spacing={1}>
-            <Grid2 lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {LOADING ? loadingNode() : tableNode()}
-            </Grid2>
-          </Grid2>
-        </div>
-      </div>
-      <div className={"content-wrapper"}>
-        <div className={"card-wrapper"}>
-          <Grid2 container spacing={1}>
-            <Grid2 lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-              {btnNode()}
-            </Grid2>
-          </Grid2>
-        </div>
-      </div>
+      {headerNode()}
+      {navBarNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

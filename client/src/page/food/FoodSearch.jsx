@@ -201,7 +201,7 @@ export const FoodSearch = () => {
     <NavBar />
   );
 
-  // 10. paging ----------------------------------------------------------------------------------->
+  // 12. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
     <Paging PAGING={FILTER} setPAGING={setFILTER} COUNT={COUNT} setCOUNT={setCOUNT}
       part={"food"} plan={""} type={"search"}
@@ -211,27 +211,11 @@ export const FoodSearch = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {LOADING ? loadingNode() : tableNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Card>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {searchNode()}
-              </Grid2>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {pagingNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {pagingNode()}
+      {searchNode()}
     </React.Fragment>
   );
 };

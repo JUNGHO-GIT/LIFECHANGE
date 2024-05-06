@@ -9,7 +9,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {useStorage} from "../../hooks/useStorage.jsx";
 import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
-import {Date} from "../../fragments/Date.jsx";
+import {DaySave} from "../../fragments/DaySave.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
@@ -327,12 +327,18 @@ export const CalendarDetail = () => {
     );
     return (
       <React.Fragment>
-        <div className={"calendar-detail-wrapper"}>
-          {countNode()}
-          {tableSection()}
-        </div>
+        <Card className={"content-wrapper"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {countNode()}
+                {tableSection()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Card>
       </React.Fragment>
-    )
+    );
   };
 
   // 9. loading ----------------------------------------------------------------------------------->
@@ -351,9 +357,9 @@ export const CalendarDetail = () => {
     <NavBar />
   );
 
-  // 7. date -------------------------------------------------------------------------------------->
-  const dateNode = () => (
-    <Date DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+  // 11. day -------------------------------------------------------------------------------------->
+  const daySaveNode = () => (
+    <DaySave DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       part={"calendar"} plan={""} type={"detail"}
     />
   );
@@ -369,33 +375,11 @@ export const CalendarDetail = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {dateNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Card>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {LOADING ? loadingNode() : tableNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Card>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {btnNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {daySaveNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

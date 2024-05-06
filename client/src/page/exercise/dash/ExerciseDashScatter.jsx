@@ -3,8 +3,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 
-import {Header} from "../../../layout/Header.jsx";
-import {NavBar} from "../../../layout/NavBar.jsx";
 import {Loading} from "../../../fragments/Loading.jsx";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Scatter, ComposedChart} from "recharts";
@@ -251,16 +249,6 @@ export const ExerciseDashScatter = () => {
   const loadingNode = () => (
     <Loading LOADING={LOADING} setLOADING={setLOADING}
     />
-  );
-
-  // 9. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
-    <Header />
-  );
-
-  // 10. navBar ----------------------------------------------------------------------------------->
-  const navBarNode = () => (
-    <NavBar />
   );
 
   // 15. return ----------------------------------------------------------------------------------->

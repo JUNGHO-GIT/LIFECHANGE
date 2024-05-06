@@ -1,7 +1,6 @@
 // FoodSave.jsx
 
 import axios from "axios";
-import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
@@ -10,7 +9,7 @@ import {Header} from "../../layout/Header.jsx";
 import {NavBar} from "../../layout/NavBar.jsx";
 import {useDate} from "../../hooks/useDate.jsx";
 import {useStorage} from "../../hooks/useStorage.jsx";
-import {Date} from "../../fragments/Date.jsx";
+import {DaySave} from "../../fragments/DaySave.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Grid, TextField, Typography} from "@mui/material";
@@ -377,9 +376,9 @@ export const FoodSave = () => {
     <NavBar />
   );
 
-  // 7. date -------------------------------------------------------------------------------------->
-  const dateNode = () => (
-    <Date DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
+  // 11. day -------------------------------------------------------------------------------------->
+  const daySaveNode = () => (
+    <DaySave DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
       part={"food"} plan={""} type={"save"}
     />
   );
@@ -395,33 +394,11 @@ export const FoodSave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {dateNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Card>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
-                {LOADING ? loadingNode() : tableNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-        </Card>
-      <Card className={"content-wrapper"}>
-          <Container className={"p-0"}>
-            <Grid2 container spacing={3}>
-              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
-                {btnNode()}
-              </Grid2>
-            </Grid2>
-          </Container>
-      </Card>
+      {headerNode()}
+      {navBarNode()}
+      {daySaveNode()}
+      {LOADING ? loadingNode() : tableNode()}
+      {btnNode()}
     </React.Fragment>
   );
 };

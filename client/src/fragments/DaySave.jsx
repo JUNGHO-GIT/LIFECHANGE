@@ -1,4 +1,4 @@
-// Date.jsx
+// DaySave.jsx
 
 import React, { useEffect } from "react";
 import {DayPicker} from "react-day-picker";
@@ -10,7 +10,7 @@ import {Container, Card, Table, TableHead, TableBody, TableCell, TableContainer,
 import Grid2 from '@mui/material/Unstable_Grid2';
 
 // 4. date ---------------------------------------------------------------------------------------->
-export const Date = ({
+export const DaySave = ({
   DATE, setDATE, DAYPICKER, setDAYPICKER, part, plan, type
 }) => {
 
