@@ -1,5 +1,7 @@
 // MoneyPlanDetail.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
@@ -15,7 +17,13 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import {Menu, MenuItem} from "@mui/material";
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanDetail = () => {
@@ -117,7 +125,7 @@ export const MoneyPlanDetail = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+        {/* <Box className={"block-wrapper h-75vh"}>
           <TableContainer>
             <Table className={"border"}>
           <TableHead>
@@ -142,7 +150,7 @@ export const MoneyPlanDetail = () => {
           </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Box> */}
       </React.Fragment>
     );
     return (

@@ -1,5 +1,7 @@
 // MoneyDashAvg.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import {ComposedChart, Bar} from "recharts";
 import React, {useEffect, useState} from "react";

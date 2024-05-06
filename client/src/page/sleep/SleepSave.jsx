@@ -151,12 +151,12 @@ export const SleepSave = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
-    const dropdownSection = () => (
+    const dropdownSection = (id, sectionId, index) => (
       <PopupState variant={"popover"} popupId={"popup"}>
         {(popupState) => (
           <React.Fragment>
             <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={COUNT?.sectionCnt} color={"primary"} showZero={true}>
+              <Badge badgeContent={index + 1} color={"primary"} showZero={true}>
               </Badge>
             </IconButton>
             <Menu {...bindMenu(popupState)}>
@@ -192,7 +192,7 @@ export const SleepSave = () => {
             <React.Fragment key={index}>
               <Card variant={"outlined"} className={"p-20"}>
                 <Box className={"d-right mb-20"}>
-                  {dropdownSection()}
+                  {dropdownSection(OBJECT._id, section._id, index)}
                 </Box>
                 <Box className={"d-center mb-20"}>
                   <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -252,7 +252,6 @@ export const SleepSave = () => {
                     ></TextField>
                   </LocalizationProvider>
                 </Box>
-                <Box className={"h-3vh"}></Box>
               </Card>
             </React.Fragment>
           ))}

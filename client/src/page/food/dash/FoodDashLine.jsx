@@ -1,5 +1,7 @@
 // FoodDashLine.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {Loading} from "../../../fragments/Loading.jsx";

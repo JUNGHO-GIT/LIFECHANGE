@@ -1,5 +1,7 @@
 // MoneyDetail.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
@@ -15,7 +17,13 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import {Menu, MenuItem} from "@mui/material";
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -129,55 +137,116 @@ export const MoneyDetail = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    const titleSection = () => (
+      <React.Fragment>
+        <Typography variant={"h5"} fontWeight={500}>
+          재무 Detail
+        </Typography>
+      </React.Fragment>
+    );
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            readOnly={true}
+          ></DesktopDatePicker>
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    const dropdownSection = (id, sectionId, index) => (
+      <PopupState variant={"popover"} popupId={"popup"}>
+        {(popupState) => (
+          <React.Fragment>
+            <IconButton {...bindTrigger(popupState)}>
+              <Badge badgeContent={index + 1} color={"primary"} showZero={true}></Badge>
+            </IconButton>
+            <Menu {...bindMenu(popupState)}>
+              <MenuItem onClick={() => {
+                flowDelete(id, sectionId)
+              }}>
+                <DeleteIcon fontSize={"small"} color={"error"}></DeleteIcon>
+                삭제
+              </MenuItem>
+              <MenuItem onClick={() => {
+                SEND.startDt = DATE.startDt;
+                SEND.endDt = DATE.endDt;
+                navParam(SEND.toUpdate, {
+                  state: SEND,
+                });
+              }}>
+                <EditIcon fontSize={"small"} color={"primary"}></EditIcon>
+                수정
+              </MenuItem>
+              <MenuItem>
+                <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+                기타
+              </MenuItem>
+            </Menu>
+          </React.Fragment>
+        )}
+      </PopupState>
+    );
+    const adornment = () => (
+      <InputAdornment position={"start"}><i className='bx bx-won'></i></InputAdornment>
+    );
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>항목</TableCell>
-              <TableCell>금액</TableCell>
-              <TableCell>내용</TableCell>
-              <TableCell>x</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT?.money_section?.map((section, index) => (
-              <TableRow key={index}>
-                {index === 0 && (
-                  <React.Fragment>
-                    <TableCell rowSpan={OBJECT?.money_section?.length}>
-                      {OBJECT?.money_startDt?.substring(5, 10)}
-                    </TableCell>
-                  </React.Fragment>
-                )}
-                <TableCell>{section.money_part_val}</TableCell>
-                <TableCell>{section.money_title_val}</TableCell>
-                <TableCell>{`₩ ${numeral(section.money_amount).format('0,0')}`}</TableCell>
-                <TableCell>{section.money_content}</TableCell>
-                <TableCell>
-                  <p className={"del-btn"} onClick={() => (
-                    flowDelete(OBJECT._id, section._id)
-                  )}>x</p>
-                </TableCell>
-              </TableRow>
-            ))}
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={3}>수입 합계</TableCell>
-              <TableCell>{`₩ ${numeral(OBJECT?.money_total_in).format('0,0')}`}</TableCell>
-              <TableCell colSpan={3}></TableCell>
-            </TableRow>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={3}>지출 합계</TableCell>
-              <TableCell>{`₩ ${numeral(OBJECT?.money_total_out).format('0,0')}`}</TableCell>
-              <TableCell colSpan={3}></TableCell>
-            </TableRow>
-          </TableBody>
-            </Table>
-          </TableContainer>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          {OBJECT?.money_section?.map((section, index) => (
+            <React.Fragment key={index}>
+              <Card variant={"outlined"} className={"p-20"}>
+                <Box className={"d-right mb-20"}>
+                  {dropdownSection(OBJECT._id, section._id, index)}
+                </Box>
+                <Box className={"d-center mb-20"}>
+                  <TextField
+                    label={"분류"}
+                    size={"small"}
+                    value={section.money_part_val}
+                    variant={"outlined"}
+                    className={"me-5"}
+                    InputProps={{
+                      readOnly: true
+                    }}
+                  ></TextField>
+                  <TextField
+                    label={"항목"}
+                    size={"small"}
+                    value={section.money_title_val}
+                    variant={"outlined"}
+                    className={"ms-5"}
+                    InputProps={{
+                      readOnly: true
+                    }}
+                  ></TextField>
+                </Box>
+                <Box className={"d-center mb-20"}>
+                  <TextField
+                    label={"금액"}
+                    size={"small"}
+                    value={`${numeral(section.money_amount).format('0,0')}`}
+                    variant={"outlined"}
+                    className={"w-102"}
+                    InputProps={{
+                      readOnly: true,
+                      startAdornment: adornment()
+                    }}
+                  ></TextField>
+                </Box>
+              </Card>
+            </React.Fragment>
+          ))}
         </Box>
       </React.Fragment>
     );

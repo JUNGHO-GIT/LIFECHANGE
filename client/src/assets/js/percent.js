@@ -1,9 +1,10 @@
 // percent.js
 
-import axios from "axios";
 import "moment/locale/ko";
 import moment from "moment-timezone";
+import axios from "axios";
 
+// ------------------------------------------------------------------------------------------------>
 export const percent = async () => {
 
   const URL = process.env.REACT_APP_URL || "";

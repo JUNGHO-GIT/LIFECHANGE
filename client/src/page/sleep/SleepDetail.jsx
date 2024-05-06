@@ -23,6 +23,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import BedtimeIcon from '@mui/icons-material/Bedtime';
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDetail = () => {
@@ -149,12 +150,12 @@ export const SleepDetail = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
-    const dropdownSection = (id, sectionId) => (
+    const dropdownSection = (id, sectionId, index) => (
       <PopupState variant={"popover"} popupId={"popup"}>
         {(popupState) => (
           <React.Fragment>
             <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={COUNT.sectionCnt} color={"primary"} showZero={true}></Badge>
+              <Badge badgeContent={index + 1} color={"primary"} showZero={true}></Badge>
             </IconButton>
             <Menu {...bindMenu(popupState)}>
               <MenuItem onClick={() => {
@@ -183,7 +184,7 @@ export const SleepDetail = () => {
       </PopupState>
     );
     const adornment = () => (
-      <InputAdornment position={"end"}>시간</InputAdornment>
+      <InputAdornment position={"end"}><BedtimeIcon/></InputAdornment>
     );
     const tableSection = () => (
       <React.Fragment>
@@ -199,7 +200,7 @@ export const SleepDetail = () => {
             <React.Fragment key={index}>
               <Card variant={"outlined"} className={"p-20"}>
                 <Box className={"d-right mb-20"}>
-                  {dropdownSection(OBJECT._id, section._id)}
+                  {dropdownSection(OBJECT._id, section._id, index)}
                 </Box>
                 <Box className={"d-center mb-20"}>
                   <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -243,7 +244,6 @@ export const SleepDetail = () => {
                     ></TextField>
                   </LocalizationProvider>
                 </Box>
-                <Box className={"h-3vh"}></Box>
               </Card>
             </React.Fragment>
           ))}

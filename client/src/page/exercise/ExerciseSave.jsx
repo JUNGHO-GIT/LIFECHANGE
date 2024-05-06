@@ -1,5 +1,7 @@
 // ExerciseSave.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";

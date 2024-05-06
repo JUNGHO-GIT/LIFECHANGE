@@ -1,5 +1,7 @@
 // UserLogin.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {percent} from "../../assets/js/percent.js";

@@ -142,12 +142,12 @@ export const SleepPlanDetail = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
-    const dropdownSection = (id) => (
+    const dropdownSection = (id, sectionId, index) => (
       <PopupState variant={"popover"} popupId={"popup"}>
         {(popupState) => (
           <React.Fragment>
             <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={COUNT.sectionCnt} color={"primary"} showZero={true}></Badge>
+              <Badge badgeContent={index + 1} color={"primary"} showZero={true}></Badge>
             </IconButton>
             <Menu {...bindMenu(popupState)}>
               <MenuItem onClick={() => {
@@ -190,7 +190,7 @@ export const SleepPlanDetail = () => {
           </Box>
           <Card variant={"outlined"} className={"p-20"}>
             <Box className={"d-right mb-20"}>
-              {dropdownSection(OBJECT._id)}
+              {dropdownSection(OBJECT._id, "", 0)}
             </Box>
             <Box className={"d-center mb-20"}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -234,7 +234,6 @@ export const SleepPlanDetail = () => {
                 ></TextField>
               </LocalizationProvider>
             </Box>
-            <Box className={"h-3vh"}></Box>
           </Card>
         </Box>
       </React.Fragment>

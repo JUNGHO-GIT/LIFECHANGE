@@ -1,5 +1,7 @@
 // CalendarDetail.jsx
 
+import "moment/locale/ko";
+import moment from "moment-timezone";
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import InputMask from "react-input-mask";
