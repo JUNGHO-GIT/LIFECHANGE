@@ -16,19 +16,19 @@ export const list = async (object) => {
     const percent = ((real - plan) / plan) * 100;
     // 1. ~ 1%
     if (percent <= 1) {
-      return "text-primary";
+      return "primary";
     }
     // 2. 1% ~ 10%
     else if (percent > 1 && percent <= 10) {
-      return "text-success";
+      return "success";
     }
     // 3. 10% ~ 50%
     else if (percent > 10 && percent <= 30) {
-      return "text-warning";
+      return "warning";
     }
     // 4. 50% ~
     else {
-      return "text-danger";
+      return "danger";
     }
   };
 

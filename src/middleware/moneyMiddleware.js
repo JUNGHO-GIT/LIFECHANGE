@@ -19,42 +19,42 @@ export const list = async (object) => {
   const makeColor = (plan, real, extra) => {
     let percent = (Math.abs(plan - real) / plan) * 100;
     if (plan === undefined || real === undefined) {
-      return "text-danger";
+      return "danger";
     }
     else if (extra === "in") {
       if (plan > real) {
         if (percent > 0 && percent <= 1) {
-          return "text-primary";
+          return "primary";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "text-success";
+          return "success";
         }
         // 3. 10% ~ 50%
         else if (percent > 10 && percent <= 50) {
-          return "text-warning";
+          return "warning";
         }
         // 4. 50% ~
         else {
-          return "text-danger";
+          return "danger";
         }
       }
       else {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {
-          return "text-danger";
+          return "danger";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "text-warning";
+          return "warning";
         }
         // 3. 10% ~ 50%
         else if (percent > 10 && percent <= 50) {
-          return "text-success";
+          return "success";
         }
         // 4. 50% ~
         else {
-          return "text-primary";
+          return "primary";
         }
       }
     }
@@ -62,37 +62,37 @@ export const list = async (object) => {
       if (plan > real) {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {
-          return "text-danger";
+          return "danger";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "text-warning";
+          return "warning";
         }
         // 3. 10% ~ 50%
         else if (percent > 10 && percent <= 50) {
-          return "text-success";
+          return "success";
         }
         // 4. 50% ~
         else {
-          return "text-primary";
+          return "primary";
         }
       }
       else {
         // 1. 0% ~ 1%
         if (percent > 0 && percent <= 1) {
-          return "text-primary";
+          return "primary";
         }
         // 2. 1% ~ 10%
         else if (percent > 1 && percent <= 10) {
-          return "text-success";
+          return "success";
         }
         // 3. 10% ~ 50%
         else if (percent > 10 && percent <= 50) {
-          return "text-warning";
+          return "warning";
         }
         // 4. 50% ~
         else {
-          return "text-danger";
+          return "danger";
         }
       }
     }

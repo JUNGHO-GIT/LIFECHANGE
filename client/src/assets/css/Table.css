@@ -9,8 +9,6 @@
 }
 .table-tbody-tr th, .table-tbody-tr td {
   text-align: center !important;
-  background-color: transparent !important;
-  color: #000000 !important;
   padding: 10px !important;
 }
 

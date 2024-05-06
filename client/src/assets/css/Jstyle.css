@@ -5337,3 +5337,28 @@
 .border-none {
   border: none !important;
 }
+
+.primary {
+  color: #3B82F6 !important;
+}
+.secondary {
+  color: #93C5FD !important;
+}
+.success {
+  color: #10B981 !important;
+}
+.danger {
+  color: #EF4444 !important;
+}
+.warning {
+  color: #F59E0B !important;
+}
+.info {
+  color: #3B82F6 !important;
+}
+.light {
+  color: #F4F5F7 !important;
+}
+.dark {
+  color: #697A8D !important;
+}
