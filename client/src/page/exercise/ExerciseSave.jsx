@@ -4,7 +4,6 @@ import axios from "axios";
 import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {TimePicker} from "react-time-picker";
 import {NumericFormat} from "react-number-format";
 import {percent} from "../../assets/js/percent.js";
 import {useTime} from "../../hooks/useTime.jsx";
@@ -485,7 +484,7 @@ export const ExerciseSave = () => {
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <Box className={"input-group"}>
               <span className={"input-group-text"}>유산소</span>
-              <TimePicker
+              {/* <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
                 className={"form-control"}
@@ -507,7 +506,7 @@ export const ExerciseSave = () => {
                     ))
                   }));
                 }}
-              ></TimePicker>
+              ></TimePicker> */}
             </Box>
           </Grid2>
         </Grid2>
@@ -546,7 +545,7 @@ export const ExerciseSave = () => {
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
             <Box className={"input-group"}>
               <span className={"input-group-text"}>총 유산소 시간</span>
-              <TimePicker
+              {/* <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
                 id={"exercise_total_cardio"}
@@ -556,7 +555,7 @@ export const ExerciseSave = () => {
                 clockIcon={null}
                 disableClock={false}
                 value={OBJECT?.exercise_total_cardio}
-              ></TimePicker>
+              ></TimePicker> */}
             </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>

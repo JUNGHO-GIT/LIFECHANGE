@@ -7,16 +7,11 @@ import {Routes, Route} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import {Box} from "@mui/material";
 
-import "aos/dist/aos.css";
 import "boxicons/css/boxicons.min.css";
-import "react-day-picker/dist/style.css";
-import "react-resizable/css/styles.css";
 import "react-calendar/dist/Calendar.css";
 import "./index.css";
 
 import "./assets/css/Mui.css";
-import "./assets/css/TimePicker.css";
-import "./assets/css/DayPicker.css";
 import "./assets/css/Calendar.css";
 
 import "./assets/css/Header.css";

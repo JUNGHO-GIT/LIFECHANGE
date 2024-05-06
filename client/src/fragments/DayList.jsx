@@ -1,7 +1,6 @@
 // DayList.jsx
 
 import React, {useEffect} from "react";
-import {DayPicker} from "react-day-picker";
 import "moment/locale/ko";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
@@ -237,7 +236,7 @@ export const DayList = ({
         <Box className={`dayPicker-container ${DAYPICKER.dayOpen ? "" : "d-none"}`}>
           {closeBtn()}
           <Box className={"h-2vh"}></Box>
-          <DayPicker
+          {/* <DayPicker
             weekStartsOn={1}
             showOutsideDays={true}
             locale={ko}
@@ -250,7 +249,7 @@ export const DayList = ({
             month={month}
             onDayClick={onDayClick}
             onMonthChange={onMonthChange}
-          ></DayPicker>
+          ></DayPicker> */}
         </Box>
       </React.Fragment>
     );

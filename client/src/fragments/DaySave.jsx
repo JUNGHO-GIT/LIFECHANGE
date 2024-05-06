@@ -4,7 +4,6 @@ import "moment/locale/ko";
 import moment from "moment-timezone";
 import {ko} from "date-fns/locale";
 import React, { useEffect } from "react";
-import {DayPicker} from "react-day-picker";
 import InputMask from "react-input-mask";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {Menu, MenuItem} from "@mui/material";
@@ -84,7 +83,7 @@ export const DaySave = ({
   const dayPicker = (type) => (
     <React.Fragment>
       <h5 className={"text-center drag"}>{type === "start" ? "시작일" : "종료일"}</h5>
-      <DayPicker
+      {/* <DayPicker
         weekStartsOn={1}
         showOutsideDays={true}
         locale={ko}
@@ -106,7 +105,7 @@ export const DaySave = ({
             [`${type}Dt`]: moment(month).tz("Asia/Seoul").format("YYYY-MM-DD")
           }));
         }}
-      ></DayPicker>
+      ></DayPicker> */}
     </React.Fragment>
   );
 

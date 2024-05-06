@@ -3,7 +3,6 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {TimePicker} from "react-time-picker";
 import {NumericFormat} from "react-number-format";
 import {percent} from "../../assets/js/percent.js";
 import {Header} from "../../layout/Header.jsx";
@@ -154,7 +153,7 @@ export const ExercisePlanSave = () => {
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
             <Box className={"input-group"}>
               <span className={"input-group-text"}>목표 유산소 시간</span>
-              <TimePicker
+              {/* <TimePicker
                 locale={"ko"}
                 format={"HH:mm"}
                 id={"exercise_cardio"}
@@ -170,7 +169,7 @@ export const ExercisePlanSave = () => {
                     exercise_plan_cardio: e ? e.toString() : ""
                   }));
                 }}
-              ></TimePicker>
+              ></TimePicker> */}
             </Box>
           </Grid2>
         </Grid2>
