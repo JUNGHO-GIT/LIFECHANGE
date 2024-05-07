@@ -165,13 +165,14 @@ const App = () => {
     <React.Fragment>
       <Box className={"App"}>
         <Routes>
-          <Route path="/user/*" element={<User />} />
+          <Route path="/" element={<CalendarList />} />
           <Route path="/calendar/*" element={<Calendar />} />
           <Route path="/exercise/*" element={<Exercise />} />
           <Route path="/food/*" element={<Food />} />
           <Route path="/money/*" element={<Money />} />
           <Route path="/sleep/*" element={<Sleep />} />
           <Route path="/tweak/*" element={<Tweak />} />
+          <Route path="/user/*" element={<User />} />
         </Routes>
       </Box>
     </React.Fragment>

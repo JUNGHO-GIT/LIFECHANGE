@@ -16,7 +16,7 @@ import {Menu, MenuItem} from "@mui/material";
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
-
+import SearchIcon from '@mui/icons-material/Search'
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
 
@@ -189,12 +189,11 @@ export const FoodSearch = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Box className={"d-flex justify-content-center p-sticky bottom-0"}>
+    <Box className={"flex-wrapper p-sticky bottom-0 h-6vh"}>
       <InputMask
         mask={""}
         id={"food_content"}
         name={"food_content"}
-        className={"form-control"}
         readOnly={false}
         disabled={false}
         value={FILTER?.query}
@@ -212,7 +211,7 @@ export const FoodSearch = () => {
         }));
         flowSearch();
       }}>
-        <i className={"bi bi-search"}></i>
+        <SearchIcon />
       </span>
     </Box>
   );

@@ -53,37 +53,39 @@ export const UserLogin = () => {
   const tableNode = () => {
     const tableSection = () => (
       <React.Fragment>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <Typography component="h1" variant="h5">
-              로그인
-            </Typography>
+        <Box className={"block-wrapper d-center h-55vh"}>
+          <Grid2 container spacing={3}>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <Typography component="h1" variant="h5">
+                로그인
+              </Typography>
+            </Grid2>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <TextField
+                type={"text"}
+                id={"user_id"}
+                name={"user_id"}
+                label={"ID"}
+                value={user_id}
+                onChange={(e) => (
+                  setUserId(e.target.value)
+                )}
+              ></TextField>
+            </Grid2>
+            <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
+              <TextField
+                type={"password"}
+                id={"user_pw"}
+                name={"user_pw"}
+                label={"Password"}
+                value={user_pw}
+                onChange={(e) => (
+                  setUserPw(e.target.value)
+                )}
+              ></TextField>
+            </Grid2>
           </Grid2>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <TextField
-              type={"text"}
-              id={"user_id"}
-              name={"user_id"}
-              label={"ID"}
-              value={user_id}
-              onChange={(e) => (
-                setUserId(e.target.value)
-              )}
-            ></TextField>
-          </Grid2>
-          <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
-            <TextField
-              type={"password"}
-              id={"user_pw"}
-              name={"user_pw"}
-              label={"Password"}
-              value={user_pw}
-              onChange={(e) => (
-                setUserPw(e.target.value)
-              )}
-            ></TextField>
-          </Grid2>
-        </Grid2>
+        </Box>
       </React.Fragment>
     );
     return (
