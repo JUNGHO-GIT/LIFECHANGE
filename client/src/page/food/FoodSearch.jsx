@@ -189,7 +189,7 @@ export const FoodSearch = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Box className={"input-group"}>
+    <Box className={"d-flex justify-content-center p-sticky bottom-0"}>
       <InputMask
         mask={""}
         id={"food_content"}
