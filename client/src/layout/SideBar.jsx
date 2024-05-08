@@ -1,7 +1,7 @@
 // SideBar.jsx
 
 // @ts-ignore
-import logo3 from "../assets/images/logo3.png";
+import logo3 from "../assets/image/logo3.png";
 import React, {useState, useEffect} from "react";
 import "moment/locale/ko";
 import moment from "moment-timezone";

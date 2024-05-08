@@ -25,11 +25,8 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
 import Popover from '@mui/material/Popover';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
-import {NumericInput} from "../../fragments/NumericInput.jsx";
+import {MuiIcons} from "../../assets/icon/Icons.jsx";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -115,10 +112,6 @@ export const MoneySave = () => {
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
-  useEffect(() => {
-    console.log("COUNT", COUNT);
-  }, [COUNT]);
-
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
     // money_part_val 가 수입인경우, 지출인 경우
@@ -162,6 +155,9 @@ export const MoneySave = () => {
   const tableNode = () => {
     const adornment = () => (
       <InputAdornment position={"start"}><i className='bx bx-won'></i></InputAdornment>
+    );
+    const adornment2 = () => (
+      <InputAdornment position={"start"}><MuiIcons name={"PlaylistAdd"} /></InputAdornment>
     );
     const titleSection = () => (
       <React.Fragment>
@@ -229,8 +225,8 @@ export const MoneySave = () => {
       </React.Fragment>
     );
     const handlerCount = (e) => {
-      let newCount = parseInt(e, 10);
-      let defaultSection = {
+      const newCount = Number(e);
+      const defaultSection = {
         money_part_idx: 0,
         money_part_val: "전체",
         money_title_idx: 0,
@@ -258,32 +254,55 @@ export const MoneySave = () => {
         }));
       }
     };
-    const countNode = () => (
+    const countSection = () => (
       <React.Fragment>
-        <PopupState variant={"popover"} popupId={"popup"}>
+        <PopupState  variant={"popover"} popupId={"popupState"}>
           {(popupState) => (
             <Box>
               <TextField
-                type={"number"}
+                type={"text"}
                 id={"sectionCnt"}
                 label={"항목수"}
                 variant={"outlined"}
                 size={"small"}
-                value={COUNT.sectionCnt}
+                value={COUNT?.sectionCnt}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: adornment2()
+                }}
                 onChange={(e) => {
-                  const newValue = Number(e.target.value);
-                  if (newValue > 10) {
-                    popupState.open();
-                    handlerCount(10);
+                  const newValInt = Number(e.target.value);
+                  const newValStr = String(e.target.value);
+                  if (newValInt < 0) {
+                    popupState.open(e.currentTarget);
                     return;
                   }
+                  else if (newValInt > 10) {
+                    popupState.open(e.currentTarget);
+                    return;
+                  }
+                  else if (newValStr === "") {
+                    handlerCount("");
+                  }
+                  else if (isNaN(newValInt) || newValStr === "NaN") {
+                    handlerCount("0");
+                  }
+                  else if (newValStr.startsWith("0")) {
+                    handlerCount(newValStr.replace(/^0+/, ""));
+                  }
                   else {
-                    handlerCount(newValue);
+                    popupState.close();
+                    handlerCount(newValStr);
                   }
                 }}
+                {...bindTrigger(popupState)}
               />
               <Popover
                 {...bindPopover(popupState)}
+                id={"popover"}
+                open={popupState.isOpen}
+                onClose={popupState.close}
+                anchorEl={popupState.anchorEl}
                 anchorOrigin={{
                   vertical: 'bottom',
                   horizontal: 'center',
@@ -303,7 +322,7 @@ export const MoneySave = () => {
                 }}
               >
                 <Box p={2}>
-                  <Typography variant={"body1"}>항목수는 10개 이하로 입력해주세요.</Typography>
+                  <Typography variant={"body1"}>0이상 10이하의 숫자만 입력하세요.</Typography>
                 </Box>
               </Popover>
             </Box>
@@ -445,7 +464,7 @@ export const MoneySave = () => {
             {dateSection()}
           </Box>
           <Box className={"d-center mb-20"}>
-            {countNode()}
+            {countSection()}
           </Box>
           <Divider variant={"middle"} className={"mb-20"}></Divider>
           <Box className={"d-center mb-20"}>

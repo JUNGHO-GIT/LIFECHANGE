@@ -7,13 +7,13 @@ import Grid2 from '@mui/material/Unstable_Grid2';
 import {Container, Paper} from "@mui/material";
 
 // @ts-ignore
-import smile1 from "../assets/images/smile1.png";
+import smile1 from "../assets/image/smile1.png";
 // @ts-ignore
-import smile2 from "../assets/images/smile2.png";
+import smile2 from "../assets/image/smile2.png";
 // @ts-ignore
-import smile3 from "../assets/images/smile3.png";
+import smile3 from "../assets/image/smile3.png";
 // @ts-ignore
-import smile4 from "../assets/images/smile4.png";
+import smile4 from "../assets/image/smile4.png";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {

@@ -171,8 +171,8 @@ export const ExerciseSave = () => {
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const handlerCount = (e) => {
-      let newCount = parseInt(e, 10);
-      let defaultSection = {
+    const newCount = Number(e);
+      const defaultSection = {
         exercise_part_idx: 0,
         exercise_part_val: "전체",
         exercise_title_idx: 0,

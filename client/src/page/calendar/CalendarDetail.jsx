@@ -151,8 +151,8 @@ export const CalendarDetail = () => {
       "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
     ];
     const handlerCount = (e) => {
-      let newCount = parseInt(e, 10);
-      let defaultSection = {
+    const newCount = Number(e);
+      const defaultSection = {
         calendar_part_idx: 1,
         calendar_part_val: "일정",
         calendar_title : "",
