@@ -1,17 +1,37 @@
 // Icons.jsx
 
-import React from "react";
+import React, { useState, useEffect } from 'react';
 
 // ------------------------------------------------------------------------------------------------>
 export const MuiIcons = ({ name }) => {
+  const [Icon, setIcon] = useState(null);
 
-  const Icon = require(`@mui/icons-material/${name}`).default;
+  useEffect(() => {
+    if (!name) {
+      return;
+    }
+
+    const loadIcon = async () => {
+      try {
+        const module = await import(`@mui/icons-material/${name}`);
+        setIcon(() => module.default);
+      } catch (error) {
+        console.error("Icon load error:", error);
+      }
+    };
+
+    loadIcon();
+  }, [name]);
+
+  if (!Icon) {
+    return null;
+  }
 
   return <Icon />;
-}
+};
 
 // ------------------------------------------------------------------------------------------------>
-export const SvgIcons = ({ name }) => {
+/* export const SvgIcons = ({ name }) => {
 
   const iconPath = {
     home: (
@@ -36,5 +56,4 @@ export const SvgIcons = ({ name }) => {
       {iconPath[name]}
     </svg>
   );
-};
-
+}; */
