@@ -1,7 +1,5 @@
 // SideBar.jsx
 
-// @ts-ignore
-import logo3 from "../assets/image/logo3.png";
 import React, {useState, useEffect} from "react";
 import "moment/locale/ko";
 import moment from "moment-timezone";
@@ -9,6 +7,11 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/array/dataArray.js";
 import {Box, Button, Collapse, Divider, SwipeableDrawer} from "@mui/material";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+
+import {CustomIcon} from "../assets/icon/CustomIcon.tsx";
+
+// @ts-ignore
+import logo3 from "../assets/image/logo3.png";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
@@ -76,7 +79,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                 onClick={() => (toggleFirstOpen(item.title))}
               >
                 <ListItemIcon>
-                  <i className={`${item.icon}`}></i>
+                  <CustomIcon type={"bi"} name={item.icon} />
                 </ListItemIcon>
                 <ListItemText>
                   {item.title}

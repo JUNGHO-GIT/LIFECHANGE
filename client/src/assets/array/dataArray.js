@@ -2,7 +2,7 @@
 export const dataArray = [
   // calendar
   {
-    icon: "bx bx-calendar",
+    icon: "BiCalendar",
     title: "Calendar",
     items: [
       {to: "/calendar/list", label: "CalendarList"},
@@ -11,7 +11,7 @@ export const dataArray = [
   },
   // exercise
   {
-    icon: "bx bx-run",
+    icon: "BiRun",
     title: "Exercise",
     items: [
       {to: "/exercise/dash", label: "ExerciseDash"},
@@ -23,7 +23,7 @@ export const dataArray = [
   },
   // food
   {
-    icon: "bx bx-bowl-hot",
+    icon: "BiFoodMenu",
     title: "Food",
     items: [
       {to: "/food/dash", label: "FoodDash"},
@@ -36,7 +36,7 @@ export const dataArray = [
   },
   // money
   {
-    icon: "bx bx-wallet",
+    icon: "BiMoney",
     title: "Money",
     items: [
       {to: "/money/dash", label: "MoneyDash"},
@@ -48,7 +48,7 @@ export const dataArray = [
   },
   // sleep
   {
-    icon: "bx bx-bed",
+    icon: "BiSleep",
     title: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},
@@ -60,7 +60,7 @@ export const dataArray = [
   },
   // tweak
   {
-    icon: "bx bx-cog",
+    icon: "BiCog",
     title: "Tweak",
     items: [
       {to: "/tweak/dataset", label: "TweakDataset"},
