@@ -1,20 +1,14 @@
 // UserLogin.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import {percent} from "../../assets/js/percent.js";
+import {percent} from "assets/js/percent.js";
 import {useNavigate, useLocation} from "react-router-dom";
-import {Header} from "../../layout/Header.jsx";
-import {NavBar} from "../../layout/NavBar.jsx";
-import {Btn} from "../../fragments/Btn.jsx";
-import {Loading} from "../../fragments/Loading.jsx";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem} from "@mui/material";
-import {TextField, Typography, InputAdornment} from '@mui/material';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {Btn, Loading} from "import/CustomComponents";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {

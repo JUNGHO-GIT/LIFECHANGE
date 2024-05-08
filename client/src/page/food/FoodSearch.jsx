@@ -1,22 +1,17 @@
 // FoodSearch.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import InputMask from "react-input-mask";
-import {useDate} from "../../hooks/useDate.jsx";
-import {Header} from "../../layout/Header.jsx";
-import {NavBar} from "../../layout/NavBar.jsx";
-import {Paging} from "../../fragments/Paging.jsx";
-import {Loading} from "../../fragments/Loading.jsx";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem} from "@mui/material";
-import {TextField, Typography, InputAdornment} from '@mui/material';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
-import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
+import {useDate} from "assets/hooks/useDate";
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {Paging} from "assets/components/Paging";
+import {Loading} from "assets/components/Loading";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
+import {CustomIcons} from "import/CustomIcons";
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
 
@@ -211,7 +206,7 @@ export const FoodSearch = () => {
         }));
         flowSearch();
       }}>
-        <CustomIcon name={"MdOutlineSearch"} className={"w-24 h-24 dark"} />
+        <CustomIcons name={"MdOutlineSearch"} className={"w-24 h-24 dark"} />
       </span>
     </Box>
   );

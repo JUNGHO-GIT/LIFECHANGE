@@ -1,20 +1,19 @@
 // ExerciseDashLine.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Line, LineChart} from "recharts";
-import {Loading} from "../../../fragments/Loading.jsx";
+import {Loading} from "../../../assets/components/Loading";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {Container, Card, Box, Paper} from "@mui/material";
-import {MenuItem, FormControl, Select} from "@mui/material";
-import {FormGroup, FormControlLabel, Switch} from "@mui/material";
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import {IconButton, Menu} from "@mui/material";
-import {CustomIcon} from "../../../assets/jsx/CustomIcon.jsx";
+import {Grid2} from "import/CustomMuis";
+import {Container, Card, Box, Paper} from "import/CustomMuis";
+import {MenuItem, FormControl, Select} from "import/CustomMuis";
+import {FormGroup, FormControlLabel, Switch} from "import/CustomMuis";
+import {PopupState, bindTrigger, bindMenu } from "import/CustomMuis";
+import {IconButton, Menu} from "import/CustomMuis";
+import {CustomIcons} from "import/CustomIcons";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashLine = () => {
@@ -303,7 +302,7 @@ export const ExerciseDashLine = () => {
       {(popupState) => (
         <React.Fragment>
           <IconButton {...bindTrigger(popupState)}>
-            <CustomIcon name={"MdMoreVert"} className={"w-24 h-24 dark"} />
+            <CustomIcons name={"MdMoreVert"} className={"w-24 h-24 dark"} />
           </IconButton>
           <Menu {...bindMenu(popupState)}>
             {["volume", "cardio"].map((key, index) => (

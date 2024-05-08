@@ -1,23 +1,19 @@
 // ExerciseSave.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
-import {percent} from "../../assets/js/percent.js";
-import {useTime} from "../../hooks/useTime.jsx";
-import {useDate} from "../../hooks/useDate.jsx";
-import {useStorage} from "../../hooks/useStorage.jsx";
-import {Header} from "../../layout/Header.jsx";
-import {NavBar} from "../../layout/NavBar.jsx";
-import {DaySave} from "../../fragments/DaySave.jsx";
-import {Btn} from "../../fragments/Btn.jsx";
-import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {percent} from "assets/js/percent.js";
+import {useTime} from "assets/hooks/useTime";
+import {useDate, useStorage} from "import/CustomHooks";
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {DaySave, Btn, Loading} from "import/CustomComponents";
+import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "import/CustomMuis";
+import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2.js";
 
 // ------------------------------------------------------------------------------------------------>

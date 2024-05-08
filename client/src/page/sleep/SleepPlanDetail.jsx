@@ -1,26 +1,23 @@
 // SleepPlanDetail.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {percent} from "../../assets/js/percent.js";
-import {Header} from "../../layout/Header.jsx";
-import {NavBar} from "../../layout/NavBar.jsx";
-import {useDate} from "../../hooks/useDate.jsx";
-import {useStorage} from "../../hooks/useStorage.jsx";
-import {Btn} from "../../fragments/Btn.jsx";
-import {Loading} from "../../fragments/Loading.jsx";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem} from "@mui/material";
-import {TextField, Typography, InputAdornment} from '@mui/material';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
+import {percent} from "assets/js/percent.js";
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {useDate, useStorage} from "import/CustomHooks";
+import {Btn, Loading} from "import/CustomComponents";
+import {Grid2} from "import/CustomMuis";
+import {Menu, MenuItem} from "import/CustomMuis";
+import {TextField, Typography, InputAdornment} from "import/CustomMuis";
+import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "import/CustomMuis";
+import {AdapterMoment} from "import/CustomMuis";
+import {LocalizationProvider} from "import/CustomMuis";
+import {DesktopDatePicker, DesktopTimePicker} from "import/CustomMuis";
+import {PopupState, bindTrigger, bindMenu } from "import/CustomMuis";
+import {CustomIcons} from "import/CustomIcons";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanDetail = () => {
@@ -154,7 +151,7 @@ export const SleepPlanDetail = () => {
               <MenuItem onClick={() => {
                 flowDelete(id)
               }}>
-                <CustomIcon name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+                <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
                 삭제
               </MenuItem>
               <MenuItem onClick={() => {
@@ -164,11 +161,11 @@ export const SleepPlanDetail = () => {
                   state: SEND,
                 });
               }}>
-                <CustomIcon name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+                <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
                 수정
               </MenuItem>
               <MenuItem>
-                <CustomIcon name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+                <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
                 기타
               </MenuItem>
             </Menu>

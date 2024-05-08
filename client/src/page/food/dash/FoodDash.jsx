@@ -1,12 +1,12 @@
 // FoodDash.jsx
 
 import React from "react";
-import {Header} from "../../../layout/Header.jsx";
-import {NavBar} from "../../../layout/NavBar.jsx";
-import {FoodDashBar} from "./FoodDashBar.jsx";
-import {FoodDashPie} from "./FoodDashPie.jsx";
-import {FoodDashLine} from "./FoodDashLine.jsx";
-import {FoodDashAvg} from "./FoodDashAvg.jsx";
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {FoodDashBar} from "./FoodDashBar";
+import {FoodDashPie} from "./FoodDashPie";
+import {FoodDashLine} from "./FoodDashLine";
+import {FoodDashAvg} from "./FoodDashAvg";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodDash = () => {

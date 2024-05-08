@@ -1,16 +1,12 @@
 // SideBar.jsx
 
 import React, {useState, useEffect} from "react";
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
-import {dataArray} from "../assets/array/dataArray.js";
-import {Box, Button, Collapse, Divider, SwipeableDrawer} from "@mui/material";
-import {List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {CustomIcon} from "../assets/jsx/CustomIcon.jsx";
-
-// @ts-ignore
-import logo3 from "../assets/image/logo3.png";
+import {dataArray} from "../../assets/array/dataArray";
+import {Box, Button, Collapse, Divider, SwipeableDrawer, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {CustomIcons} from "import/CustomIcons";
+import logo3 from "assets/images/logo3.png";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
@@ -27,7 +23,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
     endDt: "0000-00-00",
     refresh: 0,
     toLogin: "/user/login",
-    toSignup: "/user/signup",
+    toSignup: "/user/signup"
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
@@ -78,7 +74,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                 onClick={() => (toggleFirstOpen(item.title))}
               >
                 <ListItemIcon>
-                  <CustomIcon name={item.icon} className={"w-24 h-24 dark"} />
+                  <CustomIcons name={item.icon} className={"w-24 h-24 dark"} />
                 </ListItemIcon>
                 <ListItemText>
                   {item.title}

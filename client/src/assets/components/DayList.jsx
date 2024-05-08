@@ -1,14 +1,9 @@
 // DayList.jsx
 
 import React, {useEffect} from "react";
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import {differenceInDays} from "date-fns";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem} from "@mui/material";
-import {TextField, Typography, InputAdornment} from '@mui/material';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
 
 // 8. dayPicker ----------------------------------------------------------------------------------->
 export const DayList = ({

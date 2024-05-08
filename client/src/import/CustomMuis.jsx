@@ -1,70 +1,70 @@
-// CustomMui.tsx
+// CustomMui.jsx
 
 // a
 import {
   Accordion, AccordionActions, AccordionDetails, AccordionSummary, Alert, AlertTitle, AppBar, Autocomplete, Avatar, AvatarGroup
-} from '@mui/material';
+} from "@mui/material";
 
 // b
 import {
   Backdrop, Badge, BottomNavigation, BottomNavigationAction, Box, Breadcrumbs,
   Button, ButtonBase, ButtonGroup
-} from '@mui/material';
+} from "@mui/material";
 
 // c
 import {
   Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Chip, CircularProgress, ClickAwayListener, Collapse, Container, CssBaseline
-} from '@mui/material';
+} from "@mui/material";
 
 // d ~ e
 import {
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Drawer
-} from '@mui/material';
+} from "@mui/material";
 
 // f
 import {
   Fab, Fade, FilledInput, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel
-} from '@mui/material';
+} from "@mui/material";
 
 // g
 import {
   Grid, Unstable_Grid2, Grow
-} from '@mui/material';
+} from "@mui/material";
 
 // h ~ k
 import {
   Hidden, Icon, IconButton, ImageList, ImageListItem, ImageListItemBar, Input, InputAdornment, InputBase, InputLabel
-} from '@mui/material';
+} from "@mui/material";
 
 // l
 import {
   LinearProgress, Link, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
-} from '@mui/material';
+} from "@mui/material";
 
 // m ~ o
 import {
   Menu, MenuItem, MenuList, MobileStepper, Modal, NativeSelect, NoSsr, OutlinedInput
-} from '@mui/material';
+} from "import/CustomMuis";
 
 // p ~ r
 import {
   Pagination, PaginationItem, Paper, Popover, Popper, Portal, Radio, RadioGroup, Rating
-} from '@mui/material';
+} from "@mui/material";
 
 // s
 import {
   ScopedCssBaseline, Select, Skeleton, Slide, Slider, Snackbar, SnackbarContent, SpeedDial, SpeedDialAction, SpeedDialIcon, Stack, Step, StepButton, StepConnector, StepContent, StepIcon, StepLabel, Stepper, SvgIcon, SwipeableDrawer, Switch
-} from '@mui/material';
+} from "@mui/material";
 
 // t
 import {
   Tab, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TableSortLabel, Tabs, TabScrollButton, TextField, TextareaAutosize, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Typography
-} from '@mui/material';
+} from "@mui/material";
 
 // u ~ z
 import {
   useMediaQuery, useScrollTrigger, Zoom, useAutocomplete, GlobalStyles
-} from '@mui/material';
+} from "@mui/material";
 
 // adopterMoment
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';

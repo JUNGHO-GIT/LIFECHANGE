@@ -1,7 +1,6 @@
 // useTime.jsx
 
 import React, {useEffect} from "react";
-import "moment/locale/ko";
 import moment from "moment-timezone";
 
 // ------------------------------------------------------------------------------------------------>

@@ -1,12 +1,12 @@
 // MoneyDash.jsx
 
 import React from "react";
-import {Header} from "../../../layout/Header.jsx";
-import {NavBar} from "../../../layout/NavBar.jsx";
-import {MoneyDashBar} from "./MoneyDashBar.jsx";
-import {MoneyDashPie} from "./MoneyDashPie.jsx";
-import {MoneyDashLine} from "./MoneyDashLine.jsx";
-import {MoneyDashAvg} from "./MoneyDashAvg.jsx";
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {MoneyDashBar} from "./MoneyDashBar";
+import {MoneyDashPie} from "./MoneyDashPie";
+import {MoneyDashLine} from "./MoneyDashLine";
+import {MoneyDashAvg} from "./MoneyDashAvg";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDash = () => {

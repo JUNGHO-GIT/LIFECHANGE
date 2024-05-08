@@ -1,16 +1,14 @@
 // TweakDataset.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {Header} from "../../layout/Header.jsx";
-import {NavBar} from "../../layout/NavBar.jsx";
-import {Btn} from "../../fragments/Btn.jsx";
-import {Loading} from "../../fragments/Loading.jsx";
-import {Container, Card, Paper, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Button} from "@mui/material";
-import Grid2 from '@mui/material/Unstable_Grid2';
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {Btn, Loading} from "import/CustomComponents";
+import {Container, Card, Paper, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Button} from "import/CustomMuis";
+import {Grid2} from "import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakDataset = () => {

@@ -2,11 +2,10 @@
 
 import React from "react";
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter} from "react-router-dom";
-import {Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
-import {Box} from "@mui/material";
 
+import "moment/locale/ko";
 import "boxicons/css/boxicons.min.css";
 import "react-calendar/dist/Calendar.css";
 import "./index.css";
@@ -15,7 +14,6 @@ import "./assets/css/Mui.css";
 import "./assets/css/Calendar.css";
 
 import "./assets/css/Header.css";
-import "./assets/css/Loader.css";
 import "./assets/css/NavBar.css";
 import "./assets/css/SideBar.css";
 import "./assets/css/Table.css";
@@ -26,47 +24,47 @@ import "./assets/css/Custom.css";
 import "./assets/css/Core.css";
 import "./assets/css/Jstyle.css";
 
-import {UserSignup} from "./page/user/UserSignup.jsx";
-import {UserLogin} from "./page/user/UserLogin.jsx";
+import {CalendarList} from "./page/calendar/CalendarList";
+import {CalendarDetail} from "./page/calendar/CalendarDetail";
 
-import {CalendarList} from "./page/calendar/CalendarList.jsx";
-import {CalendarDetail} from "./page/calendar/CalendarDetail.jsx";
+import {ExercisePlanList} from "./page/exercise/ExercisePlanList";
+import {ExercisePlanDetail} from "./page/exercise/ExercisePlanDetail";
+import {ExercisePlanSave} from "./page/exercise/ExercisePlanSave";
+import {ExerciseDash} from "./page/exercise/dash/ExerciseDash";
+import {ExerciseList} from "./page/exercise/ExerciseList";
+import {ExerciseDetail} from "./page/exercise/ExerciseDetail";
+import {ExerciseSave} from "./page/exercise/ExerciseSave";
 
-import {ExercisePlanList} from "./page/exercise/ExercisePlanList.jsx";
-import {ExercisePlanDetail} from "./page/exercise/ExercisePlanDetail.jsx";
-import {ExercisePlanSave} from "./page/exercise/ExercisePlanSave.jsx";
-import {ExerciseDash} from "./page/exercise/dash/ExerciseDash.jsx";
-import {ExerciseList} from "./page/exercise/ExerciseList.jsx";
-import {ExerciseDetail} from "./page/exercise/ExerciseDetail.jsx";
-import {ExerciseSave} from "./page/exercise/ExerciseSave.jsx";
+import {FoodPlanList} from "./page/food/FoodPlanList";
+import {FoodPlanDetail} from "./page/food/FoodPlanDetail";
+import {FoodPlanSave} from "./page/food/FoodPlanSave";
+import {FoodDash} from "./page/food/dash/FoodDash";
+import {FoodSearch} from "./page/food/FoodSearch";
+import {FoodList} from "./page/food/FoodList";
+import {FoodDetail} from "./page/food/FoodDetail";
+import {FoodSave} from "./page/food/FoodSave";
 
-import {FoodPlanList} from "./page/food/FoodPlanList.jsx";
-import {FoodPlanDetail} from "./page/food/FoodPlanDetail.jsx";
-import {FoodPlanSave} from "./page/food/FoodPlanSave.jsx";
-import {FoodDash} from "./page/food/dash/FoodDash.jsx";
-import {FoodSearch} from "./page/food/FoodSearch.jsx";
-import {FoodList} from "./page/food/FoodList.jsx";
-import {FoodDetail} from "./page/food/FoodDetail.jsx";
-import {FoodSave} from "./page/food/FoodSave.jsx";
+import {MoneyPlanList} from "./page/money/MoneyPlanList";
+import {MoneyPlanDetail} from "./page/money/MoneyPlanDetail";
+import {MoneyPlanSave} from "./page/money/MoneyPlanSave";
+import {MoneyDash} from "./page/money/dash/MoneyDash";
+import {MoneyList} from "./page/money/MoneyList";
+import {MoneyDetail} from "./page/money/MoneyDetail";
+import {MoneySave} from "./page/money/MoneySave";
 
-import {MoneyPlanList} from "./page/money/MoneyPlanList.jsx";
-import {MoneyPlanDetail} from "./page/money/MoneyPlanDetail.jsx";
-import {MoneyPlanSave} from "./page/money/MoneyPlanSave.jsx";
-import {MoneyDash} from "./page/money/dash/MoneyDash.jsx";
-import {MoneyList} from "./page/money/MoneyList.jsx";
-import {MoneyDetail} from "./page/money/MoneyDetail.jsx";
-import {MoneySave} from "./page/money/MoneySave.jsx";
+import {SleepPlanList} from "./page/sleep/SleepPlanList";
+import {SleepPlanDetail} from "./page/sleep/SleepPlanDetail";
+import {SleepPlanSave} from "./page/sleep/SleepPlanSave";
+import {SleepDash} from "./page/sleep/dash/SleepDash";
+import {SleepList} from "./page/sleep/SleepList";
+import {SleepDetail} from "./page/sleep/SleepDetail";
+import {SleepSave} from "./page/sleep/SleepSave";
 
-import {SleepPlanList} from "./page/sleep/SleepPlanList.jsx";
-import {SleepPlanDetail} from "./page/sleep/SleepPlanDetail.jsx";
-import {SleepPlanSave} from "./page/sleep/SleepPlanSave.jsx";
-import {SleepDash} from "./page/sleep/dash/SleepDash.jsx";
-import {SleepList} from "./page/sleep/SleepList.jsx";
-import {SleepDetail} from "./page/sleep/SleepDetail.jsx";
-import {SleepSave} from "./page/sleep/SleepSave.jsx";
+import {UserSignup} from "./page/user/UserSignup";
+import {UserLogin} from "./page/user/UserLogin";
 
-import {TweakDataset} from "./page/tweak/TweakDataset.jsx";
-import {TweakDemo} from "./page/tweak/TweakDemo.jsx";
+import {TweakDataset} from "./page/tweak/TweakDataset";
+import {TweakDemo} from "./page/tweak/TweakDemo";
 
 // ------------------------------------------------------------------------------------------------>
 const User = () => (
@@ -163,7 +161,7 @@ const Tweak = () => (
 const App = () => {
   return (
     <React.Fragment>
-      <Box className={"App"}>
+      <div className={"App"}>
         <Routes>
           <Route path="/" element={<CalendarList />} />
           <Route path="/calendar/*" element={<Calendar />} />
@@ -174,7 +172,7 @@ const App = () => {
           <Route path="/tweak/*" element={<Tweak />} />
           <Route path="/user/*" element={<User />} />
         </Routes>
-      </Box>
+      </div>
     </React.Fragment>
   );
 };

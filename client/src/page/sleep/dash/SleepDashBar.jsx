@@ -1,16 +1,15 @@
 // SleepDashBar.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
-import {Loading} from "../../../fragments/Loading.jsx";
+import {Loading} from "../../../assets/components/Loading";
 import {handlerY} from "../../../assets/js/handlerY.js";
 import {Bar, Line, ComposedChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {MenuItem, FormControl, Select} from "@mui/material";
-import {Container, Card, Box, Paper} from "@mui/material";
+import {Grid2} from "import/CustomMuis";
+import {MenuItem, FormControl, Select} from "import/CustomMuis";
+import {Container, Card, Box, Paper} from "import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDashBar = () => {

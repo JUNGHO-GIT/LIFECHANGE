@@ -1,6 +1,5 @@
 // MoneySave.jsx
 
-import "moment/locale/ko";
 import moment from "moment-timezone";
 import axios from "axios";
 import numeral from 'numeral';
@@ -8,17 +7,13 @@ import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
-import {percent} from "../../assets/js/percent.js";
-import {Header} from "../../layout/Header.jsx";
-import {NavBar} from "../../layout/NavBar.jsx";
-import {useDate} from "../../hooks/useDate.jsx";
-import {useStorage} from "../../hooks/useStorage.jsx";
-import {DaySave} from "../../fragments/DaySave.jsx";
-import {Btn} from "../../fragments/Btn.jsx";
-import {Loading} from "../../fragments/Loading.jsx";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem, FormControl, Select, InputLabel, Popover,TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, AdapterMoment, DesktopDatePicker, DesktopTimePicker, LocalizationProvider, PopupState, bindTrigger, bindMenu, bindPopover} from '../../assets/jsx/CustomMui.jsx';
-import {CustomIcon} from 'assets/jsx/CustomIcon.jsx';
+import {percent} from "assets/js/percent";
+/* import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar"; */
+import {useDate, useStorage} from "import/CustomHooks";
+import {Btn, DaySave, Loading} from "import/CustomComponents";
+import {CustomIcons} from "import/CustomIcons";
+import {Grid2, Menu, MenuItem, FormControl, Select, InputLabel, Popover,TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, AdapterMoment, DesktopDatePicker, DesktopTimePicker, LocalizationProvider, PopupState, bindTrigger, bindMenu, bindPopover} from "import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -146,10 +141,10 @@ export const MoneySave = () => {
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const adornment = () => (
-      <InputAdornment position={"start"}><CustomIcon name={"BiWon"} className={"w-24 h-24 dark"} /></InputAdornment>
+      <InputAdornment position={"start"}><CustomIcons name={"BiWon"} className={"w-24 h-24 dark"} /></InputAdornment>
     );
     const adornment2 = () => (
-      <InputAdornment position={"start"}><CustomIcon name={"MdPlaylistAdd"} className={"w-24 h-24 dark"} /></InputAdornment>
+      <InputAdornment position={"start"}><CustomIcons name={"MdPlaylistAdd"} className={"w-24 h-24 dark"} /></InputAdornment>
     );
     const titleSection = () => (
       <React.Fragment>
@@ -482,14 +477,14 @@ export const MoneySave = () => {
   };
 
   // 9. header ------------------------------------------------------------------------------------>
-  const headerNode = () => (
+  /* const headerNode = () => (
     <Header />
-  );
+  ); */
 
   // 10. navBar ----------------------------------------------------------------------------------->
-  const navBarNode = () => (
+  /* const navBarNode = () => (
     <NavBar />
-  );
+  ); */
 
   // 11. day -------------------------------------------------------------------------------------->
   const daySaveNode = () => (
@@ -516,8 +511,8 @@ export const MoneySave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {headerNode()}
-      {navBarNode()}
+      {/* {headerNode()} */}
+      {/* {navBarNode()} */}
       {daySaveNode()}
       {LOADING ? loadingNode() : tableNode()}
       {btnNode()}

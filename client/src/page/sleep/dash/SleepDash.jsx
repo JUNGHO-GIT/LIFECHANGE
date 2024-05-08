@@ -1,11 +1,11 @@
 // SleepDash.jsx
 
 import React from "react";
-import {Header} from "../../../layout/Header.jsx";
-import {NavBar} from "../../../layout/NavBar.jsx";
-import {SleepDashBar} from "./SleepDashBar.jsx";
-import {SleepDashLine} from "./SleepDashLine.jsx";
-import {SleepDashAvg} from "./SleepDashAvg.jsx";
+import {Header} from "page/architecture/Header";
+import {NavBar} from "page/architecture/NavBar";
+import {SleepDashBar} from "./SleepDashBar";
+import {SleepDashLine} from "./SleepDashLine";
+import {SleepDashAvg} from "./SleepDashAvg";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepDash = () => {

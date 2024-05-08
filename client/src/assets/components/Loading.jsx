@@ -1,8 +1,8 @@
 // Loading.jsx
 
 import React from "react";
-import {Box} from "@mui/material";
-import {CustomIcon} from "../assets/jsx/CustomIcon.jsx";
+import {Box} from "import/CustomMuis";
+import {CustomIcons} from "import/CustomIcons";
 
 // 14. loading ------------------------------------------------------------------------------------>
 export const Loading = ({
@@ -16,7 +16,7 @@ export const Loading = ({
   return (
     <React.Fragment>
       <Box className={"loading-wrapper"}>
-        <CustomIcon name={"FaSpinner"} className={"w-24 h-24 dark"} />
+        <CustomIcons name={"FaSpinner"} className={"w-24 h-24 dark"} />
       </Box>
     </React.Fragment>
   );
