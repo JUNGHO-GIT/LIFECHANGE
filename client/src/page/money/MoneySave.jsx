@@ -25,7 +25,7 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
 import Popover from '@mui/material/Popover';
-import {IconsMui} from "../../assets/js/icon.js";
+import {CustomIcon} from "../../assets/icon/CustomIcon.tsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -156,7 +156,7 @@ export const MoneySave = () => {
       <InputAdornment position={"start"}><i className='bx bx-won'></i></InputAdornment>
     );
     const adornment2 = () => (
-      <InputAdornment position={"start"}></InputAdornment>
+      <InputAdornment position={"start"}><CustomIcon name={"FaWonSign"} /></InputAdornment>
     );
     const titleSection = () => (
       <React.Fragment>
