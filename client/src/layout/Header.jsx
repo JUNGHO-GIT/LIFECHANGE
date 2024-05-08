@@ -29,12 +29,8 @@ export const Header = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
     <React.Fragment>
-      <Box onClick={openSidebar}>
-        <CustomIcon name={"MdOutlineMenu"} className={"w-24 h-24 dark"} />
-      </Box>
-      <Box>
-        <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
-      </Box>
+      <CustomIcon name={"MdOutlineMenu"} className={"w-24 h-24 dark"} onClick={openSidebar} />
+      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
     </React.Fragment>
   );
 

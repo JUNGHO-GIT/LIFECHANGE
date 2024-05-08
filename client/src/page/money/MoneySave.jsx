@@ -17,15 +17,8 @@ import {DaySave} from "../../fragments/DaySave.jsx";
 import {Btn} from "../../fragments/Btn.jsx";
 import {Loading} from "../../fragments/Loading.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import {Menu, MenuItem, FormControl, Select, InputLabel} from '@mui/material';
-import {TextField, Typography, InputAdornment} from '@mui/material';
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
-import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
-import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
-import Popover from '@mui/material/Popover';
-import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
+import {Menu, MenuItem, FormControl, Select, InputLabel, Popover,TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, AdapterMoment, DesktopDatePicker, DesktopTimePicker, LocalizationProvider, PopupState, bindTrigger, bindMenu, bindPopover} from '../../assets/jsx/CustomMui.jsx';
+import {CustomIcon} from 'assets/jsx/CustomIcon.jsx';
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
