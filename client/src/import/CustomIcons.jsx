@@ -1,7 +1,7 @@
 // CustomIcons.jsx
 
 import React from 'react';
-import { IconContext } from 'react-icons';
+import {IconContext} from 'react-icons';
 
 // ------------------------------------------------------------------------------------------------>
 export const CustomIcons = ({name, className, ...props}) => {
