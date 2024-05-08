@@ -48,7 +48,7 @@ export const dataArray = [
   },
   // sleep
   {
-    icon: "BiSleep",
+    icon: "MdNightlight",
     title: "Sleep",
     items: [
       {to: "/sleep/dash", label: "SleepDash"},

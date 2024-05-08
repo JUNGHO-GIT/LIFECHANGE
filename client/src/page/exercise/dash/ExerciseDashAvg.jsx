@@ -14,7 +14,7 @@ import {MenuItem, FormControl, Select} from "@mui/material";
 import {FormGroup, FormControlLabel, Switch} from "@mui/material";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import {IconButton, Menu} from "@mui/material";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {CustomIcon} from "../../../assets/jsx/CustomIcon.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExerciseDashAvg = () => {
@@ -307,7 +307,7 @@ export const ExerciseDashAvg = () => {
       {(popupState) => (
         <React.Fragment>
           <IconButton {...bindTrigger(popupState)}>
-            <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+            <CustomIcon name={"MdMoreVert"} className={"w-24 h-24 dark"} />
           </IconButton>
           <Menu {...bindMenu(popupState)}>
             {["volume", "cardio"].map((key, index) => (

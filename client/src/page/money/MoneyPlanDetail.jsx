@@ -21,9 +21,7 @@ import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanDetail = () => {

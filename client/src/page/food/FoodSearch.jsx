@@ -16,7 +16,7 @@ import {Menu, MenuItem} from "@mui/material";
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search'
+import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
 
@@ -211,7 +211,7 @@ export const FoodSearch = () => {
         }));
         flowSearch();
       }}>
-        <SearchIcon />
+        <CustomIcon name={"MdOutlineSearch"} className={"w-24 h-24 dark"} />
       </span>
     </Box>
   );

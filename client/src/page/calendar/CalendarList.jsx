@@ -15,6 +15,7 @@ import {Menu, MenuItem} from "@mui/material";
 import {TextField, Typography, InputAdornment} from '@mui/material';
 import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "@mui/material";
 import {Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "@mui/material";
+import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {
@@ -129,8 +130,8 @@ export const CalendarList = () => {
           showNavigation={true}
           showNeighboringMonth={true}
           showDoubleView={false}
-          prevLabel={<i className={"bx bxs-left-arrow"}></i>}
-          nextLabel={<i className={"bx bxs-right-arrow"}></i>}
+          prevLabel={<CustomIcon name={"BiChevronLeft"} className={"w-24 h-24 dark"} />}
+          nextLabel={<CustomIcon name={"BiChevronRight"} className={"w-24 h-24 dark"} />}
           prev2Label={null}
           next2Label={null}
           formatDay={(locale, date) => (moment(date).format("D"))}

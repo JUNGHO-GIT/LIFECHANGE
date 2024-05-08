@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Box} from "@mui/material";
-import {CustomIcon} from "../assets/icon/CustomIcon.tsx";
+import {CustomIcon} from "../assets/jsx/CustomIcon.jsx";
 
 // 14. loading ------------------------------------------------------------------------------------>
 export const Loading = ({
@@ -16,7 +16,7 @@ export const Loading = ({
   return (
     <React.Fragment>
       <Box className={"loading-wrapper"}>
-        <CustomIcon name={"FaSpinner"} />
+        <CustomIcon name={"FaSpinner"} className={"w-24 h-24 dark"} />
       </Box>
     </React.Fragment>
   );

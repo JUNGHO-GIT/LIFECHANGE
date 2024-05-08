@@ -4,18 +4,21 @@ import React from 'react';
 import { IconContext } from 'react-icons';
 
 // ------------------------------------------------------------------------------------------------>
-export const CustomIcon = ({type, name}) => {
+export const CustomIcon = ({name, className, ...props}) => {
 
-  if (!type || !name) {
+  if (!name) {
     return null;
   }
+
+  // ex. 'FaHome' => (preStr = fa)
+  const preStr = name.slice(0, 2).toLowerCase();
 
   let importCode = null;
   let importIcon = null;
   let IconComponent = React.Fragment;
 
   try {
-    importCode = require(`react-icons/${type}/index`);
+    importCode = require(`react-icons/${preStr}/index`);
     importIcon = importCode[name];
   }
   catch (error) {
@@ -27,7 +30,7 @@ export const CustomIcon = ({type, name}) => {
   }
 
   return (
-    <IconContext.Provider value={{ size: '1em' }}>
+    <IconContext.Provider value={{ className: className }}>
       <IconComponent />
     </IconContext.Provider>
   );

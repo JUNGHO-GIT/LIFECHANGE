@@ -7,8 +7,7 @@ import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../assets/array/dataArray.js";
 import {Box, Button, Collapse, Divider, SwipeableDrawer} from "@mui/material";
 import {List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-
-import {CustomIcon} from "../assets/icon/CustomIcon.tsx";
+import {CustomIcon} from "../assets/jsx/CustomIcon.jsx";
 
 // @ts-ignore
 import logo3 from "../assets/image/logo3.png";
@@ -79,7 +78,7 @@ export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {
                 onClick={() => (toggleFirstOpen(item.title))}
               >
                 <ListItemIcon>
-                  <CustomIcon type={"bi"} name={item.icon} />
+                  <CustomIcon name={item.icon} className={"w-24 h-24 dark"} />
                 </ListItemIcon>
                 <ListItemText>
                   {item.title}

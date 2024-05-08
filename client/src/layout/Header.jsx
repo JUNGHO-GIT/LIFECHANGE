@@ -6,10 +6,9 @@ import "moment/locale/ko";
 import moment from "moment-timezone";
 import {SideBar} from "./SideBar.jsx";
 import Grid2 from '@mui/material/Unstable_Grid2';
-import MenuIcon from '@mui/icons-material/Menu';
 import {Container, Card, Paper, Box} from "@mui/material";
 import {Menu, MenuItem} from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {CustomIcon} from "../assets/jsx/CustomIcon.jsx";
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 // ------------------------------------------------------------------------------------------------>
@@ -30,8 +29,12 @@ export const Header = () => {
   // 6-1. button ---------------------------------------------------------------------------------->
   const btnSideBar = () => (
     <React.Fragment>
-      <MenuIcon onClick={openSidebar} />
-      <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <Box onClick={openSidebar}>
+        <CustomIcon name={"MdOutlineMenu"} className={"w-24 h-24 dark"} />
+      </Box>
+      <Box>
+        <SideBar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      </Box>
     </React.Fragment>
   );
 
@@ -40,7 +43,7 @@ export const Header = () => {
     <PopupState variant={"popover"} popupId={"popup-menu"}>
       {(popupState) => (
         <React.Fragment>
-          <AccountCircleIcon {...bindTrigger(popupState)} />
+          <CustomIcon name={"MdOutlineAccountCircle"} {...bindTrigger(popupState)} className={"w-24 h-24 dark"} />
           <Menu {...bindMenu(popupState)}>
             <MenuItem onClick={() => {
               navParam("/user/login");

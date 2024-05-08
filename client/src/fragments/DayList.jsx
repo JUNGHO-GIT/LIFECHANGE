@@ -3,7 +3,6 @@
 import React, {useEffect} from "react";
 import "moment/locale/ko";
 import moment from "moment-timezone";
-import {ko} from "date-fns/locale";
 import {differenceInDays} from "date-fns";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {Menu, MenuItem} from "@mui/material";

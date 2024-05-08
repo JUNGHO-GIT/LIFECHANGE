@@ -22,9 +22,7 @@ import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanSave = () => {
@@ -166,11 +164,11 @@ export const SleepPlanSave = () => {
               <MenuItem onClick={() => {
                 setOBJECT(OBJECT_DEF);
               }}>
-                <DeleteIcon fontSize={"small"} color={"action"}></DeleteIcon>
+                <CustomIcon name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
                 초기화
               </MenuItem>
               <MenuItem>
-                <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+                <CustomIcon name={"MdOutlineAdd"} className={"w-24 h-24 dark"} />
                 기타
               </MenuItem>
             </Menu>

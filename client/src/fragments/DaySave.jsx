@@ -2,7 +2,6 @@
 
 import "moment/locale/ko";
 import moment from "moment-timezone";
-import {ko} from "date-fns/locale";
 import React, { useEffect } from "react";
 import InputMask from "react-input-mask";
 import Grid2 from '@mui/material/Unstable_Grid2';

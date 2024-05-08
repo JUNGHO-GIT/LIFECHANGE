@@ -21,9 +21,7 @@ import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment/index';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {CustomIcon} from "../../assets/jsx/CustomIcon.jsx";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -216,7 +214,7 @@ export const MoneyDetail = () => {
               <MenuItem onClick={() => {
                 flowDelete(id, sectionId)
               }}>
-                <DeleteIcon fontSize={"small"} color={"error"}></DeleteIcon>
+                <CustomIcon name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
                 삭제
               </MenuItem>
               <MenuItem onClick={() => {
@@ -226,11 +224,11 @@ export const MoneyDetail = () => {
                   state: SEND,
                 });
               }}>
-                <EditIcon fontSize={"small"} color={"primary"}></EditIcon>
+                <CustomIcon name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
                 수정
               </MenuItem>
               <MenuItem>
-                <MoreVertIcon fontSize={"small"} color={"action"}></MoreVertIcon>
+                <CustomIcon name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
                 기타
               </MenuItem>
             </Menu>
