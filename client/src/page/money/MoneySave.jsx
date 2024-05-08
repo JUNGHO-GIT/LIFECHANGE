@@ -25,6 +25,7 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DesktopDatePicker, DesktopTimePicker} from '@mui/x-date-pickers';
 import PopupState, { bindTrigger, bindMenu, bindPopover } from 'material-ui-popup-state';
 import Popover from '@mui/material/Popover';
+import {IconsMui} from "../../assets/js/icon.js";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {

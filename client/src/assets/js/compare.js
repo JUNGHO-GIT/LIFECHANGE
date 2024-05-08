@@ -1,4 +1,4 @@
-// compare.jsx
+// compare.js
 
 import React from "react";
 
