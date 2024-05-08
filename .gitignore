@@ -3,5 +3,6 @@
 /build/
 **/build/
 pakcage-lock.json
+.vscode
 **.txt
 .txt
