@@ -117,9 +117,6 @@ export const SleepSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const adornment = () => (
-      <InputAdornment position={"end"}>시간</InputAdornment>
-    );
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -147,29 +144,72 @@ export const SleepSave = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
-    const dropdownSection = (id, sectionId, index) => (
-      <PopupState variant={"popover"} popupId={"popup"}>
-        {(popupState) => (
-          <React.Fragment>
-            <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={index + 1} color={"primary"} showZero={true}>
-              </Badge>
-            </IconButton>
-            <Menu {...bindMenu(popupState)}>
-              <MenuItem onClick={() => {
-                setOBJECT(OBJECT_DEF);
-              }}>
-                <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-                초기화
-              </MenuItem>
-              <MenuItem>
-                <CustomIcons name={"MdOutlineAdd"} className={"w-24 h-24 dark"} />
-                기타
-              </MenuItem>
-            </Menu>
-          </React.Fragment>
-        )}
-      </PopupState>
+    const adornment = () => (
+      <InputAdornment position={"end"}>시간</InputAdornment>
+    );
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"}>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"취침"}
+                minutesStep={1}
+                value={moment(OBJECT?.sleep_section[0]?.sleep_night, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                onChange={(time) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_section: [{
+                      ...prev?.sleep_section[0],
+                      sleep_night: moment(time).format("HH:mm")
+                    }],
+                  }));
+                }}
+              ></DesktopTimePicker>
+            </LocalizationProvider>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"기상"}
+                minutesStep={1}
+                value={moment(OBJECT?.sleep_section[0]?.sleep_morning, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                onChange={(time) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_section: [{
+                      ...prev.sleep_section[0],
+                      sleep_morning: moment(time).format("HH:mm")
+                    }]
+                  }));
+                }}
+              ></DesktopTimePicker>
+            </LocalizationProvider>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <TextField
+                label={"수면"}
+                type={"text"}
+                size={"medium"}
+                id={"sleep_time"}
+                name={"sleep_time"}
+                value={OBJECT?.sleep_section[0]?.sleep_time}
+                InputProps={{
+                  readOnly: true,
+                  endAdornment: adornment()
+                }}
+              ></TextField>
+            </LocalizationProvider>
+          </Box>
+        </Card>
+      </React.Fragment>
     );
     const tableSection = () => (
       <React.Fragment>
@@ -181,73 +221,7 @@ export const SleepSave = () => {
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          {OBJECT?.sleep_section?.map((section, index) => (
-            <React.Fragment key={index}>
-              <Card variant={"outlined"} className={"p-20"}>
-                <Box className={"d-right mb-20"}>
-                  {dropdownSection(OBJECT._id, section._id, index)}
-                </Box>
-                <Box className={"d-center mb-20"}>
-                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                    <DesktopTimePicker
-                      label={"취침"}
-                      minutesStep={1}
-                      value={moment(section.sleep_night, "HH:mm")}
-                      format={"HH:mm"}
-                      timezone={"Asia/Seoul"}
-                      views={['hours', 'minutes']}
-                      onChange={(time) => {
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          sleep_section: [{
-                            ...prev?.sleep_section[0],
-                            sleep_night: moment(time).format("HH:mm")
-                          }],
-                        }));
-                      }}
-                    ></DesktopTimePicker>
-                  </LocalizationProvider>
-                </Box>
-                <Box className={"d-center mb-20"}>
-                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                    <DesktopTimePicker
-                      label={"기상"}
-                      minutesStep={1}
-                      value={moment(section.sleep_morning, "HH:mm")}
-                      format={"HH:mm"}
-                      timezone={"Asia/Seoul"}
-                      views={['hours', 'minutes']}
-                      onChange={(time) => {
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          sleep_section: [{
-                            ...prev.sleep_section[0],
-                            sleep_morning: moment(time).format("HH:mm")
-                          }]
-                        }));
-                      }}
-                    ></DesktopTimePicker>
-                  </LocalizationProvider>
-                </Box>
-                <Box className={"d-center mb-20"}>
-                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                    <TextField
-                      label={"수면"}
-                      type={"text"}
-                      size={"medium"}
-                      id={"sleep_time"}
-                      name={"sleep_time"}
-                      value={section.sleep_time}
-                      InputProps={{
-                        readOnly: true,
-                        endAdornment: adornment()
-                      }}
-                    ></TextField>
-                  </LocalizationProvider>
-                </Box>
-              </Card>
-            </React.Fragment>
-          ))}
+          {Array.from({length: 1}, (_, i) => tableFragment(i))}
         </Box>
       </React.Fragment>
     );
