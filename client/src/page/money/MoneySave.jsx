@@ -143,12 +143,6 @@ export const MoneySave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const adornment = () => (
-      <InputAdornment position={"start"}><CustomIcons name={"BiWon"} className={"w-24 h-24 dark"} /></InputAdornment>
-    );
-    const adornment2 = () => (
-      <InputAdornment position={"start"}><CustomIcons name={"MdPlaylistAdd"} className={"w-24 h-24 dark"} /></InputAdornment>
-    );
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -175,6 +169,120 @@ export const MoneySave = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
+    const adornment1 = () => (
+      <InputAdornment position={"start"}><CustomIcons name={"BiListPlus"} className={"w-16 h-16 dark"} /></InputAdornment>
+    );
+    const adornment2 = () => (
+      <InputAdornment position={"start"}><CustomIcons name={"BiWon"} className={"w-14 h-14 dark"} /></InputAdornment>
+    );
+    const countSection = () => {
+      const handlerCount = (e) => {
+        const newCount = Number(e);
+        const defaultSection = {
+          money_part_idx: 0,
+          money_part_val: "전체",
+          money_title_idx: 0,
+          money_title_val: "전체",
+          money_amount: 0,
+          money_content: ""
+        };
+        setCOUNT((prev) => ({
+          ...prev,
+          sectionCnt: newCount
+        }));
+        if (newCount > 0) {
+          let updatedSection = Array(newCount).fill(null).map((_, idx) => (
+            idx < OBJECT.money_section.length ? OBJECT.money_section[idx] : defaultSection
+          ));
+          setOBJECT((prev) => ({
+            ...prev,
+            money_section: updatedSection
+          }));
+        }
+        else {
+          setOBJECT((prev) => ({
+            ...prev,
+            money_section: []
+          }));
+        }
+      };
+      return (
+        <React.Fragment>
+          <PopupState  variant={"popover"} popupId={"popupState"}>
+            {(popupState) => (
+              <Box>
+                <TextField
+                  type={"text"}
+                  id={"sectionCnt"}
+                  label={"항목수"}
+                  variant={"outlined"}
+                  size={"small"}
+                  value={COUNT?.sectionCnt}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: adornment1()
+                  }}
+                  onChange={(e) => {
+                    const newValInt = Number(e.target.value);
+                    const newValStr = String(e.target.value);
+                    if (newValInt < 0) {
+                      popupState.open(e.currentTarget);
+                      return;
+                    }
+                    else if (newValInt > 10) {
+                      popupState.open(e.currentTarget);
+                      return;
+                    }
+                    else if (newValStr === "") {
+                      handlerCount("");
+                    }
+                    else if (isNaN(newValInt) || newValStr === "NaN") {
+                      handlerCount("0");
+                    }
+                    else if (newValStr.startsWith("0")) {
+                      handlerCount(newValStr.replace(/^0+/, ""));
+                    }
+                    else {
+                      popupState.close();
+                      handlerCount(newValStr);
+                    }
+                  }}
+                  {...bindTrigger(popupState)}
+                />
+                <Popover
+                  {...bindPopover(popupState)}
+                  id={"popover"}
+                  open={popupState.isOpen}
+                  onClose={popupState.close}
+                  anchorEl={popupState.anchorEl}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                  }}
+                  slotProps={{
+                    paper: {
+                      style: {
+                        border: '2px solid red',
+                        boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
+                        maxWidth: '210px',
+                      }
+                    }
+                  }}
+                >
+                  <Box p={2}>
+                    <Typography variant={"body1"}>0이상 10이하의 숫자만 입력하세요.</Typography>
+                  </Box>
+                </Popover>
+              </Box>
+            )}
+          </PopupState>
+        </React.Fragment>
+      );
+    };
     const totalSection = () => (
       <React.Fragment>
         <Box sx={{display: "grid", placeItems: "center"}}>
@@ -186,7 +294,7 @@ export const MoneySave = () => {
             className={"mt-6 mb-6"}
             InputProps={{
               readOnly: true,
-              startAdornment: adornment()
+              startAdornment: adornment2()
             }}
           ></TextField>
           <TextField
@@ -197,7 +305,7 @@ export const MoneySave = () => {
             className={"mt-6 mb-6"}
             InputProps={{
               readOnly: true,
-              startAdornment: adornment()
+              startAdornment: adornment2()
             }}
           ></TextField>
           <TextField
@@ -208,116 +316,10 @@ export const MoneySave = () => {
             className={"mt-6 mb-6"}
             InputProps={{
               readOnly: true,
-              startAdornment: adornment()
+              startAdornment: adornment2()
             }}
           ></TextField>
         </Box>
-      </React.Fragment>
-    );
-    const handlerCount = (e) => {
-      const newCount = Number(e);
-      const defaultSection = {
-        money_part_idx: 0,
-        money_part_val: "전체",
-        money_title_idx: 0,
-        money_title_val: "전체",
-        money_amount: 0,
-        money_content: ""
-      };
-      setCOUNT((prev) => ({
-        ...prev,
-        sectionCnt: newCount
-      }));
-      if (newCount > 0) {
-        let updatedSection = Array(newCount).fill(null).map((_, idx) => (
-          idx < OBJECT.money_section.length ? OBJECT.money_section[idx] : defaultSection
-        ));
-        setOBJECT((prev) => ({
-          ...prev,
-          money_section: updatedSection
-        }));
-      }
-      else {
-        setOBJECT((prev) => ({
-          ...prev,
-          money_section: []
-        }));
-      }
-    };
-    const countSection = () => (
-      <React.Fragment>
-        <PopupState  variant={"popover"} popupId={"popupState"}>
-          {(popupState) => (
-            <Box>
-              <TextField
-                type={"text"}
-                id={"sectionCnt"}
-                label={"항목수"}
-                variant={"outlined"}
-                size={"small"}
-                value={COUNT?.sectionCnt}
-                InputProps={{
-                  readOnly: true,
-                  startAdornment: adornment2()
-                }}
-                onChange={(e) => {
-                  const newValInt = Number(e.target.value);
-                  const newValStr = String(e.target.value);
-                  if (newValInt < 0) {
-                    popupState.open(e.currentTarget);
-                    return;
-                  }
-                  else if (newValInt > 10) {
-                    popupState.open(e.currentTarget);
-                    return;
-                  }
-                  else if (newValStr === "") {
-                    handlerCount("");
-                  }
-                  else if (isNaN(newValInt) || newValStr === "NaN") {
-                    handlerCount("0");
-                  }
-                  else if (newValStr.startsWith("0")) {
-                    handlerCount(newValStr.replace(/^0+/, ""));
-                  }
-                  else {
-                    popupState.close();
-                    handlerCount(newValStr);
-                  }
-                }}
-                {...bindTrigger(popupState)}
-              />
-              <Popover
-                {...bindPopover(popupState)}
-                id={"popover"}
-                open={popupState.isOpen}
-                onClose={popupState.close}
-                anchorEl={popupState.anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
-                }}
-                slotProps={{
-                  paper: {
-                    style: {
-                      border: '2px solid red',
-                      boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)',
-                      maxWidth: '210px',
-                    }
-                  }
-                }}
-              >
-                <Box p={2}>
-                  <Typography variant={"body1"}>0이상 10이하의 숫자만 입력하세요.</Typography>
-                </Box>
-              </Popover>
-            </Box>
-          )}
-        </PopupState>
       </React.Fragment>
     );
     const tableFragment = (i) => (
