@@ -1,14 +1,13 @@
 // UserLogin.jsx
 
-import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import {percent} from "assets/js/percent.js";
+import {percent} from "../../assets/js/percent";
 import {useNavigate, useLocation} from "react-router-dom";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
-import {Btn, Loading} from "import/CustomComponents";
-import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
+import {Header} from "../architecture/Header";
+import {NavBar} from "../architecture/NavBar";
+import {Btn, Loading} from "../../import/CustomComponents.jsx";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "../../import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {
@@ -111,8 +110,7 @@ export const UserLogin = () => {
   const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
-      flowSave={flowSave} navParam={navParam}
-      part={"user"} plan={""} type={"login"}
+      flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"login"}
     />
   );
 

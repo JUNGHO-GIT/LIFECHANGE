@@ -1,14 +1,13 @@
 // UserSignup.jsx
 
-import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState} from "react";
 import InputMask from "react-input-mask";
 import {useNavigate} from "react-router-dom";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
-import {Btn, Loading} from "import/CustomComponents";
-import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
+import {Header} from "../architecture/Header";
+import {NavBar} from "../architecture/NavBar";
+import {Btn, Loading} from "../../import/CustomComponents";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "../../import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserSignup = () => {

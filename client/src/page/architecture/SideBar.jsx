@@ -4,9 +4,9 @@ import React, {useState, useEffect} from "react";
 import moment from "moment-timezone";
 import {useNavigate, useLocation} from "react-router-dom";
 import {dataArray} from "../../assets/array/dataArray";
-import {Box, Button, Collapse, Divider, SwipeableDrawer, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {CustomIcons} from "import/CustomIcons";
-import logo3 from "assets/images/logo3.png";
+import {Box, Button, Collapse, Divider, SwipeableDrawer, List, ListItemButton, ListItemIcon, ListItemText} from "../../import/CustomMuis";
+import {CustomIcons} from "../../import/CustomIcons";
+import {logo3} from "../../import/CustomImages";
 
 // ------------------------------------------------------------------------------------------------>
 export const SideBar = ({isSidebarOpen, setIsSidebarOpen}) => {

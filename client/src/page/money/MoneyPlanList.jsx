@@ -5,11 +5,11 @@ import axios from "axios";
 import numeral from 'numeral';
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useStorage} from "import/CustomHooks";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
-import {DayList, Paging, Filter, Btn, Loading} from "import/CustomComponents";
-import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
+import {useStorage} from "../../import/CustomHooks";
+import {Header} from "../architecture/Header";
+import {NavBar} from "../architecture/NavBar";
+import {DayList, Paging, Filter, Btn, Loading} from "../../import/CustomComponents";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "../../import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyPlanList = () => {

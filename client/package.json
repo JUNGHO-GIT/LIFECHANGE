@@ -1,5 +1,7 @@
 {
   "name": "client",
+  "module": "esnext",
+  "license": "MIT",
   "eslintConfig": {
     "extends": [
       "react-app",

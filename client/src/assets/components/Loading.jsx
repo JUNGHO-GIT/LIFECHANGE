@@ -1,8 +1,8 @@
 // Loading.jsx
 
 import React from "react";
-import {Box} from "import/CustomMuis";
-import {CustomIcons} from "import/CustomIcons";
+import {Box} from "../../import/CustomMuis";
+import {CustomIcons} from "../../import/CustomIcons";
 
 // 14. loading ------------------------------------------------------------------------------------>
 export const Loading = ({

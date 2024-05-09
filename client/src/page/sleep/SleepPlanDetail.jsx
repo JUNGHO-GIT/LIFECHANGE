@@ -4,20 +4,20 @@ import moment from "moment-timezone";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
-import {percent} from "assets/js/percent.js";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
-import {useDate, useStorage} from "import/CustomHooks";
-import {Btn, Loading} from "import/CustomComponents";
-import {Grid2} from "import/CustomMuis";
-import {Menu, MenuItem} from "import/CustomMuis";
-import {TextField, Typography, InputAdornment} from "import/CustomMuis";
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "import/CustomMuis";
-import {AdapterMoment} from "import/CustomMuis";
-import {LocalizationProvider} from "import/CustomMuis";
-import {DesktopDatePicker, DesktopTimePicker} from "import/CustomMuis";
-import {PopupState, bindTrigger, bindMenu } from "import/CustomMuis";
-import {CustomIcons} from "import/CustomIcons";
+import {percent} from "../../assets/js/percent";
+import {Header} from "../architecture/Header";
+import {NavBar} from "../architecture/NavBar";
+import {useDate, useStorage} from "../../import/CustomHooks";
+import {Btn, Loading} from "../../import/CustomComponents";
+import {Grid2} from "../../import/CustomMuis";
+import {Menu, MenuItem} from "../../import/CustomMuis";
+import {TextField, Typography, InputAdornment} from "../../import/CustomMuis";
+import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "../../import/CustomMuis";
+import {AdapterMoment} from "../../import/CustomMuis";
+import {LocalizationProvider} from "../../import/CustomMuis";
+import {DesktopDatePicker, DesktopTimePicker} from "../../import/CustomMuis";
+import {PopupState, bindTrigger, bindMenu } from "../../import/CustomMuis";
+import {CustomIcons} from "../../import/CustomIcons";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanDetail = () => {

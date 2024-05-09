@@ -1,8 +1,8 @@
 // Paging.jsx
 
 import React from "react";
-import {Container, Paper, TablePagination} from "import/CustomMuis";
-import {Grid2} from "import/CustomMuis";
+import {Container, Paper, TablePagination} from "../../import/CustomMuis";
+import {Grid2} from "../../import/CustomMuis";
 
 // 9. paging -------------------------------------------------------------------------------------->
 export const Paging = ({

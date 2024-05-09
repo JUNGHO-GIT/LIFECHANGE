@@ -1,9 +1,9 @@
 // Filter.jsx
 
 import React from "react";
-import {Container, Paper} from "import/CustomMuis";
-import {MenuItem, FormControl, Select} from "import/CustomMuis";
-import {Grid2} from "import/CustomMuis";
+import {Container, Paper} from "../../import/CustomMuis";
+import {MenuItem, FormControl, Select} from "../../import/CustomMuis";
+import {Grid2} from "../../import/CustomMuis";
 
 // 12. filter ------------------------------------------------------------------------------------->
 export const Filter = ({

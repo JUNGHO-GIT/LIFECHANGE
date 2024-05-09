@@ -7,13 +7,13 @@ import InputMask from "react-input-mask";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
-import {percent} from "assets/js/percent";
-/* import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar"; */
-import {useDate, useStorage} from "import/CustomHooks";
-import {Btn, DaySave, Loading} from "import/CustomComponents";
-import {CustomIcons} from "import/CustomIcons";
-import {Grid2, Menu, MenuItem, FormControl, Select, InputLabel, Popover,TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, AdapterMoment, DesktopDatePicker, DesktopTimePicker, LocalizationProvider, PopupState, bindTrigger, bindMenu, bindPopover} from "import/CustomMuis";
+import {percent} from "../../assets/js/percent";
+import {Header} from "../architecture/Header";
+import {NavBar} from "../architecture/NavBar";
+import {useDate, useStorage} from "../../import/CustomHooks";
+import {Btn, DaySave, Loading} from "../../import/CustomComponents";
+import {CustomIcons} from "../../import/CustomIcons";
+import {Grid2, Menu, MenuItem, FormControl, Select, InputLabel, Popover,TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, AdapterMoment, DesktopDatePicker, DesktopTimePicker, LocalizationProvider, PopupState, bindTrigger, bindMenu, bindPopover} from "../../import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -477,14 +477,14 @@ export const MoneySave = () => {
   };
 
   // 9. header ------------------------------------------------------------------------------------>
-  /* const headerNode = () => (
+  const headerNode = () => (
     <Header />
-  ); */
+  );
 
   // 10. navBar ----------------------------------------------------------------------------------->
-  /* const navBarNode = () => (
+  const navBarNode = () => (
     <NavBar />
-  ); */
+  );
 
   // 11. day -------------------------------------------------------------------------------------->
   const daySaveNode = () => (
@@ -511,8 +511,8 @@ export const MoneySave = () => {
   // 15. return ----------------------------------------------------------------------------------->
   return (
     <React.Fragment>
-      {/* {headerNode()} */}
-      {/* {navBarNode()} */}
+      {headerNode()}
+      {navBarNode()}
       {daySaveNode()}
       {LOADING ? loadingNode() : tableNode()}
       {btnNode()}

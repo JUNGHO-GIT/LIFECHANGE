@@ -1,17 +1,14 @@
 // TweakDemo.jsx
 
-import moment from "moment-timezone";
 import axios from "axios";
 import numeral from 'numeral';
 import {NumericFormat} from "react-number-format";
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
-import {Paging} from "assets/components/Paging";
-import {Loading} from "assets/components/Loading";
-import {Container, Card, Paper, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Button} from "import/CustomMuis";
-import {Grid2} from "import/CustomMuis";
+import {Header} from "../architecture/Header";
+import {NavBar} from  "../architecture/NavBar";
+import {Paging, Loading} from "../../import/CustomComponents";
+import {Container, Card, Paper, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Button, Grid2} from "../../import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakDemo = () => {

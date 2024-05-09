@@ -4,13 +4,13 @@ import moment from "moment-timezone";
 import axios from "axios";
 import Calendar from "react-calendar";
 import React, {useState, useEffect} from "react";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
+import {Header} from "../architecture/Header";
+import {NavBar} from "../architecture/NavBar";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useStorage} from "import/CustomHooks";
-import {Loading} from "assets/components/Loading";
-import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
-import {CustomIcons} from "import/CustomIcons";
+import {useStorage} from "../../import/CustomHooks";
+import {Loading} from "../../import/CustomComponents";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "../../import/CustomMuis";
+import {CustomIcons} from "../../import/CustomIcons";
 
 // ------------------------------------------------------------------------------------------------>
 export const CalendarList = () => {

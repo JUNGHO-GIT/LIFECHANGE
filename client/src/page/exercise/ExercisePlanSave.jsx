@@ -1,18 +1,15 @@
 // ExercisePlanSave.jsx
 
-import moment from "moment-timezone";
 import axios from "axios";
 import React, {useState, useEffect} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {NumericFormat} from "react-number-format";
-import {percent} from "assets/js/percent.js";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
-import {useDate} from "assets/hooks/useDate";
-import {useTime} from "assets/hooks/useTime";
-import {useStorage} from "import/CustomHooks";
-import {DaySave, Btn, Loading} from "import/CustomComponents";
-import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "import/CustomMuis";
+import {percent} from "../../assets/js/percent";
+import {Header} from "../architecture/Header";
+import {NavBar} from "../architecture/NavBar";
+import {useTime, useDate, useStorage} from "../../import/CustomHooks";
+import {DaySave, Btn, Loading} from "../../import/CustomComponents";
+import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "../../import/CustomMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const ExercisePlanSave = () => {

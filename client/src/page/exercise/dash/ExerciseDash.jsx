@@ -1,8 +1,8 @@
 // ExerciseDash.jsx
 
 import React from "react";
-import {Header} from "page/architecture/Header";
-import {NavBar} from "page/architecture/NavBar";
+import {Header} from "../../architecture/Header";
+import {NavBar} from "../../architecture/NavBar";
 import {ExerciseDashScatter} from "./ExerciseDashScatter";
 import {ExerciseDashPie} from "./ExerciseDashPie";
 import {ExerciseDashLine} from "./ExerciseDashLine";

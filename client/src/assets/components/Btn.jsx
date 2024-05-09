@@ -2,7 +2,7 @@
 
 import React from "react";
 import moment from "moment-timezone";
-import {Button, Container, Paper, Grid2} from "import/CustomMuis";
+import {Button, Container, Paper, Grid2} from "../../import/CustomMuis";
 
 // 11. button ------------------------------------------------------------------------------------->
 const Btn = ({

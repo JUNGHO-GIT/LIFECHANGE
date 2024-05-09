@@ -67,16 +67,6 @@ import {TweakDataset} from "./page/tweak/TweakDataset";
 import {TweakDemo} from "./page/tweak/TweakDemo";
 
 // ------------------------------------------------------------------------------------------------>
-const User = () => (
-  <React.Fragment>
-    <Routes>
-      <Route path="/signup" element={<UserSignup />} />
-      <Route path="/login" element={<UserLogin />} />
-    </Routes>
-  </React.Fragment>
-);
-
-// ------------------------------------------------------------------------------------------------>
 const Calendar = () => (
   <React.Fragment>
     <Routes>
@@ -143,6 +133,16 @@ const Sleep = () => (
       <Route path="/list" element={<SleepList />} />
       <Route path="/detail" element={<SleepDetail />} />
       <Route path="/save" element={<SleepSave />} />
+    </Routes>
+  </React.Fragment>
+);
+
+// ------------------------------------------------------------------------------------------------>
+const User = () => (
+  <React.Fragment>
+    <Routes>
+      <Route path="/signup" element={<UserSignup />} />
+      <Route path="/login" element={<UserLogin />} />
     </Routes>
   </React.Fragment>
 );
