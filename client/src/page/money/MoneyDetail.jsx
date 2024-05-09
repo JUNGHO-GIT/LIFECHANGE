@@ -6,16 +6,16 @@ import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading} from "../../import/ImportComponents";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
+import {TextField, Typography, InputAdornment, InputLabel} from "../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
+import {Popover, bindPopover} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
+import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -129,9 +129,7 @@ export const MoneyDetail = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const adornment = () => (
-      <InputAdornment position={"start"}><i className='bx bx-won'></i></InputAdornment>
-    );
+    // 7-1. title
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -139,6 +137,7 @@ export const MoneyDetail = () => {
         </Typography>
       </React.Fragment>
     );
+    // 7-2. date
     const dateSection = () => (
       <React.Fragment>
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -158,77 +157,176 @@ export const MoneyDetail = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
+    const countSection = () => (
+      <React.Fragment>
+        <TextField
+          type={"text"}
+          id={"sectionCnt"}
+          label={"항목수"}
+          variant={"outlined"}
+          size={"small"}
+          value={COUNT?.sectionCnt}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+            )
+          }}
+        ></TextField>
+      </React.Fragment>
+    );
     const totalSection = () => (
       <React.Fragment>
-        <Box sx={{display: "grid", placeItems: "center"}}>
+        <Card variant={"outlined"} className={"p-20"}>
           <TextField
             label={"총 수입"}
             size={"small"}
-            value={`${numeral(OBJECT.money_total_in).format('0,0')}`}
+            value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
             variant={"outlined"}
             className={"mt-6 mb-6"}
             InputProps={{
               readOnly: true,
-              startAdornment: adornment()
+              startAdornment: (
+                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
           ></TextField>
           <TextField
             label={"총 지출"}
             size={"small"}
-            value={`${numeral(OBJECT.money_total_out).format('0,0')}`}
+            value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
             variant={"outlined"}
             className={"mt-6 mb-6"}
             InputProps={{
               readOnly: true,
-              startAdornment: adornment()
+              startAdornment: (
+                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
           ></TextField>
           <TextField
             label={"총 자산"}
             size={"small"}
-            value={`${numeral(OBJECT.money_property).format('0,0')}`}
+            value={`${numeral(OBJECT?.money_property).format('0,0')}`}
             variant={"outlined"}
             className={"mt-6 mb-6"}
             InputProps={{
               readOnly: true,
-              startAdornment: adornment()
+              startAdornment: (
+                <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+              )
             }}
           ></TextField>
-        </Box>
+        </Card>
+      </React.Fragment>
+    );
+    const badgeSection = (i) => (
+      <React.Fragment>
+        <Badge
+          badgeContent={i + 1}
+          color={"primary"}
+          showZero={true}
+        ></Badge>
       </React.Fragment>
     );
     const dropdownSection = (id, sectionId, index) => (
-      <PopupState variant={"popover"} popupId={"popup"}>
-        {(popupState) => (
-          <React.Fragment>
-            <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={index + 1} color={"primary"} showZero={true}></Badge>
-            </IconButton>
-            <Menu {...bindMenu(popupState)}>
-              <MenuItem onClick={() => {
-                flowDelete(id, sectionId)
-              }}>
-                <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-                삭제
-              </MenuItem>
-              <MenuItem onClick={() => {
-                SEND.startDt = DATE.startDt;
-                SEND.endDt = DATE.endDt;
-                navParam(SEND.toUpdate, {
-                  state: SEND,
-                });
-              }}>
-                <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
-                수정
-              </MenuItem>
-              <MenuItem>
-                <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
-                기타
-              </MenuItem>
-            </Menu>
-          </React.Fragment>
-        )}
-      </PopupState>
+      <React.Fragment>
+        <PopupState variant={"popover"} popupId={"popup"}>
+          {(popupState) => (
+            <Box className={"mt-n10 me-n10"}>
+              <CustomIcons name={"MdOutlineMoreVert"} className={"w-24 h-24 dark"} {...bindTrigger(popupState)} />
+              <Menu {...bindMenu(popupState)}>
+                <MenuItem onClick={() => {
+                  flowDelete(id, sectionId)
+                }}>
+                  <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+                  삭제
+                </MenuItem>
+                <MenuItem onClick={() => {
+                  SEND.startDt = DATE.startDt;
+                  SEND.endDt = DATE.endDt;
+                  navParam(SEND.toUpdate, {
+                    state: SEND,
+                  });
+                }}>
+                  <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+                  수정
+                </MenuItem>
+                <MenuItem>
+                  <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+                  기타
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
+        </PopupState>
+      </React.Fragment>
+    );
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"}>
+          <Box className={"d-between mb-20"}>
+            {badgeSection(i)}
+            {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              label={"파트"}
+              type={"text"}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-m90 me-10"}
+              value={OBJECT?.money_section[i]?.money_part_val}
+              InputProps={{
+                readOnly: true,
+              }}
+            ></TextField>
+            <TextField
+              label={"타이틀"}
+              type={"text"}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-m90 ms-10"}
+              value={OBJECT?.money_section[i]?.money_title_val}
+              InputProps={{
+                readOnly: true,
+              }}
+            ></TextField>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              label={"금액"}
+              type={"text"}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-m220"}
+              value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                )
+              }}
+            ></TextField>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              label={"메모"}
+              type={"text"}
+              variant={"outlined"}
+              size={"small"}
+              className={"w-m220"}
+              value={OBJECT?.money_section[i]?.money_content}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
+                )
+              }}
+            ></TextField>
+          </Box>
+        </Card>
+      </React.Fragment>
     );
     const tableSection = () => (
       <React.Fragment>
@@ -236,64 +334,25 @@ export const MoneyDetail = () => {
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
-          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          <Divider variant={"middle"} className={"mb-20"}></Divider>
-          <Box className={"text-center mb-20"}>
+          <Box className={"d-center mb-20"}>
+            {countSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
             {totalSection()}
           </Box>
-          {OBJECT?.money_section?.map((section, index) => (
-            <React.Fragment key={index}>
-              <Card variant={"outlined"} className={"p-20"}>
-                <Box className={"d-right mb-20"}>
-                  {dropdownSection(OBJECT._id, section._id, index)}
-                </Box>
-                <Box className={"d-center mb-20"}>
-                  <TextField
-                    label={"분류"}
-                    size={"small"}
-                    value={section.money_part_val}
-                    variant={"outlined"}
-                    className={"me-5"}
-                    InputProps={{
-                      readOnly: true
-                    }}
-                  ></TextField>
-                  <TextField
-                    label={"항목"}
-                    size={"small"}
-                    value={section.money_title_val}
-                    variant={"outlined"}
-                    className={"ms-5"}
-                    InputProps={{
-                      readOnly: true
-                    }}
-                  ></TextField>
-                </Box>
-                <Box className={"d-center mb-20"}>
-                  <TextField
-                    label={"금액"}
-                    size={"small"}
-                    value={`${numeral(section.money_amount).format('0,0')}`}
-                    variant={"outlined"}
-                    className={"w-102"}
-                    InputProps={{
-                      readOnly: true,
-                      startAdornment: adornment()
-                    }}
-                  ></TextField>
-                </Box>
-              </Card>
-            </React.Fragment>
-          ))}
+          <Box className={"d-column"}>
+            {OBJECT?.money_section.map((item, i) => tableFragment(i))}
+          </Box>
         </Box>
       </React.Fragment>
     );
     return (
       <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
+        <Card className={"content-wrapper"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
@@ -301,7 +360,7 @@ export const MoneyDetail = () => {
               </Grid2>
             </Grid2>
           </Container>
-        </Paper>
+        </Card>
       </React.Fragment>
     );
   };

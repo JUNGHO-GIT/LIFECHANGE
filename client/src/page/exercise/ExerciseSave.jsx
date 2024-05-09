@@ -6,7 +6,7 @@ import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {DaySave, Btn, Loading} from "../../import/ImportComponents";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
@@ -117,7 +117,7 @@ export const ExerciseSave = () => {
     let totalVolume = 0;
     let totalTime = 0;
 
-    const updatedSections = OBJECT.exercise_section.map((section) => {
+    const updatedSections = OBJECT?.exercise_section.map((section) => {
       const {exercise_set, exercise_rep, exercise_kg} = section;
       const sectionVolume = exercise_set * exercise_rep * exercise_kg;
 
@@ -142,7 +142,7 @@ export const ExerciseSave = () => {
       exercise_total_cardio: `${Math.floor(totalTime / 60).toString().padStart(2, '0')}:${(totalTime % 60).toString().padStart(2, '0')}`
     }));
 
-  }, [JSON.stringify(OBJECT.exercise_section)]);
+  }, [JSON.stringify(OBJECT?.exercise_section)]);
 
   // 3. flow -------------------------------------------------------------------------------------->
   const flowSave = async () => {
@@ -187,7 +187,7 @@ export const ExerciseSave = () => {
       }));
       if (newCount > 0) {
         let updatedSection = Array(newCount).fill(null).map((_, idx) =>
-          idx < OBJECT.exercise_section.length ? OBJECT.exercise_section[idx] : defaultSection
+          idx < OBJECT?.exercise_section.length ? OBJECT?.exercise_section[idx] : defaultSection
         );
         setOBJECT((prev) => ({
           ...prev,
@@ -513,7 +513,9 @@ export const ExerciseSave = () => {
     );
     const tableSection = () => (
       <React.Fragment>
-        {Array.from({length: COUNT.sectionCnt}, (_, i) => tableFragment(i))}
+        <Box className={"d-column"}>
+          {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
+        </Box>
       </React.Fragment>
     );
     const tableRemain = () => (

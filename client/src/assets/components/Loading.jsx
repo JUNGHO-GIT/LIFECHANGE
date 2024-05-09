@@ -2,7 +2,7 @@
 
 import {React} from "../../import/ImportReacts";
 import {Box} from "../../import/ImportMuis";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 
 // 14. loading ------------------------------------------------------------------------------------>
 export const Loading = ({

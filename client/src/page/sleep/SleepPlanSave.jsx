@@ -6,7 +6,7 @@ import {useStorage, useTime, useDate} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading, DaySave} from "../../import/ImportComponents";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
@@ -115,9 +115,7 @@ export const SleepPlanSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const adornment = () => (
-      <InputAdornment position={"end"}>시간</InputAdornment>
-    );
+    // 7-1. title
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -125,6 +123,7 @@ export const SleepPlanSave = () => {
         </Typography>
       </React.Fragment>
     );
+    // 7-2. date
     const dateSection = () => (
       <React.Fragment>
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -175,20 +174,20 @@ export const SleepPlanSave = () => {
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
-          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
           <Card variant={"outlined"} className={"p-20"}>
             <Box className={"d-right mb-20"}>
-              {dropdownSection(OBJECT._id, "", 0)}
+              {dropdownSection(OBJECT?._id, "", 0)}
             </Box>
             <Box className={"d-center mb-20"}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
                 <DesktopTimePicker
                   label={"취침 계획"}
                   minutesStep={1}
-                  value={moment(OBJECT.sleep_plan_night, "HH:mm")}
+                  value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
                   format={"HH:mm"}
                   timezone={"Asia/Seoul"}
                   views={['hours', 'minutes']}
@@ -206,7 +205,7 @@ export const SleepPlanSave = () => {
                 <DesktopTimePicker
                   label={"기상"}
                   minutesStep={1}
-                  value={moment(OBJECT.sleep_plan_morning, "HH:mm")}
+                  value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
                   format={"HH:mm"}
                   timezone={"Asia/Seoul"}
                   views={['hours', 'minutes']}
@@ -227,11 +226,13 @@ export const SleepPlanSave = () => {
                   size={"medium"}
                   id={"sleep_time"}
                   name={"sleep_time"}
-                  value={OBJECT.sleep_plan_time}
+                  value={OBJECT?.sleep_plan_time}
                   InputProps={{
-                    readOnly: true,
-                    endAdornment: adornment()
-                  }}
+                  readOnly: true,
+                  endAdornment: (
+                    <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                  )
+                }}
                 ></TextField>
               </LocalizationProvider>
             </Box>
@@ -291,7 +292,6 @@ export const SleepPlanSave = () => {
     <React.Fragment>
       {headerNode()}
       {navBarNode()}
-      {daySaveNode()}
       {LOADING ? loadingNode() : tableNode()}
       {btnNode()}
     </React.Fragment>

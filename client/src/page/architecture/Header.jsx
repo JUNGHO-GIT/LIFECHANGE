@@ -7,7 +7,7 @@ import {SideBar} from "./SideBar";
 import Grid2 from '@mui/material/Unstable_Grid2';
 import {Container, Card, Paper, Box, Menu, MenuItem} from "@mui/material";
 import PopupState, {bindTrigger, bindMenu} from "material-ui-popup-state";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 
 // ------------------------------------------------------------------------------------------------>
 export const Header = () => {

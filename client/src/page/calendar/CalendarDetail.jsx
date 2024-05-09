@@ -5,7 +5,7 @@ import {axios, NumericFormat, InputMask} from "../../import/ImportLibs";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {DaySave, Btn, Loading} from "../../import/ImportComponents";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
@@ -162,7 +162,7 @@ export const CalendarDetail = () => {
       }));
       if (newCount > 0) {
         let updatedSection = Array(newCount).fill(null).map((_, idx) => (
-          idx < OBJECT.calendar_section.length ? OBJECT.calendar_section[idx] : {...defaultSection}
+          idx < OBJECT?.calendar_section.length ? OBJECT?.calendar_section[idx] : {...defaultSection}
         ));
         setOBJECT((prev) => ({
           ...prev,

@@ -6,7 +6,7 @@ import {useStorage, useTime, useDate} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading} from "../../import/ImportComponents";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
@@ -117,6 +117,7 @@ export const SleepSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    // 7-1. title
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -124,6 +125,7 @@ export const SleepSave = () => {
         </Typography>
       </React.Fragment>
     );
+    // 7-2. date
     const dateSection = () => (
       <React.Fragment>
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -144,12 +146,39 @@ export const SleepSave = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
-    const adornment = () => (
-      <InputAdornment position={"end"}>시간</InputAdornment>
+    const badgeSection = (i) => (
+      <React.Fragment>
+        <Badge
+          badgeContent={i + 1}
+          color={"primary"}
+          showZero={true}
+        ></Badge>
+      </React.Fragment>
+    );
+    const dropdownSection = (id, sectionId, index) => (
+      <React.Fragment>
+        <PopupState variant={"popover"} popupId={"popup"}>
+          {(popupState) => (
+            <Box className={"mt-n10 me-n10"}>
+              <CustomIcons name={"MdOutlineMoreVert"} className={"w-24 h-24 dark"} {...bindTrigger(popupState)} />
+              <Menu {...bindMenu(popupState)}>
+                <MenuItem>
+                  <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+                  기타
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
+        </PopupState>
+      </React.Fragment>
     );
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Card variant={"outlined"} className={"p-20"}>
+          <Box className={"d-between mb-20"}>
+            {badgeSection(i)}
+            {dropdownSection(OBJECT?._id, OBJECT?.sleep_section[i]._id, i)}
+          </Box>
           <Box className={"d-center mb-20"}>
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
               <DesktopTimePicker
@@ -203,7 +232,9 @@ export const SleepSave = () => {
                 value={OBJECT?.sleep_section[0]?.sleep_time}
                 InputProps={{
                   readOnly: true,
-                  endAdornment: adornment()
+                  endAdornment: (
+                    <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                  )
                 }}
               ></TextField>
             </LocalizationProvider>
@@ -217,11 +248,13 @@ export const SleepSave = () => {
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
-          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          {Array.from({length: 1}, (_, i) => tableFragment(i))}
+          <Box className={"d-column"}>
+            {OBJECT?.sleep_section.map((item, i) => tableFragment(i))}
+          </Box>
         </Box>
       </React.Fragment>
     );

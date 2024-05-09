@@ -51,7 +51,7 @@
 }
 [class$="MuiPickersLayout-contentWrapper"] {
   max-width: 220px !important;
-  max-height: 220px !important;
+  max-height: 230px !important;
 }
 [class$="MuiDialogActions-root"] {
   margin: 0px 0px 0px 0px !important;

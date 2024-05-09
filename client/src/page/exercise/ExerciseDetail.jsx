@@ -6,7 +6,7 @@ import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading} from "../../import/ImportComponents";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
@@ -174,7 +174,7 @@ export const ExerciseDetail = () => {
                 )}
                 <TableCell>
                   <p className={"del-btn"} onClick={() => (
-                    flowDelete(OBJECT._id, section._id)
+                    flowDelete(OBJECT?._id, section._id)
                   )}>x</p>
                 </TableCell>
               </TableRow>

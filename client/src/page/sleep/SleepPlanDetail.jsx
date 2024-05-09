@@ -6,7 +6,7 @@ import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading} from "../../import/ImportComponents";
-import {CustomIcons} from "../../import/ImportIcons";
+import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
@@ -115,9 +115,7 @@ export const SleepPlanDetail = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const adornment = () => (
-      <InputAdornment position={"end"}>시간</InputAdornment>
-    );
+    // 7-1. title
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -125,6 +123,7 @@ export const SleepPlanDetail = () => {
         </Typography>
       </React.Fragment>
     );
+    // 7-2. date
     const dateSection = () => (
       <React.Fragment>
         <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -177,13 +176,13 @@ export const SleepPlanDetail = () => {
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
-          <Divider variant={"middle"} className={"mb-20"}></Divider>
+          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
           <Card variant={"outlined"} className={"p-20"}>
             <Box className={"d-right mb-20"}>
-              {dropdownSection(OBJECT._id, "", 0)}
+              {dropdownSection(OBJECT?._id, "", 0)}
             </Box>
             <Box className={"d-center mb-20"}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
@@ -222,7 +221,9 @@ export const SleepPlanDetail = () => {
                   value={OBJECT?.sleep_plan_time}
                   InputProps={{
                     readOnly: true,
-                    endAdornment: adornment()
+                    endAdornment: (
+                      <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                    )
                   }}
                 ></TextField>
               </LocalizationProvider>
