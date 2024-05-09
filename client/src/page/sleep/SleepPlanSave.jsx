@@ -265,13 +265,6 @@ export const SleepPlanSave = () => {
     <NavBar />
   );
 
-  // 11. day -------------------------------------------------------------------------------------->
-  const daySaveNode = () => (
-    <DaySave DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      part={"sleep"} plan={"plan"} type={"save"}
-    />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}

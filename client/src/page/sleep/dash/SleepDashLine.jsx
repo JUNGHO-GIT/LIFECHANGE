@@ -9,7 +9,6 @@ import {Grid2, Container, Card, Paper, TextField} from "../../../import/ImportMu
 import {Box, Badge, Menu, MenuItem} from "../../../import/ImportMuis";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../../import/ImportMuis";
 import {Line, LineChart} from "recharts";
 import {XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
@@ -208,7 +207,7 @@ export const SleepDashLine = () => {
     <React.Fragment>
       <PopDown
         elementId={"popChild"}
-        display={
+        contents={
           <React.Fragment>
             {["취침", "기상", "수면"]?.map((key, index) => (
               <FormGroup key={index} className={"p-5 pe-10"}>
@@ -227,9 +226,9 @@ export const SleepDashLine = () => {
           </React.Fragment>
         }
       >
-        {popupProps => (
-          <IconButton onClick={(e) => {popupProps.openPopup(e.currentTarget)}} id={"popChild"}>
-            <CustomIcons name={"MdMoreVert"} className={"w-24 h-24 dark"} />
+        {popProps => (
+          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
           </IconButton>
         )}
       </PopDown>

@@ -353,13 +353,6 @@ export const CalendarDetail = () => {
     <NavBar />
   );
 
-  // 11. day -------------------------------------------------------------------------------------->
-  const daySaveNode = () => (
-    <DaySave DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      part={"calendar"} plan={""} type={"detail"}
-    />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
@@ -380,7 +373,6 @@ export const CalendarDetail = () => {
     <React.Fragment>
       {headerNode()}
       {navBarNode()}
-      {daySaveNode()}
       {LOADING ? loadingNode() : tableNode()}
       {btnNode()}
     </React.Fragment>

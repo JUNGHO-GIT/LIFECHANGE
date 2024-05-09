@@ -5,7 +5,7 @@ import {Popover, bindPopover, Box} from "../../import/ImportMuis";
 import {usePopupState} from 'material-ui-popup-state/hooks';
 
 // ------------------------------------------------------------------------------------------------>
-export const PopUp = ({ elementId, display, children }) => {
+export const PopUp = ({ elementId, contents, children }) => {
 
   const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
 
@@ -44,7 +44,7 @@ export const PopUp = ({ elementId, display, children }) => {
           }
         }}
       >
-        {display}
+        {contents}
       </Popover>
     </Box>
   );

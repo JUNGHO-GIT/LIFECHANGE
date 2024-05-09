@@ -5,9 +5,9 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, DaySave, Loading, PopUp} from "../../import/ImportComponents";
+import {Btn, DaySave, Loading, PopDown, PopUp} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
-import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
+import {Grid2, Container, Card, Paper, Icon} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, InputAdornment, InputLabel} from "../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../import/ImportMuis";
@@ -100,11 +100,6 @@ export const MoneySave = () => {
     }));
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
-
-  // 2-3. useEffect ------------------------------------------------------------------------------->
-  useEffect(() => {
-    console.log("OBJECT", JSON.stringify(OBJECT, null, 2));
-  }, [OBJECT]);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {
@@ -211,13 +206,13 @@ export const MoneySave = () => {
         <React.Fragment>
           <PopUp
             elementId={"sectionCnt"}
-            display={
+            contents={
               <Typography variant={"body2"} className={"p-10"}>
                 0이상 10이하의 숫자만 입력하세요.
               </Typography>
             }
           >
-            {popupProps => (
+            {popProps => (
               <TextField
                 type={"text"}
                 id={"sectionCnt"}
@@ -235,10 +230,10 @@ export const MoneySave = () => {
                   const newValInt = Number(e.target.value);
                   const newValStr = String(e.target.value);
                   if (newValInt < 0) {
-                    popupProps.openPopup(e.currentTarget);
+                    popProps.openPopup(e.currentTarget);
                   }
                   else if (newValInt > 10) {
-                    popupProps.openPopup(e.currentTarget);
+                    popProps.openPopup(e.currentTarget);
                   }
                   else if (newValStr === "") {
                     handlerCount("");
@@ -308,40 +303,44 @@ export const MoneySave = () => {
         </Card>
       </React.Fragment>
     );
-    // 7-5. badge
-    const badgeSection = (i) => (
-      <React.Fragment>
-        <Badge
-          badgeContent={i + 1}
-          color={"primary"}
-          showZero={true}
-        ></Badge>
-      </React.Fragment>
-    );
-    // 7-6. dropdown
+    // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
       <React.Fragment>
-        <PopupState variant={"popover"} popupId={"popup"}>
-          {(popupState) => (
-            <Box className={"mt-n10 me-n10"}>
-              <CustomIcons name={"MdOutlineMoreVert"} className={"w-24 h-24 dark"} {...bindTrigger(popupState)} />
-              <Menu {...bindMenu(popupState)}>
-                <MenuItem>
-                  <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-                  기타
-                </MenuItem>
-              </Menu>
-            </Box>
-          )}
-        </PopupState>
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          ></Badge>
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-center p-10"}>
+                <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+                기타
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
+          <React.Fragment>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          </React.Fragment>
+        )}
+        </PopDown>
       </React.Fragment>
     );
-    // 7-7. table
+    // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
-          <Box className={"d-between mb-20"}>
-            {badgeSection(i)}
+          <Box className={"d-between mt-n15 mb-20"}>
             {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
           </Box>
           <Box className={"d-center mb-20"}>
@@ -464,7 +463,7 @@ export const MoneySave = () => {
                   ))
                 }));
               }}
-            ></TextField>
+            />
           </Box>
         </Card>
       </React.Fragment>
@@ -516,13 +515,6 @@ export const MoneySave = () => {
   // 10. navBar ----------------------------------------------------------------------------------->
   const navBarNode = () => (
     <NavBar />
-  );
-
-  // 11. day -------------------------------------------------------------------------------------->
-  const daySaveNode = () => (
-    <DaySave DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      part={"money"} plan={""} type={"save"}
-    />
   );
 
   // 13. btn -------------------------------------------------------------------------------------->

@@ -383,13 +383,6 @@ export const FoodSave = () => {
     <NavBar />
   );
 
-  // 11. day -------------------------------------------------------------------------------------->
-  const daySaveNode = () => (
-    <DaySave DATE={DATE} setDATE={setDATE} DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-      part={"food"} plan={""} type={"save"}
-    />
-  );
-
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
@@ -410,7 +403,6 @@ export const FoodSave = () => {
     <React.Fragment>
       {headerNode()}
       {navBarNode()}
-      {daySaveNode()}
       {LOADING ? loadingNode() : tableNode()}
       {btnNode()}
     </React.Fragment>

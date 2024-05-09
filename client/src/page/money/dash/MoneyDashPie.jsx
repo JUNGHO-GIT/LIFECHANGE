@@ -3,7 +3,7 @@
 import {React, useState, useEffect} from "../../../import/ImportReacts";
 import {axios, moment} from "../../../import/ImportLibs";
 import {handlerY} from "../../../import/ImportLogics";
-import {Btn, Loading} from "../../../import/ImportComponents";
+import {Btn, Loading, PopDown} from "../../../import/ImportComponents";
 import {CustomIcons} from "../../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis";
@@ -509,13 +509,11 @@ export const MoneyDashPie = () => {
 
   // 7-3. dropdown -------------------------------------------------------------------------------->
   const dropdownSection3 = () => (
-    <PopupState variant={"popover"} popupId={"popup"}>
-      {(popupState) => (
-        <React.Fragment>
-          <IconButton {...bindTrigger(popupState)}>
-            <CustomIcons name={"MdMoreVert"} className={"w-24 h-24 dark"} />
-          </IconButton>
-          <Menu {...bindMenu(popupState)}>
+    <React.Fragment>
+      <PopDown
+        elementId={"popChild"}
+        contents={
+          <React.Fragment>
             {["in", "out"]?.map((key, index) => (
               <FormGroup key={index} className={"p-5 pe-10"}>
                 <FormControlLabel control={<Switch checked={LINE.includes(key)} onChange={() => {
@@ -529,10 +527,16 @@ export const MoneyDashPie = () => {
                 </FormControlLabel>
               </FormGroup>
             ))}
-          </Menu>
-        </React.Fragment>
-      )}
-    </PopupState>
+          </React.Fragment>
+        }
+      >
+        {popProps => (
+          <IconButton onClick={(e) => {popProps.openPopup(e.currentTarget)}} id={"popChild"}>
+            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+          </IconButton>
+        )}
+      </PopDown>
+    </React.Fragment>
   );
 
   // 14. loading ---------------------------------------------------------------------------------->
