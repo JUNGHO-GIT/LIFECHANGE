@@ -1,6 +1,6 @@
 // Button.jsx
 
-import React from "react";
+import {React} from "../../import/ImportReacts";
 import moment from "moment-timezone";
 import {Button, Container, Paper, Grid2} from "../../import/ImportMuis";
 

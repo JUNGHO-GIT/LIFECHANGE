@@ -1,6 +1,6 @@
 // Paging.jsx
 
-import React from "react";
+import {React} from "../../import/ImportReacts";
 import {Container, Paper, TablePagination} from "../../import/ImportMuis";
 import {Grid2} from "../../import/ImportMuis";
 

@@ -1,6 +1,6 @@
 // compare.js
 
-import React from "react";
+import {React} from "../../import/ImportReacts";
 
 // ------------------------------------------------------------------------------------------------>
 export const compare = (

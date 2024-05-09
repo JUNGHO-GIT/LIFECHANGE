@@ -5,7 +5,7 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, DaySave, Loading} from "../../import/ImportComponents";
+import {Btn, DaySave, Loading, Pop} from "../../import/ImportComponents";
 import {CustomIcons} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
@@ -177,7 +177,7 @@ export const MoneySave = () => {
       <InputAdornment position={"start"}><CustomIcons name={"BiWon"} className={"w-14 h-14 dark"} /></InputAdornment>
     );
     const adornment3 = () => (
-      <InputAdornment position={"start"}><CustomIcons name={"BiComment"} className={"w-14 h-14 dark"} /></InputAdornment>
+      <InputAdornment position={"start"}><CustomIcons name={"BiChat"} className={"w-14 h-14 dark"} /></InputAdornment>
     );
     const countSection = () => {
       const handlerCount = (e) => {
@@ -212,73 +212,50 @@ export const MoneySave = () => {
       };
       return (
         <React.Fragment>
-          <PopupState variant={"popover"} popupId={"popupState"}>
-            {(popupState) => (
-              <Box>
-                <TextField
-                  type={"text"}
-                  id={"sectionCnt"}
-                  label={"항목수"}
-                  variant={"outlined"}
-                  size={"small"}
-                  value={COUNT?.sectionCnt}
-                  InputProps={{
-                    readOnly: false,
-                    startAdornment: adornment1()
-                  }}
-                  onChange={(e) => {
-                    const newValInt = Number(e.target.value);
-                    const newValStr = String(e.target.value);
-                    if (newValInt < 0) {
-                      popupState.open(e.currentTarget);
-                      return;
-                    }
-                    else if (newValInt > 10) {
-                      popupState.open(e.currentTarget);
-                      return;
-                    }
-                    else if (newValStr === "") {
-                      handlerCount("");
-                    }
-                    else if (isNaN(newValInt) || newValStr === "NaN") {
-                      handlerCount("0");
-                    }
-                    else if (newValStr.startsWith("0")) {
-                      handlerCount(newValStr.replace(/^0+/, ""));
-                    }
-                    else {
-                      handlerCount(newValStr);
-                    }
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                />
-                <Popover
-                  {...bindPopover(popupState)}
-                  id={"popover"}
-                  open={popupState.isOpen}
-                  anchorEl={popupState.anchorEl}
-                  onClose={() => {
-                    popupState.close();
-                    document?.getElementById('sectionCnt')?.focus();
-                  }}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center'
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 130
-                  }}
-                >
-                  <Typography variant={"body1"} sx={{ p: 2 }}>
-                    0이상 10이하의 숫자만 입력하세요.
-                  </Typography>
-                </Popover>
-              </Box>
+          <Pop
+            elementId="sectionCnt"
+            alertText="0이상 10이하의 숫자만 입력하세요."
+          >
+            {popupProps => (
+              <TextField
+                type={"text"}
+                id={"sectionCnt"}
+                label={"항목수"}
+                variant={"outlined"}
+                size={"small"}
+                value={COUNT?.sectionCnt}
+                InputProps={{
+                  readOnly: false,
+                  startAdornment: adornment1()
+                }}
+                onChange={(e) => {
+                  const newValInt = Number(e.target.value);
+                  const newValStr = String(e.target.value);
+                  if (newValInt < 0) {
+                    popupProps.openPopup(e.currentTarget);
+                  }
+                  else if (newValInt > 10) {
+                    popupProps.openPopup(e.currentTarget);
+                  }
+                  else if (newValStr === "") {
+                    handlerCount("");
+                  }
+                  else if (isNaN(newValInt) || newValStr === "NaN") {
+                    handlerCount("0");
+                  }
+                  else if (newValStr.startsWith("0")) {
+                    handlerCount(newValStr.replace(/^0+/, ""));
+                  }
+                  else {
+                    handlerCount(newValStr);
+                  }
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              />
             )}
-          </PopupState>
+          </Pop>
         </React.Fragment>
       );
     };
@@ -391,7 +368,7 @@ export const MoneySave = () => {
               type={"text"}
               variant={"outlined"}
               size={"small"}
-              value={OBJECT?.money_section[i]?.money_amount}
+              value={`${numeral(OBJECT?.money_section[i]?.money_amount).format('0,0')}`}
               InputProps={{
                 startAdornment: adornment2()
               }}

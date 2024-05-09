@@ -1,6 +1,6 @@
 // Loading.jsx
 
-import React from "react";
+import {React} from "../../import/ImportReacts";
 import {Box} from "../../import/ImportMuis";
 import {CustomIcons} from "../../import/ImportIcons";
 
