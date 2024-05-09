@@ -1,8 +1,7 @@
 // MoneyDash.jsx
 
-import React from "react";
-import {Header} from "../../architecture/Header";
-import {NavBar} from "../../architecture/NavBar";
+import {React} from "../../../import/ImportReacts";
+import {Header, NavBar} from "../../../import/ImportLayouts";
 import {MoneyDashBar} from "./MoneyDashBar";
 import {MoneyDashPie} from "./MoneyDashPie";
 import {MoneyDashLine} from "./MoneyDashLine";

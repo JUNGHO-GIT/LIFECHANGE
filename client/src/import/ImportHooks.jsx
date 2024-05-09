@@ -1,4 +1,4 @@
-// CustomHooks.jsx
+// ImportHooks.jsx
 
 import {useDate} from "../assets/hooks/useDate";
 import {useTime} from "../assets/hooks/useTime";

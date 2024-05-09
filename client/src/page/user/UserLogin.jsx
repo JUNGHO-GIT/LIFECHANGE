@@ -1,13 +1,16 @@
 // UserLogin.jsx
 
-import axios from "axios";
-import React, {useState, useEffect} from "react";
-import {percent} from "../../assets/js/percent";
-import {useNavigate, useLocation} from "react-router-dom";
-import {Header} from "../architecture/Header";
-import {NavBar} from "../architecture/NavBar";
-import {Btn, Loading} from "../../import/CustomComponents.jsx";
-import {Grid2, Menu, MenuItem, TextField, Typography, InputAdornment, Container, Card, Paper, Box, Badge, Divider, IconButton, Button, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from "../../import/CustomMuis";
+import {React, useState, useNavigate} from "../../import/ImportReacts";
+import {axios} from "../../import/ImportLibs";
+import {percent} from "../../import/ImportLogics";
+import {Header, NavBar} from "../../import/ImportLayouts";
+import {Btn, Loading} from "../../import/ImportComponents.jsx";
+import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
+import {TableContainer, Table} from "../../import/ImportMuis";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
+import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
+import {IconButton, Button, Divider} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const UserLogin = () => {

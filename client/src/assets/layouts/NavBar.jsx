@@ -1,15 +1,9 @@
 // NavBar.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts";
-import {useLocation} from "react-router-dom";
+import {React, useState, useLocation, useEffect} from "../../import/ImportReacts";
 import {dataArray} from "../../import/ImportLogics";
-import Grid2 from '@mui/material/Unstable_Grid2';
-import {Container, Card, Paper, Box, Menu, MenuItem} from "@mui/material";
-import PopupState, {bindTrigger, bindMenu} from "material-ui-popup-state";
-import smile1 from "../../assets/images/smile1.png";
-import smile2 from "../../assets/images/smile2.png";
-import smile3 from "../../assets/images/smile3.png";
-import smile4 from "../../assets/images/smile4.png";
+import {Grid2, Container, Card, Paper, Box, Menu, MenuItem} from "../../import/ImportMuis";
+import {smile1, smile2, smile3, smile4} from "../../import/ImportImages";
 
 // ------------------------------------------------------------------------------------------------>
 export const NavBar = () => {

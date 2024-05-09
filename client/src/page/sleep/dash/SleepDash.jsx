@@ -1,8 +1,7 @@
 // SleepDash.jsx
 
-import React from "react";
-import {Header} from "../../architecture/Header";
-import {NavBar} from "../../architecture/NavBar";
+import {React} from "../../../import/ImportReacts";
+import {Header, NavBar} from "../../../import/ImportLayouts";
 import {SleepDashBar} from "./SleepDashBar";
 import {SleepDashLine} from "./SleepDashLine";
 import {SleepDashAvg} from "./SleepDashAvg";

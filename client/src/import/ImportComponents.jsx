@@ -1,4 +1,4 @@
-// CustomComponents.jsx
+// ImportComponents.jsx
 
 import {Btn} from "../assets/components/Btn";
 import {DayList} from "../assets/components/DayList";

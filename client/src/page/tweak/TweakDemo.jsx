@@ -1,14 +1,15 @@
 // TweakDemo.jsx
 
-import axios from "axios";
-import numeral from 'numeral';
-import {NumericFormat} from "react-number-format";
-import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
-import {Header} from "../architecture/Header";
-import {NavBar} from  "../architecture/NavBar";
-import {Paging, Loading} from "../../import/CustomComponents";
-import {Container, Card, Paper, Table, TableHead, TableBody, TableCell, TableContainer, TableRow, Box, Button, Grid2} from "../../import/CustomMuis";
+import {React, useState, useEffect, useNavigate} from "../../import/ImportReacts";
+import {axios, numeral, NumericFormat} from "../../import/ImportLibs";
+import {Header, NavBar} from "../../import/ImportLayouts";
+import {Paging, Loading} from "../../import/ImportComponents";
+import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
+import {TableContainer, Table} from "../../import/ImportMuis";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
+import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
+import {IconButton, Button, Divider} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakDemo = () => {

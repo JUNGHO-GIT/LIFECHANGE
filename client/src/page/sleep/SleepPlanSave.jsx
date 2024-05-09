@@ -1,23 +1,21 @@
 // SleepPlanSave.jsx
 
-import moment from "moment-timezone";
-import axios from "axios";
-import React, {useState, useEffect} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
-import {percent} from "../../assets/js/percent";
-import {Header} from "../architecture/Header";
-import {NavBar} from "../architecture/NavBar";
-import {useDate, useStorage, useTime} from "../../import/CustomHooks";
-import {DaySave, Btn, Loading} from "../../import/CustomComponents";
-import {Grid2} from "../../import/CustomMuis";
-import {Menu, MenuItem} from "../../import/CustomMuis";
-import {TextField, Typography, InputAdornment} from "../../import/CustomMuis";
-import {Container, Card, Paper, Box, Badge, Divider, IconButton, Button} from "../../import/CustomMuis";
-import {AdapterMoment} from "../../import/CustomMuis";
-import {LocalizationProvider} from "../../import/CustomMuis";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/CustomMuis";
-import {PopupState, bindTrigger, bindMenu } from "../../import/CustomMuis";
-import {CustomIcons} from "../../import/CustomIcons";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
+import {axios, moment} from "../../import/ImportLibs";
+import {useStorage, useTime, useDate} from "../../import/ImportHooks";
+import {percent} from "../../import/ImportLogics";
+import {Header, NavBar} from "../../import/ImportLayouts";
+import {Btn, Loading, DaySave} from "../../import/ImportComponents";
+import {CustomIcons} from "../../import/ImportIcons";
+import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
+import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
+import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TableContainer, Table} from "../../import/ImportMuis";
+import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
+import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
+import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
+import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const SleepPlanSave = () => {

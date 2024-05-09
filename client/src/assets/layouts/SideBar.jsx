@@ -1,8 +1,7 @@
 // SideBar.jsx
 
-import {React, useState, useEffect} from "../../import/ImportReacts";
-import moment from "moment-timezone";
-import {useNavigate, useLocation} from "../../import/ImportReacts";
+import {React, useState, useEffect, useNavigate, useLocation} from "../../import/ImportReacts";
+import {moment} from "../../import/ImportLibs";
 import {dataArray} from "../../import/ImportLogics";
 import {Box, Button, Collapse, Divider, SwipeableDrawer, List, ListItemButton, ListItemIcon, ListItemText} from "../../import/ImportMuis";
 import {CustomIcons} from "../../import/ImportIcons";
