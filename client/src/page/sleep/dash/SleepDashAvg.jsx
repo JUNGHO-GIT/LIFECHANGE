@@ -6,7 +6,7 @@ import {handlerY} from "../../../import/ImportLogics";
 import {Btn, Loading} from "../../../import/ImportComponents";
 import {CustomIcons} from "../../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../../import/ImportMuis";
-import {Box, Badge, Menu, MenuItem} from "../../../import/ImportMuis";
+import {Box, Badge, Menu, MenuItem, TextField} from "../../../import/ImportMuis";
 import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../../import/ImportMuis";
 import {IconButton, Button, Divider} from "../../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../../import/ImportMuis";
@@ -187,15 +187,22 @@ export const SleepDashAvg = () => {
 
   // 7-1. dropdown -------------------------------------------------------------------------------->
   const dropdownSection1 = () => (
-    <FormControl size={"small"} variant={"outlined"}>
-      <Select id={"section"} value={SECTION} className={"form-select"}
+    <TextField
+      select={true}
+      type={"text"}
+      size={"small"}
+      id={"section"}
+      name={"section"}
+      className={"w-90"}
+      variant={"outlined"}
+      value={SECTION}
       onChange={(e) => (
         setSECTION(e.target.value)
-      )}>
-        <MenuItem value={"month"}>월간</MenuItem>
-        <MenuItem value={"year"}>연간</MenuItem>
-      </Select>
-    </FormControl>
+      )}
+    >
+      <MenuItem value={"month"}>월간</MenuItem>
+      <MenuItem value={"year"}>연간</MenuItem>
+    </TextField>
   );
 
   // 7-3. dropdown -------------------------------------------------------------------------------->

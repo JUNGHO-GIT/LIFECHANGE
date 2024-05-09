@@ -1,15 +1,13 @@
-// Pop.jsx
+// PopUp.jsx
 
 import {React} from "../../import/ImportReacts";
-import {Box, TextField, Typography} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
-import { usePopupState } from 'material-ui-popup-state/hooks';
+import {Popover, bindPopover, Box} from "../../import/ImportMuis";
+import {usePopupState} from 'material-ui-popup-state/hooks';
 
 // ------------------------------------------------------------------------------------------------>
-export const Pop = ({ children, elementId, alertText }) => {
+export const PopUp = ({ elementId, display, children }) => {
 
-  const popupState = usePopupState({ variant: 'popover', popupId: 'popupState' });
+  const popupState = usePopupState({ variant: "popover", popupId: "popupState" });
 
   return (
     <Box>
@@ -22,7 +20,7 @@ export const Pop = ({ children, elementId, alertText }) => {
       })}
       <Popover
         {...bindPopover(popupState)}
-        id="popover"
+        id={"popover"}
         open={popupState.isOpen}
         anchorEl={popupState.anchorEl}
         onClose={() => {
@@ -35,12 +33,18 @@ export const Pop = ({ children, elementId, alertText }) => {
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 130
+          horizontal: 125
+        }}
+        slotProps={{
+          paper: {
+            style: {
+              border: '2px solid red',
+              boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)'
+            }
+          }
         }}
       >
-        <Typography variant="body1" sx={{ p: 2 }}>
-          {alertText}
-        </Typography>
+        {display}
       </Popover>
     </Box>
   );

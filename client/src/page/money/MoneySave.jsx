@@ -5,7 +5,7 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, DaySave, Loading, Pop} from "../../import/ImportComponents";
+import {Btn, DaySave, Loading, PopUp} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
@@ -175,6 +175,7 @@ export const MoneySave = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
+    // 7-3. count
     const countSection = () => {
       const handlerCount = (e) => {
         const newCount = Number(e);
@@ -208,9 +209,13 @@ export const MoneySave = () => {
       };
       return (
         <React.Fragment>
-          <Pop
-            elementId="sectionCnt"
-            alertText="0이상 10이하의 숫자만 입력하세요."
+          <PopUp
+            elementId={"sectionCnt"}
+            display={
+              <Typography variant={"body2"} className={"p-10"}>
+                0이상 10이하의 숫자만 입력하세요.
+              </Typography>
+            }
           >
             {popupProps => (
               <TextField
@@ -253,10 +258,11 @@ export const MoneySave = () => {
                 }}
               />
             )}
-          </Pop>
+          </PopUp>
         </React.Fragment>
       );
     };
+    // 7-4. total
     const totalSection = () => (
       <React.Fragment>
         <Card variant={"outlined"} className={"p-20"}>
@@ -272,7 +278,7 @@ export const MoneySave = () => {
                 <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
-          ></TextField>
+          />
           <TextField
             label={"총 지출"}
             size={"small"}
@@ -285,7 +291,7 @@ export const MoneySave = () => {
                 <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
-          ></TextField>
+          />
           <TextField
             label={"총 자산"}
             size={"small"}
@@ -298,10 +304,11 @@ export const MoneySave = () => {
                 <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
-          ></TextField>
+          />
         </Card>
       </React.Fragment>
     );
+    // 7-5. badge
     const badgeSection = (i) => (
       <React.Fragment>
         <Badge
@@ -311,6 +318,7 @@ export const MoneySave = () => {
         ></Badge>
       </React.Fragment>
     );
+    // 7-6. dropdown
     const dropdownSection = (id, sectionId, index) => (
       <React.Fragment>
         <PopupState variant={"popover"} popupId={"popup"}>
@@ -328,6 +336,7 @@ export const MoneySave = () => {
         </PopupState>
       </React.Fragment>
     );
+    // 7-7. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
@@ -336,65 +345,71 @@ export const MoneySave = () => {
             {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
           </Box>
           <Box className={"d-center mb-20"}>
-            <FormControl className={"w-m90 me-10"}>
-              <InputLabel>파트</InputLabel>
-              <Select
-                id={`money_part_idx-${i}`}
-                name={`money_part_idx-${i}`}
-                value={OBJECT?.money_section[i]?.money_part_idx}
-                onChange={(e) => {
-                  const newIndex = Number(e.target.value);
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={"파트"}
+              id={`money_part_val-${i}`}
+              name={`money_part_val-${i}`}
+              className={"me-10"}
+              variant={"outlined"}
+              value={OBJECT?.money_section[i]?.money_part_idx}
+              onChange={(e) => {
+                const newIndex = Number(e.target.value);
+                setOBJECT((prev) => ({
+                  ...prev,
+                  money_section: prev.money_section.map((item, idx) => (
+                    idx === i ? {
+                      ...item,
+                      money_part_idx: newIndex,
+                      money_part_val: moneyArray[newIndex]?.money_part,
+                      money_title_idx: 0,
+                      money_title_val: moneyArray[newIndex]?.money_title[0],
+                    } : item
+                  ))
+                }));
+              }}
+            >
+              {moneyArray.map((item, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  {item.money_part}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              select={true}
+              type={"text"}
+              size={"small"}
+              label={"타이틀"}
+              id={`money_title_val-${i}`}
+              name={`money_title_val-${i}`}
+              className={"ms-10"}
+              variant={"outlined"}
+              value={OBJECT?.money_section[i]?.money_title_idx}
+              onChange={(e) => {
+                const newTitleIdx = Number(e.target.value);
+                const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
+                if (newTitleIdx >= 0 && newTitleVal) {
                   setOBJECT((prev) => ({
                     ...prev,
                     money_section: prev.money_section.map((item, idx) => (
                       idx === i ? {
                         ...item,
-                        money_part_idx: newIndex,
-                        money_part_val: moneyArray[newIndex]?.money_part,
-                        money_title_idx: 0,
-                        money_title_val: moneyArray[newIndex]?.money_title[0],
+                        money_title_idx: newTitleIdx,
+                        money_title_val: newTitleVal,
                       } : item
                     ))
                   }));
-                }}
-              >
-                {moneyArray?.map((item, idx) => (
-                  <MenuItem key={idx} value={idx}>
-                    {item.money_part}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl className={"w-m90 ms-10"}>
-              <InputLabel>타이틀</InputLabel>
-              <Select
-                id={`money_title_idx-${i}`}
-                name={`money_title_idx-${i}`}
-                value={OBJECT?.money_section[i]?.money_title_idx}
-                onChange={(e) => {
-                  const newTitleIdx = Number(e.target.value);
-                  const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
-                  if (newTitleIdx >= 0 && newTitleVal) {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      money_section: prev.money_section.map((item, idx) => (
-                        idx === i ? {
-                          ...item,
-                          money_title_idx: newTitleIdx,
-                          money_title_val: newTitleVal,
-                        } : item
-                      ))
-                    }));
-                  }
-                }}
-              >
-                {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
-                  <MenuItem key={idx} value={idx}>
-                    {title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                }
+              }}
+            >
+              {moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title?.map((title, idx) => (
+                <MenuItem key={idx} value={idx}>
+                  {title}
+                </MenuItem>
+              ))}
+            </TextField>
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
@@ -454,6 +469,7 @@ export const MoneySave = () => {
         </Card>
       </React.Fragment>
     );
+    // 7-8. table
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
@@ -476,6 +492,7 @@ export const MoneySave = () => {
         </Box>
       </React.Fragment>
     );
+    // 7-9. return
     return (
       <React.Fragment>
         <Card className={"content-wrapper"}>
