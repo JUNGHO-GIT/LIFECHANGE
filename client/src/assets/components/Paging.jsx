@@ -18,7 +18,7 @@ export const Paging = ({
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
                 <TablePagination
-                  rowsPerPageOptions={[5, 10]}
+                  rowsPerPageOptions={[10]}
                   component={"div"}
                   labelRowsPerPage={""}
                   count={COUNT.totalCnt}

@@ -6,7 +6,6 @@ import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading, DaySave, Paging} from "../../import/ImportComponents";
-import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
@@ -25,6 +24,22 @@ export const FoodSearch = () => {
   const location = useLocation();
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
+  const PATH = location?.pathname.trim().toString();
+
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      query: "",
+      page: 0,
+      limit: 10,
+    }
+  );
 
   // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
@@ -34,22 +49,13 @@ export const FoodSearch = () => {
     endDt: "0000-00-00",
     toSave:"/food/save",
   });
-  const [DATE, setDATE] = useState({
-    startDt: location_startDt,
-    endDt: location_endDt
-  });
-  const [FILTER, setFILTER] = useState({
-    query: "",
-    page: 0,
-    limit: 10,
-  });
   const [COUNT, setCOUNT] = useState({
     totalCnt: 0,
     sectionCnt: 0
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const [OBJECT, setOBJECT] = useState({
+  const OBJECT_DEF = [{
     food_total_kcal: 0,
     food_total_fat: 0,
     food_total_carb: 0,
@@ -65,8 +71,11 @@ export const FoodSearch = () => {
       food_fat: 0,
       food_carb: 0,
       food_protein: 0,
-    }],
-  });
+    }]
+  }];
+  const {val:OBJECT, set:setOBJECT} = useStorage(
+    `OBJECT(food)`, OBJECT_DEF
+  );
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
@@ -138,8 +147,8 @@ export const FoodSearch = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {OBJECT?.food_section?.map((item, index) => (
-                <TableRow key={index}>
+              {OBJECT?.food_section?.map((item, sectionIndex) => (
+                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
                   <TableCell className={"pointer"} onClick={() => {
                     handleStorage(item);
                   }}>
@@ -178,10 +187,6 @@ export const FoodSearch = () => {
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-min80vh"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-column"}>
             {tableFragment()}
           </Box>
@@ -214,7 +219,7 @@ export const FoodSearch = () => {
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
-      SEND={SEND}  FILTER={FILTER} setFILTER={setFILTER} PAGING={""} setPAGING={""}
+      SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={""} setPAGING={""}
       flowSave={flowSearch} navParam={navParam}
       part={"food"} plan={""} type={"search"}
     />
