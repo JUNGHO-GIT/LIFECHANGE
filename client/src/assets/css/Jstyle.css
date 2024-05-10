@@ -5606,11 +5606,14 @@
   font-weight: bolder !important;
 }
 
-.text-dark {
-  color: #697A8D !important;
+.text-center {
+  text-align: center !important;
 }
-.text-light {
-  color: #F4F5F7 !important;
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
 }
 
 .d-center {

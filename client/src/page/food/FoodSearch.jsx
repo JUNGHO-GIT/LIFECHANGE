@@ -133,17 +133,15 @@ export const FoodSearch = () => {
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <TableContainer>
-          <Table className={"border"}>
+          <Table className={"border w-min150vw"}>
             <TableHead>
               <TableRow className={"table-thead-tr"}>
-                <TableCell>식품명</TableCell>
-                <TableCell>브랜드</TableCell>
-                <TableCell>1회 제공량</TableCell>
-                <TableCell>1회 중량</TableCell>
-                <TableCell>칼로리</TableCell>
-                <TableCell>지방</TableCell>
-                <TableCell>탄수화물</TableCell>
-                <TableCell>단백질</TableCell>
+                <TableCell width={"40%"}>식품명</TableCell>
+                <TableCell width={"20%"}>1회 제공량</TableCell>
+                <TableCell width={"10%"}>Kcal</TableCell>
+                <TableCell width={"10%"}>Fat</TableCell>
+                <TableCell width={"10%"}>Carb</TableCell>
+                <TableCell width={"10%"}>Protein</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -152,16 +150,10 @@ export const FoodSearch = () => {
                   <TableCell className={"pointer"} onClick={() => {
                     handleStorage(item);
                   }}>
-                    {item.food_title}
+                    {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
                   </TableCell>
                   <TableCell>
-                    {item.food_brand}
-                  </TableCell>
-                  <TableCell>
-                    {item.food_count} {item.food_serv}
-                  </TableCell>
-                  <TableCell>
-                    {item.food_gram}
+                    {`${item.food_count}${item.food_serv} (${item.food_gram}g)`}
                   </TableCell>
                   <TableCell>
                     {item.food_kcal}
