@@ -337,21 +337,18 @@ export const MoneySave = () => {
           />
         </IconButton>
         <PopDown elementId={`pop-${index}`} contents={
-            <React.Fragment>
-              <Box className={"d-center p-10"}>
-                <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-                <Typography variant={"inherit"}>기타</Typography>
-              </Box>
-            </React.Fragment>
-          }
-        >
-        {popProps => (
-          <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
-            popProps.openPopup(e.currentTarget)
-          }}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
+          <Box className={"d-center p-10"}>
+            <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+            <Typography variant={"inherit"}>기타</Typography>
+          </Box>
+        }>
+          {popProps => (
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          )}
         </PopDown>
       </Box>
     );

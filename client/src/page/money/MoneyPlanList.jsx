@@ -133,50 +133,48 @@ export const MoneyPlanList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell rowSpan={2} className={"pointer"} onClick={() => {
-                    SEND.id = item._id;
-                    SEND.startDt = item.money_plan_startDt;
-                    SEND.endDt = item.money_plan_endDt;
-                    navParam(SEND.toDetail, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.money_plan_startDt?.substring(5, 10)
-                      + " ~ " +
-                      item.money_plan_endDt?.substring(5, 10)
-                    }
-                  </TableCell>
-                  <TableCell>
-                    수입
-                  </TableCell>
-                  <TableCell>
-                    {`₩ ${numeral(item.money_plan_in).format('0,0')}`}
-                  </TableCell>
-                  <TableCell>
-                    {`₩ ${numeral(item.money_total_in).format('0,0')}`}
-                  </TableCell>
-                  <TableCell className={item.money_diff_in_color}>
-                    {`₩ ${numeral(item.money_diff_in).format('0,0')}`}
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    지출</TableCell>
-                  <TableCell>
-                    {`₩ ${numeral(item.money_plan_out).format('0,0')}`}
-                  </TableCell>
-                  <TableCell>
-                    {`₩ ${numeral(item.money_total_out).format('0,0')}`}
-                  </TableCell>
-                  <TableCell className={item.money_diff_out_color}>
-                    {`₩ ${numeral(item.money_diff_out).format('0,0')}`}
-                  </TableCell>
-                </TableRow>
-              </React.Fragment>
-            ))}
+            {OBJECT?.map((item, index) => ([
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell rowSpan={2} className={"pointer"} onClick={() => {
+                  SEND.id = item._id;
+                  SEND.startDt = item.money_plan_startDt;
+                  SEND.endDt = item.money_plan_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  {item.money_plan_startDt?.substring(5, 10)
+                    + " ~ " +
+                    item.money_plan_endDt?.substring(5, 10)
+                  }
+                </TableCell>
+                <TableCell>
+                  수입
+                </TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_plan_in).format('0,0')}`}
+                </TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_total_in).format('0,0')}`}
+                </TableCell>
+                <TableCell className={item.money_diff_in_color}>
+                  {`₩ ${numeral(item.money_diff_in).format('0,0')}`}
+                </TableCell>
+              </TableRow>,
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell>
+                  지출</TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_plan_out).format('0,0')}`}
+                </TableCell>
+                <TableCell>
+                  {`₩ ${numeral(item.money_total_out).format('0,0')}`}
+                </TableCell>
+                <TableCell className={item.money_diff_out_color}>
+                  {`₩ ${numeral(item.money_diff_out).format('0,0')}`}
+                </TableCell>
+              </TableRow>
+            ]))}
           </TableBody>
         </Table>
       </TableContainer>

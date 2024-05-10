@@ -135,33 +135,31 @@ export const MoneyList = () => {
           <TableBody>
             {OBJECT?.map((item, index) => (
               item.money_section.slice(0, 3)?.map((section, sectionIndex) => (
-                <React.Fragment key={sectionIndex}>
-                  <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                    {sectionIndex === 0 && (
-                      <TableCell rowSpan={Math.min(item.money_section.length, 3)}
-                      className={"pointer"} onClick={() => {
-                        SEND.id = item._id;
-                        SEND.startDt = item.money_startDt;
-                        SEND.endDt = item.money_endDt;
-                        navParam(SEND.toDetail, {
-                          state: SEND
-                        });
-                      }}>
-                        {item.money_startDt?.substring(5, 10)}
-                        {item.money_section.length > 3 && (<Box>더보기</Box>)}
-                      </TableCell>
-                    )}
-                    <TableCell>
-                      {section.money_part_val}
+                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
+                  {sectionIndex === 0 && (
+                    <TableCell rowSpan={Math.min(item.money_section.length, 3)}
+                    className={"pointer"} onClick={() => {
+                      SEND.id = item._id;
+                      SEND.startDt = item.money_startDt;
+                      SEND.endDt = item.money_endDt;
+                      navParam(SEND.toDetail, {
+                        state: SEND
+                      });
+                    }}>
+                      {item.money_startDt?.substring(5, 10)}
+                      {item.money_section.length > 3 && (<Box>더보기</Box>)}
                     </TableCell>
-                    <TableCell>
-                      {section.money_title_val}
-                    </TableCell>
-                    <TableCell>
-                      {`₩ ${numeral(section.money_amount).format('0,0')}`}
-                    </TableCell>
-                  </TableRow>
-                </React.Fragment>
+                  )}
+                  <TableCell>
+                    {section.money_part_val}
+                  </TableCell>
+                  <TableCell>
+                    {section.money_title_val}
+                  </TableCell>
+                  <TableCell>
+                    {`₩ ${numeral(section.money_amount).format('0,0')}`}
+                  </TableCell>
+                </TableRow>
               ))
             ))}
           </TableBody>

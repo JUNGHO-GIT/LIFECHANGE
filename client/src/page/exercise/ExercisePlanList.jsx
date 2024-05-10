@@ -142,79 +142,77 @@ export const ExercisePlanList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell rowSpan={4} className={"pointer"} onClick={() => {
-                    SEND.id = item._id;
-                    SEND.startDt = item.exercise_plan_startDt;
-                    SEND.endDt = item.exercise_plan_endDt;
-                    navParam(SEND.toDetail, {
-                      state: SEND
-                    });
-                  }}>
-                    {item.exercise_plan_startDt?.substring(5, 10)
-                      + " ~ " +
-                      item.exercise_plan_endDt?.substring(5, 10)
-                    }
-                  </TableCell>
-                  <TableCell>
-                    총 운동횟수
-                  </TableCell>
-                  <TableCell>
-                    {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
-                  </TableCell>
-                  <TableCell>
-                    {`${numeral(item.exercise_total_count).format("0,0")} 회`}
-                  </TableCell>
-                  <TableCell className={item.exercise_diff_count_color}>
-                    {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    총 운동량
-                  </TableCell>
-                  <TableCell>
-                    {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
-                  </TableCell>
-                  <TableCell>
-                    {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
-                  </TableCell>
-                  <TableCell className={item.exercise_diff_volume_color}>
-                    {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    유산소 시간
-                  </TableCell>
-                  <TableCell>
-                    {item.exercise_plan_cardio}
-                  </TableCell>
-                  <TableCell>
-                    {item.exercise_total_cardio}
-                  </TableCell>
-                  <TableCell className={item.exercise_diff_cardio_color}>
-                    {item.exercise_diff_cardio}
-                  </TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>
-                    체중
-                  </TableCell>
-                  <TableCell>
-                    {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
-                  </TableCell>
-                  <TableCell>
-                    {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
-                  </TableCell>
-                  <TableCell className={item.exercise_diff_weight_color}>
-                    {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
-                  </TableCell>
-                </TableRow>
-              </React.Fragment>
-            ))}
+            {OBJECT?.map((item, index) => ([
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                  SEND.id = item._id;
+                  SEND.startDt = item.exercise_plan_startDt;
+                  SEND.endDt = item.exercise_plan_endDt;
+                  navParam(SEND.toDetail, {
+                    state: SEND
+                  });
+                }}>
+                  {item.exercise_plan_startDt?.substring(5, 10)
+                    + " ~ " +
+                    item.exercise_plan_endDt?.substring(5, 10)
+                  }
+                </TableCell>
+                <TableCell>
+                  총 운동횟수
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_plan_count).format("0,0")} 회`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_total_count).format("0,0")} 회`}
+                </TableCell>
+                <TableCell className={item.exercise_diff_count_color}>
+                  {`${numeral(item.exercise_diff_count).format("0,0")} 회`}
+                </TableCell>
+              </TableRow>,
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell>
+                  총 운동량
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_plan_volume).format("0,0")} vol`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_total_volume).format("0,0")} vol`}
+                </TableCell>
+                <TableCell className={item.exercise_diff_volume_color}>
+                  {`${numeral(item.exercise_diff_volume).format("0,0")} vol`}
+                </TableCell>
+              </TableRow>,
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell>
+                  유산소 시간
+                </TableCell>
+                <TableCell>
+                  {item.exercise_plan_cardio}
+                </TableCell>
+                <TableCell>
+                  {item.exercise_total_cardio}
+                </TableCell>
+                <TableCell className={item.exercise_diff_cardio_color}>
+                  {item.exercise_diff_cardio}
+                </TableCell>
+              </TableRow>,
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell>
+                  체중
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_plan_weight).format("0,0")} kg`}
+                </TableCell>
+                <TableCell>
+                  {`${numeral(item.exercise_body_weight).format("0,0")} kg`}
+                </TableCell>
+                <TableCell className={item.exercise_diff_weight_color}>
+                  {`${numeral(item.exercise_diff_weight).format("0,0")} kg`}
+                </TableCell>
+              </TableRow>
+            ]))}
           </TableBody>
         </Table>
       </TableContainer>

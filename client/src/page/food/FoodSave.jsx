@@ -274,89 +274,87 @@ export const FoodSave = () => {
           </TableHead>
           <TableBody className={"table-tbody"}>
             {OBJECT?.food_section?.map((item, sectionIndex) => (
-              <React.Fragment key={sectionIndex}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell width={"10%"}>
-                    <TextField
-                      select={true}
-                      type={"text"}
-                      size={"small"}
-                      label={""}
-                      id={"food_part_idx"}
-                      name={"food_part_idx"}
-                      variant={"outlined"}
-                      value={item.food_part_idx}
-                      defaultValue={0}
-                      InputProps={{
-                        readOnly: false
-                      }}
-                      onChange={(e) => {
-                        const newIndex = Number(e.target.value);
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          food_section: prev.food_section.map((item, idx) => (
-                            idx === sectionIndex ? {
-                              ...item,
-                              food_part_idx: newIndex,
-                              food_part_val: foodArray[newIndex]?.food_part
-                            } : item
-                          ))
-                        }));
-                      }}
-                    >
-                      {foodArray?.map((item, idx) => (
-                        <MenuItem key={idx} value={idx}>
-                          {item.food_part}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </TableCell>
-                  <TableCell width={"20%"}>
-                    {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
-                  </TableCell>
-                  <TableCell width={"10%"}>
-                    <TextField
-                      select={false}
-                      label={""}
-                      type={"text"}
-                      variant={"outlined"}
-                      id={"food_count"}
-                      name={"food_count"}
-                      size={"small"}
-                      value={Math.min(99, Number(item.food_count))}
-                      InputProps={{
-                        readOnly: false
-                      }}
-                      onChange={(e) => {
-                        const limitedValue = Math.min(99, parseInt(e.target.value));
-                        handleCountChange(sectionIndex, limitedValue);
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell width={"10%"}>
-                    {item.food_gram}
-                  </TableCell>
-                  <TableCell width={"10%"}>
-                    {item.food_kcal}
-                  </TableCell>
-                  <TableCell width={"10%"}>
-                    {item.food_fat}
-                  </TableCell>
-                  <TableCell width={"10%"}>
-                    {item.food_carb}
-                  </TableCell>
-                  <TableCell width={"10%"}>
-                    {item.food_protein}
-                  </TableCell>
-                  <TableCell width={"10%"}>
-                    <span className={"del-btn"} onClick={() => (
-                      handlerFoodDelete(sectionIndex)
-                    )}>
-                      x
-                    </span>
-                  </TableCell>
-                </TableRow>
-              </React.Fragment>
+              <TableRow className={"table-tbody-tr"}>
+                <TableCell width={"10%"}>
+                  <TextField
+                    select={true}
+                    type={"text"}
+                    size={"small"}
+                    label={""}
+                    id={"food_part_idx"}
+                    name={"food_part_idx"}
+                    variant={"outlined"}
+                    value={item.food_part_idx}
+                    defaultValue={0}
+                    InputProps={{
+                      readOnly: false
+                    }}
+                    onChange={(e) => {
+                      const newIndex = Number(e.target.value);
+                      setOBJECT((prev) => ({
+                        ...prev,
+                        food_section: prev.food_section.map((item, idx) => (
+                          idx === sectionIndex ? {
+                            ...item,
+                            food_part_idx: newIndex,
+                            food_part_val: foodArray[newIndex]?.food_part
+                          } : item
+                        ))
+                      }));
+                    }}
+                  >
+                    {foodArray?.map((item, idx) => (
+                      <MenuItem key={idx} value={idx}>
+                        {item.food_part}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </TableCell>
+                <TableCell width={"20%"}>
+                  {`${item.food_title} ${item.food_brand !== "-" ? `${item.food_brand}` : ""}`}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  <TextField
+                    select={false}
+                    label={""}
+                    type={"text"}
+                    variant={"outlined"}
+                    id={"food_count"}
+                    name={"food_count"}
+                    size={"small"}
+                    value={Math.min(99, Number(item.food_count))}
+                    InputProps={{
+                      readOnly: false
+                    }}
+                    onChange={(e) => {
+                      const limitedValue = Math.min(99, parseInt(e.target.value));
+                      handleCountChange(sectionIndex, limitedValue);
+                    }}
+                  />
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_gram}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_kcal}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_fat}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_carb}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  {item.food_protein}
+                </TableCell>
+                <TableCell width={"10%"}>
+                  <span className={"del-btn"} onClick={() => (
+                    handlerFoodDelete(sectionIndex)
+                  )}>
+                    x
+                  </span>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
           <TableFooter className={"table-tfoot"}>

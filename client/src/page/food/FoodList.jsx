@@ -143,37 +143,33 @@ export const FoodList = () => {
           </TableHead>
           <TableBody>
             {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                {item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
-                  <React.Fragment key={sectionIndex}>
-                    <TableRow key={sectionIndex} className={"table-tbody-tr"}>
-                      {sectionIndex === 0 && (
-                        <TableCell rowSpan={Math.min(item.food_section.length, 3)}
-                        className={"pointer"} onClick={() => {
-                          SEND.id = item._id;
-                          SEND.startDt = item.food_startDt;
-                          SEND.endDt = item.food_endDt;
-                          navParam(SEND.toDetail, {
-                            state: SEND
-                          });
-                        }}>
-                          {item.food_startDt?.substring(5, 10)}
-                          {item.food_section.length > 3 && (<Box>더보기</Box>)}
-                        </TableCell>
-                      )}
-                      <TableCell>
-                        {section.food_part_val.substring(0, 6)}
-                      </TableCell>
-                      <TableCell>
-                        {section.food_title.substring(0, 6)}
-                      </TableCell>
-                      <TableCell>
-                        {`${numeral(section.food_kcal).format('0,0')} kcal`}
-                      </TableCell>
-                    </TableRow>
-                  </React.Fragment>
-                ))}
-              </React.Fragment>
+              item.food_section.slice(0, 3)?.map((section, sectionIndex) => (
+                <TableRow key={sectionIndex} className={"table-tbody-tr"}>
+                  {sectionIndex === 0 && (
+                    <TableCell rowSpan={Math.min(item.food_section.length, 3)}
+                    className={"pointer"} onClick={() => {
+                      SEND.id = item._id;
+                      SEND.startDt = item.food_startDt;
+                      SEND.endDt = item.food_endDt;
+                      navParam(SEND.toDetail, {
+                        state: SEND
+                      });
+                    }}>
+                      {item.food_startDt?.substring(5, 10)}
+                      {item.food_section.length > 3 && (<Box>더보기</Box>)}
+                    </TableCell>
+                  )}
+                  <TableCell>
+                    {section.food_part_val.substring(0, 6)}
+                  </TableCell>
+                  <TableCell>
+                    {section.food_title.substring(0, 6)}
+                  </TableCell>
+                  <TableCell>
+                    {`${numeral(section.food_kcal).format('0,0')} kcal`}
+                  </TableCell>
+                </TableRow>
+              ))
             ))}
           </TableBody>
         </Table>

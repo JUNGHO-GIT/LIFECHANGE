@@ -144,39 +144,36 @@ export const SleepPlanDetail = () => {
           />
         </IconButton>
         <PopDown elementId={`pop-${index}`} contents={
-            <React.Fragment>
-              <Box className={"d-block p-10"}>
-                <Box className={"d-left mt-10 mb-10"} onClick={() => {
-                  flowDelete(id)
-                }}>
-                  <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-                  <Typography variant={"inherit"}>삭제</Typography>
-                </Box>
-                <Box className={"d-left mt-10 mb-10"} onClick={() => {
-                  SEND.startDt = DATE.startDt;
-                  SEND.endDt = DATE.endDt;
-                  navParam(SEND.toUpdate, {
-                    state: SEND,
-                  });
-                }}>
-                  <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
-                  <Typography variant={"inherit"}>수정</Typography>
-                </Box>
-                <Box className={"d-left mt-10 mb-10"}>
-                  <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
-                  <Typography variant={"inherit"}>더보기</Typography>
-                </Box>
-              </Box>
-            </React.Fragment>
-          }
-        >
-        {popProps => (
-          <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
-            popProps.openPopup(e.currentTarget)
-          }}>
-            <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
-          </IconButton>
-        )}
+          <Box className={"d-block p-10"}>
+            <Box className={"d-left mt-10 mb-10"} onClick={() => {
+              flowDelete(id)
+            }}>
+              <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>삭제</Typography>
+            </Box>
+            <Box className={"d-left mt-10 mb-10"} onClick={() => {
+              SEND.startDt = DATE.startDt;
+              SEND.endDt = DATE.endDt;
+              navParam(SEND.toUpdate, {
+                state: SEND,
+              });
+            }}>
+              <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>수정</Typography>
+            </Box>
+            <Box className={"d-left mt-10 mb-10"}>
+              <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+              <Typography variant={"inherit"}>더보기</Typography>
+            </Box>
+          </Box>
+        }>
+          {popProps => (
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          )}
         </PopDown>
       </Box>
     );
