@@ -5,12 +5,11 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading} from "../../import/ImportComponents";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -33,7 +32,15 @@ export const ExerciseDetail = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -54,14 +61,6 @@ export const ExerciseDetail = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-
-  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     exercise_number: 0,
@@ -88,7 +87,7 @@ export const ExerciseDetail = () => {
   // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -131,75 +130,296 @@ export const ExerciseDetail = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    // 7-1. title
+    const titleSection = () => (
+      <React.Fragment>
+        <Typography variant={"h5"} fontWeight={500}>
+          운동 Detail
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-2. date
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
+          />
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    // 7-3. count
+    const countSection = () => (
+      <React.Fragment>
+        <TextField
+          type={"text"}
+          id={"sectionCnt"}
+          label={"항목수"}
+          variant={"outlined"}
+          size={"small"}
+          value={COUNT?.sectionCnt}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+            )
+          }}
+        />
+      </React.Fragment>
+    );
+    // 7-4. total
+    const totalSection = () => (
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"}>
+          <TextField
+            select={false}
+            label={"총 볼륨"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"총 유산소 시간"}
+            size={"small"}
+            value={`${OBJECT?.exercise_total_cardio}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiRun"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"체중"}
+            size={"small"}
+            value={`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiWeight"} className={"w-16 h-16 dark"} position={"start"}/>
+              )
+            }}
+          />
+        </Card>
+      </React.Fragment>
+    );
+    // 7-5. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <React.Fragment>
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          />
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-block p-10"}>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
+                  flowDelete(id, sectionId);
+                }}>
+                  <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>삭제</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
+                  SEND.startDt = DATE.startDt;
+                  SEND.endDt = DATE.endDt;
+                  navParam(SEND.toUpdate, {
+                    state: SEND,
+                  });
+                }}>
+                  <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>수정</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"}>
+                  <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>더보기</Typography>
+                </Box>
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
+          <React.Fragment>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          </React.Fragment>
+        )}
+        </PopDown>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"}>
+          <Box className={"d-between mt-n15 mb-20"}>
+            {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"부위"}
+              size={"small"}
+              value={OBJECT?.exercise_section[i]?.exercise_part_val}
+              variant={"outlined"}
+              className={"w-m90 me-10"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiBody"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+            <TextField
+              select={false}
+              label={"종목"}
+              size={"small"}
+              value={OBJECT?.exercise_section[i]?.exercise_title_val}
+              variant={"outlined"}
+              className={"w-m90 me-10"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"세트"}
+              size={"small"}
+              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_set).format('0,0')} set`}
+              variant={"outlined"}
+              className={""}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+            <TextField
+              select={false}
+              label={"횟수"}
+              size={"small"}
+              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rep).format('0,0')} rep`}
+              variant={"outlined"}
+              className={""}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+            <TextField
+              select={false}
+              label={"무게"}
+              size={"small"}
+              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_kg).format('0,0')} kg`}
+              variant={"outlined"}
+              className={""}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+            <TextField
+              select={false}
+              label={"휴식"}
+              size={"small"}
+              value={`${numeral(OBJECT?.exercise_section[i]?.exercise_rest).format('0,0')} sec`}
+              variant={"outlined"}
+              className={""}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"유산소"}
+              size={"small"}
+              value={OBJECT?.exercise_section[i]?.exercise_cardio}
+              variant={"outlined"}
+              className={""}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiDumbbell"} className={"w-16 h-16 dark"} position={"start"}/>
+                )
+              }}
+            />
+          </Box>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-              <TableCell>부위</TableCell>
-              <TableCell>종목</TableCell>
-              <TableCell>볼륨 or 시간</TableCell>
-              <TableCell>x</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT?.exercise_section?.map((section, index) => (
-              <TableRow key={index}>
-                {index === 0 && (
-                  <TableCell rowSpan={OBJECT?.exercise_section?.length}>
-                    {OBJECT?.exercise_startDt?.substring(5, 10)}
-                  </TableCell>
-                )}
-                <TableCell>{section.exercise_part_val}</TableCell>
-                {(section.exercise_part_val !== "유산소") ? (
-                  <React.Fragment>
-                    <TableCell>
-                      <p>{section.exercise_title_val}</p>
-                      <p>{section.exercise_set} x {section.exercise_rep} x {section.exercise_kg} x {section.exercise_rest}</p>
-                    </TableCell>
-                    <TableCell>{section.exercise_volume}</TableCell>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <TableCell>
-                      <p>{section.exercise_title_val}</p>
-                    </TableCell>
-                    <TableCell>{section.exercise_cardio}</TableCell>
-                  </React.Fragment>
-                )}
-                <TableCell>
-                  <p className={"del-btn"} onClick={() => (
-                    flowDelete(OBJECT?._id, section._id)
-                  )}>x</p>
-                </TableCell>
-              </TableRow>
-            ))}
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={2}>총 볼륨</TableCell>
-              <TableCell colSpan={3}>{`${numeral(OBJECT?.exercise_total_volume).format('0,0')} vol`}</TableCell>
-            </TableRow>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={2}>총 유산소 시간</TableCell>
-              <TableCell colSpan={3}>{`${OBJECT?.exercise_total_cardio}`}</TableCell>
-            </TableRow>
-            <TableRow className={"table-tbody-tr"}>
-              <TableCell colSpan={2}>체중</TableCell>
-              <TableCell colSpan={3}>{`${numeral(OBJECT?.exercise_body_weight).format('0,0')} kg`}</TableCell>
-            </TableRow>
-          </TableBody>
-            </Table>
-          </TableContainer>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {countSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {totalSection()}
+          </Box>
+          <Box className={"d-column"}>
+            {OBJECT?.exercise_section.map((item, i) => tableFragment(i))}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
-        <Paper className={"content-wrapper"} variant={"outlined"}>
+        <Card className={"content-wrapper"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
@@ -207,7 +427,7 @@ export const ExerciseDetail = () => {
               </Grid2>
             </Grid2>
           </Container>
-        </Paper>
+        </Card>
       </React.Fragment>
     );
   };

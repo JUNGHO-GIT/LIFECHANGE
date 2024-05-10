@@ -23,7 +23,7 @@ export const FoodDashAvg = () => {
   const user_id = sessionStorage.getItem("user_id");
   const array = ["칼로리", "탄수화물", "단백질", "지방"];
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("kcal");

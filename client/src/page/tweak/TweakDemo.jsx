@@ -8,8 +8,7 @@ import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakDemo = () => {
@@ -21,7 +20,7 @@ export const TweakDemo = () => {
   const user_id = sessionStorage.getItem("user_id");
   const navParam = useNavigate();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [TYPE, setTYPE] = useState("exercisePlan");
   const [PAGING, setPAGING] = useState({
@@ -258,7 +257,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     const tableExercise = () => (
@@ -307,7 +306,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     const tableFoodPlan = () => (
@@ -337,7 +336,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     const tableFood = () => (
@@ -376,7 +375,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     const tableMoneyPlan = () => (
@@ -402,7 +401,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     const tableMoney = () => (
@@ -439,7 +438,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     const tableSleepPlan = () => (
@@ -467,7 +466,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     const tableSleep = () => (
@@ -506,7 +505,7 @@ export const TweakDemo = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
     return (

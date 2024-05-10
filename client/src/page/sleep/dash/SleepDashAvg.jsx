@@ -23,7 +23,7 @@ export const SleepDashAvg = () => {
   const user_id = sessionStorage.getItem("user_id");
   const array = ["취침", "기상", "수면"];
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [PART, setPART] = useState(array);

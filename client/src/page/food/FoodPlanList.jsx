@@ -5,12 +5,11 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DayList, Paging, Filter, Btn, Loading} from "../../import/ImportComponents";
+import {DayList, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -32,7 +31,7 @@ export const FoodPlanList = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -54,7 +53,7 @@ export const FoodPlanList = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -72,7 +71,7 @@ export const FoodPlanList = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     food_startDt: "0000-00-00",
     food_endDt: "0000-00-00",
@@ -121,67 +120,126 @@ export const FoodPlanList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const tableSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+        <Typography variant={"h5"} fontWeight={500}>
+          음식 계획 List
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
           <TableContainer>
             <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
+              <TableHead>
+                <TableRow className={"table-thead-tr"}>
                   <TableCell>날짜</TableCell>
-              <TableCell>분류</TableCell>
-              <TableCell>목표</TableCell>
-              <TableCell>실제</TableCell>
-              <TableCell>비교</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT?.map((item, index) => (
-              <React.Fragment key={item._id}>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell rowSpan={4} className={"pointer"} onClick={() => {
-                    SEND.id = item._id;
-                    SEND.startDt = item.food_plan_startDt;
-                    SEND.endDt = item.food_plan_endDt;
-                    navParam(SEND.toDetail, {
-                      state: SEND
-                    });
-                  }}>
-                    {`${item.food_plan_startDt?.substring(5, 10)} ~ ${item.food_plan_endDt?.substring(5, 10)}`}
-                  </TableCell>
-                  <TableCell>칼로리</TableCell>
-                  <TableCell>{`${numeral(item.food_plan_kcal).format('0,0')} kcal`}</TableCell>
-                  <TableCell>{`${numeral(item.food_total_kcal).format('0,0')} kcal`}</TableCell>
-                  <TableCell className={item.food_diff_kcal_color}>{`${numeral(item.food_diff_kcal).format('0,0')} kcal`}</TableCell>
+                  <TableCell>분류</TableCell>
+                  <TableCell>목표</TableCell>
+                  <TableCell>실제</TableCell>
+                  <TableCell>비교</TableCell>
                 </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>탄수화물</TableCell>
-                  <TableCell>{`${numeral(item.food_plan_carb).format('0,0')} g`}</TableCell>
-                  <TableCell>{`${numeral(item.food_total_carb).format('0,0')} g`}</TableCell>
-                  <TableCell className={item.food_diff_carb_color}>{`${numeral(item.food_diff_carb).format('0,0')} g`}</TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>단백질</TableCell>
-                  <TableCell>{`${numeral(item.food_plan_protein).format('0,0')} g`}</TableCell>
-                  <TableCell>{`${numeral(item.food_total_protein).format('0,0')} g`}</TableCell>
-                  <TableCell className={item.food_diff_protein_color}>{`${numeral(item.food_diff_protein).format('0,0')} g`}</TableCell>
-                </TableRow>
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell>지방</TableCell>
-                  <TableCell>{`${numeral(item.food_plan_fat).format('0,0')} g`}</TableCell>
-                  <TableCell>{`${numeral(item.food_total_fat).format('0,0')} g`}</TableCell>
-                  <TableCell className={item.food_diff_fat_color}>{`${numeral(item.food_diff_fat).format('0,0')} g`}</TableCell>
-                </TableRow>
-              </React.Fragment>
-            ))}
+              </TableHead>
+              <TableBody>
+                {OBJECT?.map((item, index) => (
+                  <React.Fragment key={item._id}>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell rowSpan={4} className={"pointer"} onClick={() => {
+                        SEND.id = item._id;
+                        SEND.startDt = item.food_plan_startDt;
+                        SEND.endDt = item.food_plan_endDt;
+                        navParam(SEND.toDetail, {
+                          state: SEND
+                        });
+                      }}>
+                        {item.food_plan_startDt?.substring(5, 10)
+                          + " ~ " +
+                          item.food_plan_endDt?.substring(5, 10)
+                        }
+                      </TableCell>
+                      <TableCell>
+                        칼로리
+                      </TableCell>
+                      <TableCell>
+                        {`${numeral(item.food_plan_kcal).format('0,0')} kcal`}
+                      </TableCell>
+                      <TableCell>
+                      {`${numeral(item.food_total_kcal).format('0,0')} kcal`}
+                      </TableCell>
+                      <TableCell className={item.food_diff_kcal_color}>
+                        {`${numeral(item.food_diff_kcal).format('0,0')} kcal`}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell>
+                        탄수화물
+                      </TableCell>
+                      <TableCell>
+                        {`${numeral(item.food_plan_carb).format('0,0')} g`}
+                      </TableCell>
+                      <TableCell>
+                        {`${numeral(item.food_total_carb).format('0,0')} g`}
+                      </TableCell>
+                      <TableCell className={item.food_diff_carb_color}>
+                        {`${numeral(item.food_diff_carb).format('0,0')} g`}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell>
+                        단백질
+                      </TableCell>
+                      <TableCell>
+                        {`${numeral(item.food_plan_protein).format('0,0')} g`}
+                      </TableCell>
+                      <TableCell>
+                        {`${numeral(item.food_total_protein).format('0,0')} g`}
+                      </TableCell>
+                      <TableCell className={item.food_diff_protein_color}>
+                        {`${numeral(item.food_diff_protein).format('0,0')} g`}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow className={"table-tbody-tr"}>
+                      <TableCell>
+                        지방
+                      </TableCell>
+                      <TableCell>
+                        {`${numeral(item.food_plan_fat).format('0,0')} g`}
+                      </TableCell>
+                      <TableCell>
+                        {`${numeral(item.food_total_fat).format('0,0')} g`}
+                      </TableCell>
+                      <TableCell className={item.food_diff_fat_color}>
+                        {`${numeral(item.food_diff_fat).format('0,0')} g`}
+                      </TableCell>
+                    </TableRow>
+                  </React.Fragment>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-column"}>
+            {tableFragment()}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

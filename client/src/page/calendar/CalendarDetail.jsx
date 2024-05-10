@@ -4,12 +4,11 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {axios, NumericFormat, InputMask} from "../../import/ImportLibs";
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DaySave, Btn, Loading} from "../../import/ImportComponents";
+import {DaySave, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -35,7 +34,7 @@ export const CalendarDetail = () => {
   const location_category = location?.state?.category?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -53,7 +52,7 @@ export const CalendarDetail = () => {
     dayOpen: false
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -61,7 +60,7 @@ export const CalendarDetail = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     user_id: user_id,
     calendar_number: 0,
@@ -77,10 +76,10 @@ export const CalendarDetail = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -142,7 +141,7 @@ export const CalendarDetail = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const colors = [
       "red", "orange", "yellow", "green", "blue", "navy", "purple", "black", "gray"
@@ -202,6 +201,7 @@ export const CalendarDetail = () => {
         </Box>
       </React.Fragment>
     );
+    // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Grid2 container spacing={3}>
@@ -322,6 +322,7 @@ export const CalendarDetail = () => {
         </Grid2>
       </React.Fragment>
     );
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         {Array.from({ length: COUNT.sectionCnt }, (_, i) => tableFragment(i))}

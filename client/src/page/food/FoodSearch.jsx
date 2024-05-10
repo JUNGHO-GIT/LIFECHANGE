@@ -9,14 +9,9 @@ import {Btn, Loading, DaySave, Paging} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
-import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
-import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const FoodSearch = () => {
@@ -31,7 +26,7 @@ export const FoodSearch = () => {
   const location_startDt = location?.state?.startDt?.trim()?.toString();
   const location_endDt = location?.state?.endDt?.trim()?.toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(false);
   const [SEND, setSEND] = useState({
     id: "",
@@ -73,7 +68,7 @@ export const FoodSearch = () => {
     }],
   });
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
   // 2-3. useEffect ------------------------------------------------------------------------------->
@@ -106,8 +101,17 @@ export const FoodSearch = () => {
     setLOADING(false);
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    // 7-1. title
+    const titleSection = () => (
+      <React.Fragment>
+        <Typography variant={"h5"} fontWeight={500}>
+          음식 List
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-5. handleStorage
     const handleStorage = (param) => {
       localStorage.setItem("food_section", JSON.stringify(param));
       SEND.startDt = DATE.startDt;
@@ -116,46 +120,76 @@ export const FoodSearch = () => {
         state: SEND
       });
     };
-    const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
           <TableContainer>
             <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
+              <TableHead>
+                <TableRow className={"table-thead-tr"}>
                   <TableCell>식품명</TableCell>
-              <TableCell>브랜드</TableCell>
-              <TableCell>1회 제공량</TableCell>
-              <TableCell>1회 중량</TableCell>
-              <TableCell>칼로리</TableCell>
-              <TableCell>지방</TableCell>
-              <TableCell>탄수화물</TableCell>
-              <TableCell>단백질</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {OBJECT?.food_section?.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell className={"pointer"} onClick={() => {
-                  handleStorage(item);
-                }}>
-                  {item.food_title}
-                </TableCell>
-                <TableCell>{item.food_brand}</TableCell>
-                <TableCell>{item.food_count} {item.food_serv}</TableCell>
-                <TableCell>{item.food_gram}</TableCell>
-                <TableCell>{item.food_kcal}</TableCell>
-                <TableCell>{item.food_fat}</TableCell>
-                <TableCell>{item.food_carb}</TableCell>
-                <TableCell>{item.food_protein}</TableCell>
-              </TableRow>
-            ))}
+                  <TableCell>브랜드</TableCell>
+                  <TableCell>1회 제공량</TableCell>
+                  <TableCell>1회 중량</TableCell>
+                  <TableCell>칼로리</TableCell>
+                  <TableCell>지방</TableCell>
+                  <TableCell>탄수화물</TableCell>
+                  <TableCell>단백질</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {OBJECT?.food_section?.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell className={"pointer"} onClick={() => {
+                      handleStorage(item);
+                    }}>
+                      {item.food_title}
+                    </TableCell>
+                    <TableCell>
+                      {item.food_brand}
+                    </TableCell>
+                    <TableCell>
+                      {item.food_count} {item.food_serv}
+                    </TableCell>
+                    <TableCell>
+                      {item.food_gram}
+                    </TableCell>
+                    <TableCell>
+                      {item.food_kcal}
+                    </TableCell>
+                    <TableCell>
+                      {item.food_fat}
+                    </TableCell>
+                    <TableCell>
+                      {item.food_carb}
+                    </TableCell>
+                    <TableCell>
+                      {item.food_protein}
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-column"}>
+            {tableFragment()}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

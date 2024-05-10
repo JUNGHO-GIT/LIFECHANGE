@@ -23,7 +23,7 @@ export const MoneyDashLine = () => {
   const user_id = sessionStorage.getItem("user_id");
   const array = ["수입", "지출"];
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [LINE, setLINE] = useState("in");

@@ -5,12 +5,11 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DaySave, Btn, Loading} from "../../import/ImportComponents";
+import {DaySave, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -32,7 +31,15 @@ export const ExercisePlanSave = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -51,14 +58,6 @@ export const ExercisePlanSave = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-
-  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     exercise_plan_number: 0,
@@ -76,7 +75,7 @@ export const ExercisePlanSave = () => {
   useDate(location_startDt, location_endDt, DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "real");
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
@@ -115,125 +114,184 @@ export const ExercisePlanSave = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const tableSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>목표 총 볼륨</span>
-              <NumericFormat
-                min={0}
-                max={999999}
-                minLength={1}
-                maxLength={12}
-                suffix={" vol"}
-                datatype={"number"}
-                displayType={"input"}
-                id={"exercise_volume"}
-                name={"exercise_volume"}
-                className={"form-control"}
-                allowNegative={false}
-                fixedDecimalScale={true}
-                thousandSeparator={true}
-                allowLeadingZeros={false}
-                value={Math.min(999999, OBJECT?.exercise_plan_volume)}
-                onValueChange={(values) => {
-                  const limitedValue = Math.min(999999, parseInt(values?.value));
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_plan_volume: limitedValue
-                  }));
-                }}
-              />
-            </Box>
-          </Grid2>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>목표 유산소 시간</span>
-              {/* <TimePicker
-                locale={"ko"}
-                format={"HH:mm"}
-                id={"exercise_cardio"}
-                name={"exercise_cardio"}
-                className={"form-control"}
-                disabled={false}
-                clockIcon={null}
-                disableClock={false}
-                value={OBJECT?.exercise_plan_cardio}
-                onChange={(e) => {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_plan_cardio: e ? e.toString() : ""
-                  }));
-                }}
-              /> */}
-            </Box>
-          </Grid2>
-        </Grid2>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>목표 운동 횟수</span>
-              <NumericFormat
-                min={0}
-                max={999}
-                minLength={1}
-                maxLength={5}
-                id={"exercise_count"}
-                name={"exercise_count"}
-                suffix={" 회"}
-                datatype={"number"}
-                displayType={"input"}
-                className={"form-control"}
-                disabled={false}
-                allowNegative={false}
-                thousandSeparator={true}
-                fixedDecimalScale={true}
-                value={Math.min(999, OBJECT?.exercise_plan_count)}
-                onValueChange={(values) => {
-                  const limitedValue = Math.min(999, parseInt(values?.value));
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_plan_count: limitedValue
-                  }));
-                }}
-              />
-            </Box>
-          </Grid2>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>목표 체중</span>
-              <NumericFormat
-                min={0}
-                max={999}
-                minLength={1}
-                maxLength={6}
-                suffix={" kg"}
-                datatype={"number"}
-                displayType={"input"}
-                id={"exercise_weight"}
-                name={"exercise_weight"}
-                className={"form-control"}
-                allowNegative={false}
-                thousandSeparator={true}
-                fixedDecimalScale={true}
-                allowLeadingZeros={false}
-                value={Math.min(999, OBJECT?.exercise_plan_weight)}
-                onValueChange={(values) => {
-                  const limitedValue = Math.min(999, parseInt(values?.value));
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    exercise_plan_weight: limitedValue
-                  }));
-                }}
-              />
-            </Box>
-          </Grid2>
-        </Grid2>
+        <Typography variant={"h5"} fontWeight={500}>
+          운동 계획 Save
+        </Typography>
       </React.Fragment>
     );
+    // 7-2. date
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            slotProps={{ field: { shouldRespectLeadingZeros: true } }}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
+          />
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    // 7-5. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <React.Fragment>
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          />
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-block p-10"}>
+                <Box className={"d-left mt-10 mb-10"}>
+                  <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>기타</Typography>
+                </Box>
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
+          <React.Fragment>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          </React.Fragment>
+        )}
+        </PopDown>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+          <Box className={"d-between mt-n15 mb-20"}>
+            {dropdownSection(OBJECT?._id, "", 0)}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"목표 볼륨"}
+              id={"exercise_plan_volume"}
+              name={"exercise_plan_volume"}
+              className={"w-m220"}
+              value={OBJECT?.exercise_plan_volume}
+              onChange={(e) => {
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_plan_volume: Number(e.target.value)
+                }));
+              }}
+              InputProps={{
+                readOnly: false,
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"목표 유산소 시간"}
+              id={"exercise_plan_cardio"}
+              name={"exercise_plan_cardio"}
+              className={"w-m220"}
+              value={OBJECT?.exercise_plan_cardio}
+              onChange={(e) => {
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_plan_cardio: e.target.value
+                }));
+              }}
+              InputProps={{
+                readOnly: false,
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"목표 횟수"}
+              id={"exercise_plan_count"}
+              name={"exercise_plan_count"}
+              className={"w-m220"}
+              value={OBJECT?.exercise_plan_count}
+              onChange={(e) => {
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_plan_count: Number(e.target.value)
+                }));
+              }}
+              InputProps={{
+                readOnly: false,
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"목표 체중"}
+              id={"exercise_plan_weight"}
+              name={"exercise_plan_weight"}
+              className={"w-m220"}
+              value={OBJECT?.exercise_plan_weight}
+              onChange={(e) => {
+                setOBJECT((prev) => ({
+                  ...prev,
+                  exercise_plan_weight: Number(e.target.value)
+                }));
+              }}
+              InputProps={{
+                readOnly: false,
+              }}
+            />
+          </Box>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {tableFragment()}
+          </Box>
+        </Box>
+      </React.Fragment>
+    );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

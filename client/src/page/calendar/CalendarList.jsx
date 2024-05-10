@@ -8,8 +8,7 @@ import {Loading} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -29,7 +28,7 @@ export const CalendarList = () => {
   const location = useLocation();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -41,7 +40,7 @@ export const CalendarList = () => {
     toDetail: "/calendar/detail"
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: moment().startOf("month").format("YYYY-MM-DD"),
@@ -49,7 +48,7 @@ export const CalendarList = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     user_id: user_id,
     calendar_number: 0,
@@ -65,7 +64,7 @@ export const CalendarList = () => {
   }];
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/list`, {
       params: {
@@ -77,7 +76,7 @@ export const CalendarList = () => {
     setLOADING(false);
   })()}, [user_id, DATE.startDt, DATE.endDt]);
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     const formatDate = (date) => (
       moment(date).format("YYYY-MM-DD")
@@ -122,6 +121,7 @@ export const CalendarList = () => {
         ))}
       </React.Fragment>
     );
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         <Calendar
@@ -172,6 +172,7 @@ export const CalendarList = () => {
         />
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

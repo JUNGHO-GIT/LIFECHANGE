@@ -5,15 +5,11 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DaySave, Btn, Loading} from "../../import/ImportComponents";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
@@ -31,7 +27,7 @@ export const MoneyPlanSave = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -49,7 +45,7 @@ export const MoneyPlanSave = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -57,7 +53,7 @@ export const MoneyPlanSave = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     money_plan_number: 0,
@@ -69,10 +65,10 @@ export const MoneyPlanSave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
@@ -111,74 +107,146 @@ export const MoneyPlanSave = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const tableSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Grid2 container spacing={3}>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>목표 수입</span>
-              <NumericFormat
-                min={0}
-                max={99999999999999}
-                minLength={1}
-                maxLength={17}
-                prefix={"₩  "}
-                datatype={"number"}
-                displayType={"input"}
-                id={"money_plan_in"}
-                name={"money_plan_in"}
-                className={"form-control"}
-                readOnly={false}
-                disabled={false}
-                allowNegative={false}
-                thousandSeparator={true}
-                fixedDecimalScale={true}
-                value={Math.min(99999999999999, OBJECT?.money_plan_in)}
-                onValueChange={(values) => {
-                  const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    money_plan_in: limitedValue
-                  }));
-                }}
-              />
-            </Box>
-          </Grid2>
-          <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
-            <Box className={"input-group"}>
-              <span className={"input-group-text"}>목표 지출</span>
-              <NumericFormat
-                min={0}
-                max={99999999999999}
-                minLength={1}
-                maxLength={17}
-                prefix={"₩  "}
-                datatype={"number"}
-                displayType={"input"}
-                id={"money_plan_out"}
-                name={"money_plan_out"}
-                className={"form-control"}
-                readOnly={false}
-                disabled={false}
-                allowNegative={false}
-                thousandSeparator={true}
-                fixedDecimalScale={true}
-                value={Math.min(99999999999999, OBJECT?.money_plan_out)}
-                onValueChange={(values) => {
-                  const limitedValue = Math.min(99999999999999, parseInt(values?.value));
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    money_plan_out: limitedValue
-                  }));
-                }}
-              />
-            </Box>
-          </Grid2>
-        </Grid2>
+        <Typography variant={"h5"} fontWeight={500}>
+          재무 계획 Save
+        </Typography>
       </React.Fragment>
     );
+    // 7-2. date
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            slotProps={{ field: { shouldRespectLeadingZeros: true } }}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
+          />
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    // 7-5. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <React.Fragment>
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          />
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-block p-10"}>
+                <Box className={"d-left mt-10 mb-10"}>
+                  <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>기타</Typography>
+                </Box>
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
+          <React.Fragment>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          </React.Fragment>
+        )}
+        </PopDown>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+          <Box className={"d-between mt-n15 mb-20"}>
+            {dropdownSection(OBJECT?._id, "", 0)}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"목표 수입"}
+              id={`money_plan_in-${i}`}
+              name={`money_plan_in-${i}`}
+              className={"me-10"}
+              variant={"outlined"}
+              value={OBJECT?.money_plan_in}
+              InputProps={{
+                readOnly: false,
+              }}
+              onChange={(e) => {
+                const limitedValue = Math.min(99999999999, parseInt(e.target.value));
+                setOBJECT((prev) => ({
+                  ...prev,
+                  money_plan_in: limitedValue
+                }));
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              type={"text"}
+              size={"small"}
+              label={"목표 지출"}
+              id={`money_plan_out-${i}`}
+              name={`money_plan_out-${i}`}
+              className={"me-10"}
+              variant={"outlined"}
+              value={OBJECT?.money_plan_out}
+              InputProps={{
+                readOnly: false,
+              }}
+              onChange={(e) => {
+                const limitedValue = Math.min(99999999999, parseInt(e.target.value));
+                setOBJECT((prev) => ({
+                  ...prev,
+                  money_plan_out: limitedValue
+                }));
+              }}
+            />
+          </Box>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {tableFragment()}
+          </Box>
+        </Box>
+      </React.Fragment>
+    );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

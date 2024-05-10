@@ -23,7 +23,7 @@ export const FoodDashBar = () => {
   const user_id = sessionStorage.getItem("user_id");
   const array = ["목표", "실제"];
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("today");
   const [LINE, setLINE] = useState("kcal");

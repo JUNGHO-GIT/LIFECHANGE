@@ -8,8 +8,7 @@ import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const TweakDataset = () => {
@@ -32,7 +31,7 @@ export const TweakDataset = () => {
   const PATH = location?.pathname.trim().toString();
   const datasetArray = ["calendar", "exercise", "food", "money", "sleep"];
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -56,7 +55,7 @@ export const TweakDataset = () => {
   });
   const [dataType, setDataType] = useState("calendar");
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     user_id: user_id,
     user_number: 0,
@@ -110,9 +109,9 @@ export const TweakDataset = () => {
     }
   };
 
-  // 6. table ------------------------------------------------------------------------------------->
-  const tableNode = () => {
-    const addPart = () => (
+  // 4-1. handler --------------------------------------------------------------------------------->
+  const handlerAdd = (type) => {
+    if (type === "part") {
       setOBJECT((prev) => ({
         ...prev,
         user_dataset: {
@@ -125,38 +124,8 @@ export const TweakDataset = () => {
           ]
         }
       }))
-    );
-    const renamePart = (index) => (() => {
-      const newPart = prompt("새로운 이름을 입력하세요.");
-      if (newPart) {
-        setOBJECT((prev) => ({
-          ...prev,
-          user_dataset: {
-            ...prev.user_dataset,
-            [dataType]: [
-              ...prev.user_dataset[dataType]?.slice(0, index), {
-                ...prev.user_dataset[dataType]?.[index],
-                [`${dataType}_part`]: newPart
-              },
-              ...prev.user_dataset[dataType]?.slice(index + 1)
-            ]
-          }
-        }));
-      }
-    });
-    const rmPart = (index) => (() => {
-      setOBJECT((prev) => ({
-        ...prev,
-        user_dataset: {
-          ...prev.user_dataset,
-          [dataType]: [
-            ...prev.user_dataset[dataType]?.slice(0, index),
-            ...prev.user_dataset[dataType]?.slice(index + 1)
-          ]
-        }
-      }));
-    });
-    const addTitle = () => (
+    }
+    else if (type === "title") {
       setOBJECT((prev) => ({
         ...prev,
         user_dataset: {
@@ -173,8 +142,30 @@ export const TweakDataset = () => {
           ]
         }
       }))
-    );
-    const renameTitle = (index) => (() => {
+    }
+  };
+
+  // 4-2. handler --------------------------------------------------------------------------------->
+  const handlerRename = (type, index) => {
+    if (type === "part") {
+      const newPart = prompt("새로운 이름을 입력하세요.");
+      if (newPart) {
+        setOBJECT((prev) => ({
+          ...prev,
+          user_dataset: {
+            ...prev.user_dataset,
+            [dataType]: [
+              ...prev.user_dataset[dataType]?.slice(0, index), {
+                ...prev.user_dataset[dataType]?.[index],
+                [`${dataType}_part`]: newPart
+              },
+              ...prev.user_dataset[dataType]?.slice(index + 1)
+            ]
+          }
+        }));
+      }
+    }
+    else if (type === "title") {
       const newTitle = prompt("새로운 이름을 입력하세요.");
       if (newTitle) {
         setOBJECT((prev) => ({
@@ -195,8 +186,24 @@ export const TweakDataset = () => {
           }
         }));
       }
-    });
-    const rmTitle = (index) => (() => {
+    }
+  };
+
+  // 4-3. handler --------------------------------------------------------------------------------->
+  const handlerRemove = (type, index) => {
+    if (type === "part") {
+      setOBJECT((prev) => ({
+        ...prev,
+        user_dataset: {
+          ...prev.user_dataset,
+          [dataType]: [
+            ...prev.user_dataset[dataType]?.slice(0, index),
+            ...prev.user_dataset[dataType]?.slice(index + 1)
+          ]
+        }
+      }));
+    }
+    else if (type === "title") {
       setOBJECT((prev) => ({
         ...prev,
         user_dataset: {
@@ -213,71 +220,85 @@ export const TweakDataset = () => {
           ]
         }
       }));
-    });
-    const tableSection1 = () => (
+    }
+  };
+
+  // 6. table ------------------------------------------------------------------------------------->
+  const tableNode = () => {
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-          <TableHead>
-            <TableRow className={"table-thead-tr"}>
-                  <TableCell>
-                <Grid2 container spacing={3}>
-                  <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
-                    <Box>
-                      Dataset
-                    </Box>
-                  </Grid2>
-                </Grid2>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {datasetArray.map((item, index) => (
-              <TableRow
-                key={index}
-                className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
-                style={{border: "1px solid #dee2e6"}}
-                onClick={() => {
-                  setDataType(item);
-                  setSelectedIdx((prev) => ({
-                    ...prev,
-                    sectionIdx: index,
-                    partIdx: 1,
-                    titleIdx: 1
-                  }));
-                  setIdx((prev) => ({
-                    ...prev,
-                    partIdx: 1,
-                    titleIdx: 1
-                  }));
-                }}
-              >
-                <TableCell>
-                  <Grid2 container spacing={3}>
-                    <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"p-5"}>
-                      <Box className={"dataset-title"}>
-                        {item}
-                      </Box>
-                    </Grid2>
-                  </Grid2>
-                </TableCell>
-              </TableRow>
-            ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+        <Typography variant={"h5"} fontWeight={500}>
+          Dataset
+        </Typography>
       </React.Fragment>
     );
-    const tableSection2 = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+    // 7-6-1. table
+    const tableFragment1 = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
                 <TableRow className={"table-thead-tr"}>
-                      <TableCell>
+                  <TableCell>
+                    <Grid2 container spacing={3}>
+                      <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
+                        <Box>
+                          DataType
+                        </Box>
+                      </Grid2>
+                    </Grid2>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {datasetArray.map((item, index) => (
+                  <TableRow
+                    key={index}
+                    className={selectedIdx.sectionIdx === index ? "table-secondary" : ""}
+                    style={{border: "1px solid #dee2e6"}}
+                    onClick={() => {
+                      setDataType(item);
+                      setSelectedIdx((prev) => ({
+                        ...prev,
+                        sectionIdx: index,
+                        partIdx: 1,
+                        titleIdx: 1
+                      }));
+                      setIdx((prev) => ({
+                        ...prev,
+                        partIdx: 1,
+                        titleIdx: 1
+                      }));
+                    }}
+                  >
+                    <TableCell>
+                      <Grid2 container spacing={3}>
+                        <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"p-5"}>
+                          <Box className={"dataset-title"}>
+                            {item}
+                          </Box>
+                        </Grid2>
+                      </Grid2>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-6-2. table
+    const tableFragment2 = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+          <TableContainer>
+            <Table className={"border"}>
+              <TableHead>
+                <TableRow className={"table-thead-tr"}>
+                  <TableCell>
                     <Grid2 container spacing={3}>
                       <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
                         <Box>
@@ -285,7 +306,9 @@ export const TweakDataset = () => {
                         </Box>
                       </Grid2>
                       <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                        <Box className={"dataset-add"} onClick={addPart}>
+                        <Box className={"dataset-add"} onClick={() => {
+                          handlerAdd("part");
+                        }}>
                           +
                         </Box>
                       </Grid2>
@@ -308,20 +331,26 @@ export const TweakDataset = () => {
                     <TableCell>
                       <Grid2 container spacing={3}>
                         <Grid2 xl={7} lg={7} md={7} sm={7} xs={7} className={"p-5 d-center"}>
-                          <Box className={"dataset-title"} onClick={() => (setIdx((prev) => ({
-                            ...prev,
-                            partIdx: index
-                          })))}>
+                          <Box className={"dataset-title"} onClick={() => {
+                            setIdx((prev) => ({
+                              ...prev,
+                              partIdx: index
+                            }));
+                          }}>
                             {item[`${dataType}_part`]}
                           </Box>
                         </Grid2>
                         <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"p-5 d-center"}>
-                          <Box className={"dataset-rename"} onClick={renamePart(index)}>
-                            re
+                          <Box className={"dataset-rename"} onClick={() => {
+                            handlerRename("part", index);
+                          }}>
+                            o
                           </Box>
                         </Grid2>
                         <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"p-5 d-center"}>
-                          <Box className={"dataset-delete"} onClick={rmPart(index)}>
+                          <Box className={"dataset-delete"} onClick={() => {
+                            handlerRemove("part", index);
+                          }}>
                             x
                           </Box>
                         </Grid2>
@@ -332,17 +361,18 @@ export const TweakDataset = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
+        </Card>
       </React.Fragment>
     );
-    const tableSection3 = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+    // 7-6-3. table
+    const tableFragment3 = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
                 <TableRow className={"table-thead-tr"}>
-                      <TableCell>
+                  <TableCell>
                     <Grid2 container spacing={3}>
                       <Grid2 xl={9} lg={9} md={9} sm={9} xs={9} className={"d-center"}>
                         <Box>
@@ -350,7 +380,9 @@ export const TweakDataset = () => {
                         </Box>
                       </Grid2>
                       <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"d-center"}>
-                        <Box className={"dataset-add"} onClick={addTitle}>
+                        <Box className={"dataset-add"} onClick={() => {
+                          handlerAdd("title");
+                        }}>
                           +
                         </Box>
                       </Grid2>
@@ -374,20 +406,26 @@ export const TweakDataset = () => {
                     <TableCell>
                       <Grid2 container spacing={3}>
                         <Grid2 xl={7} lg={7} md={7} sm={7} xs={7} className={"p-5 d-center"}>
-                          <Box className={"dataset-title"} onClick={() => (setIdx((prev) => ({
-                            ...prev,
-                            titleIdx: index
-                          })))}>
+                          <Box className={"dataset-title"} onClick={() => {
+                            setIdx((prev) => ({
+                              ...prev,
+                              titleIdx: index
+                            }));
+                          }}>
                             {item}
                           </Box>
                         </Grid2>
                         <Grid2 xl={3} lg={3} md={3} sm={3} xs={3} className={"p-5 d-center"}>
-                          <Box className={"dataset-rename"} onClick={renameTitle(index)}>
-                            re
+                          <Box className={"dataset-rename"} onClick={() => {
+                            handlerRename("title", index);
+                          }}>
+                            o
                           </Box>
                         </Grid2>
                         <Grid2 xl={2} lg={2} md={2} sm={2} xs={2} className={"p-5 d-center"}>
-                          <Box className={"dataset-delete"} onClick={rmTitle(index)}>
+                          <Box className={"dataset-delete"} onClick={() => {
+                            handlerRemove("title", index);
+                          }}>
                             x
                           </Box>
                         </Grid2>
@@ -398,27 +436,43 @@ export const TweakDataset = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-column"}>
+            <Box className={"d-center"}>
+              {tableFragment1(0)}
+            </Box>
+            <Box className={"d-center"}>
+              {tableFragment2(0)}
+            </Box>
+            <Box className={"d-center"}>
+              {tableFragment3(0)}
+            </Box>
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
-        <Card className={"content-wrapper"}>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
-              <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"text-center"}>
-                {tableSection1()}
-              </Grid2>
-              <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"text-center"}>
-                {tableSection2()}
-              </Grid2>
-              <Grid2 xl={4} lg={4} md={4} sm={4} xs={4} className={"text-center"}>
-                {(dataType !== "calendar" && dataType !== "food" && dataType !== "sleep")
-                  && (tableSection3())}
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
               </Grid2>
             </Grid2>
           </Container>
-        </Card>
+        </Paper>
       </React.Fragment>
     );
   };

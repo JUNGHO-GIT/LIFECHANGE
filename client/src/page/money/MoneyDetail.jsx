@@ -5,17 +5,13 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading} from "../../import/ImportComponents";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment, InputLabel} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
-import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneyDetail = () => {
@@ -32,7 +28,7 @@ export const MoneyDetail = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -52,7 +48,7 @@ export const MoneyDetail = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -60,7 +56,7 @@ export const MoneyDetail = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     money_number: 0,
@@ -81,10 +77,10 @@ export const MoneyDetail = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -127,7 +123,7 @@ export const MoneyDetail = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -157,6 +153,7 @@ export const MoneyDetail = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
+    // 7-3. count
     const countSection = () => (
       <React.Fragment>
         <TextField
@@ -175,10 +172,12 @@ export const MoneyDetail = () => {
         />
       </React.Fragment>
     );
+    // 7-4. total
     const totalSection = () => (
       <React.Fragment>
         <Card variant={"outlined"} className={"p-20"}>
           <TextField
+            select={false}
             label={"총 수입"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
@@ -192,6 +191,7 @@ export const MoneyDetail = () => {
             }}
           />
           <TextField
+            select={false}
             label={"총 지출"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
@@ -205,6 +205,7 @@ export const MoneyDetail = () => {
             }}
           />
           <TextField
+            select={false}
             label={"총 자산"}
             size={"small"}
             value={`${numeral(OBJECT?.money_property).format('0,0')}`}
@@ -220,29 +221,28 @@ export const MoneyDetail = () => {
         </Card>
       </React.Fragment>
     );
-    const badgeSection = (i) => (
-      <React.Fragment>
-        <Badge
-          badgeContent={i + 1}
-          color={"primary"}
-          showZero={true}
-        />
-      </React.Fragment>
-    );
+    // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
       <React.Fragment>
-        <PopupState variant={"popover"} popupId={"popup"}>
-          {(popupState) => (
-            <Box className={"mt-n10 me-n10"}>
-              <CustomIcons name={"MdOutlineMoreVert"} className={"w-24 h-24 dark"} {...bindTrigger(popupState)} />
-              <Menu {...bindMenu(popupState)}>
-                <MenuItem onClick={() => {
-                  flowDelete(id, sectionId)
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          />
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-block p-10"}>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
+                  flowDelete(id, sectionId);
                 }}>
                   <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-                  삭제
-                </MenuItem>
-                <MenuItem onClick={() => {
+                  <Typography variant={"inherit"}>삭제</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
                   SEND.startDt = DATE.startDt;
                   SEND.endDt = DATE.endDt;
                   navParam(SEND.toUpdate, {
@@ -250,27 +250,38 @@ export const MoneyDetail = () => {
                   });
                 }}>
                   <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
-                  수정
-                </MenuItem>
-                <MenuItem>
-                  <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-                  기타
-                </MenuItem>
-              </Menu>
-            </Box>
-          )}
-        </PopupState>
+                  <Typography variant={"inherit"}>수정</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"}>
+                  <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>더보기</Typography>
+                </Box>
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
+          <React.Fragment>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          </React.Fragment>
+        )}
+        </PopDown>
       </React.Fragment>
     );
+    // 7-6. table
     const tableFragment = (i) => (
       <React.Fragment key={i}>
         <Card variant={"outlined"} className={"p-20"}>
-          <Box className={"d-between mb-20"}>
-            {badgeSection(i)}
+          <Box className={"d-between mt-n15 mb-20"}>
             {dropdownSection(OBJECT?._id, OBJECT?.money_section[i]._id, i)}
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
+              select={false}
               label={"파트"}
               type={"text"}
               variant={"outlined"}
@@ -282,6 +293,7 @@ export const MoneyDetail = () => {
               }}
             />
             <TextField
+              select={false}
               label={"타이틀"}
               type={"text"}
               variant={"outlined"}
@@ -295,6 +307,7 @@ export const MoneyDetail = () => {
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
+              select={false}
               label={"금액"}
               type={"text"}
               variant={"outlined"}
@@ -311,6 +324,7 @@ export const MoneyDetail = () => {
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
+              select={false}
               label={"메모"}
               type={"text"}
               variant={"outlined"}
@@ -328,6 +342,7 @@ export const MoneyDetail = () => {
         </Card>
       </React.Fragment>
     );
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
@@ -350,6 +365,7 @@ export const MoneyDetail = () => {
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Card className={"content-wrapper"}>

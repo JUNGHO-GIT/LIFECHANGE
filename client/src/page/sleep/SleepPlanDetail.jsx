@@ -5,15 +5,11 @@ import {axios, moment} from "../../import/ImportLibs";
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading} from "../../import/ImportComponents";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
@@ -32,7 +28,7 @@ export const SleepPlanDetail = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -51,7 +47,7 @@ export const SleepPlanDetail = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -59,7 +55,7 @@ export const SleepPlanDetail = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     sleep_plan_number: 0,
@@ -72,10 +68,10 @@ export const SleepPlanDetail = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
@@ -105,15 +101,19 @@ export const SleepPlanDetail = () => {
     if (res.data.status === "success") {
       alert(res.data.msg);
       percent();
-      setOBJECT(res.data.result);
-      navParam(SEND.toList);
+      if (Object.keys(res.data.result).length > 0) {
+        setOBJECT(res.data.result);
+      }
+      else {
+        navParam(SEND.toList);
+      }
     }
     else {
       alert(res.data.msg);
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -137,40 +137,112 @@ export const SleepPlanDetail = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
-
+    // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <PopupState variant={"popover"} popupId={"popup"}>
-        {(popupState) => (
+      <React.Fragment>
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          />
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-block p-10"}>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
+                  flowDelete(id)
+                }}>
+                  <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>삭제</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
+                  SEND.startDt = DATE.startDt;
+                  SEND.endDt = DATE.endDt;
+                  navParam(SEND.toUpdate, {
+                    state: SEND,
+                  });
+                }}>
+                  <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>수정</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"}>
+                  <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>더보기</Typography>
+                </Box>
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
           <React.Fragment>
-            <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={index + 1} color={"primary"} showZero={true}/>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
             </IconButton>
-            <Menu {...bindMenu(popupState)}>
-              <MenuItem onClick={() => {
-                flowDelete(id)
-              }}>
-                <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-                삭제
-              </MenuItem>
-              <MenuItem onClick={() => {
-                SEND.startDt = DATE.startDt;
-                SEND.endDt = DATE.endDt;
-                navParam(SEND.toUpdate, {
-                  state: SEND,
-                });
-              }}>
-                <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
-                수정
-              </MenuItem>
-              <MenuItem>
-                <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
-                기타
-              </MenuItem>
-            </Menu>
           </React.Fragment>
         )}
-      </PopupState>
+        </PopDown>
+      </React.Fragment>
     );
+    // 7-6. table
+    const tableFragment = () => (
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"}>
+          <Box className={"d-between mt-n15 mb-20"}>
+            {dropdownSection(OBJECT?._id, "", 0)}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"취침 목표"}
+                minutesStep={1}
+                value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                readOnly={true}
+              />
+            </LocalizationProvider>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"기상 목표"}
+                minutesStep={1}
+                value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                readOnly={true}
+              />
+            </LocalizationProvider>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <TextField
+                label={"수면 목표"}
+                type={"text"}
+                size={"medium"}
+                id={"sleep_time"}
+                name={"sleep_time"}
+                value={OBJECT?.sleep_plan_time}
+                InputProps={{
+                  readOnly: true,
+                  endAdornment: (
+                    <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                  )
+                }}
+              />
+            </LocalizationProvider>
+          </Box>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
@@ -181,58 +253,13 @@ export const SleepPlanDetail = () => {
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          <Card variant={"outlined"} className={"p-20"}>
-            <Box className={"d-right mb-20"}>
-              {dropdownSection(OBJECT?._id, "", 0)}
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DesktopTimePicker
-                  label={"취침 목표"}
-                  minutesStep={1}
-                  value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
-                  format={"HH:mm"}
-                  timezone={"Asia/Seoul"}
-                  views={['hours', 'minutes']}
-                  readOnly={true}
-                />
-              </LocalizationProvider>
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DesktopTimePicker
-                  label={"기상 목표"}
-                  minutesStep={1}
-                  value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
-                  format={"HH:mm"}
-                  timezone={"Asia/Seoul"}
-                  views={['hours', 'minutes']}
-                  readOnly={true}
-                />
-              </LocalizationProvider>
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <TextField
-                  label={"수면 목표"}
-                  type={"text"}
-                  size={"medium"}
-                  id={"sleep_time"}
-                  name={"sleep_time"}
-                  value={OBJECT?.sleep_plan_time}
-                  InputProps={{
-                    readOnly: true,
-                    endAdornment: (
-                      <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
-                    )
-                  }}
-                />
-              </LocalizationProvider>
-            </Box>
-          </Card>
+          <Box className={"d-column"}>
+            {tableFragment()}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

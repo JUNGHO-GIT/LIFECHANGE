@@ -5,12 +5,11 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading} from "../../import/ImportComponents";
+import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -33,7 +32,7 @@ export const FoodDetail = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -53,7 +52,7 @@ export const FoodDetail = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -61,7 +60,7 @@ export const FoodDetail = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     food_number: 0,
@@ -87,10 +86,10 @@ export const FoodDetail = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -133,61 +132,299 @@ export const FoodDetail = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
+    // 7-1. title
+    const titleSection = () => (
+      <React.Fragment>
+        <Typography variant={"h5"} fontWeight={500}>
+          음식 Save
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-2. date
+    const dateSection = () => (
+      <React.Fragment>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+          <DesktopDatePicker
+            label={"날짜"}
+            value={moment(DATE.startDt, "YYYY-MM-DD")}
+            format={"YYYY-MM-DD"}
+            timezone={"Asia/Seoul"}
+            onChange={(day) => {
+              setDATE((prev) => ({
+                ...prev,
+                startDt: moment(day).format("YYYY-MM-DD"),
+                endDt: moment(day).format("YYYY-MM-DD")
+              }));
+            }}
+          />
+        </LocalizationProvider>
+      </React.Fragment>
+    );
+    // 7-3. count
+    const countSection = () => (
+      <React.Fragment>
+        <TextField
+          type={"text"}
+          id={"sectionCnt"}
+          label={"항목수"}
+          variant={"outlined"}
+          size={"small"}
+          value={COUNT?.sectionCnt}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+            )
+          }}
+        />
+      </React.Fragment>
+    );
+    // 7-4. total
+    const totalSection = () => (
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"}>
+          <TextField
+            select={false}
+            label={"총 칼로리"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_in).format('0,0')}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiFoodApple"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"총 탄수화물"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_carb).format('0,0')}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiFoodApple"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"총 단백질"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_protein).format('0,0')}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiFoodApple"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+          <TextField
+            select={false}
+            label={"총 지방"}
+            size={"small"}
+            value={`${numeral(OBJECT?.food_total_fat).format('0,0')}`}
+            variant={"outlined"}
+            className={"mt-6 mb-6"}
+            InputProps={{
+              readOnly: true,
+              startAdornment: (
+                <CustomIcons name={"BiFoodApple"} className={"w-16 h-16 dark"} position={"start"} />
+              )
+            }}
+          />
+        </Card>
+      </React.Fragment>
+    );
+    // 7-5. dropdown
+    const dropdownSection = (id, sectionId, index) => (
+      <React.Fragment>
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          />
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-block p-10"}>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
+                  flowDelete(id, sectionId);
+                }}>
+                  <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>삭제</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"} onClick={() => {
+                  SEND.startDt = DATE.startDt;
+                  SEND.endDt = DATE.endDt;
+                  navParam(SEND.toUpdate, {
+                    state: SEND,
+                  });
+                }}>
+                  <CustomIcons name={"MdOutlineEdit"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>수정</Typography>
+                </Box>
+                <Box className={"d-left mt-10 mb-10"}>
+                  <CustomIcons name={"MdOutlineMoreHoriz"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>더보기</Typography>
+                </Box>
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
+          <React.Fragment>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
+            </IconButton>
+          </React.Fragment>
+        )}
+        </PopDown>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"}>
+          <Box className={"d-between mt-n15 mb-20"}>
+            {dropdownSection(OBJECT?._id, OBJECT?.food_section[i]._id, i)}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"분류"}
+              size={"small"}
+              value={OBJECT?.food_section[i]?.food_part_val}
+              variant={"outlined"}
+              className={"w-m220"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"식품"}
+              size={"small"}
+              value={`${OBJECT?.food_section[i]?.food_title} (${OBJECT?.food_section[i]?.food_brand || ""})`}
+              variant={"outlined"}
+              className={"w-m220"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"kcal"}
+              size={"small"}
+              value={`${numeral(OBJECT?.food_section[i]?.food_kcal).format('0,0')}`}
+              variant={"outlined"}
+              className={"w-m220"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"carb"}
+              size={"small"}
+              value={`${numeral(OBJECT?.food_section[i]?.food_carb).format('0,0')}`}
+              variant={"outlined"}
+              className={"w-m220"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"protein"}
+              size={"small"}
+              value={`${numeral(OBJECT?.food_section[i]?.food_protein).format('0,0')}`}
+              variant={"outlined"}
+              className={"w-m220"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+            />
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <TextField
+              select={false}
+              label={"fat"}
+              size={"small"}
+              value={`${numeral(OBJECT?.food_section[i]?.food_fat).format('0,0')}`}
+              variant={"outlined"}
+              className={"w-m220"}
+              InputProps={{
+                readOnly: true,
+                startAdornment: (
+                  <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
+                )
+              }}
+            />
+          </Box>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
-          <TableContainer>
-            <Table className={"border"}>
-              <TableHead>
-                <TableRow className={"table-thead-tr"}>
-                  <TableCell>날짜</TableCell>
-                  <TableCell>분류</TableCell>
-                  <TableCell>식품</TableCell>
-                  <TableCell>kcal</TableCell>
-                  <TableCell>carb</TableCell>
-                  <TableCell>protein</TableCell>
-                  <TableCell>fat</TableCell>
-                  <TableCell>x</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {OBJECT?.food_section?.map((section, index) => (
-                  <TableRow key={index}>
-                    {index === 0 && (
-                      <TableCell rowSpan={OBJECT?.food_section?.length}>
-                        {OBJECT?.food_startDt?.substring(5, 10)}
-                      </TableCell>
-                    )}
-                    <TableCell>{section.food_part_val}</TableCell>
-                    <TableCell>
-                      <p>{`${section.food_title} (${section.food_brand || ""})`}</p>
-                      <p>{`${numeral(section.food_gram * section.food_count).format('0,0')} g`}</p>
-                    </TableCell>
-                    <TableCell>{`${numeral(section.food_kcal).format('0,0')}`}</TableCell>
-                    <TableCell>{`${numeral(section.food_carb).format('0,0')}`}</TableCell>
-                    <TableCell>{`${numeral(section.food_protein).format('0,0')}`}</TableCell>
-                    <TableCell>{`${numeral(section.food_fat).format('0,0')}`}</TableCell>
-                    <TableCell><p className={"del-btn"} onClick={() => (
-                      flowDelete(OBJECT?._id, section._id)
-                    )}>x</p></TableCell>
-                  </TableRow>
-                ))}
-                <TableRow className={"table-tbody-tr"}>
-                  <TableCell colSpan={3}>합계</TableCell>
-                  <TableCell>{`${numeral(OBJECT?.food_total_kcal).format('0,0')} kcal`}</TableCell>
-                  <TableCell>{`${numeral(OBJECT?.food_total_carb).format('0,0')} g`}</TableCell>
-                  <TableCell>{`${numeral(OBJECT?.food_total_protein).format('0,0')} g`}</TableCell>
-                  <TableCell>{`${numeral(OBJECT?.food_total_fat).format('0,0')} g`}</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {countSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {totalSection()}
+          </Box>
+          <Box className={"d-column"}>
+            {OBJECT?.food_section.map((item, i) => tableFragment(i))}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

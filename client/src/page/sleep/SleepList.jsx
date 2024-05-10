@@ -4,12 +4,11 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {axios, moment} from "../../import/ImportLibs";
 import {useDate, useStorage} from "../../import/ImportHooks";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DayList, Paging, Filter, Btn, Loading} from "../../import/ImportComponents";
+import {DayList, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -30,7 +29,7 @@ export const SleepList = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -52,7 +51,7 @@ export const SleepList = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -70,7 +69,7 @@ export const SleepList = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
     sleep_number: 0,
@@ -109,11 +108,20 @@ export const SleepList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const tableSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+        <Typography variant={"h5"} fontWeight={500}>
+          수면 List
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
@@ -132,21 +140,27 @@ export const SleepList = () => {
                         <TableRow className={"table-tbody-tr"}>
                           {sectionIndex === 0 && (
                             <TableCell rowSpan={Math.min(item.sleep_section.length, 3)}
-                              className={"pointer"} onClick={() => {
-                                SEND.id = item._id;
-                                SEND.startDt = item.sleep_startDt;
-                                SEND.endDt = item.sleep_endDt;
-                                navParam(SEND.toDetail, {
-                                  state: SEND
-                                });
-                              }}>
+                            className={"pointer"} onClick={() => {
+                              SEND.id = item._id;
+                              SEND.startDt = item.sleep_startDt;
+                              SEND.endDt = item.sleep_endDt;
+                              navParam(SEND.toDetail, {
+                                state: SEND
+                              });
+                            }}>
                               {item.sleep_startDt?.substring(5, 10)}
-                              {item.sleep_section.length > 3 && (<>더보기</>)}
+                              {item.sleep_section.length > 3 && (<Box>더보기</Box>)}
                             </TableCell>
                           )}
-                          <TableCell>{section.sleep_night}</TableCell>
-                          <TableCell>{section.sleep_morning}</TableCell>
-                          <TableCell>{section.sleep_time}</TableCell>
+                          <TableCell>
+                            {section.sleep_night}
+                          </TableCell>
+                          <TableCell>
+                            {section.sleep_morning}
+                          </TableCell>
+                          <TableCell>
+                            {section.sleep_time}
+                          </TableCell>
                         </TableRow>
                       </React.Fragment>
                     ))}
@@ -155,9 +169,24 @@ export const SleepList = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-column"}>
+            {tableFragment()}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

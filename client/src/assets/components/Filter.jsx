@@ -179,7 +179,7 @@ export const Filter = ({
     </React.Fragment>
   );
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
       <Paper className={"flex-wrapper h-8vh p-sticky bottom-35"} variant={"outlined"}>

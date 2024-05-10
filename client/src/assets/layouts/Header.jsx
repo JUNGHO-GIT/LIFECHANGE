@@ -13,7 +13,7 @@ export const Header = () => {
   const navParam = useNavigate();
   const user_id = sessionStorage.getItem("user_id");
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // 4. toggle ------------------------------------------------------------------------------------>

@@ -22,12 +22,12 @@ export const SleepDashLine = () => {
   const user_id = sessionStorage.getItem("user_id");
   const array = ["취침", "수면", "기상"];
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SECTION, setSECTION] = useState("month");
   const [PART, setPART] = useState(array);
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_WEEK_DEF = [
     {name:"", 취침: 0, 기상: 0, 수면: 0},
   ];

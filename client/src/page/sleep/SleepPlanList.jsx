@@ -4,12 +4,11 @@ import {React, useState, useEffect, useNavigate, useLocation} from "../../import
 import {moment, axios} from "../../import/ImportLibs";
 import {useStorage} from "../../import/ImportHooks";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DayList, Paging, Filter, Btn, Loading} from "../../import/ImportComponents";
+import {DayList, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -30,7 +29,7 @@ export const SleepPlanList = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -52,7 +51,7 @@ export const SleepPlanList = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -70,7 +69,7 @@ export const SleepPlanList = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     sleep_startDt: "0000-00-00",
     sleep_endDt: "0000-00-00",
@@ -115,11 +114,20 @@ export const SleepPlanList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const tableSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+        <Typography variant={"h5"} fontWeight={500}>
+          수면 계획 List
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
@@ -143,33 +151,75 @@ export const SleepPlanList = () => {
                           state: SEND
                         });
                       }}>
-                        {item.sleep_plan_startDt}
+                        {item.sleep_plan_startDt?.substring(5, 10)
+                          + " ~ " +
+                          item.sleep_plan_endDt?.substring(5, 10)
+                        }
                       </TableCell>
-                      <TableCell>취침</TableCell>
-                      <TableCell>{item.sleep_plan_night}</TableCell>
-                      <TableCell>{item.sleep_night}</TableCell>
-                      <TableCell className={item.sleep_diff_night_color}>{item.sleep_diff_night}</TableCell>
+                      <TableCell>
+                        취침
+                      </TableCell>
+                      <TableCell>
+                        {item.sleep_plan_night}
+                      </TableCell>
+                      <TableCell>
+                        {item.sleep_night}
+                      </TableCell>
+                      <TableCell className={item.sleep_diff_night_color}>
+                        {item.sleep_diff_night}
+                      </TableCell>
                     </TableRow>
                     <TableRow className={"table-tbody-tr"}>
-                      <TableCell>기상</TableCell>
-                      <TableCell>{item.sleep_plan_morning}</TableCell>
-                      <TableCell>{item.sleep_morning}</TableCell>
-                      <TableCell className={item.sleep_diff_morning_color}>{item.sleep_diff_morning}</TableCell>
+                      <TableCell>
+                        기상
+                      </TableCell>
+                      <TableCell>
+                        {item.sleep_plan_morning}
+                      </TableCell>
+                      <TableCell>
+                        {item.sleep_morning}
+                      </TableCell>
+                      <TableCell className={item.sleep_diff_morning_color}>
+                        {item.sleep_diff_morning}
+                      </TableCell>
                     </TableRow>
                     <TableRow className={"table-tbody-tr"}>
-                      <TableCell>수면</TableCell>
-                      <TableCell>{item.sleep_plan_time}</TableCell>
-                      <TableCell>{item.sleep_time}</TableCell>
-                      <TableCell className={item.sleep_diff_time_color}>{item.sleep_diff_time}</TableCell>
+                      <TableCell>
+                        수면
+                      </TableCell>
+                      <TableCell>
+                        {item.sleep_plan_time}
+                      </TableCell>
+                      <TableCell>
+                        {item.sleep_time}
+                      </TableCell>
+                      <TableCell className={item.sleep_diff_time_color}>
+                        {item.sleep_diff_time}
+                      </TableCell>
                     </TableRow>
                   </React.Fragment>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-column"}>
+            {tableFragment()}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

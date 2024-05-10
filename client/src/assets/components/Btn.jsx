@@ -136,7 +136,7 @@ const Btn = ({
     </React.Fragment>
   );
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
     <React.Fragment>
       <Paper className={"flex-wrapper h-6vh p-sticky bottom-0"} variant={"outlined"}>

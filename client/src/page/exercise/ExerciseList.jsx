@@ -5,16 +5,13 @@ import {moment, axios, numeral, InputMask, NumericFormat} from "../../import/Imp
 import {useDate, useStorage, useTime} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {DayList, Paging, Filter, Btn, Loading} from "../../import/ImportComponents";
+import {DayList, Paging, Filter, Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
 
@@ -32,7 +29,25 @@ export const ExerciseList = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
+  const {val:DATE, set:setDATE} = useStorage(
+    `DATE(${PATH})`, {
+      startDt: location_startDt,
+      endDt: location_endDt
+    }
+  );
+  const {val:FILTER, set:setFILTER} = useStorage(
+    `FILTER(${PATH})`, {
+      order: "asc",
+      type: "day",
+      partIdx: 0,
+      part: "전체",
+      titleIdx: 0,
+      title: "전체"
+    }
+  );
+
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -55,24 +70,6 @@ export const ExerciseList = () => {
   });
 
   // 2-2. useState -------------------------------------------------------------------------------->
-  const {val:DATE, set:setDATE} = useStorage(
-    `DATE(${PATH})`, {
-      startDt: location_startDt,
-      endDt: location_endDt
-    }
-  );
-  const {val:FILTER, set:setFILTER} = useStorage(
-    `FILTER(${PATH})`, {
-      order: "asc",
-      type: "day",
-      partIdx: 0,
-      part: "전체",
-      titleIdx: 0,
-      title: "전체"
-    }
-  );
-
-  // 2-3. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = [{
     _id: "",
     exercise_number: 0,
@@ -121,11 +118,20 @@ export const ExerciseList = () => {
     DATE.startDt, DATE.endDt
   ]);
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    const tableSection = () => (
+    // 7-1. title
+    const titleSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper h-75vh"}>
+        <Typography variant={"h5"} fontWeight={500}>
+          운동 List
+        </Typography>
+      </React.Fragment>
+    );
+    // 7-6. table
+    const tableFragment = (i) => (
+      <React.Fragment key={i}>
+        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
@@ -145,29 +151,41 @@ export const ExerciseList = () => {
                       <TableRow key={sectionIndex}>
                         {sectionIndex === 0 && (
                           <TableCell rowSpan={Math.min(item.exercise_section.length, 3)}
-                            className={"pointer"} onClick={() => {
-                              SEND.id = item._id;
-                              SEND.startDt = item.exercise_startDt;
-                              SEND.endDt = item.exercise_endDt;
-                              navParam(SEND.toDetail, {
-                                state: SEND
-                              });
-                            }}>
+                          className={"pointer"} onClick={() => {
+                            SEND.id = item._id;
+                            SEND.startDt = item.exercise_startDt;
+                            SEND.endDt = item.exercise_endDt;
+                            navParam(SEND.toDetail, {
+                              state: SEND
+                            });
+                          }}>
                             {item.exercise_startDt?.substring(5, 10)}
                             {item.exercise_section.length > 3 && (<Box>더보기</Box>)}
                           </TableCell>
                         )}
-                        <TableCell>{section.exercise_part_val.substring(0, 6)}</TableCell>
-                        <TableCell>{section.exercise_title_val.substring(0, 6)}</TableCell>
+                        <TableCell>
+                          {section.exercise_part_val.substring(0, 6)}
+                        </TableCell>
+                        <TableCell>
+                          {section.exercise_title_val.substring(0, 6)}
+                        </TableCell>
                         {section.exercise_part_val !== "유산소" ? (
                           <React.Fragment>
-                            <TableCell>{`${numeral(section.exercise_set).format('0,0')}`}</TableCell>
-                            <TableCell>{`${numeral(section.exercise_rep).format('0,0')}`}</TableCell>
-                            <TableCell>{`${numeral(section.exercise_kg).format('0,0')}`}</TableCell>
+                            <TableCell>
+                              {`${numeral(section.exercise_set).format('0,0')}`}
+                            </TableCell>
+                            <TableCell>
+                              {`${numeral(section.exercise_rep).format('0,0')}`}
+                            </TableCell>
+                            <TableCell>
+                              {`${numeral(section.exercise_kg).format('0,0')}`}
+                            </TableCell>
                           </React.Fragment>
                         ) : (
                           <React.Fragment>
-                            <TableCell colSpan={3}>{section.exercise_cardio}</TableCell>
+                            <TableCell colSpan={3}>
+                              {section.exercise_cardio}
+                            </TableCell>
                           </React.Fragment>
                         )}
                       </TableRow>
@@ -177,9 +195,24 @@ export const ExerciseList = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-75vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-column"}>
+            {tableFragment()}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

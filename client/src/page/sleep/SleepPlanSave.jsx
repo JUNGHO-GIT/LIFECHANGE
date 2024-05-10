@@ -5,12 +5,11 @@ import {axios, moment} from "../../import/ImportLibs";
 import {useStorage, useTime, useDate} from "../../import/ImportHooks";
 import {percent} from "../../import/ImportLogics";
 import {Header, NavBar} from "../../import/ImportLayouts";
-import {Btn, Loading, DaySave} from "../../import/ImportComponents";
+import {Btn, Loading, PopDown} from "../../import/ImportComponents";
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {TableContainer, Table} from "../../import/ImportMuis";
 import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
@@ -31,7 +30,7 @@ export const SleepPlanSave = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname.trim().toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -49,7 +48,7 @@ export const SleepPlanSave = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -57,7 +56,7 @@ export const SleepPlanSave = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     sleep_plan_number: 0,
@@ -74,7 +73,7 @@ export const SleepPlanSave = () => {
   useDate(location_startDt, location_endDt, DATE, setDATE);
   useTime(OBJECT, setOBJECT, PATH, "plan");
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/plan/detail`, {
       params: {
@@ -113,13 +112,13 @@ export const SleepPlanSave = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
-          수면 계획 Detail
+          수면 계획 Save
         </Typography>
       </React.Fragment>
     );
@@ -144,30 +143,106 @@ export const SleepPlanSave = () => {
         </LocalizationProvider>
       </React.Fragment>
     );
+    // 7-5. dropdown
     const dropdownSection = (id, sectionId, index) => (
-      <PopupState variant={"popover"} popupId={"popup"}>
-        {(popupState) => (
+      <React.Fragment>
+        <IconButton size={"small"} color={"primary"}>
+          <Badge
+            badgeContent={index + 1}
+            color={"primary"}
+            showZero={true}
+          />
+        </IconButton>
+        <PopDown
+          elementId={`pop-${index}`}
+          contents={
+            <React.Fragment>
+              <Box className={"d-block p-10"}>
+                <Box className={"d-left mt-10 mb-10"}>
+                  <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
+                  <Typography variant={"inherit"}>기타</Typography>
+                </Box>
+              </Box>
+            </React.Fragment>
+          }
+        >
+        {popProps => (
           <React.Fragment>
-            <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={index + 1} color={"primary"} showZero={true}>
-              </Badge>
+            <IconButton size={"small"} color={"primary"} className={"me-n20"} onClick={(e) => {
+              popProps.openPopup(e.currentTarget)
+            }}>
+              <CustomIcons name={"BiDotsHorizontalRounded"} className={"w-24 h-24 dark"} />
             </IconButton>
-            <Menu {...bindMenu(popupState)}>
-              <MenuItem onClick={() => {
-                setOBJECT(OBJECT_DEF);
-              }}>
-                <CustomIcons name={"MdOutlineDelete"} className={"w-24 h-24 dark"} />
-                초기화
-              </MenuItem>
-              <MenuItem>
-                <CustomIcons name={"MdOutlineAdd"} className={"w-24 h-24 dark"} />
-                기타
-              </MenuItem>
-            </Menu>
           </React.Fragment>
         )}
-      </PopupState>
+        </PopDown>
+      </React.Fragment>
     );
+    // 7-6. table
+    const tableFragment = () => (
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"}>
+          <Box className={"d-between mt-n15 mb-20"}>
+            {dropdownSection(OBJECT?._id, "", 0)}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"취침 계획"}
+                minutesStep={1}
+                value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                onChange={(time) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_plan_night: moment(time).format("HH:mm")
+                  }));
+                }}
+              />
+            </LocalizationProvider>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <DesktopTimePicker
+                label={"기상"}
+                minutesStep={1}
+                value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
+                format={"HH:mm"}
+                timezone={"Asia/Seoul"}
+                views={['hours', 'minutes']}
+                onChange={(time) => {
+                  setOBJECT((prev) => ({
+                    ...prev,
+                    sleep_plan_morning: moment(time).format("HH:mm")
+                  }));
+                }}
+              />
+            </LocalizationProvider>
+          </Box>
+          <Box className={"d-center mb-20"}>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
+              <TextField
+                label={"수면"}
+                type={"text"}
+                size={"medium"}
+                id={"sleep_time"}
+                name={"sleep_time"}
+                value={OBJECT?.sleep_plan_time}
+                InputProps={{
+                  readOnly: true,
+                  endAdornment: (
+                    <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
+                  )
+                }}
+              />
+            </LocalizationProvider>
+          </Box>
+        </Card>
+      </React.Fragment>
+    );
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
@@ -178,68 +253,13 @@ export const SleepPlanSave = () => {
           <Box className={"d-center mb-20"}>
             {dateSection()}
           </Box>
-          <Card variant={"outlined"} className={"p-20"}>
-            <Box className={"d-right mb-20"}>
-              {dropdownSection(OBJECT?._id, "", 0)}
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DesktopTimePicker
-                  label={"취침 계획"}
-                  minutesStep={1}
-                  value={moment(OBJECT?.sleep_plan_night, "HH:mm")}
-                  format={"HH:mm"}
-                  timezone={"Asia/Seoul"}
-                  views={['hours', 'minutes']}
-                  onChange={(time) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      sleep_plan_night: moment(time).format("HH:mm")
-                    }));
-                  }}
-                />
-              </LocalizationProvider>
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <DesktopTimePicker
-                  label={"기상"}
-                  minutesStep={1}
-                  value={moment(OBJECT?.sleep_plan_morning, "HH:mm")}
-                  format={"HH:mm"}
-                  timezone={"Asia/Seoul"}
-                  views={['hours', 'minutes']}
-                  onChange={(time) => {
-                    setOBJECT((prev) => ({
-                      ...prev,
-                      sleep_plan_morning: moment(time).format("HH:mm")
-                    }));
-                  }}
-                />
-              </LocalizationProvider>
-            </Box>
-            <Box className={"d-center mb-20"}>
-              <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"ko"}>
-                <TextField
-                  label={"수면"}
-                  type={"text"}
-                  size={"medium"}
-                  id={"sleep_time"}
-                  name={"sleep_time"}
-                  value={OBJECT?.sleep_plan_time}
-                  InputProps={{
-                  readOnly: true,
-                  endAdornment: (
-                    <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
-                  )
-                }}
-                />
-              </LocalizationProvider>
-            </Box>
-          </Card>
+          <Box className={"d-column"}>
+            {tableFragment()}
+          </Box>
         </Box>
       </React.Fragment>
     );
+    // 7-8. return
     return (
       <React.Fragment>
         <Paper className={"content-wrapper"} variant={"outlined"}>

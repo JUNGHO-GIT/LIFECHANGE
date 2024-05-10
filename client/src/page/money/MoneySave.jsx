@@ -9,13 +9,9 @@ import {Btn, DaySave, Loading, PopDown, PopUp} from "../../import/ImportComponen
 import {CustomIcons, CustomAdornment} from "../../import/ImportIcons";
 import {Grid2, Container, Card, Paper, Icon} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TextField, Typography, InputAdornment, InputLabel} from "../../import/ImportMuis";
-import {IconButton, Button, Divider} from "../../import/ImportMuis";
-import {PopupState, bindTrigger, bindMenu} from "../../import/ImportMuis";
-import {Popover, bindPopover} from "../../import/ImportMuis";
+import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 import {LocalizationProvider, AdapterMoment} from "../../import/ImportMuis";
 import {DesktopDatePicker, DesktopTimePicker} from "../../import/ImportMuis";
-import {FormGroup, FormControlLabel, FormControl, Select, Switch} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
 export const MoneySave = () => {
@@ -33,7 +29,7 @@ export const MoneySave = () => {
   const location_endDt = location?.state?.endDt?.trim()?.toString();
   const PATH = location?.pathname?.trim()?.toString();
 
-  // 2-1. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const [LOADING, setLOADING] = useState(true);
   const [SEND, setSEND] = useState({
     id: "",
@@ -51,7 +47,7 @@ export const MoneySave = () => {
     dayOpen: false,
   });
 
-  // 2-2. useState -------------------------------------------------------------------------------->
+  // 2-1. useStorage ------------------------------------------------------------------------------>
   const {val:DATE, set:setDATE} = useStorage(
     `DATE(${PATH})`, {
       startDt: location_startDt,
@@ -59,7 +55,7 @@ export const MoneySave = () => {
     }
   );
 
-  // 2-3. useState -------------------------------------------------------------------------------->
+  // 2-2. useState -------------------------------------------------------------------------------->
   const OBJECT_DEF = {
     _id: "",
     money_number: 0,
@@ -80,10 +76,10 @@ export const MoneySave = () => {
   };
   const [OBJECT, setOBJECT] = useState(OBJECT_DEF);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useDate(location_startDt, location_endDt, DATE, setDATE);
 
-  // 2.3 useEffect -------------------------------------------------------------------------------->
+  // 2-3. useEffect ------------------------------------------------------------------------------->
   useEffect(() => {(async () => {
     const res = await axios.get(`${URL_OBJECT}/detail`, {
       params: {
@@ -140,7 +136,7 @@ export const MoneySave = () => {
     }
   };
 
-  // 7. table ------------------------------------------------------------------------------------->
+  // 8. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -204,14 +200,11 @@ export const MoneySave = () => {
       };
       return (
         <React.Fragment>
-          <PopUp
-            elementId={"sectionCnt"}
-            contents={
-              <Typography variant={"body2"} className={"p-10"}>
-                0이상 10이하의 숫자만 입력하세요.
-              </Typography>
-            }
-          >
+          <PopUp elementId={"sectionCnt"} contents={
+            <Typography variant={"body2"} className={"p-10"}>
+              0이상 10이하의 숫자만 입력하세요.
+            </Typography>
+          }>
             {popProps => (
               <TextField
                 type={"text"}
@@ -262,6 +255,7 @@ export const MoneySave = () => {
       <React.Fragment>
         <Card variant={"outlined"} className={"p-20"}>
           <TextField
+            select={false}
             label={"총 수입"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_in).format('0,0')}`}
@@ -275,6 +269,7 @@ export const MoneySave = () => {
             }}
           />
           <TextField
+            select={false}
             label={"총 지출"}
             size={"small"}
             value={`${numeral(OBJECT?.money_total_out).format('0,0')}`}
@@ -288,6 +283,7 @@ export const MoneySave = () => {
             }}
           />
           <TextField
+            select={false}
             label={"총 자산"}
             size={"small"}
             value={`${numeral(OBJECT?.money_property).format('0,0')}`}
@@ -319,7 +315,7 @@ export const MoneySave = () => {
             <React.Fragment>
               <Box className={"d-center p-10"}>
                 <CustomIcons name={"MdOutlineContentCopy"} className={"w-24 h-24 dark"} />
-                기타
+                <Typography variant={"inherit"}>기타</Typography>
               </Box>
             </React.Fragment>
           }
@@ -354,6 +350,9 @@ export const MoneySave = () => {
               className={"me-10"}
               variant={"outlined"}
               value={OBJECT?.money_section[i]?.money_part_idx}
+              InputProps={{
+                readOnly: false
+              }}
               onChange={(e) => {
                 const newIndex = Number(e.target.value);
                 setOBJECT((prev) => ({
@@ -386,6 +385,9 @@ export const MoneySave = () => {
               className={"ms-10"}
               variant={"outlined"}
               value={OBJECT?.money_section[i]?.money_title_idx}
+              InputProps={{
+                readOnly: false
+              }}
               onChange={(e) => {
                 const newTitleIdx = Number(e.target.value);
                 const newTitleVal = moneyArray[OBJECT?.money_section[i]?.money_part_idx]?.money_title[newTitleIdx];
@@ -412,6 +414,7 @@ export const MoneySave = () => {
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
+              select={false}
               label={"금액"}
               type={"text"}
               variant={"outlined"}
@@ -440,6 +443,7 @@ export const MoneySave = () => {
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
+              select={false}
               label={"메모"}
               type={"text"}
               variant={"outlined"}
@@ -468,7 +472,7 @@ export const MoneySave = () => {
         </Card>
       </React.Fragment>
     );
-    // 7-8. table
+    // 7-7. table
     const tableSection = () => (
       <React.Fragment>
         <Box className={"block-wrapper h-75vh"}>
@@ -491,7 +495,7 @@ export const MoneySave = () => {
         </Box>
       </React.Fragment>
     );
-    // 7-9. return
+    // 7-8. return
     return (
       <React.Fragment>
         <Card className={"content-wrapper"}>
