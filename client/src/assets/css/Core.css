@@ -13,8 +13,6 @@
 .flex-wrapper {
   width: 100%;
   max-width: 95vw;
-  height: auto;
-  max-height: 100%;
   margin: 0.1vh 0vw 0.1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   display: flex;
@@ -27,13 +25,11 @@
   overflow-x: hidden;
   overflow-y: hidden;
   animation: fadeIn 1.0s !important;
-  z-index: 1000;
+  z-index: 1111;
 }
 .content-wrapper {
   width: 100%;
   max-width: 95vw;
-  height: auto;
-  max-height: 150vh;
   margin: 0.1vh 0vw 0.1vh 0vw;
   padding: 1vh 2vw 1vh 2vw;
   border: none;
@@ -47,8 +43,6 @@
 .block-wrapper {
   width: 100%;
   max-width: 95vw;
-  height: auto;
-  max-height: 100%;
   margin: 0.1vh 0vw 0.1vh 0vw;
   padding: 0vh 0vw 0vh 0vw;
   display: inline-block;

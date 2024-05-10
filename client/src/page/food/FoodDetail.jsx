@@ -439,7 +439,7 @@ export const FoodDetail = () => {
     // 7-7. table
     const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper"}>
+        <Box className={"block-wrapper h-min80vh"}>
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>

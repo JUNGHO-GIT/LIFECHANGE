@@ -252,7 +252,7 @@ export const FoodSave = () => {
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => {
-    // 7-1. title
+    /* // 7-1. title
     const titleSection = () => (
       <React.Fragment>
         <Typography variant={"h5"} fontWeight={500}>
@@ -625,9 +625,47 @@ export const FoodSave = () => {
       </React.Fragment>
     );
     // 7-7. table
-    /* const tableSec = () => (
+    const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper"}>
+        <Box className={"block-wrapper h-min80vh"}>
+          <Box className={"d-center p-10"}>
+            {titleSection()}
+          </Box>
+          <Divider variant={"middle"} className={"mb-20"} />
+          <Box className={"d-center mb-20"}>
+            {dateSection()}
+          </Box>
+          <Box className={"d-center mb-20"}>
+            {countSection()}
+          </Box>
+          <Box className={"d-column mb-20"}>
+            {totalSection()}
+          </Box>
+          <Box className={"d-column"}>
+            {OBJECT?.food_section.map((item, i) => tableFragment(i))}
+          </Box>
+        </Box>
+      </React.Fragment>
+    );
+    // 7-8. return
+    return (
+      <React.Fragment>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
+          <Container className={"p-0"}>
+            <Grid2 container spacing={3}>
+              <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
+                {tableSection()}
+              </Grid2>
+            </Grid2>
+          </Container>
+        </Paper>
+      </React.Fragment>
+    ); */
+
+    // 7-7. table
+    const tableSection = () => (
+      <React.Fragment>
+        <Box className={"block-wrapper h-min80vh"}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
@@ -729,29 +767,6 @@ export const FoodSave = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Card>
-      </React.Fragment>
-    ); */
-    // 7-7. table
-    const tableSection = () => (
-      <React.Fragment>
-        <Box className={"block-wrapper"}>
-          <Box className={"d-center p-10"}>
-            {titleSection()}
-          </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
-          <Box className={"d-center mb-20"}>
-            {dateSection()}
-          </Box>
-          <Box className={"d-center mb-20"}>
-            {countSection()}
-          </Box>
-          <Box className={"d-column mb-20"}>
-            {totalSection()}
-          </Box>
-          <Box className={"d-column"}>
-            {OBJECT?.food_section.map((item, i) => tableFragment(i))}
-          </Box>
         </Box>
       </React.Fragment>
     );
@@ -776,7 +791,7 @@ export const FoodSave = () => {
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
-      part={"food"} plan={""} type={"search"}
+      part={"food"} plan={""} type={"save"}
     />
   );
 

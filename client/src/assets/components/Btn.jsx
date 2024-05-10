@@ -1,8 +1,9 @@
 // Button.jsx
 
 import {React} from "../../import/ImportReacts";
-import moment from "moment-timezone";
-import {Button, Container, Paper, Grid2} from "../../import/ImportMuis";
+import {moment} from "../../import/ImportLibs";
+import {CustomIcons} from "../../import/ImportIcons";
+import {Button, Container, Paper, Grid2, TextField} from "../../import/ImportMuis";
 
 // 11. button ------------------------------------------------------------------------------------->
 export const Btn = ({
@@ -135,6 +136,33 @@ export const Btn = ({
       </Button>
     </React.Fragment>
   );
+  const btnGetSearch = () => (
+    <React.Fragment>
+      <TextField
+        select={false}
+        label={"검색"}
+        size={"small"}
+        variant={"outlined"}
+        className={"w-150"}
+        value={FILTER?.query}
+        InputProps={{
+          readOnly: false
+        }}
+        onChange={(e) => {
+          setFILTER((prev) => ({
+            ...prev,
+            query: e.target.value
+          }));
+        }}
+      />
+      <Button size={"small"} type={"button"} color={"primary"} variant={"outlined"}
+      className={"primary-btn"} onClick={() => {
+        flowSave();
+      }}>
+        Search
+      </Button>
+    </React.Fragment>
+  );
 
   // 7. table ------------------------------------------------------------------------------------->
   const tableNode = () => (
@@ -153,16 +181,20 @@ export const Btn = ({
                   {btnToUpdate()}
                   {btnToList()}
                 </React.Fragment>
-              ) : type === "save" ? (
+              ) : type === "save" && part !== "food" ? (
                 <React.Fragment>
                   {btnToSave()}
                   {btnGetToday()}
                   {btnToList()}
                 </React.Fragment>
-              ) : type === "search" ? (
+              ) : type === "save" && part === "food" ? (
                 <React.Fragment>
                   {btnToSave()}
                   {btnToSearch()}
+                </React.Fragment>
+              ) : type === "search" ? (
+                <React.Fragment>
+                  {btnGetSearch()}
                 </React.Fragment>
               ) : type === "dataset" ? (
                 <React.Fragment>

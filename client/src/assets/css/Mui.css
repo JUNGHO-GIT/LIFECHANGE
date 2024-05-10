@@ -9,3 +9,8 @@
 [class$="-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"] {
   text-overflow: clip !important;
 }
+
+/** 폼 인풋 **/
+[class$="MuiFormLabel-root-MuiInputLabel-root"] {
+  line-height: 1.0rem !important;
+}

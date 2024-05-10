@@ -419,7 +419,7 @@ export const CalendarDetail = () => {
     // 7-7. table
     const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper"}>
+        <Box className={"block-wrapper h-min80vh"}>
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
@@ -439,7 +439,7 @@ export const CalendarDetail = () => {
     // 7-8. return
     return (
       <React.Fragment>
-        <Card className={"content-wrapper"}>
+        <Paper className={"content-wrapper"} variant={"outlined"}>
           <Container className={"p-0"}>
             <Grid2 container spacing={3}>
               <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"text-center"}>
@@ -447,7 +447,7 @@ export const CalendarDetail = () => {
               </Grid2>
             </Grid2>
           </Container>
-        </Card>
+        </Paper>
       </React.Fragment>
     );
   };

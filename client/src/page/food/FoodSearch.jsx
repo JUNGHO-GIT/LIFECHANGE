@@ -174,9 +174,10 @@ export const FoodSearch = () => {
       </React.Fragment>
     );
     // 7-7. table
+    // list 는 높이 지정
     const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper"}>
+        <Box className={"block-wrapper h-min80vh"}>
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
@@ -212,31 +213,11 @@ export const FoodSearch = () => {
 
   // 13. btn -------------------------------------------------------------------------------------->
   const btnNode = () => (
-    <Box className={"flex-wrapper p-sticky bottom-0 h-6vh"}>
-      <InputMask
-        mask={""}
-        id={"food_content"}
-        name={"food_content"}
-        readOnly={false}
-        disabled={false}
-        value={FILTER?.query}
-        onChange={(e) => {
-          setFILTER((prev) => ({
-            ...prev,
-            query: e.target.value
-          }));
-        }}
-      />
-      <span className={"input-group-text pointer"} onClick={() => {
-        setFILTER((prev) => ({
-          ...prev,
-          page: 0
-        }));
-        flowSearch();
-      }}>
-        <CustomIcons name={"MdOutlineSearch"} className={"w-24 h-24 dark"} />
-      </span>
-    </Box>
+    <Btn DAYPICKER={""} setDAYPICKER={""} DATE={DATE} setDATE={setDATE}
+      SEND={SEND}  FILTER={FILTER} setFILTER={setFILTER} PAGING={""} setPAGING={""}
+      flowSave={flowSearch} navParam={navParam}
+      part={"food"} plan={""} type={"search"}
+    />
   );
 
   // 14. loading ---------------------------------------------------------------------------------->

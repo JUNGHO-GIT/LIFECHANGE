@@ -173,9 +173,10 @@ export const MoneyList = () => {
       </React.Fragment>
     );
     // 7-7. table
+    // list 는 높이 지정
     const tableSection = () => (
       <React.Fragment>
-        <Box className={"block-wrapper"}>
+        <Box className={"block-wrapper h-min80vh"}>
           <Box className={"d-column"}>
             {tableFragment()}
           </Box>
@@ -197,13 +198,6 @@ export const MoneyList = () => {
       </React.Fragment>
     );
   };
-
-  // 10. day -------------------------------------------------------------------------------------->
-  const dayListNode = () => (
-    <DayList FILTER={FILTER} setFILTER={setFILTER} DATE={DATE} setDATE={setDATE}
-      DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER}
-    />
-  );
 
   // 11. paging ----------------------------------------------------------------------------------->
   const pagingNode = () => (
@@ -239,7 +233,6 @@ export const MoneyList = () => {
     <React.Fragment>
       {Header()}
       {NavBar()}
-      {dayListNode()}
       {LOADING ? loadingNode() : tableNode()}
       {pagingNode()}
       {filterNode()}
