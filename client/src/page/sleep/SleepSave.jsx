@@ -358,7 +358,7 @@ export const SleepSave = () => {
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
@@ -372,7 +372,7 @@ export const SleepSave = () => {
       <Header />
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

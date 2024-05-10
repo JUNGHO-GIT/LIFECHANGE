@@ -235,8 +235,8 @@ export const TweakDataset = () => {
     );
     // 7-6-1. table
     const tableFragment1 = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"} key={i}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
@@ -292,8 +292,8 @@ export const TweakDataset = () => {
     );
     // 7-6-2. table
     const tableFragment2 = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"} key={i}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
@@ -366,8 +366,8 @@ export const TweakDataset = () => {
     );
     // 7-6-3. table
     const tableFragment3 = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"} key={i}>
           <TableContainer>
             <Table className={"border"}>
               <TableHead>
@@ -478,7 +478,7 @@ export const TweakDataset = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => {
+  const BtnNode = () => {
     const confirmDefault = () => {
       const confirm = window.confirm("기본값으로 초기화하시겠습니까?");
 
@@ -536,7 +536,7 @@ export const TweakDataset = () => {
       <Header />
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

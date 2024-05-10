@@ -248,7 +248,7 @@ export const ExerciseList = () => {
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={FILTER} setFILTER={setFILTER} PAGING={PAGING} setPAGING={setPAGING}
       flowSave={""} navParam={navParam}
@@ -271,7 +271,7 @@ export const ExerciseList = () => {
       {LOADING ? <LoadingNode /> : <TableNode />}
       {pagingNode()}
       {filterNode()}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

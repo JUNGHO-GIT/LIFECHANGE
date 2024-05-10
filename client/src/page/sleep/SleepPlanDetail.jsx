@@ -276,7 +276,7 @@ export const SleepPlanDetail = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
@@ -296,7 +296,7 @@ export const SleepPlanDetail = () => {
       <Header />
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

@@ -6,19 +6,16 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import "moment/locale/ko";
-import "boxicons/css/boxicons.min.css";
 import "react-calendar/dist/Calendar.css";
 import "./index.css";
 
 import "./assets/css/Mui.css";
 import "./assets/css/Calendar.css";
-
 import "./assets/css/Header.css";
 import "./assets/css/NavBar.css";
 import "./assets/css/SideBar.css";
 import "./assets/css/Table.css";
 import "./assets/css/ScrollBar.css";
-
 import "./assets/css/Dash.css";
 import "./assets/css/Custom.css";
 import "./assets/css/Core.css";
@@ -178,8 +175,10 @@ if (rootElement === null) {
 }
 const root = ReactDOM.createRoot(rootElement);
 root.render(
-  <BrowserRouter>
-    <CssBaseline />
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <CssBaseline />
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );

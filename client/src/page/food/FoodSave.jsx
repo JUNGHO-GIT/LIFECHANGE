@@ -478,8 +478,8 @@ export const FoodSave = () => {
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"} key={i}>
           <Box className={"d-between mt-n15 mb-20"}>
             {dropdownSection(OBJECT?._id, OBJECT?.food_section[i]._id, i)}
           </Box>
@@ -762,7 +762,7 @@ export const FoodSave = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
@@ -782,7 +782,7 @@ export const FoodSave = () => {
       <Header />
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

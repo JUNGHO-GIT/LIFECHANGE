@@ -559,7 +559,7 @@ export const TweakList = () => {
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <React.Fragment>
       <Paper className={"flex-wrapper h-6vh p-sticky bottom-0"} variant={"outlined"}>
         <Container className={"p-0"}>
@@ -615,7 +615,7 @@ export const TweakList = () => {
       {LOADING ? <LoadingNode /> : <TableNode />}
       {pagingNode()}
       {filterNode()}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

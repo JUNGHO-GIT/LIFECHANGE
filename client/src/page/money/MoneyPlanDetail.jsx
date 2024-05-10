@@ -222,8 +222,8 @@ export const MoneyPlanDetail = () => {
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"} key={i}>
           <Box className={"d-between mt-n15 mb-20"}>
             {dropdownSection(OBJECT?._id, "", 0)}
           </Box>
@@ -326,7 +326,7 @@ export const MoneyPlanDetail = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Btn DAYPICKER={DAYPICKER} setDAYPICKER={setDAYPICKER} DATE={DATE} setDATE={setDATE}
       SEND={SEND} FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={""} navParam={navParam}
@@ -346,7 +346,7 @@ export const MoneyPlanDetail = () => {
       <Header />
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

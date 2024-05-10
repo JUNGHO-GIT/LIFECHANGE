@@ -215,7 +215,7 @@ export const DaySave = ({
   return (
     <React.Fragment>
       {popupNode()}
-      {tableNode()}
+      <TableNode />
     </React.Fragment>
   );
 };

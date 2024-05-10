@@ -7,8 +7,6 @@ import {Header, NavBar} from "../../import/ImportLayouts";
 import {Btn, Loading, PopUp, PopDown} from "../../import/ImportComponents.jsx";
 import {Grid2, Container, Card, Paper} from "../../import/ImportMuis";
 import {Box, Badge, Menu, MenuItem} from "../../import/ImportMuis";
-import {TableContainer, Table} from "../../import/ImportMuis";
-import {TableHead, TableBody, TableRow, TableCell} from "../../import/ImportMuis";
 import {TextField, Typography, IconButton, Button, Divider} from "../../import/ImportMuis";
 
 // ------------------------------------------------------------------------------------------------>
@@ -55,38 +53,31 @@ export const UserLogin = () => {
       </React.Fragment>
     );
     // 7-6. table
-    const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              type={"text"}
-              size={"small"}
-              id={"user_id"}
-              name={"user_id"}
-              label={"ID"}
-              value={user_id}
-              onChange={(e) => (
-                setUserId(e.target.value)
-              )}
-            />
-          </Box>
-          <Box className={"d-center mb-20"}>
-            <TextField
-              select={false}
-              type={"password"}
-              size={"small"}
-              id={"user_pw"}
-              name={"user_pw"}
-              label={"Password"}
-              value={user_pw}
-              onChange={(e) => (
-                setUserPw(e.target.value)
-              )}
-            />
-          </Box>
-        </Card>
+    const tableFragment = () => (
+      <React.Fragment>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            id={"user_id"}
+            name={"user_id"}
+            label={"ID"}
+            value={user_id}
+            onChange={(e) => setUserId(e.target.value)}
+          />
+        </Box>
+        <Box className={"d-center mb-20"}>
+          <TextField
+            select={false}
+            type={"text"}
+            size={"small"}
+            id={"user_pw"}
+            name={"user_pw"}
+            label={"Password"}
+            value={user_pw}
+          />
+        </Box>
       </React.Fragment>
     );
     // 7-7. table
@@ -96,9 +87,8 @@ export const UserLogin = () => {
           <Box className={"d-center p-10"}>
             {titleSection()}
           </Box>
-          <Divider variant={"middle"} className={"mb-20"} />
           <Box className={"d-column"}>
-            {tableFragment(0)}
+            {tableFragment()}
           </Box>
         </Box>
       </React.Fragment>
@@ -120,7 +110,7 @@ export const UserLogin = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam} part={"user"} plan={""} type={"login"}
@@ -139,7 +129,7 @@ export const UserLogin = () => {
       <Header />
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

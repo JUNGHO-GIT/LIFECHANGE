@@ -65,8 +65,8 @@ export const UserSignup = () => {
     );
     // 7-6. table
     const tableFragment = (i) => (
-      <React.Fragment key={i}>
-        <Card variant={"outlined"} className={"p-20"} key={`${i}`}>
+      <React.Fragment>
+        <Card variant={"outlined"} className={"p-20"} key={i}>
           <Box className={"d-center mb-20"}>
             <TextField
               select={false}
@@ -129,7 +129,7 @@ export const UserSignup = () => {
   };
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Btn DAYPICKER={""} setDAYPICKER={""} DATE={""} setDATE={""}
       SEND={""}  FILTER={""} setFILTER={""} PAGING={""} setPAGING={""}
       flowSave={flowSave} navParam={navParam}
@@ -149,7 +149,7 @@ export const UserSignup = () => {
       <Header />
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };

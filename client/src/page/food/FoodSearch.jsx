@@ -211,7 +211,7 @@ export const FoodSearch = () => {
   );
 
   // 13. btn -------------------------------------------------------------------------------------->
-  const btnNode = () => (
+  const BtnNode = () => (
     <Box className={"flex-wrapper p-sticky bottom-0 h-6vh"}>
       <InputMask
         mask={""}
@@ -252,7 +252,7 @@ export const FoodSearch = () => {
       <NavBar />
       {LOADING ? <LoadingNode /> : <TableNode />}
       {pagingNode()}
-      {btnNode()}
+      <BtnNode />
     </React.Fragment>
   );
 };
