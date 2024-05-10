@@ -234,7 +234,7 @@ export const DayList = ({
       <React.Fragment>
         <Box className={`dayPicker-container ${DAYPICKER.dayOpen ? "" : "d-none"}`}>
           {closeBtn()}
-          <Box className={"h-2vh"}></Box>
+          <Box className={"h-2vh"}/>
           {/* <DayPicker
             weekStartsOn={1}
             showOutsideDays={true}
@@ -248,7 +248,7 @@ export const DayList = ({
             month={month}
             onDayClick={onDayClick}
             onMonthChange={onMonthChange}
-          ></DayPicker> */}
+          /> */}
         </Box>
       </React.Fragment>
     );

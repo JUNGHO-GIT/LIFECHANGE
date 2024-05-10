@@ -141,7 +141,7 @@ export const SleepDetail = () => {
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
             readOnly={true}
-          ></DesktopDatePicker>
+          />
         </LocalizationProvider>
       </React.Fragment>
     );
@@ -151,7 +151,7 @@ export const SleepDetail = () => {
           badgeContent={i + 1}
           color={"primary"}
           showZero={true}
-        ></Badge>
+        />
       </React.Fragment>
     );
     const dropdownSection = (id, sectionId, index) => (
@@ -204,7 +204,7 @@ export const SleepDetail = () => {
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
                 readOnly={true}
-              ></DesktopTimePicker>
+              />
             </LocalizationProvider>
           </Box>
           <Box className={"d-center mb-20"}>
@@ -217,7 +217,7 @@ export const SleepDetail = () => {
                 timezone={"Asia/Seoul"}
                 views={['hours', 'minutes']}
                 readOnly={true}
-              ></DesktopTimePicker>
+              />
             </LocalizationProvider>
           </Box>
           <Box className={"d-center mb-20"}>
@@ -235,7 +235,7 @@ export const SleepDetail = () => {
                     <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
                   )
                 }}
-              ></TextField>
+              />
             </LocalizationProvider>
           </Box>
         </Card>

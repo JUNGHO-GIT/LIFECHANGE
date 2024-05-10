@@ -67,14 +67,14 @@ export const SleepDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -83,7 +83,7 @@ export const SleepDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             {PART.includes("취침") && (
               <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
               </Bar>
@@ -107,7 +107,7 @@ export const SleepDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -115,7 +115,7 @@ export const SleepDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -130,14 +130,14 @@ export const SleepDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -146,7 +146,7 @@ export const SleepDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             {PART.includes("취침") && (
               <Bar dataKey={"취침"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
               </Bar>
@@ -170,7 +170,7 @@ export const SleepDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -178,7 +178,7 @@ export const SleepDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>

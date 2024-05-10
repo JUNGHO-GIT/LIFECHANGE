@@ -66,7 +66,7 @@ export const UserLogin = () => {
                 onChange={(e) => (
                   setUserId(e.target.value)
                 )}
-              ></TextField>
+              />
             </Grid2>
             <Grid2 xl={12} lg={12} md={12} sm={12} xs={12} className={"d-center"}>
               <TextField
@@ -78,7 +78,7 @@ export const UserLogin = () => {
                 onChange={(e) => (
                   setUserPw(e.target.value)
                 )}
-              ></TextField>
+              />
             </Grid2>
           </Grid2>
         </Box>

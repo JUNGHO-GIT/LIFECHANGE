@@ -145,7 +145,7 @@ export const FoodPlanSave = () => {
                     food_plan_kcal: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -174,7 +174,7 @@ export const FoodPlanSave = () => {
                     food_plan_carb: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -203,7 +203,7 @@ export const FoodPlanSave = () => {
                     food_plan_protein: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -232,7 +232,7 @@ export const FoodPlanSave = () => {
                     food_plan_fat: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
         </Grid2>

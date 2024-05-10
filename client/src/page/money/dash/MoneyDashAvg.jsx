@@ -81,14 +81,14 @@ export const MoneyDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_IN_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -97,7 +97,7 @@ export const MoneyDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Tooltip
@@ -111,7 +111,7 @@ export const MoneyDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -119,7 +119,7 @@ export const MoneyDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -134,14 +134,14 @@ export const MoneyDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_OUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -150,7 +150,7 @@ export const MoneyDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"지출"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Tooltip
@@ -164,7 +164,7 @@ export const MoneyDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -172,7 +172,7 @@ export const MoneyDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -187,14 +187,14 @@ export const MoneyDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_IN_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -203,7 +203,7 @@ export const MoneyDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"수입"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Tooltip
@@ -217,7 +217,7 @@ export const MoneyDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -225,7 +225,7 @@ export const MoneyDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -240,14 +240,14 @@ export const MoneyDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_OUT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -256,7 +256,7 @@ export const MoneyDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"지출"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Tooltip
@@ -270,7 +270,7 @@ export const MoneyDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -278,7 +278,7 @@ export const MoneyDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>

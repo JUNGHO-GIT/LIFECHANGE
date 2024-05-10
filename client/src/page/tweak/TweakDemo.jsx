@@ -602,7 +602,7 @@ export const TweakDemo = () => {
                     inputCnt: Number(values.value)
                   }))
                 )}
-              ></NumericFormat>
+              />
               <Button size={"small"} className={"secondary-btn"} color={"secondary"} variant={"contained"}
               onClick={() => (flowAdd(TYPE))}>
                 추가

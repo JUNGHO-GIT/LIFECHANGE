@@ -74,7 +74,7 @@ export const UserSignup = () => {
                 onChange={(e) => (
                   setUserId(e.target.value)
                 )}
-              ></InputMask>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -89,7 +89,7 @@ export const UserSignup = () => {
                 onChange={(e) => (
                   setUserPw(e.target.value)
                 )}
-              ></InputMask>
+              />
             </Box>
           </Grid2>
         </Grid2>

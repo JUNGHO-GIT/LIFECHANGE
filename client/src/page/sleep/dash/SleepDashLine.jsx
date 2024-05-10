@@ -65,14 +65,14 @@ export const SleepDashLine = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <LineChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -81,18 +81,18 @@ export const SleepDashLine = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             {PART.includes("취침") && (
               <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
+              strokeWidth={2}/>
             )}
             {PART.includes("기상") && (
               <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
+              strokeWidth={2}/>
             )}
             {PART.includes("수면") && (
               <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
+              strokeWidth={2}/>
             )}
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
@@ -105,7 +105,7 @@ export const SleepDashLine = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -113,7 +113,7 @@ export const SleepDashLine = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </LineChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -127,14 +127,14 @@ export const SleepDashLine = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <LineChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -143,18 +143,18 @@ export const SleepDashLine = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             {PART.includes("취침") && (
               <Line dataKey={"취침"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
+              strokeWidth={2}/>
             )}
             {PART.includes("기상") && (
               <Line dataKey={"기상"} type={"monotone"} stroke={"#ffc658"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
+              strokeWidth={2}/>
             )}
             {PART.includes("수면") && (
               <Line dataKey={"수면"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-              strokeWidth={2}></Line>
+              strokeWidth={2}/>
             )}
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
@@ -167,7 +167,7 @@ export const SleepDashLine = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -175,7 +175,7 @@ export const SleepDashLine = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </LineChart>
         </ResponsiveContainer>
       </React.Fragment>

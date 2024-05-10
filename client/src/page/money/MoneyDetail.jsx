@@ -153,7 +153,7 @@ export const MoneyDetail = () => {
                 endDt: moment(day).format("YYYY-MM-DD")
               }));
             }}
-          ></DesktopDatePicker>
+          />
         </LocalizationProvider>
       </React.Fragment>
     );
@@ -172,7 +172,7 @@ export const MoneyDetail = () => {
               <CustomIcons name={"BiListPlus"} className={"w-18 h-18 dark"} position={"start"} />
             )
           }}
-        ></TextField>
+        />
       </React.Fragment>
     );
     const totalSection = () => (
@@ -190,7 +190,7 @@ export const MoneyDetail = () => {
                 <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
-          ></TextField>
+          />
           <TextField
             label={"총 지출"}
             size={"small"}
@@ -203,7 +203,7 @@ export const MoneyDetail = () => {
                 <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
-          ></TextField>
+          />
           <TextField
             label={"총 자산"}
             size={"small"}
@@ -216,7 +216,7 @@ export const MoneyDetail = () => {
                 <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
               )
             }}
-          ></TextField>
+          />
         </Card>
       </React.Fragment>
     );
@@ -226,7 +226,7 @@ export const MoneyDetail = () => {
           badgeContent={i + 1}
           color={"primary"}
           showZero={true}
-        ></Badge>
+        />
       </React.Fragment>
     );
     const dropdownSection = (id, sectionId, index) => (
@@ -280,7 +280,7 @@ export const MoneyDetail = () => {
               InputProps={{
                 readOnly: true,
               }}
-            ></TextField>
+            />
             <TextField
               label={"타이틀"}
               type={"text"}
@@ -291,7 +291,7 @@ export const MoneyDetail = () => {
               InputProps={{
                 readOnly: true,
               }}
-            ></TextField>
+            />
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
@@ -307,7 +307,7 @@ export const MoneyDetail = () => {
                   <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
                 )
               }}
-            ></TextField>
+            />
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField
@@ -323,7 +323,7 @@ export const MoneyDetail = () => {
                   <CustomIcons name={"BiWon"} className={"w-16 h-16 dark"} position={"start"} />
                 )
               }}
-            ></TextField>
+            />
           </Box>
         </Card>
       </React.Fragment>

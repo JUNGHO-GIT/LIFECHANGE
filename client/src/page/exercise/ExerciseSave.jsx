@@ -223,7 +223,7 @@ export const ExerciseSave = () => {
               const limitedValue = Math.min(10, parseInt(values?.value));
               handlerCount(limitedValue.toString());
             }}
-          ></NumericFormat>
+          />
         </Box>
       </React.Fragment>
     );
@@ -334,7 +334,7 @@ export const ExerciseSave = () => {
                     ))
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
@@ -374,7 +374,7 @@ export const ExerciseSave = () => {
                     ))
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
@@ -414,7 +414,7 @@ export const ExerciseSave = () => {
                     ))
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={3} lg={3} md={3} sm={3} xs={3}>
@@ -453,7 +453,7 @@ export const ExerciseSave = () => {
                     ))
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
         </Grid2>
@@ -477,7 +477,7 @@ export const ExerciseSave = () => {
                 fixedDecimalScale={true}
                 thousandSeparator={true}
                 value={Math.min(999999999, OBJECT?.exercise_section[i]?.exercise_volume)}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -505,7 +505,7 @@ export const ExerciseSave = () => {
                     ))
                   }));
                 }}
-              ></TimePicker> */}
+              /> */}
             </Box>
           </Grid2>
         </Grid2>
@@ -540,7 +540,7 @@ export const ExerciseSave = () => {
                   thousandSeparator={true}
                   fixedDecimalScale={true}
                   value={Math.min(9999999999, OBJECT?.exercise_total_volume)}
-                ></NumericFormat>
+                />
             </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -556,7 +556,7 @@ export const ExerciseSave = () => {
                 clockIcon={null}
                 disableClock={false}
                 value={OBJECT?.exercise_total_cardio}
-              ></TimePicker> */}
+              /> */}
             </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -584,7 +584,7 @@ export const ExerciseSave = () => {
                     exercise_body_weight: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
         </Grid2>

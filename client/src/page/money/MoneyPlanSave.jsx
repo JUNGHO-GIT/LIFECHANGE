@@ -143,7 +143,7 @@ export const MoneyPlanSave = () => {
                     money_plan_in: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -173,7 +173,7 @@ export const MoneyPlanSave = () => {
                     money_plan_out: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
         </Grid2>

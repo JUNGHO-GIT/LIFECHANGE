@@ -166,7 +166,7 @@ export const MoneySave = () => {
                 endDt: moment(day).format("YYYY-MM-DD")
               }));
             }}
-          ></DesktopDatePicker>
+          />
         </LocalizationProvider>
       </React.Fragment>
     );
@@ -311,7 +311,7 @@ export const MoneySave = () => {
             badgeContent={index + 1}
             color={"primary"}
             showZero={true}
-          ></Badge>
+          />
         </IconButton>
         <PopDown
           elementId={`pop-${index}`}
@@ -436,7 +436,7 @@ export const MoneySave = () => {
                   ))
                 }));
               }}
-            ></TextField>
+            />
           </Box>
           <Box className={"d-center mb-20"}>
             <TextField

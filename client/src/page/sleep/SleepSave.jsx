@@ -142,7 +142,7 @@ export const SleepSave = () => {
                 endDt: moment(day).format("YYYY-MM-DD")
               }));
             }}
-          ></DesktopDatePicker>
+          />
         </LocalizationProvider>
       </React.Fragment>
     );
@@ -152,7 +152,7 @@ export const SleepSave = () => {
           badgeContent={i + 1}
           color={"primary"}
           showZero={true}
-        ></Badge>
+        />
       </React.Fragment>
     );
     const dropdownSection = (id, sectionId, index) => (
@@ -197,7 +197,7 @@ export const SleepSave = () => {
                     }],
                   }));
                 }}
-              ></DesktopTimePicker>
+              />
             </LocalizationProvider>
           </Box>
           <Box className={"d-center mb-20"}>
@@ -218,7 +218,7 @@ export const SleepSave = () => {
                     }]
                   }));
                 }}
-              ></DesktopTimePicker>
+              />
             </LocalizationProvider>
           </Box>
           <Box className={"d-center mb-20"}>
@@ -236,7 +236,7 @@ export const SleepSave = () => {
                     <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
                   )
                 }}
-              ></TextField>
+              />
             </LocalizationProvider>
           </Box>
         </Card>

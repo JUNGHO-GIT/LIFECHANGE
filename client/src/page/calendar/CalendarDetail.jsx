@@ -198,7 +198,7 @@ export const CalendarDetail = () => {
               const limitedValue = Math.min(10, parseInt(values?.value));
               handlerCount(limitedValue.toString());
             }}
-          ></NumericFormat>
+          />
         </Box>
       </React.Fragment>
     );
@@ -290,7 +290,7 @@ export const CalendarDetail = () => {
                     ))
                   }));
                 }}
-              ></InputMask>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -316,7 +316,7 @@ export const CalendarDetail = () => {
                     ))
                   }));
                 }}
-              ></InputMask>
+              />
             </Box>
           </Grid2>
         </Grid2>

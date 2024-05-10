@@ -79,14 +79,14 @@ export const FoodDashLine = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_KCAL_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></XAxis>
+          />
           <YAxis
             type={"number"}
             domain={domain}
@@ -95,9 +95,9 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></YAxis>
+          />
           <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
-          activeDot={{r: 6}}></Line>
+          activeDot={{r: 6}}/>
           <Tooltip
             formatter={(value) => (`${Number(value).toLocaleString()}kcal`)}
             cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -109,7 +109,7 @@ export const FoodDashLine = () => {
               background:"#fff",
               color:"#666"
             }}
-          ></Tooltip>
+          />
           <Legend
             iconType={"circle"}
             verticalAlign={"bottom"}
@@ -117,7 +117,7 @@ export const FoodDashLine = () => {
             wrapperStyle={{
               lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
             }}
-          ></Legend>
+          />
         </LineChart>
       </ResponsiveContainer>
     );
@@ -129,14 +129,14 @@ export const FoodDashLine = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_NUT_WEEK} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></XAxis>
+          />
           <YAxis
             type={"number"}
             domain={domain}
@@ -145,7 +145,7 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></YAxis>
+          />
           <Line dataKey={"탄수화물"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}} />
           <Line dataKey={"단백질"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
@@ -163,7 +163,7 @@ export const FoodDashLine = () => {
               background:"#fff",
               color:"#666"
             }}
-          ></Tooltip>
+          />
           <Legend
             iconType={"circle"}
             verticalAlign={"bottom"}
@@ -171,7 +171,7 @@ export const FoodDashLine = () => {
             wrapperStyle={{
               lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
             }}
-          ></Legend>
+          />
         </LineChart>
       </ResponsiveContainer>
     );
@@ -183,14 +183,14 @@ export const FoodDashLine = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></XAxis>
+          />
           <YAxis
             type={"number"}
             domain={domain}
@@ -199,7 +199,7 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></YAxis>
+          />
           <Line dataKey={"칼로리"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}} />
           <Tooltip
@@ -213,7 +213,7 @@ export const FoodDashLine = () => {
               background:"#fff",
               color:"#666"
             }}
-          ></Tooltip>
+          />
           <Legend
             iconType={"circle"}
             verticalAlign={"bottom"}
@@ -221,7 +221,7 @@ export const FoodDashLine = () => {
             wrapperStyle={{
               lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
             }}
-          ></Legend>
+          />
         </LineChart>
       </ResponsiveContainer>
     );
@@ -233,14 +233,14 @@ export const FoodDashLine = () => {
     return (
       <ResponsiveContainer width={"100%"} height={350}>
         <LineChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 60, bottom: 20, left: 20}}>
-          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+          <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
           <XAxis
             type={"category"}
             dataKey={"name"}
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></XAxis>
+          />
           <YAxis
             type={"number"}
             domain={domain}
@@ -249,7 +249,7 @@ export const FoodDashLine = () => {
             tickLine={false}
             axisLine={false}
             tick={{fill:'#666', fontSize:14}}
-          ></YAxis>
+          />
           <Line dataKey={"탄수화물"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
           activeDot={{r: 6}} />
           <Line dataKey={"단백질"} type={"monotone"} stroke={"#82ca9d"} strokeWidth={2}
@@ -267,7 +267,7 @@ export const FoodDashLine = () => {
               background:"#fff",
               color:"#666"
             }}
-          ></Tooltip>
+          />
           <Legend
             iconType={"circle"}
             verticalAlign={"bottom"}
@@ -275,7 +275,7 @@ export const FoodDashLine = () => {
             wrapperStyle={{
               lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
             }}
-          ></Legend>
+          />
         </LineChart>
       </ResponsiveContainer>
     );

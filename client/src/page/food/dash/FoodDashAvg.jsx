@@ -81,14 +81,14 @@ export const FoodDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_KCAL_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -97,7 +97,7 @@ export const FoodDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Tooltip
@@ -111,7 +111,7 @@ export const FoodDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -119,7 +119,7 @@ export const FoodDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -134,14 +134,14 @@ export const FoodDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_NUT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -150,7 +150,7 @@ export const FoodDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
@@ -168,7 +168,7 @@ export const FoodDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -176,7 +176,7 @@ export const FoodDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -191,14 +191,14 @@ export const FoodDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_KCAL_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -207,7 +207,7 @@ export const FoodDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"칼로리"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Tooltip
@@ -221,7 +221,7 @@ export const FoodDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -229,7 +229,7 @@ export const FoodDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -244,14 +244,14 @@ export const FoodDashAvg = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_NUT_YEAR} margin={{top: 60, right: 20, bottom: 20, left: -20}}
           barGap={8} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -260,7 +260,7 @@ export const FoodDashAvg = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"탄수화물"} fill="#ffc658" radius={[10, 10, 0, 0]} minPointSize={1}>
             </Bar>
             <Bar dataKey={"단백질"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}>
@@ -278,7 +278,7 @@ export const FoodDashAvg = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -286,7 +286,7 @@ export const FoodDashAvg = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>

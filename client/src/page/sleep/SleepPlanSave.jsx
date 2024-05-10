@@ -140,7 +140,7 @@ export const SleepPlanSave = () => {
                 endDt: moment(day).format("YYYY-MM-DD")
               }));
             }}
-          ></DesktopDatePicker>
+          />
         </LocalizationProvider>
       </React.Fragment>
     );
@@ -197,7 +197,7 @@ export const SleepPlanSave = () => {
                       sleep_plan_night: moment(time).format("HH:mm")
                     }));
                   }}
-                ></DesktopTimePicker>
+                />
               </LocalizationProvider>
             </Box>
             <Box className={"d-center mb-20"}>
@@ -215,7 +215,7 @@ export const SleepPlanSave = () => {
                       sleep_plan_morning: moment(time).format("HH:mm")
                     }));
                   }}
-                ></DesktopTimePicker>
+                />
               </LocalizationProvider>
             </Box>
             <Box className={"d-center mb-20"}>
@@ -233,7 +233,7 @@ export const SleepPlanSave = () => {
                     <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
                   )
                 }}
-                ></TextField>
+                />
               </LocalizationProvider>
             </Box>
           </Card>

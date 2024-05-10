@@ -101,7 +101,7 @@ export const DaySave = ({
             [`${type}Dt`]: moment(month).tz("Asia/Seoul").format("YYYY-MM-DD")
           }));
         }}
-      ></DayPicker> */}
+      /> */}
     </React.Fragment>
   );
 
@@ -110,12 +110,12 @@ export const DaySave = ({
     <React.Fragment>
       <Box className={`dayPicker-container ${DAYPICKER.dayStartOpen ? "" : "d-none"}`}>
         {closeBtn("Start")}
-        <Box className="h-2vh"></Box>
+        <Box className="h-2vh"/>
         {dayPicker("start")}
       </Box>
       <Box className={`dayPicker-container ${DAYPICKER.dayEndOpen ? "" : "d-none"}`}>
         {closeBtn("End")}
-        <Box className="h-2vh"></Box>
+        <Box className="h-2vh"/>
         {dayPicker("end")}
       </Box>
     </React.Fragment>
@@ -143,7 +143,7 @@ export const DaySave = ({
                     dayStartOpen: !prev.dayStartOpen
                   }));
                 }}
-              ></InputMask>
+              />
             </Box>
           </Grid2>
         </Grid2>
@@ -169,7 +169,7 @@ export const DaySave = ({
                     dayStartOpen: !prev.dayStartOpen
                   }));
                 }}
-              ></InputMask>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -189,7 +189,7 @@ export const DaySave = ({
                     dayEndOpen: !prev.dayEndOpen
                   }));
                 }}
-              ></InputMask>
+              />
             </Box>
           </Grid2>
         </Grid2>

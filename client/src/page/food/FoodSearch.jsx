@@ -204,7 +204,7 @@ export const FoodSearch = () => {
             query: e.target.value
           }));
         }}
-      ></InputMask>
+      />
       <span className={"input-group-text pointer"} onClick={() => {
         setFILTER((prev) => ({
           ...prev,

@@ -80,14 +80,14 @@ export const ExerciseDashLine = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <LineChart data={OBJECT_VOLUME_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -96,9 +96,9 @@ export const ExerciseDashLine = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-            strokeWidth={2}></Line>
+            strokeWidth={2}/>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -110,7 +110,7 @@ export const ExerciseDashLine = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -118,7 +118,7 @@ export const ExerciseDashLine = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </LineChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -132,14 +132,14 @@ export const ExerciseDashLine = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <LineChart data={OBJECT_CARDIO_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -148,9 +148,9 @@ export const ExerciseDashLine = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-            strokeWidth={2}></Line>
+            strokeWidth={2}/>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -162,7 +162,7 @@ export const ExerciseDashLine = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -170,7 +170,7 @@ export const ExerciseDashLine = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </LineChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -184,14 +184,14 @@ export const ExerciseDashLine = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <LineChart data={OBJECT_VOLUME_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -200,9 +200,9 @@ export const ExerciseDashLine = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Line dataKey={"볼륨"} type={"monotone"} stroke={"#8884d8"} activeDot={{r:8}}
-            strokeWidth={2}></Line>
+            strokeWidth={2}/>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -214,7 +214,7 @@ export const ExerciseDashLine = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -222,7 +222,7 @@ export const ExerciseDashLine = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </LineChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -236,14 +236,14 @@ export const ExerciseDashLine = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <LineChart data={OBJECT_CARDIO_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -252,9 +252,9 @@ export const ExerciseDashLine = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Line dataKey={"시간"} type={"monotone"} stroke={"#82ca9d"} activeDot={{r:8}}
-            strokeWidth={2}></Line>
+            strokeWidth={2}/>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -266,7 +266,7 @@ export const ExerciseDashLine = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -274,7 +274,7 @@ export const ExerciseDashLine = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </LineChart>
         </ResponsiveContainer>
       </React.Fragment>

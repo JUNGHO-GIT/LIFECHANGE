@@ -198,7 +198,7 @@ export const ExerciseDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -234,7 +234,7 @@ export const ExerciseDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -270,7 +270,7 @@ export const ExerciseDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -306,7 +306,7 @@ export const ExerciseDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>

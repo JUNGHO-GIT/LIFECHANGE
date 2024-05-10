@@ -322,7 +322,7 @@ export const FoodSave = () => {
                               const limitedValue = Math.min(99, parseInt(values.value));
                               handleCountChange(index, limitedValue);
                             }}
-                          ></NumericFormat>
+                          />
                           <span>{item.food_serv}</span>
                         </Box>
                       </TableCell>

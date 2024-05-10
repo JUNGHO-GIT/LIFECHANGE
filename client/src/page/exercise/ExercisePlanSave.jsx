@@ -146,7 +146,7 @@ export const ExercisePlanSave = () => {
                     exercise_plan_volume: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -168,7 +168,7 @@ export const ExercisePlanSave = () => {
                     exercise_plan_cardio: e ? e.toString() : ""
                   }));
                 }}
-              ></TimePicker> */}
+              /> */}
             </Box>
           </Grid2>
         </Grid2>
@@ -199,7 +199,7 @@ export const ExercisePlanSave = () => {
                     exercise_plan_count: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
           <Grid2 xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -228,7 +228,7 @@ export const ExercisePlanSave = () => {
                     exercise_plan_weight: limitedValue
                   }));
                 }}
-              ></NumericFormat>
+              />
             </Box>
           </Grid2>
         </Grid2>

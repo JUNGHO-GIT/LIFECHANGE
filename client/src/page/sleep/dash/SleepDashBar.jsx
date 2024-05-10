@@ -54,14 +54,14 @@ export const SleepDashBar = () => {
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 60, bottom: 20, left: 20}}
           barGap={20} barCategoryGap={"20%"}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -70,12 +70,12 @@ export const SleepDashBar = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Line dataKey={"목표"} type={"monotone"} stroke={"#8884d8"} strokeWidth={2}
               activeDot={{r: 6}}
-            ></Line>
+            />
             <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
-              barSize={20}></Bar>
+              barSize={20}/>
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()}`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -87,7 +87,7 @@ export const SleepDashBar = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -95,7 +95,7 @@ export const SleepDashBar = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>

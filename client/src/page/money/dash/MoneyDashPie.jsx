@@ -251,7 +251,7 @@ export const MoneyDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -259,7 +259,7 @@ export const MoneyDashPie = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
               }}
-            ></Legend>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -295,7 +295,7 @@ export const MoneyDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -303,7 +303,7 @@ export const MoneyDashPie = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
               }}
-            ></Legend>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -339,7 +339,7 @@ export const MoneyDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -347,7 +347,7 @@ export const MoneyDashPie = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
               }}
-            ></Legend>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -383,7 +383,7 @@ export const MoneyDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -391,7 +391,7 @@ export const MoneyDashPie = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
               }}
-            ></Legend>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -427,7 +427,7 @@ export const MoneyDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -435,7 +435,7 @@ export const MoneyDashPie = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
               }}
-            ></Legend>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -471,7 +471,7 @@ export const MoneyDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -479,7 +479,7 @@ export const MoneyDashPie = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px"
               }}
-            ></Legend>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>

@@ -133,16 +133,17 @@ export const SleepPlanDetail = () => {
             format={"YYYY-MM-DD"}
             timezone={"Asia/Seoul"}
             readOnly={true}
-          ></DesktopDatePicker>
+          />
         </LocalizationProvider>
       </React.Fragment>
     );
+
     const dropdownSection = (id, sectionId, index) => (
       <PopupState variant={"popover"} popupId={"popup"}>
         {(popupState) => (
           <React.Fragment>
             <IconButton {...bindTrigger(popupState)}>
-              <Badge badgeContent={index + 1} color={"primary"} showZero={true}></Badge>
+              <Badge badgeContent={index + 1} color={"primary"} showZero={true}/>
             </IconButton>
             <Menu {...bindMenu(popupState)}>
               <MenuItem onClick={() => {
@@ -194,7 +195,7 @@ export const SleepPlanDetail = () => {
                   timezone={"Asia/Seoul"}
                   views={['hours', 'minutes']}
                   readOnly={true}
-                ></DesktopTimePicker>
+                />
               </LocalizationProvider>
             </Box>
             <Box className={"d-center mb-20"}>
@@ -207,7 +208,7 @@ export const SleepPlanDetail = () => {
                   timezone={"Asia/Seoul"}
                   views={['hours', 'minutes']}
                   readOnly={true}
-                ></DesktopTimePicker>
+                />
               </LocalizationProvider>
             </Box>
             <Box className={"d-center mb-20"}>
@@ -225,7 +226,7 @@ export const SleepPlanDetail = () => {
                       <CustomAdornment name={"BiMoon"} className={"w-18 h-18 dark"} position={"end"}/>
                     )
                   }}
-                ></TextField>
+                />
               </LocalizationProvider>
             </Box>
           </Card>

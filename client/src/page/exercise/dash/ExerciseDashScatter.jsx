@@ -75,14 +75,14 @@ export const ExerciseDashScatter = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_TODAY} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -91,13 +91,13 @@ export const ExerciseDashScatter = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Bar dataKey={"목표"} fill="#8884d8" radius={[10, 10, 0, 0]} minPointSize={1}
               barSize={20}
-            ></Bar>
+            />
             <Bar dataKey={"실제"} fill="#82ca9d" radius={[10, 10, 0, 0]} minPointSize={1}
               barSize={20}
-            ></Bar>
+            />
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -109,7 +109,7 @@ export const ExerciseDashScatter = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -117,7 +117,7 @@ export const ExerciseDashScatter = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -131,14 +131,14 @@ export const ExerciseDashScatter = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_WEEK} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -147,19 +147,19 @@ export const ExerciseDashScatter = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Scatter
               name={"목표"}
               dataKey={"목표"}
               fill={"#8884d8"}
               line={{stroke: "#aaa6ee", strokeWidth: 0.6}}
-            ></Scatter>
+            />
             <Scatter
               name={"실제"}
               dataKey={"실제"}
               fill={"#82ca9d"}
               line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
-            ></Scatter>
+            />
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -171,7 +171,7 @@ export const ExerciseDashScatter = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -179,7 +179,7 @@ export const ExerciseDashScatter = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -193,14 +193,14 @@ export const ExerciseDashScatter = () => {
       <React.Fragment>
         <ResponsiveContainer width={"100%"} height={350}>
           <ComposedChart data={OBJECT_MONTH} margin={{top: 60, right: 20, bottom: 20, left: -20}}>
-            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}></CartesianGrid>
+            <CartesianGrid strokeDasharray={"3 3"} stroke={"#f5f5f5"}/>
             <XAxis
               type={"category"}
               dataKey={"name"}
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></XAxis>
+            />
             <YAxis
               type={"number"}
               domain={domain}
@@ -209,19 +209,19 @@ export const ExerciseDashScatter = () => {
               tickLine={false}
               axisLine={{stroke:"#e0e0e0"}}
               tick={{fill:"#666", fontSize:14}}
-            ></YAxis>
+            />
             <Scatter
               name={"목표"}
               dataKey={"목표"}
               fill={"#8884d8"}
               line={{stroke: "#aaa6ee", strokeWidth: 0.6}}
-            ></Scatter>
+            />
             <Scatter
               name={"실제"}
               dataKey={"실제"}
               fill={"#82ca9d"}
               line={{stroke: "#8fd9b6", strokeWidth: 0.6}}
-            ></Scatter>
+            />
             <Tooltip
               formatter={(value) => (`${Number(value).toLocaleString()} kg`)}
               cursor={{fill:"rgba(0, 0, 0, 0.1)"}}
@@ -233,7 +233,7 @@ export const ExerciseDashScatter = () => {
                 background:"#fff",
                 color:"#666"
               }}
-            ></Tooltip>
+            />
             <Legend
               iconType={"circle"}
               verticalAlign={"bottom"}
@@ -241,7 +241,7 @@ export const ExerciseDashScatter = () => {
               wrapperStyle={{
                 lineHeight:"40px", paddingTop:"10px", fontSize:"12px", marginLeft:"20px"
               }}
-            ></Legend>
+            />
           </ComposedChart>
         </ResponsiveContainer>
       </React.Fragment>

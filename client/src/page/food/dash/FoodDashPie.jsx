@@ -251,7 +251,7 @@ export const FoodDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -287,7 +287,7 @@ export const FoodDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -323,7 +323,7 @@ export const FoodDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -359,7 +359,7 @@ export const FoodDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -395,7 +395,7 @@ export const FoodDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
@@ -431,7 +431,7 @@ export const FoodDashPie = () => {
                 border:"none",
                 borderRadius:"10px"
               }}
-            ></Tooltip>
+            />
           </PieChart>
         </ResponsiveContainer>
       </React.Fragment>
